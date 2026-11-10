@@ -14,7 +14,7 @@ const LANG_KEY = 'learn2pro_v2_lang';
 function getLang(): Lang {
   try {
     const v = localStorage.getItem(LANG_KEY);
-    if (v === 'english' || v === 'hindi' || v === 'hinglish') return v;
+    if (v === 'english' || v === 'hinglish') return v;
   } catch {
     // ignore
   }

@@ -182,11 +182,6 @@ export default function Layout({ lang, setLang, progress, subjects, children }: 
     setMenuOpen((v) => !v);
   };
 
-  const pickLang = (l: Lang) => {
-    setLang(l);
-    setMenuOpen(false);
-  };
-
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-[#243424] bg-[#0a0f0a]/95 backdrop-blur">
@@ -309,6 +304,28 @@ export default function Layout({ lang, setLang, progress, subjects, children }: 
             </div>
           </div>
 
+          {/* ── Language bar (mobile): the Hinglish / English choice is
+              our unique thing, so it stays visible at the top ───────── */}
+          <div className="flex items-center gap-2 border-t border-[#243424] py-2 lg:hidden">
+            <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-zinc-400">
+              🌐 {ui('languageLabel', lang)}
+            </span>
+            <div className="grid flex-1 grid-cols-2 gap-1 rounded-full border border-[#243424] bg-[#0d1510] p-1">
+              {LANGS.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => setLang(l.code)}
+                  aria-pressed={lang === l.code}
+                  className={`rounded-full px-2 py-1.5 text-sm font-semibold ${
+                    lang === l.code ? 'bg-green-600 text-white' : 'text-zinc-300'
+                  }`}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* ── Mobile search panel ──────────────────────────────────── */}
           {searchOpen ? (
             <div className="border-t border-[#243424] pb-3 pt-3 lg:hidden">
@@ -404,25 +421,6 @@ export default function Layout({ lang, setLang, progress, subjects, children }: 
                 })}
               </div>
 
-              <p className="mt-3 px-3 text-xs font-bold uppercase tracking-wider text-zinc-500">
-                {ui('languageLabel', lang)}
-              </p>
-              <div className="mt-1 grid grid-cols-3 gap-1.5 px-1">
-                {LANGS.map((l) => (
-                  <button
-                    key={l.code}
-                    onClick={() => pickLang(l.code)}
-                    className={`rounded-full px-2 py-2 text-sm font-semibold ${
-                      lang === l.code
-                        ? 'bg-green-600 text-white'
-                        : 'border border-[#243424] bg-[#12210f] text-zinc-300'
-                    }`}
-                  >
-                    {l.label}
-                  </button>
-                ))}
-              </div>
-
               <div className="mt-3 flex gap-2 px-1">
                 <span className="flex-1 rounded-xl border border-[#243424] bg-[#12210f] px-3 py-2 text-center text-sm font-bold">
                   🔥 {progress.streak} {ui('streakWord', lang)}
@@ -439,7 +437,7 @@ export default function Layout({ lang, setLang, progress, subjects, children }: 
       <footer className="border-t border-[#243424] py-6 text-center text-sm text-zinc-500">
         <p>Learn2Pro — Learn engineering, in depth. Everything free, forever.</p>
         <p className="mt-1">
-          All articles are written in our own style for students, in Hinglish, English and Hindi.
+          All articles are written in our own style for students, in Hinglish and English.
           {' · '}
           <a href="https://learn2pro-app.netlify.app" target="_blank" rel="noreferrer">
             Zero to Pro Path (v1)
