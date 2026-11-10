@@ -43,10 +43,26 @@ export interface MCQ {
 }
 
 /** Simple labelled diagram rendered inline (no external images). */
+export interface DiagramNode {
+  t: LText;
+  s?: LText;
+  depth?: number;
+}
+
+export interface DiagramBar {
+  label: LText;
+  value: number; // 0-100
+  note?: LText;
+}
+
 export interface Diagram {
-  kind: 'flow' | 'boxes';
+  kind: 'flow' | 'boxes' | 'memory' | 'table' | 'bars' | 'tree' | 'layers' | 'cycle' | 'timeline';
   title: LText;
-  nodes: { t: LText; s?: LText }[];
+  caption?: LText;
+  nodes: DiagramNode[]; // all kinds except table and bars (nodes may be [] for those two)
+  headers?: LText[]; // table only
+  rows?: LText[][]; // table only
+  bars?: DiagramBar[]; // bars only, value 0-100
 }
 
 export interface ArticleSection {
@@ -81,6 +97,10 @@ export interface Article {
   codeExamples?: CodeExample[];
   /** 3-5 MCQs, each with an explanation. */
   mcqs: MCQ[];
+  /** Short revision highlights (3-5 one-line takeaways). Optional: older
+   *  subjects predate this field. Rendered as a notes box on the article
+   *  page. */
+  keyNotes?: LText[];
   practice?: PracticeTask;
   /** Rough reading time in minutes (used by the UI). */
   readMinutes: number;

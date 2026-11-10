@@ -134,20 +134,91 @@ export const pythonProgramming: Subject = {
           },
         },
       ],
-      diagram: {
-        kind: 'flow',
-        title: {
-          hinglish: 'Python program kaise chalta hai',
-          english: 'How a Python program runs',
-          hindi: 'पायथन प्रोग्राम कैसे चलता है',
-        },
-        nodes: [
-          { t: { hinglish: 'Aap code likhte ho', english: 'You write code', hindi: 'आप कोड लिखते हैं' } },
-          { t: { hinglish: 'Interpreter line by line padhta hai', english: 'Interpreter reads line by line', hindi: 'इंटरप्रेटर लाइन दर लाइन पढ़ता है' } },
-          { t: { hinglish: 'Har line turant chalti hai', english: 'Every line runs at once', hindi: 'हर लाइन तुरंत चलती है' } },
-          { t: { hinglish: 'Screen par output', english: 'Output on screen', hindi: 'स्क्रीन पर आउटपुट' } },
-        ],
+      "diagram": {
+  "kind": "flow",
+  "title": {
+    "hinglish": "Python program kaise chalta hai",
+    "english": "How a Python program runs",
+    "hindi": "पायथन प्रोग्राम कैसे चलता है"
+  },
+  "caption": {
+    "hinglish": "Pehla program: likho, chalao, dekho",
+    "english": "Your first program: write it, run it, see it",
+    "hindi": "पहला प्रोग्राम: लिखो, चलाओ, देखो"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Code likho",
+        "english": "Write the code",
+        "hindi": "कोड लिखो"
       },
+      "s": {
+        "hinglish": "print(\"Hello, World\")",
+        "english": "print(\"Hello, World\")",
+        "hindi": "print(\"Hello, World\")"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Run karo",
+        "english": "Run it",
+        "hindi": "चलाओ"
+      },
+      "s": {
+        "hinglish": "Python line by line padhta hai",
+        "english": "Python reads it line by line",
+        "hindi": "पायथन इसे लाइन दर लाइन पढ़ता है"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Output dekho",
+        "english": "See the output",
+        "hindi": "आउटपुट देखो"
+      },
+      "s": {
+        "hinglish": "Hello, World",
+        "english": "Hello, World",
+        "hindi": "Hello, World"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Galti sudharo",
+        "english": "Fix the mistake",
+        "hindi": "गलती सुधारो"
+      },
+      "s": {
+        "hinglish": "Error aaye to wahi line dobara dekho",
+        "english": "If there is an error, check that line again",
+        "hindi": "अगर एरर आए तो वही लाइन दोबारा देखो"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "Python ek easy, readable language hai jo beginners ke liye best hai.",
+    "english": "Python is an easy, readable language, and it is the best choice for beginners.",
+    "hindi": "पायथन एक आसान, पढ़ने में सरल भाषा है जो शुरुआती लोगों के लिए सबसे अच्छी है।"
+  },
+  {
+    "hinglish": "print() se screen par output dikhate hain.",
+    "english": "Use print() to show output on the screen.",
+    "hindi": "print() से स्क्रीन पर आउटपुट दिखाते हैं।"
+  },
+  {
+    "hinglish": "Python code ko line by line chalata hai, upar se neeche.",
+    "english": "Python runs code line by line, from top to bottom.",
+    "hindi": "पायथन कोड को लाइन दर लाइन चलाता है, ऊपर से नीचे।"
+  },
+  {
+    "hinglish": "Error aaye to us line ko dobara padho aur sudharo.",
+    "english": "If you get an error, read that line again and fix it.",
+    "hindi": "अगर एरर आए तो उस लाइन को दोबारा पढ़ें और सुधारें।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -392,75 +463,95 @@ print("5 + 3")`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Setup ka flow",
-          "english": "The setup flow",
-          "hindi": "सेटअप का फ़्लो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Download",
-              "english": "Download",
-              "hindi": "डाउनलोड"
-            },
-            "s": {
-              "hinglish": "python.org se installer lo",
-              "english": "Get the installer from python.org",
-              "hindi": "python.org से इंस्टॉलर लें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Install",
-              "english": "Install",
-              "hindi": "इंस्टॉल"
-            },
-            "s": {
-              "hinglish": "PATH tick karo, phir Install Now",
-              "english": "Tick PATH, then press Install Now",
-              "hindi": "PATH टिक करें, फिर Install Now दबाएँ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Check",
-              "english": "Check",
-              "hindi": "जाँच"
-            },
-            "s": {
-              "hinglish": "python --version se number dekho",
-              "english": "See the number with python --version",
-              "hindi": "python --version से नंबर देखें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Editor",
-              "english": "Editor",
-              "hindi": "एडिटर"
-            },
-            "s": {
-              "hinglish": "VS Code ya IDLE kholo",
-              "english": "Open VS Code or IDLE",
-              "hindi": "VS Code या IDLE खोलें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Run",
-              "english": "Run",
-              "hindi": "चलाएँ"
-            },
-            "s": {
-              "hinglish": "hello.py chalakar output dekho",
-              "english": "Run hello.py and see the output",
-              "hindi": "hello.py चलाकर आउटपुट देखें"
-            }
-          }
-        ]
+  "kind": "layers",
+  "title": {
+    "hinglish": "Setup ki paratein",
+    "english": "The layers of the setup",
+    "hindi": "सेटअप की परतें"
+  },
+  "caption": {
+    "hinglish": "Upar code, beech mein editor, neeche interpreter",
+    "english": "Code on top, editor in the middle, interpreter below",
+    "hindi": "ऊपर कोड, बीच में एडिटर, नीचे इंटरप्रेटर"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Aapka code — hello.py",
+        "english": "Your code — hello.py",
+        "hindi": "आपका कोड — hello.py"
       },
+      "s": {
+        "hinglish": "print(\"Namaste, Python!\")",
+        "english": "print(\"Namaste, Python!\")",
+        "hindi": "print(\"Namaste, Python!\")"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Editor — VS Code ya IDLE",
+        "english": "Editor — VS Code or IDLE",
+        "hindi": "एडिटर — VS Code या IDLE"
+      },
+      "s": {
+        "hinglish": "Code likhne ki jagah",
+        "english": "The place to write code",
+        "hindi": "कोड लिखने की जगह"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Interpreter — Python 3.12",
+        "english": "Interpreter — Python 3.12",
+        "hindi": "इंटरप्रेटर — Python 3.12"
+      },
+      "s": {
+        "hinglish": "Code ko line by line chalata hai",
+        "english": "It runs the code line by line",
+        "hindi": "कोड को लाइन दर लाइन चलाता है"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Computer",
+        "english": "Computer",
+        "hindi": "कंप्यूटर"
+      },
+      "s": {
+        "hinglish": "Output: Namaste, Python! aur 200",
+        "english": "Output: Namaste, Python! and 200",
+        "hindi": "आउटपुट: Namaste, Python! और 200"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "python.org se official installer lo, kisi aur site se nahi.",
+    "english": "Get the official installer from python.org, not from any other site.",
+    "hindi": "आधिकारिक इंस्टॉलर python.org से लें, किसी और साइट से नहीं।"
+  },
+  {
+    "hinglish": "Windows par install karte time \"Add Python to PATH\" tick karna zaroori hai.",
+    "english": "On Windows, you must tick \"Add Python to PATH\" during install.",
+    "hindi": "Windows पर इंस्टॉल करते समय \"Add Python to PATH\" टिक करना ज़रूरी है।"
+  },
+  {
+    "hinglish": "python --version se check karo ki setup sahi hai.",
+    "english": "Check with python --version that the setup is correct.",
+    "hindi": "python --version से जाँचें कि सेटअप सही है।"
+  },
+  {
+    "hinglish": "VS Code ya IDLE mein hello.py banao aur run karo.",
+    "english": "Make hello.py in VS Code or IDLE and run it.",
+    "hindi": "VS Code या IDLE में hello.py बनाएँ और चलाएँ।"
+  },
+  {
+    "hinglish": "Python websites, data, AI aur automation — chaaro jagah kaam aata hai.",
+    "english": "Python is used in websites, data, AI, and automation.",
+    "hindi": "पायथन वेबसाइटों, डेटा, AI और ऑटोमेशन — चारों जगह काम आता है।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -808,19 +899,96 @@ print(f"Ab age: {age}")`,
           },
         },
       ],
-      diagram: {
-        kind: 'boxes',
-        title: {
-          hinglish: 'Memory mein teen dabbe (Python)',
-          english: 'Three boxes in memory (Python)',
-          hindi: 'मेमोरी में तीन डिब्बे (पायथन)',
-        },
-        nodes: [
-          { t: { hinglish: 'name (str)', english: 'name (str)', hindi: 'name (str)' }, s: { hinglish: '"Sid"', english: '"Sid"', hindi: '"Sid"' } },
-          { t: { hinglish: 'age (int)', english: 'age (int)', hindi: 'age (int)' }, s: { hinglish: '20', english: '20', hindi: '20' } },
-          { t: { hinglish: 'price (float)', english: 'price (float)', hindi: 'price (float)' }, s: { hinglish: '49.99', english: '49.99', hindi: '49.99' } },
-        ],
+      "diagram": {
+  "kind": "memory",
+  "title": {
+    "hinglish": "Memory mein chaar dabbe",
+    "english": "Four boxes in memory",
+    "hindi": "मेमोरी में चार डिब्बे"
+  },
+  "caption": {
+    "hinglish": "Har variable ka naam, value aur type hota hai",
+    "english": "Every variable has a name, a value, and a type",
+    "hindi": "हर वेरिएबल का नाम, वैल्यू और टाइप होता है"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "name",
+        "english": "name",
+        "hindi": "name"
       },
+      "s": {
+        "hinglish": "\"Sid\" — str (text)",
+        "english": "\"Sid\" — str (text)",
+        "hindi": "\"Sid\" — str (टेक्स्ट)"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "age",
+        "english": "age",
+        "hindi": "age"
+      },
+      "s": {
+        "hinglish": "20 → 21 — int (poora number)",
+        "english": "20 → 21 — int (whole number)",
+        "hindi": "20 → 21 — int (पूर्ण संख्या)"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "price",
+        "english": "price",
+        "hindi": "price"
+      },
+      "s": {
+        "hinglish": "49.99 — float (decimal)",
+        "english": "49.99 — float (decimal)",
+        "hindi": "49.99 — float (दशमलव)"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "passed",
+        "english": "passed",
+        "hindi": "passed"
+      },
+      "s": {
+        "hinglish": "True — bool (True/False)",
+        "english": "True — bool (True/False)",
+        "hindi": "True — bool (True/False)"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "Variable ek naam wala dabba hai jisme value rakhi jati hai.",
+    "english": "A variable is a named box that holds a value.",
+    "hindi": "वेरिएबल एक नाम वाला डिब्बा है जिसमें वैल्यू रखी जाती है।"
+  },
+  {
+    "hinglish": "int poora number hai, float decimal hai, str text hai, bool True/False hai.",
+    "english": "int is a whole number, float is a decimal, str is text, and bool is True or False.",
+    "hindi": "int पूर्ण संख्या है, float दशमलव है, str टेक्स्ट है, bool True/False है।"
+  },
+  {
+    "hinglish": "Ek hi variable ki value dobara badli ja sakti hai, jaise age = age + 1.",
+    "english": "You can change the value of a variable again, like age = age + 1.",
+    "hindi": "एक ही वेरिएबल की वैल्यू दोबारा बदली जा सकती है, जैसे age = age + 1।"
+  },
+  {
+    "hinglish": "f-string se variable ki value text ke andar print karo.",
+    "english": "Use an f-string to print a variable's value inside text.",
+    "hindi": "f-string से वेरिएबल की वैल्यू टेक्स्ट के अंदर प्रिंट करें।"
+  },
+  {
+    "hinglish": "0.1 + 0.2 bilkul 0.3 nahi deta, isliye paise ka hisab int (paise) mein karo.",
+    "english": "0.1 + 0.2 does not give exactly 0.3, so count money with int, not float.",
+    "hindi": "0.1 + 0.2 बिल्कुल 0.3 नहीं देता, इसलिए पैसे का हिसाब int (पैसे) में करें।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -1054,75 +1222,150 @@ print(f"Qty: {qty}")`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Value se type tak",
-          "english": "From value to type",
-          "hindi": "वैल्यू से टाइप तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Value",
-              "english": "Value",
-              "hindi": "वैल्यू"
-            },
-            "s": {
-              "hinglish": "10, 3.5, \"Rahul\", True",
-              "english": "10, 3.5, \"Rahul\", True",
-              "hindi": "10, 3.5, \"Rahul\", True"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "type()",
-              "english": "type()",
-              "hindi": "type()"
-            },
-            "s": {
-              "hinglish": "Type pehchano",
-              "english": "Identify the type",
-              "hindi": "टाइप पहचानें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "isinstance()",
-              "english": "isinstance()",
-              "hindi": "isinstance()"
-            },
-            "s": {
-              "hinglish": "Type check karo",
-              "english": "Check the type",
-              "hindi": "टाइप जाँचें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Casting",
-              "english": "Casting",
-              "hindi": "कास्टिंग"
-            },
-            "s": {
-              "hinglish": "int(), float(), str() se badlo",
-              "english": "Change with int(), float(), str()",
-              "hindi": "int(), float(), str() से बदलें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Naya type",
-              "english": "New type",
-              "hindi": "नया टाइप"
-            },
-            "s": {
-              "hinglish": "Badli hui value use karo",
-              "english": "Use the changed value",
-              "hindi": "बदली हुई वैल्यू इस्तेमाल करें"
-            }
-          }
-        ]
+  "kind": "table",
+  "title": {
+    "hinglish": "type() se type pehchano",
+    "english": "Find the type with type()",
+    "hindi": "type() से टाइप पहचानो"
+  },
+  "caption": {
+    "hinglish": "Har value ka ek type hota hai",
+    "english": "Every value has a type",
+    "hindi": "हर वैल्यू का एक टाइप होता है"
+  },
+  "headers": [
+    {
+      "hinglish": "Value",
+      "english": "Value",
+      "hindi": "वैल्यू"
+    },
+    {
+      "hinglish": "type()",
+      "english": "type()",
+      "hindi": "type()"
+    },
+    {
+      "hinglish": "Type ka naam",
+      "english": "Type name",
+      "hindi": "टाइप का नाम"
+    }
+  ],
+  "rows": [
+    [
+      {
+        "hinglish": "10",
+        "english": "10",
+        "hindi": "10"
       },
+      {
+        "hinglish": "int",
+        "english": "int",
+        "hindi": "int"
+      },
+      {
+        "hinglish": "poora number",
+        "english": "whole number",
+        "hindi": "पूर्ण संख्या"
+      }
+    ],
+    [
+      {
+        "hinglish": "3.5",
+        "english": "3.5",
+        "hindi": "3.5"
+      },
+      {
+        "hinglish": "float",
+        "english": "float",
+        "hindi": "float"
+      },
+      {
+        "hinglish": "decimal number",
+        "english": "decimal number",
+        "hindi": "दशमलव संख्या"
+      }
+    ],
+    [
+      {
+        "hinglish": "\"Rahul\"",
+        "english": "\"Rahul\"",
+        "hindi": "\"Rahul\""
+      },
+      {
+        "hinglish": "str",
+        "english": "str",
+        "hindi": "str"
+      },
+      {
+        "hinglish": "text",
+        "english": "text",
+        "hindi": "टेक्स्ट"
+      }
+    ],
+    [
+      {
+        "hinglish": "True",
+        "english": "True",
+        "hindi": "True"
+      },
+      {
+        "hinglish": "bool",
+        "english": "bool",
+        "hindi": "bool"
+      },
+      {
+        "hinglish": "True ya False",
+        "english": "True or False",
+        "hindi": "True या False"
+      }
+    ],
+    [
+      {
+        "hinglish": "None",
+        "english": "None",
+        "hindi": "None"
+      },
+      {
+        "hinglish": "NoneType",
+        "english": "NoneType",
+        "hindi": "NoneType"
+      },
+      {
+        "hinglish": "kuch nahi",
+        "english": "nothing",
+        "hindi": "कुछ नहीं"
+      }
+    ]
+  ],
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "hinglish": "Keywords Python ke reserved words hain, unhe variable naam mat banao.",
+    "english": "Keywords are Python's reserved words; do not use them as variable names.",
+    "hindi": "कीवर्ड्स पायथन के आरक्षित शब्द हैं, उन्हें वेरिएबल नाम मत बनाएँ।"
+  },
+  {
+    "hinglish": "type() se kisi bhi value ka type pata karo.",
+    "english": "Use type() to find the type of any value.",
+    "hindi": "type() से किसी भी वैल्यू का टाइप पता करें।"
+  },
+  {
+    "hinglish": "int(\"42\") string ko number banata hai, str(20) number ko string.",
+    "english": "int(\"42\") turns a string into a number, and str(20) turns a number into a string.",
+    "hindi": "int(\"42\") स्ट्रिंग को नंबर बनाता है, str(20) नंबर को स्ट्रिंग बनाता है।"
+  },
+  {
+    "hinglish": "int(\"Sid\") error dega, kyunki \"Sid\" number nahi hai.",
+    "english": "int(\"Sid\") gives an error, because \"Sid\" is not a number.",
+    "hindi": "int(\"Sid\") एरर देगा, क्योंकि \"Sid\" नंबर नहीं है।"
+  },
+  {
+    "hinglish": "isinstance(10, int) check karta hai ki value int hai ya nahi.",
+    "english": "isinstance(10, int) checks whether the value is an int.",
+    "hindi": "isinstance(10, int) जाँचता है कि वैल्यू int है या नहीं।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -1464,63 +1707,113 @@ print(f"Qty: {qty}")`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Operator kaise kaam karta hai",
-          "english": "How an operator works",
-          "hindi": "ऑपरेटर कैसे काम करता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Values",
-              "english": "Values",
-              "hindi": "वैल्यूज़"
-            },
-            "s": {
-              "hinglish": "17 aur 5 jaise operands",
-              "english": "Operands like 17 and 5",
-              "hindi": "17 और 5 जैसे ऑपरेंड्स"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Operator",
-              "english": "Operator",
-              "hindi": "ऑपरेटर"
-            },
-            "s": {
-              "hinglish": "+, -, *, /, ==, and, in",
-              "english": "+, -, *, /, ==, and, in",
-              "hindi": "+, -, *, /, ==, and, in"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Precedence",
-              "english": "Precedence",
-              "hindi": "प्रिसिडेंस"
-            },
-            "s": {
-              "hinglish": "Bracket, power, guna, jod",
-              "english": "Brackets, power, multiply, add",
-              "hindi": "ब्रैकेट, घात, गुणा, जोड़"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Result",
-              "english": "Result",
-              "hindi": "परिणाम"
-            },
-            "s": {
-              "hinglish": "Number ya True/False",
-              "english": "A number or True/False",
-              "hindi": "नंबर या True/False"
-            }
-          }
-        ]
+  "kind": "bars",
+  "title": {
+    "hinglish": "Operator precedence — pehle kaun?",
+    "english": "Operator precedence — who goes first?",
+    "hindi": "ऑपरेटर प्रिसीडेंस — पहले कौन?"
+  },
+  "caption": {
+    "hinglish": "Upar wala operator pehle chalta hai",
+    "english": "The operator on top runs first",
+    "hindi": "ऊपर वाला ऑपरेटर पहले चलता है"
+  },
+  "bars": [
+    {
+      "label": {
+        "hinglish": "** — power",
+        "english": "** — power",
+        "hindi": "** — घात"
       },
+      "value": 100,
+      "note": {
+        "hinglish": "2 ** 4 = 16",
+        "english": "2 ** 4 = 16",
+        "hindi": "2 ** 4 = 16"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "* / // %",
+        "english": "* / // %",
+        "hindi": "* / // %"
+      },
+      "value": 80,
+      "note": {
+        "hinglish": "17 % 5 = 2",
+        "english": "17 % 5 = 2",
+        "hindi": "17 % 5 = 2"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "+ -",
+        "english": "+ -",
+        "hindi": "+ -"
+      },
+      "value": 60,
+      "note": {
+        "hinglish": "17 + 5 = 22",
+        "english": "17 + 5 = 22",
+        "hindi": "17 + 5 = 22"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "> == <",
+        "english": "> == <",
+        "hindi": "> == <"
+      },
+      "value": 40,
+      "note": {
+        "hinglish": "10 > 7 = True",
+        "english": "10 > 7 = True",
+        "hindi": "10 > 7 = True"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "and / or",
+        "english": "and / or",
+        "hindi": "and / or"
+      },
+      "value": 20,
+      "note": {
+        "hinglish": "True and False = False",
+        "english": "True and False = False",
+        "hindi": "True and False = False"
+      }
+    }
+  ],
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "hinglish": "+ - * / se hisab hota hai, // se poora bhaag, % se shesh milta hai.",
+    "english": "Use + - * / for maths, // for whole division, and % for the remainder.",
+    "hindi": "+ - * / से हिसाब होता है, // से पूरा भाग, % से शेष मिलता है।"
+  },
+  {
+    "hinglish": "** power nikalta hai, jaise 2 ** 4 = 16.",
+    "english": "** gives the power, like 2 ** 4 = 16.",
+    "hindi": "** घात निकालता है, जैसे 2 ** 4 = 16।"
+  },
+  {
+    "hinglish": "== barabar check karta hai, = sirf value deta hai.",
+    "english": "== checks equality, while = only gives a value.",
+    "hindi": "== बराबर जाँचता है, = सिर्फ़ वैल्यू देता है।"
+  },
+  {
+    "hinglish": "and, or, not se conditions jodte hain.",
+    "english": "Use and, or, and not to join conditions.",
+    "hindi": "and, or, not से कंडीशन्स जोड़ते हैं।"
+  },
+  {
+    "hinglish": "bill += 120 ka matlab hai bill = bill + 120.",
+    "english": "bill += 120 means bill = bill + 120.",
+    "hindi": "bill += 120 का मतलब है bill = bill + 120।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -1862,75 +2155,90 @@ print(f"Qty: {qty}")`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Input se output tak",
-          "english": "From input to output",
-          "hindi": "इनपुट से आउटपुट तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "input()",
-              "english": "input()",
-              "hindi": "input()"
-            },
-            "s": {
-              "hinglish": "User se jawab lo",
-              "english": "Take an answer from the user",
-              "hindi": "यूज़र से जवाब लें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Convert",
-              "english": "Convert",
-              "hindi": "बदलें"
-            },
-            "s": {
-              "hinglish": "int() ya float() se number banao",
-              "english": "Make a number with int() or float()",
-              "hindi": "int() या float() से नंबर बनाएँ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Process",
-              "english": "Process",
-              "hindi": "प्रोसेस"
-            },
-            "s": {
-              "hinglish": "Hisaab ya faisla karo",
-              "english": "Calculate or decide",
-              "hindi": "हिसाब या फ़ैसला करें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Format",
-              "english": "Format",
-              "hindi": "फ़ॉर्मैट"
-            },
-            "s": {
-              "hinglish": "f-string, sep, end se sajao",
-              "english": "Shape it with f-string, sep, end",
-              "hindi": "f-string, sep, end से सजाएँ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "print()",
-              "english": "print()",
-              "hindi": "print()"
-            },
-            "s": {
-              "hinglish": "Jawab screen par dikhao",
-              "english": "Show the answer on the screen",
-              "hindi": "जवाब स्क्रीन पर दिखाएँ"
-            }
-          }
-        ]
+  "kind": "flow",
+  "title": {
+    "hinglish": "Input se output tak",
+    "english": "From input to output",
+    "hindi": "इनपुट से आउटपुट तक"
+  },
+  "caption": {
+    "hinglish": "User se lo, number banao, neat print karo",
+    "english": "Take it from the user, make it a number, print it neatly",
+    "hindi": "यूज़र से लो, नंबर बनाओ, साफ़ प्रिंट करो"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "input() lo",
+        "english": "Take input()",
+        "hindi": "input() लो"
       },
+      "s": {
+        "hinglish": "name = input(\"Naam: \")",
+        "english": "name = input(\"Naam: \")",
+        "hindi": "name = input(\"Naam: \")"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Number banao",
+        "english": "Change it to a number",
+        "hindi": "नंबर बनाओ"
+      },
+      "s": {
+        "hinglish": "marks = int(input(...))",
+        "english": "marks = int(input(...))",
+        "hindi": "marks = int(input(...))"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Neat output banao",
+        "english": "Make a neat output",
+        "hindi": "साफ़ आउटपुट बनाओ"
+      },
+      "s": {
+        "hinglish": "print(f\"Price: {250:.2f}\")",
+        "english": "print(f\"Price: {250:.2f}\")",
+        "hindi": "print(f\"Price: {250:.2f}\")"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Screen par dekho",
+        "english": "See it on the screen",
+        "hindi": "स्क्रीन पर देखो"
+      },
+      "s": {
+        "hinglish": "Price: 250.00",
+        "english": "Price: 250.00",
+        "hindi": "Price: 250.00"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "input() user se text leta hai, hamesha string mein.",
+    "english": "input() takes text from the user, always as a string.",
+    "hindi": "input() यूज़र से टेक्स्ट लेता है, हमेशा स्ट्रिंग में।"
+  },
+  {
+    "hinglish": "int(input()) se number wala input number banta hai.",
+    "english": "int(input()) turns number input into a number.",
+    "hindi": "int(input()) से नंबर वाला इनपुट नंबर बनता है।"
+  },
+  {
+    "hinglish": "print() mein sep se beech ka gap aur end se aakhir badlo.",
+    "english": "In print(), use sep to change the gap between items and end to change the ending.",
+    "hindi": "print() में sep से बीच का गैप और end से आखिर बदलें।"
+  },
+  {
+    "hinglish": "f-string se value ko neat format mein print karo, jaise {250:.2f}.",
+    "english": "Use an f-string to print a value in a neat format, like {250:.2f}.",
+    "hindi": "f-string से वैल्यू को साफ़ फ़ॉर्मैट में प्रिंट करें, जैसे {250:.2f}।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -2279,21 +2587,91 @@ else:
           },
         },
       ],
-      diagram: {
-        kind: 'flow',
-        title: {
-          hinglish: 'If-elif-else chain ka flow',
-          english: 'The flow of an if-elif-else chain',
-          hindi: 'If-elif-else चेन का फ्लो',
-        },
-        nodes: [
-          { t: { hinglish: 'marks >= 90?', english: 'marks >= 90?', hindi: 'marks >= 90?' } },
-          { t: { hinglish: 'Haan: Distinction', english: 'Yes: Distinction', hindi: 'हाँ: Distinction' } },
-          { t: { hinglish: 'Nahi: marks >= 60?', english: 'No: marks >= 60?', hindi: 'नहीं: marks >= 60?' } },
-          { t: { hinglish: 'Nahi: marks >= 33?', english: 'No: marks >= 33?', hindi: 'नहीं: marks >= 33?' } },
-          { t: { hinglish: 'Nahi: Fail', english: 'No: Fail', hindi: 'नहीं: Fail' } },
-        ],
+      "diagram": {
+  "kind": "flow",
+  "title": {
+    "hinglish": "If-elif-else chain ka flow",
+    "english": "The flow of an if-elif-else chain",
+    "hindi": "If-elif-else चेन का फ़्लो"
+  },
+  "caption": {
+    "hinglish": "Sirf pehli sahi condition chalti hai",
+    "english": "Only the first true condition runs",
+    "hindi": "सिर्फ़ पहली सही कंडीशन चलती है"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "marks = 72",
+        "english": "marks = 72",
+        "hindi": "marks = 72"
       },
+      "s": {
+        "hinglish": "Number mil gaya",
+        "english": "The number is in",
+        "hindi": "नंबर मिल गया"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "marks >= 90?",
+        "english": "marks >= 90?",
+        "hindi": "marks >= 90?"
+      },
+      "s": {
+        "hinglish": "Nahi — aage badho",
+        "english": "No — move on",
+        "hindi": "नहीं — आगे बढ़ो"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "marks >= 60?",
+        "english": "marks >= 60?",
+        "hindi": "marks >= 60?"
+      },
+      "s": {
+        "hinglish": "Haan — yahi chalega",
+        "english": "Yes — this one runs",
+        "hindi": "हाँ — यही चलेगा"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Output: First Division",
+        "english": "Output: First Division",
+        "hindi": "आउटपुट: First Division"
+      },
+      "s": {
+        "hinglish": "Baaki conditions skip",
+        "english": "The other conditions are skipped",
+        "hindi": "बाकी कंडीशन्स छोड़ दी जाती हैं"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "if, elif, else se program khud faisla karta hai.",
+    "english": "if, elif, and else let the program decide by itself.",
+    "hindi": "if, elif, else से प्रोग्राम खुद फ़ैसला करता है।"
+  },
+  {
+    "hinglish": "Condition ke baad colon (:) aur indented block likhna zaroori hai.",
+    "english": "After a condition, a colon (:) and an indented block are a must.",
+    "hindi": "कंडीशन के बाद कोलन (:) और इंडेंटेड ब्लॉक लिखना ज़रूरी है।"
+  },
+  {
+    "hinglish": "Sirf pehli sahi condition chalti hai, baaki skip hoti hain.",
+    "english": "Only the first true condition runs; the rest are skipped.",
+    "hindi": "सिर्फ़ पहली सही कंडीशन चलती है, बाकी छोड़ दी जाती हैं।"
+  },
+  {
+    "hinglish": "elif se kai conditions ek chain mein check karo.",
+    "english": "Use elif to check many conditions in one chain.",
+    "hindi": "elif से कई कंडीशन्स एक चेन में जाँचें।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -2549,20 +2927,91 @@ print(f"Sum: {sum}")`,
           },
         },
       ],
-      diagram: {
-        kind: 'flow',
-        title: {
-          hinglish: 'For loop ka ek round',
-          english: 'One round of a for loop',
-          hindi: 'For loop का एक राउंड',
-        },
-        nodes: [
-          { t: { hinglish: 'range(1, 11) se i = 1', english: 'i = 1 from range(1, 11)', hindi: 'range(1, 11) से i = 1' } },
-          { t: { hinglish: 'Body chalao: sum = sum + i', english: 'Run the body: sum = sum + i', hindi: 'Body चलाओ: sum = sum + i' } },
-          { t: { hinglish: 'Agla i: 2, phir 3...', english: 'Next i: 2, then 3...', hindi: 'अगला i: 2, फिर 3...' } },
-          { t: { hinglish: 'Range khatm: loop se bahar', english: 'Range ends: leave the loop', hindi: 'Range खत्म: loop से बाहर' } },
-        ],
+      "diagram": {
+  "kind": "cycle",
+  "title": {
+    "hinglish": "1 se 10 tak ka jod — loop ka chakkar",
+    "english": "The sum from 1 to 10 — the loop goes round",
+    "hindi": "1 से 10 तक का जोड़ — लूप का चक्कर"
+  },
+  "caption": {
+    "hinglish": "Aakhir mein sum = 55",
+    "english": "In the end, sum = 55",
+    "hindi": "आखिर में sum = 55"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Shuru karo",
+        "english": "Start",
+        "hindi": "शुरू करो"
       },
+      "s": {
+        "hinglish": "sum = 0, i = 1",
+        "english": "sum = 0, i = 1",
+        "hindi": "sum = 0, i = 1"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Jodo",
+        "english": "Add it",
+        "hindi": "जोड़ो"
+      },
+      "s": {
+        "hinglish": "sum = sum + i",
+        "english": "sum = sum + i",
+        "hindi": "sum = sum + i"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Aage badho",
+        "english": "Move to the next number",
+        "hindi": "आगे बढ़ो"
+      },
+      "s": {
+        "hinglish": "i = i + 1",
+        "english": "i = i + 1",
+        "hindi": "i = i + 1"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "i <= 10?",
+        "english": "i <= 10?",
+        "hindi": "i <= 10?"
+      },
+      "s": {
+        "hinglish": "Haan to wapas jao, nahi to ruko",
+        "english": "If yes, go back; if no, stop",
+        "hindi": "हाँ तो वापस जाओ, नहीं तो रुको"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "for loop se ek kaam fixed baar chalao, jaise range(1, 11).",
+    "english": "Use a for loop to run one job a fixed number of times, like range(1, 11).",
+    "hindi": "for लूप से एक काम तय बार चलाएँ, जैसे range(1, 11)।"
+  },
+  {
+    "hinglish": "while loop tab tak chalta hai jab tak condition True hai.",
+    "english": "A while loop runs as long as the condition is True.",
+    "hindi": "while लूप तब तक चलता है जब तक कंडीशन True है।"
+  },
+  {
+    "hinglish": "range(1, 11) mein 1 se 10 aate hain, 11 nahi.",
+    "english": "range(1, 11) gives 1 to 10, not 11.",
+    "hindi": "range(1, 11) में 1 से 10 आते हैं, 11 नहीं।"
+  },
+  {
+    "hinglish": "Loop ke andar total jodne ke liye sum = sum + i jaisa accumulator use karo.",
+    "english": "To add a total inside a loop, use an accumulator like sum = sum + i.",
+    "hindi": "लूप के अंदर जोड़ निकालने के लिए sum = sum + i जैसा एक्यूम्युलेटर इस्तेमाल करें।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -2813,75 +3262,90 @@ print(f"Total: {total}")`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Game ka flow",
-          "english": "The flow of the game",
-          "hindi": "गेम का फ़्लो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Secret",
-              "english": "Secret",
-              "hindi": "गुप्त नंबर"
-            },
-            "s": {
-              "hinglish": "randint se 1 se 20 me chuno",
-              "english": "Pick from 1 to 20 with randint",
-              "hindi": "randint से 1 से 20 में चुनें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Guess",
-              "english": "Guess",
-              "hindi": "अनुमान"
-            },
-            "s": {
-              "hinglish": "input() se number lo",
-              "english": "Take a number with input()",
-              "hindi": "input() से नंबर लें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Hint",
-              "english": "Hint",
-              "hindi": "संकेत"
-            },
-            "s": {
-              "hinglish": "if/elif se zyada ya kam batao",
-              "english": "Say too high or too low with if/elif",
-              "hindi": "if/elif से ज़्यादा या कम बताएँ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Loop",
-              "english": "Loop",
-              "hindi": "लूप"
-            },
-            "s": {
-              "hinglish": "Sahi hone tak while chalao",
-              "english": "Run while until it is correct",
-              "hindi": "सही होने तक while चलाएँ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Jeet",
-              "english": "Win",
-              "hindi": "जीत"
-            },
-            "s": {
-              "hinglish": "Attempts ke saath jeet dikhao",
-              "english": "Show the win with attempts",
-              "hindi": "Attempts के साथ जीत दिखाएँ"
-            }
-          }
-        ]
+  "kind": "timeline",
+  "title": {
+    "hinglish": "Guessing game ke rounds",
+    "english": "The rounds of the guessing game",
+    "hindi": "गेसिंग गेम के राउंड"
+  },
+  "caption": {
+    "hinglish": "Hint se guess sudharte jao",
+    "english": "Keep improving your guess with the hints",
+    "hindi": "हिंट से अनुमान सुधारते जाओ"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Secret number chuno",
+        "english": "Pick a secret number",
+        "hindi": "गुप्त नंबर चुनो"
       },
+      "s": {
+        "hinglish": "1 se 20 ke beech",
+        "english": "Between 1 and 20",
+        "hindi": "1 से 20 के बीच"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Guess karo",
+        "english": "Make a guess",
+        "hindi": "अनुमान लगाओ"
+      },
+      "s": {
+        "hinglish": "guess = int(input(\"Guess: \"))",
+        "english": "guess = int(input(\"Guess: \"))",
+        "hindi": "guess = int(input(\"Guess: \"))"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Hint dekho",
+        "english": "Read the hint",
+        "hindi": "हिंट देखो"
+      },
+      "s": {
+        "hinglish": "\"Too high!\" ya \"Too low!\"",
+        "english": "\"Too high!\" or \"Too low!\"",
+        "hindi": "\"Too high!\" या \"Too low!\""
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Sahi guess!",
+        "english": "Correct guess!",
+        "hindi": "सही अनुमान!"
+      },
+      "s": {
+        "hinglish": "attempts gin lo — kitni baar mein hua",
+        "english": "Count the attempts — how many tries it took",
+        "hindi": "attempts गिन लो — कितनी बार में हुआ"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "random.randint(1, 20) se 1 se 20 ke beech secret number banta hai.",
+    "english": "random.randint(1, 20) makes a secret number between 1 and 20.",
+    "hindi": "random.randint(1, 20) से 1 से 20 के बीच गुप्त नंबर बनता है।"
+  },
+  {
+    "hinglish": "while guess != secret tab tak chalta hai jab tak guess sahi na ho.",
+    "english": "while guess != secret runs until the guess is correct.",
+    "hindi": "while guess != secret तब तक चलता है जब तक अनुमान सही न हो।"
+  },
+  {
+    "hinglish": "Har guess par \"Too high!\" ya \"Too low!\" hint milta hai.",
+    "english": "Every guess gets a hint: \"Too high!\" or \"Too low!\".",
+    "hindi": "हर अनुमान पर \"Too high!\" या \"Too low!\" हिंट मिलता है।"
+  },
+  {
+    "hinglish": "attempts gin kar batao ki kitni baar mein sahi guess hua.",
+    "english": "Count attempts to tell how many tries it took to guess right.",
+    "hindi": "attempts गिन कर बताएँ कि कितनी बार में सही अनुमान हुआ।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -3227,20 +3691,103 @@ print(f"Again: {add(10, 20)}")`,
           },
         },
       ],
-      diagram: {
-        kind: 'flow',
-        title: {
-          hinglish: 'Function call ka flow',
-          english: 'The flow of a function call',
-          hindi: 'Function call का फ्लो',
-        },
-        nodes: [
-          { t: { hinglish: 'add(5, 3) bulaya gaya', english: 'add(5, 3) is called', hindi: 'add(5, 3) बुलाया गया' } },
-          { t: { hinglish: 'a = 5, b = 3 milte hain', english: 'a = 5, b = 3 are received', hindi: 'a = 5, b = 3 मिलते हैं' } },
-          { t: { hinglish: 'Andar hisaab: 5 + 3', english: 'Maths inside: 5 + 3', hindi: 'अंदर हिसाब: 5 + 3' } },
-          { t: { hinglish: 'return 8, wapas bulane wale ko', english: 'return 8, back to the caller', hindi: 'return 8, वापस बुलाने वाले को' } },
-        ],
+      "diagram": {
+  "kind": "boxes",
+  "title": {
+    "hinglish": "Function ke paanch hisse",
+    "english": "The five parts of a function",
+    "hindi": "फ़ंक्शन के पाँच हिस्से"
+  },
+  "caption": {
+    "hinglish": "Ek baar likho, baar-baar bulao",
+    "english": "Write it once, call it again and again",
+    "hindi": "एक बार लिखो, बार-बार बुलाओ"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "def — banao",
+        "english": "def — make it",
+        "hindi": "def — बनाओ"
       },
+      "s": {
+        "hinglish": "def add(a, b):",
+        "english": "def add(a, b):",
+        "hindi": "def add(a, b):"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Parameters — a, b",
+        "english": "Parameters — a, b",
+        "hindi": "पैरामीटर्स — a, b"
+      },
+      "s": {
+        "hinglish": "Input values",
+        "english": "The input values",
+        "hindi": "इनपुट वैल्यूज़"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "return — wapas do",
+        "english": "return — give it back",
+        "hindi": "return — वापस दो"
+      },
+      "s": {
+        "hinglish": "return a + b",
+        "english": "return a + b",
+        "hindi": "return a + b"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Call — bulao",
+        "english": "Call — call it",
+        "hindi": "कॉल — बुलाओ"
+      },
+      "s": {
+        "hinglish": "add(5, 3) = 8",
+        "english": "add(5, 3) = 8",
+        "hindi": "add(5, 3) = 8"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Reuse — dobara use karo",
+        "english": "Reuse — use it again",
+        "hindi": "दोबारा इस्तेमाल — फिर से यूज़ करो"
+      },
+      "s": {
+        "hinglish": "add(10, 20) = 30",
+        "english": "add(10, 20) = 30",
+        "hindi": "add(10, 20) = 30"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "def se function banta hai, jo ek kaam ko naam deta hai.",
+    "english": "def makes a function, which gives one job a name.",
+    "hindi": "def से फ़ंक्शन बनता है, जो एक काम को नाम देता है।"
+  },
+  {
+    "hinglish": "Parameters input hain, return value wapas deta hai.",
+    "english": "Parameters are the input, and return gives a value back.",
+    "hindi": "पैरामीटर्स इनपुट हैं, return वैल्यू वापस देता है।"
+  },
+  {
+    "hinglish": "print sirf dikhata hai, return value ko aage use karne deta hai.",
+    "english": "print only shows a value, while return lets you use the value further.",
+    "hindi": "print सिर्फ़ दिखाता है, return वैल्यू को आगे इस्तेमाल करने देता है।"
+  },
+  {
+    "hinglish": "Ek baar likha function baar-baar call kar sakte ho.",
+    "english": "A function written once can be called again and again.",
+    "hindi": "एक बार लिखा फ़ंक्शन बार-बार कॉल कर सकते हो।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -3498,63 +4045,90 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Python naam ko kaise dhoondhta hai — LEGB",
-          "english": "How Python finds a name — LEGB",
-          "hindi": "Python नाम को कैसे ढूँढता है — LEGB"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "L — Local",
-              "english": "L — Local",
-              "hindi": "L — Local"
-            },
-            "s": {
-              "hinglish": "Function ke andar",
-              "english": "Inside the function",
-              "hindi": "फंक्शन के अंदर"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "E — Enclosing",
-              "english": "E — Enclosing",
-              "hindi": "E — Enclosing"
-            },
-            "s": {
-              "hinglish": "Bahar wala function",
-              "english": "The outer function",
-              "hindi": "बाहर वाला फंक्शन"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "G — Global",
-              "english": "G — Global",
-              "hindi": "G — Global"
-            },
-            "s": {
-              "hinglish": "File ke top par",
-              "english": "At the top of the file",
-              "hindi": "फ़ाइल के टॉप पर"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "B — Built-in",
-              "english": "B — Built-in",
-              "hindi": "B — Built-in"
-            },
-            "s": {
-              "hinglish": "Python ke apne naam",
-              "english": "Names Python provides",
-              "hindi": "Python के अपने नाम"
-            }
-          }
-        ]
+  "kind": "layers",
+  "title": {
+    "hinglish": "LEGB — chaar paratein",
+    "english": "LEGB — four layers",
+    "hindi": "LEGB — चार परतें"
+  },
+  "caption": {
+    "hinglish": "Python naam ko andar se bahar dhoondhta hai",
+    "english": "Python looks for a name from inside to outside",
+    "hindi": "पायथन नाम को अंदर से बाहर ढूँढता है"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Local — function ke andar",
+        "english": "Local — inside the function",
+        "hindi": "लोकल — फ़ंक्शन के अंदर"
       },
+      "s": {
+        "hinglish": "discount = 10",
+        "english": "discount = 10",
+        "hindi": "discount = 10"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Enclosing — bahari function",
+        "english": "Enclosing — the outer function",
+        "hindi": "एनक्लोज़िंग — बाहरी फ़ंक्शन"
+      },
+      "s": {
+        "hinglish": "nonlocal se badlo",
+        "english": "Change it with nonlocal",
+        "hindi": "nonlocal से बदलो"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Global — poori file mein",
+        "english": "Global — in the whole file",
+        "hindi": "ग्लोबल — पूरी फ़ाइल में"
+      },
+      "s": {
+        "hinglish": "shop_name = \"Sharma Store\"",
+        "english": "shop_name = \"Sharma Store\"",
+        "hindi": "shop_name = \"Sharma Store\""
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Built-in — Python ke apne naam",
+        "english": "Built-in — Python's own names",
+        "hindi": "बिल्ट-इन — पायथन के अपने नाम"
+      },
+      "s": {
+        "hinglish": "print, len, range",
+        "english": "print, len, range",
+        "hindi": "print, len, range"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "Function ke andar bana variable sirf andar dikhta hai (local).",
+    "english": "A variable made inside a function is only visible inside it (local).",
+    "hindi": "फ़ंक्शन के अंदर बना वेरिएबल सिर्फ़ अंदर दिखता है (लोकल)।"
+  },
+  {
+    "hinglish": "Bahar bana variable poori file mein dikhta hai (global).",
+    "english": "A variable made outside is visible in the whole file (global).",
+    "hindi": "बाहर बना वेरिएबल पूरी फ़ाइल में दिखता है (ग्लोबल)।"
+  },
+  {
+    "hinglish": "LEGB rule: pehle Local, phir Enclosing, phir Global, phir Built-in.",
+    "english": "The LEGB rule: first Local, then Enclosing, then Global, then Built-in.",
+    "hindi": "LEGB नियम: पहले Local, फिर Enclosing, फिर Global, फिर Built-in।"
+  },
+  {
+    "hinglish": "global se function ke andar global variable badlo, nonlocal se enclosing wala.",
+    "english": "Use global to change a global variable inside a function, and nonlocal to change an enclosing one.",
+    "hindi": "global से फ़ंक्शन के अंदर ग्लोबल वेरिएबल बदलें, nonlocal से एनक्लोज़िंग वाला।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -3896,70 +4470,107 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Factorial(4) ka call stack",
-          "english": "The call stack of factorial(4)",
-          "hindi": "Factorial(4) का call stack"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "factorial(4)",
-              "english": "factorial(4)",
-              "hindi": "factorial(4)"
-            },
-            "s": {
-              "hinglish": "4 x factorial(3) mangta hai",
-              "english": "Asks for 4 x factorial(3)",
-              "hindi": "4 x factorial(3) माँगता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "factorial(3)",
-              "english": "factorial(3)",
-              "hindi": "factorial(3)"
-            },
-            "s": {
-              "hinglish": "3 x factorial(2) mangta hai",
-              "english": "Asks for 3 x factorial(2)",
-              "hindi": "3 x factorial(2) माँगता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "factorial(2)",
-              "english": "factorial(2)",
-              "hindi": "factorial(2)"
-            },
-            "s": {
-              "hinglish": "2 x factorial(1) mangta hai",
-              "english": "Asks for 2 x factorial(1)",
-              "hindi": "2 x factorial(1) माँगता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "factorial(1) — base case",
-              "english": "factorial(1) — base case",
-              "hindi": "factorial(1) — base case"
-            },
-            "s": {
-              "hinglish": "Seedha 1 return karta hai",
-              "english": "Returns 1 directly",
-              "hindi": "सीधा 1 रिटर्न करता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Wapas chadho: 2, 6, 24",
-              "english": "Climb back: 2, 6, 24",
-              "hindi": "वापस चढ़ो: 2, 6, 24"
-            }
-          }
-        ]
+  "kind": "tree",
+  "title": {
+    "hinglish": "factorial(5) ka call tree",
+    "english": "The call tree of factorial(5)",
+    "hindi": "factorial(5) का कॉल ट्री"
+  },
+  "caption": {
+    "hinglish": "Neeche jao, phir wapas aate hue guna karo — 5! = 120",
+    "english": "Go down, then multiply on the way back — 5! = 120",
+    "hindi": "नीचे जाओ, फिर वापस आते हुए गुणा करो — 5! = 120"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "factorial(5)",
+        "english": "factorial(5)",
+        "hindi": "factorial(5)"
       },
+      "s": {
+        "hinglish": "5 × factorial(4)",
+        "english": "5 × factorial(4)",
+        "hindi": "5 × factorial(4)"
+      },
+      "depth": 0
+    },
+    {
+      "t": {
+        "hinglish": "factorial(4)",
+        "english": "factorial(4)",
+        "hindi": "factorial(4)"
+      },
+      "s": {
+        "hinglish": "4 × factorial(3)",
+        "english": "4 × factorial(3)",
+        "hindi": "4 × factorial(3)"
+      },
+      "depth": 1
+    },
+    {
+      "t": {
+        "hinglish": "factorial(3)",
+        "english": "factorial(3)",
+        "hindi": "factorial(3)"
+      },
+      "s": {
+        "hinglish": "3 × factorial(2)",
+        "english": "3 × factorial(2)",
+        "hindi": "3 × factorial(2)"
+      },
+      "depth": 2
+    },
+    {
+      "t": {
+        "hinglish": "factorial(2)",
+        "english": "factorial(2)",
+        "hindi": "factorial(2)"
+      },
+      "s": {
+        "hinglish": "2 × factorial(1)",
+        "english": "2 × factorial(1)",
+        "hindi": "2 × factorial(1)"
+      },
+      "depth": 3
+    },
+    {
+      "t": {
+        "hinglish": "factorial(1)",
+        "english": "factorial(1)",
+        "hindi": "factorial(1)"
+      },
+      "s": {
+        "hinglish": "Base case — return 1",
+        "english": "Base case — return 1",
+        "hindi": "बेस केस — return 1"
+      },
+      "depth": 4
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "Recursion mein function khud ko call karta hai.",
+    "english": "In recursion, a function calls itself.",
+    "hindi": "रिकर्शन में फ़ंक्शन खुद को कॉल करता है।"
+  },
+  {
+    "hinglish": "Base case rukne ki shart hai — bina iske function kabhi nahi rukta.",
+    "english": "The base case is the stopping rule — without it, the function never stops.",
+    "hindi": "बेस केस रुकने की शर्त है — बिना इसके फ़ंक्शन कभी नहीं रुकता।"
+  },
+  {
+    "hinglish": "factorial(5) = 5 * factorial(4), aakhir mein 5! = 120.",
+    "english": "factorial(5) = 5 * factorial(4), and in the end 5! = 120.",
+    "hindi": "factorial(5) = 5 * factorial(4), आखिर में 5! = 120।"
+  },
+  {
+    "hinglish": "Har call apna alag n rakhta hai, stack mein jama hota hai.",
+    "english": "Every call keeps its own n, and the calls pile up in a stack.",
+    "hindi": "हर कॉल अपना अलग n रखता है, स्टैक में जमा होता है।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -4301,63 +4912,119 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "List par teen kaam: map, filter, reduce",
-          "english": "Three jobs on a list: map, filter, reduce",
-          "hindi": "List पर तीन काम: map, filter, reduce"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Marks list",
-              "english": "Marks list",
-              "hindi": "Marks list"
-            },
-            "s": {
-              "hinglish": "[45, 78, 90, 32, 66]",
-              "english": "[45, 78, 90, 32, 66]",
-              "hindi": "[45, 78, 90, 32, 66]"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "map — har value badlo",
-              "english": "map — change every value",
-              "hindi": "map — हर value बदलो"
-            },
-            "s": {
-              "hinglish": "+5 grace marks",
-              "english": "Plus 5 grace marks",
-              "hindi": "+5 grace marks"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "filter — chuno",
-              "english": "filter — pick",
-              "hindi": "filter — चुनो"
-            },
-            "s": {
-              "hinglish": "Sirf 40 ya zyada",
-              "english": "Only 40 or more",
-              "hindi": "सिर्फ 40 या ज़्यादा"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "reduce — milao",
-              "english": "reduce — merge",
-              "hindi": "reduce — मिलाओ"
-            },
-            "s": {
-              "hinglish": "Sabka total: 311",
-              "english": "Total of all: 311",
-              "hindi": "सबका total: 311"
-            }
-          }
-        ]
+  "kind": "boxes",
+  "title": {
+    "hinglish": "Function ke flexible tools",
+    "english": "The flexible tools of a function",
+    "hindi": "फ़ंक्शन के लचीले टूल्स"
+  },
+  "caption": {
+    "hinglish": "marks = [45, 78, 90, 32, 66] par try karo",
+    "english": "Try them on marks = [45, 78, 90, 32, 66]",
+    "hindi": "marks = [45, 78, 90, 32, 66] पर आज़माओ"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "*args",
+        "english": "*args",
+        "hindi": "*args"
       },
+      "s": {
+        "hinglish": "Kitne bhi extra values",
+        "english": "Any number of extra values",
+        "hindi": "कितने भी एक्स्ट्रा वैल्यूज़"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "**kwargs",
+        "english": "**kwargs",
+        "hindi": "**kwargs"
+      },
+      "s": {
+        "hinglish": "Naam wale extra inputs",
+        "english": "Extra inputs with names",
+        "hindi": "नाम वाले एक्स्ट्रा इनपुट्स"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "lambda",
+        "english": "lambda",
+        "hindi": "lambda"
+      },
+      "s": {
+        "hinglish": "lambda m: m + 5",
+        "english": "lambda m: m + 5",
+        "hindi": "lambda m: m + 5"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "map",
+        "english": "map",
+        "hindi": "map"
+      },
+      "s": {
+        "hinglish": "[50, 83, 95, 37, 71]",
+        "english": "[50, 83, 95, 37, 71]",
+        "hindi": "[50, 83, 95, 37, 71]"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "filter",
+        "english": "filter",
+        "hindi": "filter"
+      },
+      "s": {
+        "hinglish": "[45, 78, 90, 66]",
+        "english": "[45, 78, 90, 66]",
+        "hindi": "[45, 78, 90, 66]"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "reduce",
+        "english": "reduce",
+        "hindi": "reduce"
+      },
+      "s": {
+        "hinglish": "total = 311",
+        "english": "total = 311",
+        "hindi": "total = 311"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "*args se function kitne bhi extra values le sakta hai.",
+    "english": "With *args, a function can take any number of extra values.",
+    "hindi": "*args से फ़ंक्शन कितनी भी एक्स्ट्रा वैल्यूज़ ले सकता है।"
+  },
+  {
+    "hinglish": "**kwargs se naam wale extra inputs milte hain.",
+    "english": "With **kwargs, you get extra inputs with names.",
+    "hindi": "**kwargs से नाम वाले एक्स्ट्रा इनपुट्स मिलते हैं।"
+  },
+  {
+    "hinglish": "lambda ek line ka chhota function hai, jaise lambda m: m + 5.",
+    "english": "lambda is a small one-line function, like lambda m: m + 5.",
+    "hindi": "lambda एक लाइन का छोटा फ़ंक्शन है, जैसे lambda m: m + 5।"
+  },
+  {
+    "hinglish": "map har item par kaam karta hai, filter sirf pass hone walon ko rakhta hai.",
+    "english": "map works on every item, while filter keeps only the ones that pass.",
+    "hindi": "map हर आइटम पर काम करता है, filter सिर्फ़ पास होने वालों को रखता है।"
+  },
+  {
+    "hinglish": "reduce sab values ko ek result mein jodta hai, jaise total = 311.",
+    "english": "reduce joins all values into one result, like total = 311.",
+    "hindi": "reduce सब वैल्यूज़ को एक रिज़ल्ट में जोड़ता है, जैसे total = 311।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -4699,63 +5366,102 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Decorator kaise kaam karta hai",
-          "english": "How a decorator works",
-          "hindi": "Decorator कैसे काम करता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Asli function",
-              "english": "The real function",
-              "hindi": "असली फंक्शन"
-            },
-            "s": {
-              "hinglish": "Jaise add_numbers",
-              "english": "Like add_numbers",
-              "hindi": "जैसे add_numbers"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Decorator milta hai",
-              "english": "The decorator meets it",
-              "hindi": "Decorator मिलता है"
-            },
-            "s": {
-              "hinglish": "@timer lagta hai",
-              "english": "timer is applied",
-              "hindi": "@timer लगता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Wrapper banta hai",
-              "english": "A wrapper is made",
-              "hindi": "Wrapper बनता है"
-            },
-            "s": {
-              "hinglish": "Pehle apna kaam, phir function",
-              "english": "Its own work first, then the function",
-              "hindi": "पहले अपना काम, फिर फंक्शन"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Naya function wapas",
-              "english": "A new function returns",
-              "hindi": "नया फंक्शन वापस"
-            },
-            "s": {
-              "hinglish": "Naam wahi, shakti zyada",
-              "english": "Same name, more power",
-              "hindi": "नाम वही, शक्ति ज़्यादा"
-            }
-          }
-        ]
+  "kind": "flow",
+  "title": {
+    "hinglish": "Decorator ka flow — @timer",
+    "english": "The flow of a decorator — @timer",
+    "hindi": "डेकोरेटर का फ़्लो — @timer"
+  },
+  "caption": {
+    "hinglish": "Function wahi, upar se time ki parat",
+    "english": "The same function, with a layer of timing on top",
+    "hindi": "फ़ंक्शन वही, ऊपर से समय की परत"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "@timer lagao",
+        "english": "Add @timer",
+        "hindi": "@timer लगाओ"
       },
+      "s": {
+        "hinglish": "Function ke upar likho",
+        "english": "Write it above the function",
+        "hindi": "फ़ंक्शन के ऊपर लिखो"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "wrapper bano",
+        "english": "Make the wrapper",
+        "hindi": "रैपर बनाओ"
+      },
+      "s": {
+        "hinglish": "def wrapper(*args, **kwargs):",
+        "english": "def wrapper(*args, **kwargs):",
+        "hindi": "def wrapper(*args, **kwargs):"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Start time note karo",
+        "english": "Note the start time",
+        "hindi": "स्टार्ट टाइम नोट करो"
+      },
+      "s": {
+        "hinglish": "start = time.time()",
+        "english": "start = time.time()",
+        "hindi": "start = time.time()"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Asli function chalao",
+        "english": "Run the real function",
+        "hindi": "असली फ़ंक्शन चलाओ"
+      },
+      "s": {
+        "hinglish": "add_numbers(a, b)",
+        "english": "add_numbers(a, b)",
+        "hindi": "add_numbers(a, b)"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Time print karo",
+        "english": "Print the time taken",
+        "hindi": "समय प्रिंट करो"
+      },
+      "s": {
+        "hinglish": "end - start",
+        "english": "end - start",
+        "hindi": "end - start"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "Inner function woh hai jo kisi function ke andar banti hai.",
+    "english": "An inner function is one made inside another function.",
+    "hindi": "इनर फ़ंक्शन वह है जो किसी फ़ंक्शन के अंदर बनती है।"
+  },
+  {
+    "hinglish": "Closure bahari function ka variable yaad rakhta hai.",
+    "english": "A closure remembers the outer function's variable.",
+    "hindi": "क्लोज़र बाहरी फ़ंक्शन का वेरिएबल याद रखता है।"
+  },
+  {
+    "hinglish": "Decorator ek function ko badle bina usme extra kaam jodta hai.",
+    "english": "A decorator adds extra work to a function without changing it.",
+    "hindi": "डेकोरेटर एक फ़ंक्शन को बदले बिना उसमें एक्स्ट्रा काम जोड़ता है।"
+  },
+  {
+    "hinglish": "@timer likhne se function ke upar timer lag jata hai.",
+    "english": "Writing @timer puts a timer on the function.",
+    "hindi": "@timer लिखने से फ़ंक्शन के ऊपर टाइमर लग जाता है।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -5097,63 +5803,90 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Game ka flow — shuru se winner tak",
-          "english": "The flow of the game — from start to winner",
-          "hindi": "Game का flow — शुरू से winner तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Player pasand likhta hai",
-              "english": "The player types a choice",
-              "hindi": "Player पसंद लिखता है"
-            },
-            "s": {
-              "hinglish": "Validation loop check karta hai",
-              "english": "The validation loop checks it",
-              "hindi": "Validation loop check करता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Computer chunta hai",
-              "english": "The computer picks",
-              "hindi": "Computer चुनता है"
-            },
-            "s": {
-              "hinglish": "random.choice se",
-              "english": "With random.choice",
-              "hindi": "random.choice से"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "decide_winner",
-              "english": "decide_winner",
-              "hindi": "decide_winner"
-            },
-            "s": {
-              "hinglish": "Jeet, haar ya draw",
-              "english": "Win, loss or draw",
-              "hindi": "जीत, हार या draw"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Score badhta hai",
-              "english": "The score rises",
-              "hindi": "Score बढ़ता है"
-            },
-            "s": {
-              "hinglish": "3 round ke baad final winner",
-              "english": "Final winner after 3 rounds",
-              "hindi": "3 round के बाद final winner"
-            }
-          }
-        ]
+  "kind": "timeline",
+  "title": {
+    "hinglish": "Rock Paper Scissors ka ek round",
+    "english": "One round of Rock Paper Scissors",
+    "hindi": "रॉक पेपर सीज़र्स का एक राउंड"
+  },
+  "caption": {
+    "hinglish": "Teeno choices, ek winner",
+    "english": "Three choices, one winner",
+    "hindi": "तीनों पसंदें, एक विजेता"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "Choice chuno",
+        "english": "Choose",
+        "hindi": "पसंद चुनो"
       },
+      "s": {
+        "hinglish": "rock, paper, scissors",
+        "english": "rock, paper, scissors",
+        "hindi": "rock, paper, scissors"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Computer ki choice",
+        "english": "The computer's choice",
+        "hindi": "कंप्यूटर की पसंद"
+      },
+      "s": {
+        "hinglish": "random.choice(choices)",
+        "english": "random.choice(choices)",
+        "hindi": "random.choice(choices)"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Winner nikalo",
+        "english": "Find the winner",
+        "hindi": "विजेता निकालो"
+      },
+      "s": {
+        "hinglish": "rock beats scissors",
+        "english": "rock beats scissors",
+        "hindi": "rock beats scissors"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "Draw ho to dobara",
+        "english": "If it is a draw, play again",
+        "hindi": "ड्रॉ हो तो दोबारा"
+      },
+      "s": {
+        "hinglish": "Dono barabar ho to naya round",
+        "english": "If both are equal, a new round",
+        "hindi": "दोनों बराबर हों तो नया राउंड"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "choices = [\"rock\", \"paper\", \"scissors\"] se teeno options rakho.",
+    "english": "Keep all three options in choices = [\"rock\", \"paper\", \"scissors\"].",
+    "hindi": "choices = [\"rock\", \"paper\", \"scissors\"] से तीनों विकल्प रखें।"
+  },
+  {
+    "hinglish": "random.choice(choices) se computer ki choice banti hai.",
+    "english": "random.choice(choices) makes the computer's choice.",
+    "hindi": "random.choice(choices) से कंप्यूटर की पसंद बनती है।"
+  },
+  {
+    "hinglish": "decide_winner() dono choice compare karke draw, win ya loss batata hai.",
+    "english": "decide_winner() compares both choices and tells draw, win, or loss.",
+    "hindi": "decide_winner() दोनों पसंदों की तुलना करके ड्रॉ, जीत या हार बताता है।"
+  },
+  {
+    "hinglish": "Rock scissors ko harata hai, scissors paper ko, paper rock ko.",
+    "english": "Rock beats scissors, scissors beats paper, and paper beats rock.",
+    "hindi": "रॉक सीज़र्स को हराता है, सीज़र्स पेपर को, पेपर रॉक को।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -5495,75 +6228,102 @@ print(add(2, 3))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "String ke andar kya hota hai",
-          "english": "What lives inside a string",
-          "hindi": "स्ट्रिंग के अंदर क्या होता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Text",
-              "english": "Text",
-              "hindi": "टेक्स्ट"
-            },
-            "s": {
-              "hinglish": "naam, bill, message",
-              "english": "name, bill, message",
-              "hindi": "नाम, बिल, संदेश"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Index",
-              "english": "Index",
-              "hindi": "इंडेक्स"
-            },
-            "s": {
-              "hinglish": "0 se shuru, -1 aakhri",
-              "english": "starts at 0, -1 is last",
-              "hindi": "0 से शुरू, -1 आखिरी"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Slice",
-              "english": "Slice",
-              "hindi": "स्लाइस"
-            },
-            "s": {
-              "hinglish": "hissa nikalo, step se ulta",
-              "english": "take a part, reverse with step",
-              "hindi": "हिस्सा निकालो, स्टेप से उल्टा"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Methods",
-              "english": "Methods",
-              "hindi": "मेथड्स"
-            },
-            "s": {
-              "hinglish": "upper, strip, split, join",
-              "english": "upper, strip, split, join",
-              "hindi": "upper, strip, split, join"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "f-string",
-              "english": "f-string",
-              "hindi": "f-स्ट्रिंग"
-            },
-            "s": {
-              "hinglish": "text + number ek line mein",
-              "english": "text plus number in one line",
-              "hindi": "टेक्स्ट + संख्या एक लाइन में"
-            }
-          }
-        ]
+  "kind": "boxes",
+  "title": {
+    "hinglish": "name = \"Rahul Sharma\" par string tools",
+    "english": "String tools on name = \"Rahul Sharma\"",
+    "hindi": "name = \"Rahul Sharma\" पर स्ट्रिंग टूल्स"
+  },
+  "caption": {
+    "hinglish": "Index, slice, ulta, upper, f-string",
+    "english": "Index, slice, reversed, upper, f-string",
+    "hindi": "इंडेक्स, स्लाइस, उल्टा, upper, f-string"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "name[0]",
+        "english": "name[0]",
+        "hindi": "name[0]"
       },
+      "s": {
+        "hinglish": "'R' — pehla letter",
+        "english": "'R' — the first letter",
+        "hindi": "'R' — पहला अक्षर"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "name[0:5]",
+        "english": "name[0:5]",
+        "hindi": "name[0:5]"
+      },
+      "s": {
+        "hinglish": "'Rahul' — slice",
+        "english": "'Rahul' — a slice",
+        "hindi": "'Rahul' — स्लाइस"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "name[::-1]",
+        "english": "name[::-1]",
+        "hindi": "name[::-1]"
+      },
+      "s": {
+        "hinglish": "'amrahS luhaR' — ulta",
+        "english": "'amrahS luhaR' — reversed",
+        "hindi": "'amrahS luhaR' — उल्टा"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "name.upper()",
+        "english": "name.upper()",
+        "hindi": "name.upper()"
+      },
+      "s": {
+        "hinglish": "'RAHUL SHARMA' — bade akshar",
+        "english": "'RAHUL SHARMA' — capital letters",
+        "hindi": "'RAHUL SHARMA' — बड़े अक्षर"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "f-string",
+        "english": "f-string",
+        "hindi": "f-string"
+      },
+      "s": {
+        "hinglish": "pen: 3 x 25 = 75",
+        "english": "pen: 3 x 25 = 75",
+        "hindi": "pen: 3 x 25 = 75"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "String text hota hai, quotes ke andar likha jata hai.",
+    "english": "A string is text, written inside quotes.",
+    "hindi": "स्ट्रिंग टेक्स्ट होता है, कोट्स के अंदर लिखा जाता है।"
+  },
+  {
+    "hinglish": "name[0] pehla letter deta hai, name[-1] aakhri.",
+    "english": "name[0] gives the first letter, and name[-1] gives the last.",
+    "hindi": "name[0] पहला अक्षर देता है, name[-1] आखिरी।"
+  },
+  {
+    "hinglish": "name[0:5] se slice milta hai, jaise \"Rahul\".",
+    "english": "name[0:5] gives a slice, like \"Rahul\".",
+    "hindi": "name[0:5] से स्लाइस मिलता है, जैसे \"Rahul\"।"
+  },
+  {
+    "hinglish": "upper(), lower() se case badlo; f-string se bill jaisi line banao.",
+    "english": "Use upper() and lower() to change case, and an f-string to make a line like a bill.",
+    "hindi": "upper(), lower() से केस बदलें; f-string से बिल जैसी लाइन बनाएँ।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -5911,19 +6671,115 @@ print(f"Name: {student['name']}")`,
           },
         },
       ],
-      diagram: {
-        kind: 'boxes',
-        title: {
-          hinglish: 'List: index aur value',
-          english: 'List: index and value',
-          hindi: 'List: index और value',
-        },
-        nodes: [
-          { t: { hinglish: 'Index 0', english: 'Index 0', hindi: 'Index 0' }, s: { hinglish: '"Sid"', english: '"Sid"', hindi: '"Sid"' } },
-          { t: { hinglish: 'Index 1', english: 'Index 1', hindi: 'Index 1' }, s: { hinglish: '"Asha"', english: '"Asha"', hindi: '"Asha"' } },
-          { t: { hinglish: 'Index 2', english: 'Index 2', hindi: 'Index 2' }, s: { hinglish: '"Ravi"', english: '"Ravi"', hindi: '"Ravi"' } },
-        ],
+      "diagram": {
+  "kind": "memory",
+  "title": {
+    "hinglish": "List aur dictionary memory mein",
+    "english": "A list and a dictionary in memory",
+    "hindi": "लिस्ट और डिक्शनरी मेमोरी में"
+  },
+  "caption": {
+    "hinglish": "List mein index, dictionary mein key",
+    "english": "Index in a list, key in a dictionary",
+    "hindi": "लिस्ट में इंडेक्स, डिक्शनरी में key"
+  },
+  "nodes": [
+    {
+      "t": {
+        "hinglish": "marks[0]",
+        "english": "marks[0]",
+        "hindi": "marks[0]"
       },
+      "s": {
+        "hinglish": "70",
+        "english": "70",
+        "hindi": "70"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "marks[1]",
+        "english": "marks[1]",
+        "hindi": "marks[1]"
+      },
+      "s": {
+        "hinglish": "80",
+        "english": "80",
+        "hindi": "80"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "marks[2]",
+        "english": "marks[2]",
+        "hindi": "marks[2]"
+      },
+      "s": {
+        "hinglish": "90",
+        "english": "90",
+        "hindi": "90"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "student[\"name\"]",
+        "english": "student[\"name\"]",
+        "hindi": "student[\"name\"]"
+      },
+      "s": {
+        "hinglish": "\"Sid\"",
+        "english": "\"Sid\"",
+        "hindi": "\"Sid\""
+      }
+    },
+    {
+      "t": {
+        "hinglish": "student[\"age\"]",
+        "english": "student[\"age\"]",
+        "hindi": "student[\"age\"]"
+      },
+      "s": {
+        "hinglish": "20",
+        "english": "20",
+        "hindi": "20"
+      }
+    },
+    {
+      "t": {
+        "hinglish": "student[\"marks\"]",
+        "english": "student[\"marks\"]",
+        "hindi": "student[\"marks\"]"
+      },
+      "s": {
+        "hinglish": "240 — total",
+        "english": "240 — the total",
+        "hindi": "240 — कुल"
+      }
+    }
+  ]
+},
+      "keyNotes": [
+  {
+    "hinglish": "List mein kai values ek order mein rehti hain, index 0 se shuru hota hai.",
+    "english": "A list holds many values in order, and the index starts at 0.",
+    "hindi": "लिस्ट में कई वैल्यूज़ एक क्रम में रहती हैं, इंडेक्स 0 से शुरू होता है।"
+  },
+  {
+    "hinglish": "append() se list mein naya item jodte hain.",
+    "english": "Use append() to add a new item to a list.",
+    "hindi": "append() से लिस्ट में नया आइटम जोड़ते हैं।"
+  },
+  {
+    "hinglish": "Dictionary mein key-value pairs hote hain, jaise {\"name\": \"Sid\"}.",
+    "english": "A dictionary holds key-value pairs, like {\"name\": \"Sid\"}.",
+    "hindi": "डिक्शनरी में key-value पेयर होते हैं, जैसे {\"name\": \"Sid\"}।"
+  },
+  {
+    "hinglish": "student[\"name\"] se key ki value milti hai.",
+    "english": "student[\"name\"] gives the value of that key.",
+    "hindi": "student[\"name\"] से उस key की वैल्यू मिलती है।"
+  }
+],
       codeExamples: [
         {
           title: {
@@ -6171,75 +7027,116 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Tuple ya set — kaun kab",
-          "english": "Tuple or set — which one when",
-          "hindi": "टपल या सेट — कौन कब"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Data fixed hai?",
-              "english": "Is the data fixed?",
-              "hindi": "डेटा तय है?"
-            },
-            "s": {
-              "hinglish": "badalna nahi hai",
-              "english": "it must not change",
-              "hindi": "बदलना नहीं है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Tuple",
-              "english": "Tuple",
-              "hindi": "टपल"
-            },
-            "s": {
-              "hinglish": "coordinates, ticket details",
-              "english": "coordinates, ticket details",
-              "hindi": "निर्देशांक, टिकट विवरण"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Unique chahiye?",
-              "english": "Do you need unique values?",
-              "hindi": "अनूठा चाहिए?"
-            },
-            "s": {
-              "hinglish": "duplicate hatana hai",
-              "english": "duplicates must go",
-              "hindi": "दोहराव हटाना है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Set",
-              "english": "Set",
-              "hindi": "सेट"
-            },
-            "s": {
-              "hinglish": "subjects, alag items",
-              "english": "subjects, different items",
-              "hindi": "विषय, अलग आइटम"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Badalne wala?",
-              "english": "Does it change?",
-              "hindi": "बदलने वाला?"
-            },
-            "s": {
-              "hinglish": "to list use karo",
-              "english": "then use a list",
-              "hindi": "तो सूची इस्तेमाल करें"
-            }
-          }
-        ]
+  "kind": "table",
+  "title": {
+    "hinglish": "List vs tuple vs set",
+    "english": "List vs tuple vs set",
+    "hindi": "लिस्ट vs टपल vs सेट"
+  },
+  "caption": {
+    "hinglish": "Kya badlega, kya unique rahega — yehi farak hai",
+    "english": "What can change and what stays unique — that is the difference",
+    "hindi": "क्या बदलेगा, क्या यूनिक रहेगा — यही फ़र्क है"
+  },
+  "headers": [
+    {
+      "hinglish": "Type",
+      "english": "Type",
+      "hindi": "टाइप"
+    },
+    {
+      "hinglish": "Badal sakte ho?",
+      "english": "Can you change it?",
+      "hindi": "बदल सकते हो?"
+    },
+    {
+      "hinglish": "Duplicate?",
+      "english": "Duplicates?",
+      "hindi": "डुप्लिकेट?"
+    }
+  ],
+  "rows": [
+    [
+      {
+        "hinglish": "list [70, 80, 90]",
+        "english": "list [70, 80, 90]",
+        "hindi": "list [70, 80, 90]"
       },
+      {
+        "hinglish": "Haan — append karo",
+        "english": "Yes — use append",
+        "hindi": "हाँ — append करो"
+      },
+      {
+        "hinglish": "Haan",
+        "english": "Yes",
+        "hindi": "हाँ"
+      }
+    ],
+    [
+      {
+        "hinglish": "tuple (10, 20)",
+        "english": "tuple (10, 20)",
+        "hindi": "tuple (10, 20)"
+      },
+      {
+        "hinglish": "Nahi — fixed",
+        "english": "No — it is fixed",
+        "hindi": "नहीं — फिक्स्ड"
+      },
+      {
+        "hinglish": "Haan",
+        "english": "Yes",
+        "hindi": "हाँ"
+      }
+    ],
+    [
+      {
+        "hinglish": "set {10, 20}",
+        "english": "set {10, 20}",
+        "hindi": "set {10, 20}"
+      },
+      {
+        "hinglish": "Haan — add/remove",
+        "english": "Yes — add and remove",
+        "hindi": "हाँ — add/remove"
+      },
+      {
+        "hinglish": "Nahi — sirf unique",
+        "english": "No — only unique values",
+        "hindi": "नहीं — सिर्फ़ यूनिक"
+      }
+    ]
+  ],
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "hinglish": "Tuple fixed hota hai — ek baar bana to badal nahi sakte.",
+    "english": "A tuple is fixed — once made, you cannot change it.",
+    "hindi": "टपल फिक्स्ड होता है — एक बार बना तो बदल नहीं सकते।"
+  },
+  {
+    "hinglish": "Single item tuple mein comma zaroori hai: (5,).",
+    "english": "A single-item tuple needs a comma: (5,).",
+    "hindi": "सिंगल आइटम टपल में कॉमा ज़रूरी है: (5,)।"
+  },
+  {
+    "hinglish": "(5) tuple nahi hai, woh sirf int 5 hai.",
+    "english": "(5) is not a tuple; it is just the int 5.",
+    "hindi": "(5) टपल नहीं है, वह सिर्फ़ int 5 है।"
+  },
+  {
+    "hinglish": "Set mein sirf unique values rehti hain, duplicate hat jate hain.",
+    "english": "A set holds only unique values; duplicates are removed.",
+    "hindi": "सेट में सिर्फ़ यूनिक वैल्यूज़ रहती हैं, डुप्लिकेट हट जाते हैं।"
+  },
+  {
+    "hinglish": "x, y = point se tuple unpack hota hai.",
+    "english": "x, y = point unpacks a tuple.",
+    "hindi": "x, y = point से टपल अनपैक होता है।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -6581,75 +7478,111 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Comprehension kaise banta hai",
-          "english": "How a comprehension is built",
-          "hindi": "कॉम्प्रिहेंशन कैसे बनता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Input list",
-              "english": "Input list",
-              "hindi": "इनपुट सूची"
-            },
-            "s": {
-              "hinglish": "marks, prices, naam",
-              "english": "marks, prices, names",
-              "hindi": "अंक, कीमतें, नाम"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Loop",
-              "english": "Loop",
-              "hindi": "लूप"
-            },
-            "s": {
-              "hinglish": "har item par ek baar",
-              "english": "once over every item",
-              "hindi": "हर आइटम पर एक बार"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Condition",
-              "english": "Condition",
-              "hindi": "शर्त"
-            },
-            "s": {
-              "hinglish": "sirf pass wale",
-              "english": "only the ones that pass",
-              "hindi": "सिर्फ पास वाले"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Naya value",
-              "english": "New value",
-              "hindi": "नया मान"
-            },
-            "s": {
-              "hinglish": "square, upper, discount",
-              "english": "square, upper, discount",
-              "hindi": "वर्ग, बड़ा, छूट"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Nayi list",
-              "english": "New list",
-              "hindi": "नई सूची"
-            },
-            "s": {
-              "hinglish": "ek line mein tayyar",
-              "english": "ready in one line",
-              "hindi": "एक लाइन में तैयार"
-            }
-          }
-        ]
+  "kind": "table",
+  "title": {
+    "hinglish": "Loop vs comprehension",
+    "english": "Loop vs comprehension",
+    "hindi": "लूप vs कंप्रिहेंशन"
+  },
+  "caption": {
+    "hinglish": "Ek hi kaam, aadhi line mein",
+    "english": "The same job in half the lines",
+    "hindi": "एक ही काम, आधी लाइन में"
+  },
+  "headers": [
+    {
+      "hinglish": "Kaam",
+      "english": "Job",
+      "hindi": "काम"
+    },
+    {
+      "hinglish": "Loop se",
+      "english": "With a loop",
+      "hindi": "लूप से"
+    },
+    {
+      "hinglish": "Comprehension se",
+      "english": "With a comprehension",
+      "hindi": "कंप्रिहेंशन से"
+    }
+  ],
+  "rows": [
+    [
+      {
+        "hinglish": "Squares 1–5",
+        "english": "Squares 1 to 5",
+        "hindi": "1–5 के स्क्वायर्स"
       },
+      {
+        "hinglish": "5 lines",
+        "english": "5 lines",
+        "hindi": "5 लाइनें"
+      },
+      {
+        "hinglish": "[n*n for n in range(1, 6)]",
+        "english": "[n*n for n in range(1, 6)]",
+        "hindi": "[n*n for n in range(1, 6)]"
+      }
+    ],
+    [
+      {
+        "hinglish": "Cheap prices < 150",
+        "english": "Cheap prices under 150",
+        "hindi": "150 से सस्ती कीमतें"
+      },
+      {
+        "hinglish": "Loop + if",
+        "english": "Loop + if",
+        "hindi": "लूप + if"
+      },
+      {
+        "hinglish": "[p for p in prices if p < 150]",
+        "english": "[p for p in prices if p < 150]",
+        "hindi": "[p for p in prices if p < 150]"
+      }
+    ],
+    [
+      {
+        "hinglish": "Caps names",
+        "english": "Capital names",
+        "hindi": "बड़े अक्षरों वाले नाम"
+      },
+      {
+        "hinglish": "Loop + append",
+        "english": "Loop + append",
+        "hindi": "लूप + append"
+      },
+      {
+        "hinglish": "[n.upper() for n in names]",
+        "english": "[n.upper() for n in names]",
+        "hindi": "[n.upper() for n in names]"
+      }
+    ]
+  ],
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "hinglish": "List comprehension se ek line mein nayi list banti hai.",
+    "english": "List comprehension makes a new list in one line.",
+    "hindi": "लिस्ट कंप्रिहेंशन से एक लाइन में नई लिस्ट बनती है।"
+  },
+  {
+    "hinglish": "[n * n for n in range(1, 6)] se squares [1, 4, 9, 16, 25] milte hain.",
+    "english": "[n * n for n in range(1, 6)] gives the squares [1, 4, 9, 16, 25].",
+    "hindi": "[n * n for n in range(1, 6)] से स्क्वायर्स [1, 4, 9, 16, 25] मिलते हैं।"
+  },
+  {
+    "hinglish": "if lagakar filter karo: [p for p in prices if p < 150].",
+    "english": "Add if to filter: [p for p in prices if p < 150].",
+    "hindi": "if लगाकर फ़िल्टर करें: [p for p in prices if p < 150]।"
+  },
+  {
+    "hinglish": "Comprehension loop se chhota hai, par lambi logic ke liye loop clear rehta hai.",
+    "english": "A comprehension is shorter than a loop, but a loop stays clearer for long logic.",
+    "hindi": "कंप्रिहेंशन लूप से छोटा है, पर लंबी लॉजिक के लिए लूप साफ़ रहता है।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -6991,75 +7924,82 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Kaun sa tool kab",
-          "english": "Which tool when",
-          "hindi": "कौन सा उपकरण कब"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Ginna hai?",
-              "english": "Do you need to count?",
-              "hindi": "गिनना है?"
-            },
-            "s": {
-              "hinglish": "vote, words, marks",
-              "english": "votes, words, marks",
-              "hindi": "वोट, शब्द, अंक"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Counter",
-              "english": "Counter",
-              "hindi": "Counter"
-            },
-            "s": {
-              "hinglish": "most_common se top",
-              "english": "top with most_common",
-              "hindi": "most_common से शीर्ष"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Line lagani hai?",
-              "english": "Do you need a queue?",
-              "hindi": "लाइन लगानी है?"
-            },
-            "s": {
-              "hinglish": "aage peeche dono taraf",
-              "english": "both sides, front and back",
-              "hindi": "आगे पीछे दोनों तरफ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "deque",
-              "english": "deque",
-              "hindi": "deque"
-            },
-            "s": {
-              "hinglish": "popleft, appendleft, maxlen",
-              "english": "popleft, appendleft, maxlen",
-              "hindi": "popleft, appendleft, maxlen"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Top-N chahiye?",
-              "english": "Do you need the top-N?",
-              "hindi": "शीर्ष-N चाहिए?"
-            },
-            "s": {
-              "hinglish": "heapq nlargest",
-              "english": "heapq nlargest",
-              "hindi": "heapq nlargest"
-            }
-          }
-        ]
+  "kind": "bars",
+  "title": {
+    "hinglish": "Counter — votes gin lo",
+    "english": "Counter — count the votes",
+    "hindi": "Counter — वोट गिन लो"
+  },
+  "caption": {
+    "hinglish": "votes = [\"red\", \"blue\", \"red\", \"green\", \"red\", \"blue\"] — most_common(2) = red, blue",
+    "english": "votes = [\"red\", \"blue\", \"red\", \"green\", \"red\", \"blue\"] — most_common(2) = red, blue",
+    "hindi": "votes = [\"red\", \"blue\", \"red\", \"green\", \"red\", \"blue\"] — most_common(2) = red, blue"
+  },
+  "bars": [
+    {
+      "label": {
+        "hinglish": "red — sabse zyada",
+        "english": "red — the most",
+        "hindi": "red — सबसे ज़्यादा"
       },
+      "value": 50,
+      "note": {
+        "hinglish": "3 votes",
+        "english": "3 votes",
+        "hindi": "3 वोट"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "blue",
+        "english": "blue",
+        "hindi": "blue"
+      },
+      "value": 33,
+      "note": {
+        "hinglish": "2 votes",
+        "english": "2 votes",
+        "hindi": "2 वोट"
+      }
+    },
+    {
+      "label": {
+        "hinglish": "green",
+        "english": "green",
+        "hindi": "green"
+      },
+      "value": 17,
+      "note": {
+        "hinglish": "1 vote",
+        "english": "1 vote",
+        "hindi": "1 वोट"
+      }
+    }
+  ],
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "hinglish": "Counter list mein har value kitni baar aayi, gin leta hai.",
+    "english": "Counter counts how many times each value appears in a list.",
+    "hindi": "Counter लिस्ट में हर वैल्यू कितनी बार आई, गिन लेता है।"
+  },
+  {
+    "hinglish": "most_common(2) se top 2 values milte hain.",
+    "english": "most_common(2) gives the top 2 values.",
+    "hindi": "most_common(2) से टॉप 2 वैल्यूज़ मिलती हैं।"
+  },
+  {
+    "hinglish": "Counter ek dictionary jaisa hai — count[\"red\"] se red ki ginti milti hai.",
+    "english": "A Counter works like a dictionary — count[\"red\"] gives the count of red.",
+    "hindi": "Counter डिक्शनरी जैसा है — count[\"red\"] से red की गिनती मिलती है।"
+  },
+  {
+    "hinglish": "collections module mein counting, queue aur top values ke ready-made tools hain.",
+    "english": "The collections module has ready-made tools for counting, queues, and top values.",
+    "hindi": "collections मॉड्यूल में काउंटिंग, क्यू और टॉप वैल्यूज़ के तैयार टूल्स हैं।"
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -7401,75 +8341,107 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Game ka flow",
-          "english": "The flow of the game",
-          "hindi": "खेल का प्रवाह"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Board banao",
-              "english": "Make the board",
-              "hindi": "बोर्ड बनाएँ"
-            },
-            "s": {
-              "hinglish": "3x3 khaali list",
-              "english": "3 by 3 empty list",
-              "hindi": "3x3 खाली सूची"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Move lo",
-              "english": "Take a move",
-              "hindi": "चाल लें"
-            },
-            "s": {
-              "hinglish": "row, column check karo",
-              "english": "check the row and column",
-              "hindi": "पंक्ति, स्तंभ जाँचें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Jeet check karo",
-              "english": "Check the win",
-              "hindi": "जीत जाँचें"
-            },
-            "s": {
-              "hinglish": "row, column, diagonal",
-              "english": "row, column, diagonal",
-              "hindi": "पंक्ति, स्तंभ, विकर्ण"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Draw check karo",
-              "english": "Check the draw",
-              "hindi": "ड्रॉ जाँचें"
-            },
-            "s": {
-              "hinglish": "board bhara hai?",
-              "english": "is the board full?",
-              "hindi": "बोर्ड भरा है?"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Dobara khelo",
-              "english": "Play again",
-              "hindi": "दोबारा खेलें"
-            },
-            "s": {
-              "hinglish": "naya board, score badhao",
-              "english": "new board, raise the score",
-              "hindi": "नया बोर्ड, अंक बढ़ाएँ"
-            }
-          }
-        ]
+  "caption": {
+    "english": "Make the board, take a move, check the win — then play again.",
+    "hindi": "बोर्ड बनाएँ, चाल लें, जीत जाँचें — फिर दोबारा खेलें।",
+    "hinglish": "Board banao, move lo, jeet check karo — phir dobara khelo."
+  },
+  "kind": "timeline",
+  "nodes": [
+    {
+      "s": {
+        "english": "board holds 3 lists, each list is one row",
+        "hindi": "board में 3 सूचियाँ हैं, हर सूची एक पंक्ति है",
+        "hinglish": "board mein 3 lists, har list ek row"
       },
+      "t": {
+        "english": "Make the board: a 3 by 3 empty list",
+        "hindi": "बोर्ड बनाएँ: 3x3 खाली सूची",
+        "hinglish": "Board banao: 3x3 khaali list"
+      }
+    },
+    {
+      "s": {
+        "english": "Row and column must be 0 to 2, and the place must be empty",
+        "hindi": "पंक्ति और स्तंभ 0 से 2 के बीच हों, और जगह खाली होनी चाहिए",
+        "hinglish": "Row aur column 0 se 2 ke beech, jagah khaali honi chahiye"
+      },
+      "t": {
+        "english": "Take a move: put X or O",
+        "hindi": "चाल लें: X या O लगाएँ",
+        "hinglish": "Move lo: X ya O lagao"
+      }
+    },
+    {
+      "s": {
+        "english": "Look at every row, every column and both diagonals",
+        "hindi": "हर पंक्ति, हर स्तंभ और दोनों विकर्ण देखें",
+        "hinglish": "Har row, har column aur dono diagonal dekho"
+      },
+      "t": {
+        "english": "Check the win",
+        "hindi": "जीत जाँचें",
+        "hinglish": "Jeet check karo"
+      }
+    },
+    {
+      "s": {
+        "english": "All 9 boxes are full and no one has a line — a draw",
+        "hindi": "9 डिब्बे भरे और कोई लाइन नहीं — ड्रॉ",
+        "hinglish": "9 dabbe bhare aur koi line nahi — draw"
+      },
+      "t": {
+        "english": "Check for a draw",
+        "hindi": "ड्रॉ जाँचें",
+        "hinglish": "Draw check karo"
+      }
+    },
+    {
+      "s": {
+        "english": "A new empty board, score goes up by 1 on a win",
+        "hindi": "नया खाली बोर्ड, जीत पर अंक +1",
+        "hinglish": "Naya khaali board, jeet par score +1"
+      },
+      "t": {
+        "english": "Play again, raise the score",
+        "hindi": "दोबारा खेलें, अंक बढ़ाएँ",
+        "hinglish": "Dobara khelo, score badhao"
+      }
+    }
+  ],
+  "title": {
+    "english": "Steps to build Tic Tac Toe",
+    "hindi": "टिक टैक टो बनाने के चरण",
+    "hinglish": "Tic Tac Toe banane ke steps"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "The board is a list of lists, each inner list is one row.",
+    "hindi": "बोर्ड सूची की सूची है, हर अंदर वाली सूची एक पंक्ति है।",
+    "hinglish": "Board list of lists hai, har inner list ek row."
+  },
+  {
+    "english": "Before a move, check the row, the column and that the place is empty.",
+    "hindi": "चाल से पहले पंक्ति, स्तंभ और खाली जगह जाँचें।",
+    "hinglish": "Move se pehle row, column aur khaali jagah check karo."
+  },
+  {
+    "english": "For a win, look at every row, column and both diagonals.",
+    "hindi": "जीत के लिए हर पंक्ति, स्तंभ और दोनों विकर्ण देखें।",
+    "hinglish": "Jeet ke liye har row, column aur dono diagonal dekho."
+  },
+  {
+    "english": "When all 9 boxes are full and no one has a line, it is a draw.",
+    "hindi": "9 डिब्बे भरे और कोई लाइन नहीं तो ड्रॉ है।",
+    "hinglish": "9 dabbe bhare aur koi line nahi to draw hai."
+  },
+  {
+    "english": "In play-again a new board is made and the score goes up.",
+    "hindi": "दोबारा खेलने में नया बोर्ड बनता है, अंक बढ़ता है।",
+    "hinglish": "Play-again mein naya board banta hai, score badhta hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -7811,63 +8783,102 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Object kaise banta hai",
-          "english": "How an object is made",
-          "hindi": "Object कैसे बनता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Class: Student ka plan",
-              "english": "Class: the plan of a Student",
-              "hindi": "Class: Student का प्लान"
-            },
-            "s": {
-              "hinglish": "name, age aur introduce ka design",
-              "english": "The design of name, age and introduce",
-              "hindi": "name, age और introduce का डिज़ाइन"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Student(\"Rahul\", 16) bulao",
-              "english": "Call Student(\"Rahul\", 16)",
-              "hindi": "Student(\"Rahul\", 16) बुलाओ"
-            },
-            "s": {
-              "hinglish": "__init__ chalta hai, self = naya object",
-              "english": "__init__ runs, self is the new object",
-              "hindi": "__init__ चलता है, self = नया object"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "rahul object banta hai",
-              "english": "The object rahul is made",
-              "hindi": "rahul object बनता है"
-            },
-            "s": {
-              "hinglish": "name = Rahul, age = 16",
-              "english": "name is Rahul, age is 16",
-              "hindi": "name = Rahul, age = 16"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "rahul.introduce() chalao",
-              "english": "Run rahul.introduce()",
-              "hindi": "rahul.introduce() चलाओ"
-            },
-            "s": {
-              "hinglish": "Method self se data padhta hai",
-              "english": "The method reads data through self",
-              "hindi": "Method self से data पढ़ता है"
-            }
-          }
-        ]
+  "caption": {
+    "english": "The class is the plan, the object is the real data made from that plan.",
+    "hindi": "क्लास प्लान है, ऑब्जेक्ट उस प्लान से बना हुआ असली डेटा है।",
+    "hinglish": "Class plan hai, object us plan se bana hua asli data hai."
+  },
+  "kind": "memory",
+  "nodes": [
+    {
+      "s": {
+        "english": "The plan: name, age and introduce()",
+        "hindi": "प्लान: name, age, introduce()",
+        "hinglish": "Plan: name, age, introduce()"
       },
+      "t": {
+        "english": "class Student",
+        "hindi": "class Student",
+        "hinglish": "class Student"
+      }
+    },
+    {
+      "s": {
+        "english": "Rahul",
+        "hindi": "राहुल",
+        "hinglish": "Rahul"
+      },
+      "t": {
+        "english": "rahul.name",
+        "hindi": "rahul.name",
+        "hinglish": "rahul.name"
+      }
+    },
+    {
+      "s": {
+        "english": "16",
+        "hindi": "16",
+        "hinglish": "16"
+      },
+      "t": {
+        "english": "rahul.age",
+        "hindi": "rahul.age",
+        "hinglish": "rahul.age"
+      }
+    },
+    {
+      "s": {
+        "english": "A method: it reads data through self",
+        "hindi": "मेथड: self से डेटा पढ़ता है",
+        "hinglish": "Method: self se data padhta hai"
+      },
+      "t": {
+        "english": "rahul.introduce()",
+        "hindi": "rahul.introduce()",
+        "hinglish": "rahul.introduce()"
+      }
+    },
+    {
+      "s": {
+        "english": "One value shared by all objects",
+        "hindi": "सभी ऑब्जेक्ट्स के लिए एक ही मान",
+        "hinglish": "Sab objects ke liye ek hi value"
+      },
+      "t": {
+        "english": "Class attribute",
+        "hindi": "क्लास एट्रिब्यूट",
+        "hinglish": "Class attribute"
+      }
+    }
+  ],
+  "title": {
+    "english": "The rahul object in memory",
+    "hindi": "मेमोरी में rahul ऑब्जेक्ट",
+    "hinglish": "rahul object memory mein"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "A class is a plan, an object is a thing made from that plan.",
+    "hindi": "क्लास प्लान है, ऑब्जेक्ट उस प्लान से बनी हुई चीज़ है।",
+    "hinglish": "Class plan hai, object us plan se bani hui cheez hai."
+  },
+  {
+    "english": "__init__ runs when the object is made, and self points to the new object.",
+    "hindi": "__init__ ऑब्जेक्ट बनते समय चलता है, self नए ऑब्जेक्ट को बताता है।",
+    "hinglish": "__init__ object banate waqt chalta hai, self naye object ko batata hai."
+  },
+  {
+    "english": "An instance attribute belongs to one object, a class attribute is the same for all.",
+    "hindi": "इंस्टेंस एट्रिब्यूट हर ऑब्जेक्ट का अपना होता है, क्लास एट्रिब्यूट सबका एक जैसा।",
+    "hinglish": "Instance attribute har object ka apna hota hai, class attribute sab ka ek jaisa."
+  },
+  {
+    "english": "Inside a method, read data through self.",
+    "hindi": "मेथड के अंदर डेटा को self से पढ़ें।",
+    "hinglish": "Method ke andar data ko self se padho."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -8209,63 +9220,112 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Inheritance ka flow",
-          "english": "The flow of inheritance",
-          "hindi": "Inheritance का फ्लो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Animal: parent class",
-              "english": "Animal: the parent class",
-              "hindi": "Animal: parent class"
-            },
-            "s": {
-              "hinglish": "name aur speak()",
-              "english": "name and speak()",
-              "hindi": "name और speak()"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Dog(Animal): child class",
-              "english": "Dog(Animal): the child class",
-              "hindi": "Dog(Animal): child class"
-            },
-            "s": {
-              "hinglish": "super() se name leta hai",
-              "english": "It takes the name with super()",
-              "hindi": "super() से name लेता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Dog speak() ko override karta hai",
-              "english": "Dog overrides speak()",
-              "hindi": "Dog speak() को override करता है"
-            },
-            "s": {
-              "hinglish": "\"Woof woof\" bolta hai",
-              "english": "It says \"Woof woof\"",
-              "hindi": "\"Woof woof\" बोलता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Cat bhi Animal se banta hai",
-              "english": "Cat is also made from Animal",
-              "hindi": "Cat भी Animal से बनता है"
-            },
-            "s": {
-              "hinglish": "speak() par \"Meow\" bolta hai",
-              "english": "It says \"Meow\" on speak()",
-              "hindi": "speak() पर \"Meow\" बोलता है"
-            }
-          }
-        ]
+  "caption": {
+    "english": "A child class takes things from its parent, and it can change speak() in its own way.",
+    "hindi": "बच्चा क्लास माता-पिता की चीज़ें लेता है, और speak() को अपने हिसाब से बदल सकता है।",
+    "hinglish": "Baccha class parent ki cheezein leti hai, aur speak() ko apne hisaab se badal sakti hai."
+  },
+  "kind": "tree",
+  "nodes": [
+    {
+      "depth": 0,
+      "s": {
+        "english": "name and speak()",
+        "hindi": "name और speak()",
+        "hinglish": "name aur speak()"
       },
+      "t": {
+        "english": "Animal: the parent class",
+        "hindi": "Animal: पैरेंट क्लास",
+        "hinglish": "Animal: parent class"
+      }
+    },
+    {
+      "depth": 1,
+      "s": {
+        "english": "It takes the name with super()",
+        "hindi": "super() से name लेता है",
+        "hinglish": "super() se name leta hai"
+      },
+      "t": {
+        "english": "Dog(Animal): the child class",
+        "hindi": "Dog(Animal): बच्चा क्लास",
+        "hinglish": "Dog(Animal): baccha class"
+      }
+    },
+    {
+      "depth": 1,
+      "s": {
+        "english": "It gets the name from Animal",
+        "hindi": "Animal से name मिलता है",
+        "hinglish": "Animal se name milta hai"
+      },
+      "t": {
+        "english": "Cat(Animal): the child class",
+        "hindi": "Cat(Animal): बच्चा क्लास",
+        "hinglish": "Cat(Animal): baccha class"
+      }
+    },
+    {
+      "depth": 2,
+      "s": {
+        "english": "It changed speak() in its own way",
+        "hindi": "speak() को अपने हिसाब से बदला",
+        "hinglish": "speak() ko override kiya"
+      },
+      "t": {
+        "english": "Dog.speak(): Woof woof",
+        "hindi": "Dog.speak(): Woof woof",
+        "hinglish": "Dog.speak(): Woof woof"
+      }
+    },
+    {
+      "depth": 2,
+      "s": {
+        "english": "It changed speak() in its own way",
+        "hindi": "speak() को अपने हिसाब से बदला",
+        "hinglish": "speak() ko override kiya"
+      },
+      "t": {
+        "english": "Cat.speak(): Meow",
+        "hindi": "Cat.speak(): Meow",
+        "hinglish": "Cat.speak(): Meow"
+      }
+    }
+  ],
+  "title": {
+    "english": "Dog and Cat from Animal",
+    "hindi": "Animal से Dog और Cat",
+    "hinglish": "Animal se Dog aur Cat"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "A child class takes qualities from its parent.",
+    "hindi": "बच्चा क्लास माता-पिता की खूबियाँ लेता है।",
+    "hinglish": "Baccha class parent ki qualities leti hai."
+  },
+  {
+    "english": "super() is used to call the parent's __init__.",
+    "hindi": "super() से पैरेंट का __init__ बुलाया जाता है।",
+    "hinglish": "super() se parent ka __init__ bulaya jata hai."
+  },
+  {
+    "english": "In overriding, the child changes the parent's method in its own way.",
+    "hindi": "ओवरराइड में बच्चा पैरेंट के मेथड को अपने हिसाब से बदल देता है।",
+    "hinglish": "Override mein baccha parent ke method ko apne hisaab se badal deta hai."
+  },
+  {
+    "english": "One method, different work on different objects — that is polymorphism.",
+    "hindi": "एक ही मेथड, अलग ऑब्जेक्ट्स पर अलग काम — यही पॉलिमॉर्फिज़्म है।",
+    "hinglish": "Ek hi method, alag objects par alag kaam — yahi polymorphism hai."
+  },
+  {
+    "english": "In duck typing, behaviour matters, not the type.",
+    "hindi": "डक टाइपिंग में type नहीं, व्यवहार देखा जाता है।",
+    "hinglish": "Duck typing mein type nahi, behaviour dekha jata hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -8607,63 +9667,128 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "boxes",
-        "title": {
-          "hinglish": "Teen darje: public, protected, private",
-          "english": "Three levels: public, protected, private",
-          "hindi": "तीन दर्जे: public, protected, private"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Public: owner",
-              "english": "Public: owner",
-              "hindi": "Public: owner"
-            },
-            "s": {
-              "hinglish": "Sab dekh sakte hain",
-              "english": "Everyone can see it",
-              "hindi": "सब देख सकते हैं"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Protected: _balance",
-              "english": "Protected: _balance",
-              "hindi": "Protected: _balance"
-            },
-            "s": {
-              "hinglish": "Ishara: andar ki baat hai",
-              "english": "A sign: it is an inside matter",
-              "hindi": "इशारा: अंदर की बात है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Private: __pin",
-              "english": "Private: __pin",
-              "hindi": "Private: __pin"
-            },
-            "s": {
-              "hinglish": "Naam badal jata hai",
-              "english": "The name is changed",
-              "hindi": "नाम बदल जाता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Bahar ka rasta: method",
-              "english": "The outside way: methods",
-              "hindi": "बाहर का रास्ता: method"
-            },
-            "s": {
-              "hinglish": "deposit, withdraw, check_pin",
-              "english": "deposit, withdraw, check_pin",
-              "hindi": "deposit, withdraw, check_pin"
-            }
-          }
-        ]
+  "caption": {
+    "english": "Like an ATM: from outside you see only the methods, the data inside stays hidden.",
+    "hindi": "ATM जैसा: बाहर से सिर्फ मेथड दिखते हैं, अंदर का डेटा छिपा रहता है।",
+    "hinglish": "ATM jaisa: bahar se sirf methods dikhte hain, andar ka data chhupa rehta hai."
+  },
+  "headers": [
+    {
+      "english": "Level",
+      "hindi": "स्तर",
+      "hinglish": "Level"
+    },
+    {
+      "english": "Who can see it",
+      "hindi": "कौन देख सकता है",
+      "hinglish": "Kaun dekh sakta hai"
+    },
+    {
+      "english": "Example",
+      "hindi": "उदाहरण",
+      "hinglish": "Example"
+    }
+  ],
+  "kind": "table",
+  "rows": [
+    [
+      {
+        "english": "Public",
+        "hindi": "Public",
+        "hinglish": "Public"
       },
+      {
+        "english": "Everyone can see it",
+        "hindi": "सब देख सकते हैं",
+        "hinglish": "Sab dekh sakte hain"
+      },
+      {
+        "english": "owner",
+        "hindi": "owner",
+        "hinglish": "owner"
+      }
+    ],
+    [
+      {
+        "english": "Protected",
+        "hindi": "Protected",
+        "hinglish": "Protected"
+      },
+      {
+        "english": "Only the class and its children",
+        "hindi": "सिर्फ क्लास और उसके बच्चे",
+        "hinglish": "Sirf class aur uske bacche"
+      },
+      {
+        "english": "_balance",
+        "hindi": "_balance",
+        "hinglish": "_balance"
+      }
+    ],
+    [
+      {
+        "english": "Private",
+        "hindi": "Private",
+        "hinglish": "Private"
+      },
+      {
+        "english": "Only inside the class",
+        "hindi": "सिर्फ क्लास के अंदर",
+        "hinglish": "Sirf class ke andar"
+      },
+      {
+        "english": "__pin",
+        "hindi": "__pin",
+        "hinglish": "__pin"
+      }
+    ],
+    [
+      {
+        "english": "How to reach it from outside",
+        "hindi": "बाहर से कैसे पहुँचें",
+        "hinglish": "Bahar se kaise pahunche"
+      },
+      {
+        "english": "Only through methods",
+        "hindi": "सिर्फ मेथड से",
+        "hinglish": "Sirf methods se"
+      },
+      {
+        "english": "deposit(), withdraw()",
+        "hindi": "deposit(), withdraw()",
+        "hinglish": "deposit(), withdraw()"
+      }
+    ]
+  ],
+  "title": {
+    "english": "Public, protected and private — the difference",
+    "hindi": "Public, protected, private — अंतर",
+    "hinglish": "Public, protected, private — farq"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "Everyone can see public, private stays only inside the class.",
+    "hindi": "पब्लिक सब देख सकते हैं, प्राइवेट सिर्फ क्लास के अंदर।",
+    "hinglish": "Public sab dekh sakte hain, private sirf class ke andar."
+  },
+  {
+    "english": "_balance is a sign of protected, and the name of __pin is changed.",
+    "hindi": "_balance प्रोटेक्टेड का इशारा है, __pin का नाम बदल जाता है।",
+    "hinglish": "_balance protected ka ishara hai, __pin ka naam badal jata hai."
+  },
+  {
+    "english": "Change data only through methods — with a getter, a setter and @property.",
+    "hindi": "डेटा को सिर्फ मेथड से बदलें — गेटर, सेटर और @property से।",
+    "hinglish": "Data ko sirf methods se badlo — getter, setter aur @property se."
+  },
+  {
+    "english": "An abstract class gives only the design, and it is made with ABC.",
+    "hindi": "एब्स्ट्रैक्ट क्लास सिर्फ डिज़ाइन देती है, ABC से बनती है।",
+    "hinglish": "Abstract class sirf design deti hai, ABC se banti hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -9005,63 +10130,95 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "for loop ke peeche kya chalta hai",
-          "english": "What runs behind a for loop",
-          "hindi": "for loop के पीछे क्या चलता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "iter(list) bulao",
-              "english": "Call iter(list)",
-              "hindi": "iter(list) बुलाओ"
-            },
-            "s": {
-              "hinglish": "Iterator banta hai",
-              "english": "An iterator is made",
-              "hindi": "Iterator बनता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "next() bulao",
-              "english": "Call next()",
-              "hindi": "next() बुलाओ"
-            },
-            "s": {
-              "hinglish": "Ek value milti hai",
-              "english": "One value is got",
-              "hindi": "एक value मिलती है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Value mile? Loop chalao",
-              "english": "Value got? Run the loop",
-              "hindi": "Value मिली? Loop चलाओ"
-            },
-            "s": {
-              "hinglish": "10, phir 20, phir 30",
-              "english": "10, then 20, then 30",
-              "hindi": "10, फिर 20, फिर 30"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "StopIteration aaye to ruko",
-              "english": "Stop when StopIteration comes",
-              "hindi": "StopIteration आए तो रुको"
-            },
-            "s": {
-              "hinglish": "Loop chupchaap khatm",
-              "english": "The loop ends quietly",
-              "hindi": "Loop चुपचाप खत्म"
-            }
-          }
-        ]
+  "caption": {
+    "english": "iter() makes an iterator, next() gives one value at a time, and on StopIteration the loop stops quietly.",
+    "hindi": "iter() इटरेटर बनाता है, next() एक-एक मान देता है, StopIteration पर लूप चुपचाप रुक जाता है।",
+    "hinglish": "iter() iterator banata hai, next() ek-ek value deta hai, StopIteration par loop chupchaap ruk jata hai."
+  },
+  "kind": "cycle",
+  "nodes": [
+    {
+      "s": {
+        "english": "An iterator is made",
+        "hindi": "इटरेटर बनता है",
+        "hinglish": "Iterator banta hai"
       },
+      "t": {
+        "english": "Call iter(list)",
+        "hindi": "iter(list) बुलाओ",
+        "hinglish": "iter(list) bulao"
+      }
+    },
+    {
+      "s": {
+        "english": "One value comes out: 10, then 20, then 30",
+        "hindi": "एक मान मिलता है: 10, फिर 20, फिर 30",
+        "hinglish": "Ek value milti hai: 10, phir 20, phir 30"
+      },
+      "t": {
+        "english": "Call next()",
+        "hindi": "next() बुलाओ",
+        "hinglish": "next() bulao"
+      }
+    },
+    {
+      "s": {
+        "english": "The loop works on every value",
+        "hindi": "हर मान पर लूप का काम होता है",
+        "hinglish": "Har value par loop ka kaam hota hai"
+      },
+      "t": {
+        "english": "Got a value? Run the loop",
+        "hindi": "मान मिला? लूप चलाओ",
+        "hinglish": "Value mili? Loop chalao"
+      }
+    },
+    {
+      "s": {
+        "english": "The loop ends quietly",
+        "hindi": "लूप चुपचाप खत्म",
+        "hinglish": "Loop chupchaap khatam"
+      },
+      "t": {
+        "english": "StopIteration comes",
+        "hindi": "StopIteration आया",
+        "hinglish": "StopIteration aaya"
+      }
+    }
+  ],
+  "title": {
+    "english": "What runs behind a for loop",
+    "hindi": "for लूप के पीछे क्या चलता है",
+    "hinglish": "for loop ke peeche kya chalta hai"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "iter() makes an iterator, and next() gives one value at a time.",
+    "hindi": "iter() इटरेटर बनाता है, next() एक-एक मान देता है।",
+    "hinglish": "iter() iterator banata hai, next() ek-ek value deta hai."
+  },
+  {
+    "english": "When the values end, StopIteration comes.",
+    "hindi": "मान खत्म होने पर StopIteration आता है।",
+    "hinglish": "Values khatam hone par StopIteration aata hai."
+  },
+  {
+    "english": "Your own iterator is made with __iter__ and __next__.",
+    "hindi": "अपना इटरेटर __iter__ और __next__ से बनता है।",
+    "hinglish": "Apna iterator __iter__ aur __next__ se banta hai."
+  },
+  {
+    "english": "yield makes a generator, which is lazy.",
+    "hindi": "yield से जेनरेटर बनता है, जो lazy होता है।",
+    "hinglish": "yield se generator banta hai, jo lazy hota hai."
+  },
+  {
+    "english": "On a big range, lazy evaluation saves memory.",
+    "hindi": "बड़े range पर lazy evaluation मेमोरी बचाता है।",
+    "hinglish": "Bade range par lazy evaluation memory bachata hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -9403,63 +10560,102 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Bank mein paise nikaalne ka flow",
-          "english": "The flow of taking money out of the bank",
-          "hindi": "बैंक में पैसे निकालने का फ्लो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Bank se khaata dhoondho",
-              "english": "Find the account from the Bank",
-              "hindi": "Bank से खाता ढूँढो"
-            },
-            "s": {
-              "hinglish": "accounts dict mein number se",
-              "english": "By number in the accounts dict",
-              "hindi": "accounts dict में नंबर से"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "withdraw(amount) bulao",
-              "english": "Call withdraw(amount)",
-              "hindi": "withdraw(amount) बुलाओ"
-            },
-            "s": {
-              "hinglish": "Pehle check: rakam sahi hai?",
-              "english": "First check: is the amount right?",
-              "hindi": "पहले check: रकम सही है?"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Balance kaafi hai?",
-              "english": "Is the balance enough?",
-              "hindi": "Balance काफी है?"
-            },
-            "s": {
-              "hinglish": "Nahi — \"Not enough balance\"",
-              "english": "No — \"Not enough balance\"",
-              "hindi": "नहीं — \"Not enough balance\""
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Haan — balance ghatao",
-              "english": "Yes — reduce the balance",
-              "hindi": "हाँ — balance घटाओ"
-            },
-            "s": {
-              "hinglish": "Message wapas do",
-              "english": "Give back a message",
-              "hindi": "Message वापस दो"
-            }
-          }
-        ]
+  "caption": {
+    "english": "The account is found by its number in a dict, withdraw first checks the amount, then it cuts the balance.",
+    "hindi": "अकाउंट dict में नंबर से मिलता है, withdraw पहले रकम जाँचता है, फिर बैलेंस घटाता है।",
+    "hinglish": "Account dict mein number se milta hai, withdraw pehle amount check karta hai, phir balance ghataata hai."
+  },
+  "kind": "flow",
+  "nodes": [
+    {
+      "s": {
+        "english": "By its number in the accounts dict",
+        "hindi": "accounts dict में नंबर से",
+        "hinglish": "accounts dict mein number se"
       },
+      "t": {
+        "english": "Find the account in the Bank",
+        "hindi": "बैंक में अकाउंट ढूँढें",
+        "hinglish": "Bank mein account dhoondho"
+      }
+    },
+    {
+      "s": {
+        "english": "First check: is the amount right?",
+        "hindi": "पहले जाँच: क्या रकम सही है?",
+        "hinglish": "Pehle check: kya amount sahi hai?"
+      },
+      "t": {
+        "english": "Call withdraw(amount)",
+        "hindi": "withdraw(amount) बुलाओ",
+        "hinglish": "withdraw(amount) bulao"
+      }
+    },
+    {
+      "s": {
+        "english": "No — Not enough balance",
+        "hindi": "नहीं — Not enough balance",
+        "hinglish": "Nahi — Not enough balance"
+      },
+      "t": {
+        "english": "Is the balance enough?",
+        "hindi": "बैलेंस काफी है?",
+        "hinglish": "Balance kaafi hai?"
+      }
+    },
+    {
+      "s": {
+        "english": "balance = balance - amount",
+        "hindi": "balance = balance - amount",
+        "hinglish": "balance = balance - amount"
+      },
+      "t": {
+        "english": "Yes — cut the balance",
+        "hindi": "हाँ — बैलेंस घटाएँ",
+        "hinglish": "Haan — balance ghatao"
+      }
+    },
+    {
+      "s": {
+        "english": "Show the new balance",
+        "hindi": "नया बैलेंस दिखाएँ",
+        "hinglish": "Naya balance dikhao"
+      },
+      "t": {
+        "english": "Give back a message",
+        "hindi": "संदेश वापस दें",
+        "hinglish": "Message wapas do"
+      }
+    }
+  ],
+  "title": {
+    "english": "The flow of taking money out of the bank",
+    "hindi": "बैंक से पैसे निकालने का प्रवाह",
+    "hinglish": "Bank se paise nikaalne ka flow"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "The Account class holds deposit, withdraw and balance check.",
+    "hindi": "Account क्लास में deposit, withdraw और बैलेंस जाँच होते हैं।",
+    "hinglish": "Account class mein deposit, withdraw aur balance check hote hain."
+  },
+  {
+    "english": "The Bank class keeps accounts in a dict by number.",
+    "hindi": "Bank क्लास अकाउंट्स को dict में नंबर से रखता है।",
+    "hinglish": "Bank class accounts ko dict mein number se rakhta hai."
+  },
+  {
+    "english": "Before a withdrawal, check both the amount and the balance.",
+    "hindi": "Withdraw से पहले रकम और बैलेंस दोनों जाँचें।",
+    "hinglish": "Withdraw se pehle amount aur balance dono check karo."
+  },
+  {
+    "english": "With a menu loop, the user can pick a job again and again.",
+    "hindi": "मेनू लूप से user बार-बार काम चुन सकता है।",
+    "hinglish": "Menu loop se user baar-baar kaam chun sakta hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -9801,70 +10997,102 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Exception handle karne ka flow",
-          "english": "The flow of handling an exception",
-          "hindi": "एक्सेप्शन संभालने का प्रवाह"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Try block chalta hai",
-              "english": "The try block runs",
-              "hindi": "try ब्लॉक चलता है"
-            },
-            "s": {
-              "hinglish": "Code normal tareeke se run hota hai",
-              "english": "The code runs normally",
-              "hindi": "कोड सामान्य तरीके से चलता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Exception aayi?",
-              "english": "Did an exception occur?",
-              "hindi": "क्या exception आई?"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Matching except block",
-              "english": "The matching except block",
-              "hindi": "मेल खाता except ब्लॉक"
-            },
-            "s": {
-              "hinglish": "Error handle hoti hai, program rukta nahi",
-              "english": "The error is handled and the program keeps running",
-              "hindi": "एरर संभल जाती है, प्रोग्राम रुकता नहीं"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Else block",
-              "english": "The else block",
-              "hindi": "else ब्लॉक"
-            },
-            "s": {
-              "hinglish": "Sirf tab chalta hai jab koi error na aaye",
-              "english": "Runs only when no error occurred",
-              "hindi": "सिर्फ तब चलता है जब कोई एरर न आए"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Finally block",
-              "english": "The finally block",
-              "hindi": "finally ब्लॉक"
-            },
-            "s": {
-              "hinglish": "Hamesha chalta hai — error aaye ya na aaye",
-              "english": "Always runs, with or without an error",
-              "hindi": "हमेशा चलता है — एरर आए या न आए"
-            }
-          }
-        ]
+  "caption": {
+    "english": "The code runs in try, on an error except takes over, and finally always runs.",
+    "hindi": "try में कोड चलता है, गलती पर except सँभालता है, finally हमेशा चलता है।",
+    "hinglish": "try mein code chalta hai, galti par except sambhalta hai, finally hamesha chalta hai."
+  },
+  "kind": "flow",
+  "nodes": [
+    {
+      "s": {
+        "english": "The code runs as normal",
+        "hindi": "कोड सामान्य चलता है",
+        "hinglish": "Code normal chalta hai"
       },
+      "t": {
+        "english": "The try block runs",
+        "hindi": "try ब्लॉक चलता है",
+        "hinglish": "try block chalta hai"
+      }
+    },
+    {
+      "s": {
+        "english": "No — the else block runs",
+        "hindi": "नहीं — else ब्लॉक चलता है",
+        "hinglish": "Nahi — else block chalta hai"
+      },
+      "t": {
+        "english": "Did an exception occur?",
+        "hindi": "एक्सेप्शन आई?",
+        "hinglish": "Exception aayi?"
+      }
+    },
+    {
+      "s": {
+        "english": "The error is handled and the program keeps running",
+        "hindi": "गलती सँभलती है, प्रोग्राम चलता रहता है",
+        "hinglish": "Galti sambhalti hai, program chalta rehta hai"
+      },
+      "t": {
+        "english": "The matching except block",
+        "hindi": "मिलता-जुलता except ब्लॉक",
+        "hinglish": "Matching except block"
+      }
+    },
+    {
+      "s": {
+        "english": "It runs only when no error happened",
+        "hindi": "सिर्फ तब चलता है जब कोई गलती न हो",
+        "hinglish": "Sirf tab chalta hai jab koi galti na ho"
+      },
+      "t": {
+        "english": "The else block",
+        "hindi": "else ब्लॉक",
+        "hinglish": "else block"
+      }
+    },
+    {
+      "s": {
+        "english": "It always runs, with or without an error",
+        "hindi": "हमेशा चलता है, गलती हो या न हो",
+        "hinglish": "Hamesha chalta hai, galti ho ya na ho"
+      },
+      "t": {
+        "english": "The finally block",
+        "hindi": "finally ब्लॉक",
+        "hinglish": "finally block"
+      }
+    }
+  ],
+  "title": {
+    "english": "The flow of handling an exception",
+    "hindi": "एक्सेप्शन सँभालने का प्रवाह",
+    "hinglish": "Exception handle karne ka flow"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "Risky code goes in try, the fix for the error goes in except.",
+    "hindi": "try में जोखिम वाला कोड, except में गलती का हल।",
+    "hinglish": "try mein risky code, except mein galti ka hal."
+  },
+  {
+    "english": "else runs only when no error happens.",
+    "hindi": "else सिर्फ तब चलता है जब कोई गलती न हो।",
+    "hinglish": "else sirf tab chalta hai jab koi galti na ho."
+  },
+  {
+    "english": "finally always runs, with or without an error.",
+    "hindi": "finally हमेशा चलता है, गलती हो या न हो।",
+    "hinglish": "finally hamesha chalta hai, galti ho ya na ho."
+  },
+  {
+    "english": "Use raise to throw your own error, and make your own exception class.",
+    "hindi": "raise से अपनी गलती खुद उठाएँ, अपना exception क्लास बनाएँ।",
+    "hinglish": "raise se apni galti khud uthao, apna exception class banao."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -10206,58 +11434,90 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "File ka safar: kholo, kaam karo, band karo",
-          "english": "The journey of a file: open, work, close",
-          "hindi": "फ़ाइल का सफ़र: खोलो, काम करो, बंद करो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "File kholo",
-              "english": "Open the file",
-              "hindi": "फ़ाइल खोलो"
-            },
-            "s": {
-              "hinglish": "open() + mode: r, w, a ya x",
-              "english": "open() + mode: r, w, a or x",
-              "hindi": "open() + मोड: r, w, a या x"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Padho ya likho",
-              "english": "Read or write",
-              "hindi": "पढ़ो या लिखो"
-            },
-            "s": {
-              "hinglish": "read/readlines ya write/writelines",
-              "english": "read/readlines or write/writelines",
-              "hindi": "read/readlines या write/writelines"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "with block khatm",
-              "english": "The with block ends",
-              "hindi": "with ब्लॉक खत्म"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "File apne aap band",
-              "english": "The file closes by itself",
-              "hindi": "फ़ाइल अपने आप बंद"
-            },
-            "s": {
-              "hinglish": "Data disk par safe save ho jata hai",
-              "english": "The data is saved safely on disk",
-              "hindi": "डेटा डिस्क पर सुरक्षित सहेजा जाता है"
-            }
-          }
-        ]
+  "caption": {
+    "english": "As soon as the with block ends, the file closes by itself — no fear of forgetting close.",
+    "hindi": "with ब्लॉक खत्म होते ही फ़ाइल अपने आप बंद हो जाती है — close भूलने का डर नहीं।",
+    "hinglish": "with block khatam hote hi file apne aap band ho jati hai — close bhoolne ka dar nahi."
+  },
+  "kind": "flow",
+  "nodes": [
+    {
+      "s": {
+        "english": "Mode: r, w, a or x",
+        "hindi": "मोड: r, w, a या x",
+        "hinglish": "Mode: r, w, a ya x"
       },
+      "t": {
+        "english": "Open the file: open()",
+        "hindi": "फ़ाइल खोलें: open()",
+        "hinglish": "File kholo: open()"
+      }
+    },
+    {
+      "s": {
+        "english": "read/readlines or write/writelines",
+        "hindi": "read/readlines या write/writelines",
+        "hinglish": "read/readlines ya write/writelines"
+      },
+      "t": {
+        "english": "Read or write",
+        "hindi": "पढ़ें या लिखें",
+        "hinglish": "Padho ya likho"
+      }
+    },
+    {
+      "s": {
+        "english": "The data is saved safely on disk",
+        "hindi": "डेटा डिस्क पर सुरक्षित सहेजा जाता है",
+        "hinglish": "Data disk par safe save hota hai"
+      },
+      "t": {
+        "english": "The with block ends",
+        "hindi": "with ब्लॉक खत्म",
+        "hinglish": "with block khatam"
+      }
+    },
+    {
+      "s": {
+        "english": "There is no need to write close()",
+        "hindi": "close() लिखने की ज़रूरत नहीं",
+        "hinglish": "close() likhne ki zaroorat nahi"
+      },
+      "t": {
+        "english": "The file closes by itself",
+        "hindi": "फ़ाइल अपने आप बंद",
+        "hinglish": "File apne aap band"
+      }
+    }
+  ],
+  "title": {
+    "english": "The journey of a file: open, work, close",
+    "hindi": "फ़ाइल की यात्रा: open, काम, close",
+    "hinglish": "File ki journey: open, kaam, close"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "In open(), pick a mode: r, w, a or x.",
+    "hindi": "open() में मोड चुनें: r, w, a या x।",
+    "hinglish": "open() mein mode chunno: r, w, a ya x."
+  },
+  {
+    "english": "With with, the file closes by itself, so there is no fear of forgetting close.",
+    "hindi": "with से फ़ाइल अपने आप बंद होती है, close भूलने का डर नहीं।",
+    "hinglish": "with se file apne aap band hoti hai, close bhoolne ka dar nahi."
+  },
+  {
+    "english": "read gives all the data, readlines gives every line.",
+    "hindi": "read पूरा डेटा देता है, readlines हर लाइन देता है।",
+    "hinglish": "read poora data deta hai, readlines har line deta hai."
+  },
+  {
+    "english": "The os module and pathlib do the work of files and folders.",
+    "hindi": "os और pathlib से फ़ाइल और फ़ोल्डर का काम होता है।",
+    "hinglish": "os aur pathlib se file aur folder ka kaam hota hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -10599,75 +11859,150 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "SQLite kaam kaise karta hai",
-          "english": "How SQLite works",
-          "hindi": "SQLite कैसे काम करता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Connect karo",
-              "english": "Connect",
-              "hindi": "कनेक्ट करें"
-            },
-            "s": {
-              "hinglish": "sqlite3.connect se database file khulti hai",
-              "english": "sqlite3.connect opens the database file",
-              "hindi": "sqlite3.connect से डेटाबेस फ़ाइल खुलती है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Cursor lo",
-              "english": "Take a cursor",
-              "hindi": "कर्सर लें"
-            },
-            "s": {
-              "hinglish": "Cursor se SQL commands chalaye jate hain",
-              "english": "SQL commands run through the cursor",
-              "hindi": "कर्सर से SQL कमांड चलाए जाते हैं"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Table banao aur data daalo",
-              "english": "Make the table and put in data",
-              "hindi": "टेबल बनाएँ और डेटा डालें"
-            },
-            "s": {
-              "hinglish": "CREATE TABLE + INSERT with ? placeholder",
-              "english": "CREATE TABLE + INSERT with the ? placeholder",
-              "hindi": "CREATE TABLE + INSERT ? प्लेसहोल्डर के साथ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Commit karo",
-              "english": "Commit",
-              "hindi": "कमिट करें"
-            },
-            "s": {
-              "hinglish": "Data file mein permanently save hota hai",
-              "english": "The data is saved in the file for good",
-              "hindi": "डेटा फ़ाइल में स्थायी रूप से सहेजा जाता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "SELECT se data nikalo",
-              "english": "Take out data with SELECT",
-              "hindi": "SELECT से डेटा निकालें"
-            },
-            "s": {
-              "hinglish": "fetchall ya fetchone se rows milti hain",
-              "hindi": "fetchall या fetchone से पंक्तियाँ मिलती हैं",
-              "english": "fetchall or fetchone gives the rows"
-            }
-          }
-        ]
+  "caption": {
+    "english": "SQL commands run through the cursor, and commit saves the data in the file for good.",
+    "hindi": "Cursor से SQL कमांड चलती है, commit से डेटा फ़ाइल में हमेशा के लिए सहेजा जाता है।",
+    "hinglish": "Cursor se SQL command chalti hai, commit se data file mein hamesha ke liye save hota hai."
+  },
+  "headers": [
+    {
+      "english": "Command",
+      "hindi": "कमांड",
+      "hinglish": "Command"
+    },
+    {
+      "english": "What it does",
+      "hindi": "क्या करता है",
+      "hinglish": "Kya karta hai"
+    },
+    {
+      "english": "Example",
+      "hindi": "उदाहरण",
+      "hinglish": "Example"
+    }
+  ],
+  "kind": "table",
+  "rows": [
+    [
+      {
+        "english": "CREATE TABLE",
+        "hindi": "CREATE TABLE",
+        "hinglish": "CREATE TABLE"
       },
+      {
+        "english": "Makes a table",
+        "hindi": "तालिका बनाता है",
+        "hinglish": "Table banata hai"
+      },
+      {
+        "english": "CREATE TABLE students ...",
+        "hindi": "CREATE TABLE students ...",
+        "hinglish": "CREATE TABLE students ..."
+      }
+    ],
+    [
+      {
+        "english": "INSERT",
+        "hindi": "INSERT",
+        "hinglish": "INSERT"
+      },
+      {
+        "english": "Adds a new row",
+        "hindi": "नई पंक्ति डालता है",
+        "hinglish": "Naya row daalta hai"
+      },
+      {
+        "english": "INSERT INTO students ...",
+        "hindi": "INSERT INTO students ...",
+        "hinglish": "INSERT INTO students ..."
+      }
+    ],
+    [
+      {
+        "english": "SELECT",
+        "hindi": "SELECT",
+        "hinglish": "SELECT"
+      },
+      {
+        "english": "Takes out data",
+        "hindi": "डेटा निकालता है",
+        "hinglish": "Data nikaalta hai"
+      },
+      {
+        "english": "SELECT * FROM students",
+        "hindi": "SELECT * FROM students",
+        "hinglish": "SELECT * FROM students"
+      }
+    ],
+    [
+      {
+        "english": "UPDATE",
+        "hindi": "UPDATE",
+        "hinglish": "UPDATE"
+      },
+      {
+        "english": "Changes old data",
+        "hindi": "पुराना डेटा बदलता है",
+        "hinglish": "Purana data badalta hai"
+      },
+      {
+        "english": "UPDATE students SET ...",
+        "hindi": "UPDATE students SET ...",
+        "hinglish": "UPDATE students SET ..."
+      }
+    ],
+    [
+      {
+        "english": "DELETE",
+        "hindi": "DELETE",
+        "hinglish": "DELETE"
+      },
+      {
+        "english": "Removes a row",
+        "hindi": "पंक्ति हटा देता है",
+        "hinglish": "Row hata deta hai"
+      },
+      {
+        "english": "DELETE FROM students ...",
+        "hindi": "DELETE FROM students ...",
+        "hinglish": "DELETE FROM students ..."
+      }
+    ]
+  ],
+  "title": {
+    "english": "The 5 jobs of SQLite",
+    "hindi": "SQLite के 5 काम",
+    "hinglish": "SQLite ke 5 kaam"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "sqlite3.connect opens the database file.",
+    "hindi": "sqlite3.connect से डेटाबेस फ़ाइल खुलती है।",
+    "hinglish": "sqlite3.connect se database file khulti hai."
+  },
+  {
+    "english": "SQL commands run through the cursor.",
+    "hindi": "Cursor से SQL कमांड चलती है।",
+    "hinglish": "Cursor se SQL command chalti hai."
+  },
+  {
+    "english": "CREATE TABLE, INSERT, SELECT, UPDATE and DELETE — the five basic jobs.",
+    "hindi": "CREATE TABLE, INSERT, SELECT, UPDATE, DELETE — पाँच बुनियादी काम।",
+    "hinglish": "CREATE TABLE, INSERT, SELECT, UPDATE, DELETE — paanch basic kaam."
+  },
+  {
+    "english": "Put data in safely with the ? placeholder.",
+    "hindi": "? placeholder से डेटा सुरक्षित डालें।",
+    "hinglish": "? placeholder se data safe daalo."
+  },
+  {
+    "english": "Without commit, the data is not saved in the file.",
+    "hindi": "commit के बिना डेटा फ़ाइल में सहेजा नहीं जाता।",
+    "hinglish": "commit ke bina data file mein save nahi hota."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -11009,63 +12344,128 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "boxes",
-        "title": {
-          "hinglish": "SQL vs NoSQL: kya chunna hai",
-          "english": "SQL versus NoSQL: what to pick",
-          "hindi": "SQL बनाम NoSQL: क्या चुनना है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "MySQL: table",
-              "english": "MySQL: table",
-              "hindi": "MySQL: टेबल"
-            },
-            "s": {
-              "hinglish": "Fixed rows aur columns, SQL queries",
-              "english": "Fixed rows and columns, SQL queries",
-              "hindi": "तय पंक्तियाँ और स्तंभ, SQL क्वेरी"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "MongoDB: document",
-              "english": "MongoDB: document",
-              "hindi": "MongoDB: डॉक्युमेंट"
-            },
-            "s": {
-              "hinglish": "Dictionary jaisa document, find() se search",
-              "english": "A document like a dictionary, search with find()",
-              "hindi": "डिक्शनरी जैसा डॉक्युमेंट, find() से खोज"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "SQL chuno jab",
-              "english": "Pick SQL when",
-              "hindi": "SQL चुनें जब"
-            },
-            "s": {
-              "hinglish": "Data ka shape fixed ho: bank, billing, attendance",
-              "english": "The shape of the data is fixed: bank, billing, attendance",
-              "hindi": "डेटा का आकार तय हो: बैंक, बिलिंग, उपस्थिति"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "NoSQL chuno jab",
-              "english": "Pick NoSQL when",
-              "hindi": "NoSQL चुनें जब"
-            },
-            "s": {
-              "hinglish": "Data ka shape badalta rahe: profile, feedback, posts",
-              "english": "The shape of the data keeps changing: profile, feedback, posts",
-              "hindi": "डेटा का आकार बदलता रहे: प्रोफ़ाइल, फ़ीडबैक, पोस्ट"
-            }
-          }
-        ]
+  "caption": {
+    "english": "When the shape of the data is fixed, pick MySQL; when it keeps changing, pick MongoDB.",
+    "hindi": "डेटा का आकार तय है तो MySQL, आकार बदलता रहता है तो MongoDB।",
+    "hinglish": "Data ka shape fixed hai to MySQL, shape badalta rehta hai to MongoDB."
+  },
+  "headers": [
+    {
+      "english": "Thing",
+      "hindi": "चीज़",
+      "hinglish": "Cheez"
+    },
+    {
+      "english": "MySQL (SQL)",
+      "hindi": "MySQL (SQL)",
+      "hinglish": "MySQL (SQL)"
+    },
+    {
+      "english": "MongoDB (NoSQL)",
+      "hindi": "MongoDB (NoSQL)",
+      "hinglish": "MongoDB (NoSQL)"
+    }
+  ],
+  "kind": "table",
+  "rows": [
+    [
+      {
+        "english": "The shape of the data",
+        "hindi": "डेटा का आकार",
+        "hinglish": "Data ka shape"
       },
+      {
+        "english": "Fixed rows and columns",
+        "hindi": "तय पंक्तियाँ और स्तंभ",
+        "hinglish": "Fixed rows aur columns"
+      },
+      {
+        "english": "A document, like a dict",
+        "hindi": "Document, dict जैसा",
+        "hinglish": "Document, dict jaisa"
+      }
+    ],
+    [
+      {
+        "english": "Example data",
+        "hindi": "उदाहरण डेटा",
+        "hinglish": "Example data"
+      },
+      {
+        "english": "Bank, billing, attendance",
+        "hindi": "Bank, billing, attendance",
+        "hinglish": "Bank, billing, attendance"
+      },
+      {
+        "english": "Profile, feedback, posts",
+        "hindi": "Profile, feedback, posts",
+        "hinglish": "Profile, feedback, posts"
+      }
+    ],
+    [
+      {
+        "english": "How to search",
+        "hindi": "खोज कैसे",
+        "hinglish": "Search kaise"
+      },
+      {
+        "english": "With an SQL query",
+        "hindi": "SQL query से",
+        "hinglish": "SQL query se"
+      },
+      {
+        "english": "With find()",
+        "hindi": "find() से",
+        "hinglish": "find() se"
+      }
+    ],
+    [
+      {
+        "english": "In Python",
+        "hindi": "पायथन में",
+        "hinglish": "Python mein"
+      },
+      {
+        "english": "Table style, like sqlite3",
+        "hindi": "तालिका वाला, sqlite3 जैसा",
+        "hinglish": "Table wala, sqlite3 jaisa"
+      },
+      {
+        "english": "A document like a dict",
+        "hindi": "Dict जैसा document",
+        "hinglish": "Dict jaisa document"
+      }
+    ]
+  ],
+  "title": {
+    "english": "SQL versus NoSQL: what to pick",
+    "hindi": "SQL बनाम NoSQL: क्या चुनें",
+    "hinglish": "SQL vs NoSQL: kya chunna hai"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "MySQL has fixed rows and columns, MongoDB has documents.",
+    "hindi": "MySQL में तय पंक्तियाँ और स्तंभ, MongoDB में document।",
+    "hinglish": "MySQL mein fixed rows aur columns, MongoDB mein document."
+  },
+  {
+    "english": "A document is like a dict, and find() searches it.",
+    "hindi": "Document dict जैसा होता है, find() से खोज होती है।",
+    "hinglish": "Document dict jaisa hota hai, find() se search hota hai."
+  },
+  {
+    "english": "When the shape of the data is fixed, pick SQL; when it keeps changing, pick NoSQL.",
+    "hindi": "डेटा का आकार तय हो तो SQL, बदलता रहे तो NoSQL।",
+    "hinglish": "Data ka shape fixed ho to SQL, badalta rahe to NoSQL."
+  },
+  {
+    "english": "In Python, working with MySQL is much like working with sqlite3.",
+    "hindi": "पायथन में MySQL का काम sqlite3 जैसा ही होता है।",
+    "hinglish": "Python mein MySQL ka kaam sqlite3 jaisa hi hota hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -11407,75 +12807,107 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Ek badi file se package tak ka safar",
-          "english": "From one big file to a package",
-          "hindi": "एक बड़ी फाइल से पैकेज तक का सफर"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Ek badi file mushkil ho jati hai",
-              "english": "One big file becomes hard to manage",
-              "hindi": "एक बड़ी फाइल मुश्किल हो जाती है"
-            },
-            "s": {
-              "hinglish": "500 line ke baad dhundhna mushkil",
-              "english": "Hard to search after 500 lines",
-              "hindi": "500 लाइन के बाद ढूँढना मुश्किल"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Code ko chhote module mein baanto",
-              "english": "Split code into small modules",
-              "hindi": "कोड को छोटे मॉड्यूल में बाँटें"
-            },
-            "s": {
-              "hinglish": "Har file ka ek kaam",
-              "english": "One job per file",
-              "hindi": "हर फाइल का एक काम"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Module ko package folder mein rakho",
-              "english": "Group modules into a package folder",
-              "hindi": "मॉड्यूल को पैकेज फ़ोल्डर में रखें"
-            },
-            "s": {
-              "hinglish": "Folder mein __init__.py rakho",
-              "english": "Keep __init__.py in the folder",
-              "hindi": "फ़ोल्डर में __init__.py रखें"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Bahari package pip se install karo",
-              "english": "Install outside packages with pip",
-              "hindi": "बाहरी पैकेज pip से install करें"
-            },
-            "s": {
-              "hinglish": "pip install requests",
-              "english": "pip install requests",
-              "hindi": "pip install requests"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "List requirements.txt mein rakho",
-              "english": "Keep the list in requirements.txt",
-              "hindi": "सूची requirements.txt में रखें"
-            },
-            "s": {
-              "hinglish": "pip freeze se list banao",
-              "english": "Make the list with pip freeze",
-              "hindi": "pip freeze से सूची बनाएँ"
-            }
-          }
-        ]
+  "caption": {
+    "english": "One job per file, one folder per package — outside packages come from pip.",
+    "hindi": "हर फ़ाइल एक काम, हर पैकेज एक फ़ोल्डर — बाहर के पैकेज pip से आते हैं।",
+    "hinglish": "Har file ek kaam, har package ek folder — bahar ke package pip se aate hain."
+  },
+  "kind": "boxes",
+  "nodes": [
+    {
+      "s": {
+        "english": "import math",
+        "hindi": "import math",
+        "hinglish": "import math"
       },
+      "t": {
+        "english": "A module: one Python file",
+        "hindi": "मॉड्यूल: एक पायथन फ़ाइल",
+        "hinglish": "Module: ek Python file"
+      }
+    },
+    {
+      "s": {
+        "english": "Keep __init__.py in the folder",
+        "hindi": "फ़ोल्डर में __init__.py रखें",
+        "hinglish": "Folder mein __init__.py rakho"
+      },
+      "t": {
+        "english": "A package: a folder of modules",
+        "hindi": "पैकेज: मॉड्यूल्स का फ़ोल्डर",
+        "hinglish": "Package: modules ka folder"
+      }
+    },
+    {
+      "s": {
+        "english": "pip install requests",
+        "hindi": "pip install requests",
+        "hinglish": "pip install requests"
+      },
+      "t": {
+        "english": "pip: outside packages",
+        "hindi": "pip: बाहर के पैकेज",
+        "hinglish": "pip: bahar ke package"
+      }
+    },
+    {
+      "s": {
+        "english": "python -m venv myenv",
+        "hindi": "python -m venv myenv",
+        "hinglish": "python -m venv myenv"
+      },
+      "t": {
+        "english": "venv: a separate environment",
+        "hindi": "venv: अलग environment",
+        "hinglish": "venv: alag environment"
+      }
+    },
+    {
+      "s": {
+        "english": "Make the list with pip freeze",
+        "hindi": "pip freeze से सूची बनाएँ",
+        "hinglish": "pip freeze se list banao"
+      },
+      "t": {
+        "english": "requirements.txt: the list of packages",
+        "hindi": "requirements.txt: पैकेज की सूची",
+        "hinglish": "requirements.txt: package ki list"
+      }
+    }
+  ],
+  "title": {
+    "english": "From one big file to a package",
+    "hindi": "एक बड़ी फ़ाइल से पैकेज तक",
+    "hinglish": "Ek badi file se package tak"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "A module is one Python file, a package is a folder of modules.",
+    "hindi": "मॉड्यूल एक पायथन फ़ाइल है, पैकेज मॉड्यूल्स का फ़ोल्डर है।",
+    "hinglish": "Module ek Python file hai, package modules ka folder hai."
+  },
+  {
+    "english": "A package folder must hold __init__.py.",
+    "hindi": "पैकेज फ़ोल्डर में __init__.py होना चाहिए।",
+    "hinglish": "Package folder mein __init__.py hona chahiye."
+  },
+  {
+    "english": "Outside packages come with pip install.",
+    "hindi": "pip install से बाहर के पैकेज आते हैं।",
+    "hinglish": "pip install se bahar ke package aate hain."
+  },
+  {
+    "english": "Make a separate venv for each project, and keep the list in requirements.txt.",
+    "hindi": "हर प्रोजेक्ट का अपना venv बनाएँ, सूची requirements.txt में रखें।",
+    "hinglish": "Har project ka apna venv banao, list requirements.txt mein rakho."
+  },
+  {
+    "english": "Do not name your own file math.py.",
+    "hindi": "अपनी फ़ाइल का नाम math.py मत रखें।",
+    "hinglish": "Apni file ka naam math.py mat rakho."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -11817,63 +13249,90 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "4 module — kaunsa kab kaam aata hai",
-          "english": "4 modules — which one is used when",
-          "hindi": "4 मॉड्यूल — कौनसा कब काम आता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "math — hisaab karna",
-              "english": "math — doing maths",
-              "hindi": "math — हिसाब करना"
-            },
-            "s": {
-              "hinglish": "floor, ceil, sqrt, pi",
-              "english": "floor, ceil, sqrt, pi",
-              "hindi": "floor, ceil, sqrt, pi"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "random — kismat ka kaam",
-              "english": "random — jobs of chance",
-              "hindi": "random — किस्मत का काम"
-            },
-            "s": {
-              "hinglish": "randint, choice, shuffle",
-              "english": "randint, choice, shuffle",
-              "hindi": "randint, choice, shuffle"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "datetime — tareekh ginna",
-              "english": "datetime — counting dates",
-              "hindi": "datetime — तारीख गिनना"
-            },
-            "s": {
-              "hinglish": "date, timedelta, din ka farq",
-              "english": "date, timedelta, day difference",
-              "hindi": "date, timedelta, दिन का फर्क"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "json — data ko text banana",
-              "english": "json — turning data into text",
-              "hindi": "json — डेटा को text बनाना"
-            },
-            "s": {
-              "hinglish": "dumps se text, loads se wapas",
-              "english": "dumps makes text, loads brings it back",
-              "hindi": "dumps से text, loads से वापस"
-            }
-          }
-        ]
+  "caption": {
+    "english": "These modules come with Python itself — there is no need to install them.",
+    "hindi": "ये मॉड्यूल पायथन के साथ ही आते हैं — इंस्टॉल करने की ज़रूरत नहीं।",
+    "hinglish": "Ye module Python ke saath hi aate hain — install karne ki zaroorat nahi."
+  },
+  "kind": "boxes",
+  "nodes": [
+    {
+      "s": {
+        "english": "floor, ceil, sqrt, pi",
+        "hindi": "floor, ceil, sqrt, pi",
+        "hinglish": "floor, ceil, sqrt, pi"
       },
+      "t": {
+        "english": "math — maths",
+        "hindi": "math — हिसाब",
+        "hinglish": "math — hisaab"
+      }
+    },
+    {
+      "s": {
+        "english": "randint, choice, shuffle",
+        "hindi": "randint, choice, shuffle",
+        "hinglish": "randint, choice, shuffle"
+      },
+      "t": {
+        "english": "random — jobs of chance",
+        "hindi": "random — किस्मत वाले काम",
+        "hinglish": "random — kismat wale kaam"
+      }
+    },
+    {
+      "s": {
+        "english": "date, timedelta, day difference",
+        "hindi": "date, timedelta, दिन का फर्क",
+        "hinglish": "date, timedelta, din ka farq"
+      },
+      "t": {
+        "english": "datetime — counting dates",
+        "hindi": "datetime — तारीख का हिसाब",
+        "hinglish": "datetime — tareekh ka hisaab"
+      }
+    },
+    {
+      "s": {
+        "english": "dumps makes text, loads brings it back",
+        "hindi": "dumps टेक्स्ट बनाता है, loads वापस लाता है",
+        "hinglish": "dumps text banata hai, loads wapas lata hai"
+      },
+      "t": {
+        "english": "json — turning data into text",
+        "hindi": "json — डेटा को टेक्स्ट बनाना",
+        "hinglish": "json — data ko text banana"
+      }
+    }
+  ],
+  "title": {
+    "english": "4 modules, 4 jobs",
+    "hindi": "4 मॉड्यूल, 4 काम",
+    "hinglish": "4 module, 4 kaam"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "math does the maths: floor, ceil, sqrt and pi.",
+    "hindi": "math से हिसाब: floor, ceil, sqrt, pi।",
+    "hinglish": "math se hisaab: floor, ceil, sqrt, pi."
+  },
+  {
+    "english": "random does jobs of chance: randint, choice and shuffle.",
+    "hindi": "random से किस्मत वाले काम: randint, choice, shuffle।",
+    "hinglish": "random se kismat wale kaam: randint, choice, shuffle."
+  },
+  {
+    "english": "datetime counts dates and the gap in days.",
+    "hindi": "datetime से तारीख का हिसाब और दिन का फर्क।",
+    "hinglish": "datetime se tareekh ka hisaab aur din ka farq."
+  },
+  {
+    "english": "In json, dumps makes text and loads brings it back.",
+    "hindi": "json में dumps टेक्स्ट बनाता है, loads वापस लाता है।",
+    "hinglish": "json mein dumps text banata hai, loads wapas lata hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -12215,75 +13674,95 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "List se array tak — kya badalta hai",
-          "english": "From list to array — what changes",
-          "hindi": "List से array तक — क्या बदलता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "List: har type mil sakta hai",
-              "english": "List: any type can mix",
-              "hindi": "List: हर type मिल सकता है"
-            },
-            "s": {
-              "hinglish": "Number, text sab ek saath",
-              "english": "Numbers and text together",
-              "hindi": "नंबर, text सब एक साथ"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Array: sirf ek type",
-              "english": "Array: only one type",
-              "hindi": "Array: सिर्फ एक type"
-            },
-            "s": {
-              "hinglish": "np.array([78, 85, 92])",
-              "english": "np.array([78, 85, 92])",
-              "hindi": "np.array([78, 85, 92])"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Shape: row aur column",
-              "english": "Shape: rows and columns",
-              "hindi": "Shape: row और column"
-            },
-            "s": {
-              "hinglish": "(3,) ya (2, 2)",
-              "english": "(3,) or (2, 2)",
-              "hindi": "(3,) या (2, 2)"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Vector maths: a + b",
-              "english": "Vector maths: a + b",
-              "hindi": "Vector maths: a + b"
-            },
-            "s": {
-              "hinglish": "Har number ek saath judta hai",
-              "english": "Each number adds at once",
-              "hindi": "हर नंबर एक साथ जुड़ता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Ek line mein hisaab",
-              "english": "Maths in one line",
-              "hindi": "एक लाइन में हिसाब"
-            },
-            "s": {
-              "hinglish": "mean, sum, max, min",
-              "english": "mean, sum, max, min",
-              "hindi": "mean, sum, max, min"
-            }
-          }
-        ]
+  "bars": [
+    {
+      "label": {
+        "english": "Maths on big data",
+        "hindi": "बड़े डेटा पर हिसाब",
+        "hinglish": "Bade data par hisaab"
       },
+      "note": {
+        "english": "NumPy vector maths",
+        "hindi": "NumPy वेक्टर हिसाब",
+        "hinglish": "NumPy vector maths"
+      },
+      "value": 95
+    },
+    {
+      "label": {
+        "english": "Maths in one line",
+        "hindi": "एक लाइन में हिसाब",
+        "hinglish": "Ek line mein hisaab"
+      },
+      "note": {
+        "english": "a + b, mean, sum",
+        "hindi": "a + b, mean, sum",
+        "hinglish": "a + b, mean, sum"
+      },
+      "value": 90
+    },
+    {
+      "label": {
+        "english": "Small data, a list is enough",
+        "hindi": "छोटा डेटा, list ही काफी",
+        "hinglish": "Chhota data, list hi kaafi"
+      },
+      "note": {
+        "english": "A list works fine too",
+        "hindi": "List पर भी चल जाता है",
+        "hinglish": "List par bhi chal jata hai"
+      },
+      "value": 45
+    },
+    {
+      "label": {
+        "english": "Text and mixed data",
+        "hindi": "टेक्स्ट और मिला-जुला डेटा",
+        "hinglish": "Text aur mixed data"
+      },
+      "note": {
+        "english": "Not right for arrays",
+        "hindi": "Array के लिए सही नहीं",
+        "hinglish": "Array ke liye sahi nahi"
+      },
+      "value": 20
+    }
+  ],
+  "caption": {
+    "english": "An array holds only one type, so maths on big data runs faster. These scores are a rough guide.",
+    "hindi": "Array में एक ही type होता है, इसलिए बड़े डेटा पर हिसाब तेज़ होता है। ये अंक मोटा अंदाज़ा हैं।",
+    "hinglish": "Array mein ek hi type hota hai, isliye bade data par hisaab tez hota hai. Ye score rough guide hain."
+  },
+  "kind": "bars",
+  "title": {
+    "english": "How well NumPy fits each job",
+    "hindi": "NumPy किस काम में कितना fit है",
+    "hinglish": "NumPy kis kaam mein kitna fit hai"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "An array holds only one type, a list can mix types.",
+    "hindi": "Array में सिर्फ एक ही type होता है, list में mix चल जाता है।",
+    "hinglish": "Array mein sirf ek hi type hota hai, list mein mix chal jata hai."
+  },
+  {
+    "english": "The shape tells how many rows and columns there are.",
+    "hindi": "Shape बताता है rows और columns कितने हैं।",
+    "hinglish": "Shape batata hai rows aur columns kitne hain."
+  },
+  {
+    "english": "With a + b, every number adds at once — vector maths.",
+    "hindi": "a + b से हर नंबर एक साथ जुड़ता है — वेक्टर हिसाब।",
+    "hinglish": "a + b se har number ek saath judta hai — vector maths."
+  },
+  {
+    "english": "mean, sum, max and min come in one line.",
+    "hindi": "mean, sum, max, min एक लाइन में मिल जाते हैं।",
+    "hinglish": "mean, sum, max, min ek line mein mil jate hain."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -12625,75 +14104,133 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "CSV file se jawab tak",
-          "english": "From a CSV file to an answer",
-          "hindi": "CSV फाइल से जवाब तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "CSV file padho",
-              "english": "Read the CSV file",
-              "hindi": "CSV फाइल पढ़ें"
-            },
-            "s": {
-              "hinglish": "pd.read_csv(\"marks.csv\")",
-              "english": "pd.read_csv(\"marks.csv\")",
-              "hindi": "pd.read_csv(\"marks.csv\")"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Column chuno",
-              "english": "Select a column",
-              "hindi": "Column चुनें"
-            },
-            "s": {
-              "hinglish": "df[\"marks\"]",
-              "english": "df[\"marks\"]",
-              "hindi": "df[\"marks\"]"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Row filter karo",
-              "english": "Filter the rows",
-              "hindi": "Row filter करें"
-            },
-            "s": {
-              "hinglish": "df[df[\"marks\"] > 80]",
-              "english": "df[df[\"marks\"] > 80]",
-              "hindi": "df[df[\"marks\"] > 80]"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Groupby se average",
-              "english": "Average with groupby",
-              "hindi": "Groupby से औसत"
-            },
-            "s": {
-              "hinglish": "groupby(\"class\")[\"marks\"].mean()",
-              "english": "groupby(\"class\")[\"marks\"].mean()",
-              "hindi": "groupby(\"class\")[\"marks\"].mean()"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Missing value sambhalo",
-              "english": "Handle missing values",
-              "hindi": "Missing value संभालें"
-            },
-            "s": {
-              "hinglish": "dropna ya fillna(0)",
-              "english": "dropna or fillna(0)",
-              "hindi": "dropna या fillna(0)"
-            }
-          }
-        ]
+  "caption": {
+    "english": "An example of a table made from a CSV file — then pick a column, filter the rows, and find the average with groupby.",
+    "hindi": "CSV फ़ाइल से बनी तालिका का उदाहरण — फिर कॉलम चुनें, पंक्ति छाँटें, groupby से औसत निकालें।",
+    "hinglish": "CSV file se bani table ka example — phir column chuno, row filter karo, groupby se average nikalo."
+  },
+  "headers": [
+    {
+      "english": "Name",
+      "hindi": "नाम",
+      "hinglish": "Name"
+    },
+    {
+      "english": "Class",
+      "hindi": "कक्षा",
+      "hinglish": "Class"
+    },
+    {
+      "english": "Marks",
+      "hindi": "अंक",
+      "hinglish": "Marks"
+    }
+  ],
+  "kind": "table",
+  "rows": [
+    [
+      {
+        "english": "Rahul",
+        "hindi": "राहुल",
+        "hinglish": "Rahul"
       },
+      {
+        "english": "10",
+        "hindi": "10",
+        "hinglish": "10"
+      },
+      {
+        "english": "85",
+        "hindi": "85",
+        "hinglish": "85"
+      }
+    ],
+    [
+      {
+        "english": "Priya",
+        "hindi": "प्रिया",
+        "hinglish": "Priya"
+      },
+      {
+        "english": "10",
+        "hindi": "10",
+        "hinglish": "10"
+      },
+      {
+        "english": "92",
+        "hindi": "92",
+        "hinglish": "92"
+      }
+    ],
+    [
+      {
+        "english": "Arjun",
+        "hindi": "अर्जुन",
+        "hinglish": "Arjun"
+      },
+      {
+        "english": "9",
+        "hindi": "9",
+        "hinglish": "9"
+      },
+      {
+        "english": "78",
+        "hindi": "78",
+        "hinglish": "78"
+      }
+    ],
+    [
+      {
+        "english": "Meera",
+        "hindi": "मीरा",
+        "hinglish": "Meera"
+      },
+      {
+        "english": "9",
+        "hindi": "9",
+        "hinglish": "9"
+      },
+      {
+        "english": "88",
+        "hindi": "88",
+        "hinglish": "88"
+      }
+    ]
+  ],
+  "title": {
+    "english": "A DataFrame: a table like a school register",
+    "hindi": "DataFrame: स्कूल रजिस्टर जैसी तालिका",
+    "hinglish": "DataFrame: school register jaisi table"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "A DataFrame is like a table, with rows and columns.",
+    "hindi": "DataFrame तालिका जैसा होता है, rows और columns के साथ।",
+    "hinglish": "DataFrame table jaisa hota hai, rows aur columns ke saath."
+  },
+  {
+    "english": "pd.read_csv turns a CSV file into a table.",
+    "hindi": "pd.read_csv से CSV फ़ाइल तालिका बन जाती है।",
+    "hinglish": "pd.read_csv se CSV file table ban jati hai."
+  },
+  {
+    "english": "Pick a column with df[\"marks\"], and filter the rows.",
+    "hindi": "df[\"marks\"] से कॉलम चुनें, फ़िल्टर से पंक्ति छाँटें।",
+    "hinglish": "df[\"marks\"] se column chuno, filter se row chhanto."
+  },
+  {
+    "english": "Use groupby to find the average of each class.",
+    "hindi": "groupby से हर क्लास का औसत निकालें।",
+    "hinglish": "groupby se har class ka average nikalo."
+  },
+  {
+    "english": "Remove missing values with dropna, or fill them with fillna(0).",
+    "hindi": "गुम मानों को dropna से हटाएँ या fillna(0) से भरें।",
+    "hinglish": "Missing values ko dropna se hatao ya fillna(0) se bharo."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -13035,75 +14572,95 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Number se graph tak",
-          "english": "From numbers to a graph",
-          "hindi": "नंबर से graph तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Data lo — list ya DataFrame",
-              "english": "Take data — a list or a DataFrame",
-              "hindi": "डेटा लें — list या DataFrame"
-            },
-            "s": {
-              "hinglish": "Marks ya bikri ki list",
-              "english": "A list of marks or sales",
-              "hindi": "Marks या बिक्री की सूची"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Chart chuno",
-              "english": "Pick a chart",
-              "hindi": "Chart चुनें"
-            },
-            "s": {
-              "hinglish": "Line samay ke liye, bar naam ke liye",
-              "english": "Line for time, bar for names",
-              "hindi": "Line समय के लिए, bar नाम के लिए"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Label aur title lagao",
-              "english": "Add labels and a title",
-              "hindi": "Label और title लगाएँ"
-            },
-            "s": {
-              "hinglish": "xlabel, ylabel, title",
-              "english": "xlabel, ylabel, title",
-              "hindi": "xlabel, ylabel, title"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Show se dikhao",
-              "english": "Show it with show",
-              "hindi": "Show से दिखाएँ"
-            },
-            "s": {
-              "hinglish": "plt.show()",
-              "english": "plt.show()",
-              "hindi": "plt.show()"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Seaborn se sundar banao",
-              "english": "Make it pretty with Seaborn",
-              "hindi": "Seaborn से सुंदर बनाएँ"
-            },
-            "s": {
-              "hinglish": "sns.barplot — kam code",
-              "english": "sns.barplot — less code",
-              "hindi": "sns.barplot — कम कोड"
-            }
-          }
-        ]
+  "bars": [
+    {
+      "label": {
+        "english": "Maths",
+        "hindi": "गणित",
+        "hinglish": "Maths"
       },
+      "note": {
+        "english": "Out of 100",
+        "hindi": "100 में से",
+        "hinglish": "100 mein se"
+      },
+      "value": 85
+    },
+    {
+      "label": {
+        "english": "Science",
+        "hindi": "विज्ञान",
+        "hinglish": "Science"
+      },
+      "note": {
+        "english": "Out of 100",
+        "hindi": "100 में से",
+        "hinglish": "100 mein se"
+      },
+      "value": 92
+    },
+    {
+      "label": {
+        "english": "English",
+        "hindi": "अंग्रेज़ी",
+        "hinglish": "English"
+      },
+      "note": {
+        "english": "Out of 100",
+        "hindi": "100 में से",
+        "hinglish": "100 mein se"
+      },
+      "value": 78
+    },
+    {
+      "label": {
+        "english": "Hindi",
+        "hindi": "हिंदी",
+        "hinglish": "Hindi"
+      },
+      "note": {
+        "english": "Out of 100",
+        "hindi": "100 में से",
+        "hinglish": "100 mein se"
+      },
+      "value": 88
+    }
+  ],
+  "caption": {
+    "english": "A line chart is for time, a bar chart is for names — these are example marks.",
+    "hindi": "Line chart समय के लिए, bar chart नाम के लिए — ये उदाहरण अंक हैं।",
+    "hinglish": "Line chart time ke liye, bar chart naam ke liye — ye example marks hain."
+  },
+  "kind": "bars",
+  "title": {
+    "english": "A bar chart of marks",
+    "hindi": "अंकों का bar chart",
+    "hinglish": "Marks ka bar chart"
+  },
+  "nodes": []
+},
+      "keyNotes": [
+  {
+    "english": "A line chart is for time, a bar chart is for names.",
+    "hindi": "Line chart समय के लिए, bar chart नाम के लिए।",
+    "hinglish": "Line chart time ke liye, bar chart naam ke liye."
+  },
+  {
+    "english": "xlabel, ylabel and title make the graph clear.",
+    "hindi": "xlabel, ylabel और title से ग्राफ साफ बनता है।",
+    "hinglish": "xlabel, ylabel aur title se graph saaf banta hai."
+  },
+  {
+    "english": "plt.show() shows the graph on the screen.",
+    "hindi": "plt.show() से ग्राफ स्क्रीन पर दिखता है।",
+    "hinglish": "plt.show() se graph screen par dikhta hai."
+  },
+  {
+    "english": "Seaborn makes a pretty graph with less code.",
+    "hindi": "Seaborn से कम कोड में सुंदर ग्राफ बनता है।",
+    "hinglish": "Seaborn se kam code mein sundar graph banta hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -13445,75 +15002,107 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Example se andaze tak",
-          "english": "From examples to a guess",
-          "hindi": "Example से अंदाज़े तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Feature aur label lo",
-              "english": "Take features and labels",
-              "hindi": "Feature और label लें"
-            },
-            "s": {
-              "hinglish": "Marks feature, pass-fail label",
-              "english": "Marks are features, pass-fail is the label",
-              "hindi": "Marks feature, pass-fail label"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Train aur test mein baanto",
-              "english": "Split into train and test",
-              "hindi": "Train और test में बाँटें"
-            },
-            "s": {
-              "hinglish": "70 percent seekhne, 30 percent jaanch",
-              "english": "70 percent to learn, 30 percent to check",
-              "hindi": "70 percent सीखने, 30 percent जाँच"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Fit se sikhayo",
-              "english": "Teach with fit",
-              "hindi": "Fit से सिखाएँ"
-            },
-            "s": {
-              "hinglish": "model.fit(X_train, y_train)",
-              "english": "model.fit(X_train, y_train)",
-              "hindi": "model.fit(X_train, y_train)"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Predict se naya jawab",
-              "english": "New answer with predict",
-              "hindi": "Predict से नया जवाब"
-            },
-            "s": {
-              "hinglish": "model.predict([[82, 80]])",
-              "english": "model.predict([[82, 80]])",
-              "hindi": "model.predict([[82, 80]])"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Accuracy se jaancho",
-              "english": "Check with accuracy",
-              "hindi": "Accuracy से जाँचें"
-            },
-            "s": {
-              "hinglish": "Kitne jawab sahi the",
-              "english": "How many answers were right",
-              "hindi": "कितने जवाब सही थे"
-            }
-          }
-        ]
+  "caption": {
+    "english": "Take features and labels, teach with 70 percent, check with 30 percent — fit teaches, predict guesses.",
+    "hindi": "Features और labels लें, 70% से सिखाएँ, 30% से जाँचें — fit सिखाता है, predict अनुमान लगाता है।",
+    "hinglish": "Features aur labels lo, 70% se sikhao, 30% se check karo — fit sikhaata hai, predict guess karta hai."
+  },
+  "kind": "flow",
+  "nodes": [
+    {
+      "s": {
+        "english": "Marks are features, pass-fail is the label",
+        "hindi": "Marks features हैं, pass-fail label है",
+        "hinglish": "Marks features hain, pass-fail label hai"
       },
+      "t": {
+        "english": "Take features and labels",
+        "hindi": "Features और labels लें",
+        "hinglish": "Features aur labels lo"
+      }
+    },
+    {
+      "s": {
+        "english": "70 percent to learn, 30 percent to check",
+        "hindi": "70% सीखने को, 30% जाँचने को",
+        "hinglish": "70% seekhne ko, 30% check karne ko"
+      },
+      "t": {
+        "english": "Split into train and test",
+        "hindi": "Train और test में बाँटें",
+        "hinglish": "Train aur test mein baanto"
+      }
+    },
+    {
+      "s": {
+        "english": "model.fit(X_train, y_train)",
+        "hindi": "model.fit(X_train, y_train)",
+        "hinglish": "model.fit(X_train, y_train)"
+      },
+      "t": {
+        "english": "Teach with fit",
+        "hindi": "fit से सिखाएँ",
+        "hinglish": "fit se sikhao"
+      }
+    },
+    {
+      "s": {
+        "english": "model.predict([[82, 80]])",
+        "hindi": "model.predict([[82, 80]])",
+        "hinglish": "model.predict([[82, 80]])"
+      },
+      "t": {
+        "english": "A new answer with predict",
+        "hindi": "predict से नया उत्तर",
+        "hinglish": "predict se naya answer"
+      }
+    },
+    {
+      "s": {
+        "english": "How many answers were right",
+        "hindi": "कितने उत्तर सही थे",
+        "hinglish": "Kitne answer sahi the"
+      },
+      "t": {
+        "english": "Check with accuracy",
+        "hindi": "accuracy से जाँचें",
+        "hinglish": "accuracy se check karo"
+      }
+    }
+  ],
+  "title": {
+    "english": "From examples to a guess",
+    "hindi": "उदाहरण से अनुमान तक",
+    "hinglish": "Example se guess tak"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "Features are the input, the label is the answer.",
+    "hindi": "Features इनपुट होते हैं, label उत्तर होता है।",
+    "hinglish": "Features input hote hain, label answer hota hai."
+  },
+  {
+    "english": "Split the data into train (70 percent) and test (30 percent).",
+    "hindi": "डेटा को train (70%) और test (30%) में बाँटें।",
+    "hinglish": "Data ko train (70%) aur test (30%) mein baanto."
+  },
+  {
+    "english": "fit teaches the model, and predict gives a new answer.",
+    "hindi": "fit मॉडल को सिखाता है, predict नया उत्तर देता है।",
+    "hinglish": "fit model ko sikhaata hai, predict naya answer deta hai."
+  },
+  {
+    "english": "Accuracy tells how many answers were right.",
+    "hindi": "accuracy बताता है कितने उत्तर सही थे।",
+    "hinglish": "accuracy batata hai kitne answer sahi the."
+  },
+  {
+    "english": "Fitting on test data is overfitting — the model just learns by heart.",
+    "hindi": "Test डेटा पर fit करना overfitting है — मॉडल रट्टा मार लेता है।",
+    "hinglish": "Test data par fit karna overfitting hai — model ratta maar leta hai."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -13855,58 +15444,90 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Browser se page tak ka flow",
-          "english": "The flow from browser to page",
-          "hindi": "ब्राउज़र से पेज तक का फ्लो"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Browser request bhejta hai: /home",
-              "english": "Browser sends a request: /home",
-              "hindi": "ब्राउज़र request भेजता है: /home"
-            },
-            "s": {
-              "hinglish": "User address par tap karta hai",
-              "english": "The user taps on an address",
-              "hindi": "User address पर टैप करता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Router address ko function se jodta hai",
-              "english": "The router joins the address to a function",
-              "hindi": "Router address को function से जोड़ता है"
-            },
-            "s": {
-              "hinglish": "routes dictionary mein match dhoondhta hai",
-              "english": "It looks for a match in the routes dictionary",
-              "hindi": "routes dictionary में match ढूँढता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Function chalta hai aur page banata hai",
-              "english": "The function runs and makes the page",
-              "hindi": "Function चलता है और पेज बनाता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Page browser ko wapas milta hai",
-              "english": "The page comes back to the browser",
-              "hindi": "पेज ब्राउज़र को वापस मिलता है"
-            },
-            "s": {
-              "hinglish": "Galat address par 404 milta hai",
-              "english": "A wrong address gives 404",
-              "hindi": "गलत address पर 404 मिलता है"
-            }
-          }
-        ]
+  "caption": {
+    "english": "Flask is small and simple, Django is big and complete — the router joins the address to a function.",
+    "hindi": "Flask छोटा और सरल है, Django बड़ा और पूरा — router पते को फ़ंक्शन से जोड़ता है।",
+    "hinglish": "Flask chhota aur simple hai, Django bada aur poora — router address ko function se jodta hai."
+  },
+  "kind": "layers",
+  "nodes": [
+    {
+      "s": {
+        "english": "The user taps on an address",
+        "hindi": "User पते पर tap करता है",
+        "hinglish": "User address par tap karta hai"
       },
+      "t": {
+        "english": "Browser: asks for /home",
+        "hindi": "Browser: /home माँगें",
+        "hinglish": "Browser: /home maango"
+      }
+    },
+    {
+      "s": {
+        "english": "A wrong address gives 404",
+        "hindi": "गलत पते पर 404",
+        "hinglish": "Galat address par 404"
+      },
+      "t": {
+        "english": "Router: joins the address to a function",
+        "hindi": "Router: पते को फ़ंक्शन से जोड़ें",
+        "hinglish": "Router: address ko function se jodo"
+      }
+    },
+    {
+      "s": {
+        "english": "It is written in Flask or Django",
+        "hindi": "Flask या Django में लिखा होता है",
+        "hinglish": "Flask ya Django mein likha hota hai"
+      },
+      "t": {
+        "english": "Function: makes the page",
+        "hindi": "फ़ंक्शन: page बनाएँ",
+        "hinglish": "Function: page banao"
+      }
+    },
+    {
+      "s": {
+        "english": "Take out data when needed",
+        "hindi": "ज़रूरत पर डेटा निकालें",
+        "hinglish": "Zaroorat par data nikaalo"
+      },
+      "t": {
+        "english": "Database: brings the data",
+        "hindi": "Database: डेटा लाएँ",
+        "hinglish": "Database: data lao"
+      }
+    }
+  ],
+  "title": {
+    "english": "From the browser to the page",
+    "hindi": "Browser से page तक",
+    "hinglish": "Browser se page tak"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "A framework takes care of taking requests and giving pages.",
+    "hindi": "Framework request लेने और page देने का काम सँभालता है।",
+    "hinglish": "Framework request lene aur page dene ka kaam sambhalta hai."
+  },
+  {
+    "english": "Flask is small and simple, Django is big and complete.",
+    "hindi": "Flask छोटा और सरल है, Django बड़ा और पूरा है।",
+    "hinglish": "Flask chhota aur simple hai, Django bada aur poora hai."
+  },
+  {
+    "english": "The router joins an address to a function, and a wrong address gives 404.",
+    "hindi": "Router पते को फ़ंक्शन से जोड़ता है, गलत पते पर 404 मिलता है।",
+    "hinglish": "Router address ko function se jodta hai, galat address par 404 milta hai."
+  },
+  {
+    "english": "Pick Flask for a small project, Django for a big one.",
+    "hindi": "छोटे प्रोजेक्ट के लिए Flask, बड़े के लिए Django चुनें।",
+    "hinglish": "Chhote project ke liye Flask, bade ke liye Django chunno."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -14248,48 +15869,90 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "API request se response tak",
-          "english": "From API request to response",
-          "hindi": "API request से response तक"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Aapka program request bhejta hai",
-              "english": "Your program sends a request",
-              "hindi": "आपका प्रोग्राम request भेजता है"
-            },
-            "s": {
-              "hinglish": "Method, address, headers aur key",
-              "english": "Method, address, headers, and key",
-              "hindi": "Method, address, headers और key"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Server key check karta hai aur data dhoondhta hai",
-              "english": "The server checks the key and finds the data",
-              "hindi": "सर्वर key check करता है और डेटा ढूँढता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Server response bhejta hai: status code + JSON",
-              "english": "The server sends a response: status code + JSON",
-              "hindi": "सर्वर response भेजता है: status code + JSON"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Aapka program status check karke data padhta hai",
-              "english": "Your program checks the status and reads the data",
-              "hindi": "आपका प्रोग्राम status check करके डेटा पढ़ता है"
-            }
-          }
-        ]
+  "caption": {
+    "english": "An API is like a waiter: it takes the request, brings data from the server, and answers in JSON.",
+    "hindi": "API वेटर जैसी है: request लेती है, server से डेटा लाती है, JSON में जवाब देती है।",
+    "hinglish": "API waiter jaisi hai: request leti hai, server se data laati hai, JSON mein jawab deti hai."
+  },
+  "kind": "layers",
+  "nodes": [
+    {
+      "s": {
+        "english": "Method, address, headers and key",
+        "hindi": "Method, पता, headers और key",
+        "hinglish": "Method, address, headers aur key"
       },
+      "t": {
+        "english": "Client: sends a request",
+        "hindi": "Client: request भेजें",
+        "hinglish": "Client: request bhejo"
+      }
+    },
+    {
+      "s": {
+        "english": "GET, POST, PUT, DELETE — four jobs",
+        "hindi": "GET, POST, PUT, DELETE — चार काम",
+        "hinglish": "GET, POST, PUT, DELETE — chaar kaam"
+      },
+      "t": {
+        "english": "API: takes the request",
+        "hindi": "API: request लें",
+        "hinglish": "API: request lo"
+      }
+    },
+    {
+      "s": {
+        "english": "A status code and a JSON answer are made",
+        "hindi": "Status code और JSON जवाब बनता है",
+        "hinglish": "Status code aur JSON jawab banta hai"
+      },
+      "t": {
+        "english": "Server: checks the key and finds the data",
+        "hindi": "Server: key जाँचें, डेटा ढूँढें",
+        "hinglish": "Server: key check karo, data dhoondho"
+      }
+    },
+    {
+      "s": {
+        "english": "The server takes data from here",
+        "hindi": "Server यहीं से डेटा लेता है",
+        "hinglish": "Server yahin se data leta hai"
+      },
+      "t": {
+        "english": "Database: holds the data",
+        "hindi": "Database: डेटा रखें",
+        "hinglish": "Database: data rakho"
+      }
+    }
+  ],
+  "title": {
+    "english": "From request to response",
+    "hindi": "Request से response तक",
+    "hinglish": "Request se response tak"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "An API is a way for two programs to talk to each other.",
+    "hindi": "API दो प्रोग्राम्स के बीच बात करने का रास्ता है।",
+    "hinglish": "API do programs ke beech baat karne ka rasta hai."
+  },
+  {
+    "english": "Four jobs: GET, POST, PUT and DELETE.",
+    "hindi": "चार काम: GET, POST, PUT, DELETE।",
+    "hinglish": "Chaar kaam: GET, POST, PUT, DELETE."
+  },
+  {
+    "english": "The answer comes in JSON, with a status code.",
+    "hindi": "जवाब JSON में आता है, status code के साथ।",
+    "hinglish": "Jawab JSON mein aata hai, status code ke saath."
+  },
+  {
+    "english": "Without a key, the server gives no data.",
+    "hindi": "Key बिना server डेटा नहीं देता।",
+    "hinglish": "Key bina server data nahi deta."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -14631,63 +16294,102 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "boxes",
-        "title": {
-          "hinglish": "ToDo app kaise kaam karta hai",
-          "english": "How the ToDo app works",
-          "hindi": "ToDo ऐप कैसे काम करता है"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Kaam jodo",
-              "english": "Add a job",
-              "hindi": "काम जोड़ो"
-            },
-            "s": {
-              "hinglish": "add_task dictionary banata hai",
-              "english": "add_task makes a dictionary",
-              "hindi": "add_task dictionary बनाता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "File mein save karo",
-              "english": "Save it in a file",
-              "hindi": "फ़ाइल में save करो"
-            },
-            "s": {
-              "hinglish": "json.dump tasks.json mein likhta hai",
-              "english": "json.dump writes it in tasks.json",
-              "hindi": "json.dump tasks.json में लिखता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Shuru mein load karo",
-              "english": "Load it at the start",
-              "hindi": "शुरू में load करो"
-            },
-            "s": {
-              "hinglish": "json.load purani list wapas lata hai",
-              "english": "json.load brings the old list back",
-              "hindi": "json.load पुरानी list वापस लाता है"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "List dikhao, done karo",
-              "english": "Show the list, mark done",
-              "hindi": "List दिखाओ, done करो"
-            },
-            "s": {
-              "hinglish": "[ ] ya [x] ke saath number wali list",
-              "english": "A numbered list with [ ] or [x]",
-              "hindi": "[ ] या [x] के साथ नंबर वाली list"
-            }
-          }
-        ]
+  "caption": {
+    "english": "A task lives in a dict, the file is JSON — the list stays safe even when the app closes.",
+    "hindi": "Task dict में, फ़ाइल JSON में — ऐप बंद हो तो भी सूची सुरक्षित रहती है।",
+    "hinglish": "Task dict mein, file JSON mein — app band ho to bhi list safe rehti hai."
+  },
+  "kind": "timeline",
+  "nodes": [
+    {
+      "s": {
+        "english": "add_task makes a dictionary",
+        "hindi": "add_task एक dictionary बनाता है",
+        "hinglish": "add_task ek dictionary banata hai"
       },
+      "t": {
+        "english": "Add a task",
+        "hindi": "Task जोड़ें",
+        "hinglish": "Task add karo"
+      }
+    },
+    {
+      "s": {
+        "english": "json.dump writes it in the file",
+        "hindi": "json.dump फ़ाइल में लिखता है",
+        "hinglish": "json.dump file mein likhta hai"
+      },
+      "t": {
+        "english": "Save it in tasks.json",
+        "hindi": "tasks.json में सहेजें",
+        "hinglish": "tasks.json mein save karo"
+      }
+    },
+    {
+      "s": {
+        "english": "json.load brings the old list back",
+        "hindi": "json.load पुरानी सूची वापस लाता है",
+        "hinglish": "json.load purani list wapas lata hai"
+      },
+      "t": {
+        "english": "Load it at the start",
+        "hindi": "शुरू में load करें",
+        "hinglish": "Shuru mein load karo"
+      }
+    },
+    {
+      "s": {
+        "english": "A numbered list with [ ] or [x]",
+        "hindi": "नंबर वाली सूची, [ ] या [x]",
+        "hinglish": "Number wali list, [ ] ya [x]"
+      },
+      "t": {
+        "english": "Show the list, mark done",
+        "hindi": "सूची दिखाएँ, done करें",
+        "hinglish": "List dikhao, done karo"
+      }
+    },
+    {
+      "s": {
+        "english": "Take a finished task out of the list",
+        "hindi": "जो task खत्म, उसे सूची से हटाएँ",
+        "hinglish": "Jo task khatam, use list se hatao"
+      },
+      "t": {
+        "english": "Delete it",
+        "hindi": "Delete करें",
+        "hinglish": "Delete karo"
+      }
+    }
+  ],
+  "title": {
+    "english": "Steps to build the ToDo app",
+    "hindi": "ToDo ऐप बनाने के चरण",
+    "hinglish": "ToDo app banane ke steps"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "A task lives in a dictionary, the list lives in the tasks.json file.",
+    "hindi": "Task dictionary में, सूची tasks.json फ़ाइल में।",
+    "hinglish": "Task dictionary mein, list tasks.json file mein."
+  },
+  {
+    "english": "json.dump saves, and json.load brings the old list back.",
+    "hindi": "json.dump सहेजता है, json.load पुरानी सूची वापस लाता है।",
+    "hinglish": "json.dump save karta hai, json.load purani list wapas lata hai."
+  },
+  {
+    "english": "[ ] means still to do, [x] means done.",
+    "hindi": "[ ] का मतलब बाकी है, [x] का मतलब हो गया।",
+    "hinglish": "[ ] ka matlab baaki hai, [x] ka matlab ho gaya."
+  },
+  {
+    "english": "The data stays safe in the file even when the app closes.",
+    "hindi": "फ़ाइल से डेटा तब भी सुरक्षित रहता है जब ऐप बंद हो जाए।",
+    "hinglish": "File se data tab bhi safe rehta hai jab app band ho jaye."
+  }
+],
       "codeExamples": [
         {
           "title": {
@@ -15029,53 +16731,102 @@ print(phone.get("Ravi", "Nahi mila"))`,
         }
       ],
       "diagram": {
-        "kind": "flow",
-        "title": {
-          "hinglish": "Interview problem hal karne ka tareeka",
-          "english": "The way to solve an interview problem",
-          "hindi": "Interview problem हल करने का तरीका"
-        },
-        "nodes": [
-          {
-            "t": {
-              "hinglish": "Problem ko zor se padho",
-              "english": "Read the problem out loud",
-              "hindi": "Problem को ज़ोर से पढ़ो"
-            },
-            "s": {
-              "hinglish": "Input aur output saaf karo",
-              "english": "Make the input and output clear",
-              "hindi": "Input और output साफ करो"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Steps seedhe shabdon mein socho",
-              "english": "Think of the steps in plain words",
-              "hindi": "Steps सीधे शब्दों में सोचो"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Chhota code likho",
-              "english": "Write small code",
-              "hindi": "छोटा कोड लिखो"
-            }
-          },
-          {
-            "t": {
-              "hinglish": "Aasan aur mushkil case se test karo",
-              "english": "Test with an easy case and a hard case",
-              "hindi": "आसान और मुश्किल case से test करो"
-            },
-            "s": {
-              "hinglish": "Khaali input aur duplicate mat bhoolo",
-              "english": "Do not forget empty input and duplicates",
-              "hindi": "खाली input और duplicate मत भूलो"
-            }
-          }
-        ]
+  "caption": {
+    "english": "First make the basics strong, then the top questions, then 3 coding problems — do not forget the edge cases.",
+    "hindi": "पहले basics पक्के करें, फिर top सवाल, फिर 3 कोडिंग समस्याएँ — edge cases मत भूलें।",
+    "hinglish": "Pehle basics pakke karo, phir top questions, phir 3 coding problems — edge cases mat bhoolo."
+  },
+  "kind": "timeline",
+  "nodes": [
+    {
+      "s": {
+        "english": "Variables, loops, functions, OOP",
+        "hindi": "Variables, loops, functions, OOP",
+        "hinglish": "Variables, loops, functions, OOP"
       },
+      "t": {
+        "english": "Revise the basics",
+        "hindi": "Basics दोहराएँ",
+        "hinglish": "Basics revise karo"
+      }
+    },
+    {
+      "s": {
+        "english": "Every answer with the right reason",
+        "hindi": "हर उत्तर सही कारण के साथ",
+        "hinglish": "Har answer sahi reason ke saath"
+      },
+      "t": {
+        "english": "Learn the top questions",
+        "hindi": "Top सवाल याद करें",
+        "hinglish": "Top questions yaad karo"
+      }
+    },
+    {
+      "s": {
+        "english": "Reverse a string, word frequency, second largest",
+        "hindi": "String उलटें, word count, second largest",
+        "hinglish": "String ultao, word count, second largest"
+      },
+      "t": {
+        "english": "Solve 3 coding problems",
+        "hindi": "3 कोडिंग समस्याएँ हल करें",
+        "hinglish": "3 coding problems hal karo"
+      }
+    },
+    {
+      "s": {
+        "english": "An easy case and a hard case both",
+        "hindi": "आसान case और मुश्किल case दोनों",
+        "hinglish": "Aasaan case aur mushkil case dono"
+      },
+      "t": {
+        "english": "Test yourself",
+        "hindi": "खुद test करें",
+        "hinglish": "Khud test karo"
+      }
+    },
+    {
+      "s": {
+        "english": "Check empty input and duplicates",
+        "hindi": "खाली input और duplicate जाँचें",
+        "hinglish": "Khali input aur duplicate check karo"
+      },
+      "t": {
+        "english": "Do not forget the edge cases",
+        "hindi": "Edge cases न भूलें",
+        "hinglish": "Edge cases na bhoolo"
+      }
+    }
+  ],
+  "title": {
+    "english": "A roadmap to prepare for the interview",
+    "hindi": "इंटरव्यू की तैयारी का रोडमैप",
+    "hinglish": "Interview ki taiyaari ka roadmap"
+  }
+},
+      "keyNotes": [
+  {
+    "english": "First read the problem out loud, and make the input and output clear.",
+    "hindi": "समस्या को पहले ज़ोर से पढ़ें, input और output साफ करें।",
+    "hinglish": "Problem ko pehle zor se padho, input aur output saaf karo."
+  },
+  {
+    "english": "First think of the steps in plain words, then write the code.",
+    "hindi": "Steps पहले सादे शब्दों में सोचें, फिर कोड लिखें।",
+    "hinglish": "Steps pehle saade shabdon mein socho, phir code likho."
+  },
+  {
+    "english": "Do not forget edge cases like empty input and duplicates.",
+    "hindi": "खाली input और duplicate जैसे edge cases मत भूलें।",
+    "hinglish": "Khali input aur duplicate jaise edge cases mat bhoolo."
+  },
+  {
+    "english": "Test with an easy case and a hard case both.",
+    "hindi": "आसान और मुश्किल दोनों case से test करें।",
+    "hinglish": "Aasaan aur mushkil dono case se test karo."
+  }
+],
       "codeExamples": [
         {
           "title": {

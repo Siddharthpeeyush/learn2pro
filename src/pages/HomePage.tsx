@@ -62,10 +62,10 @@ export default function HomePage({ subjects, lang, progress }: Props) {
         </h1>
         <p className="mt-2 max-w-2xl text-zinc-300">
           {lang === 'hindi'
-            ? 'C, Python, DSA, DBMS, OS, Networks, Aptitude और Placement — हर विषय के गहरे लेख, काम के उदाहरण, और साथ में compiler जिसमें आप खुद code चला सकते हैं। सब कुछ मुफ़्त।'
+            ? 'C, Python, Java, DSA, DBMS, OS, Networks, Aptitude और Placement — हर विषय के गहरे लेख, काम के उदाहरण, और साथ में compiler जिसमें आप खुद code चला सकते हैं। सब कुछ मुफ़्त।'
             : lang === 'english'
-              ? 'C, Python, DSA, DBMS, OS, Networks, Aptitude and Placement — deep articles for every subject, worked examples, and a compiler where you run code yourself. Everything free.'
-              : 'C, Python, DSA, DBMS, OS, Networks, Aptitude aur Placement — har subject ke gehre articles, worked examples, aur compiler jisme tum khud code chala sakte ho. Sab kuch free.'}
+              ? 'C, Python, Java, DSA, DBMS, OS, Networks, Aptitude and Placement — deep articles for every subject, worked examples, and a compiler where you run code yourself. Everything free.'
+              : 'C, Python, Java, DSA, DBMS, OS, Networks, Aptitude aur Placement — har subject ke gehre articles, worked examples, aur compiler jisme tum khud code chala sakte ho. Sab kuch free.'}
         </p>
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
           <span className="rounded-full bg-[#12210f] border border-[#243424] px-3 py-1">{subjects.length} subjects</span>

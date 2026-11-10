@@ -44,3 +44,10 @@ a {
   font-size: 14px;
   min-height: 60px;
 }
+
+/* Code blocks with a header bar: the <pre> loses its top corners/border
+ * so it sits flush under the header (ArticlePage .codeblock wrapper). */
+.codeblock pre.codebox {
+  border: 0;
+  border-radius: 0 0 12px 12px;
+}
