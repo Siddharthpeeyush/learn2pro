@@ -96,7 +96,7 @@ export default function App() {
   }
 
   return (
-    <Layout lang={lang} setLang={setLang}>
+    <Layout lang={lang} setLang={setLang} progress={progress} subjects={ALL_SUBJECTS}>
       {page}
     </Layout>
   );
