@@ -1429,6 +1429,742 @@ print(binary_search(nums, 50))`,
   readMinutes: 11,
 };
 
+const dsaGraphs: Article = {
+  id: 'dsa-graphs',
+  subjectId: 'dsa',
+  title: t(
+    'Graphs — Nodes, Edges, Adjacency List/Matrix, BFS aur DFS',
+    'Graphs — Nodes, Edges, Adjacency List/Matrix, BFS and DFS'
+  ),
+  summary: t(
+    'Graphs ko zero se samjho: nodes aur edges kya hote hain, adjacency matrix aur adjacency list mein graph kaise store karte hain, aur BFS/DFS algorithms ka step-by-step dry run kaise kaam karta hai.',
+    'Learn graphs from scratch: understand nodes and edges, how to store graphs using adjacency matrices and adjacency lists, and how BFS and DFS algorithms work through complete step-by-step dry runs.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Graph Kya Hai? (Nodes, Edges, Directed vs Undirected)',
+        '1. What Is a Graph? (Nodes, Edges, Directed vs Undirected)'
+      ),
+      body: t(
+        `Abhi tak humne Arrays, Linked Lists aur Trees dekhe. Array aur Linked List mein data ek seedhi line (linear order) mein hota hai. Tree mein ek hierarchy hoti hai jahan ek root node upar hota hai aur baaki nodes uske neeche parent-child relation mein hote hain. Par agar humein aisi cheezein connect karni hon jahan koi fixed top-bottom hierarchy na ho aur koi bhi element kisi bhi doosre element se jud sake, toh wahan Graph kaam aata hai.
+
+Ek Graph do cheezon se milkar banta hai:
+1. Nodes (jinhe Vertices bhi bolte hain, singular: Vertex): Yeh woh points ya objects hain jinhe hum store kar rahe hain. Hum apni examples mein nodes ko simple numbers 0, 1, 2, 3, 4 se represent karenge.
+2. Edges: Do nodes ko jodne wali line ya connection ko edge bolte hain. Agar node 0 aur node 1 ke beech connection hai, toh hum bolenge unke beech ek edge hai: (0, 1).
+
+Graphs mainly do tarah ke hote hain:
+- Undirected Graph: Ismein edge ka koi direction nahi hota. Agar node 0 aur node 1 jude hain, toh aap 0 se 1 par bhi ja sakte ho aur 1 se 0 par bhi. Jaise do doston ka relation: agar A, B ka dost hai toh B bhi A ka dost hai.
+- Directed Graph (Digraph): Ismein har edge par ek arrow (direction) hota hai. Agar edge 0 -> 1 hai, iska matlab aap 0 se 1 par ja sakte ho, par 1 se wapas 0 par nahi aa sakte jab tak 1 -> 0 ki alag edge na ho.
+
+Ek aur chhota term yaad rakho: Degree. Kisi node se kitni edges judi hain, usse us node ki degree kehte hain. Directed graph mein aane wali edges ko In-degree aur bahar jaane wali edges ko Out-degree bolte hain. Jab hum graph ke saare nodes ko ek-ek karke visit karte hain, toh us process ko Graph Traversal kehte hain, jiske do sabse bade tarike hain: BFS (Breadth-First Search) aur DFS (Depth-First Search).`,
+        `So far we have seen Arrays, Linked Lists, and Trees. In an Array or Linked List, items sit in a single straight line. In a Tree, items follow a strict top-to-bottom parent-child hierarchy with no loops. However, when we need to model connections where any item can link to any other item freely—including loops and cycles—we use a Graph.
+
+A Graph is made of two core parts:
+1. Nodes (also called Vertices, singular: Vertex): These are the individual points or entities in the structure. In our code examples, we will label nodes with simple integers such as 0, 1, 2, 3, and 4.
+2. Edges: An edge is a link connecting two nodes. If node 0 and node 1 are connected, we write that edge as the pair (0, 1).
+
+Graphs come in two main types based on edge direction:
+- Undirected Graph: Edges have no arrow or direction. An edge between 0 and 1 works like a two-way street: you can travel from 0 to 1 and from 1 to 0.
+- Directed Graph (Digraph): Every edge has a strict one-way direction. An edge 0 -> 1 lets you move from node 0 to node 1, but you cannot go back from 1 to 0 unless a separate edge 1 -> 0 also exists.
+
+Another useful term is Degree. In an undirected graph, the degree of a node is the number of edges attached to it. In a directed graph, we split this into In-degree (the number of incoming edges pointing to the node) and Out-degree (the number of outgoing edges leaving the node). Visiting nodes systematically across edges is called Graph Traversal, and its two foundational methods are Breadth-First Search (BFS) and Depth-First Search (DFS).`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Maps, Social Networks aur Metro Routes',
+        '2. Real-Life Examples: Maps, Social Networks, and Metro Routes'
+      ),
+      body: t(
+        `Graphs sirf textbook ka topic nahi hai, aapke phone ki har badi app andar se graph chala rahi hai:
+
+1. Metro Routes aur Google Maps: Delhi ya Mumbai Metro ka map socho. Har metro station ek Node hai (jaise Rajiv Chowk = 0, Kashmere Gate = 1, Mandi House = 2). Do stations ke beech jo patri (track) hai woh Edge hai. Kyunki metro dono taraf aati-jaati hai, yeh ek Undirected Graph hai. Par agar aap Google Maps par city roads dekho jahan kuch raaste "One-Way" hote hain, toh woh Directed Graph ban jaata hai. Jab aap shortest route dhoondhte ho (kam se kam stations change karke pahunchna), toh background mein BFS jaisa algorithm kaam karta hai.
+
+2. Social Media (WhatsApp / LinkedIn vs Instagram): LinkedIn ya Facebook par jab aap kisi se connect hote ho aur woh request accept karta hai, toh dono ek doosre ke connections ban jaate hain. Yeh Undirected Graph hai. Wahin Instagram par agar Node 0 (aap) ne Node 1 (Virat Kohli) ko follow kiya, toh edge 0 -> 1 bani, par zaroori nahi ki Node 1 bhi aapko wapas follow kare. Isliye Instagram followers ka network ek Directed Graph hai. Jab Instagram aapko "Suggested Friends" (dost ke dost) dikhata hai, toh woh aapke node se 2 steps door wale nodes (Level 2 in BFS) nikaal kar laata hai.
+
+3. Course Prerequisites aur Web Links: Engineering mein "Data Structures" padhne se pehle "Programming in C/Python" aana zaroori hai. Yahan C/Python -> DSA ek directed edge hai. Isi tarah internet par har webpage ek node hai aur uske andar laga hyperlink ek directed edge hai jo doosre page par le jaata hai.`,
+        `Graphs are not just a textbook concept; almost every major application you use daily relies on graphs behind the scenes:
+
+1. Metro Routes and Road Maps: Think of a city metro network. Every station is a Node (for example, Station 0, Station 1, Station 2), and every direct rail track between two adjacent stations is an Edge. Because trains travel in both directions between stations, a basic metro map forms an Undirected Graph. By contrast, city road maps on GPS navigation apps include one-way streets, making them Directed Graphs. When you search for a route with the fewest station stops, Breadth-First Search (BFS) finds that path directly.
+
+2. Social Networks (Mutual Friends vs Followers): On platforms like Facebook or LinkedIn, friendships are mutual: if person 0 is connected to person 1, person 1 is automatically connected to person 0. That is an Undirected Graph. On Instagram or X, following is one-way: user 0 can follow user 1 (edge 0 -> 1) without user 1 following user 0 back. That forms a Directed Graph. When a platform recommends "People You May Know" (friends of your friends), it runs a graph traversal to find nodes that are exactly two edges away from your node.
+
+3. Course Prerequisites and Web Pages: In a university curriculum, taking "Introduction to Programming" before "Data Structures" is represented as a directed edge from the introductory course to the advanced course. Similarly, the World Wide Web is a massive directed graph where every web page is a node and every clickable link is a directed edge pointing to another page.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: Adjacency Matrix, Adjacency List, BFS aur DFS Dry Run',
+        '3. Step-by-Step: Adjacency Matrix, Adjacency List, BFS, and DFS Dry Run'
+      ),
+      body: t(
+        `Computer ki memory mein graph banane ke do standard tarike hain. Maan lo humare paas 5 nodes hain (0, 1, 2, 3, 4) aur 5 undirected edges hain: (0,1), (0,2), (1,3), (2,4), (3,4).
+
+Tarika 1: Adjacency Matrix (2D Grid)
+Hum V x V (yahan 5 x 5) ka ek 2D list banate hain jismein shuru mein sab 0 hota hai. Agar node i aur node j ke beech edge hai, toh matrix[i][j] = 1 kar dete hain. Undirected graph mein matrix[i][j] = 1 ke saath matrix[j][i] = 1 bhi karte hain.
+- Fayda: Do nodes ke beech edge hai ya nahi (matrix[1][3] == 1), yeh O(1) time mein turant pata chal jaata hai.
+- Nuksaan: Chahe graph mein sirf 2 edges hon, memory hamesha O(V^2) lagti hai. Agar 10,000 nodes hain toh 10,000 x 10,000 = 10 crore cells lagenge!
+
+Tarika 2: Adjacency List (Array of Lists)
+Har node ke liye hum sirf uske direct padosiyon (neighbors) ki list banate hain. Jaise humare graph ke liye:
+adj[0] = [1, 2]
+adj[1] = [0, 3]
+adj[2] = [0, 4]
+adj[3] = [1, 4]
+adj[4] = [2, 3]
+- Fayda: Memory sirf O(V + E) lagti hai (jahan V nodes hain aur E edges). Real life ke 95% graphs sparse hote hain (kam edges wale), isliye coding interviews aur projects mein Adjacency List hi sabse zyada use hoti hai.
+
+Ab BFS (Breadth-First Search) ka Line-by-Line Dry Run samjho:
+BFS paani mein patthar phenkne se banne wali waves (laharon) ki tarah kaam karta hai. Yeh Queue (First-In, First-Out) use karta hai. Pehle starting node (0), phir 1 kadam door wale nodes (1, 2), phir 2 kadam door wale nodes (3, 4).
+Hum do structures rakhte hain: \`visited\` set aur \`queue\` (deque).
+- Start: \`visited = {0}\`, \`queue = deque([0])\`, \`order = []\`.
+- Iteration 1: \`queue.popleft()\` se \`curr = 0\` nikla. \`order = [0]\`. Node 0 ke neighbors \`adj[0] = [1, 2]\` dekho. Dono \`visited\` mein nahi hain, toh dono ko mark karo aur queue mein daalo: \`visited = {0, 1, 2}\`, \`queue = deque([1, 2])\`.
+- Iteration 2: \`queue.popleft()\` se \`curr = 1\` nikla. \`order = [0, 1]\`. Node 1 ke neighbors \`[0, 3]\` hain. 0 pehle se visited hai, 3 naya hai. Toh \`visited = {0, 1, 2, 3}\`, \`queue = deque([2, 3])\`.
+- Iteration 3: \`queue.popleft()\` se \`curr = 2\` nikla. \`order = [0, 1, 2]\`. Node 2 ke neighbors \`[0, 4]\` hain. 0 visited hai, 4 naya hai. Toh \`visited = {0, 1, 2, 3, 4}\`, \`queue = deque([3, 4])\`.
+- Iteration 4: \`queue.popleft()\` se \`curr = 3\` nikla. \`order = [0, 1, 2, 3]\`. Neighbors \`[1, 4]\` dono visited hain. Queue ab \`deque([4])\` bachi.
+- Iteration 5: \`queue.popleft()\` se \`curr = 4\` nikla. \`order = [0, 1, 2, 3, 4]\`. Neighbors \`[2, 3]\` dono visited hain. Queue khali \`deque([])\` ho gayi, loop khatam!
+
+Ab DFS (Depth-First Search) ka Dry Run samjho:
+DFS ek bhool-bhulaiya (maze) mein ek raaste par tab tak aage badhta rehta hai jab tak dead-end na aa jaaye, aur phir peeche mudkar (backtrack karke) doosra raasta pakadta hai. Yeh Recursion (Call Stack) use karta hai:
+- \`dfs(0)\`: \`visited = {0}\`, \`order = [0]\`. Pehla neighbor 1 hai -> call \`dfs(1)\`.
+- \`dfs(1)\`: \`visited = {0, 1}\`, \`order = [0, 1]\`. Neighbors \`[0, 3]\`: 0 visited hai, 3 par jao -> call \`dfs(3)\`.
+- \`dfs(3)\`: \`visited = {0, 1, 3}\`, \`order = [0, 1, 3]\`. Neighbors \`[1, 4]\`: 1 visited hai, 4 par jao -> call \`dfs(4)\`.
+- \`dfs(4)\`: \`visited = {0, 1, 3, 4}\`, \`order = [0, 1, 3, 4]\`. Neighbors \`[2, 3]\`: 2 unvisited hai -> call \`dfs(2)\`.
+- \`dfs(2)\`: \`visited = {0, 1, 3, 4, 2}\`, \`order = [0, 1, 3, 4, 2]\`. Neighbors \`[0, 4]\` dono visited hain. Ab sab calls backtrack hokar return ho jaayengi!`,
+        `There are two standard ways to represent a graph in memory. Suppose we have 5 nodes (0, 1, 2, 3, 4) and 5 undirected edges: (0,1), (0,2), (1,3), (2,4), and (3,4).
+
+Method 1: Adjacency Matrix (2D Grid)
+We create a V x V (here 5 x 5) 2D table filled with 0s. Whenever an edge connects node i and node j, we set matrix[i][j] = 1. For an undirected graph, we set both matrix[i][j] = 1 and matrix[j][i] = 1.
+- Advantage: Checking whether an edge exists between any two nodes (matrix[1][3] == 1) takes O(1) instant time.
+- Disadvantage: It always consumes O(V^2) memory regardless of how few edges exist. A graph with 10,000 nodes requires 100,000,000 matrix entries even if it only has 5 edges.
+
+Method 2: Adjacency List (List of Neighbor Lists)
+For each node, we store a dynamic list containing only its direct neighbors:
+adj[0] = [1, 2]
+adj[1] = [0, 3]
+adj[2] = [0, 4]
+adj[3] = [1, 4]
+adj[4] = [2, 3]
+- Advantage: It uses only O(V + E) memory (where V is the number of nodes and E is the number of edges). Because most real-world graphs are sparse (few edges relative to V^2), the Adjacency List is the default choice in interviews and production code.
+
+Line-by-Line Dry Run of BFS (Breadth-First Search):
+BFS explores a graph in ripples, level by level, using a FIFO Queue (collections.deque). It visits the start node (distance 0), then all nodes at distance 1, then all nodes at distance 2.
+We track a \`visited\` set and a \`queue\`:
+- Start: \`visited = {0}\`, \`queue = deque([0])\`, \`order = []\`.
+- Step 1: Pop \`curr = 0\` from the left of the queue. \`order = [0]\`. Inspect \`adj[0] = [1, 2]\`. Neither 1 nor 2 is in \`visited\`, so mark both visited and append them: \`visited = {0, 1, 2}\`, \`queue = deque([1, 2])\`.
+- Step 2: Pop \`curr = 1\`. \`order = [0, 1]\`. Inspect \`adj[1] = [0, 3]\`. Node 0 is already visited; node 3 is unvisited, so mark and enqueue 3: \`visited = {0, 1, 2, 3}\`, \`queue = deque([2, 3])\`.
+- Step 3: Pop \`curr = 2\`. \`order = [0, 1, 2]\`. Inspect \`adj[2] = [0, 4]\`. Node 0 is visited; node 4 is unvisited, so mark and enqueue 4: \`visited = {0, 1, 2, 3, 4}\`, \`queue = deque([3, 4])\`.
+- Step 4: Pop \`curr = 3\`. \`order = [0, 1, 2, 3]\`. Both neighbors \`[1, 4]\` are already in \`visited\`. Queue becomes \`deque([4])\`.
+- Step 5: Pop \`curr = 4\`. \`order = [0, 1, 2, 3, 4]\`. Both neighbors \`[2, 3]\` are already in \`visited\`. Queue is now empty \`deque([])\`, so the loop terminates.
+
+Line-by-Line Dry Run of DFS (Depth-First Search):
+DFS dives as deep as possible down one path before backtracking, using recursion (the call stack):
+- \`dfs(0)\`: \`visited = {0}\`, \`order = [0]\`. First neighbor of 0 is 1 -> calls \`dfs(1)\`.
+- \`dfs(1)\`: \`visited = {0, 1}\`, \`order = [0, 1]\`. Neighbors of 1 are \`[0, 3]\`: 0 is visited, so it moves to 3 -> calls \`dfs(3)\`.
+- \`dfs(3)\`: \`visited = {0, 1, 3}\`, \`order = [0, 1, 3]\`. Neighbors of 3 are \`[1, 4]\`: 1 is visited, so it moves to 4 -> calls \`dfs(4)\`.
+- \`dfs(4)\`: \`visited = {0, 1, 3, 4}\`, \`order = [0, 1, 3, 4]\`. Neighbors of 4 are \`[2, 3]\`: 2 is unvisited -> calls \`dfs(2)\`.
+- \`dfs(2)\`: \`visited = {0, 1, 3, 4, 2}\`, \`order = [0, 1, 3, 4, 2]\`. Both neighbors \`[0, 4]\` are visited, so all recursive calls unwind and finish.`
+      ),
+      code: {
+        title: t(
+          'Adjacency Matrix, Adjacency List, BFS aur DFS Ek Saath',
+          'Adjacency Matrix, Adjacency List, BFS, and DFS Together'
+        ),
+        language: 'python',
+        code: `from collections import deque
+
+# 5 nodes (0 to 4) and undirected edges
+n = 5
+edges = [(0, 1), (0, 2), (1, 3), (2, 4), (3, 4)]
+
+# 1. Build Adjacency Matrix
+matrix = [[0] * n for _ in range(n)]
+# 2. Build Adjacency List
+adj = [[] for _ in range(n)]
+
+for u, v in edges:
+    matrix[u][v] = 1
+    matrix[v][u] = 1
+    adj[u].append(v)
+    adj[v].append(u)
+
+print("Row 0 of Matrix:", matrix[0])
+print("Adj List:", adj)
+
+# 3. BFS Traversal from node 0
+visited_bfs = {0}
+queue = deque([0])
+bfs_order = []
+
+while queue:
+    curr = queue.popleft()
+    bfs_order.append(curr)
+    for nxt in adj[curr]:
+        if nxt not in visited_bfs:
+            visited_bfs.add(nxt)
+            queue.append(nxt)
+
+print("BFS Order:", bfs_order)
+
+# 4. DFS Traversal from node 0
+visited_dfs = set()
+dfs_order = []
+
+def dfs(node):
+    visited_dfs.add(node)
+    dfs_order.append(node)
+    for nxt in adj[node]:
+        if nxt not in visited_dfs:
+            dfs(nxt)
+
+dfs(0)
+print("DFS Order:", dfs_order)`,
+        output: `Row 0 of Matrix: [0, 1, 1, 0, 0]
+Adj List: [[1, 2], [0, 3], [0, 4], [1, 4], [2, 3]]
+BFS Order: [0, 1, 2, 3, 4]
+DFS Order: [0, 1, 3, 4, 2]`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes aur Woh Kyun Hoti Hain',
+        '4. Common Mistakes and Why They Happen'
+      ),
+      body: t(
+        `Beginners jab pehli baar graph code likhte hain, toh yeh 4 galtiyan sabse zyada hoti hain. Samjho computer andar kya galat karta hai:
+
+Galti 1: \`visited\` set bhool jaana (Infinite Loop / RecursionError)
+Tree mein koi cycle nahi hoti, isliye wahan \`visited\` set nahi lagta. Par undirected graph mein agar edge (0, 1) hai, toh \`adj[0]\` mein 1 hai aur \`adj[1]\` mein 0 hai. Agar aap \`visited\` set nahi rakhoge, toh DFS 0 se 1 par jaayega, 1 ka neighbor 0 dekh kar wapas 0 par jaayega, phir 0 se 1 par... aur 0 -> 1 -> 0 -> 1 chalta rahega jab tak Python \`RecursionError: maximum recursion depth exceeded\` dekar crash na ho jaaye!
+
+Galti 2: BFS mein node ko pop karte waqt \`visited\` mark karna (Duplicate Queue Entries)
+Bahut students node ko queue mein daalte waqt \`visited.add(nxt)\` nahi karte, balki jab woh \`popleft()\` hota hai tab mark karte hain. Isse kya bura hota hai? Humare upar wale graph mein:
+- 0 pop hua, usne 1 aur 2 ko queue mein daala: \`queue = [1, 2]\`.
+- Ab 1 pop hua, usne dekha 4 ke paas jaane se pehle 3 hai, toh 3 queue mein gaya: \`queue = [2, 3]\`.
+- Jab 2 pop hua, usne 4 ko queue mein daala: \`queue = [3, 4]\`.
+- Ab jab 3 pop hua, uska neighbor 4 abhi queue mein baitha hai par pop nahi hua! Kyunki aapne queue mein daalte waqt 4 ko visited mark nahi kiya tha, 3 bhi 4 ko dobara queue mein daal dega (\`queue = [4, 4]\`)! Isse node 4 do baar visit ho jaayega aur bade graphs mein Memory Limit Exceeded (MLE) ya Time Limit Exceeded (TLE) aa jaayega. Hamesha \`queue.append(nxt)\` ke turant saath \`visited.add(nxt)\` karo.
+
+Galti 3: 2D Matrix banate waqt \`[[0] * n] * n\` likhna (Shallow Copy Bug)
+Python mein \`[[0] * n] * n\` n alag-alag rows nahi banata, balki ek hi row ke n references bana deta hai! Toh agar aap \`bad_matrix[0][1] = 1\` karoge, toh \`bad_matrix[1][1]\`, \`bad_matrix[2][1]\` sab apne aap 1 ho jaayenge. Hamesha \`[[0] * n for _ in range(n)]\` use karo.
+
+Galti 4: 1-based nodes ko 0-based list mein daalna (\`IndexError\`)
+Kai coding questions mein nodes 1 se N tak numbered hote hain (jaise 1, 2, 3, 4, 5). Agar aap \`adj = [[] for _ in range(n)]\` banaoge, toh indices sirf \`0\` se \`n - 1\` (0..4) tak banenge. Jaise hi code \`adj[5]\` access karega, Python \`IndexError: list index out of range\` phenk dega. 1-based nodes ke liye hamesha \`range(n + 1)\` ki list banao.`,
+        `When writing graph code for the first time, four bugs appear constantly. Understanding what the computer actually does in memory explains why each mistake happens:
+
+Mistake 1: Forgetting the \`visited\` set (Infinite Loop / RecursionError)
+In a binary tree, pointers only go downward, so you cannot revisit an ancestor. In an undirected graph, edge (0, 1) means 1 is in \`adj[0]\` and 0 is in \`adj[1]\`. Without a \`visited\` set, DFS moves from 0 to 1, sees 0 in \`adj[1]\`, moves back to 0, then back to 1 (0 -> 1 -> 0 -> 1) endlessly until Python crashes with \`RecursionError: maximum recursion depth exceeded\`.
+
+Mistake 2: Marking nodes \`visited\` on pop instead of on enqueue in BFS (Duplicate Visits)
+Many students add \`visited.add(curr)\` only after \`curr = queue.popleft()\` instead of marking \`nxt\` when pushing it into the queue. Watch what goes wrong in our 5-node graph:
+- Node 0 pops and pushes 1 and 2 (\`queue = [1, 2]\`).
+- Node 1 pops and pushes 3 (\`queue = [2, 3]\`).
+- Node 2 pops and pushes 4 (\`queue = [3, 4]\`).
+- Now node 3 pops and inspects its neighbor 4. Because 4 is still sitting in the queue waiting to be popped, it has not been marked visited yet! So node 3 pushes a second copy of 4 into the queue (\`queue = [4, 4]\`). Node 4 gets processed twice. On dense graphs, this blows up the queue size from O(V) to O(E) and causes Time Limit Exceeded. Always mark \`visited.add(nxt)\` at the exact moment you call \`queue.append(nxt)\`.
+
+Mistake 3: Creating a 2D Matrix with \`[[0] * n] * n\` (Shallow Reference Bug)
+In Python, multiplying a list of lists (\`* n\`) does not create \`n\` independent rows; it copies the memory reference of the exact same row \`n\` times. Setting \`bad_matrix[0][1] = 1\` mutates column 1 across every single row simultaneously. Always use a list comprehension: \`[[0] * n for _ in range(n)]\`.
+
+Mistake 4: 1-Based Node Labels in a Size-\`n\` List (\`IndexError\`)
+Many problem statements number nodes from \`1\` to \`n\` instead of \`0\` to \`n - 1\`. Allocating \`[[] for _ in range(n)]\` only creates indices \`0\` through \`n - 1\`, so accessing node \`n\` via \`adj[n]\` immediately raises \`IndexError: list index out of range\`. For 1-indexed graphs, allocate \`range(n + 1)\`.`
+      ),
+      code: {
+        title: t(
+          'Late Visited Bug aur Shallow Matrix Bug ka Live Proof',
+          'Live Proof of the Late Visited Bug and Shallow Matrix Bug'
+        ),
+        language: 'python',
+        code: `from collections import deque
+
+adj = [[1, 2], [0, 3], [0, 4], [1, 4], [2, 3]]
+
+# BUG 1: Marking visited on popleft() instead of append()
+visited_late = set()
+q = deque([0])
+order_wrong = []
+
+while q:
+    curr = q.popleft()
+    visited_late.add(curr)  # Too late! 4 gets pushed by both 2 and 3
+    order_wrong.append(curr)
+    for nxt in adj[curr]:
+        if nxt not in visited_late:
+            q.append(nxt)
+
+print("Wrong BFS (4 visited twice):", order_wrong)
+
+# BUG 2: [[0] * 3] * 3 shallow copy trap
+bad_matrix = [[0] * 3] * 3
+bad_matrix[0][1] = 1
+print("Bad Matrix (all rows changed!):", bad_matrix)`,
+        output: `Wrong BFS (4 visited twice): [0, 1, 2, 3, 4, 4]
+Bad Matrix (all rows changed!): [[0, 1, 0], [0, 1, 0], [0, 1, 0]]`
+      }
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Empty Graph, Single Node, Disconnected Graph aur Self-Loop',
+        '5. Edge Cases: Empty Graph, Single Node, Disconnected Graph, and Self-Loop'
+      ),
+      body: t(
+        `Interviews mein aapka code tab pass hota hai jab woh har corner case (edge case) ko bina fatte handle kare:
+
+1. Empty Graph (0 Nodes): Agar \`n = 0\` hai aur \`adj = []\` hai, toh bina check kiye \`queue = deque([0])\` chalane par \`adj[0]\` \`IndexError\` de dega. Isliye traversal shuru karne se pehle check karo: \`if n == 0: return []\`.
+
+2. Single Node with No Edges (\`n = 1\`, \`adj = [[]]\`): Yahan sirf node 0 hai aur uska koi neighbor nahi hai. BFS queue mein 0 daalega, \`popleft()\` karega, \`for nxt in adj[0]\` loop 0 baar chalega, aur sahi answer \`[0]\` return ho jaayega.
+
+3. Self-Loop (Node khud se juda ho, jaise \`0 -> 0\`) aur Parallel Edges: Agar node 0 par self-loop hai (\`adj[0] = [0, 1]\`), toh kyunki hum shuru mein hi \`visited = {0}\` kar dete hain, jab loop \`nxt = 0\` dekhega toh \`0 not in visited\` False ho jaayega aur code infinite loop mein nahi fansega.
+
+4. Disconnected Graph (Sabse Important Edge Case!):
+Maan lo 5 nodes hain, jismein \`0 - 1 - 2\` aapas mein jude hain (Component 1), aur \`3 - 4\` alag aapas mein jude hain (Component 2), par {0, 1, 2} se {3, 4} tak koi pul (edge) nahi hai. Agar aap sirf \`bfs(0)\` chalaoge, toh woh [0, 1, 2] visit karke ruk jaayega — nodes 3 aur 4 kabhi visit hi nahi honge!
+Iska ilaaj kya hai? Hum \`0\` se \`n - 1\` tak ek outer \`for\` loop lagate hain. Jo bhi node abhi tak \`visited\` mein nahi hai, wahan se naya BFS start karte hain. Isse saare disconnected tukde (Connected Components) cover ho jaate hain!`,
+        `In coding interviews and production systems, your graph code must handle four classic edge cases cleanly:
+
+1. Empty Graph (0 Nodes): If \`n = 0\` and \`adj = []\`, unconditionally starting BFS at node \`0\` crashes on \`adj[0]\` with an \`IndexError\`. Always guard the entry point with \`if not adj: return []\`.
+
+2. Single Isolated Node (\`n = 1\`, \`adj = [[]]\`): Node 0 exists but has zero edges. BFS initializes \`visited = {0}\` and \`queue = deque([0])\`, pops \`0\`, skips the empty \`for nxt in adj[0]\` loop, and cleanly returns \`[0]\`.
+
+3. Self-Loop (An edge from a node to itself, \`0 -> 0\`): Suppose \`adj[0] = [0, 1]\`. Because \`0\` is added to \`visited\` before its neighbors are inspected, the check \`if nxt not in visited\` evaluates to \`False\` when \`nxt == 0\`, preventing a self-loop from re-adding node 0.
+
+4. Disconnected Graph (The Most Frequently Missed Edge Case):
+Suppose a 5-node graph has two separate islands (Connected Components): nodes \`0 - 1 - 2\` form one island, and nodes \`3 - 4\` form a second island with no edge connecting the two groups. Running a single \`bfs(0)\` only visits \`[0, 1, 2]\` and completely misses nodes \`3\` and \`4\`.
+To guarantee visiting every node in a disconnected graph, wrap your traversal in an outer loop \`for start in range(n):\` and trigger a new BFS/DFS whenever \`start not in visited\`.`
+      ),
+      code: {
+        title: t(
+          'Edge Cases: Empty, Single, Self-Loop aur Disconnected Graph',
+          'Edge Cases: Empty, Single, Self-Loop, and Disconnected Graph'
+        ),
+        language: 'python',
+        code: `from collections import deque
+
+def bfs_full_graph(adj):
+    n = len(adj)
+    if n == 0:
+        return []
+    visited = set()
+    components = []
+    for start in range(n):
+        if start not in visited:
+            comp = []
+            visited.add(start)
+            q = deque([start])
+            while q:
+                curr = q.popleft()
+                comp.append(curr)
+                for nxt in adj[curr]:
+                    if nxt not in visited:
+                        visited.add(nxt)
+                        q.append(nxt)
+            components.append(comp)
+    return components
+
+# Case 1: Empty graph
+print("Empty:", bfs_full_graph([]))
+
+# Case 2: Single node with self-loop (0 -> 0)
+print("Self-loop:", bfs_full_graph([[0]]))
+
+# Case 3: Disconnected graph: {0, 1, 2} and {3, 4}
+disconnected_adj = [[1, 2], [0], [0], [4], [3]]
+print("Disconnected components:", bfs_full_graph(disconnected_adj))`,
+        output: `Empty: []
+Self-loop: [[0]]
+Disconnected components: [[0, 1, 2], [3, 4]]`
+      }
+    },
+    {
+      heading: t(
+        '6. What If You Change This? (BFS vs DFS Path, Undirected vs Directed)',
+        '6. What If You Change This? (BFS vs DFS Path, Undirected vs Directed)'
+      ),
+      body: t(
+        `Chalo ab apne code mein do chhote badlaav (experiments) karke dekhte hain ki output kaise aur kyun badalta hai:
+
+Experiment 1: Queue (\`popleft()\`) ki jagah Stack (\`pop()\`) kar dein toh kya hoga? (Shortest Path Test)
+Maan lo humare graph mein edges hain: (0, 1), (0, 2), (1, 2), (1, 3), (2, 3), aur humein node 0 se node 3 tak pahunchna hai.
+- Jab hum BFS (\`queue.popleft()\`) chalate hain, toh woh level-by-level chalta hai: 0 -> 1 -> 3 (sirf 2 edges). BFS hamesha unweighted graph mein sabse chhota raasta (Shortest Path) deta hai!
+- Par agar hum usi graph par DFS chalayein, toh woh 0 se 1 par jaayega, 1 ka pehla unvisited neighbor 2 dekhega toh 2 par chala jaayega, aur 2 se 3 par pahunchega: path banega \`[0, 1, 2, 3]\` (3 edges!). Yani DFS shortest path ki guarantee nahi deta.
+
+Experiment 2: Undirected graph ko Directed bana dein (\`adj[v].append(u)\` hata dein) toh kya hoga?
+Agar hum edges \`[(0, 1), (2, 0), (2, 3), (3, 4)]\` mein sirf one-way edges \`u -> v\` rakhein (\`0 -> 1\`, \`2 -> 0\`, \`2 -> 3\`, \`3 -> 4\`):
+- Undirected graph mein node 0 se start karne par saare 5 nodes [0, 1, 2, 3, 4] the, kyunki \`0 - 2\` two-way tha.
+- Par Directed graph mein \`2 -> 0\` ka arrow 2 se 0 ki taraf hai, 0 se 2 ki taraf nahi! Isliye jab aap node 0 se BFS chalaoge, toh aap sirf \`0 -> 1\` tak ja paoge (\`[0, 1]\`), aur nodes 2, 3, 4 tak kabhi nahi pahunch paoge! Neeche code mein dono experiments ka asli output dekho.`,
+        `Let us run two concrete experiments by modifying small parts of our code and observing how the output changes:
+
+Experiment 1: BFS vs DFS when finding a path from node 0 to node 3
+Suppose our graph has edges (0, 1), (0, 2), (1, 2), (1, 3), and (2, 3), so \`adj[1] = [0, 2, 3]\`. We want a path from node 0 to node 3.
+- BFS (\`queue.popleft()\`) explores nodes in order of distance from 0. From 0 it visits distance-1 neighbors 1 and 2, and from 1 it immediately reaches 3, giving the path \`[0, 1, 3]\` (2 edges). In any unweighted graph, BFS is guaranteed to find the shortest path (minimum number of edges).
+- DFS dives into the first available neighbor at every step: from 0 it goes to 1, from 1 its first unvisited neighbor in \`[0, 2, 3]\` is 2, and from 2 it reaches 3, producing the longer path \`[0, 1, 2, 3]\` (3 edges). DFS finds a valid path, but does not guarantee the shortest path.
+
+Experiment 2: Removing \`adj[v].append(u)\` (Undirected vs Directed Reachability)
+Consider the edge list \`[(0, 1), (2, 0), (2, 3), (3, 4)]\`:
+- If we add both \`adj[u].append(v)\` and \`adj[v].append(u)\` (Undirected), starting BFS from node 0 reaches all 5 nodes: \`[0, 1, 2, 3, 4]\`.
+- If we remove \`adj[v].append(u)\` so edges are strictly one-way \`u -> v\` (Directed), the edge \`2 -> 0\` points into 0, not out of 0. Starting BFS from node 0 can only follow \`0 -> 1\`, returning \`[0, 1]\`. Nodes 2, 3, and 4 become unreachable from node 0.`
+      ),
+      code: {
+        title: t(
+          'Experiment: BFS vs DFS Path Length aur Undirected vs Directed',
+          'Experiment: BFS vs DFS Path Length and Undirected vs Directed'
+        ),
+        language: 'python',
+        code: `from collections import deque
+
+# Experiment 1: Shortest path from 0 to 3
+adj_exp1 = [[1, 2], [0, 2, 3], [0, 1, 3], [1, 2]]
+
+# BFS Path from 0 to 3
+q = deque([(0, [0])])
+visited = {0}
+bfs_path = []
+while q:
+    node, path = q.popleft()
+    if node == 3:
+        bfs_path = path
+        break
+    for nxt in adj_exp1[node]:
+        if nxt not in visited:
+            visited.add(nxt)
+            q.append((nxt, path + [nxt]))
+
+# DFS Path from 0 to 3
+visited_dfs = set()
+def dfs_find(node, path):
+    if node == 3:
+        return path
+    visited_dfs.add(node)
+    for nxt in adj_exp1[node]:
+        if nxt not in visited_dfs:
+            res = dfs_find(nxt, path + [nxt])
+            if res:
+                return res
+    return None
+
+print("BFS Path (shortest):", bfs_path)
+print("DFS Path (not shortest):", dfs_find(0, [0]))
+
+# Experiment 2: Undirected vs Directed from node 0
+edges2 = [(0, 1), (2, 0), (2, 3), (3, 4)]
+undir = [[] for _ in range(5)]
+dir_g = [[] for _ in range(5)]
+for u, v in edges2:
+    undir[u].append(v)
+    undir[v].append(u)
+    dir_g[u].append(v)  # One-way only
+
+def reach_from_0(adj):
+    vis = {0}
+    q = deque([0])
+    out = []
+    while q:
+        c = q.popleft()
+        out.append(c)
+        for nxt in adj[c]:
+            if nxt not in vis:
+                vis.add(nxt)
+                q.append(nxt)
+    return out
+
+print("Undirected from 0:", reach_from_0(undir))
+print("Directed from 0:", reach_from_0(dir_g))`,
+        output: `BFS Path (shortest): [0, 1, 3]
+DFS Path (not shortest): [0, 1, 2, 3]
+Undirected from 0: [0, 1, 2, 3, 4]
+Directed from 0: [0, 1]`
+      }
+    },
+    {
+      heading: t(
+        '7. Summary aur Quick Comparison',
+        '7. Summary and Quick Comparison'
+      ),
+      body: t(
+        `Chalo poore chapter ko ek baar crisp points mein revise karte hain:
+
+1. Graph Basics: Graph mein Nodes (V) aur Edges (E) hote hain. Undirected graph mein edges two-way hoti hain (\`u <-> v\`), jabki Directed graph mein one-way (\`u -> v\`).
+2. Storage Choice:
+   - Adjacency Matrix: \`O(V^2)\` space leta hai, edge lookup \`O(1)\` mein karta hai. Sirf tab use karo jab \`V\` bahut chhota ho (jaise \`V <= 500\`) ya graph bahut dense ho.
+   - Adjacency List: \`O(V + E)\` space leta hai. Lagbhag har coding problem aur real-world network ke liye best hai.
+3. BFS (Breadth-First Search):
+   - Queue (\`collections.deque\`) use karta hai.
+   - Level-by-level visit karta hai aur unweighted graph mein Shortest Path ki guarantee deta hai.
+   - Time Complexity: \`O(V + E)\`, Space Complexity: \`O(V)\`.
+4. DFS (Depth-First Search):
+   - Recursion ya Stack use karta hai, ek raaste ki gehraai (depth) mein poora jaata hai aur phir backtrack karta hai.
+   - Cycle detection, connected components, topological sort aur maze solving mein bahut kaam aata hai.
+   - Time Complexity: \`O(V + E)\`, Space Complexity: \`O(V)\`.
+5. Golden Rule: BFS mein neighbor ko queue mein \`append()\` karte hi usi line par \`visited.add()\` karo, aur disconnected graphs ke liye hamesha \`0\` se \`n - 1\` tak outer loop lagao.`,
+        `Here is a concise review of everything we covered:
+
+1. Graph Fundamentals: A graph consists of Nodes (V) and Edges (E). Undirected edges allow two-way movement (\`u <-> v\`), whereas Directed edges allow one-way movement (\`u -> v\`).
+2. Choosing a Representation:
+   - Adjacency Matrix: Takes \`O(V^2)\` memory and checks edge existence in \`O(1)\` time. Use it only for small or dense graphs.
+   - Adjacency List: Takes \`O(V + E)\` memory and iterates over actual neighbors efficiently. Use it as your default representation.
+3. Breadth-First Search (BFS):
+   - Uses a FIFO Queue (\`collections.deque\`).
+   - Explores level by level and guarantees the shortest path (fewest edges) in an unweighted graph.
+   - Time Complexity: \`O(V + E)\`, Space Complexity: \`O(V)\`.
+4. Depth-First Search (DFS):
+   - Uses Recursion (the call stack) or an explicit Stack to explore deep along each branch before backtracking.
+   - Ideal for cycle detection, finding connected components, and exploring mazes.
+   - Time Complexity: \`O(V + E)\`, Space Complexity: \`O(V)\`.
+5. Golden Rules: Always mark a node \`visited\` at the exact moment you enqueue it in BFS, and always loop over all nodes \`0\` to \`n - 1\` when a graph might be disconnected.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'boxes',
+    title: t(
+      '5-Node Graph par BFS Level-by-Level Kaise Chalta Hai',
+      'How BFS Visits a 5-Node Graph Level by Level'
+    ),
+    caption: t(
+      'Edges: (0,1), (0,2), (1,3), (2,4), (3,4). Node 0 se start karne par BFS distance (levels) ke hisaab se nodes visit karta hai.',
+      'Edges: (0,1), (0,2), (1,3), (2,4), (3,4). Starting at Node 0, BFS visits nodes strictly in order of their distance (level) from Node 0.'
+    ),
+    nodes: [
+      {
+        t: t('Level 0: Node 0 (Start)', 'Level 0: Node 0 (Start)'),
+        s: t(
+          'Distance 0 | Queue: [0] | Visited: {0} -> Neighbors 1 aur 2 ko queue mein daala',
+          'Distance 0 | Queue: [0] | Visited: {0} -> Enqueues direct neighbors 1 and 2'
+        )
+      },
+      {
+        t: t('Level 1 (Left): Node 1', 'Level 1 (Left): Node 1'),
+        s: t(
+          'Distance 1 from 0 | Queue: [1, 2] -> 1 pop hua, naya neighbor 3 queue mein gaya',
+          'Distance 1 from 0 | Queue: [1, 2] -> Pops 1, enqueues unvisited neighbor 3'
+        )
+      },
+      {
+        t: t('Level 1 (Right): Node 2', 'Level 1 (Right): Node 2'),
+        s: t(
+          'Distance 1 from 0 | Queue: [2, 3] -> 2 pop hua, naya neighbor 4 queue mein gaya',
+          'Distance 1 from 0 | Queue: [2, 3] -> Pops 2, enqueues unvisited neighbor 4'
+        )
+      },
+      {
+        t: t('Level 2 (Left): Node 3', 'Level 2 (Left): Node 3'),
+        s: t(
+          'Distance 2 from 0 | Queue: [3, 4] -> 3 pop hua, neighbors (1, 4) pehle se visited hain',
+          'Distance 2 from 0 | Queue: [3, 4] -> Pops 3, neighbors (1, 4) are already visited'
+        )
+      },
+      {
+        t: t('Level 2 (Right): Node 4', 'Level 2 (Right): Node 4'),
+        s: t(
+          'Distance 2 from 0 | Queue: [4] -> 4 pop hua, queue khali, Final BFS: [0, 1, 2, 3, 4]',
+          'Distance 2 from 0 | Queue: [4] -> Pops 4, queue empty, Final BFS: [0, 1, 2, 3, 4]'
+        )
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'BFS se Har Node ka Shortest Distance (Levels) Nikaalna',
+        'Finding Shortest Distance (Levels) to Every Node Using BFS'
+      ),
+      language: 'python',
+      code: `from collections import deque
+
+# Graph: 0 connected to 1, 2; 1 to 3; 2 to 4; 3 to 4
+adj = [[1, 2], [0, 3], [0, 4], [1, 4], [2, 3]]
+n = len(adj)
+
+dist = [-1] * n
+dist[0] = 0
+queue = deque([0])
+
+while queue:
+    curr = queue.popleft()
+    for nxt in adj[curr]:
+        if dist[nxt] == -1:  # Not visited yet
+            dist[nxt] = dist[curr] + 1
+            queue.append(nxt)
+
+for node in range(n):
+    print(f"Node {node} is at distance {dist[node]} from Node 0")`,
+      output: `Node 0 is at distance 0 from Node 0
+Node 1 is at distance 1 from Node 0
+Node 2 is at distance 1 from Node 0
+Node 3 is at distance 2 from Node 0
+Node 4 is at distance 2 from Node 0`
+    },
+    {
+      title: t(
+        'Recursive DFS ke Har Step (Enter aur Backtrack) ka Trace',
+        'Tracing Every Step (Enter and Backtrack) of Recursive DFS'
+      ),
+      language: 'python',
+      code: `adj = [[1, 2], [0, 3], [0], [1]]
+visited = set()
+
+def dfs_trace(node):
+    visited.add(node)
+    print(f"Enter node {node}")
+    for nxt in adj[node]:
+        if nxt not in visited:
+            dfs_trace(nxt)
+    print(f"Backtrack from node {node}")
+
+dfs_trace(0)`,
+      output: `Enter node 0
+Enter node 1
+Enter node 3
+Backtrack from node 3
+Backtrack from node 1
+Enter node 2
+Backtrack from node 2
+Backtrack from node 0`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'Agar adj = [[1, 2], [0, 3], [0, 3], [1, 2]] hai aur hum node 0 se standard BFS chalate hain (jahan queue mein append karte waqt visited mark hota hai), toh visit order kya print hoga?',
+        'Given adj = [[1, 2], [0, 3], [0, 3], [1, 2]], what visit order will standard BFS print when starting from node 0 (marking nodes visited upon enqueue)?'
+      ),
+      opts: [
+        t('[0, 1, 2, 3]', '[0, 1, 2, 3]'),
+        t('[0, 1, 3, 2]', '[0, 1, 3, 2]'),
+        t('[0, 2, 1, 3]', '[0, 2, 1, 3]'),
+        t('[0, 1, 2, 3, 3]', '[0, 1, 2, 3, 3]')
+      ],
+      ans: 0,
+      expl: t(
+        'Node 0 pop hokar 1 aur 2 ko queue mein daalta hai (queue=[1, 2]). Phir 1 pop hokar 3 ko queue mein daalta hai aur visited mark karta hai (queue=[2, 3]). Jab 2 pop hota hai, 3 pehle se visited hai, isliye final order [0, 1, 2, 3] aata hai.',
+        'Node 0 pops and enqueues 1 and 2 (queue=[1, 2]). Next, 1 pops and enqueues 3 while marking 3 visited (queue=[2, 3]). When 2 pops, 3 is already visited, resulting in [0, 1, 2, 3].'
+      )
+    },
+    {
+      q: t(
+        'Usi graph adj = [[1, 2], [0, 3], [0, 3], [1, 2]] par agar hum node 0 se recursive DFS chalayein, toh visit order kya hoga?',
+        'On the same graph adj = [[1, 2], [0, 3], [0, 3], [1, 2]], what visit order will recursive DFS produce starting from node 0?'
+      ),
+      opts: [
+        t('[0, 1, 2, 3]', '[0, 1, 2, 3]'),
+        t('[0, 1, 3, 2]', '[0, 1, 3, 2]'),
+        t('[0, 3, 1, 2]', '[0, 3, 1, 2]'),
+        t('[0, 2, 3, 1]', '[0, 2, 3, 1]')
+      ],
+      ans: 1,
+      expl: t(
+        'DFS 0 se pehle neighbor 1 par jaata hai, 1 se unvisited neighbor 3 par jaata hai, aur 3 (`adj[3] = [1, 2]`) se unvisited neighbor 2 par jaata hai. Isliye order [0, 1, 3, 2] banta hai.',
+        'DFS starts at 0, visits its first neighbor 1, then moves from 1 to unvisited neighbor 3, and from 3 (adj[3] = [1, 2]) moves directly to unvisited neighbor 2, producing [0, 1, 3, 2].'
+      )
+    },
+    {
+      q: t(
+        'Agar BFS mein hum visited.add(node) ko queue.append() ke bajaye sirf queue.popleft() ke waqt karein, toh graph adj = [[1, 2], [0, 3], [0, 3], [1, 2]] mein kya hoga?',
+        'If we call visited.add(node) only when popping from the queue instead of when appending, what happens on adj = [[1, 2], [0, 3], [0, 3], [1, 2]] starting at 0?'
+      ),
+      opts: [
+        t('Code RecursionError dekar crash ho jaayega', 'The code crashes with a RecursionError'),
+        t('Node 3 queue mein do baar push hoga aur output [0, 1, 2, 3, 3] aayega', 'Node 3 is pushed into the queue twice and the output becomes [0, 1, 2, 3, 3]'),
+        t('Node 3 kabhi visit nahi hoga', 'Node 3 is never visited'),
+        t('Output [0, 1, 2, 3] hi rahega, koi farak nahi padega', 'The output stays [0, 1, 2, 3] with no difference')
+      ],
+      ans: 1,
+      expl: t(
+        'Jab 1 pop hota hai toh woh 3 ko queue mein daalta hai, par 3 abhi visited mark nahi hua. Agle step mein jab 2 pop hota hai, toh woh bhi 3 ko unvisited dekh kar dobara queue mein daal deta hai, jisse [0, 1, 2, 3, 3] banta hai.',
+        'When node 1 pops, it appends node 3 to the queue without marking 3 visited. When node 2 pops next, 3 is still not in visited, so node 2 appends a second copy of 3, producing [0, 1, 2, 3, 3].'
+      )
+    },
+    {
+      q: t(
+        'Ek graph mein 10,000 nodes (V = 10,000) aur sirf 15,000 edges (E = 15,000) hain. Adjacency Matrix aur Adjacency List mein se kaunsi representation memory bachayegi aur kyun?',
+        'A graph has 10,000 nodes (V = 10,000) and only 15,000 edges (E = 15,000). Which representation saves more memory and why?'
+      ),
+      opts: [
+        t('Adjacency Matrix, kyunki woh O(1) lookup deta hai', 'Adjacency Matrix, because it provides O(1) edge lookup'),
+        t('Adjacency List, kyunki woh V^2 (10 crore) cells ke bajaye sirf O(V + E) space leti hai', 'Adjacency List, because it uses O(V + E) space instead of V^2 (100,000,000) matrix cells'),
+        t('Dono barabar memory lengi', 'Both representations use the exact same amount of memory'),
+        t('Adjacency Matrix, kyunki sparse graph mein 0 store karna free hota hai', 'Adjacency Matrix, because storing 0s in a sparse graph takes no memory')
+      ],
+      ans: 1,
+      expl: t(
+        'Adjacency Matrix ko 10,000 x 10,000 = 10,00,00,000 (10 crore) integers store karne padenge, jabki Adjacency List sirf 10,000 lists aur 30,000 neighbor entries (O(V + E)) store karegi.',
+        'An Adjacency Matrix allocates 10,000 x 10,000 = 100,000,000 cells, whereas an Adjacency List stores only 10,000 list headers and 30,000 neighbor integers (O(V + E)).'
+      )
+    },
+    {
+      q: t(
+        '5 nodes (0 se 4) ke ek directed graph mein sirf 3 edges hain: 0 -> 1, 1 -> 2, aur 3 -> 4. Agar hum sirf node 0 se BFS chalayein, toh kitne nodes visit honge?',
+        'A directed graph with 5 nodes (0 to 4) has only 3 directed edges: 0 -> 1, 1 -> 2, and 3 -> 4. If we run BFS starting only from node 0, how many nodes are visited?'
+      ),
+      opts: [
+        t('Saare 5 nodes (0, 1, 2, 3, 4)', 'All 5 nodes (0, 1, 2, 3, 4)'),
+        t('Sirf 1 node (0)', 'Only 1 node (0)'),
+        t('Sirf 3 nodes (0, 1, 2)', 'Only 3 nodes (0, 1, 2)'),
+        t('Sirf 2 nodes (3, 4)', 'Only 2 nodes (3, 4)')
+      ],
+      ans: 2,
+      expl: t(
+        'Node 0 se hum 0 -> 1 -> 2 tak ja sakte hain, par {0, 1, 2} se {3, 4} tak koi edge nahi hai. Isliye bina outer loop ke sirf 3 nodes (0, 1, 2) visit honge.',
+        'From node 0, BFS can follow the directed edges 0 -> 1 -> 2, but no edge connects {0, 1, 2} to {3, 4}, so only the 3 nodes (0, 1, 2) are visited.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'Sparse graphs ke liye hamesha Adjacency List (O(V + E) memory) use karo; Adjacency Matrix (O(V^2) memory) sirf chhote ya dense graphs ke liye rakho.',
+      'Always prefer an Adjacency List (O(V + E) memory) for sparse graphs; reserve the Adjacency Matrix (O(V^2) memory) for small or dense graphs.'
+    ),
+    t(
+      'BFS Queue (deque) use karke level-by-level chalta hai aur unweighted graph mein Shortest Path (minimum edges) ki guarantee deta hai.',
+      'BFS uses a FIFO Queue (deque) to explore level by level and guarantees the shortest path (minimum edges) in an unweighted graph.'
+    ),
+    t(
+      'BFS mein duplicate visits aur TLE se bachne ke liye node ko queue.append() karte waqt hi visited set mein add karo, popleft() ke waqt nahi.',
+      'In BFS, mark each neighbor visited at the exact moment you append it to the queue—not when you pop it—to prevent duplicate queue entries.'
+    ),
+    t(
+      'Disconnected graphs ke saare components cover karne ke liye 0 se n - 1 tak har unvisited node se BFS/DFS trigger karo.',
+      'To traverse all components of a disconnected graph, loop from 0 to n - 1 and start a BFS/DFS from every node not yet in the visited set.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: 5-Node Graph par BFS Visit Order Print Karo',
+      'Practice: Print the BFS Visit Order on a 5-Node Graph'
+    ),
+    task: t(
+      'Neeche diye gaye 5-node graph (adj = [[1, 3], [0, 2, 4], [1], [0, 4], [1, 3]]) par node 0 se BFS chalao aur visit order ki list print karo. Starter code poora runnable hai — isko run karke verify karo.',
+      'Run Breadth-First Search starting from node 0 on the given 5-node graph (adj = [[1, 3], [0, 2, 4], [1], [0, 4], [1, 3]]) and print the visit order list. The starter code is complete and runnable.'
+    ),
+    language: 'python',
+    starter: `from collections import deque
+
+def bfs_from_zero(adj):
+    visited = {0}
+    queue = deque([0])
+    order = []
+
+    while queue:
+        curr = queue.popleft()
+        order.append(curr)
+        for nxt in adj[curr]:
+            if nxt not in visited:
+                visited.add(nxt)
+                queue.append(nxt)
+
+    return order
+
+adj = [
+    [1, 3],     # Neighbors of node 0
+    [0, 2, 4],  # Neighbors of node 1
+    [1],        # Neighbors of node 2
+    [0, 4],     # Neighbors of node 3
+    [1, 3]      # Neighbors of node 4
+]
+
+print(bfs_from_zero(adj))`,
+    expected: `[0, 1, 3, 2, 4]`
+  },
+  readMinutes: 12,
+};
+
 export const dsa: Subject = {
   id: 'dsa',
   name: t(
@@ -1451,5 +2187,6 @@ export const dsa: Subject = {
     dsaStacksQueues,
     dsaTrees,
     dsaSortingSearching,
+    dsaGraphs,
   ],
 };
