@@ -306,17 +306,17 @@ export default function Layout({ lang, setLang, progress, subjects, children }: 
 
           {/* ── Language bar (mobile): the Hinglish / English choice is
               our unique thing, so it stays visible at the top ───────── */}
-          <div className="flex items-center gap-2 border-t border-[#243424] py-2 lg:hidden">
-            <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-zinc-400">
+          <div className="flex items-center gap-1.5 border-t border-[#243424] py-1 lg:hidden">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
               🌐 {ui('languageLabel', lang)}
             </span>
-            <div className="grid flex-1 grid-cols-2 gap-1 rounded-full border border-[#243424] bg-[#0d1510] p-1">
+            <div className="grid flex-1 grid-cols-2 gap-0.5 rounded-full border border-[#243424] bg-[#0d1510] p-0.5">
               {LANGS.map((l) => (
                 <button
                   key={l.code}
                   onClick={() => setLang(l.code)}
                   aria-pressed={lang === l.code}
-                  className={`rounded-full px-2 py-1.5 text-sm font-semibold ${
+                  className={`rounded-full px-2 py-1 text-xs font-semibold ${
                     lang === l.code ? 'bg-green-600 text-white' : 'text-zinc-300'
                   }`}
                 >
