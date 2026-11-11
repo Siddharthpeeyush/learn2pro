@@ -2165,6 +2165,456 @@ print(bfs_from_zero(adj))`,
   readMinutes: 12,
 };
 
+const dsaHashing: Article = {
+  id: 'dsa-hashing',
+  subjectId: 'dsa',
+  title: t(
+    'Hashing — Hash Function, Hash Table, Dict, Collisions aur Two Sum',
+    'Hashing — Hash Function, Hash Table, Dict, Collisions, and Two Sum'
+  ),
+  summary: t(
+    'Hashing ko zero se samjho: hash function key ko table index mein kaise badalta hai, Python dict aur set andar se kaise kaam karte hain, collision par chaining aur linear probing kya karte hain, load factor aur rehashing kab hota hai, aur Two Sum jaise interview questions mein dict kaise O(n) solution deta hai.',
+    'Learn hashing from scratch: how a hash function turns a key into a table index, how Python dict and set work under the hood, what chaining and linear probing do when keys collide, when load factor triggers rehashing, and how a dict gives an O(n) solution to interview questions like Two Sum.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Hashing Kya Hai? (Hash Function, Hash Table aur Dict)',
+        '1. What Is Hashing? (Hash Function, Hash Table, and Dict)'
+      ),
+      body: t(
+        `Hashing ek aisi technique hai jo kisi bhi key ko ek number mein badal deti hai, aur phir us number ko table ke andar ek jagah (index) ki tarah use karti hai. Socho aapke paas ek bada sa dabba hai jismein 7 khaane (buckets) bane hain, aur aapko 4 numbers store karne hain: 21, 35, 14 aur 28. Agar aap seedha list mein store karo, toh kisi number ko dhoondhne ke liye aapko poori list scan karni padegi. Hashing mein hum ek chhota sa formula lagate hain, jise **hash function** kehte hain. Is article mein hamara hash function hai \`key % 7\`, matlab key ko 7 se bhaag karke remainder lena. 21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, 28 % 7 = 0. Har key ka hash 0 aaya, toh saari keys bucket 0 mein chali gayi. Yahi **collision** hai — jab do ya zyada keys ka hash ek hi index par aa jaaye.
+
+Hash function ka kaam sirf index nikaalna hai, aur **hash table** woh table hai jismein keys apne hash index par store hoti hain. Python ka \`dict\` aur \`set\` andar se hash table hi hote hain. Jab aap \`marks = {'Ram': 90, 'Sita': 85}\` likhte ho, toh Python har key ('Ram', 'Sita') ka hash nikaalta hai aur us hash ke hisaab se value ko table mein rakhta hai. Isi liye \`marks['Ram']\` likhte hi answer turant mil jaata hai — Python ko poori dict scan nahi karni padti, woh seedha sahi bucket par jaata hai.
+
+Yahi hashing ki sabse badi taakat hai: average case mein **lookup, insert aur delete — teeno O(1)** time mein hote hain, matlab table mein 10 items hon ya 10 lakh, ek key ko dhoondhne ka time lagbhag ek jaisa rehta hai. List mein aisa nahi hota: list mein kisi value ko dhoondhna O(n) hota hai kyunki worst case mein poori list scan karni padti hai. Isi farak ki wajah se jab bhi humein baar-baar "yeh cheez hai ya nahi" ya "is key ki value kya hai" poochhna ho, hum list ki jagah dict ya set use karte hain.
+
+Ek important baat: hash function **deterministic** hota hai — ek hi key ka hash hamesha ek hi aayega, warna hum value ko dhoondh hi nahi paayenge. Aur ek achhi hash function keys ko table mein **evenly spread** karti hai, taaki ek hi bucket mein sab keys na gir jaayein. Hamara \`key % 7\` wala function is example mein bura nikla kyunki saari keys 7 ke multiples thi, isliye sab ek hi bucket mein gir gayi. Real life mein Python ka hash function zyada smart hai — woh keys ko poori table mein faila deta hai, isliye collisions kam hote hain aur dict fast rehta hai. Agle sections mein hum dekhenge ki collision aane par Python kya karta hai, aur dict kab slow ho jaata hai.`,
+        `Hashing is a technique that converts any key into a number and then uses that number as a position (index) inside a table. Imagine a box with 7 slots (buckets) and 4 numbers to store: 21, 35, 14, and 28. If you store them in a plain list, finding any number means scanning the whole list. In hashing, we apply a small formula called a **hash function**. In this article our hash function is \`key % 7\`, which means dividing the key by 7 and taking the remainder. 21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, and 28 % 7 = 0. Every key hashed to 0, so all four keys landed in bucket 0. That is a **collision** — when two or more keys hash to the same index.
+
+The hash function only computes the index, and the **hash table** is the table where keys are stored at their hash index. Python's \`dict\` and \`set\` are hash tables under the hood. When you write \`marks = {'Ram': 90, 'Sita': 85}\`, Python computes the hash of every key ('Ram', 'Sita') and places each value in the table according to that hash. That is why \`marks['Ram']\` returns the answer instantly — Python does not scan the whole dict; it jumps straight to the correct bucket.
+
+That is the greatest strength of hashing: on average, **lookup, insert, and delete all take O(1)** time, which means finding a key takes almost the same time whether the table holds 10 items or 1,000,000 items. A list cannot do this: searching a list is O(n) because in the worst case you must scan every element. This difference is why we use a dict or set instead of a list whenever we repeatedly need to ask "does this item exist?" or "what is the value of this key?".
+
+One important point: a hash function is **deterministic** — the same key must always produce the same hash, otherwise we could never find the value again. A good hash function also spreads keys **evenly** across the table so that all keys do not pile into one bucket. Our \`key % 7\` function was bad in this example because all four keys were multiples of 7, so they all fell into the same bucket. In real life, Python's hash function is much smarter — it spreads keys across the whole table, which keeps collisions rare and the dict fast. In the next sections we will see what Python does when a collision does happen, and when a dict becomes slow.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Phone Contacts, Word Counting aur Caching',
+        '2. Real-Life Examples: Phone Contacts, Word Counting, and Caching'
+      ),
+      body: t(
+        `Hashing aapki roz ki zindagi mein har jagah hai, bas aapko dikhai nahi deta. Sabse seedha example hai **phone contacts**. Aapke phone mein 2,000 contacts hain. Jab aap "Rahul" search karte ho, toh phone poori list ek-ek karke scan nahi karta — woh naam ka hash nikaal kar seedha sahi jagah par jaata hai aur number dikha deta hai. Agar phone har baar 2,000 naam scan karta, toh har search mein der lagti. Contacts app andar se ek hash table ki tarah kaam karti hai: naam key hai, number value hai.
+
+Doosra example hai **word counting**. Maan lo aapke paas ek bada paragraph hai aur aapko batana hai ki har word kitni baar aaya. List se karoge toh har word ke liye poori list scan karni padegi — bahut slow. Dict se aap ek hi pass mein kaam khatam kar dete ho: har word ko key banao aur uski count ko value. Word pehli baar aaye toh count 1, dobara aaye toh count badha do. Dict mein \`counts[word]\` dekhna O(1) hota hai, isliye poora paragraph ginne mein sirf O(n) time lagta hai, jahan n total words hain. Interview mein yeh pattern baar-baar aata hai — "first non-repeating character", "most frequent word", "check if two strings are anagrams" — sab ke peeche yahi dict counting hai.
+
+Teesra example hai **caching aur memoization**. Jab koi function baar-baar ek hi input par chalta hai, toh hum uska result ek dict mein save kar lete hain: input key, result value. Agli baar wahi input aaye toh dobara calculate karne ki jagah dict se result nikaal lo. Ise **memoization** kehte hain, aur yeh dynamic programming ki jaan hai — Fibonacci jaise recursive functions ko exponential se linear time mein laane ka yahi tareeka hai. Browser bhi visited websites ko cache karta hai, aur database bhi frequently poochhe jaane wale queries ke results ko hash table mein rakhta hai.
+
+Ek aur jagah jahan hashing chhup kar kaam karta hai woh hai **password storage**. Websites aapka password seedha store nahi karti — woh password ka hash store karti hain. Jab aap login karte ho, toh typed password ka hash nikaal kar stored hash se compare kiya jaata hai. Hash one-way hota hai: hash se original password wapas nahi nikaala ja sakta. Isliye agar database leak bhi ho jaaye, toh chor ko sirf hash milta hai, password nahi. Yeh hashing ka ek alag use hai — yahan hash function ko index ke liye nahi, security ke liye use kiya jaata hai. Aapko dono uses ka farak samajhna chahiye: hash table mein hash se jagah milti hai, password hashing mein hash se pehchan hoti hai.`,
+        `Hashing is everywhere in your daily life, even though you never see it. The simplest example is **phone contacts**. Your phone holds 2,000 contacts. When you search for "Rahul", the phone does not scan all 2,000 names one by one — it hashes the name, jumps straight to the right place, and shows the number. If the phone scanned 2,000 names on every search, every search would feel slow. A contacts app works like a hash table inside: the name is the key and the number is the value.
+
+A second example is **word counting**. Suppose you have a long paragraph and must report how many times each word appears. With a list you would scan the whole list for every word — very slow. With a dict you finish the job in a single pass: make each word a key and its count the value. The first time a word appears, set its count to 1; every later time, increase the count. Looking up \`counts[word]\` in a dict is O(1), so counting the whole paragraph takes only O(n) time, where n is the total number of words. This pattern appears again and again in interviews — "first non-repeating character", "most frequent word", "check if two strings are anagrams" — and dict counting sits behind all of them.
+
+A third example is **caching and memoization**. When a function runs repeatedly on the same input, we save its result in a dict: the input is the key and the result is the value. The next time the same input arrives, we fetch the result from the dict instead of computing it again. This is called **memoization**, and it is the heart of dynamic programming — it is how recursive functions like Fibonacci go from exponential time to linear time. Browsers cache visited websites, and databases keep the results of frequently asked queries in hash tables too.
+
+One more place where hashing works quietly is **password storage**. Websites do not store your password directly — they store the hash of your password. When you log in, the typed password is hashed and compared with the stored hash. A hash is one-way: you cannot recover the original password from the hash. So even if the database leaks, a thief only gets hashes, not passwords. This is a different use of hashing — here the hash is used for security, not for finding a position. You should understand the difference between the two uses: in a hash table the hash gives you a location, while in password hashing the hash gives you an identity check.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: Size 7 ki Table Haath se Banana aur Two Sum ka Dry Run',
+        '3. Step-by-Step: Building a Size 7 Table by Hand and a Two Sum Dry Run'
+      ),
+      body: t(
+        `Ab hum ek hash table ko haath se banakar dekhenge, taaki chaining bilkul clear ho jaaye. Table ka size 7 hai, matlab buckets 0 se 6 tak hain. Hash function hai \`key % 7\`. Keys hain 21, 35, 14 aur 28. Pehle har key ka hash nikaalte hain: 21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, 28 % 7 = 0. Chaaro keys ka hash 0 aaya. Aisa isliye hua kyunki chaaro keys 7 ke multiples hain — 21 = 7 x 3, 35 = 7 x 5, 14 = 7 x 2, 28 = 7 x 4. Yeh ek bahut bura hash function hota agar keys hamesha aisi hoti, par seekhne ke liye yeh perfect hai kyunki isse collision saaf dikhai deta hai.
+
+Ab insert karte hain, ek-ek karke:
+- **21 insert karo:** hash 0 hai, bucket 0 khaali hai. 21 bucket 0 mein chala gaya. Bucket 0 = [21].
+- **35 insert karo:** hash 0 hai, par bucket 0 mein pehle se 21 hai. Yeh **collision** hai. Chaining mein hum 35 ko bucket 0 ki list mein peeche jod dete hain. Bucket 0 = [21, 35].
+- **14 insert karo:** hash phir 0, bucket 0 mein pehle se [21, 35] hai. Phir collision, phir chaining. Bucket 0 = [21, 35, 14].
+- **28 insert karo:** hash phir 0. Bucket 0 = [21, 35, 14, 28].
+
+Final table mein bucket 0 mein 4 keys ki chain hai, aur buckets 1 se 6 poori tarah khaali hain. Ab agar aapko 35 dhoondhna hai, toh aap hash nikaalte ho (35 % 7 = 0), bucket 0 par jaate ho, aur uski chain ko scan karte ho: 21 nahi, 35 mil gaya. Chain mein 4 items hain, isliye search mein 4 steps lage — yeh O(n) ho gaya, O(1) nahi. Yahi woh point hai jo interviewer poochhta hai: collision badhne par hash table list jaisi slow ho jaati hai. Iska solution hai achha hash function aur **rehashing** — jab load factor badh jaaye, toh table ko bada karke saari keys dobara hash karo, taaki keys phir se fail jaayein.
+
+Ab doosra worked example: **Two Sum**. Problem hai nums = [2, 7, 11, 15] aur target = 9. Aise do numbers dhoondho jinka sum 9 ho. List wale tareeke mein aap har pair check karte — O(n^2) time. Dict wale tareeke mein aap ek hi pass mein kaam khatam kar dete ho. Idea simple hai: har number ke liye poochho, "target minus number" pehle dikha hai kya? Dict \`seen\` mein hum woh numbers rakhte hain jo ab tak dekhe hain, unke index ke saath.
+- **i = 0, num = 2:** need = 9 - 2 = 7. \`seen\` abhi khaali hai {}, usmein 7 nahi hai. Toh 2 ko store karo: \`seen = {2: 0}\`.
+- **i = 1, num = 7:** need = 9 - 7 = 2. \`seen\` mein 2 hai, uska index 0 hai. Mil gaya! Answer hai indices (0, 1), kyunki nums[0] + nums[1] = 2 + 7 = 9.
+Loop yahin ruk gaya — 11 aur 15 ko dekhne ki zaroorat hi nahi padi. Har step mein dict lookup O(1) hai, isliye poora solution **O(n) time aur O(n) space** mein chalta hai. Yahi pattern interview mein baar-baar aata hai: "kya complement pehle dikha hai?" — jab bhi yeh sawaal ho, dict nikaalo. Neeche wala code upar wali table banane ka process print karta hai, isko line-by-line padho.`,
+        `Now let us build a hash table by hand so that chaining becomes completely clear. The table size is 7, so the buckets are numbered 0 to 6. The hash function is \`key % 7\`. The keys are 21, 35, 14, and 28. First compute the hash of every key: 21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, and 28 % 7 = 0. All four keys hash to 0. That happened because all four keys are multiples of 7 — 21 = 7 x 3, 35 = 7 x 5, 14 = 7 x 2, and 28 = 7 x 4. This would be a terrible hash function if keys were always like this, but for learning it is perfect because the collision is completely visible.
+
+Now insert the keys one by one:
+- **Insert 21:** the hash is 0 and bucket 0 is empty. 21 goes into bucket 0. Bucket 0 = [21].
+- **Insert 35:** the hash is 0, but bucket 0 already holds 21. This is a **collision**. With chaining, we append 35 to the list inside bucket 0. Bucket 0 = [21, 35].
+- **Insert 14:** the hash is 0 again, and bucket 0 already holds [21, 35]. Another collision, another chain link. Bucket 0 = [21, 35, 14].
+- **Insert 28:** the hash is 0 again. Bucket 0 = [21, 35, 14, 28].
+
+In the final table, bucket 0 holds a chain of 4 keys, and buckets 1 to 6 are completely empty. Now suppose you must find 35. You compute the hash (35 % 7 = 0), go to bucket 0, and scan its chain: 21 is not it, 35 is found. The chain has 4 items, so the search took 4 steps — that is O(n), not O(1). This is exactly the point interviewers ask about: as collisions grow, a hash table becomes as slow as a list. The fix is a good hash function plus **rehashing** — when the load factor grows, make the table bigger and hash every key again so the keys spread out once more.
+
+Now the second worked example: **Two Sum**. The problem gives nums = [2, 7, 11, 15] and target = 9. Find two numbers whose sum is 9. The list approach checks every pair — O(n^2) time. The dict approach finishes the job in a single pass. The idea is simple: for every number, ask "has target minus this number appeared before?" The dict \`seen\` stores the numbers we have already visited, together with their index.
+- **i = 0, num = 2:** need = 9 - 2 = 7. \`seen\` is still empty {}, so 7 is not in it. Store 2: \`seen = {2: 0}\`.
+- **i = 1, num = 7:** need = 9 - 7 = 2. \`seen\` contains 2, at index 0. Found it! The answer is indices (0, 1), because nums[0] + nums[1] = 2 + 7 = 9.
+The loop stops right here — 11 and 15 never even need to be looked at. Every step uses an O(1) dict lookup, so the whole solution runs in **O(n) time and O(n) space**. This pattern appears again and again in interviews: "has the complement appeared before?" — whenever that is the question, reach for a dict. The code below prints this table-building process; read it line by line.`
+      ),
+      code: {
+        title: t(
+          'Chaining: Size 7 ki Table mein 21, 35, 14, 28 Insert Karna',
+          'Chaining: Inserting 21, 35, 14, 28 into a Size 7 Table'
+        ),
+        language: 'python',
+        code: `# Hash function: key % 7 (table size 7)
+# Buckets: 7 khaali lists, collision par chaining
+
+table = [[] for _ in range(7)]
+
+def hash_key(key):
+    return key % 7
+
+def insert(key):
+    index = hash_key(key)
+    table[index].append(key)
+    print(f"key {key} -> bucket {index} : {table[index]}")
+
+for key in [21, 35, 14, 28]:
+    insert(key)
+
+print()
+print("Final table:")
+for i, bucket in enumerate(table):
+    print(f"bucket {i}: {bucket}")`,
+        output: `key 21 -> bucket 0 : [21]
+key 35 -> bucket 0 : [21, 35]
+key 14 -> bucket 0 : [21, 35, 14]
+key 28 -> bucket 0 : [21, 35, 14, 28]
+
+Final table:
+bucket 0: [21, 35, 14, 28]
+bucket 1: []
+bucket 2: []
+bucket 3: []
+bucket 4: []
+bucket 5: []
+bucket 6: []`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Unhashable Keys, O(1) ka Galat Matlab aur Key Badalna',
+        '4. Common Mistakes: Unhashable Keys, Misreading O(1), and Changing a Key'
+      ),
+      body: t(
+        `Hashing mein sabse zyada galtiyan teen cheezon par hoti hain, aur teeno ke peeche ek hi wajah hai — hash ka matlab theek se samajhna nahi.
+
+**Galti 1: List ko dict key banana.** Beginners aksar \`d = {[1, 2]: 'x'}\` likh dete hain aur Python turant error deta hai: \`TypeError: unhashable type: 'list'\`. Kyun? Kyunki dict key ka hash nikaal kar usse bucket mein rakhta hai, aur hash tabhi stable rehta hai jab key kabhi change na ho. List **mutable** hoti hai — uske andar ke items badal sakte hain. Agar list key ban jaaye aur baad mein list change ho jaaye, toh uska hash bhi badal jaayega, aur dict apni hi value ko dhoondh nahi paayega. Isliye Python sirf **hashable** (immutable) cheezon ko key banne deta hai: string, number, tuple. Tuple key ban sakta hai kyunki tuple change nahi hota — \`d[(1, 2)] = 'x'\` bilkul chalega. Yaad rakhne ka tareeka: agar cheez badal sakti hai, toh woh key nahi ban sakti.
+
+**Galti 2: O(1) ko guarantee samajh lena.** Log aksar kehte hain "dict lookup hamesha O(1) hota hai" — yeh aadha sach hai. Dict lookup **average case** mein O(1) hota hai, **worst case** mein O(n). Worst case tab aata hai jab saari keys ek hi bucket mein gir jaayein, jaise hamare size 7 wale example mein chaaro keys bucket 0 mein gir gayi thi. Tab search ko poori chain scan karni padti hai. Real life mein Python ka hash function achha hai, isliye aisa kam hota hai, par interviewer yahi poochhta hai: "dict kab slow ho jaata hai?" Answer hai — jab hash function bura ho ya attacker jaan-boojh kar colliding keys bhej de. Isi liye load factor par nazar rakhi jaati hai.
+
+**Galti 3: Key ko insert ke baad badal dena.** Maan lo aapne kisi object ko key banaya aur baad mein us object ko mutate kar diya. Ab uska hash badal gaya, par dict mein woh purane hash wale bucket mein pada hai. Aap us key se value dhoondhoge toh dict naye hash wale bucket mein dekhega aur bolega "key nahi mili" — jabki value andar hi hai. Python mein yeh galti tuple ke andar list rakhne se hoti hai: \`t = ([1, 2], 3)\` — tuple immutable hai par uske andar ki list mutable hai, isliye poora tuple unhashable ho jaata hai aur key ban hi nahi sakta. Isi liye hamesha poori tarah immutable keys use karo.
+
+**Galti 4: Dict ko sorted samajh lena.** Python 3.7 ke baad se dict **insertion order** yaad rakhta hai — jis order mein keys daali, usi order mein iteration hoti hai. Par yeh sorted order nahi hai. \`{'b': 1, 'a': 2}\` ko iterate karoge toh 'b' pehle aayega, 'a' baad mein. Agar sorted chahiye toh \`sorted(d)\` likhna padega. Interview mein is confusion se galat answer aata hai, isliye order aur sorted ka farak yaad rakho.`,
+        `The most common hashing mistakes come from three misunderstandings, and all three trace back to one thing — not fully understanding what a hash means.
+
+**Mistake 1: Using a list as a dict key.** Beginners often write \`d = {[1, 2]: 'x'}\` and Python immediately raises \`TypeError: unhashable type: 'list'\`. Why? Because a dict hashes the key and stores it in a bucket, and the hash only stays valid if the key never changes. A list is **mutable** — its contents can change. If a list became a key and later changed, its hash would change too, and the dict would be unable to find its own value. That is why Python only allows **hashable** (immutable) things as keys: strings, numbers, and tuples. A tuple works as a key because it never changes — \`d[(1, 2)] = 'x'\` runs fine. The rule to remember: if a thing can change, it cannot be a key.
+
+**Mistake 2: Treating O(1) as a guarantee.** People often say "dict lookup is always O(1)" — that is only half true. Dict lookup is O(1) in the **average case** and O(n) in the **worst case**. The worst case arrives when all keys fall into the same bucket, exactly like our size 7 example where all four keys landed in bucket 0. Then a search must scan the whole chain. In real life Python's hash function is good, so this rarely happens, but interviewers ask exactly this: "when does a dict become slow?" The answer is — when the hash function is bad, or when an attacker deliberately sends colliding keys. That is why the load factor is watched so closely.
+
+**Mistake 3: Changing a key after inserting it.** Suppose you use some object as a key and later mutate that object. Its hash changes, but the dict still holds it in the old hash's bucket. When you search with that key, the dict looks in the new hash's bucket and reports "key not found" — even though the value is sitting right there inside. In Python this trap appears when you put a list inside a tuple: \`t = ([1, 2], 3)\` — the tuple is immutable, but the list inside it is mutable, so the whole tuple becomes unhashable and cannot be a key at all. Always use fully immutable keys.
+
+**Mistake 4: Assuming a dict is sorted.** Since Python 3.7, a dict remembers **insertion order** — iterating visits keys in the order they were added. But that is not sorted order. Iterating \`{'b': 1, 'a': 2}\` gives 'b' first and 'a' second. If you want sorted order, you must write \`sorted(d)\`. This confusion causes wrong answers in interviews, so remember the difference between insertion order and sorted order.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Khaali Dict, Sab Keys Ek Bucket mein aur Load Factor 0.7',
+        '5. Edge Cases: Empty Dict, All Keys in One Bucket, and Load Factor 0.7'
+      ),
+      body: t(
+        `Edge cases woh situations hain jo normal test mein kabhi nahi aati, par interview aur real bugs mein yahi phansate hain. Hashing ke paanch edge cases yaad rakho.
+
+**1. Khaali dict.** \`d = {}\` par \`d['x']\` likhoge toh \`KeyError\` aayega, kyunki key hai hi nahi. Safe tareeka hai \`d.get('x')\` — key nahi mili toh \`None\` milega, error nahi. Ya \`d.get('x', 0)\` likho, toh default value 0 milegi. Counting wale code mein \`d.get(word, 0) + 1\` yahi pattern use hota hai. Interview mein jab bhi key missing ho sakti ho, \`get\` use karo.
+
+**2. Saari keys ek hi bucket mein.** Hamare size 7 wale example mein yahi hua — 21, 35, 14, 28 chaaro bucket 0 mein gir gayi. Aisi situation mein chaining wali table mein search O(n) ho jaata hai. Real life mein aisa tab hota hai jab hash function bura ho ya keys khaas taur par chuni gayi hon. Python isse bachne ke liye achha hash function use karta hai aur load factor badhne par rehash karta hai, par concept samajhna zaroori hai: hashing ki speed hash function ki quality par depend karti hai, magic par nahi.
+
+**3. Duplicate keys value ko overwrite kar deti hain.** Dict mein ek key sirf ek baar reh sakti hai. Agar aap \`d['a'] = 1\` ke baad \`d['a'] = 2\` likho, toh purani value 1 chali jaayegi aur 'a' ki value 2 ho jaayegi. Yeh bug bhi hai aur feature bhi — counting mein hum isi ka fayda uthate hain, par jab aapko ek key ke saath multiple values rakhni hon, toh value ko list banana padta hai: \`d['a'] = [1, 2]\`. Beginners aksar sochte hain ki do baar insert karne se do entries banengi — nahi, dict mein key unique hoti hai.
+
+**4. Unhashable key (list ya dict).** \`d[[1, 2]] = 'x'\` ya \`d[{'a': 1}] = 'x'\` dono par \`TypeError: unhashable type\` aayega. List aur dict mutable hain, isliye key nahi ban sakte. Solution hai tuple use karna: \`d[(1, 2)] = 'x'\` chal jaata hai. Yaad rakho — set bhi unhashable hai, isliye set ko key nahi bana sakte, par \`frozenset\` bana sakte ho kyunki woh immutable hota hai.
+
+**5. Load factor 0.7 se upar.** **Load factor** matlab table mein bhari hui jagah ka ratio: items / table size. Agar size 7 ki table mein 5 items hain, toh load factor 5/7 = 0.71 hai. Python (aur zyada tar hash table implementations) jab load factor lagbhag 0.7 ko paar karta hai, toh table ko bada kar deta hai — aam taur par double — aur saari keys ko naye size ke hisaab se dobara hash karta hai. Is process ko **rehashing** kehte hain. Rehashing mein ek baar O(n) time lagta hai, par uske baad table phir se khaali-khaali ho jaata hai aur lookup wapas O(1) ho jaata hai. Isi liye dict mein insert kabhi-kabhi achanak slow lag sakta hai — woh rehash ka moment hota hai.`,
+        `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps. Remember these five hashing edge cases.
+
+**1. Empty dict.** Writing \`d['x']\` on \`d = {}\` raises a \`KeyError\` because the key simply is not there. The safe way is \`d.get('x')\` — if the key is missing you get \`None\`, not an error. Or write \`d.get('x', 0)\` to get a default value of 0. Counting code uses exactly this pattern: \`d.get(word, 0) + 1\`. Whenever a key might be missing in an interview, use \`get\`.
+
+**2. All keys in one bucket.** That is what happened in our size 7 example — 21, 35, 14, and 28 all fell into bucket 0. In that situation, searching a chaining table becomes O(n). In real life this happens when the hash function is bad or the keys are deliberately chosen to collide. Python avoids it with a good hash function and by rehashing when the load factor grows, but the concept matters: hashing speed depends on the quality of the hash function, not on magic.
+
+**3. Duplicate keys overwrite the value.** A dict holds each key only once. If you write \`d['a'] = 1\` and then \`d['a'] = 2\`, the old value 1 is gone and 'a' now holds 2. This is both a bug source and a feature — counting relies on it, but when you need several values under one key, you must make the value a list: \`d['a'] = [1, 2]\`. Beginners often think inserting twice creates two entries — it does not; keys in a dict are unique.
+
+**4. Unhashable key (list or dict).** Both \`d[[1, 2]] = 'x'\` and \`d[{'a': 1}] = 'x'\` raise \`TypeError: unhashable type\`. Lists and dicts are mutable, so they cannot be keys. The fix is to use a tuple: \`d[(1, 2)] = 'x'\` works fine. Remember — a set is unhashable too, so a set cannot be a key, but a \`frozenset\` can, because it is immutable.
+
+**5. Load factor above 0.7.** The **load factor** is the ratio of filled space in the table: items / table size. If a size 7 table holds 5 items, the load factor is 5/7 = 0.71. Python (and most hash table implementations) grows the table — usually doubling it — when the load factor passes roughly 0.7, and re-hashes every key for the new size. This process is called **rehashing**. Rehashing costs O(n) time once, but afterwards the table is spacious again and lookups return to O(1). That is why inserting into a dict can occasionally feel suddenly slow — that is the rehash moment.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Dict vs List, Chaining vs Linear Probing aur Rehashing',
+        '6. What-If: Dict vs List, Chaining vs Linear Probing, and Rehashing'
+      ),
+      body: t(
+        `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: dict ki jagah list use kar lein?** Word counting wala kaam list se karne ki koshish karo: har word ke liye poori list mein dhoondho ki woh pehle aaya hai ya nahi. Har word par O(n) scan, total O(n^2) time. Dict se wahi kaam O(n) mein hota hai kyunki har lookup O(1) hai. Neeche wala code dict se word counting karta hai — isko run karo aur output dekho. Par list hamesha buri nahi hoti: agar aapko order maintain karna hai aur sirf end mein items add karne hain, toh list behtar hai. Dict tab jeetta hai jab aapko baar-baar search, insert ya delete karna ho. Interview mein "kab dict, kab list" ka answer yahi hai: search-heavy kaam mein dict, order-heavy kaam mein list.
+
+**What if: chaining ki jagah linear probing use karein?** Collision handle karne ke do main tareeke hain. **Chaining** mein har bucket mein ek list hoti hai aur colliding keys usi list mein jud jaati hain — yahi humne size 7 wale example mein dekha. **Open addressing** mein har bucket mein sirf ek key rehti hai; collision aane par hum agla khaali bucket dhoondhte hain. **Linear probing** open addressing ka sabse simple tareeka hai: hash 0 par collision hua toh bucket 1 dekho, phir 2, phir 3 — jab tak khaali bucket na mil jaaye. Chaining simple hai aur table full hone par bhi kaam karta hai, par usmein extra memory lagti hai lists ke liye. Linear probing mein memory kam lagti hai par table bharne par **clustering** ho jaata hai — keys ke bade-bade groups ban jaate hain aur search slow ho jaata hai. Python ka dict open addressing ka ek advanced version use karta hai, isliye usmein chaining wali lists nahi dikhti.
+
+**What if: load factor ko ignore kar dein?** Agar table ko kabhi bada na karo aur keys badhti rahein, toh chains lambi hoti jaayengi aur lookup O(n) ki taraf badh jaayega — hash table list ban jaayegi. Isi liye rehashing zaroori hai: jab load factor 0.7 ke aas-paas pahunche, table ko double karo aur saari keys ko naye size se dobara hash karo. Rehashing ek baar mein O(n) time leta hai, par yeh cost saare inserts par **amortized** ho jaati hai — matlab average insert ab bhi O(1) rehta hai. Yeh amortized analysis ka classic example hai, aur interviewer ko yeh sunna pasand hai.
+
+**What if: set chahiye, dict nahi?** Jab sirf yeh check karna ho ki item hai ya nahi, value ki zaroorat na ho, toh \`set\` use karo — woh bhi hash table hi hai, bas value ke bina. \`if x in my_set\` O(1) mein chalta hai, jabki \`if x in my_list\` O(n) mein. Duplicate hatana ho toh \`set(items)\` ek line mein kaam kar deta hai.`,
+        `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if we use a list instead of a dict?** Try word counting with a list: for every word, scan the whole list to check whether it appeared before. Each word costs an O(n) scan, so the total is O(n^2) time. With a dict the same job is O(n), because every lookup is O(1). The code below counts words with a dict — run it and look at the output. But a list is not always worse: if you must keep order and only add items at the end, a list is better. A dict wins when you repeatedly search, insert, or delete. That is the interview answer to "when dict, when list": dict for search-heavy work, list for order-heavy work.
+
+**What if we use linear probing instead of chaining?** There are two main ways to handle a collision. In **chaining**, every bucket holds a list, and colliding keys join that list — that is what we saw in the size 7 example. In **open addressing**, every bucket holds only one key; on a collision you look for the next empty bucket. **Linear probing** is the simplest form of open addressing: if bucket 0 collides, check bucket 1, then 2, then 3, until an empty bucket appears. Chaining is simple and keeps working even when the table is full, but it spends extra memory on the lists. Linear probing uses less memory, but as the table fills up it suffers **clustering** — big groups of keys form together and searches slow down. Python's dict uses an advanced form of open addressing, which is why you never see chaining lists inside it.
+
+**What if we ignore the load factor?** If the table never grows while keys keep arriving, the chains keep getting longer and lookups drift toward O(n) — the hash table becomes a list. That is why rehashing is essential: when the load factor reaches about 0.7, double the table and re-hash every key for the new size. Rehashing costs O(n) time once, but that cost is **amortized** across all inserts — so the average insert still stays O(1). This is a classic example of amortized analysis, and interviewers like hearing it.
+
+**What if you need a set, not a dict?** When you only need to check whether an item exists and do not need a value, use a \`set\` — it is also a hash table, just without values. \`if x in my_set\` runs in O(1), while \`if x in my_list\` runs in O(n). Removing duplicates is one line: \`set(items)\`.`
+      ),
+      code: {
+        title: t(
+          'Dict se Word Counting: List se O(n^2), Dict se O(n)',
+          'Word Counting with a Dict: O(n^2) with a List, O(n) with a Dict'
+        ),
+        language: 'python',
+        code: `sentence = "ram ne aam khaya ram ne aam khaya ram"
+counts = {}
+
+for word in sentence.split():
+    if word in counts:
+        counts[word] += 1
+    else:
+        counts[word] = 1
+
+for word in counts:
+    print(word, "->", counts[word])`,
+        output: `ram -> 3
+ne -> 2
+aam -> 2
+khaya -> 2`
+      }
+    },
+    {
+      heading: t(
+        '7. Summary: Hashing se Interview Tak ka Poora Picture',
+        '7. Summary: The Full Picture, from Hashing to the Interview'
+      ),
+      body: t(
+        `Chalo poora article ek jagah par bandhte hain. **Hashing** ka matlab hai key ko hash function se ek number mein badalna aur us number ko table index ki tarah use karna. **Hash table** mein keys apne hash index par store hoti hain. Python ka \`dict\` aur \`set\` andar se hash table hain, isliye unmein lookup, insert aur delete average case mein **O(1)** hote hain, jabki list mein search O(n) hota hai. Yahi O(1) hashing ki sabse badi jeet hai — aur yahi wajah hai ki counting, caching, memoization aur Two Sum jaise problems mein dict sabse pehla hathiyaar hota hai.
+
+**Collision** tab hota hai jab do keys ka hash ek hi index par aa jaaye. **Chaining** mein bucket ke andar ek list banti hai aur colliding keys usmein jud jaati hain; **linear probing** mein hum agla khaali bucket dhoondhte hain. Collision badhne par search O(n) ki taraf badh jaata hai, isliye achha hash function aur **rehashing** zaroori hai. **Load factor** (items / table size) jab 0.7 ke aas-paas pahunche, toh table double hota hai aur saari keys dobara hash hoti hain — ek baar ka O(n) kharcha, par uske baad lookup wapas O(1).
+
+Keys ke baare mein teen baatein yaad rakho: sirf **hashable** (immutable) cheezein key ban sakti hain — string, number, tuple haan; list, dict, set naa. Duplicate key purani value ko **overwrite** kar deti hai. Aur dict **insertion order** yaad rakhta hai, sorted order nahi. Khaali dict par direct access \`KeyError\` deta hai, isliye \`get\` use karo.
+
+Interview mein hashing ke sawaal aksar ek hi pattern mein aate hain: "kya complement pehle dikha hai?" (Two Sum), "pehla non-repeating character kaunsa hai?", "do strings anagrams hain?", "array mein duplicate hai?" — har ek ka answer ek hi hai: ek dict banao, ek pass mein scan karo, aur har step par O(1) lookup karo. Agar aapko yeh pattern dikhne lag gaya hai, toh hashing aapko aa gaya hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle size 7 wali table ko khud haath se banao — 21, 35, 14, 28 ke hash nikaalo aur chain dekho. Phir Two Sum ko bina code dekhe khud trace karo: nums = [2, 7, 11, 15], target = 9. Agar dono dry run bina ruke ho jaayein, toh hashing aapko aa gaya hai. Aakhiri mein 5 keyNotes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum Heaps dekhenge — jahan sabse chhota ya sabse bada element turant nikaalna hota hai, wahan hashing kaam nahi aata aur heap aata hai.`,
+        `Let us tie the whole article together. **Hashing** means turning a key into a number with a hash function and using that number as a table index. In a **hash table**, keys are stored at their hash index. Python's \`dict\` and \`set\` are hash tables inside, so lookup, insert, and delete take **O(1)** on average, while searching a list takes O(n). That O(1) is hashing's biggest win — and the reason a dict is the first tool you reach for in counting, caching, memoization, and problems like Two Sum.
+
+A **collision** happens when two keys hash to the same index. In **chaining**, the bucket holds a list and colliding keys join it; in **linear probing**, you look for the next empty bucket. As collisions grow, search drifts toward O(n), so a good hash function and **rehashing** are essential. When the **load factor** (items / table size) reaches about 0.7, the table doubles and every key is re-hashed — a one-time O(n) cost, after which lookups return to O(1).
+
+Remember three things about keys: only **hashable** (immutable) things can be keys — strings, numbers, and tuples yes; lists, dicts, and sets no. A duplicate key **overwrites** the old value. And a dict remembers **insertion order**, not sorted order. Direct access on an empty dict raises a \`KeyError\`, so use \`get\`.
+
+Interview questions on hashing usually follow one pattern: "has the complement appeared before?" (Two Sum), "which is the first non-repeating character?", "are two strings anagrams?", "does the array contain a duplicate?" — the answer to every one is the same: build a dict, scan in a single pass, and use an O(1) lookup at every step. Once you start seeing that pattern, you know hashing.
+
+To revise, read this article once more in this order: first build the size 7 table by hand — compute the hashes of 21, 35, 14, and 28 and draw the chain. Then trace Two Sum without looking at the code: nums = [2, 7, 11, 15], target = 9. If both dry runs go smoothly, you know hashing. Finally, read the 5 keyNotes out loud once — those 5 lines are enough before an interview. In the next article we will look at Heaps — where you need the smallest or largest element instantly, hashing does not help and a heap does.`
+      )
+    },
+  ],
+  diagram: {
+    kind: 'boxes',
+    title: t(
+      'Size 7 ki Hash Table: 21, 35, 14, 28 aur Collision',
+      'Size 7 Hash Table: 21, 35, 14, 28 and the Collision'
+    ),
+    caption: t(
+      'Chaaro keys 7 ke multiples hain, isliye sabka hash 0 aaya aur sab bucket 0 ki chain mein gaye',
+      'All four keys are multiples of 7, so they all hash to 0 and land in bucket 0 as a chain'
+    ),
+    nodes: [
+      {
+        t: t('Hash function: key % 7', 'Hash function: key % 7'),
+        s: t(
+          '21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, 28 % 7 = 0',
+          '21 % 7 = 0, 35 % 7 = 0, 14 % 7 = 0, 28 % 7 = 0'
+        )
+      },
+      {
+        t: t('Bucket 0: [21, 35, 14, 28]', 'Bucket 0: [21, 35, 14, 28]'),
+        s: t(
+          'Collision! Chaining se chaaro keys ek hi bucket ki list mein',
+          'Collision! Chaining stores all four keys in one bucket list'
+        )
+      },
+      {
+        t: t('Buckets 1-6: khaali []', 'Buckets 1-6: empty []'),
+        s: t(
+          'Koi key yahan nahi aayi, table ka zyada hissa bekaar pada hai',
+          'No key landed here, most of the table sits unused'
+        )
+      },
+      {
+        t: t('Dict lookup: O(1) average', 'Dict lookup: O(1) average'),
+        s: t(
+          'Achhe hash par seedha sahi bucket, bura hash par chain scan O(n)',
+          'Good hash jumps straight to the bucket, bad hash scans a chain in O(n)'
+        )
+      },
+      {
+        t: t('Load factor > 0.7: rehash', 'Load factor > 0.7: rehash'),
+        s: t(
+          'Table double hoti hai aur saari keys naye size se dobara hash hoti hain',
+          'Table doubles and every key is re-hashed for the new size'
+        )
+      }
+    ]
+  },  mcqs: [
+    {
+      q: t(
+        'Table size 7 hai aur hash function key % 7 hai. Key 35 kis bucket mein jaayegi?',
+        'The table size is 7 and the hash function is key % 7. Which bucket does key 35 go to?'
+      ),
+      opts: [
+        t('Bucket 5', 'Bucket 5'),
+        t('Bucket 2', 'Bucket 2'),
+        t('Bucket 0', 'Bucket 0'),
+        t('Bucket 1', 'Bucket 1')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: 35 % 7 = 0, isliye 35 bucket 0 mein jaayegi aur wahan pehle se pada 21 se collide karegi.',
+        'Correct answer: 35 % 7 = 0, so 35 goes to bucket 0 and collides with 21, which is already there.'
+      )
+    },
+    {
+      q: t(
+        'Python dict mein ek key ko dhoondhne ka average time complexity kya hota hai?',
+        'What is the average time complexity of looking up a key in a Python dict?'
+      ),
+      opts: [
+        t('O(n)', 'O(n)'),
+        t('O(log n)', 'O(log n)'),
+        t('O(n log n)', 'O(n log n)'),
+        t('O(1)', 'O(1)')
+      ],
+      ans: 3,
+      expl: t(
+        'Sahi jawab: dict hash se seedha sahi bucket par jaata hai, isliye average lookup O(1) hota hai — worst case O(n) hota hai jab sab keys ek hi bucket mein gir jaayein.',
+        'Correct answer: a dict jumps straight to the right bucket using the hash, so average lookup is O(1) — worst case is O(n) when all keys fall into one bucket.'
+      )
+    },
+    {
+      q: t(
+        'Inmein se kaunsi cheez Python dict ki key ban sakti hai?',
+        'Which of these can be a key in a Python dict?'
+      ),
+      opts: [
+        t('List [1, 2]', 'List [1, 2]'),
+        t('Tuple (1, 2)', 'Tuple (1, 2)'),
+        t('Set {1, 2}', 'Set {1, 2}'),
+        t("Dict {'a': 1}", "Dict {'a': 1}")
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: tuple immutable hota hai isliye hashable hai, jabki list, set aur dict mutable hain aur key nahi ban sakte.',
+        'Correct answer: a tuple is immutable, so it is hashable, while a list, a set, and a dict are mutable and cannot be keys.'
+      )
+    },
+    {
+      q: t(
+        'Jab hash table ka load factor 0.7 se upar chala jaaye, toh kya hota hai?',
+        'What happens when a hash table load factor goes above 0.7?'
+      ),
+      opts: [
+        t('Table double hoti hai aur saari keys dobara hash hoti hain (rehashing)', 'The table doubles and every key is re-hashed (rehashing)'),
+        t('Saari keys delete ho jaati hain', 'All keys are deleted'),
+        t('Lookup hamesha ke liye O(n) ho jaata hai', 'Lookup becomes O(n) forever'),
+        t('Kuch nahi badalta', 'Nothing changes')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: load factor badhne par table bada kiya jaata hai aur rehashing se keys phir se fail jaati hain, taaki lookup wapas O(1) ho jaaye.',
+        'Correct answer: when the load factor grows, the table is enlarged and rehashing spreads the keys out again, so lookups return to O(1).'
+      )
+    },
+    {
+      q: t(
+        'Two Sum problem mein dict mein kya store karte hain?',
+        'In the Two Sum problem, what do we store in the dict?'
+      ),
+      opts: [
+        t('Saare possible pairs', 'All possible pairs'),
+        t('Sorted array', 'The sorted array'),
+        t('Ab tak dekhe gaye numbers aur unke index', 'The numbers seen so far and their index'),
+        t('Sirf target value', 'Only the target value')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: har number ke liye check karte hain ki target minus number pehle dikha hai kya, isliye dekhe gaye numbers aur unke index store karte hain.',
+        'Correct answer: for each number we check whether target minus that number appeared before, so we store the numbers seen so far and their index.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'Hash function key ko table index mein badalta hai; achha hash keys ko table mein evenly spread karta hai.',
+      'A hash function turns a key into a table index; a good hash spreads keys evenly across the table.'
+    ),
+    t(
+      'Dict aur set ka lookup average O(1) hota hai, worst case O(n) jab sab keys ek hi bucket mein collide karein.',
+      'Dict and set lookup is O(1) on average, and O(n) in the worst case when all keys collide in one bucket.'
+    ),
+    t(
+      'Sirf hashable (immutable) cheezein key ban sakti hain — tuple haan, list/dict/set naa.',
+      'Only hashable (immutable) things can be keys — a tuple yes, a list, dict, or set no.'
+    ),
+    t(
+      'Load factor = items / table size; 0.7 se upar jaane par table double hoti hai aur rehashing hota hai.',
+      'Load factor = items / table size; above 0.7 the table doubles and rehashing happens.'
+    ),
+    t(
+      'Collision chaining (bucket mein list) ya open addressing (agla khaali bucket) se handle hota hai.',
+      'A collision is handled by chaining (a list inside the bucket) or open addressing (the next empty bucket).'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Sabse Zyada Baar Aane Wala Word Dhoondho',
+      'Practice: Find the Most Frequent Word'
+    ),
+    task: t(
+      'Neeche diye gaye sentence mein dict se har word ki count nikaalo, phir sabse zyada baar aane wala word aur uski count print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+      'Use a dict to count every word in the sentence below, then print the most frequent word and its count. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+    ),
+    language: 'python',
+    starter: `sentence = "chai chai coffee chai juice coffee chai"
+counts = {}
+
+for word in sentence.split():
+    counts[word] = counts.get(word, 0) + 1
+
+most = None
+most_count = 0
+for word in counts:
+    if counts[word] > most_count:
+        most = word
+        most_count = counts[word]
+
+print("counts:", counts)
+print("Sabse zyada baar:", most, "->", most_count, "baar")`,
+    expected: `counts: {'chai': 4, 'coffee': 2, 'juice': 1}
+Sabse zyada baar: chai -> 4 baar`
+  },
+  readMinutes: 12,
+};
+
 export const dsa: Subject = {
   id: 'dsa',
   name: t(
@@ -2188,5 +2638,6 @@ export const dsa: Subject = {
     dsaTrees,
     dsaSortingSearching,
     dsaGraphs,
+    dsaHashing,
   ],
 };
