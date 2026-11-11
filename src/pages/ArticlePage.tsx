@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
 import type { Article, Lang, Subject } from '../lib/types';
 import type { Progress } from '../lib/store';
 import { t } from '../lib/i18n';
+import { renderInline, renderBodyBlocks } from '../lib/inline';
 import DiagramView from '../components/Diagram';
 import Quiz from '../components/Quiz';
 import CodeRunner from '../components/CodeRunner';
@@ -14,32 +14,6 @@ interface Props {
   progress: Progress;
   onArticleDone: (articleId: string, score: number) => void;
   onCompilerRun: (ok: boolean) => void;
-}
-
-/** Render inline markdown used in article prose: **bold** and `code`.
- * Content is written with these markers (C++ prose uses them heavily);
- * without this the markers show up literally on screen. */
-function renderInline(text: string): ReactNode[] {
-  // Non-greedy so **a** and **b** stay separate; [\s\S] lets a bold span
-  // contain `code` with * inside it (e.g. **Edge Case 4: `/* ... */` ...**).
-  const parts = text.split(/(\*\*[\s\S]+?\*\*|`[^`]+`)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
-      return (
-        <strong key={i} className="font-bold text-white">
-          {part.slice(2, -2)}
-        </strong>
-      );
-    }
-    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
-      return (
-        <code key={i} className="rounded bg-black/50 px-1 py-0.5 font-mono text-[0.9em] text-green-300">
-          {part.slice(1, -1)}
-        </code>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
 }
 
 /** Language label + a short file-name-style label for the header bar. */
@@ -119,7 +93,6 @@ function SectionBlock({
 }) {
   const kind = sectionKind(sec.heading.english ?? '');
   const num = String(index + 1).padStart(2, '0');
-  const paras = t(sec.body, lang).split(/\n\n+/).filter(Boolean);
 
   const headingRow = (
     <div className="flex items-start gap-3">
@@ -144,11 +117,7 @@ function SectionBlock({
 
   const body = (
     <div className="mt-3 space-y-4 text-[17px] leading-[1.75] text-zinc-200">
-      {paras.map((p, i) => (
-        <p key={i} className="whitespace-pre-line">
-          {renderInline(p)}
-        </p>
-      ))}
+      {renderBodyBlocks(t(sec.body, lang))}
     </div>
   );
 

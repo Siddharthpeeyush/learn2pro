@@ -1,5 +1,6 @@
 import type { Diagram, DiagramBar, DiagramNode } from '../lib/types';
 import { t } from '../lib/i18n';
+import { renderInline } from '../lib/inline';
 import type { Lang } from '../lib/types';
 
 /** Renders a lesson diagram as a BIG, colourful, real illustrated figure.
@@ -31,8 +32,8 @@ function tintStyle(color: string): React.CSSProperties {
 function NodeText({ node, lang }: { node: DiagramNode; lang: Lang }) {
   return (
     <>
-      <div className="text-base font-bold leading-snug">{t(node.t, lang)}</div>
-      {node.s ? <div className="mt-1 text-sm text-zinc-300">{t(node.s, lang)}</div> : null}
+      <div className="text-base font-bold leading-snug">{renderInline(t(node.t, lang))}</div>
+      {node.s ? <div className="mt-1 text-sm text-zinc-300">{renderInline(t(node.s, lang))}</div> : null}
     </>
   );
 }
@@ -92,11 +93,11 @@ function MemoryDiagram({ diagram, lang }: { diagram: Diagram; lang: Lang }) {
               className="shrink-0 rounded-xl border-2 px-4 py-2 text-base font-bold"
               style={tintStyle(color)}
             >
-              {t(n.t, lang)}
+              {renderInline(t(n.t, lang))}
             </span>
             <span className="hidden text-2xl font-bold text-zinc-400 sm:block">→</span>
             <span className="flex-1 rounded-xl border border-zinc-700 bg-zinc-950/70 px-4 py-2 font-mono text-base text-zinc-100">
-              {n.s ? t(n.s, lang) : '—'}
+              {n.s ? renderInline(t(n.s, lang)) : '—'}
             </span>
           </div>
         );
@@ -120,7 +121,7 @@ function TableDiagram({ diagram, lang }: { diagram: Diagram; lang: Lang }) {
                   key={i}
                   className="border border-green-800 bg-green-600 px-4 py-3 text-left font-bold text-white"
                 >
-                  {t(h, lang)}
+                  {renderInline(t(h, lang))}
                 </th>
               ))}
             </tr>
@@ -136,7 +137,7 @@ function TableDiagram({ diagram, lang }: { diagram: Diagram; lang: Lang }) {
                     ci === 0 ? 'font-bold' : ''
                   }`}
                 >
-                  {t(cell, lang)}
+                  {renderInline(t(cell, lang))}
                 </td>
               ))}
             </tr>
@@ -159,11 +160,11 @@ function BarsDiagram({ diagram, lang }: { diagram: Diagram; lang: Lang }) {
         return (
           <div key={i}>
             <div className="mb-1 flex flex-wrap items-baseline justify-between gap-2">
-              <span className="text-base font-bold">{t(b.label, lang)}</span>
+              <span className="text-base font-bold">{renderInline(t(b.label, lang))}</span>
               <span className="text-base font-bold" style={{ color }}>
                 {b.value}
                 {b.note ? (
-                  <span className="ml-2 text-sm font-normal text-zinc-300">{t(b.note, lang)}</span>
+                  <span className="ml-2 text-sm font-normal text-zinc-300">{renderInline(t(b.note, lang))}</span>
                 ) : null}
               </span>
             </div>
@@ -196,9 +197,9 @@ function TreeDiagram({ diagram, lang }: { diagram: Diagram; lang: Lang }) {
               style={tintStyle(color)}
             >
               {depth > 0 ? <span className="mr-2 text-zinc-400">└─</span> : null}
-              {t(n.t, lang)}
+              {renderInline(t(n.t, lang))}
               {n.s ? (
-                <span className="ml-2 text-sm font-normal text-zinc-300">{t(n.s, lang)}</span>
+                <span className="ml-2 text-sm font-normal text-zinc-300">{renderInline(t(n.s, lang))}</span>
               ) : null}
             </span>
           </div>
@@ -304,7 +305,7 @@ export default function DiagramView({ diagram, lang }: { diagram: Diagram; lang:
         <span className="mr-2" aria-hidden="true">
           🖼️
         </span>
-        {t(diagram.title, lang)}
+        {renderInline(t(diagram.title, lang))}
       </p>
       {diagram.kind === 'flow' ? (
         <FlowDiagram diagram={diagram} lang={lang} />
@@ -326,7 +327,7 @@ export default function DiagramView({ diagram, lang }: { diagram: Diagram; lang:
         <TimelineDiagram diagram={diagram} lang={lang} />
       )}
       {diagram.caption ? (
-        <p className="mt-4 text-sm italic text-zinc-400">{t(diagram.caption, lang)}</p>
+        <p className="mt-4 text-sm italic text-zinc-400">{renderInline(t(diagram.caption, lang))}</p>
       ) : null}
     </div>
   );

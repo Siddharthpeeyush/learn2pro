@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { MCQ, Lang } from '../lib/types';
 import { t } from '../lib/i18n';
+import { renderInline, renderRichText } from '../lib/inline';
 
 interface Props {
   mcqs: MCQ[];
@@ -31,9 +32,9 @@ export default function Quiz({ mcqs, lang, onFinish }: Props) {
     <div>
       {mcqs.map((q, qi) => (
         <div key={qi} className="mb-5 rounded-2xl border border-[#243424] bg-[#0d1510] p-4">
-          <p className="mb-3 font-semibold">
-            Q{qi + 1}. {t(q.q, lang)}
-          </p>
+          <div className="mb-3 font-semibold">
+            Q{qi + 1}. {renderRichText(t(q.q, lang))}
+          </div>
           <div className="flex flex-col gap-2">
             {q.opts.map((o, oi) => {
               const chosen = answers[qi] === oi;
@@ -53,7 +54,7 @@ export default function Quiz({ mcqs, lang, onFinish }: Props) {
                   onClick={() => setAnswers((prev) => ({ ...prev, [qi]: oi }))}
                   className={`rounded-xl border px-3 py-2 text-left ${cls}`}
                 >
-                  {t(o, lang)}
+                  {renderRichText(t(o, lang))}
                 </button>
               );
             })}
@@ -62,9 +63,9 @@ export default function Quiz({ mcqs, lang, onFinish }: Props) {
             <div className="mt-3 rounded-xl bg-green-950/60 p-3 text-sm">
               <p>
                 <b>{lang === 'hindi' ? 'सही जवाब: ' : lang === 'english' ? 'Correct answer: ' : 'Sahi jawab: '}</b>
-                {t(q.opts[q.ans], lang)}
+                {renderInline(t(q.opts[q.ans], lang))}
               </p>
-              <p className="mt-1 text-zinc-300">{t(q.expl, lang)}</p>
+              <div className="mt-1 text-zinc-300">{renderRichText(t(q.expl, lang))}</div>
             </div>
           ) : null}
         </div>
