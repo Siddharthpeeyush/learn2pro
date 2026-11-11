@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import type { Article, Lang, Subject } from '../lib/types';
 import type { Progress } from '../lib/store';
 import { t } from '../lib/i18n';
@@ -13,6 +14,32 @@ interface Props {
   progress: Progress;
   onArticleDone: (articleId: string, score: number) => void;
   onCompilerRun: (ok: boolean) => void;
+}
+
+/** Render inline markdown used in article prose: **bold** and `code`.
+ * Content is written with these markers (C++ prose uses them heavily);
+ * without this the markers show up literally on screen. */
+function renderInline(text: string): ReactNode[] {
+  // Non-greedy so **a** and **b** stay separate; [\s\S] lets a bold span
+  // contain `code` with * inside it (e.g. **Edge Case 4: `/* ... */` ...**).
+  const parts = text.split(/(\*\*[\s\S]+?\*\*|`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return (
+        <strong key={i} className="font-bold text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+      return (
+        <code key={i} className="rounded bg-black/50 px-1 py-0.5 font-mono text-[0.9em] text-green-300">
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
 }
 
 /** Language label + a short file-name-style label for the header bar. */
@@ -119,7 +146,7 @@ function SectionBlock({
     <div className="mt-3 space-y-4 text-[17px] leading-[1.75] text-zinc-200">
       {paras.map((p, i) => (
         <p key={i} className="whitespace-pre-line">
-          {p}
+          {renderInline(p)}
         </p>
       ))}
     </div>
@@ -134,7 +161,7 @@ function SectionBlock({
           <p className="output">{sec.code.output}</p>
         </div>
       ) : null}
-      {sec.code.note ? <p className="mt-2 text-sm text-zinc-400">{t(sec.code.note, lang)}</p> : null}
+      {sec.code.note ? <p className="mt-2 text-sm text-zinc-400">{renderInline(t(sec.code.note, lang))}</p> : null}
       <TryInCompilerButton onClick={() => openInCompiler(sec.code!.language, sec.code!.code)} />
     </div>
   ) : null;
@@ -286,7 +313,7 @@ export default function ArticlePage({ subject, article, lang, progress, onArticl
                   <p className="output">{ex.output}</p>
                 </div>
               ) : null}
-              {ex.note ? <p className="mt-2 text-sm text-zinc-400">{t(ex.note, lang)}</p> : null}
+              {ex.note ? <p className="mt-2 text-sm text-zinc-400">{renderInline(t(ex.note, lang))}</p> : null}
               <TryInCompilerButton onClick={() => openInCompiler(ex.language, ex.code)} />
             </div>
           ))}
@@ -315,7 +342,7 @@ export default function ArticlePage({ subject, article, lang, progress, onArticl
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-sm font-extrabold text-amber-300 ring-1 ring-amber-500/50">
                   {i + 1}
                 </span>
-                <span className="pt-0.5 text-[16px] leading-relaxed text-amber-50/95">{t(n, lang)}</span>
+                <span className="pt-0.5 text-[16px] leading-relaxed text-amber-50/95">{renderInline(t(n, lang))}</span>
               </li>
             ))}
           </ol>
@@ -328,7 +355,7 @@ export default function ArticlePage({ subject, article, lang, progress, onArticl
           <h2 className="mt-1 text-xl font-extrabold text-white sm:text-2xl">
             ✍️ {t(article.practice.title, lang)}
           </h2>
-          <p className="mt-3 whitespace-pre-line text-[17px] leading-[1.75] text-zinc-200">{t(article.practice.task, lang)}</p>
+          <p className="mt-3 whitespace-pre-line text-[17px] leading-[1.75] text-zinc-200">{renderInline(t(article.practice.task, lang))}</p>
           {article.practice.expected ? (
             <p className="mt-3 inline-block rounded-xl bg-[#12210f] px-3 py-2 text-sm text-zinc-300 ring-1 ring-[#243424]">
               <span className="font-bold text-green-300">Expected:</span> {article.practice.expected}
