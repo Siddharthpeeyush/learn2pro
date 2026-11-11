@@ -5,6 +5,7 @@ import type { Subject } from '../lib/types';
 import { cProgramming } from './c-programming';
 import { pythonProgramming } from './python-programming';
 import { javaProgramming } from './java-programming';
+import { cppProgramming } from './cpp-programming';
 import { dsa } from './dsa';
 import { dbms } from './dbms';
 import { operatingSystems } from './operating-systems';
@@ -18,6 +19,7 @@ export const ALL_SUBJECTS: Subject[] = [
   cProgramming,
   pythonProgramming,
   javaProgramming,
+  cppProgramming,
   dsa,
   dbms,
   operatingSystems,
