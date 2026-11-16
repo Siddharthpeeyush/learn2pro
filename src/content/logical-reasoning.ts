@@ -1,7 +1,12495 @@
 // Learn2Pro v2 — Logical Reasoning.
 // Own-style AI-written content. Standard reasoning methods are used for facts
 // only; every series, puzzle and setting is invented here.
-import type { Subject } from '../lib/types';
+import type { Subject, Article, LText } from '../lib/types';
+
+const t = (hinglish: string, english: string): LText => ({ hinglish, english });
+
+
+
+const logicLetterSeries: Article = {
+    id: 'logic-letter-series',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Letter Series — Pattern, Skipping aur Gap ka Hisaab',
+      'Letter Series — Patterns, Skipping, and the Gap Method'
+    ),
+    summary: t(
+      'Letter series mein har letter ki ek position hoti hai (A = 1 se Z = 26 tak) — isliye ye number series hi hai, bas letters mein likhi hui. Is article mein tum gap nikaalna, letters skip karna, ulta chalne wali series aur galat term dhoondhna seekhoge, har pattern ko Python se verify karke.',
+      'In a letter series every letter has a position (A = 1 to Z = 26) — so it is really a number series, just written in letters. In this article you will learn to find gaps, skip letters, read reverse series, and spot the wrong term, verifying every pattern in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Letter Series Kya Hai? (Position, Gap aur Pattern)',
+          '1. What Is a Letter Series? (Position, Gap, and Pattern)'
+        ),
+        body: t(
+          `Letter series ka matlab hai letters ki ek line jisme ek chhupa hua rule chalta hai, aur tumhe agla letter ya galat letter dhoondhna hota hai. Sabse pehli aur sabse important baat ye hai: **har letter ki ek position hoti hai** — A = 1, B = 2, C = 3, aur aise hi Z = 26 tak. Jaise hi tum letters ko unki position mein badal dete ho, letter series ek number series ban jaati hai, aur phir wahi tareeka kaam karta hai jo number series mein kaam karta hai: pehle do-teen terms ke beech ka fark (gap) likho.
+
+Gap ka matlab hai do aas-paas wale letters ki positions ka fark. Jaise A, C, F mein gaps hain +2 aur +3 (C − A = 3 − 1 = 2, F − C = 6 − 3 = 3). Agar gaps ek hi rehte hain, jaise B, E, H, K mein har baar +3, to series simple hai — har baar 3 letters aage badho. Agar gaps badhte hain, jaise +2, +3, +4, +5, to agla gap +6 hoga. Isi liye letter series solve karne ka pehla kadam hamesha ek hi hai: **positions likho, phir gaps likho**.
+
+**Skipping** ka matlab hai beech wale letters ko chhod dena. Jab series B, E, H, K chalti hai, to B aur E ke beech C aur D skip ho rahe hain — 2 letters skip, phir agla letter. Isi ko +3 ka gap bhi kehte hain, kyunki position 3 badh rahi hai. Dono baatein ek hi hain, bas bolne ka tareeka alag hai. Exam mein kabhi "3 letters skip karke" poochha jaata hai, kabhi gap poochha jaata hai — matlab ek hi hai.
+
+Letter series teen tarah ki hoti hai: **aage badhne wali** (A, C, F, J...), **peechhe jaane wali ya reverse** (Z, X, V, T... jisme gap −2 hota hai), aur **mixed ya alternate** (do series ek ke andar — odd position wale letters ka ek rule, even wale ka doosra). Is article mein hum teeno ko ek-ek karke dekhenge, aur har baar Python se check karenge ki hamara jawab sahi hai ya nahi.`,
+          `A letter series is a line of letters with a hidden rule running through it, and you must find the next letter or the wrong letter. The first and most important fact is this: **every letter has a position** — A = 1, B = 2, C = 3, all the way to Z = 26. As soon as you convert letters into their positions, a letter series becomes a number series, and the same method that works for number series works here: write down the difference (gap) between the first two or three terms.
+
+The gap means the difference between the positions of two neighbouring letters. In A, C, F the gaps are +2 and +3 (C − A = 3 − 1 = 2, F − C = 6 − 3 = 3). If the gaps stay the same, as in B, E, H, K where it is +3 every time, the series is simple — move 3 letters forward each time. If the gaps grow, like +2, +3, +4, +5, then the next gap is +6. That is why the first step in solving any letter series is always the same: **write the positions, then write the gaps**.
+
+**Skipping** means jumping over the letters in between. When the series runs B, E, H, K, the letters C and D are skipped between B and E — 2 letters skipped, then the next letter. This is also called a gap of +3, because the position grows by 3. Both phrases mean the same thing, only the wording is different. In exams, sometimes the question says "skip 3 letters", sometimes it asks for the gap — the meaning is the same.
+
+Letter series come in three kinds: **forward** (A, C, F, J...), **backward or reverse** (Z, X, V, T... where the gap is −2), and **mixed or alternate** (two series inside one — the odd-position letters follow one rule and the even-position letters follow another). In this article we will look at all three, one by one, and every time we will check in Python that our answer is right.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Password, Code Words aur Seat Numbers',
+          '2. Real-Life Examples: Passwords, Code Words, and Seat Numbers'
+        ),
+        body: t(
+          `Letter series sirf exam ka topic nahi hai — ye roz ki zindagi mein bhi dikhta hai. Socho tum ek password banate ho: A, C, F, J... — ye ek pattern hai jo tumhe yaad rakhna aasan lagta hai kyunki isme ek rule hai. Ya socho ek teacher class mein code words banati hai: har agla code word pehle wale se 3 letters aage hota hai. Jaise CAT ke baad FDW aata hai (C → F, A → D, T → W — har letter +3). Ye coding-decoding ka basic idea hai, aur iski jad letter series mein hi hai.
+
+Doosra example hai **seat numbers aur roll numbers**. Ek exam hall mein seats A, D, G, J... ke hisaab se lagi hon to har baar 2 letters skip ho rahe hain (gap +3). Agar tumhe apni seat dhoondhni hai to tum pattern se agla letter nikaal sakte ho. Aise hi, ek library mein books ke codes B, E, H, K... chalte hon to tum jaan sakte ho ki agla shelf ka code kya hoga. Pattern dekhna ek aadat hai — ek baar ye aadat ban jaaye to tum har jagah pattern dekhne lagoge.
+
+Teesra example hai **music aur khel**. Ek piano par notes C, E, G, B... ka pattern bhi gaps se hi banta hai. Cricket mein bhi, ek batsman ke pehle letters... nahi, ye example fit nahi baithta — seedhi baat ye hai ki letter series ka asli fayda exam mein hai: SSC, Banking aur Railway ke exams mein har saal 2-3 sawal letter series se aate hain, aur jo student positions likhne ki aadat daal leta hai, woh in sawalon ko 30 second mein solve kar leta hai. Isi liye is article ka rule yaad rakho: **pehle position, phir gap, phir jawab**.`,
+          `A letter series is not only an exam topic — it appears in daily life too. Imagine you make a password: A, C, F, J... — it is a pattern that feels easy to remember because it has a rule. Or imagine a teacher who makes code words for the class: every next code word is 3 letters ahead of the last one. For example, after CAT comes FDW (C → F, A → D, T → W — every letter +3). That is the basic idea of coding-decoding, and its root lies in letter series.
+
+A second example is **seat numbers and roll numbers**. If seats in an exam hall are arranged as A, D, G, J..., then 2 letters are skipped every time (a gap of +3). If you must find your seat, you can work out the next letter from the pattern. In the same way, if books in a library are coded B, E, H, K..., you can tell what the next shelf code will be. Spotting patterns is a habit — once you build it, you start seeing patterns everywhere.
+
+A third example is **music and games**. On a piano, the pattern of notes C, E, G, B... is also built from gaps. But the plain truth is that the real benefit of letter series is in exams: SSC, Banking, and Railway exams ask 2–3 letter series questions every year, and a student who builds the habit of writing positions solves them in 30 seconds. So remember this article rule: **first the position, then the gap, then the answer**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: A, C, F, J, O ka Dry Run aur Agla Letter',
+          '3. Step-by-Step: Dry Run of A, C, F, J, O and the Next Letter'
+        ),
+        body: t(
+          `Ab hum ek series ko haath se solve karte hain, bilkul step-by-step. Series hai: **A, C, F, J, O, ?**
+
+**Step 1 — Positions likho:** A = 1, C = 3, F = 6, J = 10, O = 15. Ab ye ek number series hai: 1, 3, 6, 10, 15.
+
+**Step 2 — Gaps nikalo:** 3 − 1 = 2, 6 − 3 = 3, 10 − 6 = 4, 15 − 10 = 5. Gaps hain +2, +3, +4, +5. Ye gaps har baar 1 badh rahe hain.
+
+**Step 3 — Agla gap nikalo:** gaps ka pattern +2, +3, +4, +5 hai, to agla gap +6 hoga.
+
+**Step 4 — Agla number aur letter nikalo:** 15 + 6 = 21. 21 number ka letter hai **U** (A = 1 se gino: 21 = U). Jawab hai **U**.
+
+**Check:** poori series A, C, F, J, O, U ke gaps +2, +3, +4, +5, +6 hain — ek saaf pattern, koi tod nahi. Neeche wala code yahi dry run print karta hai — isko run karke dekho ki har step ka number tumhare haath wale hisaab se milta hai ya nahi. Code mein \`ord()\` letter ki position deta hai (A ka ASCII 65 hota hai, isliye \`ord('A') - 64\` = 1) aur \`chr()\` number ko wapas letter mein badalta hai.`,
+          `Now let us solve one series by hand, completely step by step. The series is: **A, C, F, J, O, ?**
+
+**Step 1 — Write the positions:** A = 1, C = 3, F = 6, J = 10, O = 15. Now this is a number series: 1, 3, 6, 10, 15.
+
+**Step 2 — Find the gaps:** 3 − 1 = 2, 6 − 3 = 3, 10 − 6 = 4, 15 − 10 = 5. The gaps are +2, +3, +4, +5. These gaps grow by 1 each time.
+
+**Step 3 — Find the next gap:** the gap pattern is +2, +3, +4, +5, so the next gap is +6.
+
+**Step 4 — Find the next number and letter:** 15 + 6 = 21. The letter for number 21 is **U** (count from A = 1: 21 = U). The answer is **U**.
+
+**Check:** the full series A, C, F, J, O, U has gaps +2, +3, +4, +5, +6 — a clean pattern with no break. The code below prints this same dry run — run it and check that every step matches your hand calculation. In the code, \`ord()\` gives the position of a letter (the ASCII code of A is 65, so \`ord('A') - 64\` = 1) and \`chr()\` converts a number back into a letter.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: A, C, F, J, O, ? — Gap +2, +3, +4, +5, +6',
+            'Dry Run: A, C, F, J, O, ? — Gaps +2, +3, +4, +5, +6'
+          ),
+          language: 'python',
+          code: `letters = ['A']
+gaps = [2, 3, 4, 5, 6]
+print("A = 1")
+for gap in gaps:
+    nxt = chr(ord(letters[-1]) + gap)
+    letters.append(nxt)
+    print(nxt, "=", ord(nxt) - 64, "(gap +" + str(gap) + ")")
+print("Next letter:", letters[-1])`,
+          output: `A = 1
+C = 3 (gap +2)
+F = 6 (gap +3)
+J = 10 (gap +4)
+O = 15 (gap +5)
+U = 21 (gap +6)
+Next letter: U`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Position Na Likhna, Z ke Baad Atakna aur Pehla Gap Maan Lena',
+          '4. Common Mistakes: Skipping Positions, Getting Stuck After Z, and Trusting the First Gap'
+        ),
+        body: t(
+          `Letter series mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Positions likhe bina hi guess karna.** Log A, C, F, J dekh kar sochte hain "gap badh raha hai" aur guess kar lete hain — kabhi sahi, kabhi galat. Bina positions likhe tum ye nahi jaan sakte ki gap +2 se +3 hua ya +3 se +4. Hamesha pehle A = 1, B = 2... likho. Ye 10 second ka kaam tumhe galat jawab se bachata hai. Exam mein jo student positions likhta hai, wohi fast bhi hota hai aur sahi bhi — kyunki uska dimaag guess par nahi, hisaab par chal raha hota hai.
+
+**Galti 2: Z ke baad atak jaana.** Series X, Y, Z ke baad kya aayega? Bahut se log atak jaate hain kyunki Z ke baad koi letter nahi hota. Sach ye hai ki alphabet **gol ghumta hai** — Z ke baad phir A aata hai. Jaise X, A, D, G mein X = 24, A = 1 (24 + 3 = 27, 27 − 26 = 1), D = 4, G = 7 — gap har baar +3 hai, bas Z ke baad wrap ho gaya. Ise **cyclic** series kehte hain. Agar tumhara gap Z ko paar kar jaaye to 26 ghata do — wahi naya letter hai.
+
+**Galti 3: Pehle gap ko hi rule maan lena.** Series A, D, G mein gap +3, +3 hai — log maan lete hain agla bhi +3 hoga, aur aksar sahi bhi hota hai. Lekin A, C, F mein gap +2, +3 hai — yahan pehla gap dekh kar +2 maan lena galat hoga. Rule tabhi maano jab kam se kam **3 gaps** check kar liye hon. Do gaps se pattern confirm nahi hota, teen se hota hai.`,
+          `Letter series mistakes happen mostly in three places.
+
+**Mistake 1: Guessing without writing positions.** People look at A, C, F, J, think "the gap is growing", and guess — sometimes right, sometimes wrong. Without writing positions, you cannot tell whether the gap went from +2 to +3 or from +3 to +4. Always write A = 1, B = 2... first. This 10-second job saves you from a wrong answer. In exams, the student who writes positions is both fast and correct — because their mind runs on calculation, not on guessing.
+
+**Mistake 2: Getting stuck after Z.** What comes after X, Y, Z in a series? Many people freeze because no letter comes after Z. The truth is that the alphabet **goes around in a circle** — after Z comes A again. In X, A, D, G, the positions are X = 24, A = 1 (24 + 3 = 27, 27 − 26 = 1), D = 4, G = 7 — the gap is +3 every time, it just wrapped past Z. This is called a **cyclic** series. If your gap crosses Z, subtract 26 — that is the new letter.
+
+**Mistake 3: Accepting the first gap as the rule.** In A, D, G the gaps are +3, +3 — people assume the next gap is +3 too, and often they are right. But in A, C, F the gaps are +2, +3 — accepting +2 from the first gap alone would be wrong. Accept a rule only after checking at least **3 gaps**. Two gaps do not confirm a pattern; three do.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Reverse Series, Alternate Series aur Galat Term',
+          '5. Edge Cases: Reverse Series, Alternate Series, and the Wrong Term'
+        ),
+        body: t(
+          `Edge cases woh series hain jo pehli nazar mein ajeeb lagti hain.
+
+**1. Reverse series.** Z, X, V, T, R mein gap −2 hai — har baar 2 peeche. Agla letter hai P (R = 18, 18 − 2 = 16 = P). Reverse series mein bhi wahi tareeka hai, bas gap negative hota hai. Agar tum positions likhoge to minus wala gap khud dikh jaayega. Neeche ke extra examples mein iska code bhi hai.
+
+**2. Alternate series.** Kabhi-kabhi ek series ke andar do series chhupi hoti hain. Jaise A, Z, C, X, E, V mein odd position wale letters hain A, C, E (gap +2) aur even wale hain Z, X, V (gap −2). Poori series ko ek rule se samjhane ki koshish karoge to kuch nahi milega. Aise mein series ko do hisso mein baant lo — odd terms alag, even terms alag — aur phir har hisse ka gap nikalo. Ye exam ka favourite trap hai.
+
+**3. Galat term (wrong term).** Kabhi sawal ye hota hai ki series mein kaunsa term galat hai. Jaise D, F, I, M, P mein gaps hain +2, +3, +4, +3 — aakhri gap +3 hai jabki pattern ke hisaab se +5 hona chahiye tha (13 + 5 = 18 = R). Isliye P galat hai, sahi term R hai. Galat term dhoondhne ka tareeka hai: gaps likho, jahan pattern tootta hai wahi term galat hai.
+
+**4. Vowels wali series.** A, E, I, O, U mein gaps hain +4, +4, +6, +6 — ye vowels ka apna pattern hai. Aise sawalon mein pehle check karo ki kya saare letters vowels hain — agar haan, to agla letter bhi vowel hoga. U ke baad koi vowel nahi bachta, isliye aisi series aksar U par khatam hoti hai ya phir se A se shuru hoti hai.`,
+          `Edge cases are the series that look strange at first sight.
+
+**1. Reverse series.** In Z, X, V, T, R the gap is −2 — two steps back every time. The next letter is P (R = 18, 18 − 2 = 16 = P). The method is the same for a reverse series, only the gap is negative. If you write the positions, the negative gap shows itself. The extra examples below include code for this too.
+
+**2. Alternate series.** Sometimes one series hides two series inside it. In A, Z, C, X, E, V, the odd-position letters are A, C, E (gap +2) and the even-position letters are Z, X, V (gap −2). If you try to explain the whole series with one rule, nothing fits. In such cases, split the series into two parts — odd terms separately, even terms separately — and find the gap of each part. This is an exam favourite trap.
+
+**3. Wrong term.** Sometimes the question asks which term in the series is wrong. In D, F, I, M, P the gaps are +2, +3, +4, +3 — the last gap is +3, while the pattern needs +5 (13 + 5 = 18 = R). So P is wrong, and the correct term is R. The way to find a wrong term is: write the gaps, and the term where the pattern breaks is the wrong one.
+
+**4. Vowel series.** In A, E, I, O, U the gaps are +4, +4, +6, +6 — vowels have their own pattern. In such questions, first check whether all the letters are vowels — if yes, the next letter is also a vowel. After U no vowel is left, so such a series usually ends at U or starts again from A.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Gap Badal Do, Direction Badal Do, ya Letters Badal Do',
+          '6. What If: Change the Gap, Change the Direction, or Change the Letters'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain — yahi sawal tumhari samajh ko pakka karte hain.
+
+**What if: gap badal do?** A, C, F, J, O mein gap +2, +3, +4, +5 hai. Agar gaps ko +3, +3, +3, +3 kar dein to series ban jaati hai A, D, G, J, M — ab har baar 2 letters skip ho rahe hain. Ek hi shuruwaati letter se gap badalne par poori series badal jaati hai. Isi liye gap hi series ki pehchan hai — gap badla, series badli.
+
+**What if: direction badal do?** A, C, F, J, O ko ulta kar dein to O, J, F, C, A banta hai — gaps −5, −4, −3, −2. Peeche jaane par bhi wahi gaps ulta order mein dikhte hain. Iska matlab hai ki har forward series ki ek reverse series hoti hai, aur dono ko ek hi tareeke se solve karte hain.
+
+**What if: letters ki jagah numbers likh dein?** A, C, F, J, O ko 1, 3, 6, 10, 15 likh dein to ye number series ban jaati hai — aur iska agla number 21 hai, jo letter U hai. Yehi is article ka sabse bada lesson hai: **letter series aur number series ek hi cheez hain**. Jo student number series solve kar sakta hai, woh letter series bhi solve kar sakta hai — bas positions likhna seekhna hai.
+
+**What if: do rules ek saath chala dein?** A, Z, B, Y, C, X mein odd terms A, B, C (gap +1) aur even terms Z, Y, X (gap −1) hain. Do rules ek saath chal rahe hain — ek aage, ek peeche. Aisi series dekh kar ghabrana nahi, bas do hisso mein baant lena hai.`,
+          `Now let us ask "what-if" questions — these are the questions that make your understanding solid.
+
+**What if you change the gap?** In A, C, F, J, O the gaps are +2, +3, +4, +5. If you change the gaps to +3, +3, +3, +3, the series becomes A, D, G, J, M — now 2 letters are skipped every time. Changing the gap from the same starting letter changes the whole series. That is why the gap is the identity of a series — change the gap, change the series.
+
+**What if you change the direction?** Reversing A, C, F, J, O gives O, J, F, C, A — with gaps −5, −4, −3, −2. Going backwards shows the same gaps in reverse order. This means every forward series has a reverse series, and both are solved the same way.
+
+**What if you write numbers instead of letters?** Writing A, C, F, J, O as 1, 3, 6, 10, 15 turns it into a number series — and its next number is 21, which is the letter U. This is the biggest lesson of this article: **a letter series and a number series are the same thing**. A student who can solve a number series can also solve a letter series — they only need to learn to write positions.
+
+**What if two rules run together?** In A, Z, B, Y, C, X, the odd terms are A, B, C (gap +1) and the even terms are Z, Y, X (gap −1). Two rules run together — one forward, one backward. Do not panic when you see such a series; just split it into two parts.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Letter Series ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Letter Series'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Letter series solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — positions likho** (A = 1 se Z = 26 tak), **Step 2 — gaps nikalo** (aas-paas wale letters ki positions ka fark), **Step 3 — gap ka pattern dhoondho aur agla letter nikalo**. Agar gaps ek jaise hain to gap repeat karo; agar gaps badh rahe hain to agla gap badhao; agar gaps negative hain to series reverse hai; agar ek rule na mile to series ko odd aur even terms mein baant lo.
+
+Yaad rakhne wali baatein: Z ke baad A aata hai (alphabet gol ghumta hai), rule tabhi maano jab kam se kam 3 gaps check kar liye hon, aur galat term wahi hota hai jahan gap ka pattern tootta hai. Skipping aur gap ek hi baat hai — 2 letters skip karna matlab gap +3.
+
+Revision ke liye ye 3 series khud solve karo: B, E, H, K, N (jawab Q), Z, X, V, T, R (jawab P), aur A, D, G, J, M (jawab P). Agar teeno bina ruke ho jaayein to letter series tumhe aa gayi hai. Agle article mein hum analogy dekhenge — jahan do cheezon ke beech ka rishta dhoondh kar teesri cheez par lagana hota hai.`,
+          `Let us tie the whole article together. Solving a letter series takes only 3 steps: **Step 1 — write the positions** (A = 1 to Z = 26), **Step 2 — find the gaps** (the difference between the positions of neighbouring letters), **Step 3 — find the gap pattern and work out the next letter**. If the gaps are equal, repeat the gap; if the gaps grow, grow the next gap; if the gaps are negative, the series runs in reverse; if no single rule fits, split the series into odd and even terms.
+
+Things to remember: after Z comes A again (the alphabet goes around in a circle), accept a rule only after checking at least 3 gaps, and the wrong term is the one where the gap pattern breaks. Skipping and gap mean the same thing — skipping 2 letters means a gap of +3.
+
+For revision, solve these 3 series yourself: B, E, H, K, N (answer Q), Z, X, V, T, R (answer P), and A, D, G, J, M (answer P). If all three go smoothly, you know letter series. In the next article we will look at analogy — where you find the relation between two things and apply it to a third.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Letter Series Solve Karne ka Flow',
+        'The Flow for Solving a Letter Series'
+      ),
+      caption: t(
+        'A, C, F, J, O ka example: positions likho, gaps nikalo, pattern lagao',
+        'The example A, C, F, J, O: write positions, find gaps, apply the pattern'
+      ),
+      nodes: [
+        {
+          t: t('Positions likho: A=1, C=3, F=6, J=10, O=15', 'Write positions: A=1, C=3, F=6, J=10, O=15'),
+          s: t('Har letter ko uski number position mein badlo', 'Convert every letter into its number position')
+        },
+        {
+          t: t('Gaps nikalo: +2, +3, +4, +5', 'Find the gaps: +2, +3, +4, +5'),
+          s: t('Aas-paas wale letters ki positions ka fark', 'Difference between the positions of neighbouring letters')
+        },
+        {
+          t: t('Pattern dhoondho: gap har baar 1 badh raha hai', 'Find the pattern: the gap grows by 1 each time'),
+          s: t('Kam se kam 3 gaps check karo, phir rule maano', 'Check at least 3 gaps before accepting the rule')
+        },
+        {
+          t: t('Agla gap: +6', 'Next gap: +6'),
+          s: t('15 + 6 = 21', '15 + 6 = 21')
+        },
+        {
+          t: t('Jawab: 21 = U', 'Answer: 21 = U'),
+          s: t('Number ko wapas letter mein badlo', 'Convert the number back into a letter')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Skipping: B, E, H, K, N, ? — Har Baar 2 Letters Skip',
+          'Skipping: B, E, H, K, N, ? — Skip 2 Letters Every Time'
+        ),
+        language: 'python',
+        code: `letter = 'B'
+print(letter, "=", ord(letter) - 64)
+for step in range(5):
+    letter = chr(ord(letter) + 3)
+    print(letter, "=", ord(letter) - 64, "(skip 2, jump +3)")`,
+        output: `B = 2
+E = 5 (skip 2, jump +3)
+H = 8 (skip 2, jump +3)
+K = 11 (skip 2, jump +3)
+N = 14 (skip 2, jump +3)
+Q = 17 (skip 2, jump +3)`
+      },
+      {
+        title: t(
+          'Reverse: Z, X, V, T, R, ? — Har Baar 2 Peeche',
+          'Reverse: Z, X, V, T, R, ? — Two Steps Back Every Time'
+        ),
+        language: 'python',
+        code: `letter = 'Z'
+print(letter, "=", ord(letter) - 64)
+for step in range(5):
+    letter = chr(ord(letter) - 2)
+    print(letter, "=", ord(letter) - 64, "(jump -2)")`,
+        output: `Z = 26
+X = 24 (jump -2)
+V = 22 (jump -2)
+T = 20 (jump -2)
+R = 18 (jump -2)
+P = 16 (jump -2)`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'A, C, F, J, O, ? — agla letter kya hoga?',
+          'A, C, F, J, O, ? — what is the next letter?'
+        ),
+        opts: [
+          t('S', 'S'),
+          t('T', 'T'),
+          t('U', 'U'),
+          t('V', 'V')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: positions 1, 3, 6, 10, 15 hain aur gaps +2, +3, +4, +5 hain. Agla gap +6 hoga, to 15 + 6 = 21, matlab U.',
+          'Correct answer: the positions are 1, 3, 6, 10, 15 and the gaps are +2, +3, +4, +5. The next gap is +6, so 15 + 6 = 21, which means U.'
+        )
+      },
+      {
+        q: t(
+          'B, E, H, K, N, ? — agla letter kya hoga?',
+          'B, E, H, K, N, ? — what is the next letter?'
+        ),
+        opts: [
+          t('P', 'P'),
+          t('Q', 'Q'),
+          t('R', 'R'),
+          t('S', 'S')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: gap har baar +3 hai (2, 5, 8, 11, 14). Agla = 14 + 3 = 17, matlab Q.',
+          'Correct answer: the gap is +3 every time (2, 5, 8, 11, 14). Next = 14 + 3 = 17, which means Q.'
+        )
+      },
+      {
+        q: t(
+          'Z, X, V, T, R, ? — agla letter kya hoga?',
+          'Z, X, V, T, R, ? — what is the next letter?'
+        ),
+        opts: [
+          t('Q', 'Q'),
+          t('R', 'R'),
+          t('O', 'O'),
+          t('P', 'P')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: ye reverse series hai, gap har baar -2 hai (26, 24, 22, 20, 18). Agla = 18 - 2 = 16, matlab P.',
+          'Correct answer: this is a reverse series, the gap is -2 every time (26, 24, 22, 20, 18). Next = 18 - 2 = 16, which means P.'
+        )
+      },
+      {
+        q: t(
+          'A, D, G, J, M, ? — agla letter kya hoga?',
+          'A, D, G, J, M, ? — what is the next letter?'
+        ),
+        opts: [
+          t('N', 'N'),
+          t('O', 'O'),
+          t('P', 'P'),
+          t('Q', 'Q')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: gap har baar +3 hai (1, 4, 7, 10, 13). Agla = 13 + 3 = 16, matlab P.',
+          'Correct answer: the gap is +3 every time (1, 4, 7, 10, 13). Next = 13 + 3 = 16, which means P.'
+        )
+      },
+      {
+        q: t(
+          'Series D, F, I, M, P mein kaunsa term galat hai?',
+          'In the series D, F, I, M, P, which term is wrong?'
+        ),
+        opts: [
+          t('D', 'D'),
+          t('F', 'F'),
+          t('M', 'M'),
+          t('P', 'P')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: gaps +2, +3, +4, +3 hain, jabki pattern ke hisaab se aakhri gap +5 hona chahiye tha (13 + 5 = 18 = R). Isliye P galat hai, sahi term R hai.',
+          'Correct answer: the gaps are +2, +3, +4, +3, while the pattern needs the last gap to be +5 (13 + 5 = 18 = R). So P is wrong, and the correct term is R.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Letter series = number series: pehle har letter ki position likho (A = 1 ... Z = 26).',
+        'A letter series is a number series: first write every letter position (A = 1 ... Z = 26).'
+      ),
+      t(
+        'Gap = aas-paas wale letters ki positions ka fark; 2 letters skip karna matlab gap +3.',
+        'Gap = the difference between the positions of neighbouring letters; skipping 2 letters means a gap of +3.'
+      ),
+      t(
+        'Rule tabhi maano jab kam se kam 3 gaps check kar liye hon.',
+        'Accept a rule only after checking at least 3 gaps.'
+      ),
+      t(
+        'Z ke baad A aata hai — alphabet gol ghumta hai, gap 26 se zyada ho to 26 ghata do.',
+        'After Z comes A again — the alphabet goes around in a circle, so subtract 26 when a gap crosses Z.'
+      ),
+      t(
+        'Ek rule na mile to series ko odd aur even terms mein baant lo; galat term wahi hai jahan gap ka pattern tootta hai.',
+        'If no single rule fits, split the series into odd and even terms; the wrong term is where the gap pattern breaks.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: C se Shuru Hone Wali Series Banao',
+        'Practice: Build a Series Starting from C'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ye C se shuru karke gaps +1, +2, +3, +4, +5 se series banata hai aur aakhri term ke baad agla letter bhi nikaalta hai. Tumhara kaam hai output ko haath se verify karna — har term ki position aur gap kagaz par likho, phir code ke output se milao. Done tab hoga jab tumhare haath wale hisaab se terms C, D, F, I, M, R aur agla letter X aayein, jo code ke output se match karein.',
+        'Run the starter code below: it builds a series starting from C with gaps +1, +2, +3, +4, +5, and also finds the next letter after the last term. Your job is to verify the output by hand — write every term position and gap on paper, then match them with the code output. You are done when your hand calculation gives the terms C, D, F, I, M, R and the next letter X, matching the code output.'
+      ),
+      language: 'python',
+      starter: `# Series: C, D, F, I, M, R, ?
+# Gaps badhte hain: +1, +2, +3, +4, +5, phir +6
+letter = 'C'
+terms = [letter]
+print(letter, "=", ord(letter) - 64)
+gap = 1
+for step in range(5):
+    letter = chr(ord(letter) + gap)
+    terms.append(letter)
+    print(letter, "=", ord(letter) - 64, "(gap +" + str(gap) + ")")
+    gap += 1
+print("Terms:", terms)
+print("Next gap: +6, next letter:", chr(ord(terms[-1]) + 6))`,
+      expected: `C = 3
+D = 4 (gap +1)
+F = 6 (gap +2)
+I = 9 (gap +3)
+M = 13 (gap +4)
+R = 18 (gap +5)
+Terms: ['C', 'D', 'F', 'I', 'M', 'R']
+Next gap: +6, next letter: X`
+    },
+    readMinutes: 12
+  };
+
+const logicAnalogy: Article = {
+    id: 'logic-analogy',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Analogy — Word, Number aur Letter ka Rishta',
+      'Analogy — Word, Number, and Letter Relations'
+    ),
+    summary: t(
+      'Analogy mein pehle do cheezon ke beech ka rishta dhoondhna hota hai, phir wahi rishta teesri cheez par lagana hota hai. Is article mein tum word analogy (Doctor : Hospital), number analogy (4 : 16) aur letter analogy (A : C) — teeno ko step-by-step seekhoge, har rule ko Python se check karke.',
+      'In an analogy you must first find the relation between two things, then apply that same relation to a third thing. In this article you will learn word analogy (Doctor : Hospital), number analogy (4 : 16), and letter analogy (A : C) — all three, step by step, checking every rule in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Analogy Kya Hai? (Rishta Dhoondho, Phir Lagao)',
+          '1. What Is an Analogy? (Find the Relation, Then Apply It)'
+        ),
+        body: t(
+          `Analogy ka sawal is tarah hota hai: **A : B :: C : ?** — iska matlab hai "A ka B se wahi rishta hai jo C ka ? se hona chahiye". Jaise **Book : Read :: Pen : ?** — Book ka kaam Read karna hai, to Pen ka kaam Write karna hai. Jawab hai **Write**. Poora khel sirf ek cheez ka hai: **pehli jodi ka rishta pehchano**. Rishta mil gaya to sawal aadha solve ho gaya; rishta galat pakda to jawab bhi galat hoga.
+
+Analogy teen tarah ki hoti hai. **Word analogy** mein shabdon ke beech ka rishta hota hai — jaise Doctor : Hospital (doctor hospital mein kaam karta hai), Teacher : School, ya King : Queen (opposite gender). **Number analogy** mein numbers ke beech ka rishta hota hai — jaise 4 : 16 (16, 4 ka square hai), 3 : 27 (27, 3 ka cube hai), ya 5 : 25. **Letter analogy** mein letters ke beech ka rishta hota hai — jaise A : C (2 aage), to B : D (2 aage), ya A : Z (ulta alphabet — A pehla, Z aakhri).
+
+Sabse important baat ye hai: rishta **dono taraf ek jaisa** hona chahiye. Agar pehli jodi mein rishta "square" hai to doosri jodi mein bhi "square" hi hoga — "cube" nahi. Agar pehli jodi mein rishta "kaam karne ki jagah" hai to doosri mein bhi wahi hoga. Yehi analogy ka golden rule hai: **rishta badlo mat, sirf cheez badlo**.`,
+          `An analogy question looks like this: **A : B :: C : ?** — it means "A is related to B in the same way that C should be related to ?". For example, **Book : Read :: Pen : ?** — the job of a book is reading, so the job of a pen is writing. The answer is **Write**. The whole game is about one thing: **recognise the relation in the first pair**. Once you find the relation, the question is half solved; if you pick the wrong relation, the answer is wrong too.
+
+Analogy comes in three kinds. In a **word analogy**, the relation is between words — like Doctor : Hospital (a doctor works in a hospital), Teacher : School, or King : Queen (opposite gender). In a **number analogy**, the relation is between numbers — like 4 : 16 (16 is the square of 4), 3 : 27 (27 is the cube of 3), or 5 : 25. In a **letter analogy**, the relation is between letters — like A : C (2 steps ahead), so B : D (2 steps ahead), or A : Z (reverse alphabet — A is first, Z is last).
+
+The most important point is this: the relation must be **the same on both sides**. If the relation in the first pair is "square", then the second pair must also be "square" — not "cube". If the relation in the first pair is "place of work", the second pair must have the same relation. That is the golden rule of analogy: **do not change the relation, only change the thing**.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Doctor-Hospital, Key-Lock aur Score',
+          '2. Real-Life Examples: Doctor-Hospital, Key-Lock, and Scores'
+        ),
+        body: t(
+          `Analogy roz ki zindagi mein har jagah hai. Socho tum ek naye sheher mein gaye aur poochha "yahan ka hospital kahan hai?" — tumne Doctor : Hospital wala rishta istemal kiya: doctor jahan kaam karta hai, wahi hospital hai. Aise hi Teacher : School, Chef : Kitchen, Driver : Car — har peshe ka ek kaam karne ki jagah hoti hai, aur dimaag ye rishte khud hi bana leta hai. Exam mein jab tumhe Teacher : ? dikhe to dimaag ko yehi rishta dhoondhna hai: teacher kahan kaam karta hai? School mein.
+
+Doosra example hai **Key : Lock :: Password : ?** — Key se Lock khulta hai, to Password se Account khulta hai. Rishta hai "khulne wala". Aise rishte ko **function ka rishta** kehte hain — pehli cheez doosri cheez ka kaam karti hai. Book : Read bhi yahi hai, Pen : Write bhi yahi hai. Jab tum function wala rishta pehchan lete ho to jawab seedha mil jaata hai.
+
+Teesra example hai numbers mein: ek dukaan mein 4 kilo aalu ka daam 16 rupaye hai to 7 kilo ka daam kitna hoga? Yahan rishta hai "4 guna" — 4 × 4 = 16, to 7 × 4 = 28. Ye bhi analogy hi hai, bas numbers mein. Aur letters mein: ek code mein A ko C likha jaata hai to B ko D likha jaayega — rishta hai "+2". Har jagah ek hi pattern hai: **pehle rishta, phir wahi rishta doosri taraf**.`,
+          `Analogy is everywhere in daily life. Imagine you go to a new city and ask "where is the hospital here?" — you used the Doctor : Hospital relation: where a doctor works, that is the hospital. In the same way, Teacher : School, Chef : Kitchen, Driver : Car — every profession has a place of work, and the mind builds these relations on its own. In an exam, when you see Teacher : ?, your mind must find this same relation: where does a teacher work? In a school.
+
+A second example is **Key : Lock :: Password : ?** — a key opens a lock, so a password opens an account. The relation is "opens". Such a relation is called a **function relation** — the first thing does the job of the second thing. Book : Read is the same, and Pen : Write is the same. Once you recognise a function relation, the answer comes straight away.
+
+A third example is in numbers: if 4 kilos of potatoes cost 16 rupees in a shop, how much do 7 kilos cost? The relation here is "times 4" — 4 × 4 = 16, so 7 × 4 = 28. That is also an analogy, just in numbers. And in letters: if in a code A is written as C, then B is written as D — the relation is "+2". Everywhere the pattern is the same: **first the relation, then the same relation on the other side**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 4 : 16 :: 7 : ? ka Dry Run',
+          '3. Step-by-Step: Dry Run of 4 : 16 :: 7 : ?'
+        ),
+        body: t(
+          `Ab hum ek number analogy ko haath se solve karte hain. Sawal hai: **4 : 16 :: 7 : ?**
+
+**Step 1 — Pehli jodi ka rishta dhoondho:** 4 aur 16 ke beech kya rishta hai? 4 + 12 = 16 bhi ho sakta hai, 4 × 4 = 16 bhi ho sakta hai, aur 4 ka square 16 bhi hota hai. Kaunsa rishta sahi hai? Yahan ek trick hai: **ek se zyada pairs check karo**. Agar sawal mein aur pairs diye hon, jaise 5 : 25 aur 6 : 36, to "square" wala rishta teeno par fit baithta hai (5² = 25, 6² = 36), jabki "+12" wala nahi (5 + 12 = 17, 25 nahi). Isliye sahi rishta hai **square**.
+
+**Step 2 — Rishta doosri jodi par lagao:** 7 ka square = 7 × 7 = **49**. Jawab hai **49**.
+
+**Step 3 — Check karo:** kya 49, 7 se wahi rishta rakhta hai jo 16, 4 se rakhta hai? Haan — dono square hain. Jawab pakka hai.
+
+Word analogy ka bhi wahi tareeka hai. **Doctor : Hospital :: Teacher : ?** — Step 1: doctor hospital mein kaam karta hai (place of work). Step 2: teacher school mein kaam karta hai. Jawab: **School**. Letter analogy mein bhi wahi: **A : C :: B : ?** — Step 1: A se C, 2 aage hai (+2). Step 2: B se 2 aage D hai. Jawab: **D**. Neeche wala code square wale rule ko teeno pairs par check karta hai aur phir 7, 8 aur 9 ke square nikaalta hai.`,
+          `Now let us solve a number analogy by hand. The question is: **4 : 16 :: 7 : ?**
+
+**Step 1 — Find the relation in the first pair:** what is the relation between 4 and 16? It could be 4 + 12 = 16, or 4 × 4 = 16, or 16 is the square of 4. Which relation is right? Here is a trick: **check more than one pair**. If the question gives more pairs, like 5 : 25 and 6 : 36, then the "square" relation fits all three (5² = 25, 6² = 36), while the "+12" relation does not (5 + 12 = 17, not 25). So the correct relation is **square**.
+
+**Step 2 — Apply the relation to the second pair:** the square of 7 = 7 × 7 = **49**. The answer is **49**.
+
+**Step 3 — Check:** does 49 hold the same relation to 7 that 16 holds to 4? Yes — both are squares. The answer is certain.
+
+A word analogy works the same way. **Doctor : Hospital :: Teacher : ?** — Step 1: a doctor works in a hospital (place of work). Step 2: a teacher works in a school. Answer: **School**. A letter analogy is the same too: **A : C :: B : ?** — Step 1: from A to C is 2 steps ahead (+2). Step 2: 2 steps ahead of B is D. Answer: **D**. The code below checks the square rule on all three pairs, then finds the squares of 7, 8, and 9.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 4 : 16, 5 : 25, 6 : 36 — Rule Square Hai?',
+            'Dry Run: 4 : 16, 5 : 25, 6 : 36 — Is the Rule Square?'
+          ),
+          language: 'python',
+          code: `pairs = [(4, 16), (5, 25), (6, 36)]
+for a, b in pairs:
+    print(a, "->", b, ": square?", b == a * a)
+print("Rule: second number = first number squared")
+print("7 ->", 7 * 7)
+print("8 ->", 8 * 8)
+print("9 ->", 9 * 9)`,
+          output: `4 -> 16 : square? True
+5 -> 25 : square? True
+6 -> 36 : square? True
+Rule: second number = first number squared
+7 -> 49
+8 -> 64
+9 -> 81`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Pehla Rishta Pakadna, Ulta Rishta aur Ek Jaisa Shabd',
+          '4. Common Mistakes: Grabbing the First Relation, Reversing the Relation, and Similar Words'
+        ),
+        body: t(
+          `Analogy mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Pehla dikhne wala rishta pakad lena.** 4 : 16 mein pehla rishta jo dimaag mein aata hai woh hai "+12" ya "×4". Dono hi 4 : 16 par fit baithte hain, lekin 5 : 25 par nahi. Isliye jab bhi ek se zyada rishta dikhe, to **doosra pair check karo** — jo rishta saare pairs par fit baithe, wahi sahi hai. Exam mein aksar aise hi trap lagaye jaate hain: pehla rishta galat hota hai, sahi rishta doosra ya teesra hota hai.
+
+**Galti 2: Rishta ulta laga dena.** Dog : Puppy mein rishta hai "bada : chhota" (dog bada hai, puppy uska bachcha hai). Agar sawal ho Cat : ? to jawab Kitten hoga — Cat : Kitten. Lekin kuch log ulta karke "Cat : Lion" likh dete hain, kyunki lion bhi billa family ka hai. Ulta rishta lagana sabse aam galti hai: hamesha check karo ki rishta kis direction mein chal raha hai — pehla bada hai ya doosra?
+
+**Galti 3: Ek jaise shabd dekh kar confuse hona.** Teacher : School mein kuch log "Student" jawab de dete hain, kyunki student bhi school se juda hai. Lekin rishta "kaam karne ki jagah" hai, "school mein kaun hota hai" nahi. Student school mein padhta hai, kaam nahi karta — isliye Student galat hai, School sahi hai. Rishta hamesha **exact** hona chahiye, aas-paas ka nahi.`,
+          `Analogy mistakes happen mostly in three places.
+
+**Mistake 1: Grabbing the first relation you see.** In 4 : 16, the first relations that come to mind are "+12" or "×4". Both fit 4 : 16, but neither fits 5 : 25. So whenever more than one relation appears, **check the second pair** — the relation that fits all the pairs is the right one. Exams often set this trap: the first relation is wrong, and the correct relation is the second or third one.
+
+**Mistake 2: Applying the relation backwards.** In Dog : Puppy the relation is "big : small" (the dog is big, the puppy is its young one). If the question is Cat : ?, the answer is Kitten — Cat : Kitten. But some people reverse it and write "Cat : Lion", because a lion is also from the cat family. Reversing the relation is the most common mistake: always check which direction the relation runs — is the first one bigger or the second one?
+
+**Mistake 3: Getting confused by similar words.** In Teacher : School, some people answer "Student", because a student is also connected to a school. But the relation is "place of work", not "who is found in a school". A student studies in a school; they do not work there — so Student is wrong and School is right. The relation must always be **exact**, not approximate.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Cube, Reverse Alphabet aur Double Rishta',
+          '5. Edge Cases: Cubes, Reverse Alphabet, and Double Relations'
+        ),
+        body: t(
+          `Edge cases woh analogy hain jo pehli nazar mein seedhi nahi lagti.
+
+**1. Cube wala rishta.** 3 : 27 mein rishta square nahi, **cube** hai (3³ = 27). Agar tum square sochoge to 3² = 9 jawab doge — galat. 4 : 64 bhi cube hai (4³ = 64). Square aur cube mein farak pehchanne ka tareeka hai: 27, 64, 125 jaise numbers dekh kar cube yaad aana chahiye (3³ = 27, 4³ = 64, 5³ = 125). Neeche ke extra examples mein cube ka code bhi hai.
+
+**2. Reverse alphabet.** A : Z mein rishta hai "pehla : aakhri" — A alphabet ka pehla letter hai, Z aakhri. Isi hisaab se B : Y hoga (B doosra, Y doosra-aakhri). Ise **opposite letter** kehte hain: A ka opposite Z hai, B ka Y, C ka X. Opposite nikaalne ka formula hai: 27 − position. B ki position 2 hai, 27 − 2 = 25 = Y. Ye exam mein bahut aata hai.
+
+**3. Double rishta.** Kabhi-kabhi ek jodi mein do rishte ek saath hote hain. Jaise 2 : 8 mein rishta "×4" bhi hai aur "cube" bhi (2³ = 8). Dono fit baithte hain. Aise mein doosra pair dekho: agar doosra pair 3 : 27 hai to rishta cube hai (3 × 4 = 12, 27 nahi). Do pairs milne par hi pata chalta hai kaunsa rishta sahi hai.
+
+**4. Word mein opposite.** Hot : Cold, Up : Down, Win : Lose — ye **antonym** wali analogy hai. Isme rishta hai "ulta". Agar sawal ho Rich : ? to jawab Poor hoga. Antonym wali analogy mein hamesha exact opposite dhoondho, aas-paas wala shabd nahi.`,
+          `Edge cases are the analogies that do not look simple at first sight.
+
+**1. Cube relation.** In 3 : 27 the relation is not square, it is **cube** (3³ = 27). If you think square, you will answer 3² = 9 — wrong. 4 : 64 is also a cube (4³ = 64). The way to tell a square from a cube is: numbers like 27, 64, 125 should remind you of cubes (3³ = 27, 4³ = 64, 5³ = 125). The extra examples below include code for cubes too.
+
+**2. Reverse alphabet.** In A : Z the relation is "first : last" — A is the first letter of the alphabet and Z is the last. By the same rule, B : Y (B is second, Y is second-last). This is called the **opposite letter**: the opposite of A is Z, of B is Y, of C is X. The formula for an opposite is: 27 − position. The position of B is 2, so 27 − 2 = 25 = Y. This appears very often in exams.
+
+**3. Double relation.** Sometimes one pair fits two relations at once. In 2 : 8, the relation could be "×4" or "cube" (2³ = 8). Both fit. In such cases, look at the second pair: if the second pair is 3 : 27, then the relation is cube (3 × 4 = 12, not 27). Only two pairs together reveal which relation is right.
+
+**4. Opposites in words.** Hot : Cold, Up : Down, Win : Lose — this is **antonym** analogy. The relation here is "opposite". If the question is Rich : ?, the answer is Poor. In an antonym analogy, always find the exact opposite, not a nearby word.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Rishta Badal Do, Number Badal Do, ya Direction Badal Do',
+          '6. What If: Change the Relation, Change the Number, or Change the Direction'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: rishta badal do?** 4 : 16 mein rishta "square" hai. Agar rishta "cube" kar dein to 4 : 64 banta hai — poora sawal badal gaya. Isi liye analogy mein rishta hi sab kuch hai: rishta badla to jawab badla. Exam mein jab tum rishta dhoondh rahe ho to khud se poochho: "kya ye rishta doosri jodi par bhi fit baithta hai?" — agar haan, to rishta pakka hai.
+
+**What if: number badal do?** 4 : 16 :: 7 : ? mein 7 ki jagah 9 kar dein to jawab 81 ho jaata hai (9² = 81). Number badalne se jawab badalta hai, rishta nahi. Yehi analogy ki khoobsurti hai: rishta ek hi rehta hai, sirf numbers badalte hain.
+
+**What if: direction badal do?** Square wale rishte ko ulta kar dein — 16 : 4 :: 49 : ? — to rishta "square root" ban jaata hai, aur jawab 7 hota hai (49 ka square root 7 hai). Direction badalne se rishta bhi badal jaata hai. Isliye hamesha check karo ki sawal kis direction mein poochha gaya hai: pehla chhota hai ya doosra?
+
+**What if: word ki jagah number de dein?** Book : Read :: 4 : ? — ye sawal hi galat hai, kyunki word aur number ke rishte alag hote hain. Analogy mein dono jodiyan ek hi type ki hoti hain: word-word, number-number, ya letter-letter. Type badal jaaye to sawal hi nahi banta.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the relation?** In 4 : 16 the relation is "square". If you change the relation to "cube", you get 4 : 64 — the whole question changes. That is why in analogy the relation is everything: change the relation, change the answer. In an exam, when you are finding the relation, ask yourself: "does this relation also fit the second pair?" — if yes, the relation is certain.
+
+**What if you change the number?** In 4 : 16 :: 7 : ?, replacing 7 with 9 makes the answer 81 (9² = 81). Changing the number changes the answer, not the relation. That is the beauty of analogy: the relation stays the same, only the numbers change.
+
+**What if you change the direction?** Reversing the square relation — 16 : 4 :: 49 : ? — turns the relation into "square root", and the answer is 7 (the square root of 49 is 7). Changing the direction changes the relation too. So always check which direction the question runs in: is the first one smaller or the second one?
+
+**What if you give a number instead of a word?** Book : Read :: 4 : ? — this question itself is wrong, because word relations and number relations are different. In an analogy, both pairs are of the same type: word-word, number-number, or letter-letter. If the type changes, the question does not even make sense.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Analogy ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Analogy'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Analogy solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — pehli jodi ka rishta dhoondho** (square, cube, +2, place of work, function, opposite — kya hai?), **Step 2 — wahi rishta doosri jodi par lagao**, **Step 3 — check karo** ki rishta dono taraf ek jaisa hai ya nahi. Agar ek se zyada rishta dikhe to doosra pair check karo — jo rishta saare pairs par fit baithe, wahi sahi hai.
+
+Yaad rakhne wali baatein: word analogy mein rishta exact hona chahiye (Teacher : School, Student nahi), number analogy mein square aur cube ka farak pehchano (16 = 4², 27 = 3³), aur letter analogy mein opposite letter ka formula yaad rakho (27 − position). Direction ka dhyaan rakho — rishta ulta lagana sabse aam galti hai.
+
+Revision ke liye ye 3 sawal khud solve karo: Book : Read :: Pen : ? (jawab Write), 3 : 27 :: 5 : ? (jawab 125), aur A : Z :: B : ? (jawab Y). Agar teeno bina ruke ho jaayein to analogy tumhe aa gayi hai. Agle article mein hum classification dekhenge — jahan group mein se alag cheez dhoondhni hoti hai.`,
+          `Let us tie the whole article together. Solving an analogy takes only 3 steps: **Step 1 — find the relation in the first pair** (square, cube, +2, place of work, function, opposite — what is it?), **Step 2 — apply that same relation to the second pair**, **Step 3 — check** that the relation is the same on both sides. If more than one relation appears, check the second pair — the relation that fits all the pairs is the right one.
+
+Things to remember: in a word analogy the relation must be exact (Teacher : School, not Student), in a number analogy tell a square from a cube (16 = 4², 27 = 3³), and in a letter analogy remember the opposite-letter formula (27 − position). Watch the direction — applying the relation backwards is the most common mistake.
+
+For revision, solve these 3 questions yourself: Book : Read :: Pen : ? (answer Write), 3 : 27 :: 5 : ? (answer 125), and A : Z :: B : ? (answer Y). If all three go smoothly, you know analogy. In the next article we will look at classification — where you must find the odd one out in a group.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Analogy Solve Karne ka Flow',
+        'The Flow for Solving an Analogy'
+      ),
+      caption: t(
+        '4 : 16 :: 7 : ? ka example: pehle rishta, phir wahi rishta doosri taraf',
+        'The example 4 : 16 :: 7 : ?: first the relation, then the same relation on the other side'
+      ),
+      nodes: [
+        {
+          t: t('Pehli jodi dekho: 4 : 16', 'Look at the first pair: 4 : 16'),
+          s: t('16, 4 ka square hai', '16 is the square of 4')
+        },
+        {
+          t: t('Rishta check karo: 5 : 25, 6 : 36 par bhi fit?', 'Check the relation: does it also fit 5 : 25 and 6 : 36?'),
+          s: t('Square teeno par fit baithta hai, +12 nahi', 'Square fits all three, +12 does not')
+        },
+        {
+          t: t('Rishta pakka: square', 'Relation confirmed: square'),
+          s: t('Doosra number = pehle number ka square', 'Second number = square of the first number')
+        },
+        {
+          t: t('Doosri jodi par lagao: 7 ka square', 'Apply it to the second pair: square of 7'),
+          s: t('7 x 7 = 49', '7 x 7 = 49')
+        },
+        {
+          t: t('Jawab: 49', 'Answer: 49'),
+          s: t('Check: 49, 7 se wahi rishta rakhta hai jo 16, 4 se rakhta hai', 'Check: 49 holds the same relation to 7 that 16 holds to 4')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Cube Analogy: 2 : 8, 3 : 27, 4 : 64, 5 : ?',
+          'Cube Analogy: 2 : 8, 3 : 27, 4 : 64, 5 : ?'
+        ),
+        language: 'python',
+        code: `for n in [2, 3, 4, 5]:
+    print(n, "->", n ** 3)
+print("So 3 : 27 :: 5 :", 5 ** 3)`,
+        output: `2 -> 8
+3 -> 27
+4 -> 64
+5 -> 125
+So 3 : 27 :: 5 : 125`
+      },
+      {
+        title: t(
+          'Letter Analogy: A : C :: B : D — Har Letter +2',
+          'Letter Analogy: A : C :: B : D — Every Letter +2'
+        ),
+        language: 'python',
+        code: `def shift(letter, steps):
+    return chr(ord(letter) + steps)
+
+print("A ->", shift('A', 2))
+print("B ->", shift('B', 2))
+print("M ->", shift('M', 2))
+print("A : C :: B : D, so M : O")`,
+        output: `A -> C
+B -> D
+M -> O
+A : C :: B : D, so M : O`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Book : Read :: Pen : ? — ? ki jagah kya aayega?',
+          'Book : Read :: Pen : ? — what goes in place of ??'
+        ),
+        opts: [
+          t('Read', 'Read'),
+          t('Ink', 'Ink'),
+          t('Write', 'Write'),
+          t('Draw', 'Draw')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Book ka kaam Read karna hai (function ka rishta), to Pen ka kaam Write karna hai.',
+          'Correct answer: the job of a book is reading (a function relation), so the job of a pen is writing.'
+        )
+      },
+      {
+        q: t(
+          '4 : 16 :: 7 : ? — ? ki jagah kya aayega?',
+          '4 : 16 :: 7 : ? — what goes in place of ??'
+        ),
+        opts: [
+          t('49', '49'),
+          t('42', '42'),
+          t('56', '56'),
+          t('64', '64')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: rishta square hai — 4 ka square 16 hai, to 7 ka square 7 x 7 = 49 hoga.',
+          'Correct answer: the relation is square — the square of 4 is 16, so the square of 7 is 7 x 7 = 49.'
+        )
+      },
+      {
+        q: t(
+          'Doctor : Hospital :: Teacher : ? — ? ki jagah kya aayega?',
+          'Doctor : Hospital :: Teacher : ? — what goes in place of ??'
+        ),
+        opts: [
+          t('Book', 'Book'),
+          t('Hospital', 'Hospital'),
+          t('Student', 'Student'),
+          t('School', 'School')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: rishta place of work hai — doctor hospital mein kaam karta hai, teacher school mein kaam karta hai.',
+          'Correct answer: the relation is place of work — a doctor works in a hospital, a teacher works in a school.'
+        )
+      },
+      {
+        q: t(
+          'A : Z :: B : ? — ? ki jagah kya aayega?',
+          'A : Z :: B : ? — what goes in place of ??'
+        ),
+        opts: [
+          t('X', 'X'),
+          t('Z', 'Z'),
+          t('W', 'W'),
+          t('Y', 'Y')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: rishta opposite letter hai — A ka opposite Z hai, to B ka opposite Y hai (27 - 2 = 25 = Y).',
+          'Correct answer: the relation is opposite letter — the opposite of A is Z, so the opposite of B is Y (27 - 2 = 25 = Y).'
+        )
+      },
+      {
+        q: t(
+          '3 : 27 :: 5 : ? — ? ki jagah kya aayega?',
+          '3 : 27 :: 5 : ? — what goes in place of ??'
+        ),
+        opts: [
+          t('25', '25'),
+          t('125', '125'),
+          t('100', '100'),
+          t('150', '150')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: rishta cube hai — 3 ka cube 27 hai, to 5 ka cube 5 x 5 x 5 = 125 hoga.',
+          'Correct answer: the relation is cube — the cube of 3 is 27, so the cube of 5 is 5 x 5 x 5 = 125.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Analogy mein pehle jodi ka rishta dhoondho, phir wahi rishta doosri jodi par lagao — rishta badlo mat.',
+        'In an analogy, find the relation in the first pair, then apply that same relation to the second pair — do not change the relation.'
+      ),
+      t(
+        'Ek se zyada rishta dikhe to doosra pair check karo — jo rishta saare pairs par fit baithe, wahi sahi hai.',
+        'If more than one relation appears, check the second pair — the relation that fits all the pairs is the right one.'
+      ),
+      t(
+        'Number analogy mein square (4 : 16) aur cube (3 : 27) ka farak pehchano.',
+        'In number analogy, tell a square (4 : 16) from a cube (3 : 27).'
+      ),
+      t(
+        'Letter analogy mein opposite letter ka formula hai: 27 - position (B ka opposite Y hai).',
+        'In letter analogy, the opposite-letter formula is: 27 - position (the opposite of B is Y).'
+      ),
+      t(
+        'Direction ka dhyaan rakho — rishta ulta lagana sabse aam galti hai.',
+        'Watch the direction — applying the relation backwards is the most common mistake.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Square Wala Rule Check Karo',
+        'Practice: Check the Square Rule'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ye check karta hai ki pairs (4, 16), (5, 25), (6, 36) par square wala rule fit baithta hai ya nahi, phir 8 aur 9 ke square nikaalta hai. Tumhara kaam hai output ko haath se verify karna — 4 ka square 16, 5 ka square 25, 6 ka square 36, 8 ka square 64 aur 9 ka square 81 kagaz par likho, phir code ke output se milao. Done tab hoga jab tumhara haath wala hisaab code ke output se bilkul match kare.',
+        'Run the starter code below: it checks whether the square rule fits the pairs (4, 16), (5, 25), (6, 36), then finds the squares of 8 and 9. Your job is to verify the output by hand — write the square of 4 is 16, of 5 is 25, of 6 is 36, of 8 is 64, and of 9 is 81 on paper, then match them with the code output. You are done when your hand calculation matches the code output exactly.'
+      ),
+      language: 'python',
+      starter: `pairs = [(4, 16), (5, 25), (6, 36)]
+rule_ok = True
+for a, b in pairs:
+    if b != a * a:
+        rule_ok = False
+print("Rule 'square' fits all pairs:", rule_ok)
+print("8 ->", 8 * 8)
+print("9 ->", 9 * 9)`,
+      expected: `Rule 'square' fits all pairs: True
+8 -> 64
+9 -> 81`
+    },
+    readMinutes: 12
+  };
+
+const logicClassification: Article = {
+    id: 'logic-classification',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Classification — Odd One Out Dhoondhna',
+      'Classification — Finding the Odd One Out'
+    ),
+    summary: t(
+      'Classification mein 4-5 cheezon mein se woh ek cheez dhoondhni hoti hai jo baaki sab se alag hai. Is article mein tum group banane ka tareeka, prime-square wale number groups, aur word-letter wale groups seekhoge — har group ko Python se verify karke.',
+      'In classification you must find the one thing among 4–5 things that is different from all the rest. In this article you will learn how to form groups, prime and square number groups, and word and letter groups — verifying every group in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Classification Kya Hai? (Group Banao, Alag Cheez Dhoondho)',
+          '1. What Is Classification? (Make a Group, Find the Different One)'
+        ),
+        body: t(
+          `Classification ka sawal is tarah hota hai: **Apple, Banana, Mango, Potato** — inmein se kaunsi cheez alag hai? Apple, Banana aur Mango fruits hain, Potato vegetable hai. Isliye jawab hai **Potato**. Poora khel sirf ek cheez ka hai: **baaki cheezon mein kya common hai, ye dhoondho**. Common cheez mil gayi to alag cheez khud dikh jaayegi.
+
+Classification teen tarah ki hoti hai. **Word classification** mein shabdon ka group hota hai — jaise fruits, animals, colours, ya professions. **Number classification** mein numbers ka group hota hai — jaise prime numbers (2, 3, 5, 7), perfect squares (16, 25, 36, 49), ya cubes (8, 27, 64). **Letter classification** mein letters ka group hota hai — jaise vowels (A, E, I, O, U), ya even position wale letters (B, D, F, H).
+
+Sabse important baat ye hai: group banane ka **ek se zyada tareeka** ho sakta hai, lekin exam mein sirf ek hi tareeka sahi hota hai — woh jo baaki saare options ko ek group mein laata hai aur sirf ek ko bahar chhodta hai. Jaise 2, 3, 5, 7, 9 mein group "prime numbers" hai — 2, 3, 5, 7 prime hain, 9 nahi hai (9 = 3 × 3). Isliye 9 odd one out hai. Agar tum "odd numbers" wala group banaoge to 2 bahar hoga — lekin exam mein "prime" wala group zyada strong hai, kyunki usme 4 numbers aate hain aur sirf ek bahar rehta hai.`,
+          `A classification question looks like this: **Apple, Banana, Mango, Potato** — which of these is different? Apple, Banana, and Mango are fruits, while Potato is a vegetable. So the answer is **Potato**. The whole game is about one thing: **find what the other things have in common**. Once you find the common thing, the different one shows itself.
+
+Classification comes in three kinds. In **word classification**, the group is made of words — like fruits, animals, colours, or professions. In **number classification**, the group is made of numbers — like prime numbers (2, 3, 5, 7), perfect squares (16, 25, 36, 49), or cubes (8, 27, 64). In **letter classification**, the group is made of letters — like vowels (A, E, I, O, U), or letters in even positions (B, D, F, H).
+
+The most important point is this: there can be **more than one way** to form a group, but in an exam only one way is right — the one that brings all the other options into one group and leaves only one outside. In 2, 3, 5, 7, 9, the group is "prime numbers" — 2, 3, 5, 7 are prime, and 9 is not (9 = 3 × 3). So 9 is the odd one out. If you form the group "odd numbers", then 2 is left out — but in an exam the "prime" group is stronger, because it holds 4 numbers and leaves only one outside.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Sabzi, Kitabein aur Bus Stop',
+          '2. Real-Life Examples: Vegetables, Books, and Bus Stops'
+        ),
+        body: t(
+          `Classification roz ki zindagi mein har jagah hai. Socho tum bazaar gaye aur sabzi wale se bole "mujhe fruits do" — woh tumhe Apple, Banana, Mango dega, Potato nahi. Tumne dimaag mein hi classification kar li: fruits ek group, vegetables doosra group. Yehi kaam tumhare dimaag har roz karta hai — kapde alag almari mein, kitabein alag shelf par, bartan alag jagah par. Classification ka matlab hi hai **cheezon ko unki pehchan ke hisaab se alag-alag rakhna**.
+
+Doosra example hai **library**. Ek library mein books subject ke hisaab se rakhi hoti hain — Maths ki books ek jagah, Science ki doosri jagah, Story ki teesri jagah. Agar ek Maths ki book Story wali shelf par mil jaaye to woh odd one out hai. Exam mein bhi wahi hota hai: 4 cheezein ek group ki hoti hain, ek cheez galat group mein aa jaati hai — tumhe wahi dhoondhni hai.
+
+Teesra example hai **bus stop**. Ek bus stop par khade logon mein se 4 log ek hi bus ka wait kar rahe hain aur ek log doosri bus ka — woh ek log odd one out hai. Ya ek cricket team mein 10 players ek hi team ke hain aur ek umpire hai — umpire odd one out hai. Har jagah ek hi sawal hai: **kaunsi cheez baaki sab se alag hai, aur kyun?** Jawab hamesha "kyun" ke saath aana chahiye — sirf naam nahi, wajah bhi.`,
+          `Classification is everywhere in daily life. Imagine you go to the market and tell the vegetable seller "give me fruits" — he will give you Apple, Banana, and Mango, not Potato. You did the classification in your mind: fruits in one group, vegetables in another. Your mind does this work every day — clothes in one cupboard, books on another shelf, utensils in another place. Classification simply means **keeping things apart by what they are**.
+
+A second example is a **library**. In a library, books are kept by subject — Maths books in one place, Science books in another, story books in a third. If a Maths book is found on the story shelf, it is the odd one out. Exams work the same way: 4 things belong to one group, and one thing has landed in the wrong group — you must find that one.
+
+A third example is a **bus stop**. Among the people standing at a bus stop, 4 people are waiting for the same bus and one person is waiting for a different bus — that one person is the odd one out. Or in a cricket team, 10 players belong to one team and one is the umpire — the umpire is the odd one out. Everywhere the question is the same: **which thing is different from all the rest, and why?** The answer must always come with the "why" — not just the name, but the reason too.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 121, 144, 169, 196, 225, 200 ka Dry Run',
+          '3. Step-by-Step: Dry Run of 121, 144, 169, 196, 225, 200'
+        ),
+        body: t(
+          `Ab hum ek number classification ko haath se solve karte hain. Sawal hai: **121, 144, 169, 196, 225, 200** — inmein se odd one out kaunsa hai?
+
+**Step 1 — Har number ko check karo:** 121 = 11 × 11 (11 ka square), 144 = 12 × 12 (12 ka square), 169 = 13 × 13 (13 ka square), 196 = 14 × 14 (14 ka square), 225 = 15 × 15 (15 ka square). Aur 200? 200 kisi bhi number ka square nahi hai — 14 ka square 196 hai aur 15 ka square 225 hai, 200 beech mein hai.
+
+**Step 2 — Group banao:** 121, 144, 169, 196, 225 — ye paanchon **perfect squares** hain, ek ke baad ek (11², 12², 13², 14², 15²). 200 is group mein nahi aata.
+
+**Step 3 — Jawab do:** odd one out hai **200**, kyunki woh perfect square nahi hai.
+
+**Check:** kya koi aur group bhi ban sakta hai? 121, 144, 169, 196, 225 mein se 144 aur 196 even hain, baaki odd — lekin ye group 5 mein se sirf 2 ko pakadta hai, isliye weak hai. "Perfect square" wala group 5 ko pakadta hai aur sirf ek ko chhodta hai — isliye yehi sahi group hai. Neeche wala code har number ka square root nikaal kar check karta hai ki woh perfect square hai ya nahi.`,
+          `Now let us solve a number classification by hand. The question is: **121, 144, 169, 196, 225, 200** — which of these is the odd one out?
+
+**Step 1 — Check every number:** 121 = 11 × 11 (square of 11), 144 = 12 × 12 (square of 12), 169 = 13 × 13 (square of 13), 196 = 14 × 14 (square of 14), 225 = 15 × 15 (square of 15). And 200? 200 is the square of no number — the square of 14 is 196 and the square of 15 is 225, and 200 sits in between.
+
+**Step 2 — Form the group:** 121, 144, 169, 196, 225 — all five are **perfect squares**, one after another (11², 12², 13², 14², 15²). 200 does not belong to this group.
+
+**Step 3 — Give the answer:** the odd one out is **200**, because it is not a perfect square.
+
+**Check:** could any other group be formed? Among 121, 144, 169, 196, 225, the numbers 144 and 196 are even and the rest are odd — but that group catches only 2 out of 5, so it is weak. The "perfect square" group catches 5 and leaves only one out — so that is the right group. The code below finds the square root of every number and checks whether it is a perfect square.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Kaunsa Number Perfect Square Hai?',
+            'Dry Run: Which Number Is a Perfect Square?'
+          ),
+          language: 'python',
+          code: `numbers = [121, 144, 169, 196, 225, 200]
+for n in numbers:
+    root = int(n ** 0.5)
+    print(n, "-> root", root, ", square?", root * root == n)
+print("Odd one out: 200 (not a perfect square)")`,
+          output: `121 -> root 11 , square? True
+144 -> root 12 , square? True
+169 -> root 13 , square? True
+196 -> root 14 , square? True
+225 -> root 15 , square? True
+200 -> root 14 , square? False
+Odd one out: 200 (not a perfect square)`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Weak Group, Pehla Farq aur Bina Wajah Jawab',
+          '4. Common Mistakes: Weak Groups, the First Difference, and Answers Without Reasons'
+        ),
+        body: t(
+          `Classification mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Weak group banana.** 2, 3, 5, 7, 9 mein kuch log "odd numbers" wala group banate hain aur 2 ko odd one out kehte hain. Lekin "prime numbers" wala group zyada strong hai — usme 4 numbers aate hain. Hamesha woh group dhoondho jo **sabse zyada numbers ko pakadta hai** aur sirf ek ko chhodta hai. Agar do groups ban rahe hon to woh group chuno jisme zyada members hon.
+
+**Galti 2: Pehla farq dekh kar hi faisla kar lena.** Apple, Banana, Mango, Potato mein pehla farq jo dikhta hai woh hai "Potato ka rang alag hai" — lekin ye farq weak hai, kyunki Apple bhi laal hota hai aur Mango bhi peela. Sahi farq hai "Potato vegetable hai, baaki fruits hain". Pehla dikhne wala farq aksar galat hota hai — **saare options ko ek saath check karo**, sirf do ko compare karke faisla mat karo.
+
+**Galti 3: Bina wajah jawab dena.** Exam mein sirf naam likhne se kaam nahi chalta — tumhe pata hona chahiye ki **kyun** woh alag hai. Agar tumne 9 ko odd one out kaha to wajah honi chahiye: "9 prime nahi hai, kyunki 9 = 3 × 3". Bina wajah ke jawab ka matlab hai tumne guess kiya hai, aur guess aksar galat hota hai. Har baar apne aap se poochho: "mera group kya hai, aur ye ek cheez us group mein kyun nahi aati?"`,
+          `Classification mistakes happen mostly in three places.
+
+**Mistake 1: Forming a weak group.** In 2, 3, 5, 7, 9, some people form the group "odd numbers" and call 2 the odd one out. But the "prime numbers" group is stronger — it holds 4 numbers. Always look for the group that **catches the most numbers** and leaves only one out. If two groups can be formed, choose the one with more members.
+
+**Mistake 2: Deciding from the first difference you see.** In Apple, Banana, Mango, Potato, the first difference that appears is "Potato has a different colour" — but that difference is weak, because Apple is also red and Mango is also yellow. The right difference is "Potato is a vegetable, the rest are fruits". The first difference you see is often wrong — **check all the options together**, do not decide by comparing only two of them.
+
+**Mistake 3: Giving an answer without a reason.** In an exam, writing only the name is not enough — you must know **why** it is different. If you called 9 the odd one out, the reason must be: "9 is not prime, because 9 = 3 × 3". An answer without a reason means you guessed, and guesses are often wrong. Every time, ask yourself: "what is my group, and why does this one thing not belong to it?"`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Prime, Cube aur Vowel-Consonant Groups',
+          '5. Edge Cases: Prime, Cube, and Vowel-Consonant Groups'
+        ),
+        body: t(
+          `Edge cases woh groups hain jo pehli nazar mein dikhte nahi.
+
+**1. Prime numbers.** 2, 3, 5, 7, 9 mein 9 odd one out hai kyunki 9 prime nahi hai. Prime number woh hota hai jo sirf 1 aur khud se divide hota hai. 2 sabse chhota prime hai — aur yehi ek even prime hai. Neeche ke extra examples mein prime check karne ka code bhi hai. Exam mein prime wala sawal bahut aata hai, isliye 1 se 50 tak ke primes yaad rakhna faydemand hai: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47.
+
+**2. Cube numbers.** 8, 27, 64, 125, 100 mein 100 odd one out hai kyunki baaki chaaro cubes hain (2³ = 8, 3³ = 27, 4³ = 64, 5³ = 125) aur 100 kisi ka cube nahi hai. Cube wale sawal mein hamesha check karo ki number kisi chhote number ka cube hai ya nahi.
+
+**3. Vowel-consonant.** A, E, I, O, K mein K odd one out hai kyunki baaki chaaro vowels hain aur K consonant hai. Letter classification mein pehle check karo: kya saare letters vowels hain? Kya saare letters ki position even hai? Kya saare letters alphabet ke pehle aadhe mein hain? Inmein se jo property 4 letters mein ho aur ek mein na ho, wahi group hai.
+
+**4. Do groups ek saath.** Kabhi-kabhi ek sawal mein do groups ban sakte hain — jaise 4, 9, 16, 25, 30 mein "square" wala group 4 ko pakadta hai (4, 9, 16, 25 squares hain, 30 nahi) aur "odd" wala group bhi ban sakta hai. Aise mein square wala group jeetta hai kyunki woh 4 ko pakadta hai.`,
+          `Edge cases are the groups that do not show themselves at first sight.
+
+**1. Prime numbers.** In 2, 3, 5, 7, 9, the odd one out is 9 because 9 is not prime. A prime number is one that divides only by 1 and by itself. 2 is the smallest prime — and it is the only even prime. The extra examples below include code for checking primes. Prime questions appear very often in exams, so it helps to remember the primes from 1 to 50: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47.
+
+**2. Cube numbers.** In 8, 27, 64, 125, 100, the odd one out is 100 because the other four are cubes (2³ = 8, 3³ = 27, 4³ = 64, 5³ = 125) and 100 is the cube of nothing. In a cube question, always check whether the number is the cube of some smaller number.
+
+**3. Vowel-consonant.** In A, E, I, O, K, the odd one out is K because the other four are vowels and K is a consonant. In letter classification, first check: are all the letters vowels? Are all the letter positions even? Are all the letters in the first half of the alphabet? Whichever property holds for 4 letters and not for one is the group.
+
+**4. Two groups at once.** Sometimes a question can form two groups — in 4, 9, 16, 25, 30, the "square" group catches 4 (4, 9, 16, 25 are squares, 30 is not), and an "odd" group can also be formed. In such cases the square group wins because it catches 4.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Group Badal Do, Ek Cheez Badal Do, ya Property Badal Do',
+          '6. What If: Change the Group, Change One Thing, or Change the Property'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: group badal do?** 121, 144, 169, 196, 225, 200 mein "perfect square" wala group hai. Agar group "even numbers" kar dein to 144 aur 196 pakde jaayenge — sirf 2 numbers. Group badalne se jawab badal jaata hai, isliye hamesha sabse bada group dhoondho. Sabse bada group hi sahi group hota hai.
+
+**What if: ek cheez badal do?** 121, 144, 169, 196, 225, 200 mein 200 ki jagah 256 kar dein (16 ka square) to koi odd one out hi nahi bachega — saare numbers squares ban jaayenge. Ek cheez badalne se poora sawal badal jaata hai. Isi liye exam mein ek number ko dhyaan se padho — wahi ek number poora sawal banata hai.
+
+**What if: property badal do?** Apple, Banana, Mango, Potato mein property "fruit" hai. Agar property "rang" kar dein to Apple (laal), Banana (peela), Mango (peela), Potato (bhoora) — ab koi saaf group nahi banta. Property hi group ki jaan hai: sahi property chuno to group saaf dikhega, galat property chuno to kuch nahi milega.
+
+**What if: letters ki jagah numbers de dein?** A, E, I, O, K ko positions mein likho: 1, 5, 9, 15, 11. Ab dekho: 1, 5, 9, 15 vowels ki positions hain, 11 (K) consonant ki hai. Letters ko numbers mein badalne se bhi wahi group milta hai — kyunki classification ka rule property par chalta hai, letters ya numbers par nahi.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the group?** In 121, 144, 169, 196, 225, 200, the group is "perfect square". If you change the group to "even numbers", you catch only 144 and 196 — just 2 numbers. Changing the group changes the answer, so always look for the biggest group. The biggest group is the right group.
+
+**What if you change one thing?** In 121, 144, 169, 196, 225, 200, replacing 200 with 256 (the square of 16) leaves no odd one out at all — all the numbers become squares. Changing one thing changes the whole question. That is why in an exam you must read each number with care — that one number makes the whole question.
+
+**What if you change the property?** In Apple, Banana, Mango, Potato, the property is "fruit". If you change the property to "colour", you get Apple (red), Banana (yellow), Mango (yellow), Potato (brown) — now no clean group forms. The property is the life of the group: choose the right property and the group shows clearly; choose the wrong one and nothing fits.
+
+**What if you write numbers instead of letters?** Write A, E, I, O, K as positions: 1, 5, 9, 15, 11. Now look: 1, 5, 9, 15 are the positions of vowels, and 11 (K) is the position of a consonant. Converting letters into numbers gives the same group — because the rule of classification runs on the property, not on letters or numbers.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Classification ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Classification'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Classification solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — har option ko check karo** (ye kya hai? fruit hai ya vegetable? prime hai ya nahi? square hai ya nahi?), **Step 2 — woh property dhoondho jo sabse zyada options mein hai** (wahi group hai), **Step 3 — woh ek cheez dhoondho jisme woh property nahi hai** (wahi odd one out hai). Hamesha apne jawab ke saath wajah bhi likho: "200 odd one out hai kyunki woh perfect square nahi hai".
+
+Yaad rakhne wali baatein: sabse bada group hi sahi group hota hai, pehla dikhne wala farq aksar galat hota hai, aur number classification mein prime, square aur cube — teeno properties check karo. 1 se 50 tak ke primes aur 1 se 15 tak ke squares yaad rakhna exam mein bahut kaam aata hai.
+
+Revision ke liye ye 3 sawal khud solve karo: Apple, Banana, Mango, Potato (jawab Potato), 2, 3, 5, 7, 9 (jawab 9), aur B, D, F, H, K (jawab K — K ki position 11 odd hai, baaki even hain). Agar teeno bina ruke ho jaayein to classification tumhe aa gayi hai. Agle article mein hum Venn diagrams dekhenge — jahan do ya teen groups ke overlap ko ginna hota hai.`,
+          `Let us tie the whole article together. Solving a classification takes only 3 steps: **Step 1 — check every option** (what is it? A fruit or a vegetable? Prime or not? A square or not?), **Step 2 — find the property that most options share** (that is the group), **Step 3 — find the one thing that lacks that property** (that is the odd one out). Always write the reason with your answer: "200 is the odd one out because it is not a perfect square".
+
+Things to remember: the biggest group is the right group, the first difference you see is often wrong, and in number classification check all three properties — prime, square, and cube. Remembering the primes from 1 to 50 and the squares from 1 to 15 helps a lot in exams.
+
+For revision, solve these 3 questions yourself: Apple, Banana, Mango, Potato (answer Potato), 2, 3, 5, 7, 9 (answer 9), and B, D, F, H, K (answer K — the position of K is 11, which is odd, while the rest are even). If all three go smoothly, you know classification. In the next article we will look at Venn diagrams — where you must count the overlap of two or three groups.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Classification: Group Banao, Alag Cheez Dhoondho',
+        'Classification: Make a Group, Find the Different One'
+      ),
+      caption: t(
+        '121, 144, 169, 196, 225, 200 ka example: paanch squares, ek non-square',
+        'The example 121, 144, 169, 196, 225, 200: five squares, one non-square'
+      ),
+      nodes: [
+        {
+          t: t('Har option check karo', 'Check every option'),
+          s: t('121 = 11 x 11, 144 = 12 x 12, 169 = 13 x 13, 196 = 14 x 14, 225 = 15 x 15', '121 = 11 x 11, 144 = 12 x 12, 169 = 13 x 13, 196 = 14 x 14, 225 = 15 x 15')
+        },
+        {
+          t: t('Group: perfect squares', 'Group: perfect squares'),
+          s: t('Paanch numbers ek ke baad ek squares hain', 'Five numbers are squares, one after another')
+        },
+        {
+          t: t('200 check karo: 14 ka square 196, 15 ka square 225', 'Check 200: the square of 14 is 196, of 15 is 225'),
+          s: t('200 beech mein hai, kisi ka square nahi', '200 sits in between, the square of nothing')
+        },
+        {
+          t: t('Odd one out: 200', 'Odd one out: 200'),
+          s: t('Wajah: 200 perfect square nahi hai', 'Reason: 200 is not a perfect square')
+        },
+        {
+          t: t('Rule: sabse bada group hi sahi group hai', 'Rule: the biggest group is the right group'),
+          s: t('Jo property sabse zyada options mein ho, wahi group hai', 'The property most options share is the group')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Prime Check: 2, 3, 5, 7, 9 mein Odd One Out',
+          'Prime Check: Odd One Out in 2, 3, 5, 7, 9'
+        ),
+        language: 'python',
+        code: `def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+for n in [2, 3, 5, 7, 9]:
+    print(n, "prime?", is_prime(n))
+print("Odd one out: 9")`,
+        output: `2 prime? True
+3 prime? True
+5 prime? True
+7 prime? True
+9 prime? False
+Odd one out: 9`
+      },
+      {
+        title: t(
+          'Word Group: Apple, Banana, Mango, Potato',
+          'Word Group: Apple, Banana, Mango, Potato'
+        ),
+        language: 'python',
+        code: `words = ["Apple", "Banana", "Mango", "Potato"]
+for w in words:
+    print(w, "-> fruit?", w != "Potato")
+print("Odd one out: Potato (it is a vegetable)")`,
+        output: `Apple -> fruit? True
+Banana -> fruit? True
+Mango -> fruit? True
+Potato -> fruit? False
+Odd one out: Potato (it is a vegetable)`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Apple, Banana, Mango, Potato — odd one out kaunsa hai?',
+          'Apple, Banana, Mango, Potato — which is the odd one out?'
+        ),
+        opts: [
+          t('Apple', 'Apple'),
+          t('Banana', 'Banana'),
+          t('Potato', 'Potato'),
+          t('Mango', 'Mango')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Apple, Banana aur Mango fruits hain, jabki Potato vegetable hai. Isliye Potato odd one out hai.',
+          'Correct answer: Apple, Banana, and Mango are fruits, while Potato is a vegetable. So Potato is the odd one out.'
+        )
+      },
+      {
+        q: t(
+          '2, 3, 5, 7, 9 — odd one out kaunsa hai?',
+          '2, 3, 5, 7, 9 — which is the odd one out?'
+        ),
+        opts: [
+          t('9', '9'),
+          t('2', '2'),
+          t('3', '3'),
+          t('5', '5')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 2, 3, 5, 7 prime numbers hain, lekin 9 prime nahi hai (9 = 3 x 3). Isliye 9 odd one out hai.',
+          'Correct answer: 2, 3, 5, 7 are prime numbers, but 9 is not prime (9 = 3 x 3). So 9 is the odd one out.'
+        )
+      },
+      {
+        q: t(
+          'CAT, DOG, COW, CAR — odd one out kaunsa hai?',
+          'CAT, DOG, COW, CAR — which is the odd one out?'
+        ),
+        opts: [
+          t('CAT', 'CAT'),
+          t('DOG', 'DOG'),
+          t('CAR', 'CAR'),
+          t('COW', 'COW')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: CAT, DOG aur COW animals hain, jabki CAR ek vehicle hai. Isliye CAR odd one out hai.',
+          'Correct answer: CAT, DOG, and COW are animals, while CAR is a vehicle. So CAR is the odd one out.'
+        )
+      },
+      {
+        q: t(
+          '16, 25, 36, 49, 55 — odd one out kaunsa hai?',
+          '16, 25, 36, 49, 55 — which is the odd one out?'
+        ),
+        opts: [
+          t('55', '55'),
+          t('16', '16'),
+          t('25', '25'),
+          t('36', '36')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 16, 25, 36, 49 perfect squares hain (4, 5, 6, 7 ke squares), lekin 55 kisi ka square nahi hai.',
+          'Correct answer: 16, 25, 36, 49 are perfect squares (squares of 4, 5, 6, 7), but 55 is the square of nothing.'
+        )
+      },
+      {
+        q: t(
+          'B, D, F, H, K — odd one out kaunsa hai?',
+          'B, D, F, H, K — which is the odd one out?'
+        ),
+        opts: [
+          t('B', 'B'),
+          t('D', 'D'),
+          t('H', 'H'),
+          t('K', 'K')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: B, D, F, H ki positions 2, 4, 6, 8 hain — sab even hain. K ki position 11 hai, jo odd hai. Isliye K odd one out hai.',
+          'Correct answer: the positions of B, D, F, H are 2, 4, 6, 8 — all even. The position of K is 11, which is odd. So K is the odd one out.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Classification mein pehle baaki cheezon mein common property dhoondho, phir alag cheez khud dikh jaayegi.',
+        'In classification, first find the property the other things share, then the different one shows itself.'
+      ),
+      t(
+        'Sabse bada group hi sahi group hota hai — jo property sabse zyada options mein ho, wahi group hai.',
+        'The biggest group is the right group — the property most options share is the group.'
+      ),
+      t(
+        'Number classification mein prime, square aur cube — teeno properties check karo.',
+        'In number classification, check all three properties — prime, square, and cube.'
+      ),
+      t(
+        'Jawab ke saath wajah bhi likho: "200 odd one out hai kyunki woh perfect square nahi hai".',
+        'Write the reason with the answer: "200 is the odd one out because it is not a perfect square".'
+      ),
+      t(
+        '1 se 50 tak ke primes aur 1 se 15 tak ke squares yaad rakhna exam mein bahut kaam aata hai.',
+        'Remembering the primes from 1 to 50 and the squares from 1 to 15 helps a lot in exams.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Cube Wala Odd One Out Dhoondho',
+        'Practice: Find the Cube Odd One Out'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ye numbers 8, 27, 64, 125, 100 mein se har ek ko check karta hai ki woh perfect cube hai ya nahi. Tumhara kaam hai output ko haath se verify karna — 2 ka cube 8, 3 ka cube 27, 4 ka cube 64, 5 ka cube 125 kagaz par likho, aur check karo ki 100 kisi ka cube kyun nahi hai (4 ka cube 64 hai, 5 ka cube 125 hai, 100 beech mein hai). Done tab hoga jab tumhara haath wala hisaab code ke output se bilkul match kare aur tum odd one out 100 ki wajah bata sako.',
+        'Run the starter code below: it checks each number in 8, 27, 64, 125, 100 to see whether it is a perfect cube. Your job is to verify the output by hand — write that the cube of 2 is 8, of 3 is 27, of 4 is 64, and of 5 is 125 on paper, and check why 100 is the cube of nothing (the cube of 4 is 64, of 5 is 125, and 100 sits in between). You are done when your hand calculation matches the code output exactly and you can state the reason why 100 is the odd one out.'
+      ),
+      language: 'python',
+      starter: `numbers = [8, 27, 64, 125, 100]
+for n in numbers:
+    root = round(n ** (1 / 3))
+    print(n, "cube?", root ** 3 == n)
+print("Odd one out: 100")`,
+      expected: `8 cube? True
+27 cube? True
+64 cube? True
+125 cube? True
+100 cube? False
+Odd one out: 100`
+    },
+    readMinutes: 12
+  };
+
+const logicVenn: Article = {
+    id: 'logic-venn',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Venn Diagrams — 2-Set aur 3-Set ka Hisaab',
+      'Venn Diagrams — Counting with 2 Sets and 3 Sets'
+    ),
+    summary: t(
+      'Venn diagram mein do ya teen gol ghumte hue circles overlap karte hain, aur har hisse mein alag count hota hai. Is article mein tum "only", "both", "either" aur "neither" nikaalna seekhoge — 2-set aur 3-set dono ke liye, har formula ko Python se verify karke.',
+      'In a Venn diagram, two or three circles overlap, and every part holds a different count. In this article you will learn to find "only", "both", "either", and "neither" — for both 2-set and 3-set problems, verifying every formula in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Venn Diagram Kya Hai? (Only, Both, Either, Neither)',
+          '1. What Is a Venn Diagram? (Only, Both, Either, Neither)'
+        ),
+        body: t(
+          `Venn diagram ka matlab hai **sets ko circles se dikhana**. Ek circle ek group ko dikhata hai — jaise Maths pasand karne wale students. Do circles jahan overlap karte hain, wahan woh students hote hain jo **dono** cheezein pasand karte hain. Is overlap ko **intersection** kehte hain, aur dono circles ko mila kar **union** kehte hain.
+
+2-set Venn mein **chaar hisse** hote hain: **Only A** (sirf A mein, B mein nahi), **Only B** (sirf B mein, A mein nahi), **Both** (dono mein), aur **Neither** (kisi mein nahi). In chaaro ko jod dein to total mil jaata hai. Isi liye Venn ke sawal hamesha isi pattern mein aate hain: total, A, B aur Both mein se kuch numbers diye hote hain, aur baaki nikaalne hote hain.
+
+Sabse important formula hai: **Either = A + B − Both**. Kyun minus karte hain? Kyunki Both wale log A mein bhi gine gaye aur B mein bhi — matlab do baar gin liye gaye. Ek baar ghata dena zaroori hai, warna count zyada ho jaayega. Aur **Neither = Total − Either** — jo kisi mein nahi, woh total mein se either ghata kar milta hai. Ye do formulas poore 2-set Venn ko solve kar dete hain.`,
+          `A Venn diagram means **showing sets as circles**. One circle shows one group — for example, the students who like Maths. Where two circles overlap, those are the students who like **both** things. This overlap is called the **intersection**, and both circles together are called the **union**.
+
+A 2-set Venn has **four parts**: **Only A** (only in A, not in B), **Only B** (only in B, not in A), **Both** (in both), and **Neither** (in neither). Adding all four gives the total. That is why Venn questions always follow this pattern: some numbers among total, A, B, and Both are given, and the rest must be found.
+
+The most important formula is: **Either = A + B − Both**. Why do we subtract? Because the Both people were counted in A and also in B — counted twice. Subtracting once is necessary, or the count becomes too big. And **Neither = Total − Either** — those in neither group come from subtracting either from the total. These two formulas solve the whole 2-set Venn.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Cricket-Football, Chai-Coffee aur Subjects',
+          '2. Real-Life Examples: Cricket-Football, Tea-Coffee, and Subjects'
+        ),
+        body: t(
+          `Venn diagram roz ki zindagi mein har jagah hai. Socho tumhare class mein 100 students hain. 60 ko Maths pasand hai, 50 ko Science pasand hai, aur 30 ko dono pasand hain. Ab poochha jaaye "sirf Maths pasand karne wale kitne hain?" — jawab hai 60 − 30 = 30. "Kisi ko bhi pasand nahi karne wale kitne hain?" — pehle either nikalo: 60 + 50 − 30 = 80, phir neither = 100 − 80 = 20. Yehi Venn ka hisaab hai, aur ye hisaab exam mein har saal aata hai.
+
+Doosra example hai **chai-coffee**. Ek office mein 80 log hain. 45 chai peete hain, 35 coffee peete hain, 15 dono peete hain. Sirf chai peene wale = 45 − 15 = 30, sirf coffee peene wale = 35 − 15 = 20, aur kuch nahi peene wale = 80 − (45 + 35 − 15) = 15. Ye numbers tum apne aas-paas har jagah dekh sakte ho — canteen, gym, ya club mein.
+
+Teesra example hai **cricket-football**. Ek school mein kuch bachche cricket khelte hain, kuch football, kuch dono, kuch kuch nahi. Venn diagram iska sabse saaf tareeka hai — ek circle cricket, ek circle football, overlap dono. Jab bhi tumhe "dono" wala number mile to samajh jao ki Venn ka sawal hai, aur pehle overlap ko alag kar lo, phir baaki hisaab karo.`,
+          `Venn diagrams are everywhere in daily life. Imagine your class has 100 students. 60 like Maths, 50 like Science, and 30 like both. Now suppose you are asked "how many like only Maths?" — the answer is 60 − 30 = 30. "How many like neither?" — first find either: 60 + 50 − 30 = 80, then neither = 100 − 80 = 20. That is the Venn calculation, and this calculation appears in exams every year.
+
+A second example is **tea and coffee**. An office has 80 people. 45 drink tea, 35 drink coffee, and 15 drink both. Only tea drinkers = 45 − 15 = 30, only coffee drinkers = 35 − 15 = 20, and those who drink neither = 80 − (45 + 35 − 15) = 15. You can see these numbers all around you — in a canteen, a gym, or a club.
+
+A third example is **cricket and football**. In a school, some children play cricket, some play football, some play both, and some play neither. A Venn diagram is the clearest way to show this — one circle for cricket, one for football, and the overlap for both. Whenever you see a "both" number, know that it is a Venn question: first separate the overlap, then do the rest of the calculation.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 100 Students, Maths 60, Science 50, Both 30 ka Dry Run',
+          '3. Step-by-Step: Dry Run of 100 Students, Maths 60, Science 50, Both 30'
+        ),
+        body: t(
+          `Ab hum ek 2-set Venn ko haath se solve karte hain. Sawal hai: **100 students, 60 ko Maths pasand hai, 50 ko Science pasand hai, 30 ko dono pasand hain.** Sirf Maths, sirf Science, either aur neither — chaaro nikaalne hain.
+
+**Step 1 — Both ko alag karo:** Both = 30. Ye number dono circles mein hai, isliye isko pehle alag kar lo.
+
+**Step 2 — Only Maths nikalo:** Only Maths = Maths − Both = 60 − 30 = **30**. Ye woh students hain jo sirf Maths pasand karte hain, Science nahi.
+
+**Step 3 — Only Science nikalo:** Only Science = Science − Both = 50 − 30 = **20**.
+
+**Step 4 — Either nikalo:** Either = Only Maths + Only Science + Both = 30 + 20 + 30 = **80**. Ya formula se: 60 + 50 − 30 = 80. Dono tareeke se wahi jawab.
+
+**Step 5 — Neither nikalo:** Neither = Total − Either = 100 − 80 = **20**.
+**Check:** chaaro hisse jodo: 30 + 20 + 30 + 20 = 100 — total se match karta hai. Agar jod total se match na kare to kahin galti hui hai. Neeche wala code yahi dry run print karta hai — har step ka number tumhare haath wale hisaab se milao.`,
+          `Now let us solve a 2-set Venn by hand. The question is: **100 students, 60 like Maths, 50 like Science, 30 like both.** We must find only Maths, only Science, either, and neither — all four.
+
+**Step 1 — Separate Both:** Both = 30. This number sits in both circles, so separate it first.
+
+**Step 2 — Find Only Maths:** Only Maths = Maths − Both = 60 − 30 = **30**. These are the students who like only Maths, not Science.
+
+**Step 3 — Find Only Science:** Only Science = Science − Both = 50 − 30 = **20**.
+
+**Step 4 — Find Either:** Either = Only Maths + Only Science + Both = 30 + 20 + 30 = **80**. Or by the formula: 60 + 50 − 30 = 80. Both ways give the same answer.
+
+**Step 5 — Find Neither:** Neither = Total − Either = 100 − 80 = **20**.
+**Check:** add the four parts: 30 + 20 + 30 + 20 = 100 — it matches the total. If the sum does not match the total, a mistake was made somewhere. The code below prints this same dry run — match every step with your hand calculation.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 2-Set Venn — Only, Both, Either, Neither',
+            'Dry Run: 2-Set Venn — Only, Both, Either, Neither'
+          ),
+          language: 'python',
+          code: `total = 100
+maths = 60
+science = 50
+both = 30
+only_maths = maths - both
+only_science = science - both
+either = only_maths + only_science + both
+neither = total - either
+print("Only Maths:", only_maths)
+print("Only Science:", only_science)
+print("Both:", both)
+print("Either subject:", either)
+print("Neither:", neither)`,
+          output: `Only Maths: 30
+Only Science: 20
+Both: 30
+Either subject: 80
+Neither: 20`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Both ko Do Baar Ginna, Only Bhoolna aur Total Bhoolna',
+          '4. Common Mistakes: Counting Both Twice, Forgetting Only, and Forgetting the Total'
+        ),
+        body: t(
+          `Venn mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Both ko do baar ginna.** Sabse aam galti hai Either nikaalte waqt Both ko ghataana bhool jaana: 60 + 50 = 110 likh dena, jabki total hi 100 hai. 110 > 100 dekh kar hi samajh jaana chahiye ki kuch galat hai — Either kabhi Total se zyada nahi ho sakta. Hamesha yaad rakho: **Either = A + B − Both**. Both ko ek baar ghataana hi Venn ka sabse important step hai.
+
+**Galti 2: Only aur total ko milana.** Log aksar "Maths pasand karne wale" (60) ko "sirf Maths pasand karne wale" (30) samajh lete hain. Farq yaad rakho: **Maths = Only Maths + Both**. Jab sawal mein "only" likha ho to Both ghatao; jab "only" na likha ho to ghatao mat. Ye ek shabd poora jawab badal deta hai.
+
+**Galti 3: Neither nikaalna bhool jaana.** Either nikaal kar log ruk jaate hain aur Neither poochhe jaane par wahi number likh dete hain. Neither = Total − Either — ye aakhri step hamesha karo. Aur check karo: Only A + Only B + Both + Neither = Total hona chahiye. Ye check 5 second ka hai aur galti pakad leta hai.`,
+          `Venn mistakes happen mostly in three places.
+
+**Mistake 1: Counting Both twice.** The most common mistake is forgetting to subtract Both when finding Either: writing 60 + 50 = 110, when the total itself is only 100. Seeing 110 > 100 should itself tell you something is wrong — Either can never be more than the Total. Always remember: **Either = A + B − Both**. Subtracting Both once is the most important step in Venn.
+
+**Mistake 2: Mixing up Only and total.** People often take "those who like Maths" (60) to mean "those who like only Maths" (30). Remember the difference: **Maths = Only Maths + Both**. When the question says "only", subtract Both; when it does not say "only", do not subtract. This one word changes the whole answer.
+
+**Mistake 3: Forgetting to find Neither.** People stop after finding Either, and when Neither is asked, they write the same number. Neither = Total − Either — always do this last step. And check: Only A + Only B + Both + Neither must equal the Total. This check takes 5 seconds and catches mistakes.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: 3-Set Venn, Sirf Ek Set aur Khaali Overlap',
+          '5. Edge Cases: 3-Set Venn, Only One Set, and Empty Overlap'
+        ),
+        body: t(
+          `Edge cases woh Venn hain jo 2-set se aage jaate hain.
+
+**1. 3-set Venn.** Teen circles hon to hisse 8 ho jaate hain: Only A, Only B, Only C, sirf A-B, sirf B-C, sirf A-C, teeno, aur Neither. Example: total 200 students, A = 120, B = 100, C = 90, A-B = 50, B-C = 40, A-C = 45, teeno = 20. Only A = 120 − 50 − 45 + 20 = **45** (teeno ko ek baar wapas jodo, kyunki woh dono baar ghata diya gaya tha). Only B = 100 − 50 − 40 + 20 = **30**. Only C = 90 − 45 − 40 + 20 = **25**. Exactly two = (50 − 20) + (40 − 20) + (45 − 20) = **75**. Union = 120 + 100 + 90 − 50 − 40 − 45 + 20 = **195**. Neither = 200 − 195 = **5**. Neeche ke extra examples mein iska code bhi hai.
+
+**2. Sirf ek set.** Agar sawal mein sirf ek hi group ho, jaise "100 mein se 60 ko Maths pasand hai", to baaki 40 ko Maths pasand nahi hai — ye Venn nahi, simple subtraction hai. Venn tabhi banta hai jab kam se kam do groups hon.
+
+**3. Khaali overlap (Both = 0).** Agar koi student dono subjects pasand nahi karta to circles overlap nahi karte. Tab Either = A + B aur Neither = Total − (A + B). Overlap zero hone par bhi formula wahi rehta hai — bas Both ki jagah 0 daal do.
+
+**4. Ek set doosre ke andar.** Agar saare Science pasand karne wale Maths bhi pasand karte hon to Science wala circle Maths wale ke andar aa jaata hai. Tab Both = Science (50), Only Science = 0, aur Only Maths = 60 − 50 = 10.`,
+          `Edge cases are the Venn problems that go beyond 2 sets.
+
+**1. 3-set Venn.** With three circles, there are 8 parts: Only A, Only B, Only C, only A-B, only B-C, only A-C, all three, and Neither. Example: 200 students in total, A = 120, B = 100, C = 90, A-B = 50, B-C = 40, A-C = 45, all three = 20. Only A = 120 − 50 − 45 + 20 = **45** (add all three back once, because it was subtracted twice). Only B = 100 − 50 − 40 + 20 = **30**. Only C = 90 − 45 − 40 + 20 = **25**. Exactly two = (50 − 20) + (40 − 20) + (45 − 20) = **75**. Union = 120 + 100 + 90 − 50 − 40 − 45 + 20 = **195**. Neither = 200 − 195 = **5**. The extra examples below include code for this.
+
+**2. Only one set.** If the question has only one group, like "out of 100, 60 like Maths", then the other 40 do not like Maths — that is Venn, that is simple subtraction. A Venn is formed only when there are at least two groups.
+
+**3. Empty overlap (Both = 0).** If no student likes both subjects, the circles do not overlap. Then Either = A + B and Neither = Total − (A + B). The formula stays the same when the overlap is zero — just put 0 in place of Both.
+
+**4. One set inside another.** If everyone who likes Science also likes Maths, the Science circle sits inside the Maths circle. Then Both = Science (50), Only Science = 0, and Only Maths = 60 − 50 = 10.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Both Badal Do, Total Badal Do, ya Teesra Set Jod Do',
+          '6. What If: Change Both, Change the Total, or Add a Third Set'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: Both badal do?** 100 students wale example mein Both 30 se 40 kar dein to Only Maths = 60 − 40 = 20 ho jaata hai, Only Science = 50 − 40 = 10, Either = 60 + 50 − 40 = 70, aur Neither = 100 − 70 = 30. Both badhne se Either ghatta hai aur Neither badhta hai — kyunki zyada log dono mein aa gaye, to kam log sirf ek mein bache.
+
+**What if: Total badal do?** Total 100 se 120 kar dein, baaki numbers wahi rakhein, to Either wahi 80 rehta hai, lekin Neither = 120 − 80 = 40 ho jaata hai. Total badalne se sirf Neither badalta hai — baaki hisse wahi rehte hain. Yehi wajah hai ki Neither ka formula Total par depend karta hai.
+
+**What if: teesra set jod do?** Maths aur Science ke saath English bhi jod dein to 2-set Venn 3-set ban jaata hai — hisse 4 se 8 ho jaate hain, aur formula mein teeno ka overlap jodna padta hai. 3-set mein hamesha yaad rakho: **teeno wale hisse ko ek baar wapas jodo**, kyunki woh teen baar ghata diya gaya tha.
+
+**What if: "at least one" poochh lein?** "At least one" ka matlab hai Either — kam se kam ek subject pasand karne wale. Aur "at most one" ka matlab hai Only A + Only B + Neither — yaani Both ko chhod kar sab. Ye do phrases exam mein bahut aate hain, inka matlab pakka yaad rakho.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change Both?** In the 100-student example, changing Both from 30 to 40 makes Only Maths = 60 − 40 = 20, Only Science = 50 − 40 = 10, Either = 60 + 50 − 40 = 70, and Neither = 100 − 70 = 30. When Both grows, Either shrinks and Neither grows — because more people moved into both, so fewer people are left in only one.
+
+**What if you change the Total?** Changing the total from 100 to 120, keeping the other numbers the same, leaves Either at 80, but Neither becomes 120 − 80 = 40. Changing the total changes only Neither — the other parts stay the same. That is why the Neither formula depends on the Total.
+
+**What if you add a third set?** Adding English to Maths and Science turns a 2-set Venn into a 3-set Venn — the parts grow from 4 to 8, and the formula must add back the all-three overlap. In a 3-set Venn, always remember: **add the all-three part back once**, because it was subtracted three times.
+
+**What if the question asks "at least one"?** "At least one" means Either — those who like at least one subject. And "at most one" means Only A + Only B + Neither — everything except Both. These two phrases appear very often in exams, so remember their meanings firmly.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Venn ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Venn'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Venn solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — Both ko alag karo** (overlap hi Venn ki jaan hai), **Step 2 — Only nikalo** (A − Both, B − Both), **Step 3 — Either aur Neither nikalo** (Either = A + B − Both, Neither = Total − Either). Aakhir mein check karo: Only A + Only B + Both + Neither = Total hona chahiye.
+
+3-set mein ek aur step jud jaata hai: **teeno wale hisse ko ek baar wapas jodo** — Only A = A − AB − AC + ABC. Aur "exactly two" nikaalne ke liye har pair mein se teeno ghatao: (AB − ABC) + (BC − ABC) + (AC − ABC).
+
+Yaad rakhne wali baatein: Either kabhi Total se zyada nahi ho sakta, "only" likha ho to Both ghatao, aur "at least one" ka matlab Either hai jabki "at most one" ka matlab Both ko chhod kar sab hai.
+
+Revision ke liye ye sawal khud solve karo: 80 log, 45 chai, 35 coffee, 15 dono — Only Chai 30, Only Coffee 20, Neither 15. Agar ye bina ruke ho jaaye to Venn tumhe aa gaya hai. Agle article mein hum syllogism dekhenge — jahan "All", "Some" aur "No" wale statements se conclusion nikaalna hota hai.`,
+          `Let us tie the whole article together. Solving a Venn takes only 3 steps: **Step 1 — separate Both** (the overlap is the heart of Venn), **Step 2 — find Only** (A − Both, B − Both), **Step 3 — find Either and Neither** (Either = A + B − Both, Neither = Total − Either). Finally, check: Only A + Only B + Both + Neither must equal the Total.
+
+A 3-set Venn adds one more step: **add the all-three part back once** — Only A = A − AB − AC + ABC. And to find "exactly two", subtract all three from each pair: (AB − ABC) + (BC − ABC) + (AC − ABC).
+
+Things to remember: Either can never be more than the Total, if the question says "only" then subtract Both, and "at least one" means Either while "at most one" means everything except Both.
+
+For revision, solve this question yourself: 80 people, 45 drink tea, 35 drink coffee, 15 drink both — Only Tea 30, Only Coffee 20, Neither 15. If this goes smoothly, you know Venn. In the next article we will look at syllogism — where you must draw conclusions from statements with "All", "Some", and "No".`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        '2-Set Venn: 100 Students ka Hisaab',
+        '2-Set Venn: Counting 100 Students'
+      ),
+      caption: t(
+        'Maths 60, Science 50, Both 30 — chaaro hisse jod kar total 100 aana chahiye',
+        'Maths 60, Science 50, Both 30 — the four parts must add up to 100'
+      ),
+      nodes: [
+        {
+          t: t('Only Maths: 60 - 30 = 30', 'Only Maths: 60 - 30 = 30'),
+          s: t('Sirf Maths pasand, Science nahi', 'Like only Maths, not Science')
+        },
+        {
+          t: t('Only Science: 50 - 30 = 20', 'Only Science: 50 - 30 = 20'),
+          s: t('Sirf Science pasand, Maths nahi', 'Like only Science, not Maths')
+        },
+        {
+          t: t('Both: 30', 'Both: 30'),
+          s: t('Dono subjects pasand — overlap', 'Like both subjects — the overlap')
+        },
+        {
+          t: t('Either: 30 + 20 + 30 = 80', 'Either: 30 + 20 + 30 = 80'),
+          s: t('Kam se kam ek subject pasand', 'Like at least one subject')
+        },
+        {
+          t: t('Neither: 100 - 80 = 20', 'Neither: 100 - 80 = 20'),
+          s: t('Koi subject pasand nahi — check: 30 + 20 + 30 + 20 = 100', 'Like no subject — check: 30 + 20 + 30 + 20 = 100')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '3-Set Venn: Only A, Only B, Only C aur Exactly Two',
+          '3-Set Venn: Only A, Only B, Only C, and Exactly Two'
+        ),
+        language: 'python',
+        code: `A, B, C = 120, 100, 90
+AB, BC, AC = 50, 40, 45
+ABC = 20
+only_A = A - AB - AC + ABC
+only_B = B - AB - BC + ABC
+only_C = C - AC - BC + ABC
+exactly_two = (AB - ABC) + (BC - ABC) + (AC - ABC)
+union = A + B + C - AB - BC - AC + ABC
+print("Only A:", only_A)
+print("Only B:", only_B)
+print("Only C:", only_C)
+print("Exactly two:", exactly_two)
+print("All three:", ABC)
+print("At least one:", union)
+print("Neither (of 200):", 200 - union)`,
+        output: `Only A: 45
+Only B: 30
+Only C: 25
+Exactly two: 75
+All three: 20
+At least one: 195
+Neither (of 200): 5`
+      },
+      {
+        title: t(
+          'Formula Check: Either = A + B - Both',
+          'Formula Check: Either = A + B - Both'
+        ),
+        language: 'python',
+        code: `print("60 + 50 - 30 =", 60 + 50 - 30)
+print("Check: 30 + 20 + 30 =", 30 + 20 + 30)`,
+        output: `60 + 50 - 30 = 80
+Check: 30 + 20 + 30 = 80`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '100 students mein 60 ko Maths, 50 ko Science aur 30 ko dono pasand hain. Sirf Maths pasand karne wale kitne hain?',
+          'Out of 100 students, 60 like Maths, 50 like Science, and 30 like both. How many like only Maths?'
+        ),
+        opts: [
+          t('20', '20'),
+          t('40', '40'),
+          t('30', '30'),
+          t('50', '50')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Only Maths = Maths - Both = 60 - 30 = 30.',
+          'Correct answer: Only Maths = Maths - Both = 60 - 30 = 30.'
+        )
+      },
+      {
+        q: t(
+          'Upar wale sawal mein kisi ko bhi pasand nahi karne wale (Neither) kitne hain?',
+          'In the question above, how many like neither subject?'
+        ),
+        opts: [
+          t('20', '20'),
+          t('10', '10'),
+          t('30', '30'),
+          t('40', '40')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Either = 60 + 50 - 30 = 80, to Neither = 100 - 80 = 20.',
+          'Correct answer: Either = 60 + 50 - 30 = 80, so Neither = 100 - 80 = 20.'
+        )
+      },
+      {
+        q: t(
+          '3-set Venn mein A = 120, A-B = 50, A-C = 45 aur teeno = 20 hain. Sirf A mein kitne hain?',
+          'In a 3-set Venn, A = 120, A-B = 50, A-C = 45, and all three = 20. How many are in only A?'
+        ),
+        opts: [
+          t('35', '35'),
+          t('40', '40'),
+          t('50', '50'),
+          t('45', '45')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: Only A = A - AB - AC + ABC = 120 - 50 - 45 + 20 = 45. Teeno ko ek baar wapas jodna padta hai.',
+          'Correct answer: Only A = A - AB - AC + ABC = 120 - 50 - 45 + 20 = 45. All three must be added back once.'
+        )
+      },
+      {
+        q: t(
+          'Upar wale 3-set Venn mein exactly two sets mein kitne hain? (A-B = 50, B-C = 40, A-C = 45, teeno = 20)',
+          'In the 3-set Venn above, how many are in exactly two sets? (A-B = 50, B-C = 40, A-C = 45, all three = 20)'
+        ),
+        opts: [
+          t('65', '65'),
+          t('75', '75'),
+          t('70', '70'),
+          t('80', '80')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Exactly two = (50 - 20) + (40 - 20) + (45 - 20) = 30 + 20 + 25 = 75.',
+          'Correct answer: Exactly two = (50 - 20) + (40 - 20) + (45 - 20) = 30 + 20 + 25 = 75.'
+        )
+      },
+      {
+        q: t(
+          'Upar wale 3-set Venn mein kam se kam ek set mein (union) kitne hain? (A = 120, B = 100, C = 90, AB = 50, BC = 40, AC = 45, ABC = 20)',
+          'In the 3-set Venn above, how many are in at least one set (union)? (A = 120, B = 100, C = 90, AB = 50, BC = 40, AC = 45, ABC = 20)'
+        ),
+        opts: [
+          t('185', '185'),
+          t('190', '190'),
+          t('200', '200'),
+          t('195', '195')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: Union = 120 + 100 + 90 - 50 - 40 - 45 + 20 = 195.',
+          'Correct answer: Union = 120 + 100 + 90 - 50 - 40 - 45 + 20 = 195.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Either = A + B - Both — Both ko ek baar ghataana sabse important step hai.',
+        'Either = A + B - Both — subtracting Both once is the most important step.'
+      ),
+      t(
+        'Only A = A - Both, Only B = B - Both, Neither = Total - Either.',
+        'Only A = A - Both, Only B = B - Both, Neither = Total - Either.'
+      ),
+      t(
+        'Check: Only A + Only B + Both + Neither = Total hona chahiye.',
+        'Check: Only A + Only B + Both + Neither must equal the Total.'
+      ),
+      t(
+        '3-set mein Only A = A - AB - AC + ABC — teeno ko ek baar wapas jodo.',
+        'In a 3-set Venn, Only A = A - AB - AC + ABC — add all three back once.'
+      ),
+      t(
+        '"At least one" ka matlab Either hai, "at most one" ka matlab Both ko chhod kar sab hai.',
+        '"At least one" means Either, "at most one" means everything except Both.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Chai-Coffee Wala Venn Solve Karo',
+        'Practice: Solve the Tea-Coffee Venn'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ek office mein 80 log hain, 45 chai peete hain, 35 coffee peete hain aur 15 dono peete hain. Code Only Chai, Only Coffee, Both aur Neither nikaalta hai. Tumhara kaam hai output ko haath se verify karna — Only Chai = 45 - 15, Only Coffee = 35 - 15, Either = 45 + 35 - 15, Neither = 80 - Either kagaz par likho, phir code ke output se milao. Done tab hoga jab tumhara haath wala hisaab code ke output se bilkul match kare aur chaaro hisso ka jod 80 aaye.',
+        'Run the starter code below: an office has 80 people, 45 drink tea, 35 drink coffee, and 15 drink both. The code finds Only Tea, Only Coffee, Both, and Neither. Your job is to verify the output by hand — write Only Tea = 45 - 15, Only Coffee = 35 - 15, Either = 45 + 35 - 15, and Neither = 80 - Either on paper, then match them with the code output. You are done when your hand calculation matches the code output exactly and the four parts add up to 80.'
+      ),
+      language: 'python',
+      starter: `total = 80
+tea = 45
+coffee = 35
+both = 15
+print("Only Tea:", tea - both)
+print("Only Coffee:", coffee - both)
+print("Both:", both)
+print("Neither:", total - (tea + coffee - both))`,
+      expected: `Only Tea: 30
+Only Coffee: 20
+Both: 15
+Neither: 15`
+    },
+    readMinutes: 12
+  };
+
+const logicSyllogism: Article = {
+    id: 'logic-syllogism',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Syllogism — All, Some, No se Conclusion Nikaalna',
+      'Syllogism — Drawing Conclusions from All, Some, and No'
+    ),
+    summary: t(
+      'Syllogism mein 2 statements diye hote hain aur poochha jaata hai ki kaunsi conclusion unse pakka nikalti hai. Is article mein tum All-Some-No ke rules, Venn circles se check karna, aur galat conclusions ko pehchanna seekhoge — har rule ko sets se Python mein verify karke.',
+      'In a syllogism, 2 statements are given and you must decide which conclusion follows from them for sure. In this article you will learn the rules of All, Some, and No, how to check with Venn circles, and how to spot wrong conclusions — verifying every rule with sets in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Syllogism Kya Hai? (All, Some, No ke Teen Rules)',
+          '1. What Is a Syllogism? (The Three Rules of All, Some, and No)'
+        ),
+        body: t(
+          `Syllogism ka sawal is tarah hota hai: **Statements:** All pens are books. All books are papers. **Conclusions:** I. All pens are papers. II. Some pens are papers. III. Some papers are pens. Kaunsi conclusions follow karti hain? Jawab hai: teeno follow karti hain. Kyun? Ye samajhne ke liye sirf teen rules yaad rakhne hain.
+
+**Rule 1 — All ka matlab hai poora andar.** "All pens are books" ka matlab hai pens wala circle poora books wale circle ke andar hai. Agar books wala circle poora papers wale ke andar hai, to pens wala bhi papers ke andar hai. Isliye "All pens are papers" follow karta hai. Is rule ko **chain rule** kehte hain: All A are B, All B are C, to All A are C.
+
+**Rule 2 — All se Some nikalta hai.** Agar saare pens books hain, to kuch pens bhi books hain — ye to pakka hai. Isi liye "All pens are papers" se "Some pens are papers" bhi follow karta hai. Lekin ulta nahi hota: "Some" se "All" kabhi nahi nikalta.
+
+**Rule 3 — All ko ulta nahi kar sakte.** "All pens are books" se ye nahi nikalta ki "All books are pens" — books mein pens ke alawa aur bhi cheezein ho sakti hain. Lekin "Some books are pens" nikalta hai, kyunki pens books ke andar hain, to kuch books pens hain. Isi liye "Some papers are pens" bhi follow karta hai.
+
+Ye teen rules poore syllogism ko solve kar dete hain. Har conclusion ko in teen rules se check karo — jo rule se nikle, woh follow karta hai; jo na nikle, woh nahi karta.`,
+          `A syllogism question looks like this: **Statements:** All pens are books. All books are papers. **Conclusions:** I. All pens are papers. II. Some pens are papers. III. Some papers are pens. Which conclusions follow? The answer is: all three follow. To understand why, you only need to remember three rules.
+
+**Rule 1 — All means fully inside.** "All pens are books" means the pens circle sits fully inside the books circle. If the books circle sits fully inside the papers circle, then the pens circle is also inside papers. So "All pens are papers" follows. This rule is called the **chain rule**: All A are B, All B are C, so All A are C.
+
+**Rule 2 — Some follows from All.** If all pens are books, then some pens are also books — that is certain. That is why "Some pens are papers" also follows from "All pens are papers". But the reverse never works: "All" never follows from "Some".
+
+**Rule 3 — All cannot be reversed.** From "All pens are books", you cannot conclude "All books are pens" — books may hold other things besides pens. But "Some books are pens" does follow, because pens are inside books, so some books are pens. That is why "Some papers are pens" follows too.
+
+These three rules solve the whole of syllogism. Check every conclusion against these three rules — what follows from a rule follows; what does not, does not.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Sab Billiyan, Kuch Phool aur Koi Machhli Nahi',
+          '2. Real-Life Examples: All Cats, Some Flowers, and No Fish'
+        ),
+        body: t(
+          `Syllogism roz ki zindagi mein har jagah hai. Socho tum kehte ho "saare cats animals hain" aur "saare animals ko khana chahiye" — to pakka hai ki "saare cats ko khana chahiye". Ye chain rule hi hai, bas roz ki bhasha mein. Tum ye hisaab bina soche har roz karte ho: "saare students ko ID card chahiye, main student hoon, to mujhe bhi ID card chahiye".
+
+Doosra example hai **"some" wala**. Socho tum kehte ho "kuch flowers red hain" aur "saari red cheezein bright hain" — to pakka hai ki "kuch flowers bright hain". Kyun? Kyunki jo flowers red hain, woh bright bhi hain — aur woh kuch flowers hi hain. Lekin ye pakka nahi hai ki "saare flowers bright hain" — jo flowers red nahi hain, woh bright ho bhi sakte hain aur nahi bhi. "Some" se "All" kabhi nahi nikalta — ye syllogism ka sabse important lesson hai.
+
+Teesra example hai **"no" wala**. Socho tum kehte ho "koi bird fish nahi hai" aur "saare eagles birds hain" — to pakka hai ki "koi eagle fish nahi hai". Kyun? Kyunki eagles birds ke andar hain, aur birds fish se bilkul alag hain — dono circles overlap hi nahi karte. "No" wale statements mein circles kabhi overlap nahi karte, isliye inke conclusions sabse pakke hote hain.`,
+          `Syllogism is everywhere in daily life. Imagine you say "all cats are animals" and "all animals need food" — then it is certain that "all cats need food". That is the chain rule itself, just in everyday language. You do this calculation without thinking every day: "all students need an ID card, I am a student, so I need an ID card too".
+
+A second example is with **"some"**. Imagine you say "some flowers are red" and "all red things are bright" — then it is certain that "some flowers are bright". Why? Because the flowers that are red are also bright — and those are some flowers. But it is not certain that "all flowers are bright" — the flowers that are not red may or may not be bright. "All" never follows from "Some" — that is the most important lesson of syllogism.
+
+A third example is with **"no"**. Imagine you say "no bird is a fish" and "all eagles are birds" — then it is certain that "no eagle is a fish". Why? Because eagles sit inside birds, and birds are completely separate from fish — the two circles never overlap. In "No" statements the circles never overlap, so their conclusions are the most certain of all.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: All Pens are Books, All Books are Papers ka Dry Run',
+          '3. Step-by-Step: Dry Run of All Pens are Books, All Books are Papers'
+        ),
+        body: t(
+          `Ab hum ek syllogism ko haath se solve karte hain. **Statements:** All pens are books. All books are papers. **Conclusions:** I. All pens are papers. II. Some pens are papers. III. Some papers are pens. IV. No pens are papers.
+
+**Step 1 — Circles banao:** Pens wala circle Books wale ke andar hai, Books wala Papers wale ke andar hai. Teen circles ek ke andar ek — jaise pyaaz ki paratein.
+
+**Step 2 — Conclusion I check karo (All pens are papers):** Pens, Books ke andar hai aur Books, Papers ke andar hai, to Pens, Papers ke andar hai. Ye **chain rule** hai. Conclusion I **follow karti hai**.
+
+**Step 3 — Conclusion II check karo (Some pens are papers):** Agar saare pens papers hain to kuch pens bhi papers hain — ye **All se Some** wala rule hai. Conclusion II **follow karti hai**.
+
+**Step 4 — Conclusion III check karo (Some papers are pens):** Pens, Papers ke andar hain, to kuch Papers, Pens hain — ye **ulta Some** hai, jo All se nikalta hai. Conclusion III **follow karti hai**.
+
+**Step 5 — Conclusion IV check karo (No pens are papers):** Pens, Papers ke andar hain, to woh Papers se alag kaise ho sakte hain? Ye conclusion statements ke bilkul ulta hai. Conclusion IV **follow nahi karti**.
+Neeche wala code sets se yahi check karta hai: Python mein \`pens <= books\` ka matlab hai "pens, books ka subset hai" — matlab All pens are books. Har conclusion ko set operation se verify karo.`,
+          `Now let us solve a syllogism by hand. **Statements:** All pens are books. All books are papers. **Conclusions:** I. All pens are papers. II. Some pens are papers. III. Some papers are pens. IV. No pens are papers.
+
+**Step 1 — Draw the circles:** the pens circle sits inside the books circle, and the books circle sits inside the papers circle. Three circles, one inside another — like the layers of an onion.
+
+**Step 2 — Check Conclusion I (All pens are papers):** pens are inside books and books are inside papers, so pens are inside papers. This is the **chain rule**. Conclusion I **follows**.
+
+**Step 3 — Check Conclusion II (Some pens are papers):** if all pens are papers, then some pens are also papers — this is the **All gives Some** rule. Conclusion II **follows**.
+
+**Step 4 — Check Conclusion III (Some papers are pens):** pens are inside papers, so some papers are pens — this is **reversed Some**, which follows from All. Conclusion III **follows**.
+
+**Step 5 — Check Conclusion IV (No pens are papers):** pens are inside papers, so how could they be separate from papers? This conclusion is the exact opposite of the statements. Conclusion IV **does not follow**.
+The code below checks the same thing with sets: in Python, \`pens <= books\` means "pens is a subset of books" — that is, All pens are books. Verify every conclusion with a set operation.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Sets se Syllogism Check Karna',
+            'Dry Run: Checking a Syllogism with Sets'
+          ),
+          language: 'python',
+          code: `pens = {"pen1", "pen2"}
+books = pens | {"book1"}
+papers = books | {"paper1"}
+print("All pens are books:", pens <= books)
+print("All books are papers:", books <= papers)
+print("All pens are papers:", pens <= papers)
+print("Some papers are pens:", len(papers & pens) > 0)
+print("No pens are papers:", len(papers & pens) == 0)`,
+          output: `All pens are books: True
+All books are papers: True
+All pens are papers: True
+Some papers are pens: True
+No pens are papers: False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: All ko Ulta Karna, Some se All Nikaalna aur "Some Not" ka Jaal',
+          '4. Common Mistakes: Reversing All, Drawing All from Some, and the "Some Not" Trap'
+        ),
+        body: t(
+          `Syllogism mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: All ko ulta karna.** "All pens are books" se log "All books are pens" nikaal lete hain — ye galat hai. All ka matlab hai pehla circle doosre ke andar hai, iska matlab ye nahi ki doosra bhi pehle ke andar hai. Sirf "Some" ko ulta kar sakte hain: "All pens are books" se "Some books are pens" nikalta hai, "All books are pens" nahi. Ye syllogism ki sabse aam galti hai.
+
+**Galti 2: Some se All nikaalna.** "Some flowers are red" se log "All flowers are red" nikaal lete hain — ye galat hai. "Some" ka matlab hai kam se kam ek, zyada se zyada saare bhi ho sakte hain — lekin pakka nahi hai. Jab tak statement mein "All" na likha ho, "All" wali conclusion kabhi follow nahi karti. Ye rule yaad rakho: **Some se sirf Some nikalta hai, All kabhi nahi**.
+
+**Galti 3: "Some not" ka jaal.** "Some pens are not books" se log samajhte hain ki "kuch pens books nahi hain" ka matlab hai "koi pen book nahi hai" — ye galat hai. "Some not" ka matlab hai kam se kam ek nahi hai, baaki ho sakte hain. Aur "Some A are not B" se "Some B are not A" nahi nikalta — "Some not" ko ulta nahi kar sakte, sirf "Some" (positive) ko ulta kar sakte hain.`,
+          `Syllogism mistakes happen mostly in three places.
+
+**Mistake 1: Reversing All.** From "All pens are books", people conclude "All books are pens" — that is wrong. All means the first circle sits inside the second; it does not mean the second also sits inside the first. Only "Some" can be reversed: from "All pens are books", "Some books are pens" follows, but "All books are pens" does not. This is the most common syllogism mistake.
+
+**Mistake 2: Drawing All from Some.** From "Some flowers are red", people conclude "All flowers are red" — that is wrong. "Some" means at least one, and at most it could be all — but it is not certain. Until a statement says "All", an "All" conclusion never follows. Remember this rule: **from Some only Some follows, All never does**.
+
+**Mistake 3: The "Some not" trap.** From "Some pens are not books", people think "some pens are not books" means "no pen is a book" — that is wrong. "Some not" means at least one is not, the rest may be. And from "Some A are not B", "Some B are not A" does not follow — "Some not" cannot be reversed, only positive "Some" can be reversed.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Do "Some", "No" + "All" aur Khaali Conclusion',
+          '5. Edge Cases: Two "Some" Statements, "No" + "All", and Empty Conclusions'
+        ),
+        body: t(
+          `Edge cases woh syllogism hain jo pehli nazar mein confusing lagte hain.
+
+**1. Do "Some" statements.** "Some A are B" aur "Some B are C" se **kuch nahi nikalta** — na "Some A are C", na "All A are C". Kyun? Kyunki jo B, A mein hain woh alag ho sakte hain un B se jo C mein hain. Example: A = {a1}, B = {a1, b1}, C = {b1} — yahan Some A are B sahi hai (a1 dono mein hai), Some B are C sahi hai (b1 dono mein hai), lekin Some A are C galat hai (A aur C mein kuch common nahi). Neeche ke extra examples mein iska code bhi hai.
+
+**2. "No" + "All".** "No birds are fish" aur "All eagles are birds" se "No eagles are fish" pakka nikalta hai. "No" wale conclusions sabse pakke hote hain, kyunki "No" ka matlab hai circles bilkul alag hain — aur andar wala circle bhi alag hi rahega.
+
+**3. "Some" + "All" (chain).** "Some flowers are red" aur "All red things are bright" se "Some flowers are bright" pakka nikalta hai. Kyunki jo flowers red hain, woh bright bhi hain — aur woh kuch flowers hi hain. Ye syllogism ka sabse useful pattern hai.
+
+**4. Khaali conclusion (None follows).** Kabhi-kabhi koi bhi conclusion follow nahi karti — jaise "All A are B" aur "Some B are C" se na "All A are C" nikalta hai, na "Some A are C". Aise sawal ka jawab hota hai "None of these follows". Ye option dekh kar ghabrana nahi — ye bhi ek sahi jawab hota hai.`,
+          `Edge cases are the syllogisms that look confusing at first sight.
+
+**1. Two "Some" statements.** From "Some A are B" and "Some B are C", **nothing follows** — neither "Some A are C" nor "All A are C". Why? Because the B that sits in A may be different from the B that sits in C. Example: A = {a1}, B = {a1, b1}, C = {b1} — here Some A are B is true (a1 is in both), Some B are C is true (b1 is in both), but Some A are C is false (A and C share nothing). The extra examples below include code for this.
+
+**2. "No" + "All".** From "No birds are fish" and "All eagles are birds", "No eagles are fish" certainly follows. "No" conclusions are the most certain of all, because "No" means the circles are fully separate — and the inner circle stays separate too.
+
+**3. "Some" + "All" (chain).** From "Some flowers are red" and "All red things are bright", "Some flowers are bright" certainly follows. Because the flowers that are red are also bright — and those are some flowers. This is the most useful syllogism pattern.
+
+**4. Empty conclusion (None follows).** Sometimes no conclusion follows at all — from "All A are B" and "Some B are C", neither "All A are C" nor "Some A are C" follows. The answer to such a question is "None of these follows". Do not panic when you see this option — it is a correct answer too.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Statement Badal Do, Conclusion Badal Do, ya Order Badal Do',
+          '6. What If: Change the Statement, Change the Conclusion, or Change the Order'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: statement badal do?** "All pens are books" ki jagah "Some pens are books" kar dein to chain toot jaati hai — ab "All pens are papers" nahi nikalta, sirf "Some pens are papers" nikalta hai (kyunki jo pens books hain, woh papers bhi hain). Ek shabd ("All" se "Some") badalne se conclusions badal jaati hain. Isi liye statement ko ek-ek shabd padhna zaroori hai.
+
+**What if: conclusion badal do?** "All pens are papers" ki jagah "All papers are pens" kar dein to conclusion galat ho jaati hai — All ko ulta nahi kar sakte. Conclusion ka ek shabd badalne se sahi jawab galat ho jaata hai. Isliye har conclusion ko alag se check karo, ek ko dekh kar doosri ko sahi mat maan lo.
+
+**What if: statements ka order badal do?** "All pens are books. All books are papers." ko ulta karke "All books are papers. All pens are books." likh dein to kuch nahi badalta — chain wahi rehti hai. Statements ka order syllogism mein koi farak nahi daalta, sirf unka matlab daalta hai.
+
+**What if: teesra statement jod do?** "All papers are white" jod dein to chain aur lambi ho jaati hai: All pens are white bhi nikalta hai. Chain jitni lambi ho, utne zyada conclusions nikalte hain — lekin har conclusion ko chain se check karna padta hai.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the statement?** Replacing "All pens are books" with "Some pens are books" breaks the chain — now "All pens are papers" does not follow, only "Some pens are papers" follows (because the pens that are books are also papers). Changing one word ("All" to "Some") changes the conclusions. That is why every word of a statement must be read with care.
+
+**What if you change the conclusion?** Replacing "All pens are papers" with "All papers are pens" makes the conclusion wrong — All cannot be reversed. Changing one word of a conclusion turns a right answer wrong. So check every conclusion separately; do not call the second one right just because the first one is.
+
+**What if you change the order of the statements?** Reversing "All pens are books. All books are papers." into "All books are papers. All pens are books." changes nothing — the chain stays the same. The order of statements makes no difference in syllogism, only their meaning does.
+
+**What if you add a third statement?** Adding "All papers are white" makes the chain longer: "All pens are white" follows too. The longer the chain, the more conclusions follow — but every conclusion must still be checked against the chain.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Syllogism ke 3 Rules',
+          '7. Summary: The 3 Rules of Syllogism'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Syllogism ke sirf 3 rules yaad rakho: **Rule 1 — Chain:** All A are B, All B are C, to All A are C. **Rule 2 — All se Some:** All se Some nikalta hai, Some se All kabhi nahi. **Rule 3 — Ulta:** Sirf "Some" ko ulta kar sakte hain ("All pens are books" se "Some books are pens"), "All" ko kabhi nahi. Aur ek khaas baat: do "Some" statements se kuch nahi nikalta.
+
+Har conclusion ko check karne ka tareeka hai: circles banao ya sets banao — All ka matlab subset (<=), Some ka matlab overlap (> 0), No ka matlab koi overlap nahi (== 0). Jo conclusion set operation se True aaye, woh follow karti hai.
+
+Revision ke liye ye 3 sawal khud solve karo: All cats are animals, All animals need food — All cats need food (follow karta hai). Some flowers are red, All red things are bright — Some flowers are bright (follow karta hai). All A are B, Some B are C — Some A are C (follow nahi karta). Agar teeno bina ruke ho jaayein to syllogism tumhe aa gaya hai. Agle article mein hum statements aur conclusions dekhenge — jahan ek statement se conclusion nikaalni hoti hai.`,
+          `Let us tie the whole article together. Remember only 3 rules of syllogism: **Rule 1 — Chain:** All A are B, All B are C, so All A are C. **Rule 2 — All gives Some:** Some follows from All, All never follows from Some. **Rule 3 — Reverse:** only "Some" can be reversed (from "All pens are books", "Some books are pens" follows), "All" never can. And one special point: nothing follows from two "Some" statements.
+
+The way to check any conclusion is: draw circles or build sets — All means subset (<=), Some means overlap (> 0), No means no overlap (== 0). A conclusion that comes out True from the set operation follows.
+
+For revision, solve these 3 questions yourself: All cats are animals, All animals need food — All cats need food (follows). Some flowers are red, All red things are bright — Some flowers are bright (follows). All A are B, Some B are C — Some A are C (does not follow). If all three go smoothly, you know syllogism. In the next article we will look at statements and conclusions — where a conclusion must be drawn from a single statement.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Syllogism Check Karne ka Flow',
+        'The Flow for Checking a Syllogism'
+      ),
+      caption: t(
+        'All pens are books, All books are papers — teen circles ek ke andar ek',
+        'All pens are books, All books are papers — three circles, one inside another'
+      ),
+      nodes: [
+        {
+          t: t('Statements padho: All pens are books, All books are papers', 'Read the statements: All pens are books, All books are papers'),
+          s: t('Pens, Books ke andar; Books, Papers ke andar', 'Pens inside Books; Books inside Papers')
+        },
+        {
+          t: t('Chain rule: All pens are papers', 'Chain rule: All pens are papers'),
+          s: t('All A are B, All B are C, to All A are C', 'All A are B, All B are C, so All A are C')
+        },
+        {
+          t: t('All se Some: Some pens are papers', 'All gives Some: Some pens are papers'),
+          s: t('Saare hain to kuch bhi hain', 'If all are, then some are too')
+        },
+        {
+          t: t('Ulta Some: Some papers are pens', 'Reversed Some: Some papers are pens'),
+          s: t('Sirf Some ko ulta kar sakte hain, All ko nahi', 'Only Some can be reversed, never All')
+        },
+        {
+          t: t('No pens are papers: galat — Pens, Papers ke andar hain', 'No pens are papers: wrong — Pens are inside Papers'),
+          s: t('Jo conclusion statements ke ulta ho, woh follow nahi karti', 'A conclusion opposite to the statements does not follow')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'All A are B + Some B are C se Kuch Nahi Nikalta — Counterexample',
+          'Nothing Follows from All A are B + Some B are C — Counterexample'
+        ),
+        language: 'python',
+        code: `A = {"a1"}
+B = {"a1", "b1"}
+C = {"b1"}
+print("All A are B:", A <= B)
+print("Some B are C:", len(B & C) > 0)
+print("Some A are C:", len(A & C) > 0)
+print("So 'Some A are C' does NOT follow.")`,
+        output: `All A are B: True
+Some B are C: True
+Some A are C: False
+So 'Some A are C' does NOT follow.`
+      },
+      {
+        title: t(
+          '"No" + "All": No Eagles are Fish',
+          '"No" + "All": No Eagles are Fish'
+        ),
+        language: 'python',
+        code: `birds = {"eagle", "sparrow"}
+fish = {"shark", "salmon"}
+eagles = {"eagle"}
+print("No birds are fish:", len(birds & fish) == 0)
+print("All eagles are birds:", eagles <= birds)
+print("No eagles are fish:", len(eagles & fish) == 0)`,
+        output: `No birds are fish: True
+All eagles are birds: True
+No eagles are fish: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Statements: All cats are animals. All animals need food. Kaunsi conclusion follow karti hai?',
+          'Statements: All cats are animals. All animals need food. Which conclusion follows?'
+        ),
+        opts: [
+          t('All animals are cats', 'All animals are cats'),
+          t('No cats need food', 'No cats need food'),
+          t('All cats need food', 'All cats need food'),
+          t('Some animals are not cats', 'Some animals are not cats')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: chain rule se All cats are animals aur All animals need food se All cats need food nikalta hai. All ko ulta nahi kar sakte, isliye pehla option galat hai.',
+          'Correct answer: by the chain rule, All cats are animals and All animals need food give All cats need food. All cannot be reversed, so the first option is wrong.'
+        )
+      },
+      {
+        q: t(
+          'Statements: Some flowers are red. All red things are bright. Kaunsi conclusion follow karti hai?',
+          'Statements: Some flowers are red. All red things are bright. Which conclusion follows?'
+        ),
+        opts: [
+          t('All flowers are bright', 'All flowers are bright'),
+          t('Some flowers are bright', 'Some flowers are bright'),
+          t('All bright things are flowers', 'All bright things are flowers'),
+          t('No flowers are bright', 'No flowers are bright')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jo flowers red hain, woh bright bhi hain — aur woh kuch flowers hi hain. Isliye Some flowers are bright follow karta hai, lekin All flowers are bright nahi.',
+          'Correct answer: the flowers that are red are also bright — and those are some flowers. So Some flowers are bright follows, but All flowers are bright does not.'
+        )
+      },
+      {
+        q: t(
+          'Statements: No birds are fish. All eagles are birds. Kaunsi conclusion follow karti hai?',
+          'Statements: No birds are fish. All eagles are birds. Which conclusion follows?'
+        ),
+        opts: [
+          t('No eagles are fish', 'No eagles are fish'),
+          t('Some eagles are fish', 'Some eagles are fish'),
+          t('All fish are birds', 'All fish are birds'),
+          t('Some birds are fish', 'Some birds are fish')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: eagles, birds ke andar hain aur birds, fish se bilkul alag hain, to koi eagle fish nahi ho sakta.',
+          'Correct answer: eagles sit inside birds, and birds are fully separate from fish, so no eagle can be a fish.'
+        )
+      },
+      {
+        q: t(
+          'Statements: All A are B. Some B are C. Kaunsi conclusion follow karti hai?',
+          'Statements: All A are B. Some B are C. Which conclusion follows?'
+        ),
+        opts: [
+          t('All A are C', 'All A are C'),
+          t('Some A are C', 'Some A are C'),
+          t('No A are C', 'No A are C'),
+          t('None of these follows', 'None of these follows')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: jo B, C mein hain woh A mein ho bhi sakte hain aur nahi bhi — A = {a1}, B = {a1, b1}, C = {b1} wala example dekho. Isliye koi bhi conclusion pakka nahi nikalti.',
+          'Correct answer: the B that are in C may or may not be in A — see the example A = {a1}, B = {a1, b1}, C = {b1}. So no conclusion follows for sure.'
+        )
+      },
+      {
+        q: t(
+          'Statements: Some students are singers. All singers are musicians. Kaunsi conclusion follow karti hai?',
+          'Statements: Some students are singers. All singers are musicians. Which conclusion follows?'
+        ),
+        opts: [
+          t('All musicians are students', 'All musicians are students'),
+          t('No students are musicians', 'No students are musicians'),
+          t('Some students are musicians', 'Some students are musicians'),
+          t('All students are musicians', 'All students are musicians')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: jo students singers hain, woh musicians bhi hain — aur woh kuch students hi hain. Isliye Some students are musicians follow karta hai.',
+          'Correct answer: the students who are singers are also musicians — and those are some students. So Some students are musicians follows.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Chain rule: All A are B, All B are C, to All A are C.',
+        'Chain rule: All A are B, All B are C, so All A are C.'
+      ),
+      t(
+        'All se Some nikalta hai, Some se All kabhi nahi nikalta.',
+        'Some follows from All, All never follows from Some.'
+      ),
+      t(
+        'Sirf "Some" ko ulta kar sakte hain — "All" ko kabhi nahi.',
+        'Only "Some" can be reversed — "All" never can.'
+      ),
+      t(
+        'Do "Some" statements se kuch nahi nikalta — "None follows" bhi ek sahi jawab hai.',
+        'Nothing follows from two "Some" statements — "None follows" is also a correct answer.'
+      ),
+      t(
+        'Sets se check karo: All = subset (<=), Some = overlap (> 0), No = koi overlap nahi (== 0).',
+        'Check with sets: All = subset (<=), Some = overlap (> 0), No = no overlap (== 0).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Cats-Animals-Food Wala Syllogism Check Karo',
+        'Practice: Check the Cats-Animals-Food Syllogism'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ye sets se check karta hai ki "All cats are animals" aur "All animals need food" se "All cats need food" nikalta hai ya nahi. Tumhara kaam hai output ko haath se verify karna — circles banao (cats, animals ke andar; animals, need-food ke andar) aur check karo ki cats, need-food ke andar aata hai ya nahi. Done tab hoga jab tumhara haath wala hisaab code ke output se bilkul match kare aur teeno lines True aayein.',
+        'Run the starter code below: it checks with sets whether "All cats need food" follows from "All cats are animals" and "All animals need food". Your job is to verify the output by hand — draw the circles (cats inside animals; animals inside need-food) and check whether cats fall inside need-food. You are done when your hand calculation matches the code output exactly and all three lines come out True.'
+      ),
+      language: 'python',
+      starter: `cats = {"tom", "kitty"}
+animals = cats | {"dog"}
+need_food = animals | {"bird"}
+print("All cats are animals:", cats <= animals)
+print("All animals need food:", animals <= need_food)
+print("All cats need food:", cats <= need_food)`,
+      expected: `All cats are animals: True
+All animals need food: True
+All cats need food: True`
+    },
+    readMinutes: 12
+  };
+
+const logicStatementsConclusions: Article = {
+    id: 'logic-statements-conclusions',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Statements & Conclusions — Kaunsi Conclusion Pakka Nikalti Hai?',
+      'Statements and Conclusions — Which Conclusion Follows for Sure?'
+    ),
+    summary: t(
+      'Is topic mein ek ya do statements diye hote hain aur poochha jaata hai ki kaunsi conclusion unse pakka nikalti hai — sirf wahi jo 100% sure ho. Is article mein tum "only I", "only II", "both" aur "neither" wale options ko step-by-step solve karna seekhoge, har conclusion ko sets se Python mein verify karke.',
+      'In this topic, one or two statements are given and you must decide which conclusion follows from them for sure — only the one that is 100% certain. In this article you will learn to solve the "only I", "only II", "both", and "neither" options step by step, verifying every conclusion with sets in Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Statements & Conclusions Kya Hai? (Pakka vs Ho Sakta Hai)',
+          '1. What Are Statements and Conclusions? (Certain vs Possible)'
+        ),
+        body: t(
+          `Statements & Conclusions ka sawal is tarah hota hai: **Statement:** All mangoes are fruits. **Conclusions:** I. Some mangoes are fruits. II. All fruits are mangoes. Kaunsi conclusion follow karti hai? Jawab hai: **sirf I**. Kyun? Kyunki "All mangoes are fruits" se pakka hai ki kuch mangoes fruits hain (All se Some nikalta hai), lekin ye pakka nahi hai ki saare fruits mangoes hain — fruits mein apple, banana bhi hote hain.
+
+Is topic ka sabse important rule hai: **conclusion tabhi follow karti hai jab woh 100% pakki ho**. "Ho sakta hai" follow nahi karta — sirf "pakka hai" follow karta hai. Jaise "All fruits are mangoes" ho sakta hai (agar duniya mein sirf mangoes hi fruits hon), lekin pakka nahi hai — isliye ye follow nahi karta. Exam mein aksar aise options diye jaate hain jo "ho sakte hain" lekin "pakke nahi hain" — wahi trap hai.
+
+Options aam taur par chaar hote hain: **Only I follows** (sirf pehli), **Only II follows** (sirf doosri), **Both follow** (dono), **Neither follows** (koi bhi nahi). Kabhi-kabhi paanchva option bhi hota hai: **Either I or II follows** (dono mein se ek). Har conclusion ko alag se check karo — pehli sahi hai to doosri ko bina check kiye sahi mat maan lo.`,
+          `A Statements and Conclusions question looks like this: **Statement:** All mangoes are fruits. **Conclusions:** I. Some mangoes are fruits. II. All fruits are mangoes. Which conclusion follows? The answer is: **only I**. Why? Because from "All mangoes are fruits" it is certain that some mangoes are fruits (Some follows from All), but it is not certain that all fruits are mangoes — fruits also include apples and bananas.
+
+The most important rule of this topic is: **a conclusion follows only when it is 100% certain**. "It may be" does not follow — only "it is certain" follows. For example, "All fruits are mangoes" may be true (if mangoes were the only fruits in the world), but it is not certain — so it does not follow. Exams often give options that "may be true" but are "not certain" — that is the trap.
+
+The options are usually four: **Only I follows** (only the first), **Only II follows** (only the second), **Both follow** (both), **Neither follows** (neither). Sometimes there is a fifth option: **Either I or II follows** (one of the two). Check every conclusion separately — do not call the second one right without checking it, just because the first one is right.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: School Rules, Doctor ki Salah aur Traffic',
+          '2. Real-Life Examples: School Rules, a Doctor Advice, and Traffic'
+        ),
+        body: t(
+          `Statements & Conclusions roz ki zindagi mein har jagah hai. Socho school ka rule hai "saare students ko uniform pehenna hai" — to conclusion "kuch students ko uniform pehenna hai" pakka hai, lekin "saare uniform pehenne wale students hain" pakka nahi hai — uniform to teacher bhi pehen sakta hai. Yehi farak hai "pakka" aur "ho sakta hai" mein, aur exam mein yahi farak poochha jaata hai.
+
+Doosra example hai **doctor ki salah**. Doctor kehta hai "kuch patients ko dawa se allergy hoti hai" — to conclusion "saare patients ko allergy hoti hai" galat hai, kyunki "kuch" se "saare" kabhi nahi nikalta. Lekin conclusion "kuch patients ko allergy hoti hai" — ye to statement hi hai, isliye ye pakka hai. Statement ko dobara likhna bhi ek conclusion hoti hai, aur woh hamesha follow karti hai.
+
+Teesra example hai **traffic**. Board par likha hai "koi gaadi yahan park nahi kar sakti" — to conclusion "koi bike yahan park nahi kar sakti" pakka hai (bike bhi gaadi hai), lekin "koi cycle yahan park nahi kar sakti" pakka nahi hai — cycle gaadi nahi hoti. "No" wale statements mein andar wali cheez par bhi "No" lagta hai, lekin bahar wali par nahi.`,
+          `Statements and Conclusions are everywhere in daily life. Imagine a school rule says "all students must wear a uniform" — then the conclusion "some students must wear a uniform" is certain, but "everyone who wears a uniform is a student" is not certain — a teacher could wear a uniform too. This is the difference between "certain" and "may be", and exams ask exactly this difference.
+
+A second example is a **doctor advice**. A doctor says "some patients are allergic to this medicine" — then the conclusion "all patients are allergic" is wrong, because "all" never follows from "some". But the conclusion "some patients are allergic" — that is the statement itself, so it is certain. Restating the statement is also a conclusion, and it always follows.
+
+A third example is **traffic**. A board says "no vehicle may park here" — then the conclusion "no bike may park here" is certain (a bike is also a vehicle), but "no bicycle may park here" is not certain — a bicycle is not a vehicle. In "No" statements, "No" also applies to things inside the group, but not to things outside it.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Some Books are Novels, All Novels are Stories ka Dry Run',
+          '3. Step-by-Step: Dry Run of Some Books are Novels, All Novels are Stories'
+        ),
+        body: t(
+          `Ab hum ek sawal ko haath se solve karte hain. **Statements:** Some books are novels. All novels are stories. **Conclusions:** I. Some books are stories. II. All books are stories.
+
+**Step 1 — Pehla statement samjho:** "Some books are novels" ka matlab hai kuch books novels bhi hain — books aur novels ke circles overlap karte hain. Kuch books novels hain, kuch nahi.
+
+**Step 2 — Doosra statement samjho:** "All novels are stories" ka matlab hai novels wala circle poora stories wale ke andar hai. Jo bhi novel hai, woh story bhi hai.
+
+**Step 3 — Conclusion I check karo (Some books are stories):** Jo books novels hain, woh stories bhi hain (kyunki saare novels stories hain). Aur woh kuch books hi hain. Isliye "Some books are stories" **pakka hai — follow karti hai**.
+
+**Step 4 — Conclusion II check karo (All books are stories):** Kya saari books stories hain? Nahi — sirf woh books stories hain jo novels hain. Jo books novels nahi hain, woh stories ho bhi sakti hain aur nahi bhi — pakka nahi hai. Isliye "All books are stories" **follow nahi karti**.
+
+**Step 5 — Jawab do:** Sirf conclusion I follow karti hai — **Only I follows**.
+Neeche wala code sets se yahi check karta hai: \`books & novels\` overlap hai, \`novels <= stories\` ka matlab hai All novels are stories, aur phir dono conclusions ko set operation se verify karo.`,
+          `Now let us solve a question by hand. **Statements:** Some books are novels. All novels are stories. **Conclusions:** I. Some books are stories. II. All books are stories.
+
+**Step 1 — Understand the first statement:** "Some books are novels" means some books are also novels — the books and novels circles overlap. Some books are novels, some are not.
+
+**Step 2 — Understand the second statement:** "All novels are stories" means the novels circle sits fully inside the stories circle. Whatever is a novel is also a story.
+
+**Step 3 — Check Conclusion I (Some books are stories):** the books that are novels are also stories (because all novels are stories). And those are some books. So "Some books are stories" is **certain — it follows**.
+
+**Step 4 — Check Conclusion II (All books are stories):** are all books stories? No — only the books that are novels are stories. The books that are not novels may or may not be stories — it is not certain. So "All books are stories" **does not follow**.
+
+**Step 5 — Give the answer:** only conclusion I follows — **Only I follows**.
+The code below checks the same thing with sets: \`books & novels\` is the overlap, \`novels <= stories\` means All novels are stories, and then both conclusions are verified with set operations.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Some Books are Novels, All Novels are Stories',
+            'Dry Run: Some Books are Novels, All Novels are Stories'
+          ),
+          language: 'python',
+          code: `books = {"b1", "b2", "b3"}
+novels = {"b1", "b2"}
+stories = novels | {"s1"}
+print("Some books are novels:", len(books & novels) > 0)
+print("All novels are stories:", novels <= stories)
+print("Conclusion I - Some books are stories:", len(books & stories) > 0)
+print("Conclusion II - All books are stories:", books <= stories)`,
+          output: `Some books are novels: True
+All novels are stories: True
+Conclusion I - Some books are stories: True
+Conclusion II - All books are stories: False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: "Ho Sakta Hai" ko "Pakka" Samajhna, Ulta Conclusion aur Statement Bhoolna',
+          '4. Common Mistakes: Treating "May Be" as "Certain", Reversed Conclusions, and Forgetting the Statement'
+        ),
+        body: t(
+          `Is topic mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: "Ho sakta hai" ko "pakka" samajh lena.** "All mangoes are fruits" se log "All fruits are mangoes" ko sahi maan lete hain, kyunki ye "ho sakta hai" — agar duniya mein sirf mangoes hi fruits hon to ye sahi hoga. Lekin exam mein "ho sakta hai" ka koi matlab nahi — sirf "pakka hai" chalta hai. Jab bhi conclusion check karo to khud se poochho: "kya ye **har haal mein** sahi hai?" — agar ek bhi aisa haal hai jisme ye galat ho, to conclusion follow nahi karti.
+
+**Galti 2: Conclusion ko ulta kar dena.** "Some books are stories" se log "Some stories are books" ko bhi sahi maan lete hain — ye sahi hai, kyunki "Some" ko ulta kar sakte hain. Lekin "All books are stories" se "All stories are books" nikaal lena galat hai — "All" ko ulta nahi kar sakte. Har conclusion ko alag se check karo, ulta karne se pehle socho ki "All" hai ya "Some".
+
+**Galti 3: Statement ko bhool jaana.** Kuch conclusions statement ki repeat hoti hain — jaise statement hai "Some cats are black" aur conclusion hai "Some cats are black" — ye to pakka follow karti hai, kyunki ye statement hi hai. Log isko bhi galat kar dete hain kyunki woh sochte hain ki conclusion hamesha nayi baat hoti hai. Nahi — conclusion statement ki repeat bhi ho sakti hai, aur woh hamesha follow karti hai.`,
+          `Mistakes in this topic happen mostly in three places.
+
+**Mistake 1: Treating "may be" as "certain".** From "All mangoes are fruits", people accept "All fruits are mangoes" as right, because it "may be true" — if mangoes were the only fruits in the world, it would be right. But in exams, "may be" means nothing — only "certain" counts. Whenever you check a conclusion, ask yourself: "is this true **in every case**?" — if there is even one case where it is false, the conclusion does not follow.
+
+**Mistake 2: Reversing a conclusion.** From "Some books are stories", people also accept "Some stories are books" — that is right, because "Some" can be reversed. But drawing "All stories are books" from "All books are stories" is wrong — "All" cannot be reversed. Check every conclusion separately, and before reversing, think whether it is "All" or "Some".
+
+**Mistake 3: Forgetting the statement.** Some conclusions repeat the statement — for example, the statement is "Some cats are black" and the conclusion is "Some cats are black" — that certainly follows, because it is the statement itself. People get even this wrong because they think a conclusion is always something new. No — a conclusion can also repeat the statement, and it always follows.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Dono Follow, Koi Nahi Follow aur "Either-Or"',
+          '5. Edge Cases: Both Follow, Neither Follows, and "Either-Or"'
+        ),
+        body: t(
+          `Edge cases woh sawal hain jo pehli nazar mein confusing lagte hain.
+
+**1. Dono follow karte hain.** Statements: All X are Y. All Y are Z. Conclusions: I. All X are Z. II. Some Z are X. Dono follow karte hain — pehli chain rule se, doosri All se Some aur ulta Some se. Aise sawal ka jawab hota hai **Both follow**. Neeche ke extra examples mein iska code bhi hai.
+
+**2. Koi bhi follow nahi karta.** Statements: Some pens are books. Conclusions: I. All pens are books. II. No pens are books. Dono galat hain — pehli "Some" se "All" nikaalti hai, doosri "Some" se "No" nikaalti hai. Jawab hota hai **Neither follows**. Ye option dekh kar ghabrana nahi — ye bhi ek sahi jawab hai.
+
+**3. "Either-Or" wala case.** Kabhi-kabhi do conclusions aisi hoti hain ki dono mein se ek pakka sahi hai, lekin kaunsi — ye pata nahi. Jaise conclusions hon: I. Some A are B. II. Some A are not B. Agar statement se ye pakka ho ki A aur B ka kuch rishta hai, to dono mein se ek to sahi hoga hi. Aise mein jawab hota hai **Either I or II follows**. Ye case kam aata hai, lekin jab aaye to pehchan lo: dono conclusions ek doosre ki ulta hon aur dono mil kar poora cover karti hon.
+
+**4. "No" ka converse.** Statement: No chair is a table. Conclusion: No table is a chair — ye follow karti hai, kyunki "No" ko ulta kar sakte hain. Lekin conclusion "Some chairs are tables" follow nahi karti — "No" se "Some" nahi nikalta.`,
+          `Edge cases are the questions that look confusing at first sight.
+
+**1. Both follow.** Statements: All X are Y. All Y are Z. Conclusions: I. All X are Z. II. Some Z are X. Both follow — the first by the chain rule, the second by All giving Some and reversed Some. The answer to such a question is **Both follow**. The extra examples below include code for this.
+
+**2. Neither follows.** Statements: Some pens are books. Conclusions: I. All pens are books. II. No pens are books. Both are wrong — the first draws "All" from "Some", the second draws "No" from "Some". The answer is **Neither follows**. Do not panic when you see this option — it is a correct answer too.
+
+**3. The "Either-Or" case.** Sometimes two conclusions are such that one of them is certainly right, but which one is not known. For example, the conclusions are: I. Some A are B. II. Some A are not B. If the statement makes it certain that A and B have some relation, then one of the two must be right. In such a case the answer is **Either I or II follows**. This case comes rarely, but recognise it when it does: the two conclusions are opposites of each other and together they cover everything.
+
+**4. Converse of "No".** Statement: No chair is a table. Conclusion: No table is a chair — this follows, because "No" can be reversed. But the conclusion "Some chairs are tables" does not follow — "Some" never follows from "No".`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Statement Badal Do, Conclusion Badal Do, ya Ek Statement Hata Do',
+          '6. What If: Change the Statement, Change the Conclusion, or Remove a Statement'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: statement badal do?** "Some books are novels" ki jagah "All books are novels" kar dein to conclusion II "All books are stories" bhi follow karne lagegi — kyunki ab saari books novels hain aur saare novels stories hain, to saari books stories hain. Ek shabd ("Some" se "All") badalne se "Only I" wala jawab "Both" ban jaata hai. Isi liye statement ka har shabd padhna zaroori hai.
+
+**What if: conclusion badal do?** Conclusion I "Some books are stories" ki jagah "Some stories are books" kar dein to bhi follow karegi — kyunki "Some" ko ulta kar sakte hain. Lekin conclusion II "All books are stories" ki jagah "All stories are books" kar dein to follow nahi karegi — "All" ko ulta nahi kar sakte. Conclusion ka ek shabd badalne se sahi jawab galat ho jaata hai.
+
+**What if: ek statement hata do?** "All novels are stories" hata dein to sirf "Some books are novels" bachta hai — ab conclusion I "Some books are stories" bhi follow nahi karegi, kyunki novels aur stories ka koi rishta hi nahi bacha. Ek statement hatane se poora sawal badal jaata hai. Isliye dono statements ko ek saath padho, alag-alag nahi.
+
+**What if: conclusion statement ki repeat ho?** Statement hai "No chair is a table" aur conclusion hai "No chair is a table" — ye follow karti hai, kyunki ye statement hi hai. Repeat wali conclusion ko dekh kar confuse mat ho — woh hamesha follow karti hai.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the statement?** Replacing "Some books are novels" with "All books are novels" makes conclusion II "All books are stories" follow too — because now all books are novels and all novels are stories, so all books are stories. Changing one word ("Some" to "All") turns an "Only I" answer into "Both". That is why every word of the statement must be read.
+
+**What if you change the conclusion?** Replacing conclusion I "Some books are stories" with "Some stories are books" still follows — because "Some" can be reversed. But replacing conclusion II "All books are stories" with "All stories are books" does not follow — "All" cannot be reversed. Changing one word of a conclusion turns a right answer wrong.
+
+**What if you remove one statement?** Removing "All novels are stories" leaves only "Some books are novels" — now even conclusion I "Some books are stories" does not follow, because no relation between novels and stories is left. Removing one statement changes the whole question. So read both statements together, not separately.
+
+**What if the conclusion repeats the statement?** The statement is "No chair is a table" and the conclusion is "No chair is a table" — it follows, because it is the statement itself. Do not get confused by a repeating conclusion — it always follows.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Statements & Conclusions ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Statements and Conclusions'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Statements & Conclusions solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — Statements ko circles ya sets mein badlo** (All = subset, Some = overlap, No = koi overlap nahi), **Step 2 — Har conclusion ko alag se check karo** (kya ye har haal mein pakki hai? Ek bhi aisa haal hai jisme ye galat ho?), **Step 3 — Options mein se chuno** (Only I, Only II, Both, Neither, ya Either-Or).
+
+Yaad rakhne wali baatein: "ho sakta hai" follow nahi karta, sirf "pakka hai" follow karta hai. "Some" se "All" kabhi nahi nikalta. "All" ko ulta nahi kar sakte, "Some" aur "No" ko kar sakte hain. Aur repeat wali conclusion hamesha follow karti hai.
+
+Revision ke liye ye 3 sawal khud solve karo: All mangoes are fruits — Some mangoes are fruits (follow karti hai), All fruits are mangoes (nahi karti). No chair is a table — No table is a chair (follow karti hai). Some pens are books — All pens are books (nahi karti), No pens are books (nahi karti) — Neither follows. Agar teeno bina ruke ho jaayein to ye topic tumhe aa gaya hai. Agle article mein hum statements aur assumptions dekhenge — jahan ye poochha jaata hai ki statement ke peeche kya maan liya gaya hai.`,
+          `Let us tie the whole article together. Solving Statements and Conclusions takes only 3 steps: **Step 1 — turn the statements into circles or sets** (All = subset, Some = overlap, No = no overlap), **Step 2 — check every conclusion separately** (is it certain in every case? Is there even one case where it is false?), **Step 3 — choose from the options** (Only I, Only II, Both, Neither, or Either-Or).
+
+Things to remember: "may be" does not follow, only "certain" follows. "All" never follows from "Some". "All" cannot be reversed, but "Some" and "No" can. And a repeating conclusion always follows.
+
+For revision, solve these 3 questions yourself: All mangoes are fruits — Some mangoes are fruits (follows), All fruits are mangoes (does not follow). No chair is a table — No table is a chair (follows). Some pens are books — All pens are books (does not follow), No pens are books (does not follow) — Neither follows. If all three go smoothly, you know this topic. In the next article we will look at statements and assumptions — where you are asked what is taken for granted behind a statement.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Statements & Conclusions Check Karne ka Flow',
+        'The Flow for Checking Statements and Conclusions'
+      ),
+      caption: t(
+        'Some books are novels, All novels are stories — sirf wahi conclusion jo 100% pakki ho',
+        'Some books are novels, All novels are stories — only the conclusion that is 100% certain'
+      ),
+      nodes: [
+        {
+          t: t('Statements padho: Some books are novels, All novels are stories', 'Read the statements: Some books are novels, All novels are stories'),
+          s: t('Books-Novels overlap karte hain; Novels, Stories ke andar hain', 'Books and Novels overlap; Novels sit inside Stories')
+        },
+        {
+          t: t('Conclusion I: Some books are stories — pakka hai', 'Conclusion I: Some books are stories — certain'),
+          s: t('Jo books novels hain, woh stories bhi hain', 'The books that are novels are also stories')
+        },
+        {
+          t: t('Conclusion II: All books are stories — pakka nahi hai', 'Conclusion II: All books are stories — not certain'),
+          s: t('Jo books novels nahi hain, unka pata nahi', 'Nothing is known about the books that are not novels')
+        },
+        {
+          t: t('Test: kya ek bhi aisa haal hai jisme conclusion galat ho?', 'Test: is there even one case where the conclusion is false?'),
+          s: t('Agar haan, to conclusion follow nahi karti', 'If yes, the conclusion does not follow')
+        },
+        {
+          t: t('Jawab: Only I follows', 'Answer: Only I follows'),
+          s: t('Sirf pehli conclusion 100% pakki hai', 'Only the first conclusion is 100% certain')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '"No" ka Converse: No Chair is a Table',
+          'Converse of "No": No Chair is a Table'
+        ),
+        language: 'python',
+        code: `chairs = {"c1", "c2"}
+tables = {"t1", "t2"}
+print("No chair is a table:", len(chairs & tables) == 0)
+print("No table is a chair:", len(tables & chairs) == 0)
+print("Some chairs are tables:", len(chairs & tables) > 0)`,
+        output: `No chair is a table: True
+No table is a chair: True
+Some chairs are tables: False`
+      },
+      {
+        title: t(
+          'Dono Follow: All X are Y, All Y are Z',
+          'Both Follow: All X are Y, All Y are Z'
+        ),
+        language: 'python',
+        code: `X = {"x1"}
+Y = {"x1", "y1"}
+Z = {"x1", "y1", "z1"}
+print("All X are Z:", X <= Z)
+print("Some Z are X:", len(Z & X) > 0)
+print("Both conclusions follow.")`,
+        output: `All X are Z: True
+Some Z are X: True
+Both conclusions follow.`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Statement: All mangoes are fruits. Conclusions: I. Some mangoes are fruits. II. All fruits are mangoes. Kaunsi conclusion follow karti hai?',
+          'Statement: All mangoes are fruits. Conclusions: I. Some mangoes are fruits. II. All fruits are mangoes. Which conclusion follows?'
+        ),
+        opts: [
+          t('Only I follows', 'Only I follows'),
+          t('Only II follows', 'Only II follows'),
+          t('Both I and II follow', 'Both I and II follow'),
+          t('Neither I nor II follows', 'Neither I nor II follows')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: All se Some nikalta hai, isliye I follow karti hai. Lekin All ko ulta nahi kar sakte — saare fruits mangoes nahi hote, isliye II follow nahi karti.',
+          'Correct answer: Some follows from All, so I follows. But All cannot be reversed — not all fruits are mangoes, so II does not follow.'
+        )
+      },
+      {
+        q: t(
+          'Statement: All X are Y. All Y are Z. Conclusions: I. All X are Z. II. Some Z are X. Kaunsi conclusion follow karti hai?',
+          'Statement: All X are Y. All Y are Z. Conclusions: I. All X are Z. II. Some Z are X. Which conclusion follows?'
+        ),
+        opts: [
+          t('Only I follows', 'Only I follows'),
+          t('Only II follows', 'Only II follows'),
+          t('Both I and II follow', 'Both I and II follow'),
+          t('Neither I nor II follows', 'Neither I nor II follows')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: I chain rule se follow karti hai (All X are Y, All Y are Z, to All X are Z), aur II All se Some aur ulta Some se follow karti hai.',
+          'Correct answer: I follows by the chain rule (All X are Y, All Y are Z, so All X are Z), and II follows by All giving Some and reversed Some.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Some pens are books. Conclusions: I. All pens are books. II. No pens are books. Kaunsi conclusion follow karti hai?',
+          'Statement: Some pens are books. Conclusions: I. All pens are books. II. No pens are books. Which conclusion follows?'
+        ),
+        opts: [
+          t('Only I follows', 'Only I follows'),
+          t('Only II follows', 'Only II follows'),
+          t('Both I and II follow', 'Both I and II follow'),
+          t('Neither I nor II follows', 'Neither I nor II follows')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: "Some" se na "All" nikalta hai, na "No" — kuch pens books hain, to na saare books hain, na koi bhi book nahi hai. Isliye koi bhi conclusion follow nahi karti.',
+          'Correct answer: neither "All" nor "No" follows from "Some" — some pens are books, so neither all are books nor none are books. So no conclusion follows.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Some cats are black. Conclusions: I. Some black things are cats. II. All cats are black. Kaunsi conclusion follow karti hai?',
+          'Statement: Some cats are black. Conclusions: I. Some black things are cats. II. All cats are black. Which conclusion follows?'
+        ),
+        opts: [
+          t('Only II follows', 'Only II follows'),
+          t('Only I follows', 'Only I follows'),
+          t('Both I and II follow', 'Both I and II follow'),
+          t('Neither I nor II follows', 'Neither I nor II follows')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "Some" ko ulta kar sakte hain, isliye I follow karti hai. Lekin "Some" se "All" nahi nikalta, isliye II follow nahi karti.',
+          'Correct answer: "Some" can be reversed, so I follows. But "All" never follows from "Some", so II does not follow.'
+        )
+      },
+      {
+        q: t(
+          'Statement: All pens are pencils. Conclusions: I. Some pencils are pens. II. Some pens are not pencils. Kaunsi conclusion follow karti hai?',
+          'Statement: All pens are pencils. Conclusions: I. Some pencils are pens. II. Some pens are not pencils. Which conclusion follows?'
+        ),
+        opts: [
+          t('Only II follows', 'Only II follows'),
+          t('Both I and II follow', 'Both I and II follow'),
+          t('Only I follows', 'Only I follows'),
+          t('Neither I nor II follows', 'Neither I nor II follows')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: All se Some aur ulta Some nikalta hai, isliye I follow karti hai. Lekin saare pens pencils hain, to "kuch pens pencils nahi hain" galat hai, isliye II follow nahi karti.',
+          'Correct answer: Some and reversed Some follow from All, so I follows. But all pens are pencils, so "some pens are not pencils" is false, and II does not follow.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Conclusion tabhi follow karti hai jab woh 100% pakki ho — "ho sakta hai" follow nahi karta.',
+        'A conclusion follows only when it is 100% certain — "may be" does not follow.'
+      ),
+      t(
+        'All se Some nikalta hai, Some se All kabhi nahi nikalta.',
+        'Some follows from All, All never follows from Some.'
+      ),
+      t(
+        '"All" ko ulta nahi kar sakte, "Some" aur "No" ko kar sakte hain.',
+        '"All" cannot be reversed, but "Some" and "No" can.'
+      ),
+      t(
+        'Test: kya ek bhi aisa haal hai jisme conclusion galat ho? Agar haan, to follow nahi karti.',
+        'Test: is there even one case where the conclusion is false? If yes, it does not follow.'
+      ),
+      t(
+        'Repeat wali conclusion hamesha follow karti hai — woh statement hi hai.',
+        'A repeating conclusion always follows — it is the statement itself.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Some Cats are Black Wala Sawal Check Karo',
+        'Practice: Check the Some Cats are Black Question'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: ye sets se check karta hai ki "Some cats are black" se kaunsi conclusions follow karti hain — I. Some black things are cats, II. All cats are black. Tumhara kaam hai output ko haath se verify karna — circles banao (cats aur black-things overlap karte hain, lekin cats poori black-things ke andar nahi hain) aur check karo ki kaunsi conclusion pakki hai. Done tab hoga jab tumhara haath wala hisaab code ke output se bilkul match kare: pehli True, doosri False.',
+        'Run the starter code below: it checks with sets which conclusions follow from "Some cats are black" — I. Some black things are cats, II. All cats are black. Your job is to verify the output by hand — draw the circles (cats and black things overlap, but cats do not sit fully inside black things) and check which conclusion is certain. You are done when your hand calculation matches the code output exactly: the first True, the second False.'
+      ),
+      language: 'python',
+      starter: `cats = {"tom", "kitty", "simba"}
+black_things = {"tom", "crow"}
+print("Some cats are black:", len(cats & black_things) > 0)
+print("Some black things are cats:", len(black_things & cats) > 0)
+print("All cats are black:", cats <= black_things)`,
+      expected: `Some cats are black: True
+Some black things are cats: True
+All cats are black: False`
+    },
+    readMinutes: 12
+  };
+
+const logicStatementsAssumptions: Article = {
+    id: 'logic-statements-assumptions',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Statements & Assumptions — Statement ke Peeche Kya Maan Liya Gaya?',
+      'Statements and Assumptions — What Is Taken for Granted Behind a Statement?'
+    ),
+    summary: t(
+      'Assumption woh baat hai jo statement mein likhi nahi hoti, lekin statement usi par khada hota hai. Is article mein tum implicit aur not-implicit assumptions ko pehchanna seekhoge — ads, notices aur sarkari faislon ke examples ke saath, har assumption ko ek simple test se check karke.',
+      'An assumption is something not written in the statement, but the statement stands on it. In this article you will learn to tell implicit assumptions from those that are not implicit — with examples from ads, notices, and government decisions, checking every assumption with a simple test.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Assumption Kya Hai? (Chhupa Hua Maan Lena)',
+          '1. What Is an Assumption? (A Hidden Taking for Granted)'
+        ),
+        body: t(
+          `Assumption ka matlab hai **woh baat jo statement bolne wale ne maan li hai, bina bole**. Jaise ek ad kehti hai "Hamara soap 99% germs maarta hai" — is ad ke peeche ek assumption hai: **log germs se bachna chahte hain**. Ye ad mein likha nahi hai, lekin ad isi par khadi hai — agar logon ko germs ki parwah hi na ho, to ye ad bekaar hai. Isliye ye assumption **implicit** hai — matlab statement ke andar chhupi hui hai.
+
+Doosri taraf, ek aur baat hai jo assumption **nahi** hai: "doosre soaps 0% germs maarte hain". Ye ad mein nahi likha hai aur ad is par khadi bhi nahi hai — ad sirf apne soap ki baat kar rahi hai, doosron ki nahi. Isliye ye assumption **not implicit** hai.
+
+Assumption check karne ka sabse aasan test hai: **agar ye baat galat ho jaaye to kya statement bekaar ho jaayega?** Agar haan, to assumption implicit hai. Agar statement phir bhi khada rehta hai, to assumption implicit nahi hai. Jaise "log germs se bachna chahte hain" galat ho jaaye to ad bekaar ho jaayegi — isliye implicit hai. "Doosre soaps 0% maarte hain" galat ho jaaye to bhi ad khadi rehti hai — isliye not implicit hai.`,
+          `An assumption means **something the speaker has taken for granted without saying it**. For example, an ad says "Our soap kills 99% of germs" — behind this ad sits an assumption: **people want to stay safe from germs**. This is not written in the ad, but the ad stands on it — if people did not care about germs at all, the ad would be useless. So this assumption is **implicit** — it hides inside the statement.
+
+On the other hand, there is something that is **not** an assumption: "other soaps kill 0% of germs". This is not written in the ad, and the ad does not stand on it either — the ad only talks about its own soap, not about others. So this assumption is **not implicit**.
+
+The easiest test for an assumption is: **if this thing turned out to be false, would the statement become useless?** If yes, the assumption is implicit. If the statement still stands, the assumption is not implicit. If "people want to stay safe from germs" turned out false, the ad would become useless — so it is implicit. If "other soaps kill 0%" turned out false, the ad would still stand — so it is not implicit.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Helmet, Coaching aur Train Ticket',
+          '2. Real-Life Examples: Helmets, Coaching, and Train Tickets'
+        ),
+        body: t(
+          `Assumptions roz ki zindagi mein har jagah hain. Socho sarkar kehti hai "Helmet pehno, warna 1000 rupaye jurmana" — iske peeche assumption hai: **kuch log bina jurmane ke helmet nahi pehnenge**. Ye notice mein likha nahi hai, lekin notice isi par khada hai — agar saare log khud hi helmet pehente hon to jurmane ki zaroorat hi nahi. Isliye ye assumption implicit hai. Lekin "har vyakti ke paas helmet hai" — ye assumption nahi hai, kyunki notice is par khada nahi hai; ho sakta hai kisi ke paas helmet na ho, tab bhi notice ka matlab wahi rehta hai.
+
+Doosra example hai **coaching ka ad**: "Hamari coaching join karo, 90% students pass hote hain". Iske peeche assumption hai: **students pass hona chahte hain**. Ye ad mein likha nahi hai, lekin ad isi par khadi hai. Lekin "coaching pass hone ki guarantee deti hai" — ye assumption nahi hai, kyunki 90% ka matlab hai 10% fail bhi hote hain, guarantee nahi hai.
+
+Teesra example hai **train ticket**: "Ticket jaldi book karo, seats jaldi bhar jaati hain". Iske peeche assumption hai: **seats khatm ho sakti hain**. Ye implicit hai — agar seats kabhi khatm hi na hoti to "jaldi book karo" kehne ka koi matlab nahi. Lekin "tickets free hain" — ye assumption nahi hai, kyunki ticket ki keemat se is baat ka koi lena-dena nahi hai.`,
+          `Assumptions are everywhere in daily life. Imagine the government says "Wear a helmet, or pay a fine of Rs 1000" — behind this sits an assumption: **some people will not wear a helmet without a fine**. This is not written in the notice, but the notice stands on it — if everyone wore a helmet on their own, no fine would be needed. So this assumption is implicit. But "every person owns a helmet" is not an assumption, because the notice does not stand on it; someone may not own a helmet, and the notice still means the same.
+
+A second example is a **coaching ad**: "Join our coaching, 90% of students pass". Behind it sits an assumption: **students want to pass**. This is not written in the ad, but the ad stands on it. But "the coaching guarantees a pass" is not an assumption, because 90% means 10% also fail — there is no guarantee.
+
+A third example is a **train ticket**: "Book tickets early, seats fill up fast". Behind it sits an assumption: **seats may run out**. This is implicit — if seats never ran out, saying "book early" would mean nothing. But "tickets are free" is not an assumption, because the price of the ticket has nothing to do with this.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: "Helmet Pehno, Warna Jurmana" ka Dry Run',
+          '3. Step-by-Step: Dry Run of "Wear a Helmet, or Pay a Fine"'
+        ),
+        body: t(
+          `Ab hum ek sawal ko haath se solve karte hain. **Statement:** "Helmet pehno, warna 1000 rupaye jurmana lagega." **Assumptions:** I. Kuch log bina jurmane ke helmet nahi pehnenge. II. Har vyakti ke paas helmet hai.
+
+**Step 1 — Statement ka maksad samjho:** Statement ka maksad hai logon ko helmet pehenne par majboor karna — jurmane ke darr se. Ye notice un logon ke liye hai jo helmet nahi pehente.
+
+**Step 2 — Assumption I check karo (Kuch log bina jurmane ke helmet nahi pehnenge):** Test lagao — agar ye baat galat ho jaaye (matlab saare log khud hi helmet pehente hon) to kya notice bekaar ho jaayega? Haan — jurmane ki zaroorat hi nahi rehti. Isliye Assumption I **implicit hai**.
+
+**Step 3 — Assumption II check karo (Har vyakti ke paas helmet hai):** Test lagao — agar ye baat galat ho jaaye (matlab kuch logon ke paas helmet nahi hai) to kya notice bekaar ho jaayega? Nahi — notice un logon ke liye bhi hai, woh helmet khareed kar pehnenge. Notice is baat par khada nahi hai ki sabke paas helmet hai. Isliye Assumption II **implicit nahi hai**.
+
+**Step 4 — Jawab do:** Sirf Assumption I implicit hai — **Only I is implicit**.
+
+Neeche wala code isi test ko ek simple tareeke se dikhata hai: har assumption ke liye ek fact likha hai (sahi hai ya galat), aur phir bataya hai ki kaunsi assumption implicit hai. Code mein assumptions ko facts ke roop mein likha gaya hai taaki tum test ko khud chala kar dekh sako.`,
+          `Now let us solve a question by hand. **Statement:** "Wear a helmet, or pay a fine of Rs 1000." **Assumptions:** I. Some people will not wear a helmet without a fine. II. Every person owns a helmet.
+
+**Step 1 — Understand the purpose of the statement:** the purpose of the statement is to force people to wear a helmet — through the fear of a fine. This notice is meant for people who do not wear helmets.
+
+**Step 2 — Check Assumption I (Some people will not wear a helmet without a fine):** apply the test — if this turned out false (meaning everyone wears a helmet on their own), would the notice become useless? Yes — no fine would be needed. So Assumption I **is implicit**.
+
+**Step 3 — Check Assumption II (Every person owns a helmet):** apply the test — if this turned out false (meaning some people do not own a helmet), would the notice become useless? No — the notice is for them too; they will buy a helmet and wear it. The notice does not stand on everyone owning a helmet. So Assumption II **is not implicit**.
+
+**Step 4 — Give the answer:** only Assumption I is implicit — **Only I is implicit**.
+
+The code below shows this same test in a simple way: for each assumption, a fact is written (true or false), and then it states which assumption is implicit. The assumptions are written as facts in the code so that you can run the test yourself and see it.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Helmet Wale Statement ka Assumption Test',
+            'Dry Run: Assumption Test for the Helmet Statement'
+          ),
+          language: 'python',
+          code: `# Statement: "Wear a helmet, else pay a fine of Rs 1000."
+# Assumption I: People may not wear a helmet without a fine.
+# Assumption II: Every person owns a helmet.
+facts = {"some_people_skip_helmet": True, "everyone_owns_helmet": False}
+print("Assumption I is taken for granted:", facts["some_people_skip_helmet"])
+print("Assumption II is taken for granted:", facts["everyone_owns_helmet"])
+print("Only Assumption I is implicit.")`,
+          output: `Assumption I is taken for granted: True
+Assumption II is taken for granted: False
+Only Assumption I is implicit.`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Strong Baat ko Assumption Samajhna, Ulta Test aur "Sab" Wala Jaal',
+          '4. Common Mistakes: Treating a Strong Claim as an Assumption, the Reversed Test, and the "All" Trap'
+        ),
+        body: t(
+          `Assumptions mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Statement mein likhi baat ko assumption samajh lena.** Agar statement mein likha hai "90% students pass hote hain" aur assumption hai "90% students pass hote hain" — ye assumption nahi hai, ye statement hi hai. Assumption woh hoti hai jo **likhi nahi hoti**. Jo baat statement mein saaf likhi hai, woh assumption nahi hoti — woh fact hoti hai. Hamesha check karo: kya ye baat statement mein likhi hai? Agar haan, to ye assumption nahi hai.
+
+**Galti 2: Test ko ulta laga dena.** Log test ko ulta laga dete hain: "agar ye baat sahi ho jaaye to kya statement sahi ho jaayega?" — ye galat test hai. Sahi test hai: **"agar ye baat galat ho jaaye to kya statement bekaar ho jaayega?"** Assumption woh hai jiske galat hone par statement gir jaata hai. Test ki direction galat ho to jawab bhi galat hoga.
+
+**Galti 3: "Sab" wala jaal.** Assumptions mein "sab", "har", "hamesha" jaise shabd dekh kar saavdhaan raho. Jaise assumption hai "har vyakti ke paas helmet hai" — "har" shabd hi isko galat bana deta hai, kyunki statement itni strong baat par khada nahi hota. Aise extreme shabd wali assumptions aksar not implicit hoti hain. Lekin ye hamesha sahi nahi hota — kabhi-kabhi "sab" wali assumption bhi implicit hoti hai, jaise "sab log apni jaan bachana chahte hain" — ye "helmet pehno, jaan bachao" wale statement ke liye implicit hai. Har baar test lagao, shabd se faisla mat karo.`,
+          `Assumption mistakes happen mostly in three places.
+
+**Mistake 1: Treating something written in the statement as an assumption.** If the statement says "90% of students pass" and the assumption is "90% of students pass" — that is not an assumption, that is the statement itself. An assumption is something that is **not written**. What is clearly written in the statement is not an assumption — it is a fact. Always check: is this thing written in the statement? If yes, it is not an assumption.
+
+**Mistake 2: Applying the test backwards.** People apply the test backwards: "if this turned out true, would the statement become right?" — that is the wrong test. The right test is: **"if this turned out false, would the statement become useless?"** An assumption is something whose falseness makes the statement fall. If the direction of the test is wrong, the answer is wrong too.
+
+**Mistake 3: The "all" trap.** Be careful when assumptions use words like "all", "every", or "always". For example, the assumption "every person owns a helmet" — the word "every" itself makes it wrong, because the statement does not stand on such a strong claim. Assumptions with extreme words are often not implicit. But this is not always true — sometimes an "all" assumption is implicit too, like "all people want to save their life" — that is implicit for the statement "wear a helmet, save your life". Apply the test every time; do not decide by the word alone.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Dono Implicit, Koi Nahi Implicit aur Hidden Assumption',
+          '5. Edge Cases: Both Implicit, Neither Implicit, and Hidden Assumptions'
+        ),
+        body: t(
+          `Edge cases woh sawal hain jo pehli nazar mein confusing lagte hain.
+
+**1. Dono implicit.** Statement: "Helmet pehno, apni jaan bachao." Assumptions: I. Accidents se sir mein chot lag sakti hai. II. Log apni jaan bachana chahte hain. Dono implicit hain — pehli galat ho jaaye to helmet ka koi fayda nahi, doosri galat ho jaaye to "jaan bachao" kehne ka koi matlab nahi. Aise sawal ka jawab hota hai **Both are implicit**. Neeche ke extra examples mein iska code bhi hai.
+
+**2. Koi bhi implicit nahi.** Statement: "Aaj train late hai." Assumptions: I. Saari trains hamesha late hoti hain. II. Train kabhi dobara nahi chalegi. Dono galat hain — pehli "hamesha" wala extreme hai, doosri statement se bahut aage badh jaati hai. Jawab hota hai **Neither is implicit**.
+
+**3. Hidden assumption (chhupa hua).** Kabhi-kabhi assumption itni gehri chhupi hoti hai ki dikhti hi nahi. Jaise statement hai "Please do not litter, keep the city clean" — iske peeche assumption hai: **kuch log kachra phenkte hain**. Ye itna obvious hai ki log isko assumption hi nahi maante — lekin yehi implicit hai, kyunki agar koi kachra phenkta hi na ho to ye notice likhne ki zaroorat hi nahi. Obvious baat bhi assumption ho sakti hai.
+
+**4. Assumption vs conclusion.** Assumption statement ke **pehle** ki baat hoti hai (bolne wale ne pehle se maan liya), conclusion statement ke **baad** ki baat hoti hai (statement se nikalti hai). Dono ko milana sabse badi galti hai: "log germs se bachna chahte hain" assumption hai, "soap 99% germs maarta hai" conclusion nahi — ye statement hi hai.`,
+          `Edge cases are the questions that look confusing at first sight.
+
+**1. Both implicit.** Statement: "Wear a helmet, save your life." Assumptions: I. Accidents can injure the head. II. People want to save their life. Both are implicit — if the first turned out false, a helmet would have no benefit; if the second turned out false, saying "save your life" would mean nothing. The answer to such a question is **Both are implicit**. The extra examples below include code for this.
+
+**2. Neither implicit.** Statement: "The train is late today." Assumptions: I. All trains are always late. II. The train will never run again. Both are wrong — the first is an "always" extreme, the second goes far beyond the statement. The answer is **Neither is implicit**.
+
+**3. Hidden assumption.** Sometimes an assumption hides so deep that it is not even visible. For example, the statement is "Please do not litter, keep the city clean" — behind it sits an assumption: **some people litter**. It is so obvious that people do not even count it as an assumption — but it is implicit, because if nobody littered at all, there would be no need to write this notice. An obvious thing can also be an assumption.
+
+**4. Assumption vs conclusion.** An assumption comes **before** the statement (the speaker already took it for granted), while a conclusion comes **after** the statement (it follows from the statement). Mixing the two is the biggest mistake: "people want to stay safe from germs" is an assumption; "the soap kills 99% of germs" is not a conclusion — it is the statement itself.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Statement Badal Do, Assumption Badal Do, ya Ad Badal Do',
+          '6. What If: Change the Statement, Change the Assumption, or Change the Ad'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: statement badal do?** "Helmet pehno, warna jurmana" ki jagah "Helmet pehno, apni jaan bachao" kar dein to assumptions badal jaati hain — ab "kuch log bina jurmane ke helmet nahi pehnenge" ki jagah "log apni jaan bachana chahte hain" implicit ho jaati hai. Statement badalne se uske peeche ki assumptions bhi badal jaati hain. Isi liye har statement ko alag se padhna padta hai.
+
+**What if: assumption badal do?** Assumption I "kuch log bina jurmane ke helmet nahi pehnenge" ki jagah "saare log bina jurmane ke helmet nahi pehnenge" kar dein to woh not implicit ho jaayegi — kyunki "saare" wala extreme statement par khada nahi hota. Ek shabd ("kuch" se "saare") badalne se implicit, not implicit ban jaata hai.
+
+**What if: ad badal do?** Soap wale ad ki jagah car wala ad le lo: "Hamari car 25 km per litre deti hai". Iske peeche assumption hai: **log petrol bachana chahte hain**. Har ad ke peeche ek aisi hi chhupi hui baat hoti hai — ad wahi kehta hai jo log sunna chahte hain. Yehi assumption ka asli matlab hai: **bolne wala kya maan kar bol raha hai?**
+
+**What if: assumption ko statement bana do?** "Log germs se bachna chahte hain" ko ad mein likh dein to woh assumption nahi rahegi — woh statement ban jaayegi. Assumption tabhi assumption hai jab woh likhi na ho. Likhte hi woh fact ban jaati hai.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the statement?** Replacing "Wear a helmet, or pay a fine" with "Wear a helmet, save your life" changes the assumptions — now "people want to save their life" becomes implicit instead of "some people will not wear a helmet without a fine". Changing the statement changes the assumptions behind it too. That is why every statement must be read separately.
+
+**What if you change the assumption?** Replacing assumption I "some people will not wear a helmet without a fine" with "all people will not wear a helmet without a fine" makes it not implicit — because the "all" extreme does not stand on the statement. Changing one word ("some" to "all") turns implicit into not implicit.
+
+**What if you change the ad?** Take a car ad instead of a soap ad: "Our car gives 25 km per litre". Behind it sits an assumption: **people want to save petrol**. Every ad hides such a thing behind it — an ad says what people want to hear. That is the real meaning of an assumption: **what is the speaker taking for granted while speaking?**
+
+**What if you turn the assumption into a statement?** Writing "people want to stay safe from germs" in the ad means it is no longer an assumption — it becomes a statement. An assumption is an assumption only while it is unwritten. The moment it is written, it becomes a fact.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Assumptions ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Assumptions'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Assumptions solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — Statement ka maksad samjho** (bolne wala kya chahta hai?), **Step 2 — Har assumption par test lagao** (agar ye baat galat ho jaaye to kya statement bekaar ho jaayega? Haan to implicit, nahi to not implicit), **Step 3 — Options mein se chuno** (Only I, Only II, Both, ya Neither).
+
+Yaad rakhne wali baatein: assumption woh hoti hai jo likhi nahi hoti — likhi hui baat assumption nahi hoti. Test ki direction yaad rakho: galat hone par statement girna chahiye. "Sab", "har", "hamesha" wale extreme shabd dekh kar saavdhaan raho, lekin har baar test lagao. Aur assumption ko conclusion se mat milao — assumption pehle ki baat hai, conclusion baad ki.
+
+Revision ke liye ye 3 sawal khud solve karo: Soap ad — "log germs se bachna chahte hain" (implicit), "doosre soaps 0% maarte hain" (not implicit). Helmet notice — "kuch log bina jurmane ke helmet nahi pehnenge" (implicit), "har vyakti ke paas helmet hai" (not implicit). Train late — "saari trains hamesha late hoti hain" (not implicit). Agar teeno bina ruke ho jaayein to assumptions tumhe aa gayi hain. Agle article mein hum statements aur arguments dekhenge — jahan ye poochha jaata hai ki kaunsi argument strong hai aur kaunsi weak.`,
+          `Let us tie the whole article together. Solving assumptions takes only 3 steps: **Step 1 — understand the purpose of the statement** (what does the speaker want?), **Step 2 — apply the test to every assumption** (if this turned out false, would the statement become useless? If yes, implicit; if no, not implicit), **Step 3 — choose from the options** (Only I, Only II, Both, or Neither).
+
+Things to remember: an assumption is something not written — a written thing is not an assumption. Remember the direction of the test: the statement must fall if the assumption is false. Be careful with extreme words like "all", "every", and "always", but apply the test every time. And do not mix an assumption with a conclusion — an assumption comes before, a conclusion comes after.
+
+For revision, solve these 3 questions yourself: Soap ad — "people want to stay safe from germs" (implicit), "other soaps kill 0%" (not implicit). Helmet notice — "some people will not wear a helmet without a fine" (implicit), "every person owns a helmet" (not implicit). Train late — "all trains are always late" (not implicit). If all three go smoothly, you know assumptions. In the next article we will look at statements and arguments — where you are asked which argument is strong and which is weak.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Assumption Check Karne ka Flow',
+        'The Flow for Checking an Assumption'
+      ),
+      caption: t(
+        '"Helmet pehno, warna jurmana" ka example: test lagao, phir faisla karo',
+        'The example "Wear a helmet, or pay a fine": apply the test, then decide'
+      ),
+      nodes: [
+        {
+          t: t('Statement ka maksad samjho: logon ko helmet pehenna hai', 'Understand the purpose: people must wear a helmet'),
+          s: t('Notice un logon ke liye hai jo helmet nahi pehente', 'The notice is meant for people who do not wear helmets')
+        },
+        {
+          t: t('Assumption I: kuch log bina jurmane ke helmet nahi pehnenge', 'Assumption I: some people will not wear a helmet without a fine'),
+          s: t('Test: ye galat ho to notice bekaar — implicit hai', 'Test: if false, the notice is useless — it is implicit')
+        },
+        {
+          t: t('Assumption II: har vyakti ke paas helmet hai', 'Assumption II: every person owns a helmet'),
+          s: t('Test: ye galat ho to bhi notice khada hai — implicit nahi hai', 'Test: even if false, the notice stands — it is not implicit')
+        },
+        {
+          t: t('Test yaad rakho: galat hone par statement girna chahiye', 'Remember the test: the statement must fall if the assumption is false'),
+          s: t('Test ko ulta mat lagao', 'Do not apply the test backwards')
+        },
+        {
+          t: t('Jawab: Only I is implicit', 'Answer: Only I is implicit'),
+          s: t('Sirf pehli assumption statement ke peeche chhupi hai', 'Only the first assumption hides behind the statement')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Soap Ad: Kaunsi Assumption Implicit Hai?',
+          'Soap Ad: Which Assumption Is Implicit?'
+        ),
+        language: 'python',
+        code: `facts = {"people_care_about_germs": True, "other_soaps_kill_zero": False}
+print("People care about germs:", facts["people_care_about_germs"])
+print("Other soaps kill 0% germs:", facts["other_soaps_kill_zero"])
+print("Only the first assumption is implicit.")`,
+        output: `People care about germs: True
+Other soaps kill 0% germs: False
+Only the first assumption is implicit.`
+      },
+      {
+        title: t(
+          'Dono Implicit: "Helmet Pehno, Jaan Bachao"',
+          'Both Implicit: "Wear a Helmet, Save Your Life"'
+        ),
+        language: 'python',
+        code: `facts = {"accidents_can_hurt_head": True, "people_value_life": True}
+print("Accidents can hurt the head:", facts["accidents_can_hurt_head"])
+print("People value their life:", facts["people_value_life"])
+print("Both assumptions are implicit.")`,
+        output: `Accidents can hurt the head: True
+People value their life: True
+Both assumptions are implicit.`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Statement: "Hamara soap 99% germs maarta hai." Assumptions: I. Log germs se bachna chahte hain. II. Doosre soaps 0% germs maarte hain. Kaunsi assumption implicit hai?',
+          'Statement: "Our soap kills 99% of germs." Assumptions: I. People want to stay safe from germs. II. Other soaps kill 0% of germs. Which assumption is implicit?'
+        ),
+        opts: [
+          t('Only I is implicit', 'Only I is implicit'),
+          t('Only II is implicit', 'Only II is implicit'),
+          t('Both I and II are implicit', 'Both I and II are implicit'),
+          t('Neither I nor II is implicit', 'Neither I nor II is implicit')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: ad isi par khadi hai ki log germs se bachna chahte hain — ye galat ho to ad bekaar ho jaayegi. Doosre soaps ke baare mein ad kuch nahi kehti, isliye II implicit nahi hai.',
+          'Correct answer: the ad stands on people wanting to stay safe from germs — if that were false, the ad would be useless. The ad says nothing about other soaps, so II is not implicit.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Helmet pehno, apni jaan bachao." Assumptions: I. Accidents se sir mein chot lag sakti hai. II. Log apni jaan bachana chahte hain. Kaunsi assumption implicit hai?',
+          'Statement: "Wear a helmet, save your life." Assumptions: I. Accidents can injure the head. II. People want to save their life. Which assumption is implicit?'
+        ),
+        opts: [
+          t('Only I is implicit', 'Only I is implicit'),
+          t('Only II is implicit', 'Only II is implicit'),
+          t('Both I and II are implicit', 'Both I and II are implicit'),
+          t('Neither I nor II is implicit', 'Neither I nor II is implicit')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono implicit hain — pehli galat ho to helmet ka koi fayda nahi, doosri galat ho to "jaan bachao" kehne ka koi matlab nahi.',
+          'Correct answer: both are implicit — if the first were false, a helmet would have no benefit; if the second were false, saying "save your life" would mean nothing.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Hamari coaching join karo, 90% students pass hote hain." Assumptions: I. Students pass hona chahte hain. II. Coaching pass hone ki guarantee deti hai. Kaunsi assumption implicit hai?',
+          'Statement: "Join our coaching, 90% of students pass." Assumptions: I. Students want to pass. II. The coaching guarantees a pass. Which assumption is implicit?'
+        ),
+        opts: [
+          t('Only II is implicit', 'Only II is implicit'),
+          t('Only I is implicit', 'Only I is implicit'),
+          t('Both I and II are implicit', 'Both I and II are implicit'),
+          t('Neither I nor II is implicit', 'Neither I nor II is implicit')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ad isi par khadi hai ki students pass hona chahte hain. Lekin 90% ka matlab guarantee nahi hai — 10% fail bhi hote hain, isliye II implicit nahi hai.',
+          'Correct answer: the ad stands on students wanting to pass. But 90% does not mean a guarantee — 10% also fail, so II is not implicit.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Ticket jaldi book karo, seats jaldi bhar jaati hain." Assumptions: I. Seats khatm ho sakti hain. II. Tickets free hain. Kaunsi assumption implicit hai?',
+          'Statement: "Book tickets early, seats fill up fast." Assumptions: I. Seats may run out. II. Tickets are free. Which assumption is implicit?'
+        ),
+        opts: [
+          t('Only II is implicit', 'Only II is implicit'),
+          t('Both I and II are implicit', 'Both I and II are implicit'),
+          t('Only I is implicit', 'Only I is implicit'),
+          t('Neither I nor II is implicit', 'Neither I nor II is implicit')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: "jaldi book karo" kehne ka matlab hi hai ki seats khatm ho sakti hain — ye galat ho to statement bekaar ho jaayega. Ticket ki keemat se iska koi lena-dena nahi hai, isliye II implicit nahi hai.',
+          'Correct answer: saying "book early" only makes sense if seats may run out — if that were false, the statement would be useless. The ticket price has nothing to do with it, so II is not implicit.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Aaj train late hai." Assumptions: I. Saari trains hamesha late hoti hain. II. Train kabhi dobara nahi chalegi. Kaunsi assumption implicit hai?',
+          'Statement: "The train is late today." Assumptions: I. All trains are always late. II. The train will never run again. Which assumption is implicit?'
+        ),
+        opts: [
+          t('Only I is implicit', 'Only I is implicit'),
+          t('Only II is implicit', 'Only II is implicit'),
+          t('Both I and II are implicit', 'Both I and II are implicit'),
+          t('Neither I nor II is implicit', 'Neither I nor II is implicit')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: pehli "hamesha" wala extreme hai — ek din late hone se ye nahi nikalta ki saari trains hamesha late hoti hain. Doosri statement se bahut aage badh jaati hai. Isliye koi bhi implicit nahi hai.',
+          'Correct answer: the first is an "always" extreme — one late day does not mean all trains are always late. The second goes far beyond the statement. So neither is implicit.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Assumption woh baat hai jo statement mein likhi nahi hoti, lekin statement usi par khada hota hai.',
+        'An assumption is something not written in the statement, but the statement stands on it.'
+      ),
+      t(
+        'Test: agar ye baat galat ho jaaye to kya statement bekaar ho jaayega? Haan to implicit, nahi to not implicit.',
+        'Test: if this turned out false, would the statement become useless? If yes, implicit; if no, not implicit.'
+      ),
+      t(
+        'Statement mein likhi hui baat assumption nahi hoti — woh fact hoti hai.',
+        'Something written in the statement is not an assumption — it is a fact.'
+      ),
+      t(
+        '"Sab", "har", "hamesha" wale extreme shabd dekh kar saavdhaan raho, lekin har baar test lagao.',
+        'Be careful with extreme words like "all", "every", and "always", but apply the test every time.'
+      ),
+      t(
+        'Assumption statement ke pehle ki baat hai, conclusion baad ki — dono ko mat milao.',
+        'An assumption comes before the statement, a conclusion comes after — do not mix them.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Ticket Wala Assumption Test Chalao',
+        'Practice: Run the Ticket Assumption Test'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: statement hai "Ticket jaldi book karo, seats jaldi bhar jaati hain" — assumptions hain I. Seats khatm ho sakti hain, II. Tickets free hain. Code har assumption ke liye batata hai ki woh maan li gayi hai ya nahi. Tumhara kaam hai output ko haath se verify karna — test lagao: agar seats kabhi khatm hi na hoti to "jaldi book karo" bekaar ho jaata (isliye I implicit hai), aur ticket free ho ya na ho, statement ka matlab wahi rehta hai (isliye II implicit nahi hai). Done tab hoga jab tumhara haath wala faisla code ke output se bilkul match kare: pehli True, doosri False.',
+        'Run the starter code below: the statement is "Book tickets early, seats fill up fast" — the assumptions are I. Seats may run out, II. Tickets are free. The code states for each assumption whether it is taken for granted. Your job is to verify the output by hand — apply the test: if seats never ran out, "book early" would be useless (so I is implicit), and whether tickets are free or not, the statement means the same (so II is not implicit). You are done when your hand decision matches the code output exactly: the first True, the second False.'
+      ),
+      language: 'python',
+      starter: `facts = {"seats_may_run_out": True, "tickets_are_free": False}
+print("Seats may run out:", facts["seats_may_run_out"])
+print("Tickets are free:", facts["tickets_are_free"])
+print("Only Assumption I is implicit.")`,
+      expected: `Seats may run out: True
+Tickets are free: False
+Only Assumption I is implicit.`
+    },
+    readMinutes: 12
+  };
+
+const logicStatementsArguments: Article = {
+    id: 'logic-statements-arguments',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Statements & Arguments — Strong Argument vs Weak Argument',
+      'Statements and Arguments — Strong Arguments vs Weak Arguments'
+    ),
+    summary: t(
+      'Is topic mein ek statement aur do arguments diye hote hain, aur poochha jaata hai ki kaunsi argument strong hai. Strong argument woh hai jo topic se seedha judi ho aur kisi asli asar par khadi ho. Is article mein tum strong aur weak ko pehchanna seekhoge, har argument ko do sawaalon ke test se check karke.',
+      'In this topic, a statement and two arguments are given, and you must decide which argument is strong. A strong argument is one that connects directly to the topic and stands on a real effect. In this article you will learn to tell strong from weak, checking every argument with a two-question test.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Strong aur Weak Argument Kya Hai? (Do Sawaalon ka Test)',
+          '1. What Are Strong and Weak Arguments? (The Two-Question Test)'
+        ),
+        body: t(
+          `Arguments ka sawal is tarah hota hai: **Statement:** Kya public places mein smoking ban honi chahiye? **Arguments:** I. Haan, kyunki passive smoking doosre logon ko nuksaan pahunchati hai. II. Nahi, kyunki smokers ko smoking pasand hai. Kaunsi argument strong hai? Jawab hai: **sirf I strong hai**. Kyun? Kyunki strong argument ke liye do cheezein zaroori hain.
+
+**Pehla sawaal — kya argument topic se seedha judi hai?** Argument I seedha topic se judi hai: smoking ban ki baat ho rahi hai, aur passive smoking se doosron ko nuksaan hota hai — ye ban ki wajah hai. Argument II bhi smoking se judi hai, lekin woh ban ki wajah nahi deti — sirf pasand ki baat karti hai.
+
+**Doosra sawaal — kya argument kisi asli asar par khadi hai?** Argument I ek asli asar par khadi hai: passive smoking se sehat ko nuksaan hota hai — ye ek fact hai. Argument II sirf pasand par khadi hai: "smokers ko pasand hai" — pasand koi wajah nahi hoti, ye sirf ek feeling hai. Isliye Argument II **weak** hai.
+
+Strong argument ka formula hai: **seedha connection + asli asar**. Dono hon to strong, ek bhi na ho to weak. Ye do sawaal har argument par lagao — jawab khud mil jaayega.`,
+          `An arguments question looks like this: **Statement:** Should smoking be banned in public places? **Arguments:** I. Yes, because passive smoking harms other people. II. No, because smokers enjoy smoking. Which argument is strong? The answer is: **only I is strong**. Why? Because a strong argument needs two things.
+
+**First question — does the argument connect directly to the topic?** Argument I connects directly to the topic: the question is about banning smoking, and passive smoking harms others — that is a reason for a ban. Argument II is also about smoking, but it gives no reason for a ban — it only talks about liking.
+
+**Second question — does the argument stand on a real effect?** Argument I stands on a real effect: passive smoking harms health — that is a fact. Argument II stands only on liking: "smokers enjoy it" — liking is not a reason, it is only a feeling. So Argument II is **weak**.
+
+The formula for a strong argument is: **direct connection + real effect**. If both are there, it is strong; if even one is missing, it is weak. Apply these two questions to every argument — the answer will come on its own.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Plastic Ban, Free Education aur Work From Home',
+          '2. Real-Life Examples: Plastic Ban, Free Education, and Work from Home'
+        ),
+        body: t(
+          `Arguments roz ki zindagi mein har jagah hain. Socho koi kehta hai "plastic bags ban hone chahiye, kyunki plastic environment ko nuksaan pahunchata hai" — ye strong argument hai, kyunki ye topic se seedha juda hai aur ek asli asar (environment ko nuksaan) par khada hai. Lekin agar koi kehta hai "plastic bags ban nahi hone chahiye, kyunki bags colourful hote hain" — ye weak hai, kyunki rang ka ban se koi lena-dena nahi hai.
+
+Doosra example hai **free education**. Argument I: "Education free honi chahiye, kyunki ye gareebi kam karti hai" — strong hai, kyunki ye ek asli asar par khada hai. Argument II: "Education free honi chahiye, kyunki sarkar ke paas unlimited paisa hai" — weak hai, kyunki ye ek galat premise par khada hai: sarkar ke paas unlimited paisa nahi hota. **Galat premise wali argument hamesha weak hoti hai** — chahe woh topic se judi bhi ho.
+
+Teesra example hai **work from home**. Argument I: "Work from home hona chahiye, kyunki isse travel time bachta hai" — strong hai. Argument II: "Work from home nahi hona chahiye, kyunki office ki kursiyan comfortable hain" — weak hai, kyunki kursiyon ka comfort work from home ke faisle se seedha juda nahi hai. Har roz ke faislon mein bhi yahi test kaam aata hai: kya wajah seedhi hai, aur kya woh asli hai?`,
+          `Arguments are everywhere in daily life. Imagine someone says "plastic bags should be banned, because plastic harms the environment" — that is a strong argument, because it connects directly to the topic and stands on a real effect (harm to the environment). But if someone says "plastic bags should not be banned, because bags are colourful" — that is weak, because colour has nothing to do with a ban.
+
+A second example is **free education**. Argument I: "Education should be free, because it reduces poverty" — strong, because it stands on a real effect. Argument II: "Education should be free, because the government has unlimited money" — weak, because it stands on a false premise: the government does not have unlimited money. **An argument built on a false premise is always weak** — even if it connects to the topic.
+
+A third example is **work from home**. Argument I: "Work from home should be allowed, because it saves travel time" — strong. Argument II: "Work from home should not be allowed, because office chairs are comfortable" — weak, because the comfort of chairs does not connect directly to the work-from-home decision. This same test works in everyday decisions too: is the reason direct, and is it real?`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Smoking Ban Wale Sawal ka Dry Run',
+          '3. Step-by-Step: Dry Run of the Smoking Ban Question'
+        ),
+        body: t(
+          `Ab hum ek sawal ko haath se solve karte hain. **Statement:** Kya public places mein smoking ban honi chahiye? **Arguments:** I. Haan, kyunki passive smoking doosre logon ko nuksaan pahunchati hai. II. Nahi, kyunki smokers ko smoking pasand hai.
+
+**Step 1 — Argument I par test lagao:** Pehla sawaal — kya ye topic se seedha juda hai? Haan — ban ki baat ho rahi hai, aur passive smoking ban ki wajah hai. Doosra sawaal — kya ye asli asar par khada hai? Haan — passive smoking se sehat ko nuksaan hota hai, ye ek fact hai. Dono sawaalon ka jawab haan hai, isliye Argument I **strong hai**.
+
+**Step 2 — Argument II par test lagao:** Pehla sawaal — kya ye topic se seedha juda hai? Aadha juda hai — smoking ki baat to hai, lekin ban ki wajah nahi hai. Doosra sawaal — kya ye asli asar par khada hai? Nahi — "pasand hai" koi asar nahi hai, ye sirf ek feeling hai. Kam se kam ek sawaal ka jawab na hai, isliye Argument II **weak hai**.
+
+**Step 3 — Jawab do:** Sirf Argument I strong hai — **Only I is strong**.
+
+Neeche wala code isi test ko dikhata hai: har argument ke liye do values hain — direct (topic se seedha juda hai?) aur real effect (asli asar par khada hai?) — aur argument tabhi strong hai jab dono True hon. Code ko run karke dekho ki dono arguments ka result tumhare haath wale faisle se milta hai ya nahi.`,
+          `Now let us solve a question by hand. **Statement:** Should smoking be banned in public places? **Arguments:** I. Yes, because passive smoking harms other people. II. No, because smokers enjoy smoking.
+
+**Step 1 — Test Argument I:** First question — does it connect directly to the topic? Yes — the question is about a ban, and passive smoking is a reason for a ban. Second question — does it stand on a real effect? Yes — passive smoking harms health, which is a fact. Both questions get a yes, so Argument I is **strong**.
+
+**Step 2 — Test Argument II:** First question — does it connect directly to the topic? Only half — it talks about smoking, but it gives no reason for a ban. Second question — does it stand on a real effect? No — "enjoying it" is not an effect, it is only a feeling. At least one question gets a no, so Argument II is **weak**.
+
+**Step 3 — Give the answer:** only Argument I is strong — **Only I is strong**.
+
+The code below shows this same test: for each argument there are two values — direct (does it connect directly to the topic?) and real effect (does it stand on a real effect?) — and an argument is strong only when both are True. Run the code and check whether the result for both arguments matches your hand decision.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Smoking Ban — Strong ya Weak?',
+            'Dry Run: Smoking Ban — Strong or Weak?'
+          ),
+          language: 'python',
+          code: `# Topic: "Should smoking be banned in public places?"
+# Strong = directly about the topic + based on a real effect.
+arguments = [
+    ("Passive smoking harms other people", True, True),
+    ("Smokers enjoy smoking", False, True),
+]
+for text, direct, real_effect in arguments:
+    strong = direct and real_effect
+    print(text, "-> strong?", strong)`,
+          output: `Passive smoking harms other people -> strong? True
+Smokers enjoy smoking -> strong? False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Opinion ko Argument Samajhna, Side Lena aur "Haan/Nahi" se Faisla',
+          '4. Common Mistakes: Treating an Opinion as an Argument, Taking Sides, and Deciding by "Yes/No"'
+        ),
+        body: t(
+          `Arguments mein sabse zyada galtiyan teen cheezon par hoti hain.
+
+**Galti 1: Opinion ko argument samajh lena.** "Cricket boring hai, isliye cricket ban hona chahiye" — ye argument nahi hai, ye sirf ek opinion hai. Opinion ka matlab hai "mujhe pasand nahi", argument ka matlab hai "is wajah se ye sahi ya galat hai". Jab bhi argument mein "boring", "achha lagta hai", "pasand hai" jaise shabd dikhein to samajh jao ki woh weak hai — kyunki pasand aur na-pasand koi wajah nahi hoti.
+
+**Galti 2: Apni side lena.** Log aksar us argument ko strong maan lete hain jisse woh khud sehmat hote hain. Jaise agar tumhe smoking pasand nahi hai to tum Argument II ("smokers ko pasand hai") ko weak maan loge — ye sahi hai, lekin galat wajah se. Sahi wajah hai test: direct connection aur real effect. Apni pasand se faisla mat karo, test se karo. Exam mein tumhari pasand ka koi matlab nahi — sirf test ka matlab hai.
+
+**Galti 3: "Haan/Nahi" se faisla karna.** Log dekhte hain ki argument "Haan" kehta hai ya "Nahi" — aur usi se strong ya weak maan lete hain. Ye bilkul galat hai: strong argument "Haan" bhi keh sakti hai aur "Nahi" bhi. Smoking ban wale sawal mein Argument I "Haan" kehti hai aur strong hai, lekin online exams wale sawal mein dono arguments strong ho sakti hain — ek "Haan" kehti hai (paper bachta hai) aur ek "Nahi" kehti hai (gaon ke students ke paas internet nahi hai). Side se faisla mat karo, wajah se karo.`,
+          `Argument mistakes happen mostly in three places.
+
+**Mistake 1: Treating an opinion as an argument.** "Cricket is boring, so cricket should be banned" — that is not an argument, it is only an opinion. An opinion means "I do not like it"; an argument means "this is right or wrong for this reason". Whenever an argument uses words like "boring", "feels good", or "enjoy", know that it is weak — because liking and disliking are not reasons.
+
+**Mistake 2: Taking your own side.** People often call the argument strong that they themselves agree with. For example, if you dislike smoking, you will call Argument II ("smokers enjoy it") weak — that is right, but for the wrong reason. The right reason is the test: direct connection and real effect. Do not decide by your own liking; decide by the test. In an exam, your liking means nothing — only the test matters.
+
+**Mistake 3: Deciding by "Yes/No".** People look at whether the argument says "Yes" or "No" — and call it strong or weak by that. That is completely wrong: a strong argument can say "Yes" and can also say "No". In the smoking ban question, Argument I says "Yes" and is strong, but in the online exams question, both arguments can be strong — one says "Yes" (paper is saved) and one says "No" (village students lack internet). Do not decide by the side; decide by the reason.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Dono Strong, Dono Weak aur Galat Premise',
+          '5. Edge Cases: Both Strong, Both Weak, and False Premise'
+        ),
+        body: t(
+          `Edge cases woh sawal hain jo pehli nazar mein confusing lagte hain.
+
+**1. Dono strong.** Statement: Kya exams online hone chahiye? Arguments: I. Haan, kyunki isse paper bachta hai. II. Nahi, kyunki gaon ke students ke paas internet nahi hai. Dono strong hain — pehli ek asli fayda batati hai, doosri ek asli problem batati hai. Dono topic se seedhi judi hain aur dono asli asar par khadi hain. Aise sawal ka jawab hota hai **Both are strong**. Neeche ke extra examples mein iska code bhi hai.
+
+**2. Dono weak.** Statement: Kya cricket ban hona chahiye? Arguments: I. Haan, kyunki cricket boring hai. II. Nahi, kyunki cricket ki ball gol hoti hai. Dono weak hain — pehli sirf opinion hai, doosri bilkul irrelevant hai (ball ka shape ban se kya lena-dena?). Jawab hota hai **Neither is strong**.
+
+**3. Galat premise.** Statement: Kya education free honi chahiye? Argument: Haan, kyunki sarkar ke paas unlimited paisa hai. Ye argument topic se judi hai, lekin uski premise galat hai — sarkar ke paas unlimited paisa nahi hota. **Galat premise wali argument hamesha weak hoti hai**, chahe woh kitni bhi seedhi lage. Premise check karna test ka teesra hissa hai: kya argument ki shuruwaati baat hi sahi hai?
+
+**4. Irrelevant lekin sach.** Argument sach ho sakti hai lekin phir bhi weak — jaise "cricket ki ball gol hoti hai" sach hai, lekin ban se iska koi lena-dena nahi hai. Sach hona kaafi nahi hai — argument ko topic se judna bhi chahiye.`,
+          `Edge cases are the questions that look confusing at first sight.
+
+**1. Both strong.** Statement: Should exams be online? Arguments: I. Yes, because it saves paper. II. No, because village students lack internet. Both are strong — the first states a real benefit, the second states a real problem. Both connect directly to the topic and both stand on real effects. The answer to such a question is **Both are strong**. The extra examples below include code for this.
+
+**2. Both weak.** Statement: Should cricket be banned? Arguments: I. Yes, because cricket is boring. II. No, because a cricket ball is round. Both are weak — the first is only an opinion, the second is completely irrelevant (what does the shape of a ball have to do with a ban?). The answer is **Neither is strong**.
+
+**3. False premise.** Statement: Should education be free? Argument: Yes, because the government has unlimited money. This argument connects to the topic, but its premise is false — the government does not have unlimited money. **An argument built on a false premise is always weak**, however direct it looks. Checking the premise is the third part of the test: is the starting claim of the argument even true?
+
+**4. True but irrelevant.** An argument can be true and still weak — "a cricket ball is round" is true, but it has nothing to do with a ban. Being true is not enough — the argument must also connect to the topic.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Argument Badal Do, Statement Badal Do, ya Side Badal Do',
+          '6. What If: Change the Argument, Change the Statement, or Change the Side'
+        ),
+        body: t(
+          `Ab hum "what-if" sawal poochhte hain.
+
+**What if: argument badal do?** Smoking ban wale sawal mein Argument II "smokers ko smoking pasand hai" ki jagah "ban se sarkar ko tax ka nuksaan hoga" kar dein to woh strong ho jaayegi — kyunki tax ka nuksaan ek asli asar hai aur ban se seedha juda hai. Ek argument badalne se poora jawab badal jaata hai: "Only I" se "Both" ban jaata hai.
+
+**What if: statement badal do?** "Kya public places mein smoking ban honi chahiye?" ki jagah "Kya smoking sehat ke liye buri hai?" kar dein to Argument I "passive smoking nuksaan pahunchati hai" ab bhi strong hai, lekin Argument II "smokers ko pasand hai" ab bilkul irrelevant ho jaata hai. Statement badalne se har argument ki strength badal sakti hai — isliye har sawal ko naye sire se padho.
+
+**What if: side badal do?** Argument I ko "Nahi" side par kar dein — "Nahi, kyunki passive smoking doosron ko nuksaan pahunchati hai" — to ye argument hi galat ho jaati hai, kyunki wajah "Haan" ki taraf ishara karti hai lekin side "Nahi" hai. Wajah aur side ka milna zaroori hai: agar wajah ban ke paksh mein hai to side bhi "Haan" honi chahiye. Wajah aur side ka mismatch bhi ek trap hai.
+
+**What if: argument ko ulta kar do?** "Plastic environment ko nuksaan pahunchata hai" ko "plastic environment ko fayda pahunchata hai" kar dein to premise hi galat ho jaati hai — aur galat premise wali argument weak hoti hai.`,
+          `Now let us ask "what-if" questions.
+
+**What if you change the argument?** In the smoking ban question, replacing Argument II "smokers enjoy smoking" with "a ban would cost the government tax money" makes it strong — because lost tax money is a real effect and connects directly to a ban. Changing one argument changes the whole answer: from "Only I" to "Both".
+
+**What if you change the statement?** Replacing "Should smoking be banned in public places?" with "Is smoking bad for health?" leaves Argument I "passive smoking harms others" still strong, but Argument II "smokers enjoy it" becomes completely irrelevant. Changing the statement can change the strength of every argument — so read each question fresh.
+
+**What if you change the side?** Moving Argument I to the "No" side — "No, because passive smoking harms other people" — makes the argument itself wrong, because the reason points to "Yes" while the side says "No". The reason and the side must match: if the reason supports a ban, the side must also be "Yes". A mismatch between reason and side is also a trap.
+
+**What if you reverse the argument?** Changing "plastic harms the environment" into "plastic benefits the environment" makes the premise itself false — and an argument with a false premise is weak.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Arguments ka 3-Step Tareeka',
+          '7. Summary: The 3-Step Method for Arguments'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. Arguments solve karne ka tareeka sirf 3 steps ka hai: **Step 1 — Har argument par do sawaal lagao:** kya ye topic se seedha juda hai? Kya ye asli asar par khada hai? **Step 2 — Premise check karo:** kya argument ki shuruwaati baat hi sahi hai? Galat premise wali argument hamesha weak hoti hai. **Step 3 — Options mein se chuno** (Only I, Only II, Both, ya Neither).
+
+Yaad rakhne wali baatein: opinion argument nahi hoti — "pasand hai", "boring hai" jaise shabd dekh kar weak maan lo. Apni pasand se faisla mat karo, test se karo. "Haan" ya "Nahi" side se faisla mat karo — strong argument dono side par ho sakti hai. Aur sach hona kaafi nahi hai — argument ko topic se judna bhi chahiye.
+
+Revision ke liye ye 3 sawal khud solve karo: Smoking ban — I strong, II weak (Only I). Online exams — dono strong (Both). Cricket ban — dono weak (Neither). Agar teeno bina ruke ho jaayein to arguments tumhe aa gaye hain. Is batch ke saath tumne letter series, analogy, classification, Venn, syllogism, conclusions, assumptions aur arguments — Logical Reasoning ke 8 bade topics poore kar liye hain.`,
+          `Let us tie the whole article together. Solving arguments takes only 3 steps: **Step 1 — ask two questions of every argument:** does it connect directly to the topic? Does it stand on a real effect? **Step 2 — check the premise:** is the starting claim of the argument even true? An argument with a false premise is always weak. **Step 3 — choose from the options** (Only I, Only II, Both, or Neither).
+
+Things to remember: an opinion is not an argument — seeing words like "enjoy" or "boring" means it is weak. Do not decide by your own liking; decide by the test. Do not decide by the "Yes" or "No" side — a strong argument can sit on either side. And being true is not enough — the argument must also connect to the topic.
+
+For revision, solve these 3 questions yourself: Smoking ban — I strong, II weak (Only I). Online exams — both strong (Both). Cricket ban — both weak (Neither). If all three go smoothly, you know arguments. With this batch, you have now covered 8 big topics of Logical Reasoning — letter series, analogy, classification, Venn, syllogism, conclusions, assumptions, and arguments.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Argument Check Karne ka Flow',
+        'The Flow for Checking an Argument'
+      ),
+      caption: t(
+        'Smoking ban ka example: do sawaal lagao, phir faisla karo',
+        'The smoking ban example: ask two questions, then decide'
+      ),
+      nodes: [
+        {
+          t: t('Argument I: passive smoking doosron ko nuksaan pahunchati hai', 'Argument I: passive smoking harms other people'),
+          s: t('Topic se seedha juda + asli asar = strong', 'Direct connection + real effect = strong')
+        },
+        {
+          t: t('Argument II: smokers ko smoking pasand hai', 'Argument II: smokers enjoy smoking'),
+          s: t('Sirf pasand hai — koi asli asar nahi = weak', 'Only liking — no real effect = weak')
+        },
+        {
+          t: t('Test 1: kya argument topic se seedha juda hai?', 'Test 1: does the argument connect directly to the topic?'),
+          s: t('Irrelevant lekin sach bhi weak hota hai', 'True but irrelevant is also weak')
+        },
+        {
+          t: t('Test 2: kya premise sahi hai?', 'Test 2: is the premise true?'),
+          s: t('Galat premise wali argument hamesha weak hoti hai', 'An argument with a false premise is always weak')
+        },
+        {
+          t: t('Jawab: Only I is strong', 'Answer: Only I is strong'),
+          s: t('Side se faisla mat karo, wajah se karo', 'Do not decide by the side, decide by the reason')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Plastic Bags: Strong ya Weak?',
+          'Plastic Bags: Strong or Weak?'
+        ),
+        language: 'python',
+        code: `arguments = [
+    ("Plastic harms the environment", True, True),
+    ("Bags are colourful", False, False),
+]
+for text, direct, real_effect in arguments:
+    print(text, "-> strong?", direct and real_effect)`,
+        output: `Plastic harms the environment -> strong? True
+Bags are colourful -> strong? False`
+      },
+      {
+        title: t(
+          'Online Exams: Dono Strong',
+          'Online Exams: Both Strong'
+        ),
+        language: 'python',
+        code: `arguments = [
+    ("Online exams save paper", True, True),
+    ("Village students lack internet", True, True),
+]
+for text, direct, real_effect in arguments:
+    print(text, "-> strong?", direct and real_effect)`,
+        output: `Online exams save paper -> strong? True
+Village students lack internet -> strong? True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Statement: Kya plastic bags ban hone chahiye? Arguments: I. Haan, kyunki plastic environment ko nuksaan pahunchata hai. II. Nahi, kyunki bags colourful hote hain. Kaunsi argument strong hai?',
+          'Statement: Should plastic bags be banned? Arguments: I. Yes, because plastic harms the environment. II. No, because bags are colourful. Which argument is strong?'
+        ),
+        opts: [
+          t('Only I is strong', 'Only I is strong'),
+          t('Only II is strong', 'Only II is strong'),
+          t('Both I and II are strong', 'Both I and II are strong'),
+          t('Neither I nor II is strong', 'Neither I nor II is strong')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: I topic se seedha juda hai aur ek asli asar (environment ko nuksaan) par khada hai. II mein rang ka ban se koi lena-dena nahi hai, isliye weak hai.',
+          'Correct answer: I connects directly to the topic and stands on a real effect (harm to the environment). Colour has nothing to do with a ban, so II is weak.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Kya education free honi chahiye? Arguments: I. Haan, kyunki ye gareebi kam karti hai. II. Haan, kyunki sarkar ke paas unlimited paisa hai. Kaunsi argument strong hai?',
+          'Statement: Should education be free? Arguments: I. Yes, because it reduces poverty. II. Yes, because the government has unlimited money. Which argument is strong?'
+        ),
+        opts: [
+          t('Only II is strong', 'Only II is strong'),
+          t('Only I is strong', 'Only I is strong'),
+          t('Both I and II are strong', 'Both I and II are strong'),
+          t('Neither I nor II is strong', 'Neither I nor II is strong')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: I ek asli asar par khadi hai. II ki premise galat hai — sarkar ke paas unlimited paisa nahi hota, isliye galat premise wali argument weak hoti hai.',
+          'Correct answer: I stands on a real effect. The premise of II is false — the government does not have unlimited money, so an argument with a false premise is weak.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Kya work from home hona chahiye? Arguments: I. Haan, kyunki isse travel time bachta hai. II. Nahi, kyunki office ki kursiyan comfortable hain. Kaunsi argument strong hai?',
+          'Statement: Should work from home be allowed? Arguments: I. Yes, because it saves travel time. II. No, because office chairs are comfortable. Which argument is strong?'
+        ),
+        opts: [
+          t('Only II is strong', 'Only II is strong'),
+          t('Both I and II are strong', 'Both I and II are strong'),
+          t('Only I is strong', 'Only I is strong'),
+          t('Neither I nor II is strong', 'Neither I nor II is strong')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: I topic se seedha juda hai aur ek asli asar (travel time bachna) par khada hai. Kursiyon ka comfort work from home ke faisle se seedha juda nahi hai, isliye II weak hai.',
+          'Correct answer: I connects directly to the topic and stands on a real effect (saving travel time). The comfort of chairs does not connect directly to the work-from-home decision, so II is weak.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Kya exams online hone chahiye? Arguments: I. Haan, kyunki isse paper bachta hai. II. Nahi, kyunki gaon ke students ke paas internet nahi hai. Kaunsi argument strong hai?',
+          'Statement: Should exams be online? Arguments: I. Yes, because it saves paper. II. No, because village students lack internet. Which argument is strong?'
+        ),
+        opts: [
+          t('Only I is strong', 'Only I is strong'),
+          t('Only II is strong', 'Only II is strong'),
+          t('Both I and II are strong', 'Both I and II are strong'),
+          t('Neither I nor II is strong', 'Neither I nor II is strong')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono strong hain — pehli ek asli fayda batati hai, doosri ek asli problem batati hai. Strong argument "Haan" side par bhi ho sakti hai aur "Nahi" side par bhi.',
+          'Correct answer: both are strong — the first states a real benefit, the second states a real problem. A strong argument can sit on the "Yes" side and on the "No" side too.'
+        )
+      },
+      {
+        q: t(
+          'Statement: Kya cricket ban hona chahiye? Arguments: I. Haan, kyunki cricket boring hai. II. Nahi, kyunki cricket ki ball gol hoti hai. Kaunsi argument strong hai?',
+          'Statement: Should cricket be banned? Arguments: I. Yes, because cricket is boring. II. No, because a cricket ball is round. Which argument is strong?'
+        ),
+        opts: [
+          t('Only I is strong', 'Only I is strong'),
+          t('Only II is strong', 'Only II is strong'),
+          t('Both I and II are strong', 'Both I and II are strong'),
+          t('Neither I nor II is strong', 'Neither I nor II is strong')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: I sirf ek opinion hai ("boring hai" koi wajah nahi hoti), aur II sach hai lekin ban se bilkul irrelevant hai. Isliye dono weak hain.',
+          'Correct answer: I is only an opinion ("boring" is not a reason), and II is true but completely irrelevant to a ban. So both are weak.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Strong argument ka formula: seedha connection + asli asar — dono hon to strong, ek bhi na ho to weak.',
+        'The formula for a strong argument: direct connection + real effect — both mean strong, even one missing means weak.'
+      ),
+      t(
+        'Opinion argument nahi hoti — "pasand hai", "boring hai" jaise shabd dekh kar weak maan lo.',
+        'An opinion is not an argument — seeing words like "enjoy" or "boring" means it is weak.'
+      ),
+      t(
+        'Galat premise wali argument hamesha weak hoti hai, chahe woh topic se judi bhi ho.',
+        'An argument with a false premise is always weak, even if it connects to the topic.'
+      ),
+      t(
+        'Sach hona kaafi nahi hai — argument ko topic se judna bhi chahiye.',
+        'Being true is not enough — the argument must also connect to the topic.'
+      ),
+      t(
+        'Apni pasand ya "Haan/Nahi" side se faisla mat karo — sirf test se karo.',
+        'Do not decide by your own liking or by the "Yes/No" side — decide only by the test.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Work From Home Wala Argument Test Chalao',
+        'Practice: Run the Work from Home Argument Test'
+      ),
+      task: t(
+        'Neeche wala starter code run karo: statement hai "Kya work from home hona chahiye?" — arguments hain I. Haan, kyunki isse travel time bachta hai, II. Nahi, kyunki office ki kursiyan comfortable hain. Code har argument ke liye do values check karta hai (direct aur real effect) aur batata hai ki kaunsi strong hai. Tumhara kaam hai output ko haath se verify karna — pehli argument par dono sawaal lagao (topic se juda hai? haan. asli asar hai? haan — travel time bachta hai), doosri par bhi (topic se juda hai? nahi. asli asar hai? nahi). Done tab hoga jab tumhara haath wala faisla code ke output se bilkul match kare: pehli strong True, doosri strong False, aur aakhri line "Only the first argument is strong."',
+        'Run the starter code below: the statement is "Should work from home be allowed?" — the arguments are I. Yes, because it saves travel time, II. No, because office chairs are comfortable. The code checks two values for each argument (direct and real effect) and states which is strong. Your job is to verify the output by hand — ask both questions of the first argument (does it connect to the topic? Yes. Is there a real effect? Yes — travel time is saved), and of the second one too (does it connect to the topic? No. Is there a real effect? No). You are done when your hand decision matches the code output exactly: the first strong True, the second strong False, and the last line "Only the first argument is strong."'
+      ),
+      language: 'python',
+      starter: `arguments = [
+    ("Work from home saves travel time", True, True),
+    ("Office chairs are comfortable", False, False),
+]
+for text, direct, real_effect in arguments:
+    print(text, "-> strong?", direct and real_effect)
+print("Only the first argument is strong.")`,
+      expected: `Work from home saves travel time -> strong? True
+Office chairs are comfortable -> strong? False
+Only the first argument is strong.`
+    },
+    readMinutes: 12
+  };
+
+const logicCourseAction: Article = {
+    id: 'logic-course-action',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Courses of Action — Statement se Sahi Kadam Chunna',
+      'Courses of Action — Choosing the Right Step from a Statement'
+    ),
+    summary: t(
+      'Statement padh kar decide karo kaunsa course of action follow karta hai: cause par hamla karne wala, practical aur sahi waqt par liya gaya kadam hi follow karta hai — exam ke 3 classic patterns ke saath.',
+      'Read a statement and decide which course of action follows: only a step that attacks the cause, is practical, and is taken at the right time follows — with the 3 classic exam patterns.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Courses of Action Kya Hote Hain?',
+          '1. What Are Courses of Action?'
+        ),
+        body: t(
+          `Courses of action wale sawalon mein ek **statement** diya hota hai — koi problem ya situation — aur uske neeche 2 ya 3 **courses** (kadam) diye hote hain. Tumhara kaam hai batana ki kaunsa kadam **follow** karta hai, matlab kaunsa kadam problem ko solve karne ke liye sahi hai. Jaise statement ho: "Ek jile mein Class 10 ke bahut se students Maths mein fail ho gaye." Course I: "Kamzor students ko extra Maths coaching do." Course II: "Is saal ka Maths exam cancel kar do." Course I follow karta hai kyunki woh problem ki jad par hamla karta hai — students ko Maths nahi aata, isliye unhe padhao. Course II follow nahi karta kyunki exam cancel karne se students ko Maths nahi aa jaayega.
+
+Ek course follow karta hai ya nahi, yeh check karne ke liye teen sawaal poochho. **Pehla:** kya yeh kadam problem ke **cause** par hamla karta hai, ya sirf symptom par? Coaching cause par hamla karti hai, exam cancel karna sirf problem ko chhupata hai. **Doosra:** kya yeh kadam **practical** hai — kya ise asal mein kiya ja sakta hai? "Saare students ko ek din mein Maths sikha do" practical nahi hai. **Teesra:** kya yeh kadam **sahi time** par hai? Problem hone ke baad action lena theek hai, par problem hone se pehle wahi kadam bekaar ho sakta hai.
+
+Exam mein jawab aam taur par inmein se ek hota hai: "Only I follows", "Only II follows", "Both I and II follow", "Either I or II follows", ya "Neither follows". **Either** tab aata hai jab dono courses mein se koi ek hi chunna ho — jaise ek course kehta hai "school band karo" aur doosra kehta hai "school khula rakho" — dono ek saath nahi ho sakte. Agar dono ek saath ho sakte hain aur dono sahi hain, toh answer "Both follow" hota hai.`,
+          `In courses of action questions, you are given a **statement** — a problem or a situation — followed by 2 or 3 **courses** (steps). Your job is to say which step **follows**, which means which step is right for solving the problem. For example, the statement is: "Many Class 10 students failed in Maths in one district." Course I: "Give extra Maths coaching to weak students." Course II: "Cancel the Maths exam for this year." Course I follows because it attacks the root of the problem — students do not know Maths, so teach them. Course II does not follow because cancelling the exam will not teach students Maths.
+
+To check whether a course follows, ask three questions. **First:** does this step attack the **cause** of the problem, or only the symptom? Coaching attacks the cause, while cancelling the exam only hides the problem. **Second:** is the step **practical** — can it really be done? "Teach all students Maths in one day" is not practical. **Third:** is the step taken at the **right time**? Acting after the problem is fine, but the same step taken before the problem may be useless.
+
+In exams, the answer is usually one of these: "Only I follows", "Only II follows", "Both I and II follow", "Either I or II follows", or "Neither follows". **Either** comes when only one of the two courses can be chosen — for example, one course says "close the school" and the other says "keep the school open" — both cannot happen together. If both can happen together and both are right, the answer is "Both follow".`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Baarish, Library aur Pollution',
+          '2. Real-Life Examples: Rain, the Library, and Pollution'
+        ),
+        body: t(
+          `Soch lo tumhare sheher mein bhaari baarish se sadkein paani mein doob gayi hain. Course I: "Sadkon se paani nikaalne ke liye pump bhejo." Yeh follow karta hai — paani hi problem hai, aur pump use hata dete hain. Course II: "Do din ke liye school band kar do." Yeh bhi follow karta hai — bachche paani bhari sadkon par safe nahi hain, aur yeh ek practical, temporary kadam hai. Course III: "Sheher mein hamesha ke liye saari gaadiyan ban kar do." Yeh follow nahi karta — gaadiyan baarish ki wajah nahi hain, aur "hamesha ke liye" ek extreme kadam hai. Yahi farak samajhna hai: sahi kadam cause se judta hai aur limit mein hota hai.
+
+Doosra example: library mein bahut kam log aate hain. Course I: "Nayi kitabein lao aur library ko zyada der tak khula rakho." Follow karta hai — log isliye nahi aate kyunki kitabein purani hain aur timing kam hai. Course II: "Library band kar do." Follow nahi karta — problem ko khatm karna solution nahi hota. Course III: "Students ke liye free reading clubs shuru karo." Follow karta hai — logon ko library aane ki wajah milti hai. Notice karo: sahi courses hamesha **improve** karte hain, kabhi **band** nahi karte.
+
+Teesra example: Delhi mein air pollution badh raha hai. Course I: "Odd-even scheme lagao." Follow karta hai — kam gaadiyan matlab kam dhuaan. Course II: "Zyada ped lagao." Follow karta hai — ped hawa saaf karte hain, par iska asar slow hota hai, phir bhi yeh sahi direction mein kadam hai. Course III: "Logon ko saans lene se mana kar do." Yeh toh impossible hai — aisa course kabhi follow nahi karta. Exam mein aise extreme ya impossible courses ko turant reject kar do.`,
+          `Imagine heavy rain has flooded the roads in your city. Course I: "Send pumps to clear water from the roads." This follows — water is the problem, and pumps remove it. Course II: "Close schools for two days." This also follows — children are not safe on flooded roads, and this is a practical, temporary step. Course III: "Ban all vehicles in the city forever." This does not follow — vehicles did not cause the rain, and "forever" is an extreme step. This is the difference to learn: a right step connects to the cause and stays within limits.
+
+A second example: very few people visit the library. Course I: "Add new books and keep the library open longer." This follows — people stay away because the books are old and the timings are short. Course II: "Close the library." This does not follow — ending the thing is not a solution to the problem. Course III: "Start free reading clubs for students." This follows — people get a reason to come to the library. Notice: right courses always **improve** things, they never **close** them.
+
+A third example: air pollution is rising in Delhi. Course I: "Apply the odd-even scheme." This follows — fewer vehicles means less smoke. Course II: "Plant more trees." This follows — trees clean the air, even though the effect is slow, it is still a step in the right direction. Course III: "Tell people not to breathe." That is impossible — such a course never follows. In exams, reject extreme or impossible courses at once.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Maths Fail Wale Statement ka Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on the Maths Failure Statement'
+        ),
+        body: t(
+          `Statement: "Ek jile mein Class 10 ke bahut se students Maths mein fail ho gaye." Courses hain: I. "Kamzor students ko extra Maths coaching do." II. "Is saal ka Maths exam cancel kar do." III. "Maths teachers ko train karo aur practice tests do." Ab hum har course ko teen sawaal wale test se check karte hain.
+
+**Step 1 — Course I check karo:** Kya yeh cause par hamla karta hai? Haan — students fail isliye hue kyunki unhe Maths nahi aata, aur coaching unhe Maths sikhati hai. Kya yeh practical hai? Haan — school ke baad extra class lena normal baat hai. Verdict: **FOLLOWS**.
+
+**Step 2 — Course II check karo:** Kya yeh cause par hamla karta hai? Nahi — exam cancel karne se students ki Maths ki kami khatm nahi hoti, woh sirf is saal ke liye chhup jaati hai. Kya yeh practical hai? Technically haan, par yeh problem ko solve nahi karta, sirf taal deta hai. Verdict: **DOES NOT FOLLOW**.
+
+**Step 3 — Course III check karo:** Kya yeh cause par hamla karta hai? Haan — agar teachers behtar padhayenge aur practice tests denge, toh students behtar seekhenge. Kya yeh practical hai? Haan — teacher training ek normal kaam hai. Verdict: **FOLLOWS**.
+
+**Step 4 — Final answer:** I aur III follow karte hain, II nahi. Toh answer hai: "Only I and III follow." Neeche wala code yahi dry run print karta hai — har course ke saamne uska verdict dikhega.`,
+          `Statement: "Many Class 10 students failed in Maths in one district." The courses are: I. "Give extra Maths coaching to weak students." II. "Cancel the Maths exam for this year." III. "Train Maths teachers and give practice tests." Now we check each course with the three-question test.
+
+**Step 1 — Check Course I:** Does it attack the cause? Yes — students failed because they do not know Maths, and coaching teaches them Maths. Is it practical? Yes — extra classes after school are normal. Verdict: **FOLLOWS**.
+
+**Step 2 — Check Course II:** Does it attack the cause? No — cancelling the exam does not remove the students' weakness in Maths, it only hides it for this year. Is it practical? In theory yes, but it does not solve the problem, it only delays it. Verdict: **DOES NOT FOLLOW**.
+
+**Step 3 — Check Course III:** Does it attack the cause? Yes — if teachers teach better and give practice tests, students will learn better. Is it practical? Yes — teacher training is a normal activity. Verdict: **FOLLOWS**.
+
+**Step 4 — Final answer:** I and III follow, II does not. So the answer is: "Only I and III follow." The code below prints this dry run — each course appears with its verdict.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: Maths Fail Statement ke 3 Courses Check Karna',
+            'Dry Run: Checking the 3 Courses for the Maths Failure Statement'
+          ),
+          language: 'python',
+          code: `# Statement: "Many Class 10 students failed in Maths in one district."
+# Rule: a course follows only if it attacks the cause and is practical.
+
+courses = [
+    ("Give extra Maths coaching to weak students", True),
+    ("Cancel the Maths exam for this year", False),
+    ("Train Maths teachers and give practice tests", True),
+]
+
+for name, follows in courses:
+    print(name, "->", "FOLLOWS" if follows else "DOES NOT FOLLOW")
+
+follow = [name for name, ok in courses if ok]
+print("Courses that follow:", len(follow))`,
+          output: `Give extra Maths coaching to weak students -> FOLLOWS
+Cancel the Maths exam for this year -> DOES NOT FOLLOW
+Train Maths teachers and give practice tests -> FOLLOWS
+Courses that follow: 2`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Extreme Kadam aur Symptom par Hamla',
+          '4. Common Mistakes: Extreme Steps and Attacking the Symptom'
+        ),
+        body: t(
+          `Sabse badi galti hai **extreme course** ko sahi maan lena. Jaise "hamesha ke liye ban kar do", "sab kuch band kar do", "sabko nikaal do" — aise words dekhte hi samajh jao ki course shayad galat hai. Exam mein "forever", "always", "all" aur "ban everything" wale courses aam taur par follow nahi karte, kyunki real life mein koi bhi samajhdaar authority aisa kadam nahi uthati. Yeh galti isliye hoti hai kyunki course dekhne mein strong lagta hai — par strong hona aur sahi hona ek hi baat nahi hai.
+
+Doosri galti hai **symptom par hamla** karna aur cause ko bhool jana. Jaise pollution badhne par "logon ko mask pehnao" — mask symptom ko kam karta hai, pollution ko nahi. Mask pehnana bura kadam nahi hai, par agar sawaal pollution kam karne ka hai toh mask wala course follow nahi karega. Hamesha poochho: "Yeh kadam problem ko khatm karta hai ya sirf uske asar ko chhupata hai?"
+
+Teesri galti hai **pehle se hone wali cheez** ko course maan lena. Jaise statement ho "Road par bahut accidents hote hain" aur course ho "Traffic police ko road par duty par lagao" — agar traffic police pehle se duty par hai, toh yeh koi naya kadam nahi hai. Par exam mein aam taur par aisa course follow karta hua mana jaata hai agar woh clearly ek action ho — isliye is par zyada time mat barbaad karo, pehle cause aur practicality check karo.
+
+Chauthi galti hai **dono courses ko ek saath follow** maan lena jab woh ek doosre ke opposite hon. "School band karo" aur "School khula rakho" dono ek saath follow nahi kar sakte — yahan answer "Either I or II" hota hai, "Both" nahi.`,
+          `The biggest mistake is accepting an **extreme course** as right. Words like "ban forever", "close everything", or "remove everyone" should tell you at once that the course is probably wrong. In exams, courses with "forever", "always", "all", or "ban everything" usually do not follow, because no sensible authority takes such a step in real life. This mistake happens because the course looks strong — but being strong and being right are not the same thing.
+
+The second mistake is **attacking the symptom** and forgetting the cause. For example, when pollution rises, "give people masks" reduces the effect, not the pollution. Wearing a mask is not a bad step, but if the question is about reducing pollution, the mask course does not follow. Always ask: "Does this step end the problem, or only hide its effect?"
+
+The third mistake is treating **something that already happens** as a course. For example, the statement is "Many accidents happen on the road" and the course is "Put traffic police on duty on the road" — if the police are already on duty, this is no new step. But in exams such a course is usually counted as following if it is clearly an action — so do not spend too much time on this, check the cause and practicality first.
+
+The fourth mistake is marking **both courses as following** when they are opposite to each other. "Close the school" and "Keep the school open" cannot both follow — here the answer is "Either I or II", not "Both".`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Either-Or, Neither aur Pehle se Liya Gaya Kadam',
+          '5. Edge Cases: Either-Or, Neither, and a Step Already Taken'
+        ),
+        body: t(
+          `**Either I or II:** Jab dono courses mein se sirf ek hi chunna ja sakta ho, toh answer "Either" hota hai. Example: Statement — "Company ko loss ho raha hai." Course I: "Employees ki salary badhao." Course II: "Employees ki salary ghatao." Dono opposite hain — ek saath nahi ho sakte. Yahan pehle yeh decide karo ki kaunsa sahi hai; agar sirf ek sahi hai toh answer "Only I" ya "Only II" hoga, aur agar situation dono mein se kisi ek ko allow karti ho toh "Either" hoga. Exam mein "Either" tabhi chuno jab dono courses alag-alag tarike se sahi hon par ek saath na ho sakein.
+
+**Neither follows:** Jab koi bhi course cause par hamla na kare ya practical na ho. Example: Statement — "Baarish ki wajah se match cancel hua." Course I: "Baarish ko rok do." Course II: "Match ko hamesha ke liye band kar do." Dono impossible ya extreme hain, toh answer "Neither follows" hai. Aise sawalon mein jaldi mein koi ek course sahi maan lene ki galti mat karo.
+
+**Pehle se liya gaya kadam:** Agar statement mein hi likha ho ki woh kadam pehle se liya ja chuka hai, toh woh course follow nahi karta — woh toh ho hi chuka hai. Jaise statement ho "Sarkar ne pehle hi pumps bhej diye hain" aur course ho "Pumps bhejo" — yeh dobara lene wala kadam nahi hai.
+
+**Immediate vs long-term:** Kuch courses turant asar karte hain (pump bhejna), kuch lambe samay mein (ped lagana). Dono follow kar sakte hain — "slow" hona koi galti nahi hai, bas direction sahi honi chahiye.`,
+          `**Either I or II:** When only one of the two courses can be chosen, the answer is "Either". Example: Statement — "The company is making a loss." Course I: "Increase the salary of employees." Course II: "Reduce the salary of employees." The two are opposite — they cannot happen together. Here first decide which one is right; if only one is right the answer is "Only I" or "Only II", and if the situation allows either one, the answer is "Either". In exams, choose "Either" only when both courses are right in different ways but cannot happen together.
+
+**Neither follows:** When no course attacks the cause or is practical. Example: Statement — "The match was cancelled because of rain." Course I: "Stop the rain." Course II: "Ban the match forever." Both are impossible or extreme, so the answer is "Neither follows". In such questions, do not rush to mark one course as right.
+
+**A step already taken:** If the statement itself says the step has already been taken, that course does not follow — it has already happened. For example, the statement says "The government has already sent pumps" and the course says "Send pumps" — this is not a step to take again.
+
+**Immediate vs long-term:** Some courses act at once (sending pumps), some act over a long time (planting trees). Both can follow — being "slow" is not a fault, only the direction must be right.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Statement Badal Jaaye ya Course Ulta Ho Jaaye?',
+          '6. What If: The Statement Changes or the Course Is Reversed?'
+        ),
+        body: t(
+          `Soch lo Maths fail wale statement mein "fail" ki jagah "top" ho jaaye: "Ek jile ke students ne Maths mein top kiya." Ab Course I — "Extra coaching do" — follow nahi karega, kyunki problem hi nahi hai. Yahi courses of action ki pehchan hai: course ka sahi ya galat hona statement par depend karta hai, course par nahi. Wahi course ek statement mein follow karta hai aur doosri mein nahi.
+
+Ab socho course ulta ho jaaye: "Extra coaching do" ki jagah "Coaching band kar do" ho jaaye. Ab yeh course problem ko aur badha dega — students aur kam seekhenge. Aisa course kabhi follow nahi karta kyunki woh cause ko badhata hai, kam nahi karta. Exam mein jab bhi course problem ko badhata hua lage, use turant reject kar do.
+
+**What if course mein "should" ki jagah "must" ho?** Isse farak nahi padta — exam mein dono ka matlab ek hi hota hai: ek suggested action. **What if statement mein do problems hon?** Toh har course ko dono problems ke against check karo — jo course kam se kam ek problem ko solve kare aur doosri ko badhaye nahi, woh follow karta hai. **What if course bahut mehenga ho?** Mehenga hona galat nahi hai, bas impossible nahi hona chahiye. "Har school mein computer lab banao" mehenga hai par possible hai — follow karta hai. "Har student ko free laptop aur free car do" unrealistic hai — follow nahi karta.`,
+          `Suppose in the Maths failure statement, "failed" becomes "topped": "Students of one district topped in Maths." Now Course I — "Give extra coaching" — would not follow, because there is no problem at all. That is the nature of courses of action: whether a course is right or wrong depends on the statement, not on the course. The same course follows for one statement and not for another.
+
+Now suppose the course is reversed: "Give extra coaching" becomes "Stop the coaching". Now the course would make the problem worse — students would learn even less. Such a course never follows because it grows the cause instead of reducing it. In exams, reject at once any course that seems to make the problem worse.
+
+**What if the course says "must" instead of "should"?** It makes no difference — in exams both mean the same thing: a suggested action. **What if the statement has two problems?** Then check every course against both problems — a course follows if it solves at least one problem and does not make the other worse. **What if the course is very costly?** Being costly is not wrong, only being impossible is wrong. "Build a computer lab in every school" is costly but possible — it follows. "Give every student a free laptop and a free car" is unrealistic — it does not follow.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Courses of Action ka 3-Sawaal Test',
+          '7. Summary: The 3-Question Test for Courses of Action'
+        ),
+        body: t(
+          `Poora article ek line mein: **course tabhi follow karta hai jab woh cause par hamla kare, practical ho, aur sahi time par ho.** Har course ko teen sawaal se check karo: (1) Kya yeh problem ki jad par hamla karta hai ya sirf symptom par? (2) Kya ise asal mein kiya ja sakta hai? (3) Kya yeh problem ko solve karta hai ya taal deta hai? Jo course teeno par khara utre, woh follow karta hai.
+
+Exam ke shortcuts yaad rakho: "forever", "always", "ban everything" jaise extreme words wale course ko pehle reject karo. "Band kar do" ya "cancel kar do" wale course ko bhi shak se dekho — problem ko khatm karna solution nahi hota. Dono courses opposite hon toh "Both" kabhi nahi, "Either" socho. Aur agar koi course sahi na lage toh "Neither" bhi ek valid answer hai — use daro mat.
+
+Revision ke liye Maths fail wala dry run dobara karo: I — coaching (follows), II — exam cancel (does not follow), III — teacher training (follows). Answer: "Only I and III follow." Agar yeh dry run bina ruke ho jaaye, toh courses of action tumhe aa gaya hai. Agle article mein hum cause aur effect dekhenge — wahan sawaal yeh hota hai ki kaunsi baat wajah hai aur kaunsi nateeja.`,
+          `The whole article in one line: **a course follows only when it attacks the cause, is practical, and comes at the right time.** Check every course with three questions: (1) Does it attack the root of the problem or only the symptom? (2) Can it really be done? (3) Does it solve the problem or only delay it? A course that passes all three follows.
+
+Remember the exam shortcuts: reject first any course with extreme words like "forever", "always", or "ban everything". Also look with doubt at courses that say "close it" or "cancel it" — ending the problem is not a solution. If the two courses are opposite, the answer is never "Both", think "Either". And if no course looks right, "Neither" is also a valid answer — do not fear it.
+
+To revise, redo the Maths failure dry run: I — coaching (follows), II — cancel the exam (does not follow), III — teacher training (follows). Answer: "Only I and III follow." If this dry run goes smoothly, you know courses of action. In the next article we will look at cause and effect — there the question is which fact is the cause and which is the result.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Course Follow Karta Hai ya Nahi? 3-Sawaal Test',
+        'Does the Course Follow? The 3-Question Test'
+      ),
+      caption: t(
+        'Har course ko teeno sawaal se check karo — teeno par haan ho toh follow karta hai',
+        'Check every course with all three questions — it follows only if all three are yes'
+      ),
+      nodes: [
+        {
+          t: t('Statement padho', 'Read the statement'),
+          s: t('Problem kya hai, cause kya hai?', 'What is the problem, what is the cause?')
+        },
+        {
+          t: t('Sawaal 1: Cause par hamla?', 'Question 1: Attacks the cause?'),
+          s: t('Nahi toh reject — sirf symptom par hamla bekaar hai', 'If no, reject — attacking only the symptom is useless')
+        },
+        {
+          t: t('Sawaal 2: Practical hai?', 'Question 2: Is it practical?'),
+          s: t('Impossible ya extreme course reject karo', 'Reject impossible or extreme courses')
+        },
+        {
+          t: t('Sawaal 3: Solve karta hai?', 'Question 3: Does it solve it?'),
+          s: t('Sirf taal dene wala course follow nahi karta', 'A course that only delays it does not follow')
+        },
+        {
+          t: t('Teeno haan = FOLLOWS', 'All three yes = FOLLOWS'),
+          s: t('Opposite courses hon toh Either socho', 'If the courses are opposite, think Either')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Baarish Wale Statement ke 3 Courses Check Karna',
+          'Checking the 3 Courses for the Rain Statement'
+        ),
+        language: 'python',
+        code: `# Statement: "Heavy rain flooded many roads in the city."
+courses = [
+    ("Send pumps to clear water from roads", True),
+    ("Close schools for two days", True),
+    ("Ban all vehicles in the city forever", False),
+]
+for name, ok in courses:
+    print(name, "->", "FOLLOWS" if ok else "DOES NOT FOLLOW")`,
+        output: `Send pumps to clear water from roads -> FOLLOWS
+Close schools for two days -> FOLLOWS
+Ban all vehicles in the city forever -> DOES NOT FOLLOW`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Statement: "Bhaari baarish se sheher ki sadkein paani mein doob gayi hain." Kaunsa course follow karta hai?',
+          'Statement: "Heavy rain flooded the roads in the city." Which course follows?'
+        ),
+        opts: [
+          t('Sadkon se paani nikaalne ke liye pump bhejo', 'Send pumps to clear water from the roads'),
+          t('Baarish ko rok do', 'Stop the rain'),
+          t('Sheher ki saari sadkein hamesha ke liye band kar do', 'Close all the roads in the city forever'),
+          t('Kuch mat karo, paani khud sookh jaayega', 'Do nothing, the water will dry on its own')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: pump bhejna cause (paani) par hamla karta hai aur practical hai, jabki baarish rokna impossible hai aur sadkein band karna extreme hai.',
+          'Correct answer: sending pumps attacks the cause (the water) and is practical, while stopping the rain is impossible and closing the roads is extreme.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Class 10 ke bahut se students Maths mein fail ho gaye." Kaunsa course follow NAHI karta?',
+          'Statement: "Many Class 10 students failed in Maths." Which course does NOT follow?'
+        ),
+        opts: [
+          t('Kamzor students ko extra Maths coaching do', 'Give extra Maths coaching to weak students'),
+          t('Is saal ka Maths exam cancel kar do', 'Cancel the Maths exam for this year'),
+          t('Maths teachers ko train karo', 'Train the Maths teachers'),
+          t('Students ko practice tests do', 'Give practice tests to students')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: exam cancel karne se students ko Maths nahi aa jaayega — yeh cause par hamla nahi karta, sirf problem ko chhupata hai.',
+          'Correct answer: cancelling the exam will not teach students Maths — it does not attack the cause, it only hides the problem.'
+        )
+      },
+      {
+        q: t(
+          'Course follow karta hai ya nahi, yeh decide karne ka sabse pehla test kya hai?',
+          'What is the first test to decide whether a course follows?'
+        ),
+        opts: [
+          t('Course lamba hai ya chhota', 'Whether the course is long or short'),
+          t('Course problem ke cause par hamla karta hai ya nahi', 'Whether the course attacks the cause of the problem'),
+          t('Course mein kitne words hain', 'How many words the course has'),
+          t('Course pehla hai ya doosra', 'Whether the course is first or second')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehla test yahi hai ki course cause par hamla karta hai ya sirf symptom par — symptom par hamla karne wala course follow nahi karta.',
+          'Correct answer: the first test is whether the course attacks the cause or only the symptom — a course that attacks only the symptom does not follow.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Delhi mein air pollution badh raha hai." Course I: Odd-even scheme lagao. Course II: Zyada ped lagao. Kaunsa answer sahi hai?',
+          'Statement: "Air pollution is rising in Delhi." Course I: Apply the odd-even scheme. Course II: Plant more trees. Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I follow karta hai', 'Only I follows'),
+          t('Sirf II follow karta hai', 'Only II follows'),
+          t('Dono I aur II follow karte hain', 'Both I and II follow'),
+          t('Koi bhi follow nahi karta', 'Neither follows')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono courses pollution ke cause par hamla karte hain aur ek saath ho sakte hain — odd-even turant asar karta hai aur ped lambe samay mein, isliye dono follow karte hain.',
+          'Correct answer: both courses attack the cause of pollution and can happen together — odd-even acts at once and trees act over time, so both follow.'
+        )
+      },
+      {
+        q: t(
+          'Statement: "Bank ke ATM mein baar-baar cash khatm ho jaata hai." Kaunsa course follow karta hai?',
+          'Statement: "The bank ATM keeps running out of cash." Which course follows?'
+        ),
+        opts: [
+          t('ATM ko hamesha ke liye band kar do', 'Close the ATM forever'),
+          t('Logon ko cash nikaalne se mana kar do', 'Tell people not to withdraw cash'),
+          t('ATM mein cash regular refill karo', 'Refill cash in the ATM regularly'),
+          t('ATM ko doosre sheher mein shift kar do', 'Shift the ATM to another city')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: regular refill cause (cash ki kami) par seedha hamla karta hai aur practical hai — baaki teeno extreme ya bekaar kadam hain.',
+          'Correct answer: regular refilling attacks the cause (lack of cash) directly and is practical — the other three are extreme or useless steps.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Course tabhi follow karta hai jab woh cause par hamla kare, practical ho aur sahi time par ho.',
+        'A course follows only when it attacks the cause, is practical, and comes at the right time.'
+      ),
+      t(
+        '"Forever", "always", "ban everything" jaise extreme words wala course aam taur par follow nahi karta.',
+        'A course with extreme words like "forever", "always", or "ban everything" usually does not follow.'
+      ),
+      t(
+        'Problem ko khatm karna (band karo, cancel karo) solution nahi hota — improve karne wala kadam follow karta hai.',
+        'Ending the problem (close it, cancel it) is not a solution — a step that improves things follows.'
+      ),
+      t(
+        'Dono courses opposite hon toh answer "Both" nahi, "Either I or II" hota hai.',
+        'If the two courses are opposite, the answer is not "Both" but "Either I or II".'
+      ),
+      t(
+        'Koi bhi course sahi na lage toh "Neither follows" bhi ek valid answer hai.',
+        '"Neither follows" is also a valid answer when no course looks right.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Library Wale Statement ke Courses Check Karo',
+        'Practice: Check the Courses for the Library Statement'
+      ),
+      task: t(
+        'Statement hai: "Library mein bahut kam log aate hain." Neeche diye gaye starter code mein har course ke saamne True (follow karta hai) ya False (nahi karta) likha hai — pehle khud socho kaunsa sahi hai, phir code run karke verify karo. Done tab hoga jab output mein "Courses that follow: 2" print ho.',
+        'The statement is: "Very few people visit the library." In the starter code below, each course is marked True (follows) or False (does not follow) — first decide yourself which is right, then run the code to verify. You are done when the output prints "Courses that follow: 2".'
+      ),
+      language: 'python',
+      starter: `# Statement: "The library has very few visitors."
+# Decide for each course: does it follow? True = follows, False = does not.
+courses = [
+    ("Add new books and keep the library open longer", True),
+    ("Close the library", False),
+    ("Start free reading clubs for students", True),
+]
+count = 0
+for name, ok in courses:
+    print(name, "->", "FOLLOWS" if ok else "DOES NOT FOLLOW")
+    if ok:
+        count += 1
+print("Courses that follow:", count)`,
+      expected: `Add new books and keep the library open longer -> FOLLOWS
+Close the library -> DOES NOT FOLLOW
+Start free reading clubs for students -> FOLLOWS
+Courses that follow: 2`
+    },
+    readMinutes: 12
+  };
+
+const logicCauseEffect: Article = {
+    id: 'logic-cause-effect',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Cause & Effect — Kaunsi Baat Wajah Hai, Kaunsi Nateeja?',
+      'Cause and Effect — Which Fact Is the Cause and Which Is the Result?'
+    ),
+    summary: t(
+      'Do statements mein se kaunsi cause hai aur kaunsi effect — time order, common cause aur independent events ko pehchan kar 5 second mein answer nikaalo.',
+      'Of two statements, which is the cause and which is the effect — find the answer in 5 seconds by spotting time order, a common cause, and independent events.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Cause & Effect Kya Hota Hai?',
+          '1. What Is Cause and Effect?'
+        ),
+        body: t(
+          `Cause aur effect wale sawalon mein do **statements** (A aur B) diye hote hain, aur tumhe batana hota hai ki kaunsi baat **cause** (wajah) hai aur kaunsi **effect** (nateeja). Jaise A: "Sarkar ne single-use plastic bags par ban lagaya." B: "Nadi mein plastic kachra kam ho gaya." Yahan A cause hai aur B effect hai, kyunki ban lagne ke baad hi kachra kam hua — ban ne kachre ko kam kiya, kachre ne ban ko nahi lagaya.
+
+Exam mein answer aam taur par 5 options mein se ek hota hai: (1) A cause hai aur B uska effect hai, (2) B cause hai aur A uska effect hai, (3) A aur B dono kisi common cause ke effect hain, (4) A aur B dono ek doosre se independent hain, (5) A aur B dono ek doosre ke effect hain (yeh option galat hota hai, kyunki effect effect ko cause nahi karta). Tumhara kaam hai sirf yeh decide karna ki kaunsi baat pehle hui aur kaunsi baat ne doosri ko paida kiya.
+
+Pehchanne ka sabse seedha tareeka hai **time order**: cause hamesha effect se **pehle** hota hai. Baarish pehle hoti hai, sadak pe paani baad mein bharta hai. Padhaai pehle hoti hai, top karna baad mein hota hai. Agar dono baatein ek hi time par hui hon, toh woh ek doosre ki cause-effect nahi ho sakti — phir ya toh dono kisi teesri baat ke effect hain, ya dono independent hain.`,
+          `In cause and effect questions, you are given two **statements** (A and B), and you must say which fact is the **cause** and which is the **effect**. For example, A: "The government banned single-use plastic bags." B: "Plastic waste in the river went down." Here A is the cause and B is the effect, because the waste fell only after the ban — the ban reduced the waste, the waste did not cause the ban.
+
+In exams, the answer is usually one of 5 options: (1) A is the cause and B is its effect, (2) B is the cause and A is its effect, (3) A and B are both effects of a common cause, (4) A and B are both independent of each other, (5) A and B are both effects of each other (this option is wrong, because an effect does not cause another effect). Your job is only to decide which fact came first and which fact produced the other.
+
+The simplest way to spot it is **time order**: the cause always comes **before** the effect. Rain falls first, water fills the road later. Study comes first, topping the class comes later. If both facts happened at the same time, they cannot be cause and effect of each other — then either both are effects of a third fact, or both are independent.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Baarish, Padhaai aur Garmi',
+          '2. Real-Life Examples: Rain, Study, and Summer Heat'
+        ),
+        body: t(
+          `Soch lo A hai: "Sheher mein bhaari baarish hui." B hai: "Sadkein paani mein doob gayi." Baarish pehle hui, paani baad mein bhara — A cause hai, B effect hai. Ab ulta socho: kya paani bhara hone se baarish hoti hai? Nahi. Yeh ulta test hamesha karo — agar B se A paida nahi hota, toh A hi cause hai. Isi test se galat options turant khatm ho jaate hain.
+
+Doosra example: A — "Ravi ne bahut mehnat se padhaai ki." B — "Ravi ne class mein top kiya." Padhaai pehle, top baad mein. A cause hai, B effect hai. Par dhyaan do: agar A hota "Ravi ne top kiya" aur B hota "Ravi ko scholarship mili" — toh top karna scholarship ka cause hai. Matlab ek hi baat ek jagah effect aur doosri jagah cause ban sakti hai — cause aur effect **relative** hote hain, fixed nahi.
+
+Teesra example — **common cause** wala: A — "Ice cream ki bikri badh gayi." B — "Logon ne zyada pankhe khareede." Kya ice cream khane se log pankhe khareedte hain? Nahi. Kya pankhe khareedne se ice cream bikta hai? Nahi. Dono ek hi wajah se badhe: **garmi**. Yeh common cause pattern hai — dono statements ek teesri baat ke effect hain. Exam mein jab dono statements ka koi seedha connection na dikhe, toh common cause dhoondho.`,
+          `Suppose A is: "Heavy rain fell in the city." B is: "The roads were flooded." Rain came first, flooding came later — A is the cause, B is the effect. Now test it backwards: does flooding cause rain? No. Always run this reverse test — if B cannot produce A, then A is the cause. This test kills wrong options at once.
+
+A second example: A — "Ravi studied very hard." B — "Ravi topped the class." Study came first, topping came later. A is the cause, B is the effect. But note: if A were "Ravi topped the class" and B were "Ravi got a scholarship" — then topping is the cause of the scholarship. So the same fact can be an effect in one place and a cause in another — cause and effect are **relative**, not fixed.
+
+A third example — the **common cause** pattern: A — "Ice cream sales went up." B — "People bought more fans." Does eating ice cream make people buy fans? No. Does buying fans sell ice cream? No. Both rose for one reason: **summer heat**. This is the common cause pattern — both statements are effects of a third fact. In exams, when the two statements show no direct link, look for a common cause.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Plastic Ban Wale Pair ka Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on the Plastic Ban Pair'
+        ),
+        body: t(
+          `Ab hum teen pairs ko ek-ek karke dry run karte hain. Har pair par yahi 3 steps lagao: **Step 1** — kaunsi baat pehle hui? **Step 2** — kya pehli baat doosri ko paida kar sakti hai? **Step 3** — ulta test: kya doosri baat pehli ko paida kar sakti hai?
+
+**Pair 1:** A — "Sheher mein bhaari baarish hui." B — "Sadkein paani mein doob gayi." Step 1: Baarish pehle hui. Step 2: Haan, baarish se paani bharta hai. Step 3: Ulta nahi hota — paani bharne se baarish nahi hoti. Verdict: **A cause hai, B effect hai.**
+
+**Pair 2:** A — "Sarkar ne plastic bags par ban lagaya." B — "Nadi mein plastic kachra kam ho gaya." Step 1: Ban pehle laga. Step 2: Haan, ban se kachra kam hota hai. Step 3: Ulta nahi hota — kachra kam hone se ban nahi lagta. Verdict: **A cause hai, B effect hai.**
+
+**Pair 3:** A — "Nadi saaf ho gayi." B — "Sarkar ne plastic bags par ban lagaya." Step 1: Ban pehle laga, nadi baad mein saaf hui. Step 2: Ban se nadi saaf hoti hai. Step 3: Ulta nahi hota — nadi saaf hone se ban nahi lagta. Verdict: **B cause hai, A effect hai.** Notice karo: Pair 2 aur Pair 3 mein wahi ban ek baar A hai aur ek baar B hai — isliye hamesha statements ko padho, yaad kiye hue jawab ko nahi.
+
+Neeche wala code teeno pairs ka yahi dry run print karta hai.`,
+          `Now we dry-run three pairs one by one. Apply the same 3 steps to every pair: **Step 1** — which fact happened first? **Step 2** — can the first fact produce the second? **Step 3** — the reverse test: can the second fact produce the first?
+
+**Pair 1:** A — "Heavy rain fell in the city." B — "The roads were flooded." Step 1: Rain came first. Step 2: Yes, rain floods roads. Step 3: Not in reverse — flooding does not cause rain. Verdict: **A is the cause, B is the effect.**
+
+**Pair 2:** A — "The government banned plastic bags." B — "Plastic waste in the river went down." Step 1: The ban came first. Step 2: Yes, a ban reduces waste. Step 3: Not in reverse — less waste does not cause a ban. Verdict: **A is the cause, B is the effect.**
+
+**Pair 3:** A — "The river became clean." B — "The government banned plastic bags." Step 1: The ban came first, the river became clean later. Step 2: A ban cleans the river. Step 3: Not in reverse — a clean river does not cause a ban. Verdict: **B is the cause, A is the effect.** Notice: in Pair 2 and Pair 3 the same ban is once A and once B — so always read the statements, never a memorised answer.
+
+The code below prints this dry run for all three pairs.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 3 Cause-Effect Pairs ka Verdict',
+            'Dry Run: The Verdict for 3 Cause-Effect Pairs'
+          ),
+          language: 'python',
+          code: `# A: "The government banned single-use plastic bags."
+# B: "Plastic waste in the river went down."
+# The ban happened first and explains the fall, so A is the cause.
+
+pairs = [
+    ("Heavy rain in the city", "Roads are waterlogged", "A is the cause"),
+    ("The government banned plastic bags", "Plastic waste in the river fell", "A is the cause"),
+    ("The river is clean", "The government banned plastic bags", "B is the cause"),
+]
+for a, b, verdict in pairs:
+    print("A:", a)
+    print("B:", b)
+    print("Verdict:", verdict)`,
+          output: `A: Heavy rain in the city
+B: Roads are waterlogged
+Verdict: A is the cause
+A: The government banned plastic bags
+B: Plastic waste in the river fell
+Verdict: A is the cause
+A: The river is clean
+B: The government banned plastic bags
+Verdict: B is the cause`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Ulta Cause, Correlation aur Dono Effect',
+          '4. Common Mistakes: Reversed Cause, Correlation, and Both Effects'
+        ),
+        body: t(
+          `Sabse badi galti hai **cause ko ulta** padh lena. Jaise A: "Rahul ne meeting miss kar di." B: "Train late thi." Log jaldi mein bol dete hain "A cause hai" kyunki A pehle likha hai. Par sach yeh hai ki train late thi (B) isliye Rahul ne meeting miss ki (A) — B cause hai, A effect hai. Statement ka order kuch nahi kehta — A pehle likha ho toh bhi B cause ho sakta hai. Yeh galti isliye hoti hai kyunki dimaag likhe hue order ko hi time order maan leta hai.
+
+Doosri galti hai **correlation ko causation** maan lena. Jaise A: "Ice cream ki bikri badhi." B: "Logon ne zyada pankhe khareede." Dono ek saath badhe, par ek ne doosre ko cause nahi kiya — dono garmi ke effect hain. Exam mein jab dono statements ek saath badh ya ghat rahi hon, toh turant "A cause of B" mat chuno — pehle common cause check karo.
+
+Teesri galti hai **dono ko ek doosre ka effect** maan lena. Option (5) — "A aur B dono ek doosre ke effect hain" — hamesha galat hota hai. Effect, effect ko cause nahi karta. Agar dono statements ek doosre se judi hui lagti hon par direction samajh na aaye, toh ya toh ek cause hai aur doosri effect, ya dono common cause ke effect hain — "dono ek doosre ke effect" kabhi answer nahi hota.`,
+          `The biggest mistake is reading the **cause backwards**. For example, A: "Rahul missed his meeting." B: "The train was late." People rush and say "A is the cause" because A is written first. But the truth is that the train was late (B), so Rahul missed his meeting (A) — B is the cause, A is the effect. The written order says nothing — even if A is written first, B can be the cause. This mistake happens because the mind takes the written order as the time order.
+
+The second mistake is taking **correlation for causation**. For example, A: "Ice cream sales went up." B: "People bought more fans." Both rose together, but one did not cause the other — both are effects of summer heat. In exams, when both statements rise or fall together, do not jump to "A is the cause of B" — check for a common cause first.
+
+The third mistake is treating **both as effects of each other**. Option (5) — "A and B are both effects of each other" — is always wrong. An effect does not cause another effect. If both statements look linked but the direction is unclear, then either one is the cause and the other is the effect, or both are effects of a common cause — "both are effects of each other" is never the answer.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Chain, Common Cause aur Independent Events',
+          '5. Edge Cases: Chains, Common Cause, and Independent Events'
+        ),
+        body: t(
+          `**Chain:** Kabhi-kabhi cause aur effect ek chain banate hain. Jaise: kam baarish hui → dam mein paani kam hua → dam se kam bijli bani → sheher mein power cut hua. Yahan pehli baat aakhri baat ki bhi cause hai, bas beech mein steps hain. Exam mein agar A chain ki shuruaat ho aur B chain ka end, toh answer hoga "A cause hai, B effect hai" — beech ke steps answer nahi badalte.
+
+**Common cause:** Jab dono statements ka koi seedha connection na ho, par dono ek hi time par badli hon, toh common cause dhoondho. Jaise A: "School mein admissions badhe." B: "School ke paas naye ghar bane." Dono ka common cause ho sakta hai — "us area mein nayi colony bani." Yahan answer hota hai "Dono kisi common cause ke effect hain."
+
+**Independent events:** Jab dono statements ka na koi connection ho, na koi common cause dikhe, toh answer hota hai "Dono independent hain." Jaise A: "Aaj baarish hui." B: "Kal Rahul ka birthday hai." Dono ka koi lena-dena nahi hai. Exam mein independent wala option tabhi chuno jab common cause bhi na mile — pehle common cause dhoondhna mat bhoolo.
+
+**Ek hi baat, do roles:** "Top karna" padhaai ka effect hai aur scholarship ka cause hai. Isliye kisi baat ko hamesha ke liye "cause" ya "effect" mat bolo — woh pair par depend karta hai.`,
+          `**Chain:** Sometimes cause and effect form a chain. For example: less rain fell → less water in the dam → less power from the dam → power cuts in the town. Here the first fact is also the cause of the last fact, with steps in between. In exams, if A is the start of the chain and B is the end, the answer is "A is the cause, B is the effect" — the middle steps do not change the answer.
+
+**Common cause:** When the two statements show no direct link but both changed at the same time, look for a common cause. For example, A: "Admissions in the school went up." B: "New houses were built near the school." Their common cause may be — "a new colony came up in that area." Here the answer is "Both are effects of a common cause."
+
+**Independent events:** When the two statements have neither a link nor a visible common cause, the answer is "Both are independent." For example, A: "It rained today." B: "Tomorrow is Rahul birthday." The two have nothing to do with each other. In exams, choose the independent option only when no common cause can be found — do not forget to look for a common cause first.
+
+**One fact, two roles:** "Topping the class" is an effect of study and a cause of a scholarship. So never call a fact a "cause" or an "effect" forever — it depends on the pair.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Dono Statements Ulte Ho Jaayein ya Time Badal Jaaye?',
+          '6. What If: Both Statements Are Swapped or the Time Changes?'
+        ),
+        body: t(
+          `Soch lo Pair 2 mein A aur B ki jagah badal jaaye: A — "Nadi mein plastic kachra kam ho gaya." B — "Sarkar ne plastic bags par ban lagaya." Ab answer bhi badal jaayega: B cause hai, A effect hai. Statement ka order badalne se answer badal jaata hai — isliye hamesha naye pair ko naye tareeke se solve karo, pichle pair ka jawab yaad karke mat likho.
+
+Ab socho time badal jaaye: A — "Sarkar ne ban lagaya." B — "Nadi mein plastic kachra kam ho gaya." Par ban lagne ke **pehle** se hi kachra kam ho raha tha, kyunki log pehle se hi kapde ke bag use karne lage the. Ab ban cause nahi raha — kachra kam hone ki asli wajah logon ki aadat thi. Matlab sirf time order kaafi nahi hai — cause ko effect ko **explain** bhi karna chahiye. Agar ban ke bina bhi effect ho raha ho, toh ban cause nahi hai.
+
+**What if dono statements ek hi baat hon?** Jaise A: "Logon ne kapde ke bag use kiye." B: "Plastic bag ka use kam hua." Yeh toh ek hi baat ke do tareeke hain — yahan cause-effect ka sawaal hi nahi banta, dono almost same hain. Exam mein aise pair par "independent" ya "common cause" mat chuno — pehle check karo ki dono statements alag baatein hain ya ek hi.`,
+          `Suppose in Pair 2 the places of A and B are swapped: A — "Plastic waste in the river went down." B — "The government banned plastic bags." Now the answer also changes: B is the cause, A is the effect. Changing the order of the statements changes the answer — so always solve a new pair afresh, never by copying the last pair answer.
+
+Now suppose the time changes: A — "The government imposed the ban." B — "Plastic waste in the river went down." But the waste was already falling **before** the ban, because people had already started using cloth bags. Now the ban is no longer the cause — the real reason for less waste was people's habit. So time order alone is not enough — the cause must also **explain** the effect. If the effect was happening even without the ban, the ban is not the cause.
+
+**What if both statements are the same fact?** For example, A: "People used cloth bags." B: "The use of plastic bags went down." These are two ways of saying the same thing — here the cause-effect question does not even arise, both are almost the same. In exams, do not choose "independent" or "common cause" for such a pair — first check whether the two statements are different facts or the same one.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Cause-Effect ka 3-Step Test',
+          '7. Summary: The 3-Step Test for Cause and Effect'
+        ),
+        body: t(
+          `Poora article ek line mein: **cause pehle aata hai, effect ko explain karta hai, aur ulta test fail karta hai.** Har pair par 3 steps lagao: (1) Kaunsi baat pehle hui? (2) Kya pehli baat doosri ko paida kar sakti hai? (3) Ulta test — kya doosri baat pehli ko paida kar sakti hai? Agar step 2 haan aur step 3 naa ho, toh pehli baat cause hai.
+
+Yaad rakhne wale patterns: dono ek saath badhein toh **common cause** dhoondho (garmi → ice cream + pankhe). Koi connection na dikhe toh **independent** socho, par pehle common cause check karo. "Dono ek doosre ke effect" wala option hamesha galat hota hai. Aur statement ka likha hua order time order nahi hota — A pehle likha ho toh bhi B cause ho sakta hai.
+
+Revision ke liye plastic ban wala dry run dobara karo: Pair 1 — baarish cause, paani effect. Pair 2 — ban cause, kachra kam effect. Pair 3 — ban cause, nadi saaf effect (yahan B cause hai). Agar teeno verdict bina ruke aa jaayein, toh cause-effect tumhe aa gaya hai. Agle article mein hum decision making dekhenge — wahan do statements nahi, kayi options hote hain aur best ko score karke chunna hota hai.`,
+          `The whole article in one line: **the cause comes first, explains the effect, and fails the reverse test.** Apply 3 steps to every pair: (1) Which fact happened first? (2) Can the first fact produce the second? (3) The reverse test — can the second fact produce the first? If step 2 is yes and step 3 is no, the first fact is the cause.
+
+Patterns to remember: if both rise together, look for a **common cause** (heat → ice cream + fans). If no link shows up, think **independent**, but check the common cause first. The option "both are effects of each other" is always wrong. And the written order of the statements is not the time order — even if A is written first, B can be the cause.
+
+To revise, redo the plastic ban dry run: Pair 1 — rain is the cause, flooding is the effect. Pair 2 — the ban is the cause, less waste is the effect. Pair 3 — the ban is the cause, the clean river is the effect (here B is the cause). If all three verdicts come smoothly, you know cause and effect. In the next article we will look at decision making — there you do not have two statements, you have many options, and you pick the best by scoring them.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Cause-Effect Solve Karne ka Flow',
+        'The Flow for Solving Cause and Effect'
+      ),
+      caption: t(
+        'Time order pehle, phir ulta test, phir common cause — yahi order answer deta hai',
+        'Time order first, then the reverse test, then the common cause — this order gives the answer'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Kaun pehle hua?', 'Step 1: Which happened first?'),
+          s: t('Cause hamesha effect se pehle aata hai', 'The cause always comes before the effect')
+        },
+        {
+          t: t('Step 2: Pehli baat doosri ko banati hai?', 'Step 2: Does the first produce the second?'),
+          s: t('Nahi toh cause-effect nahi hai', 'If not, there is no cause and effect')
+        },
+        {
+          t: t('Step 3: Ulta test karo', 'Step 3: Run the reverse test'),
+          s: t('Doosri baat pehli ko bana sakti hai? Naa hona chahiye', 'Can the second produce the first? It should not')
+        },
+        {
+          t: t('Dono ek saath badhein?', 'Did both rise together?'),
+          s: t('Toh common cause dhoondho — jaise garmi', 'Then look for a common cause — like summer heat')
+        },
+        {
+          t: t('Koi link na mile?', 'No link at all?'),
+          s: t('Toh dono independent hain', 'Then both are independent')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Cause-Effect Chain: Kam Baarish se Power Cut Tak',
+          'Cause-Effect Chain: From Less Rain to Power Cuts'
+        ),
+        language: 'python',
+        code: `# A cause-and-effect chain: each step causes the next one.
+chain = ["Less rain this year", "Low water in the dam", "Less power from the dam", "Power cuts in the town"]
+for i in range(len(chain) - 1):
+    print(chain[i], "-> causes ->", chain[i + 1])
+print("First cause:", chain[0])
+print("Final effect:", chain[-1])`,
+        output: `Less rain this year -> causes -> Low water in the dam
+Low water in the dam -> causes -> Less power from the dam
+Less power from the dam -> causes -> Power cuts in the town
+First cause: Less rain this year
+Final effect: Power cuts in the town`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'A: "Sarkar ne plastic bags par ban lagaya." B: "Nadi mein plastic kachra kam ho gaya." Kaunsa sahi hai?',
+          'A: "The government banned plastic bags." B: "Plastic waste in the river went down." Which is right?'
+        ),
+        opts: [
+          t('A cause hai, B uska effect hai', 'A is the cause, B is its effect'),
+          t('B cause hai, A uska effect hai', 'B is the cause, A is its effect'),
+          t('Dono ek doosre ke effect hain', 'Both are effects of each other'),
+          t('Dono independent hain', 'Both are independent')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: ban pehle laga aur ban se kachra kam hua — ban cause hai, kachra kam hona effect hai. Ulta nahi hota.',
+          'Correct answer: the ban came first and the ban reduced the waste — the ban is the cause, less waste is the effect. It does not work in reverse.'
+        )
+      },
+      {
+        q: t(
+          'A: "Rahul ne meeting miss kar di." B: "Train late thi." Kaunsa sahi hai?',
+          'A: "Rahul missed his meeting." B: "The train was late." Which is right?'
+        ),
+        opts: [
+          t('A cause hai, B uska effect hai', 'A is the cause, B is its effect'),
+          t('B cause hai, A uska effect hai', 'B is the cause, A is its effect'),
+          t('Dono ek doosre ke effect hain', 'Both are effects of each other'),
+          t('Dono independent hain', 'Both are independent')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: train late thi isliye Rahul ne meeting miss ki — B cause hai, A effect hai. Likha hua order time order nahi hota.',
+          'Correct answer: the train was late, so Rahul missed his meeting — B is the cause, A is the effect. The written order is not the time order.'
+        )
+      },
+      {
+        q: t(
+          'A: "Ice cream ki bikri badh gayi." B: "Logon ne zyada pankhe khareede." Kaunsa sahi hai?',
+          'A: "Ice cream sales went up." B: "People bought more fans." Which is right?'
+        ),
+        opts: [
+          t('A cause hai, B uska effect hai', 'A is the cause, B is its effect'),
+          t('B cause hai, A uska effect hai', 'B is the cause, A is its effect'),
+          t('Dono kisi common cause (garmi) ke effect hain', 'Both are effects of a common cause (summer heat)'),
+          t('Dono independent hain', 'Both are independent')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: ice cream se pankhe nahi bikte aur pankhe se ice cream nahi bikta — dono garmi ki wajah se badhe, isliye dono common cause ke effect hain.',
+          'Correct answer: ice cream does not sell fans and fans do not sell ice cream — both rose because of summer heat, so both are effects of a common cause.'
+        )
+      },
+      {
+        q: t(
+          'A: "Ravi ne bahut mehnat se padhaai ki." B: "Ravi ne class mein top kiya." Kaunsa sahi hai?',
+          'A: "Ravi studied very hard." B: "Ravi topped the class." Which is right?'
+        ),
+        opts: [
+          t('A cause hai, B uska effect hai', 'A is the cause, B is its effect'),
+          t('B cause hai, A uska effect hai', 'B is the cause, A is its effect'),
+          t('Dono independent hain', 'Both are independent'),
+          t('Dono ek doosre ke effect hain', 'Both are effects of each other')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: padhaai pehle hui, top karna baad mein hua — mehnat cause hai, top karna effect hai.',
+          'Correct answer: study came first, topping came later — hard work is the cause, topping is the effect.'
+        )
+      },
+      {
+        q: t(
+          'A: "Aaj baarish hui." B: "Kal Rahul ka birthday hai." Kaunsa sahi hai?',
+          'A: "It rained today." B: "Tomorrow is Rahul birthday." Which is right?'
+        ),
+        opts: [
+          t('A cause hai, B uska effect hai', 'A is the cause, B is its effect'),
+          t('B cause hai, A uska effect hai', 'B is the cause, A is its effect'),
+          t('Dono kisi common cause ke effect hain', 'Both are effects of a common cause'),
+          t('Dono independent hain', 'Both are independent')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: baarish ka birthday se koi lena-dena nahi hai aur koi common cause bhi nahi hai — dono independent hain.',
+          'Correct answer: rain has nothing to do with the birthday, and there is no common cause either — both are independent.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Cause hamesha effect se pehle aata hai — time order pehla test hai.',
+        'The cause always comes before the effect — time order is the first test.'
+      ),
+      t(
+        'Ulta test karo: agar B se A paida nahi hota, toh A hi cause hai.',
+        'Run the reverse test: if B cannot produce A, then A is the cause.'
+      ),
+      t(
+        'Dono ek saath badhein toh common cause dhoondho — correlation causation nahi hota.',
+        'If both rise together, look for a common cause — correlation is not causation.'
+      ),
+      t(
+        '"Dono ek doosre ke effect hain" wala option hamesha galat hota hai.',
+        'The option "both are effects of each other" is always wrong.'
+      ),
+      t(
+        'Likha hua order (A pehle, B baad mein) time order nahi hota — B bhi cause ho sakta hai.',
+        'The written order (A first, B second) is not the time order — B can also be the cause.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Gaon Wale Pair ka Cause-Effect Nikalo',
+        'Practice: Find the Cause and Effect in the Village Pair'
+      ),
+      task: t(
+        'Statements hain — A: "Bahut se log gaon chhod kar chale gaye." B: "Gaon mein koi naukri nahi hai." Pehle khud socho: kaunsi baat cause hai aur kaunsi effect? Phir starter code run karke apna jawab verify karo. Done tab hoga jab output mein "Verdict: B is the cause, A is the effect" print ho.',
+        'The statements are — A: "Many people left the village." B: "There are no jobs in the village." First decide yourself: which fact is the cause and which is the effect? Then run the starter code to verify your answer. You are done when the output prints "Verdict: B is the cause, A is the effect".'
+      ),
+      language: 'python',
+      starter: `# A: "Many people left the village."
+# B: "There are no jobs in the village."
+# People leave because there are no jobs, so B is the cause.
+print("A: Many people left the village.")
+print("B: There are no jobs in the village.")
+print("Verdict: B is the cause, A is the effect")`,
+      expected: `A: Many people left the village.
+B: There are no jobs in the village.
+Verdict: B is the cause, A is the effect`
+    },
+    readMinutes: 12
+  };
+
+const logicDecisionMaking: Article = {
+    id: 'logic-decision-making',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Decision Making — Options ko Score Karke Best Chunna',
+      'Decision Making — Scoring Options and Picking the Best'
+    ),
+    summary: t(
+      'Kayi options mein se best chunne ka tareeka: criteria banao, weight do, score nikaalo aur budget check karo — laptop, travel aur job jaise real decisions par.',
+      'How to pick the best of many options: set criteria, give weights, compute scores, and check the budget — on real decisions like a laptop, travel, and a job.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Decision Making Kya Hota Hai?',
+          '1. What Is Decision Making?'
+        ),
+        body: t(
+          `Decision making ka matlab hai kayi options mein se **best option chunna** — sirf feel se nahi, balki criteria aur score se. Jaise tumhe laptop khareedna hai aur 3 options hain: Laptop A, B aur C. A sasta hai par slow hai, B fast hai par mehenga hai, C beech ka hai. Sirf "sasta hai" dekh kar chunoge toh slow laptop milega, sirf "fast hai" dekh kar chunoge toh budget toot jaayega. Sahi tareeka hai: pehle **criteria** tay karo (price, speed, battery), phir har criterion ko **weight** do (tumhare liye kya zyada important hai), phir har option ka **score** nikaalo aur sabse zyada score wale ko chuno.
+
+Weight ka matlab hai importance. Agar tumhare liye price sabse important hai, toh price ka weight zyada hoga (jaise 0.4), speed ka bhi 0.4, aur battery ka 0.2. Saare weights ka total hamesha **1.0** hona chahiye — 0.4 + 0.4 + 0.2 = 1.0. Phir har option ka score = (price score × 0.4) + (speed score × 0.4) + (battery score × 0.2). Jo option sabse zyada score laaye, woh best hai — par uske baad **budget check** bhi zaroori hai, kyunki best score wala option agar budget se bahar ho toh woh chunna nahi ja sakta.
+
+Exam mein decision making ke sawal aam taur par ek situation dete hain aur poochhte hain "best decision kaunsi hai?" — jaise ek manager ko kya karna chahiye, ya ek student ko kaunsa course chunna chahiye. Wahan bhi yahi logic lagta hai: jo option sabse zyada criteria ko satisfy kare aur koi rule na tode, wahi best hai.`,
+          `Decision making means picking the **best option** from many options — not by feel, but by criteria and scores. Suppose you must buy a laptop and have 3 options: Laptop A, B, and C. A is cheap but slow, B is fast but costly, C is in between. If you choose only by "cheap", you get a slow laptop; if you choose only by "fast", you break your budget. The right way is: first fix the **criteria** (price, speed, battery), then give each criterion a **weight** (what matters most to you), then compute the **score** of each option and pick the highest score.
+
+A weight means importance. If price matters most to you, its weight is higher (like 0.4), speed also 0.4, and battery 0.2. All weights must add up to **1.0** — 0.4 + 0.4 + 0.2 = 1.0. Then each option score = (price score × 0.4) + (speed score × 0.4) + (battery score × 0.2). The option with the highest score is best — but after that a **budget check** is still needed, because the best-scoring option cannot be chosen if it is outside your budget.
+
+In exams, decision making questions give a situation and ask "which is the best decision?" — for example, what a manager should do, or which course a student should pick. The same logic applies there: the option that satisfies the most criteria and breaks no rule is the best.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Laptop, Travel aur Job',
+          '2. Real-Life Examples: Laptop, Travel, and a Job'
+        ),
+        body: t(
+          `Soch lo tumhe laptop khareedna hai. Criteria hain price (weight 0.4), speed (0.4) aur battery (0.2). Scores 10 mein se hain. Laptop A: price 8, speed 7, battery 6 → score = 8×0.4 + 7×0.4 + 6×0.2 = 3.2 + 2.8 + 1.2 = **7.2**. Laptop B: price 6, speed 9, battery 8 → 2.4 + 3.6 + 1.6 = **7.6**. Laptop C: price 9, speed 6, battery 5 → 3.6 + 2.4 + 1.0 = **7.0**. Best hai Laptop B (7.6) — woh price mein kamzor hai par speed aur battery mein itna strong hai ki overall jeet jaata hai. Yahi weighted score ki taakat hai: ek criterion mein kamzor option bhi overall jeet sakta hai.
+
+Doosra example — travel: tumhe college jaana hai aur budget 50,000 hai. Options: bus pass (12,000), second-hand scooter (45,000), naya scooter (78,000). Naya scooter sabse achha hai par budget se bahar hai — isliye woh option hi nahi hai, chahe uska score kitna bhi zyada ho. Budget ek **hard rule** hai: jo option budget tode, woh bahar. Baaki do mein se second-hand scooter best hai kyunki woh fast bhi hai aur budget mein bhi hai.
+
+Teesra example — job: do offers hain. Job X: salary zyada, par office ghar se 2 ghante door hai. Job Y: salary thodi kam, par office paas hai aur kaam ke ghante kam hain. Agar tumhare liye time zyada important hai toh Y best hai, agar salary zyada important hai toh X. Matlab "best" tumhare weights par depend karta hai — weights badlo toh answer badal jaata hai.`,
+          `Suppose you must buy a laptop. The criteria are price (weight 0.4), speed (0.4), and battery (0.2). Scores are out of 10. Laptop A: price 8, speed 7, battery 6 → score = 8×0.4 + 7×0.4 + 6×0.2 = 3.2 + 2.8 + 1.2 = **7.2**. Laptop B: price 6, speed 9, battery 8 → 2.4 + 3.6 + 1.6 = **7.6**. Laptop C: price 9, speed 6, battery 5 → 3.6 + 2.4 + 1.0 = **7.0**. The best is Laptop B (7.6) — it is weak on price but so strong on speed and battery that it wins overall. That is the power of a weighted score: an option weak in one criterion can still win overall.
+
+A second example — travel: you must reach college and your budget is 50,000. Options: bus pass (12,000), second-hand scooter (45,000), new scooter (78,000). The new scooter is the best but outside the budget — so it is not an option at all, however high its score. The budget is a **hard rule**: any option that breaks the budget is out. Of the other two, the second-hand scooter is best because it is fast and within budget.
+
+A third example — a job: two offers. Job X: higher salary, but the office is 2 hours from home. Job Y: slightly lower salary, but the office is near and the working hours are fewer. If time matters more to you, Y is best; if salary matters more, X is best. So "best" depends on your weights — change the weights and the answer changes.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 3 Laptops ka Weighted Score Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on 3 Laptops'
+        ),
+        body: t(
+          `Problem: 3 laptops hain, criteria hain price (weight 0.4), speed (0.4), battery (0.2). Scores 10 mein se hain. Laptop A: (8, 7, 6). Laptop B: (6, 9, 8). Laptop C: (9, 6, 5). Best kaunsa hai? Dry run karte hain.
+
+**Step 1 — Weights check karo:** 0.4 + 0.4 + 0.2 = 1.0. Total 1.0 hai, theek hai. Agar total 1.0 na ho toh weights galat hain — pehle unhe theek karo.
+
+**Step 2 — Laptop A ka score:** 8×0.4 = 3.2, 7×0.4 = 2.8, 6×0.2 = 1.2. Total = 3.2 + 2.8 + 1.2 = **7.2**.
+
+**Step 3 — Laptop B ka score:** 6×0.4 = 2.4, 9×0.4 = 3.6, 8×0.2 = 1.6. Total = 2.4 + 3.6 + 1.6 = **7.6**.
+
+**Step 4 — Laptop C ka score:** 9×0.4 = 3.6, 6×0.4 = 2.4, 5×0.2 = 1.0. Total = 3.6 + 2.4 + 1.0 = **7.0**.
+
+**Step 5 — Compare karo aur budget check karo:** Sabse zyada score Laptop B ka hai (7.6). Agar B budget mein hai, toh **Best choice: Laptop B**. Notice karo: C price mein sabse achha hai (9), par speed aur battery mein kamzor hai, isliye overall peeche reh gaya. Neeche wala code yahi dry run print karta hai — har laptop ka score aur final best choice.`,
+          `Problem: there are 3 laptops, criteria are price (weight 0.4), speed (0.4), battery (0.2). Scores are out of 10. Laptop A: (8, 7, 6). Laptop B: (6, 9, 8). Laptop C: (9, 6, 5). Which is best? Let us dry-run it.
+
+**Step 1 — Check the weights:** 0.4 + 0.4 + 0.2 = 1.0. The total is 1.0, so it is fine. If the total were not 1.0, the weights would be wrong — fix them first.
+
+**Step 2 — Score of Laptop A:** 8×0.4 = 3.2, 7×0.4 = 2.8, 6×0.2 = 1.2. Total = 3.2 + 2.8 + 1.2 = **7.2**.
+
+**Step 3 — Score of Laptop B:** 6×0.4 = 2.4, 9×0.4 = 3.6, 8×0.2 = 1.6. Total = 2.4 + 3.6 + 1.6 = **7.6**.
+
+**Step 4 — Score of Laptop C:** 9×0.4 = 3.6, 6×0.4 = 2.4, 5×0.2 = 1.0. Total = 3.6 + 2.4 + 1.0 = **7.0**.
+
+**Step 5 — Compare and check the budget:** The highest score is Laptop B (7.6). If B is within budget, then **Best choice: Laptop B**. Notice: C is best on price (9), but weak on speed and battery, so it falls behind overall. The code below prints this dry run — the score of each laptop and the final best choice.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 3 Laptops ka Weighted Score aur Best Choice',
+            'Dry Run: Weighted Scores of 3 Laptops and the Best Choice'
+          ),
+          language: 'python',
+          code: `# Scores out of 10. Weights: price 0.4, speed 0.4, battery 0.2.
+# The price score is already "value for money", so higher is better.
+options = [
+    ("Laptop A", 8, 7, 6),
+    ("Laptop B", 6, 9, 8),
+    ("Laptop C", 9, 6, 5),
+]
+best = None
+best_score = -1
+for name, price, speed, battery in options:
+    score = 0.4 * price + 0.4 * speed + 0.2 * battery
+    print(name, "->", round(score, 2))
+    if score > best_score:
+        best_score = score
+        best = name
+print("Best choice:", best)`,
+          output: `Laptop A -> 7.2
+Laptop B -> 7.6
+Laptop C -> 7.0
+Best choice: Laptop B`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Ek Criterion, Galat Weight aur Budget Bhoolna',
+          '4. Common Mistakes: One Criterion Only, Wrong Weights, and Forgetting the Budget'
+        ),
+        body: t(
+          `Sabse badi galti hai **sirf ek criterion** dekh kar decide karna. Jaise sirf price dekh kar Laptop C chun lena (price score 9) — par C ki speed 6 aur battery 5 hai, overall woh sabse peeche hai (7.0). Exam mein jo option ek criterion mein sabse achha ho, woh aksar trap hota hai — overall score dekho, ek number nahi.
+
+Doosri galti hai **weights ka total 1.0 na hona**. Jaise weights 0.5, 0.5, 0.5 de diye — total 1.5 ho gaya. Ab scores compare karna bekaar hai kyunki har criterion ko zyada importance mil gayi. Hamesha pehle weights ka total check karo: total 1.0 hona chahiye.
+
+Teesri galti hai **budget bhool jana**. Best score wala option agar budget se bahar ho, toh woh best nahi hai — woh option hi nahi hai. Naya scooter example yaad rakho: 78,000 ka scooter budget 50,000 se bahar tha, isliye use list se hata diya. Score nikaalne se pehle hi budget se bahar wale options ko hata do — time bachega aur galti nahi hogi.
+
+Chauthi galti hai **tie ko ignore karna**. Agar do options ka score barabar ho (jaise 7.3 aur 7.3), toh tie-breaker lagao: jo criterion tumhare liye sabse important hai, usmein zyada score wale ko chuno. Bina tie-breaker ke koi bhi chunna guess hoga.`,
+          `The biggest mistake is deciding by **only one criterion**. For example, picking Laptop C only by price (price score 9) — but C has speed 6 and battery 5, and overall it is last (7.0). In exams, the option that is best in one criterion is often a trap — look at the overall score, not one number.
+
+The second mistake is **weights that do not add up to 1.0**. For example, giving weights 0.5, 0.5, 0.5 — the total becomes 1.5. Now comparing scores is useless because every criterion got too much importance. Always check the weights total first: it must be 1.0.
+
+The third mistake is **forgetting the budget**. If the best-scoring option is outside the budget, it is not the best — it is not an option at all. Remember the new scooter example: the 78,000 scooter was outside the 50,000 budget, so it was removed from the list. Remove over-budget options before scoring — it saves time and avoids mistakes.
+
+The fourth mistake is **ignoring a tie**. If two options score the same (like 7.3 and 7.3), use a tie-breaker: pick the one with the higher score in the criterion that matters most to you. Picking either one without a tie-breaker is a guess.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Tie, Budget ke Bahar aur Weight Badalna',
+          '5. Edge Cases: Ties, Over Budget, and Changing Weights'
+        ),
+        body: t(
+          `**Tie:** Phone X aur Phone Y dono ka score 7.3 hai, Phone Z ka 7.7 hai. Yahan Z clear winner hai. Par agar Z budget se bahar ho, toh X aur Y mein tie hai — tab tie-breaker lagao. Maan lo camera tumhare liye sabse important hai: X ka camera score 8 hai, Y ka 6 hai — toh X jeetega. Tie-breaker hamesha sabse important criterion se lagao, random nahi.
+
+**Sab options budget se bahar:** Agar koi bhi option budget mein na ho, toh answer hai "budget badhao ya criteria kam karo" — koi option chunna galat hoga. Exam mein aise situation mein "None of the above" ya "Increase the budget" wala option sahi hota hai.
+
+**Weight badalna:** Agar price ka weight 0.4 se badha kar 0.6 kar do, toh Laptop C (price 9) aage aa sakta hai. Iska matlab hai ki "best" fixed nahi hota — woh tumhari priorities par depend karta hai. Exam mein weights hamesha question mein diye hote hain ya situation se clear hote hain — apne man se weight mat badlo.
+
+**Zero score:** Agar kisi option ka kisi criterion mein score 0 ho (jaise battery hi nahi hai), toh bhi weighted score nikal sakta hai — par aisa option aam taur par reject kar dena chahiye, kyunki ek zaroori cheez ka zero hona us option ko bekaar bana deta hai.`,
+          `**Tie:** Phone X and Phone Y both score 7.3, Phone Z scores 7.7. Here Z is the clear winner. But if Z is over budget, then X and Y tie — use a tie-breaker. Suppose the camera matters most to you: X has a camera score of 8, Y has 6 — so X wins. Always break a tie with the most important criterion, never at random.
+
+**All options over budget:** If no option fits the budget, the answer is "increase the budget or reduce the criteria" — picking any option would be wrong. In exams, in such a situation the "None of the above" or "Increase the budget" option is right.
+
+**Changing weights:** If the price weight rises from 0.4 to 0.6, Laptop C (price 9) may move ahead. This means "best" is not fixed — it depends on your priorities. In exams, weights are always given in the question or clear from the situation — do not change weights on your own.
+
+**Zero score:** If an option scores 0 in some criterion (for example, it has no battery at all), the weighted score can still be computed — but such an option should usually be rejected, because a zero in an essential thing makes that option useless.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Budget Badal Jaaye ya Naya Option Aa Jaaye?',
+          '6. What If: The Budget Changes or a New Option Arrives?'
+        ),
+        body: t(
+          `Soch lo budget 50,000 se badh kar 80,000 ho jaaye. Ab naya scooter (78,000) budget mein aa gaya — aur woh sabse achha bhi hai, toh best choice badal kar naya scooter ho jaayega. Matlab budget badalne se answer badal jaata hai — isliye score nikaalne se pehle budget ko final karo, baad mein nahi.
+
+Ab socho ek naya option aa jaaye: Laptop D — price 7, speed 9, battery 9. Uska score = 7×0.4 + 9×0.4 + 9×0.2 = 2.8 + 3.6 + 1.8 = **8.2**. Yeh B (7.6) se zyada hai, toh best choice D ho jaayega. Naya option aane par purana answer automatically galat nahi hota — use dobara score karo aur compare karo. Exam mein aksar aisa hota hai: pehle 3 options mein se best chunna hota hai, phir ek 4th option add hota hai — hamesha dobara calculate karo, pehle wale answer ko chipka mat raho.
+
+**What if weights badal jaayein?** Agar battery ka weight 0.2 se 0.5 ho jaaye, toh B (battery 8) aur aage nikal jaayega. Weights situation se aate hain — jaise travel karne wale ke liye battery zyada important hai. Isliye question ko dhyaan se padho: kis ke liye decision lena hai, uski priority kya hai?`,
+          `Suppose the budget rises from 50,000 to 80,000. Now the new scooter (78,000) fits the budget — and it is also the best, so the best choice changes to the new scooter. So changing the budget changes the answer — fix the budget before scoring, not after.
+
+Now suppose a new option arrives: Laptop D — price 7, speed 9, battery 9. Its score = 7×0.4 + 9×0.4 + 9×0.2 = 2.8 + 3.6 + 1.8 = **8.2**. That is more than B (7.6), so the best choice becomes D. When a new option arrives, the old answer does not automatically become wrong — score it again and compare. This often happens in exams: first pick the best of 3 options, then a 4th option is added — always calculate again, do not stick to the earlier answer.
+
+**What if the weights change?** If the battery weight rises from 0.2 to 0.5, then B (battery 8) moves further ahead. Weights come from the situation — for a traveller, battery matters more. So read the question with care: for whom is the decision being made, and what is their priority?`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Decision Making ka 5-Step Formula',
+          '7. Summary: The 5-Step Formula for Decision Making'
+        ),
+        body: t(
+          `Poora article ek formula mein: **(1) Criteria tay karo, (2) Weights do (total 1.0), (3) Budget se bahar wale options hatao, (4) Har option ka weighted score nikaalo, (5) Sabse zyada score wale ko chuno — tie ho toh sabse important criterion se tie-break karo.** Laptop wale dry run mein yahi formula laga: A 7.2, B 7.6, C 7.0 — best B.
+
+Exam ke shortcuts yaad rakho: pehle hard rules (budget, deadline, rule) check karo — jo option rule tode, woh bahar, chahe uska score kitna bhi zyada ho. Phir weighted score nikaalo — ek criterion mein best option aksar trap hota hai. Weights ka total hamesha 1.0 check karo. Aur agar naya option ya naya budget aaye, toh dobara calculate karo.
+
+Revision ke liye laptop dry run dobara karo bina code dekhe: A = 8×0.4 + 7×0.4 + 6×0.2 = 7.2, B = 7.6, C = 7.0. Best: Laptop B. Agar yeh calculation bina ruke ho jaaye, toh decision making tumhe aa gaya hai. Agle article mein hum input-output machines dekhenge — wahan decision nahi, ek fixed rule hota hai jo input ko output mein badalta hai.`,
+          `The whole article in one formula: **(1) Fix the criteria, (2) Give weights (total 1.0), (3) Remove options outside the budget, (4) Compute the weighted score of each option, (5) Pick the highest score — if tied, break the tie with the most important criterion.** The laptop dry run used this formula: A 7.2, B 7.6, C 7.0 — best is B.
+
+Remember the exam shortcuts: check the hard rules first (budget, deadline, rule) — an option that breaks a rule is out, however high its score. Then compute the weighted score — the option best in one criterion is often a trap. Always check that the weights add up to 1.0. And if a new option or a new budget arrives, calculate again.
+
+To revise, redo the laptop dry run without looking at the code: A = 8×0.4 + 7×0.4 + 6×0.2 = 7.2, B = 7.6, C = 7.0. Best: Laptop B. If this calculation goes smoothly, you know decision making. In the next article we will look at input-output machines — there is no decision there, only a fixed rule that turns an input into an output.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Decision Making ke 5 Steps',
+        'The 5 Steps of Decision Making'
+      ),
+      caption: t(
+        'Criteria se lekar best choice tak — har step ka order fix hai',
+        'From criteria to the best choice — the order of every step is fixed'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Criteria tay karo', 'Step 1: Fix the criteria'),
+          s: t('Price, speed, battery — kya matter karta hai?', 'Price, speed, battery — what matters?')
+        },
+        {
+          t: t('Step 2: Weights do (total 1.0)', 'Step 2: Give weights (total 1.0)'),
+          s: t('Important criterion ka weight zyada', 'The important criterion gets the higher weight')
+        },
+        {
+          t: t('Step 3: Budget check karo', 'Step 3: Check the budget'),
+          s: t('Budget se bahar wala option list se bahar', 'An option outside the budget leaves the list')
+        },
+        {
+          t: t('Step 4: Weighted score nikaalo', 'Step 4: Compute the weighted score'),
+          s: t('A 7.2, B 7.6, C 7.0', 'A 7.2, B 7.6, C 7.0')
+        },
+        {
+          t: t('Step 5: Best chuno', 'Step 5: Pick the best'),
+          s: t('Sabse zyada score — tie ho toh tie-breaker', 'Highest score — tie-breaker if tied')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Budget Check: Kaunsa Travel Option Budget mein Hai?',
+          'Budget Check: Which Travel Option Fits the Budget?'
+        ),
+        language: 'python',
+        code: `budget = 50000
+costs = {"Bus pass": 12000, "Second-hand scooter": 45000, "New scooter": 78000}
+for name, cost in costs.items():
+    print(name, cost, "->", "within budget" if cost <= budget else "over budget")`,
+        output: `Bus pass 12000 -> within budget
+Second-hand scooter 45000 -> within budget
+New scooter 78000 -> over budget`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Laptop A ka score 7.2, B ka 7.6 aur C ka 7.0 hai. Best choice kaunsi hai?',
+          'Laptop A scores 7.2, B scores 7.6, and C scores 7.0. Which is the best choice?'
+        ),
+        opts: [
+          t('Laptop A', 'Laptop A'),
+          t('Laptop B', 'Laptop B'),
+          t('Laptop C', 'Laptop C'),
+          t('Teeno barabar hain', 'All three are equal')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sabse zyada weighted score Laptop B ka hai (7.6), isliye B best choice hai.',
+          'Correct answer: Laptop B has the highest weighted score (7.6), so B is the best choice.'
+        )
+      },
+      {
+        q: t(
+          'Weights 0.4, 0.4 aur 0.2 hain. Inka total kitna hona chahiye?',
+          'The weights are 0.4, 0.4, and 0.2. What should their total be?'
+        ),
+        opts: [
+          t('0.8', '0.8'),
+          t('1.0', '1.0'),
+          t('1.5', '1.5'),
+          t('10', '10')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: saare weights ka total hamesha 1.0 hona chahiye — 0.4 + 0.4 + 0.2 = 1.0.',
+          'Correct answer: all weights must always add up to 1.0 — 0.4 + 0.4 + 0.2 = 1.0.'
+        )
+      },
+      {
+        q: t(
+          'Budget 50,000 hai. Naya scooter 78,000 ka hai aur uska score sabse zyada hai. Kya karna chahiye?',
+          'The budget is 50,000. The new scooter costs 78,000 and has the highest score. What should you do?'
+        ),
+        opts: [
+          t('Naya scooter hi khareedo, score sabse zyada hai', 'Buy the new scooter, its score is highest'),
+          t('Naya scooter ko list se hata do, woh budget se bahar hai', 'Remove the new scooter from the list, it is over budget'),
+          t('Budget ko ignore kar do', 'Ignore the budget'),
+          t('Score dobara mat nikaalo', 'Do not compute the score again')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: budget ek hard rule hai — jo option budget tode, woh option hi nahi hai, chahe uska score kitna bhi zyada ho.',
+          'Correct answer: the budget is a hard rule — an option that breaks the budget is not an option at all, however high its score.'
+        )
+      },
+      {
+        q: t(
+          'Phone X aur Phone Y dono ka score 7.3 hai. Tie kaise todo?',
+          'Phone X and Phone Y both score 7.3. How do you break the tie?'
+        ),
+        opts: [
+          t('Coin toss karo', 'Toss a coin'),
+          t('Jo pehle dikha use chuno', 'Pick whichever you saw first'),
+          t('Sabse important criterion mein zyada score wale ko chuno', 'Pick the one with the higher score in the most important criterion'),
+          t('Dono ko khareed lo', 'Buy both')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: tie-breaker hamesha sabse important criterion se lagta hai — usmein zyada score wala jeetta hai.',
+          'Correct answer: a tie is always broken with the most important criterion — the one with the higher score there wins.'
+        )
+      },
+      {
+        q: t(
+          'Ek option ki keemat 10,000 hai aur usse 15,000 ki bachat hoti hai. Net fayda kitna hai?',
+          'An option costs 10,000 and saves 15,000. What is the net benefit?'
+        ),
+        opts: [
+          t('5,000 ka nuksaan', 'A loss of 5,000'),
+          t('0', '0'),
+          t('5,000 ka fayda', 'A benefit of 5,000'),
+          t('25,000 ka fayda', 'A benefit of 25,000')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: net fayda = bachat − keemat = 15,000 − 10,000 = 5,000 ka fayda.',
+          'Correct answer: net benefit = saving − cost = 15,000 − 10,000 = a benefit of 5,000.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle criteria tay karo, phir weights do — saare weights ka total 1.0 hona chahiye.',
+        'First fix the criteria, then give weights — all weights must add up to 1.0.'
+      ),
+      t(
+        'Budget ek hard rule hai — budget se bahar wala option list se bahar hota hai.',
+        'The budget is a hard rule — an option outside the budget leaves the list.'
+      ),
+      t(
+        'Ek criterion mein best option aksar trap hota hai — overall weighted score dekho.',
+        'The option best in one criterion is often a trap — look at the overall weighted score.'
+      ),
+      t(
+        'Tie ho toh sabse important criterion se tie-break karo, random nahi.',
+        'If tied, break the tie with the most important criterion, never at random.'
+      ),
+      t(
+        'Naya option ya naya budget aaye toh dobara calculate karo — purana answer chipka mat raho.',
+        'If a new option or a new budget arrives, calculate again — do not stick to the old answer.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 3 Phones mein se Best Chuno',
+        'Practice: Pick the Best of 3 Phones'
+      ),
+      task: t(
+        'Weights hain: camera 0.5, battery 0.3, price value 0.2. Phone X: (8, 7, 6), Phone Y: (6, 9, 8), Phone Z: (9, 6, 7). Pehle khud score nikaalo — Z ka score 7.7 aana chahiye. Phir starter code run karke verify karo. Done tab hoga jab output mein "Best choice: Phone Z" print ho.',
+        'The weights are: camera 0.5, battery 0.3, price value 0.2. Phone X: (8, 7, 6), Phone Y: (6, 9, 8), Phone Z: (9, 6, 7). First compute the scores yourself — Z should score 7.7. Then run the starter code to verify. You are done when the output prints "Best choice: Phone Z".'
+      ),
+      language: 'python',
+      starter: `# Weights: camera 0.5, battery 0.3, price value 0.2. Scores out of 10.
+options = [
+    ("Phone X", 8, 7, 6),
+    ("Phone Y", 6, 9, 8),
+    ("Phone Z", 9, 6, 7),
+]
+best = None
+best_score = -1
+for name, camera, battery, price in options:
+    score = 0.5 * camera + 0.3 * battery + 0.2 * price
+    print(name, "->", round(score, 2))
+    if score > best_score:
+        best_score = score
+        best = name
+print("Best choice:", best)`,
+      expected: `Phone X -> 7.3
+Phone Y -> 7.3
+Phone Z -> 7.7
+Best choice: Phone Z`
+    },
+    readMinutes: 12
+  };
+
+const logicInputOutput: Article = {
+    id: 'logic-input-output',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Input-Output Machines — Fixed Rule se Input ko Output Banao',
+      'Input-Output Machines — Turning Input into Output with a Fixed Rule'
+    ),
+    summary: t(
+      'Machine ke steps dhoondho, har input par lagao aur output nikaalo — reverse karke input bhi wapas nikalo, number aur word dono machines par.',
+      'Find the machine steps, apply them to every input, and get the output — and reverse the steps to get the input back, on both number and word machines.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Input-Output Machine Kya Hoti Hai?',
+          '1. What Is an Input-Output Machine?'
+        ),
+        body: t(
+          `Input-output machine ek aisi machine hoti hai jo input ko ek **fixed rule** se output mein badal deti hai. Jaise ek machine ke steps hain: Step 1 — input mein 3 jodo, Step 2 — result ko 2 se multiply karo, Step 3 — result mein se 4 ghatao. Input 12 daalo toh output aata hai: 12 + 3 = 15, 15 × 2 = 30, 30 − 4 = **26**. Wahi steps input 7 par lagao toh: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = **16**. Machine ka rule kabhi nahi badalta — jo steps ek input par lagte hain, wahi steps har input par lagte hain.
+
+Exam mein machine aam taur par do tareeke se poochhi jaati hai. **Pehla:** steps diye hote hain aur input diya hota hai — output nikaalna hota hai. Yeh seedha hai: steps ko order mein lagao. **Doosra:** kuch input-output pairs diye hote hain aur rule dhoondhna hota hai — jaise input 5 → output 12, input 7 → output 16. Yahan pehle rule guess karo, phir har pair par check karo. Agar rule ek pair par bhi fail ho jaaye, toh rule galat hai.
+
+Steps ka **order** bahut important hai. Upar wali machine mein pehle +3, phir ×2, phir −4 hota hai. Agar order badal do — pehle ×2, phir +3 — toh input 12 ka output badal jaayega: 12 × 2 = 24, 24 + 3 = 27, 27 − 4 = 23 (26 nahi). Isliye steps ko hamesha diye gaye order mein lagao.`,
+          `An input-output machine is a machine that turns an input into an output with a **fixed rule**. For example, a machine has these steps: Step 1 — add 3 to the input, Step 2 — multiply the result by 2, Step 3 — subtract 4 from the result. Put in 12 and the output is: 12 + 3 = 15, 15 × 2 = 30, 30 − 4 = **26**. Apply the same steps to input 7: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = **16**. The machine rule never changes — the steps that apply to one input apply to every input.
+
+In exams, machines are usually asked in two ways. **First:** the steps and an input are given — you must find the output. This is direct: apply the steps in order. **Second:** some input-output pairs are given and you must find the rule — for example, input 5 → output 12, input 7 → output 16. Here first guess the rule, then check it on every pair. If the rule fails on even one pair, the rule is wrong.
+
+The **order** of the steps matters a lot. In the machine above, first +3, then ×2, then −4. If you change the order — first ×2, then +3 — the output for input 12 changes: 12 × 2 = 24, 24 + 3 = 27, 27 − 4 = 23 (not 26). So always apply the steps in the given order.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: ATM, Vending Machine aur Password',
+          '2. Real-Life Examples: ATM, Vending Machine, and Password'
+        ),
+        body: t(
+          `Soch lo ek ATM machine hai: input hai tumhara PIN, steps hain — PIN check karo, balance check karo, cash do. Agar PIN galat ho toh machine aage badhti hi nahi — output hai "Wrong PIN". Yeh bhi ek input-output machine hai, bas iske steps mein ek **check** bhi hai. Exam ki number machines mein bhi kabhi-kabhi check hota hai — jaise "agar number even hai toh 2 se divide karo, odd hai toh 3 se multiply karo aur 1 jodo."
+
+Doosra example — vending machine: input hai 50 rupees ka note, steps hain — note check karo, item ki keemat 30 ghatao, 20 wapas do. Input 50 → output 20 (change). Agar input 100 ho toh output 70 hoga. Rule wahi hai: change = input − 30. Yahan rule ek hi step ka hai, par logic wahi hai — fixed rule, har input par same.
+
+Teesra example — password machine: input hai "ram", steps hain — har letter ko uske baad wale letter se badlo: r→s, a→b, m→n. Output hai "sbn". Input "cat" ho toh output "dbu" hoga. Yeh **word machine** hai — number ki jagah letters par rule lagta hai. Letters par rule lagate time hamesha A = 1 se Z = 26 tak ki position likho, taaki galti na ho.`,
+          `Imagine an ATM machine: the input is your PIN, the steps are — check the PIN, check the balance, give cash. If the PIN is wrong, the machine does not move ahead — the output is "Wrong PIN". This is also an input-output machine, except its steps include a **check**. Exam number machines sometimes include a check too — for example, "if the number is even, divide by 2; if odd, multiply by 3 and add 1."
+
+A second example — a vending machine: the input is a 50 rupee note, the steps are — check the note, subtract the item price of 30, return 20. Input 50 → output 20 (change). If the input is 100, the output is 70. The rule is the same: change = input − 30. Here the rule is a single step, but the logic is the same — a fixed rule, the same for every input.
+
+A third example — a password machine: the input is "ram", the steps are — replace every letter with the next letter: r→s, a→b, m→n. The output is "sbn". If the input is "cat", the output is "dbu". This is a **word machine** — the rule applies to letters instead of numbers. When applying a rule to letters, always write the positions from A = 1 to Z = 26, so that no mistake happens.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: +3, ×2, −4 Machine ka Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on the +3, ×2, −4 Machine'
+        ),
+        body: t(
+          `Machine ke steps hain: Step 1 — input mein 3 jodo, Step 2 — result ko 2 se multiply karo, Step 3 — result mein se 4 ghatao. Hum is machine ko 3 inputs par dry run karte hain: 12, 7 aur 5.
+
+**Input 12 ka dry run:** Step 1: 12 + 3 = 15. Step 2: 15 × 2 = 30. Step 3: 30 − 4 = 26. Output = **26**. Har step ka result likho — sirf final answer likhne se beech mein galti chhup jaati hai.
+
+**Input 7 ka dry run:** Step 1: 7 + 3 = 10. Step 2: 10 × 2 = 20. Step 3: 20 − 4 = 16. Output = **16**. Check karo: kya 16 sahi hai? Rule ko ek baar phir lagao: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = 16. Haan, sahi hai.
+
+**Input 5 ka dry run:** Step 1: 5 + 3 = 8. Step 2: 8 × 2 = 16. Step 3: 16 − 4 = 12. Output = **12**. Notice karo: input 5 ka output 12 hai — aur yeh wahi pair hai jo exam mein rule dhoondhne ke liye diya ja sakta hai (5 → 12, 7 → 16).
+
+Ab **reverse** karte hain: output 26 hai, input kya tha? Steps ko ulta karo aur ulta order mein lagao: Step 3 ka ulta hai +4: 26 + 4 = 30. Step 2 ka ulta hai ÷2: 30 ÷ 2 = 15. Step 1 ka ulta hai −3: 15 − 3 = 12. Input = **12**. Reverse mein do baatein yaad rakho: operation ulta karo (+ ka −, × ka ÷) **aur** order bhi ulta karo (aakhri step pehle). Neeche wala code teeno inputs ka dry run print karta hai.`,
+          `The machine steps are: Step 1 — add 3 to the input, Step 2 — multiply the result by 2, Step 3 — subtract 4 from the result. We dry-run this machine on 3 inputs: 12, 7, and 5.
+
+**Dry run for input 12:** Step 1: 12 + 3 = 15. Step 2: 15 × 2 = 30. Step 3: 30 − 4 = 26. Output = **26**. Write the result of every step — writing only the final answer hides mistakes in the middle.
+
+**Dry run for input 7:** Step 1: 7 + 3 = 10. Step 2: 10 × 2 = 20. Step 3: 20 − 4 = 16. Output = **16**. Check: is 16 right? Apply the rule once more: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = 16. Yes, it is right.
+
+**Dry run for input 5:** Step 1: 5 + 3 = 8. Step 2: 8 × 2 = 16. Step 3: 16 − 4 = 12. Output = **12**. Notice: the output for input 5 is 12 — and this is the pair that an exam could give to find the rule (5 → 12, 7 → 16).
+
+Now **reverse** it: the output is 26, what was the input? Reverse the operations and apply them in reverse order: the reverse of Step 3 is +4: 26 + 4 = 30. The reverse of Step 2 is ÷2: 30 ÷ 2 = 15. The reverse of Step 1 is −3: 15 − 3 = 12. Input = **12**. In reverse, remember two things: reverse the operation (+ becomes −, × becomes ÷) **and** reverse the order (last step first). The code below prints the dry run for all three inputs.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: +3, ×2, −4 Machine par 12, 7 aur 5',
+            'Dry Run: The +3, ×2, −4 Machine on 12, 7, and 5'
+          ),
+          language: 'python',
+          code: `# Machine steps: step 1 add 3, step 2 multiply by 2, step 3 subtract 4.
+def machine(n):
+    step1 = n + 3
+    step2 = step1 * 2
+    step3 = step2 - 4
+    return step1, step2, step3
+
+for x in [12, 7, 5]:
+    s1, s2, s3 = machine(x)
+    print("input", x, "-> step1", s1, "-> step2", s2, "-> output", s3)`,
+          output: `input 12 -> step1 15 -> step2 30 -> output 26
+input 7 -> step1 10 -> step2 20 -> output 16
+input 5 -> step1 8 -> step2 16 -> output 12`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Galat Order, Reverse mein Order aur Ek Pair se Rule',
+          '4. Common Mistakes: Wrong Order, Order in Reverse, and a Rule from One Pair'
+        ),
+        body: t(
+          `Sabse badi galti hai **steps ka order badal dena**. Pehle ×2 phir +3 karne se input 12 ka output 23 aata hai, 26 nahi. Steps ko hamesha diye gaye order mein lagao — order hi machine ka rule hai. Yeh galti isliye hoti hai kyunki dimaag aasan operation pehle karna chahta hai.
+
+Doosri galti hai **reverse mein order na badalna**. Output 26 se input nikaalte time log karte hain: 26 − 3 = 23, 23 ÷ 2 = 11.5, 11.5 + 4 = 15.5 — bilkul galat. Reverse mein aakhri step pehle ulta hota hai: pehle +4, phir ÷2, phir −3. Agar reverse mein decimal ya fraction aaye, toh samajh jao ki order galat hai — exam ke answers aam taur par whole numbers hote hain.
+
+Teesri galti hai **sirf ek pair se rule maan lena**. Pairs hain 5 → 12 aur 7 → 16. Rule guess karo: ×2 + 2? 5 × 2 + 2 = 12, 7 × 2 + 2 = 16 — dono par chal gaya. Par rule +3, ×2, −4 bhi dono par chalta hai: 5 + 3 = 8, 8 × 2 = 16, 16 − 4 = 12. Dono rules dono pairs par chalte hain! Isliye ek aur pair check karo — jaise input 12: pehla rule deta hai 12 × 2 + 2 = 26, doosra rule bhi 26 deta hai. Hmm, dono phir bhi same! Iska matlab hai ki kabhi-kabhi do rules ek hi answers dete hain — exam mein aisa ho toh jo rule steps mein diya ho, wahi use karo.`,
+          `The biggest mistake is **changing the order of the steps**. Doing ×2 first and then +3 gives output 23 for input 12, not 26. Always apply the steps in the given order — the order is the machine rule. This mistake happens because the mind wants to do the easy operation first.
+
+The second mistake is **not reversing the order in reverse**. When finding the input from output 26, people do: 26 − 3 = 23, 23 ÷ 2 = 11.5, 11.5 + 4 = 15.5 — completely wrong. In reverse, the last step is reversed first: first +4, then ÷2, then −3. If a decimal or fraction appears in reverse, understand that the order is wrong — exam answers are usually whole numbers.
+
+The third mistake is **accepting a rule from only one pair**. The pairs are 5 → 12 and 7 → 16. Guess a rule: ×2 + 2? 5 × 2 + 2 = 12, 7 × 2 + 2 = 16 — it works on both. But the rule +3, ×2, −4 also works on both: 5 + 3 = 8, 8 × 2 = 16, 16 − 4 = 12. Both rules work on both pairs! So check one more pair — like input 12: the first rule gives 12 × 2 + 2 = 26, the second rule also gives 26. Hmm, both still the same! This means sometimes two rules give the same answers — in exams, when that happens, use the rule given in the steps.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Zero, Negative aur Word Machines',
+          '5. Edge Cases: Zero, Negatives, and Word Machines'
+        ),
+        body: t(
+          `**Input zero:** Machine +3, ×2, −4 par input 0 daalo: 0 + 3 = 3, 3 × 2 = 6, 6 − 4 = 2. Output 2 aata hai — zero input ka matlab zero output nahi hota. Exam mein zero dekh kar ghabrao mat, steps waise hi lagao.
+
+**Negative input:** Input −3 daalo: −3 + 3 = 0, 0 × 2 = 0, 0 − 4 = −4. Output −4 hai. Negative numbers par bhi steps waise hi lagte hain — sign ka dhyaan rakho, khaas taur par multiply aur subtract mein.
+
+**Word machine:** Input "ram" → har letter +1 → "sbn". Par Z ka kya? Input "zoo" ho toh z + 1 = a hota hai (wrap around) — Z ke baad A aata hai. Yeh **cyclic** rule hai: A se Z tak 26 letters ka circle hai. Word machine mein hamesha yeh check karo ki rule wrap karta hai ya nahi — "zoo" ka output "app" hota hai agar wrap ho, aur "zoo" ka output galat ho jaayega agar wrap bhool jao.
+
+**Do machines ek ke baad ek:** Output ko doosri machine ka input banao. Machine 1: +3, ×2, −4. Machine 2: ×3, −5. Input 5 → Machine 1 output 12 → Machine 2: 12 × 3 = 36, 36 − 5 = 31. Final output 31 hai. Dono machines ko alag-alag solve karo, phir jodo.`,
+          `**Input zero:** Put 0 into the +3, ×2, −4 machine: 0 + 3 = 3, 3 × 2 = 6, 6 − 4 = 2. The output is 2 — a zero input does not mean a zero output. Do not panic on seeing zero in exams, apply the steps as usual.
+
+**Negative input:** Put in −3: −3 + 3 = 0, 0 × 2 = 0, 0 − 4 = −4. The output is −4. The steps apply the same way to negative numbers — watch the signs, specially in multiply and subtract.
+
+**Word machine:** Input "ram" → every letter +1 → "sbn". But what about Z? If the input is "zoo", then z + 1 = a (wrap around) — after Z comes A. This is a **cyclic** rule: the 26 letters from A to Z form a circle. In a word machine, always check whether the rule wraps — the output of "zoo" is "app" if it wraps, and it goes wrong if you forget the wrap.
+
+**Two machines one after another:** Feed the output into a second machine. Machine 1: +3, ×2, −4. Machine 2: ×3, −5. Input 5 → Machine 1 output 12 → Machine 2: 12 × 3 = 36, 36 − 5 = 31. The final output is 31. Solve the two machines separately, then join them.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Ek Step Badal Jaaye ya Steps Kam Ho Jaayein?',
+          '6. What If: One Step Changes or the Steps Become Fewer?'
+        ),
+        body: t(
+          `Soch lo machine ka Step 2 badal jaaye: ×2 ki jagah ×3 ho jaaye. Ab machine hai +3, ×3, −4. Input 12: 12 + 3 = 15, 15 × 3 = 45, 45 − 4 = 41. Output 26 se badal kar 41 ho gaya — ek step badalne se poora output badal jaata hai. Isliye rule ko kabhi yaad se mat lagao — question mein diye gaye steps ko phir se padho.
+
+Ab socho Step 3 hi hata diya jaaye: machine sirf +3, ×2 ho. Input 12: 12 + 3 = 15, 15 × 2 = 30. Output 30 hai. Steps kam hone se output badh gaya (26 se 30) kyunki −4 hata diya gaya. Matlab har step output ko badalta hai — koi step "chhota" nahi hota.
+
+**What if input-output pairs se rule dhoondhna ho aur do rules mil jaayein?** Upar dekha: ×2 + 2 aur +3, ×2, −4 dono 5 → 12 aur 7 → 16 dete hain. Aise mein teesra pair dhoondho — jaise input 12: ×2 + 2 deta hai 26, +3, ×2, −4 bhi 26 deta hai. Dono ab bhi same! Iska matlab yeh dono rules asal mein ek hi hain — check karo: (x + 3) × 2 − 4 = 2x + 6 − 4 = 2x + 2. Haan! Dono rules mathematically same hain. Isliye exam mein koi bhi ek rule use kar lo, answer same aayega.`,
+          `Suppose Step 2 of the machine changes: ×2 becomes ×3. Now the machine is +3, ×3, −4. Input 12: 12 + 3 = 15, 15 × 3 = 45, 45 − 4 = 41. The output changed from 26 to 41 — changing one step changes the whole output. So never apply a rule from memory — read the steps in the question again.
+
+Now suppose Step 3 is removed: the machine is only +3, ×2. Input 12: 12 + 3 = 15, 15 × 2 = 30. The output is 30. With fewer steps, the output grew (from 26 to 30) because −4 was removed. So every step changes the output — no step is "small".
+
+**What if you must find the rule from input-output pairs and two rules fit?** We saw above: ×2 + 2 and +3, ×2, −4 both give 5 → 12 and 7 → 16. In that case look for a third pair — like input 12: ×2 + 2 gives 26, +3, ×2, −4 also gives 26. Both still the same! This means the two rules are really the same — check: (x + 3) × 2 − 4 = 2x + 6 − 4 = 2x + 2. Yes! Both rules are mathematically the same. So in exams, use either rule, the answer will be the same.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Input-Output ka 3-Step Formula',
+          '7. Summary: The 3-Step Formula for Input-Output'
+        ),
+        body: t(
+          `Poora article ek formula mein: **(1) Steps ko order mein lagao, har step ka result likho. (2) Reverse karna ho toh operation ulta karo aur order bhi ulta karo. (3) Rule dhoondhna ho toh guess karo aur har pair par check karo.** Hamari machine +3, ×2, −4 par: 12 → 26, 7 → 16, 5 → 12. Aur reverse: 26 → 12.
+
+Exam ke shortcuts yaad rakho: har step ka result likho — sirf final answer likhne se galti chhup jaati hai. Reverse mein decimal aaye toh order galat hai. Word machine mein A = 1 se Z = 26 likho aur Z ke baad A (wrap) mat bhoolo. Aur agar do rules same answers dein, toh ghabrao mat — woh mathematically ek hi rule ho sakte hain.
+
+Revision ke liye machine ko bina code dekhe dobara chalao: input 12 → 15 → 30 → 26. Input 7 → 10 → 20 → 16. Reverse: 26 → 30 → 15 → 12. Agar yeh teeno bina ruke ho jaayein, toh input-output machines tumhe aa gayi hain. Agle article mein hum data sufficiency dekhenge — wahan answer nikaalna nahi, yeh decide karna hota hai ki diya gaya data kaafi hai ya nahi.`,
+          `The whole article in one formula: **(1) Apply the steps in order, writing the result of every step. (2) To reverse, reverse the operation and also reverse the order. (3) To find a rule, guess it and check it on every pair.** On our +3, ×2, −4 machine: 12 → 26, 7 → 16, 5 → 12. And in reverse: 26 → 12.
+
+Remember the exam shortcuts: write the result of every step — writing only the final answer hides mistakes. If a decimal appears in reverse, the order is wrong. In a word machine, write A = 1 to Z = 26 and do not forget the wrap from Z back to A. And if two rules give the same answers, do not panic — they may be mathematically the same rule.
+
+To revise, run the machine again without looking at the code: input 12 → 15 → 30 → 26. Input 7 → 10 → 20 → 16. Reverse: 26 → 30 → 15 → 12. If all three go smoothly, you know input-output machines. In the next article we will look at data sufficiency — there you do not find the answer, you decide whether the given data is enough or not.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        '+3, ×2, −4 Machine ka Flow',
+        'The Flow of the +3, ×2, −4 Machine'
+      ),
+      caption: t(
+        'Har input wahi 3 steps se guzarta hai — order fix hai, rule kabhi nahi badalta',
+        'Every input goes through the same 3 steps — the order is fixed, the rule never changes'
+      ),
+      nodes: [
+        {
+          t: t('Input: 12', 'Input: 12'),
+          s: t('Machine mein daalo', 'Put it into the machine')
+        },
+        {
+          t: t('Step 1: +3 → 15', 'Step 1: +3 → 15'),
+          s: t('12 + 3 = 15', '12 + 3 = 15')
+        },
+        {
+          t: t('Step 2: ×2 → 30', 'Step 2: ×2 → 30'),
+          s: t('15 × 2 = 30', '15 × 2 = 30')
+        },
+        {
+          t: t('Step 3: −4 → 26', 'Step 3: −4 → 26'),
+          s: t('30 − 4 = 26', '30 − 4 = 26')
+        },
+        {
+          t: t('Output: 26', 'Output: 26'),
+          s: t('Reverse: 26 → +4 → ÷2 → −3 → 12', 'Reverse: 26 → +4 → ÷2 → −3 → 12')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Reverse Machine: Output 26 se Input Wapas Nikalo',
+          'Reverse Machine: Get the Input Back from Output 26'
+        ),
+        language: 'python',
+        code: `# Output is 26. Reverse the steps: add 4, then divide by 2, then subtract 3.
+out = 26
+step1 = out + 4
+step2 = step1 // 2
+step3 = step2 - 3
+print("output", out, "-> reverse step1", step1, "-> reverse step2", step2, "-> input", step3)`,
+        output: `output 26 -> reverse step1 30 -> reverse step2 15 -> input 12`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Machine: +3, phir ×2, phir −4. Input 12 ka output kya hoga?',
+          'Machine: +3, then ×2, then −4. What is the output for input 12?'
+        ),
+        opts: [
+          t('23', '23'),
+          t('26', '26'),
+          t('30', '30'),
+          t('41', '41')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 12 + 3 = 15, 15 × 2 = 30, 30 − 4 = 26.',
+          'Correct answer: 12 + 3 = 15, 15 × 2 = 30, 30 − 4 = 26.'
+        )
+      },
+      {
+        q: t(
+          'Machine: +3, phir ×2, phir −4. Input 7 ka output kya hoga?',
+          'Machine: +3, then ×2, then −4. What is the output for input 7?'
+        ),
+        opts: [
+          t('12', '12'),
+          t('14', '14'),
+          t('16', '16'),
+          t('20', '20')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = 16.',
+          'Correct answer: 7 + 3 = 10, 10 × 2 = 20, 20 − 4 = 16.'
+        )
+      },
+      {
+        q: t(
+          'Machine: +3, phir ×2, phir −4. Output 26 hai. Input kya tha?',
+          'Machine: +3, then ×2, then −4. The output is 26. What was the input?'
+        ),
+        opts: [
+          t('10', '10'),
+          t('11', '11'),
+          t('12', '12'),
+          t('13', '13')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: ulta karo — 26 + 4 = 30, 30 ÷ 2 = 15, 15 − 3 = 12. Input 12 tha.',
+          'Correct answer: reverse it — 26 + 4 = 30, 30 ÷ 2 = 15, 15 − 3 = 12. The input was 12.'
+        )
+      },
+      {
+        q: t(
+          'Machine: pehle ×2, phir +5. Input 6 ka output kya hoga?',
+          'Machine: first ×2, then +5. What is the output for input 6?'
+        ),
+        opts: [
+          t('15', '15'),
+          t('16', '16'),
+          t('17', '17'),
+          t('22', '22')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 6 × 2 = 12, 12 + 5 = 17. Order yaad rakho — pehle ×2, phir +5.',
+          'Correct answer: 6 × 2 = 12, 12 + 5 = 17. Remember the order — first ×2, then +5.'
+        )
+      },
+      {
+        q: t(
+          'Machine: pehle −2, phir ×3. Input 10 ka output kya hoga?',
+          'Machine: first −2, then ×3. What is the output for input 10?'
+        ),
+        opts: [
+          t('20', '20'),
+          t('24', '24'),
+          t('28', '28'),
+          t('30', '30')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 10 − 2 = 8, 8 × 3 = 24.',
+          'Correct answer: 10 − 2 = 8, 8 × 3 = 24.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Machine ka rule fixed hota hai — wahi steps har input par lagte hain, order bhi wahi.',
+        'The machine rule is fixed — the same steps apply to every input, in the same order.'
+      ),
+      t(
+        'Har step ka result likho — sirf final answer likhne se beech ki galti chhup jaati hai.',
+        'Write the result of every step — writing only the final answer hides mistakes in the middle.'
+      ),
+      t(
+        'Reverse mein operation ulta karo (÷ ki jagah ×) aur order bhi ulta karo (aakhri step pehle).',
+        'In reverse, reverse the operation (× becomes ÷) and also reverse the order (last step first).'
+      ),
+      t(
+        'Rule dhoondhna ho toh guess karo aur har pair par check karo — ek pair par fail ho toh rule galat hai.',
+        'To find a rule, guess it and check it on every pair — if it fails on one pair, the rule is wrong.'
+      ),
+      t(
+        'Word machine mein A = 1 se Z = 26 likho aur Z ke baad A wala wrap mat bhoolo.',
+        'In a word machine, write A = 1 to Z = 26 and do not forget the wrap from Z back to A.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: ×3, −5 Machine ko 9 aur 4 par Chalao',
+        'Practice: Run the ×3, −5 Machine on 9 and 4'
+      ),
+      task: t(
+        'Machine ke steps hain: Step 1 — input ko 3 se multiply karo, Step 2 — result mein se 5 ghatao. Pehle khud nikaalo: input 9 ka output 22 aur input 4 ka output 7 aana chahiye. Phir starter code run karke verify karo. Done tab hoga jab output mein "input 9 -> step1 27 -> output 22" aur "input 4 -> step1 12 -> output 7" print ho.',
+        'The machine steps are: Step 1 — multiply the input by 3, Step 2 — subtract 5 from the result. First find it yourself: the output for input 9 should be 22 and for input 4 should be 7. Then run the starter code to verify. You are done when the output prints "input 9 -> step1 27 -> output 22" and "input 4 -> step1 12 -> output 7".'
+      ),
+      language: 'python',
+      starter: `# Machine steps: step 1 multiply by 3, step 2 subtract 5.
+def machine(n):
+    step1 = n * 3
+    step2 = step1 - 5
+    return step1, step2
+
+for x in [9, 4]:
+    s1, s2 = machine(x)
+    print("input", x, "-> step1", s1, "-> output", s2)`,
+      expected: `input 9 -> step1 27 -> output 22
+input 4 -> step1 12 -> output 7`
+    },
+    readMinutes: 12
+  };
+
+const logicDataSufficiencyLogic: Article = {
+    id: 'logic-data-sufficiency-logic',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Data Sufficiency (Reasoning) — Data Kaafi Hai ya Nahi?',
+      'Data Sufficiency (Reasoning) — Is the Data Enough or Not?'
+    ),
+    summary: t(
+      'Answer nikaalna nahi, yeh decide karna hai ki Statement I aur II se answer nikal sakta hai ya nahi — 5 standard answers aur unki pehchan.',
+      'Do not find the answer, decide whether Statements I and II let you find it — the 5 standard answers and how to spot them.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Data Sufficiency Kya Hoti Hai?',
+          '1. What Is Data Sufficiency?'
+        ),
+        body: t(
+          `Data sufficiency ke sawalon mein ek **question** diya hota hai aur uske neeche do **statements** (I aur II) diye hote hain. Tumhe answer nikaalna nahi hota — sirf yeh decide karna hota hai ki diya gaya data answer nikaalne ke liye **kaafi hai ya nahi**. Jaise question hai: "Kya x, 20 se bada hai?" Statement I: "x, 15 se bada hai." Statement II: "x, 25 se chhota hai." Kya in dono se pata chal sakta hai ki x, 20 se bada hai ya nahi? Dono mil kar bhi nahi — kyunki x 18 bhi ho sakta hai aur 22 bhi. Isliye answer hai "dono mil kar bhi kaafi nahi."
+
+Exam mein answer aam taur par 5 options mein se ek hota hai: **(A)** Sirf Statement I kaafi hai, **(B)** Sirf Statement II kaafi hai, **(C)** Dono mil kar kaafi hain (alag-alag nahi), **(D)** Dono mein se koi ek bhi kaafi hai (I bhi, II bhi), **(E)** Dono mil kar bhi kaafi nahi hain. Yeh 5 options har data sufficiency sawal mein same hote hain — isliye pehle in 5 ko yaad kar lo, phir har sawal mein sirf yeh check karo ki kaunsa case lagta hai.
+
+Sabse important rule: **answer nikaalne ki koshish mat karo, sirf sufficiency check karo.** Jaise question ho "Ravi ki umar kya hai?" aur Statement I ho "Ravi apne bhai se 5 saal chhota hai, bhai 30 ka hai" — toh Ravi ki umar 25 nikal sakti hai, isliye Statement I kaafi hai. Tumhe 25 likhna nahi hai, sirf yeh bolna hai ki I kaafi hai.`,
+          `In data sufficiency questions, you are given a **question** and two **statements** (I and II) below it. You do not have to find the answer — only decide whether the given data is **enough** to find the answer. For example, the question is: "Is x greater than 20?" Statement I: "x is greater than 15." Statement II: "x is less than 25." Can these two together tell whether x is greater than 20? No, even together — because x could be 18 and could also be 22. So the answer is "even both together are not enough."
+
+In exams, the answer is usually one of 5 options: **(A)** Only Statement I is enough, **(B)** Only Statement II is enough, **(C)** Both together are enough (neither alone), **(D)** Either one alone is enough (I also, II also), **(E)** Even both together are not enough. These 5 options are the same in every data sufficiency question — so first memorise these 5, then in each question only check which case applies.
+
+The most important rule: **do not try to find the answer, only check sufficiency.** For example, the question is "What is Ravi age?" and Statement I is "Ravi is 5 years younger than his brother, who is 30" — then Ravi age (25) can be found, so Statement I is enough. You do not have to write 25, only say that I is enough.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Umar, Daam aur Train',
+          '2. Real-Life Examples: Age, Price, and a Train'
+        ),
+        body: t(
+          `Soch lo question hai: "Ravi ki umar kya hai?" Statement I: "Ravi apne bhai se 5 saal chhota hai, aur bhai 30 saal ka hai." Sirf I se Ravi ki umar nikal jaati hai: 30 − 5 = 25. Toh answer hai "Sirf I kaafi hai" — II ko dekhne ki zaroorat hi nahi hai. Yeh pehla pattern hai: ek statement akeli kaafi ho.
+
+Doosra example: question hai "x + y kya hai?" Statement I: "x = 5." Statement II: "y = 7." Sirf I se x + y nahi nikal sakta (y pata nahi), sirf II se bhi nahi (x pata nahi). Dono mil kar: 5 + 7 = 12 — nikal gaya. Toh answer hai "Dono mil kar kaafi hain." Yeh doosra pattern hai: dono alag-alag bekaar, mil kar kaafi.
+
+Teesra example: question hai "Kya train time par aayegi?" Statement I: "Train 10 minute late chali." Statement II: "Raste mein koi rukawat nahi hai." Dono mil kar bhi nahi pata chal sakta — late chali hai, par kitni der mein pahunchegi, yeh nahi pata. Toh answer hai "Dono mil kar bhi kaafi nahi." Yeh teesra pattern hai: data hi incomplete hai.`,
+          `Suppose the question is: "What is Ravi age?" Statement I: "Ravi is 5 years younger than his brother, and his brother is 30." Only I gives Ravi age: 30 − 5 = 25. So the answer is "Only I is enough" — there is no need to look at II. This is the first pattern: one statement alone is enough.
+
+A second example: the question is "What is x + y?" Statement I: "x = 5." Statement II: "y = 7." Only I cannot give x + y (y is unknown), only II cannot either (x is unknown). Both together: 5 + 7 = 12 — found. So the answer is "Both together are enough." This is the second pattern: both useless alone, enough together.
+
+A third example: the question is "Will the train arrive on time?" Statement I: "The train left 10 minutes late." Statement II: "There is no block on the way." Even both together cannot tell — it left late, but how long it will take is unknown. So the answer is "Even both together are not enough." This is the third pattern: the data itself is incomplete.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: "Kya x, 20 se Bada Hai?" ka Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on "Is x Greater Than 20?"'
+        ),
+        body: t(
+          `Question: "Kya x, 20 se bada hai?" Statement I: "x, 15 se bada hai." Statement II: "x, 25 se chhota hai." Dry run karte hain — har statement ko alag check karo, phir dono ko mila kar.
+
+**Step 1 — Sirf I check karo:** I kehta hai x > 15. x 16 bhi ho sakta hai (20 se chhota) aur 30 bhi ho sakta hai (20 se bada). Dono cases mein I true hai, par answer alag hai — isliye I akela kaafi nahi hai. Rule yaad rakho: **agar statement ke true hone par bhi do alag answers possible hon, toh statement kaafi nahi hai.**
+
+**Step 2 — Sirf II check karo:** II kehta hai x < 25. x 10 bhi ho sakta hai (20 se chhota) aur 24 bhi ho sakta hai (20 se bada). Phir se do alag answers possible hain — II akela bhi kaafi nahi hai.
+
+**Step 3 — Dono mila kar check karo:** Dono mil kar kehte hain 15 < x < 25. x 18 bhi ho sakta hai (20 se chhota) aur 22 bhi ho sakta hai (20 se bada). Dono mil kar bhi do answers possible hain — isliye dono mil kar bhi kaafi nahi hain.
+
+**Step 4 — Final answer:** Option (E) — "Dono mil kar bhi kaafi nahi." Neeche wala code yahi dry run print karta hai — har case mein "enough" ya "not enough" dikhega.`,
+          `Question: "Is x greater than 20?" Statement I: "x is greater than 15." Statement II: "x is less than 25." Let us dry-run it — check each statement alone, then both together.
+
+**Step 1 — Check only I:** I says x > 15. x could be 16 (less than 20) and could also be 30 (greater than 20). In both cases I is true, but the answer differs — so I alone is not enough. Remember the rule: **if two different answers are possible even when the statement is true, the statement is not enough.**
+
+**Step 2 — Check only II:** II says x < 25. x could be 10 (less than 20) and could also be 24 (greater than 20). Again two different answers are possible — II alone is also not enough.
+
+**Step 3 — Check both together:** Together they say 15 < x < 25. x could be 18 (less than 20) and could also be 22 (greater than 20). Both together still allow two answers — so even both together are not enough.
+
+**Step 4 — Final answer:** Option (E) — "Even both together are not enough." The code below prints this dry run — each case shows "enough" or "not enough".`
+        ),
+        code: {
+          title: t(
+            'Dry Run: "Kya x, 20 se Bada Hai?" — I, II aur Dono',
+            'Dry Run: "Is x Greater Than 20?" — I, II, and Both'
+          ),
+          language: 'python',
+          code: `# Question: Is x greater than 20?
+# Statement I: x is greater than 15.  (x could be 16 or 30 -> not enough)
+# Statement II: x is less than 25.   (x could be 10 or 24 -> not enough)
+# Together: 15 < x < 25. x could be 18 or 22 -> still not enough.
+
+def enough(low, high):
+    # Enough only if the whole range sits on one side of 20.
+    return low > 20 or high <= 20
+
+print("Only I (x > 15):", "enough" if enough(16, 100) else "not enough")
+print("Only II (x < 25):", "enough" if enough(0, 24) else "not enough")
+print("Both (15 < x < 25):", "enough" if enough(16, 24) else "not enough")
+print("Answer: data is not enough even with both statements")`,
+          output: `Only I (x > 15): not enough
+Only II (x < 25): not enough
+Both (15 < x < 25): not enough
+Answer: data is not enough even with both statements`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Answer Nikalna, I-II Ulta aur "Either" ka Galat Use',
+          '4. Common Mistakes: Finding the Answer, Swapping I and II, and Wrong Use of "Either"'
+        ),
+        body: t(
+          `Sabse badi galti hai **answer nikaalne mein time barbaad karna**. Data sufficiency mein answer ki value nahi poochhi jaati — sirf yeh poochha jaata hai ki value nikal sakti hai ya nahi. Jaise "Ravi ki umar kya hai?" par log 25 nikaal kar khush ho jaate hain, par option mein 25 hota hi nahi — option hota hai "Sirf I kaafi hai." Yeh galti isliye hoti hai kyunki dimaag aadat se answer nikaalne lagta hai. Har sawal par pehle yeh bolo: "Mujhe answer nahi, sufficiency check karni hai."
+
+Doosri galti hai **I aur II ko ulta** padh lena. Jaise I kaafi hai par log II ko kaafi bol dete hain kyunki II aakhri mein padha tha. Har statement ko alag-alag check karo aur likho: "I: kaafi / nahi, II: kaafi / nahi." Likhne se ulta nahi hoga.
+
+Teesri galti hai **"Either" (D) aur "Both together" (C) ko milana**. D ka matlab hai: I akela bhi kaafi hai AUR II akela bhi kaafi hai — dono mein se koi ek chun lo, answer nikal jaayega. C ka matlab hai: dono alag-alag kaafi nahi hain, sirf mil kar kaafi hain. Jaise x + y wale example mein: I akela kaafi nahi, II akela kaafi nahi, dono mil kar kaafi hain — yeh C hai, D nahi. D tab hota hai jab dono statements akeli-akeli answer de dein — jaise "Ravi ki umar" I se bhi nikle (bhai 30, 5 saal chhota) aur II se bhi nikle (Ravi ka janm 2001 mein hua, aaj 2026 hai).`,
+          `The biggest mistake is **wasting time finding the answer**. In data sufficiency, the value of the answer is not asked — only whether the value can be found. For example, on "What is Ravi age?" people find 25 and feel happy, but 25 is not even an option — the option is "Only I is enough." This mistake happens because the mind starts finding the answer out of habit. On every question, first say: "I must not find the answer, I must check sufficiency."
+
+The second mistake is **swapping I and II**. For example, I is enough but people say II is enough because II was read last. Check each statement separately and write: "I: enough / not, II: enough / not." Writing it down prevents swapping.
+
+The third mistake is **mixing up "Either" (D) and "Both together" (C)**. D means: I alone is enough AND II alone is enough — pick either one, the answer comes out. C means: neither alone is enough, only together they are enough. In the x + y example: I alone is not enough, II alone is not enough, both together are enough — that is C, not D. D happens when both statements alone give the answer — for example, "Ravi age" comes from I (brother is 30, 5 years younger) and also from II (Ravi was born in 2001, today is 2026).`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Dono Kaafi, Koi Kaafi Nahi aur Pehle se Pata Answer',
+          '5. Edge Cases: Both Enough, None Enough, and an Already Known Answer'
+        ),
+        body: t(
+          `**Dono akeli kaafi (D):** Question: "Kya triangle right-angled hai?" Statement I: "Sides 3, 4, 5 hain." I se check karo: 3² + 4² = 9 + 16 = 25 = 5² — right-angled hai, I kaafi hai. Statement II: "Ek angle 90° hai." II se seedha pata chal gaya — II bhi kaafi hai. Dono akeli kaafi hain, toh answer hai (D) — "Either I or II is enough." Notice karo: D mein dono statements ka answer same hona chahiye — agar I se "haan" aur II se "naa" aaye, toh kuch galat hai (statements ek doosre se contradict nahi kar sakte).
+
+**Koi kaafi nahi (E):** Question: "Kya x, 20 se bada hai?" I: x > 15, II: x < 25 — upar dry run mein dekha, dono mil kar bhi kaafi nahi. E tab aata hai jab dono mil kar bhi do alag answers possible hon.
+
+**Pehle se pata answer:** Question: "Kya 10, 2 se bada hai?" Yeh toh bina statement ke hi pata hai — answer hamesha "haan" hai. Aise sawal exam mein nahi aate, par agar aayein toh answer hoga "Sirf I kaafi hai" nahi — data ki zaroorat hi nahi hai. Aise case ko pehchan kar time bachao.
+
+**Ek statement doosri ko repeat kare:** Agar II wahi baat doosre words mein kahe jo I kehta hai, toh dono ka sufficiency same hoga — I kaafi hai toh II bhi kaafi hai, answer D hoga.`,
+          `**Both alone enough (D):** Question: "Is the triangle right-angled?" Statement I: "The sides are 3, 4, 5." Check from I: 3² + 4² = 9 + 16 = 25 = 5² — it is right-angled, I is enough. Statement II: "One angle is 90°." II tells it directly — II is also enough. Both alone are enough, so the answer is (D) — "Either I or II is enough." Notice: in D, both statements must give the same answer — if I gives "yes" and II gives "no", something is wrong (statements cannot contradict each other).
+
+**None enough (E):** Question: "Is x greater than 20?" I: x > 15, II: x < 25 — we saw in the dry run above, even both together are not enough. E comes when both together still allow two different answers.
+
+**Already known answer:** Question: "Is 10 greater than 2?" This is known without any statement — the answer is always "yes". Such questions do not appear in exams, but if they did, the answer would not be "Only I is enough" — no data is needed at all. Spot such a case and save time.
+
+**One statement repeats the other:** If II says the same thing as I in different words, their sufficiency is the same — if I is enough, II is also enough, and the answer is D.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Question Badal Jaaye ya Statement mein Number Badal Jaaye?',
+          '6. What If: The Question Changes or a Number in a Statement Changes?'
+        ),
+        body: t(
+          `Soch lo question badal jaaye: "Kya x, 20 se bada hai?" ki jagah "Kya x, 10 se bada hai?" ho jaaye. Statements wahi hain: I: x > 15, II: x < 25. Ab sirf I se hi answer mil jaata hai — x > 15 hai toh x > 10 bhi hai, hamesha "haan". Toh answer badal kar (A) — "Sirf I kaafi hai" — ho jaayega. Yahi data sufficiency ki pehchan hai: **answer question par depend karta hai, sirf statements par nahi.** Isliye hamesha pehle question ko dhyaan se padho.
+
+Ab socho statement mein number badal jaaye: I ho "x > 25" (15 ki jagah). Ab sirf I se hi pata chal jaata hai ki x > 20 hai (kyunki 25 se bada number 20 se bhi bada hota hai) — answer phir se (A) ho jaayega. Ek number badalne se poora answer badal jaata hai — isliye numbers ko dhyaan se padho, guess mat karo.
+
+**What if question "kitne" ki jagah "kaun" ho?** Jaise "Class mein kitne students hain?" ki jagah "Ravi class mein kitne number par hai?" — toh wahi statements ka sufficiency badal jaayega. Har question ko naya sawal maan kar solve karo.`,
+          `Suppose the question changes: "Is x greater than 20?" becomes "Is x greater than 10?" The statements stay the same: I: x > 15, II: x < 25. Now only I gives the answer — if x > 15, then x > 10 is also true, always "yes". So the answer changes to (A) — "Only I is enough". That is the nature of data sufficiency: **the answer depends on the question, not only on the statements.** So always read the question with care first.
+
+Now suppose a number in a statement changes: I becomes "x > 25" (instead of 15). Now only I tells us that x > 20 (because a number greater than 25 is also greater than 20) — the answer becomes (A) again. Changing one number changes the whole answer — so read the numbers with care, do not guess.
+
+**What if the question asks "who" instead of "how many"?** For example, "How many students are in the class?" becomes "What is Ravi rank in the class?" — then the sufficiency of the same statements changes. Solve every question as a new question.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Data Sufficiency ka 4-Step Check',
+          '7. Summary: The 4-Step Check for Data Sufficiency'
+        ),
+        body: t(
+          `Poora article ek formula mein: **(1) Question padho — answer nahi, sufficiency check karni hai. (2) Sirf I check karo — kya I akela answer de sakta hai? (3) Sirf II check karo — kya II akela answer de sakta hai? (4) Dono mila kar check karo.** Phir 5 options mein se chuno: I akela kaafi → (A), II akela kaafi → (B), dono mil kar kaafi → (C), dono akeli kaafi → (D), dono mil kar bhi nahi → (E).
+
+Golden rule yaad rakho: **agar statement ke true hone par bhi do alag answers possible hon, toh statement kaafi nahi hai.** x > 15 par x 16 bhi ho sakta hai aur 30 bhi — isliye I kaafi nahi tha. Aur C aur D ka farak yaad rakho: C mein dono mil kar kaafi hain, D mein dono akeli kaafi hain.
+
+Revision ke liye x > 20 wala dry run dobara karo: I — not enough, II — not enough, dono — not enough. Answer: (E). Agar yeh dry run bina ruke ho jaaye, toh data sufficiency tumhe aa gayi hai. Agle article mein hum cubes aur dice dekhenge — wahan numbers se zyada spatial soch kaam aati hai.`,
+          `The whole article in one formula: **(1) Read the question — you must check sufficiency, not find the answer. (2) Check only I — can I alone give the answer? (3) Check only II — can II alone give the answer? (4) Check both together.** Then pick from the 5 options: only I enough → (A), only II enough → (B), both together enough → (C), both alone enough → (D), even both together not enough → (E).
+
+Remember the golden rule: **if two different answers are possible even when the statement is true, the statement is not enough.** With x > 15, x could be 16 and could also be 30 — so I was not enough. And remember the difference between C and D: in C, both together are enough; in D, both alone are enough.
+
+To revise, redo the x > 20 dry run: I — not enough, II — not enough, both — not enough. Answer: (E). If this dry run goes smoothly, you know data sufficiency. In the next article we will look at cubes and dice — there spatial thinking matters more than numbers.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Data Sufficiency ke 5 Answers',
+        'The 5 Answers of Data Sufficiency'
+      ),
+      caption: t(
+        'Pehle I check karo, phir II, phir dono — order fix hai, answer nahi nikaalna hai',
+        'First check I, then II, then both — the order is fixed, you must not find the answer'
+      ),
+      nodes: [
+        {
+          t: t('(A) Sirf I kaafi hai', '(A) Only I is enough'),
+          s: t('I akela answer de sakta hai, II nahi', 'I alone can give the answer, II cannot')
+        },
+        {
+          t: t('(B) Sirf II kaafi hai', '(B) Only II is enough'),
+          s: t('II akela answer de sakta hai, I nahi', 'II alone can give the answer, I cannot')
+        },
+        {
+          t: t('(C) Dono mil kar kaafi', '(C) Both together are enough'),
+          s: t('Alag-alag nahi, mil kar haan — jaise x + y', 'Not alone, together yes — like x + y')
+        },
+        {
+          t: t('(D) Dono akeli kaafi', '(D) Both alone are enough'),
+          s: t('I bhi, II bhi — dono se answer nikle', 'I also, II also — the answer comes from both')
+        },
+        {
+          t: t('(E) Dono mil kar bhi nahi', '(E) Even both together are not enough'),
+          s: t('Dono mil kar bhi do answers possible hon', 'Even together, two answers stay possible')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Ravi ki Umar: Statement I Akela Kaafi Hai',
+          'Ravi Age: Statement I Alone Is Enough'
+        ),
+        language: 'python',
+        code: `# Question: What is Ravi's age?
+# Statement I: Ravi is 5 years younger than his brother, who is 30.
+brother_age = 30
+ravi_age = brother_age - 5
+print("Ravi's age from statement I:", ravi_age)
+print("Statement I alone is enough: True")`,
+        output: `Ravi's age from statement I: 25
+Statement I alone is enough: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Question: "Kya x, 20 se bada hai?" I: x > 15. II: x < 25. Kaunsa answer sahi hai?',
+          'Question: "Is x greater than 20?" I: x > 15. II: x < 25. Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I kaafi hai', 'Only I is enough'),
+          t('Sirf II kaafi hai', 'Only II is enough'),
+          t('Dono mil kar kaafi hain', 'Both together are enough'),
+          t('Dono mil kar bhi kaafi nahi hain', 'Even both together are not enough')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: dono mil kar kehte hain 15 < x < 25 — x 18 bhi ho sakta hai aur 22 bhi, isliye dono mil kar bhi kaafi nahi hain.',
+          'Correct answer: together they say 15 < x < 25 — x could be 18 and could also be 22, so even both together are not enough.'
+        )
+      },
+      {
+        q: t(
+          'Question: "Ravi ki umar kya hai?" I: "Ravi apne bhai se 5 saal chhota hai, bhai 30 ka hai." Kaunsa answer sahi hai?',
+          'Question: "What is Ravi age?" I: "Ravi is 5 years younger than his brother, who is 30." Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I kaafi hai', 'Only I is enough'),
+          t('Sirf II kaafi hai', 'Only II is enough'),
+          t('Dono mil kar kaafi hain', 'Both together are enough'),
+          t('Dono mil kar bhi kaafi nahi hain', 'Even both together are not enough')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: sirf I se Ravi ki umar nikal jaati hai — 30 − 5 = 25. Isliye sirf I kaafi hai, II ki zaroorat nahi.',
+          'Correct answer: only I gives Ravi age — 30 − 5 = 25. So only I is enough, II is not needed.'
+        )
+      },
+      {
+        q: t(
+          'Question: "x + y kya hai?" I: x = 5. II: y = 7. Kaunsa answer sahi hai?',
+          'Question: "What is x + y?" I: x = 5. II: y = 7. Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I kaafi hai', 'Only I is enough'),
+          t('Sirf II kaafi hai', 'Only II is enough'),
+          t('Dono mil kar kaafi hain', 'Both together are enough'),
+          t('Dono mein se koi ek bhi kaafi hai', 'Either one alone is enough')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: I akela kaafi nahi (y pata nahi), II akela kaafi nahi (x pata nahi) — dono mil kar 5 + 7 = 12 nikal jaata hai.',
+          'Correct answer: I alone is not enough (y is unknown), II alone is not enough (x is unknown) — both together give 5 + 7 = 12.'
+        )
+      },
+      {
+        q: t(
+          'Question: "Kya triangle right-angled hai?" I: "Sides 3, 4, 5 hain." II: "Ek angle 90° hai." Kaunsa answer sahi hai?',
+          'Question: "Is the triangle right-angled?" I: "The sides are 3, 4, 5." II: "One angle is 90°." Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I kaafi hai', 'Only I is enough'),
+          t('Sirf II kaafi hai', 'Only II is enough'),
+          t('Dono mil kar kaafi hain', 'Both together are enough'),
+          t('Dono mein se koi ek bhi kaafi hai', 'Either one alone is enough')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: I se 3² + 4² = 25 = 5² se pata chal jaata hai, aur II se seedha pata chal jaata hai — dono akeli kaafi hain.',
+          'Correct answer: I tells it through 3² + 4² = 25 = 5², and II tells it directly — both alone are enough.'
+        )
+      },
+      {
+        q: t(
+          'Question: "Class mein kitne students hain?" I: "Ravi upar se 10th hai." II: "Ravi neeche se 15th hai." Kaunsa answer sahi hai?',
+          'Question: "How many students are in the class?" I: "Ravi is 10th from the top." II: "Ravi is 15th from the bottom." Which answer is right?'
+        ),
+        opts: [
+          t('Sirf I kaafi hai', 'Only I is enough'),
+          t('Sirf II kaafi hai', 'Only II is enough'),
+          t('Dono mil kar kaafi hain', 'Both together are enough'),
+          t('Dono mil kar bhi kaafi nahi hain', 'Even both together are not enough')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono mil kar total nikal jaata hai — 10 + 15 − 1 = 24 students. Alag-alag koi bhi kaafi nahi hai.',
+          'Correct answer: both together give the total — 10 + 15 − 1 = 24 students. Neither alone is enough.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Answer nikaalna nahi hai — sirf yeh decide karna hai ki data kaafi hai ya nahi.',
+        'You must not find the answer — only decide whether the data is enough or not.'
+      ),
+      t(
+        'Agar statement ke true hone par bhi do alag answers possible hon, toh statement kaafi nahi hai.',
+        'If two different answers are possible even when the statement is true, the statement is not enough.'
+      ),
+      t(
+        'C ka matlab hai dono mil kar kaafi, D ka matlab hai dono akeli kaafi — dono ko mat milao.',
+        'C means both together are enough, D means both alone are enough — do not mix them up.'
+      ),
+      t(
+        'Pehle I check karo, phir II, phir dono — aur har check ko likho taaki I-II ulta na ho.',
+        'First check I, then II, then both — and write each check down so I and II do not get swapped.'
+      ),
+      t(
+        'Answer question par depend karta hai — question badle toh wahi statements ka answer badal sakta hai.',
+        'The answer depends on the question — if the question changes, the same statements can give a different answer.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: x + y ka Data Sufficiency Check Karo',
+        'Practice: Check Data Sufficiency for x + y'
+      ),
+      task: t(
+        'Question hai: "x + y kya hai?" Statement I: x = 5. Statement II: y = 7. Pehle khud decide karo: kya I akela kaafi hai, II akela kaafi hai, ya dono mil kar kaafi hain? Phir starter code run karke verify karo. Done tab hoga jab output mein "Answer: both statements together are needed" print ho.',
+        'The question is: "What is x + y?" Statement I: x = 5. Statement II: y = 7. First decide yourself: is I alone enough, is II alone enough, or are both together enough? Then run the starter code to verify. You are done when the output prints "Answer: both statements together are needed".'
+      ),
+      language: 'python',
+      starter: `# Question: What is x + y?
+# Statement I: x = 5.  Statement II: y = 7.
+# Neither alone is enough, but together they give the answer.
+x = 5
+y = 7
+print("Statement I alone: x =", x, "-> y is unknown -> not enough")
+print("Statement II alone: y =", y, "-> x is unknown -> not enough")
+print("Both together: x + y =", x + y)
+print("Answer: both statements together are needed")`,
+      expected: `Statement I alone: x = 5 -> y is unknown -> not enough
+Statement II alone: y = 7 -> x is unknown -> not enough
+Both together: x + y = 12
+Answer: both statements together are needed`
+    },
+    readMinutes: 12
+  };
+
+const logicCubesDice: Article = {
+    id: 'logic-cubes-dice',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Cubes & Dice — Painted Cube aur Opposite Faces',
+      'Cubes and Dice — The Painted Cube and Opposite Faces'
+    ),
+    summary: t(
+      'Painted cube ko kaatne par kitne chhote cubes par 3, 2, 1 ya 0 faces par rang hoga — aur dice ki do positions se opposite faces kaise nikalein.',
+      'When a painted cube is cut, how many small cubes have paint on 3, 2, 1, or 0 faces — and how to find opposite faces from two positions of a dice.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Cubes & Dice Kya Hote Hain?',
+          '1. What Are Cubes and Dice?'
+        ),
+        body: t(
+          `Cubes aur dice ke sawal spatial soch ke hote hain — tumhe cube ko dimaag mein ghumana aur kaatna hota hai. **Painted cube** wale sawal mein ek bada cube (side n) saari taraf se paint kiya jaata hai, phir use chhote cubes mein kaata jaata hai. Total chhote cubes hote hain n³. Jaise n = 3 ho toh 27 chhote cubes bante hain. Phir poochha jaata hai: kitne chhote cubes par 3 faces par rang hai, kitne par 2 faces par, kitne par 1 face par, aur kitne par ek bhi face par rang nahi hai?
+
+**Dice** wale sawal mein ek dice ki 1, 2 ya 3 positions dikhayi jaati hain, aur poochha jaata hai ki kaunsi face kis ke opposite hai. Dice ki sabse important baat hai: **ek face ke opposite wali face uske saath kabhi ek hi position mein nahi dikhti** — kyunki opposite faces ek doosre ko dekh hi nahi sakti. Agar ek position mein 5 upar hai aur 1 saamne hai, toh 1 kabhi 5 ka opposite nahi ho sakta.
+
+Dono topics ka ek hi funda hai: **cube ke corners, edges aur faces ko pehchan lo.** Corner wale chhote cubes par 3 faces par rang hota hai, edge wale par 2 faces par, face ke beech wale par 1 face par, aur andar wale par 0 faces par.`,
+          `Cube and dice questions need spatial thinking — you must turn and cut the cube in your mind. In a **painted cube** question, a big cube (side n) is painted on all sides, then cut into small cubes. The total number of small cubes is n³. For example, if n = 3, you get 27 small cubes. Then you are asked: how many small cubes have paint on 3 faces, how many on 2 faces, how many on 1 face, and how many on no face at all?
+
+In a **dice** question, 1, 2, or 3 positions of a dice are shown, and you are asked which face is opposite which. The most important fact about a dice is: **a face and its opposite face never appear together in one position** — because opposite faces can never see each other. If in one position 5 is on top and 1 is in front, then 1 can never be opposite 5.
+
+Both topics share one idea: **learn the corners, edges, and faces of a cube.** Small cubes at the corners have paint on 3 faces, those on the edges have paint on 2 faces, those in the middle of a face have paint on 1 face, and those inside have paint on 0 faces.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Rubik Cube, Ludo Dice aur Barfi',
+          '2. Real-Life Examples: Rubik Cube, Ludo Dice, and Barfi'
+        ),
+        body: t(
+          `Soch lo tumhare paas ek Rubik cube hai — 3 × 3 × 3 ka cube, matlab 27 chhote cubes. Corner wale 8 chhote cubes par 3 faces par rang hai (har corner par 3 faces milti hain). Edge wale 12 chhote cubes par 2 faces par rang hai (har edge par 2 faces milti hain, aur n = 3 mein har edge par sirf 1 beech wala cube hota hai — 12 edges × 1 = 12). Face ke beech wale 6 chhote cubes par 1 face par rang hai (har face ke beech mein 1 cube). Aur bilkul andar wala 1 cube aisa hai jis par ek bhi face par rang nahi hai — use tum dekh bhi nahi sakte, woh andar chhupa hai. Total: 8 + 12 + 6 + 1 = 27. Yeh check hamesha karo — chaaro numbers ka total n³ hona chahiye.
+
+Doosra example — Ludo ka dice: tum dice ko phenkte ho aur 5 aata hai. Dice ki opposite faces ka sum **standard dice** mein 7 hota hai: 1 ke opposite 6, 2 ke opposite 5, 3 ke opposite 4. Toh agar upar 5 hai, toh neeche 2 hai (kyunki 5 + 2 = 7). Yeh sirf standard dice ke liye hai — exam mein agar dice standard na ho, toh positions se opposite nikaalna hota hai, sum-7 rule se nahi.
+
+Teesra example — barfi: ek badi barfi ko 3 × 3 × 3 ke 27 tukdon mein kaata gaya hai. Upar wali layer ke beech wala tukda sirf upar se meetha hai (1 face), corner wale tukde 3 taraf se meetha hai. Bilkul beech wala tukda andar hai — us par ek bhi taraf meetha nahi hai.`,
+          `Imagine you have a Rubik cube — a 3 × 3 × 3 cube, which means 27 small cubes. The 8 corner small cubes have paint on 3 faces (3 faces meet at every corner). The 12 edge small cubes have paint on 2 faces (2 faces meet at every edge, and with n = 3 each edge has only 1 middle cube — 12 edges × 1 = 12). The 6 small cubes in the middle of a face have paint on 1 face (1 cube in the middle of each face). And the 1 cube right inside has paint on no face at all — you cannot even see it, it is hidden inside. Total: 8 + 12 + 6 + 1 = 27. Always run this check — the four numbers must add up to n³.
+
+A second example — a Ludo dice: you throw the dice and get 5. On a **standard dice**, opposite faces add up to 7: 1 is opposite 6, 2 is opposite 5, 3 is opposite 4. So if 5 is on top, 2 is at the bottom (because 5 + 2 = 7). This is only for a standard dice — in exams, if the dice is not standard, you must find opposites from the positions, not from the sum-7 rule.
+
+A third example — barfi: a big barfi is cut into 27 pieces of 3 × 3 × 3. The middle piece of the top layer is sweet only on top (1 face), the corner pieces are sweet on 3 sides. The piece right in the middle is inside — it has no sweet side at all.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: n = 3 aur n = 4 Cube ka Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on n = 3 and n = 4 Cubes'
+        ),
+        body: t(
+          `Formulas yaad rakho (n = side, n ≥ 2): **Total = n³. 3 faces = 8** (hamesha 8, kyunki cube ke 8 corners hote hain). **2 faces = 12 × (n − 2)** (12 edges, har edge par n − 2 beech wale cubes). **1 face = 6 × (n − 2)²** (6 faces, har face ke beech mein (n − 2)² cubes). **0 faces = (n − 2)³** (andar wala cube).
+
+**n = 3 ka dry run:** Total = 27. 3 faces = 8. 2 faces = 12 × (3 − 2) = 12 × 1 = 12. 1 face = 6 × (3 − 2)² = 6 × 1 = 6. 0 faces = (3 − 2)³ = 1. Check: 8 + 12 + 6 + 1 = 27. Total se match kar gaya — dry run sahi hai.
+
+**n = 4 ka dry run:** Total = 64. 3 faces = 8 (hamesha). 2 faces = 12 × (4 − 2) = 12 × 2 = 24. 1 face = 6 × (4 − 2)² = 6 × 4 = 24. 0 faces = (4 − 2)³ = 8. Check: 8 + 24 + 24 + 8 = 64. Total se match kar gaya.
+
+Ab **dice ka dry run:** Dice ki do positions hain. Dono mein 5 upar hai. Position A mein saamne 1 hai aur right mein 2 hai. Position B mein saamne 3 hai aur right mein 6 hai. Upar 5 fix hai, toh side faces ka clockwise order banao: A se order hai 1, 2, ... B se order hai 3, 6, ... Dono ko mila kar order banta hai **1, 2, 3, 6**. Opposite faces order mein 2 steps door hoti hain: 1 ke opposite 3, 2 ke opposite 6. Aur jo face bachi — 4 — woh 5 ke opposite hai. Answer: 1↔3, 2↔6, 5↔4. Neeche wala code cube wale dry run ko print karta hai.`,
+          `Remember the formulas (n = side, n ≥ 2): **Total = n³. 3 faces = 8** (always 8, because a cube has 8 corners). **2 faces = 12 × (n − 2)** (12 edges, with n − 2 middle cubes on each edge). **1 face = 6 × (n − 2)²** (6 faces, with (n − 2)² cubes in the middle of each face). **0 faces = (n − 2)³** (the inside cube).
+
+**Dry run for n = 3:** Total = 27. 3 faces = 8. 2 faces = 12 × (3 − 2) = 12 × 1 = 12. 1 face = 6 × (3 − 2)² = 6 × 1 = 6. 0 faces = (3 − 2)³ = 1. Check: 8 + 12 + 6 + 1 = 27. It matches the total — the dry run is right.
+
+**Dry run for n = 4:** Total = 64. 3 faces = 8 (always). 2 faces = 12 × (4 − 2) = 12 × 2 = 24. 1 face = 6 × (4 − 2)² = 6 × 4 = 24. 0 faces = (4 − 2)³ = 8. Check: 8 + 24 + 24 + 8 = 64. It matches the total.
+
+Now a **dice dry run:** A dice has two positions. In both, 5 is on top. In Position A, 1 is in front and 2 is on the right. In Position B, 3 is in front and 6 is on the right. With 5 fixed on top, build the clockwise order of the side faces: from A the order is 1, 2, ... from B it is 3, 6, ... Joining them gives the order **1, 2, 3, 6**. Opposite faces sit 2 steps apart in the order: 1 is opposite 3, 2 is opposite 6. And the face left over — 4 — is opposite 5. Answer: 1↔3, 2↔6, 5↔4. The code below prints the cube dry run.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: n = 3 aur n = 4 Cube ke Painted Faces Ginna',
+            'Dry Run: Counting Painted Faces for n = 3 and n = 4 Cubes'
+          ),
+          language: 'python',
+          code: `# A cube of side n is painted on all faces and cut into n^3 small cubes.
+def cube_counts(n):
+    total = n ** 3
+    three = 8
+    two = 12 * (n - 2)
+    one = 6 * (n - 2) ** 2
+    zero = (n - 2) ** 3
+    return total, three, two, one, zero
+
+for n in [3, 4]:
+    total, three, two, one, zero = cube_counts(n)
+    print("n =", n, "total =", total)
+    print("  3 faces:", three, " 2 faces:", two, " 1 face:", one, " 0 faces:", zero)
+    print("  check:", three + two + one + zero, "==", total)`,
+          output: `n = 3 total = 27
+  3 faces: 8  2 faces: 12  1 face: 6  0 faces: 1
+  check: 27 == 27
+n = 4 total = 64
+  3 faces: 8  2 faces: 24  1 face: 24  0 faces: 8
+  check: 64 == 64`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: 3 Faces ko 8 Nahi, Sum-7 Har Dice par aur Edge Formula',
+          '4. Common Mistakes: Not 8 for 3 Faces, Sum-7 on Every Dice, and the Edge Formula'
+        ),
+        body: t(
+          `Sabse badi galti hai **3 faces wale cubes ko n ke hisaab se badal dena**. Log sochte hain n = 4 mein 3 faces wale cubes zyada honge — nahi, hamesha **8** hote hain, kyunki cube ke sirf 8 corners hote hain. n badhne se sirf edge aur face wale cubes badhte hain, corner hamesha 8 rehte hain.
+
+Doosri galti hai **sum-7 rule ko har dice par lagana**. Sum-7 (1↔6, 2↔5, 3↔4) sirf **standard dice** ke liye hai. Exam mein agar dice ki positions di hain, toh woh dice standard nahi bhi ho sakta — jaise upar wale dry run mein 1↔3, 2↔6, 5↔4 tha, sum 7 nahi hai. Positions di hon toh hamesha positions se opposite nikaalo, sum-7 se nahi. Sum-7 sirf tab use karo jab question mein "standard dice" likha ho.
+
+Teesri galti hai **2 faces ka formula galat likhna**. 2 faces = 12 × (n − 2) hota hai, 12 × n nahi. n = 4 mein 12 × 2 = 24 hota hai, 12 × 4 = 48 nahi. (n − 2) isliye aata hai kyunki har edge ke dono corner cubes 3 faces wale hote hain — beech wale hi 2 faces wale hote hain. Yahi (n − 2) 1 face aur 0 faces wale formulas mein bhi aata hai.
+
+Chauthi galti hai **check karna bhool jana**. Chaaro numbers ka total n³ hona chahiye — agar match na kare, toh koi formula galat laga hai. Yeh check 5 second ka hai aur galti turant pakad leta hai.`,
+          `The biggest mistake is **changing the 3-face cubes with n**. People think n = 4 has more 3-face cubes — no, there are always **8**, because a cube has only 8 corners. When n grows, only the edge and face cubes grow; the corners always stay 8.
+
+The second mistake is **applying the sum-7 rule to every dice**. Sum-7 (1↔6, 2↔5, 3↔4) is only for a **standard dice**. In exams, if dice positions are given, the dice may not be standard — like in the dry run above, where 1↔3, 2↔6, 5↔4, which does not sum to 7. If positions are given, always find opposites from the positions, not from sum-7. Use sum-7 only when the question says "standard dice".
+
+The third mistake is **writing the 2-face formula wrong**. 2 faces = 12 × (n − 2), not 12 × n. For n = 4 it is 12 × 2 = 24, not 12 × 4 = 48. The (n − 2) comes because both corner cubes on each edge are 3-face cubes — only the middle ones are 2-face cubes. The same (n − 2) appears in the 1-face and 0-face formulas too.
+
+The fourth mistake is **forgetting the check**. The four numbers must add up to n³ — if they do not match, some formula was applied wrongly. This check takes 5 seconds and catches the mistake at once.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: n = 2, Sirf Ek Face Paint aur Ek Position',
+          '5. Edge Cases: n = 2, Only One Face Painted, and a Single Position'
+        ),
+        body: t(
+          `**n = 2:** Cube ko 8 chhote cubes mein kaata gaya hai. Formulas lagao: 3 faces = 8, 2 faces = 12 × 0 = 0, 1 face = 6 × 0 = 0, 0 faces = 0. Matlab saare 8 cubes corner hain — har chhote cube par 3 faces par rang hai. Check: 8 + 0 + 0 + 0 = 8 = 2³. Sahi hai. n = 2 mein andar koi cube hi nahi hota, isliye 2, 1 aur 0 faces wale cubes zero hote hain.
+
+**Sirf ek face paint:** Agar cube ki sirf ek face paint ki gayi ho, toh formulas badal jaate hain. Jaise n = 3 mein sirf upar wali face paint ho: upar wali layer ke 9 cubes par rang hoga (1 face par), baaki 18 par ek bhi rang nahi hoga. 3 faces aur 2 faces wale cubes zero honge, kyunki rang sirf ek face par hai. Exam mein pehle padho: "all faces painted" likha hai ya "only one face painted"?
+
+**Sirf ek position:** Dice ki sirf ek position di ho — jaise 5 upar, 1 saamne, 2 right mein. Isse sirf yeh pata chalta hai ki 1, 2 aur 5 ek doosre ke opposite nahi hain. 5 ka opposite 3, 4 ya 6 mein se koi ek ho sakta hai — ek position se exact opposite nahi nikal sakta. Isliye exam mein opposite nikaalne ke liye kam se kam 2 positions chahiye, ya "standard dice" likha hona chahiye.`,
+          `**n = 2:** The cube is cut into 8 small cubes. Apply the formulas: 3 faces = 8, 2 faces = 12 × 0 = 0, 1 face = 6 × 0 = 0, 0 faces = 0. So all 8 cubes are corners — every small cube has paint on 3 faces. Check: 8 + 0 + 0 + 0 = 8 = 2³. Right. With n = 2 there is no inside cube at all, so the 2-face, 1-face, and 0-face counts are zero.
+
+**Only one face painted:** If only one face of the cube is painted, the formulas change. For example, with n = 3 and only the top face painted: the 9 cubes of the top layer have paint (on 1 face), the other 18 have no paint at all. The 3-face and 2-face counts are zero, because paint is on only one face. In exams, read first: does it say "all faces painted" or "only one face painted"?
+
+**A single position:** Only one position of the dice is given — for example, 5 on top, 1 in front, 2 on the right. This only tells you that 1, 2, and 5 are not opposite each other. The opposite of 5 could be 3, 4, or 6 — one position cannot give the exact opposite. So in exams, finding an opposite needs at least 2 positions, or the words "standard dice".`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: n Badal Jaaye ya Dice Standard Ho Jaaye?',
+          '6. What If: n Changes or the Dice Becomes Standard?'
+        ),
+        body: t(
+          `Soch lo n = 3 se badal kar n = 5 ho jaaye. Formulas lagao: Total = 125. 3 faces = 8 (hamesha). 2 faces = 12 × 3 = 36. 1 face = 6 × 9 = 54. 0 faces = 27. Check: 8 + 36 + 54 + 27 = 125. Notice karo: 3 faces wale hamesha 8 rehte hain, par 0 faces wale 1 se badh kar 27 ho gaye — cube bada hote hi andar wala hissa sabse zyada badhta hai.
+
+Ab socho dice standard ho jaaye: positions ki zaroorat hi nahi hai, sum-7 rule lagao — 1↔6, 2↔5, 3↔4. Agar upar 5 hai toh neeche 2 hai. Par dhyaan do: standard dice mein bhi do positions se opposite nikaalna galat nahi hai — dono tareeke se same answer aana chahiye. Agar positions se alag answer aaye aur sum-7 se alag, toh dice standard nahi hai.
+
+**What if cube ko sirf 2 hisso mein kaata jaaye?** Jaise n = 3 wale cube ko sirf beech se kaat kar 2 tukde kiye jaayein — toh chhote cubes 27 nahi, sirf 2 honge. Formulas sirf tab lagte hain jab cube ko har side se n hisso mein kaata jaaye. Question mein "cut into n³ small cubes" ya "each side divided into n parts" padh kar hi formula lagao.`,
+          `Suppose n changes from 3 to 5. Apply the formulas: Total = 125. 3 faces = 8 (always). 2 faces = 12 × 3 = 36. 1 face = 6 × 9 = 54. 0 faces = 27. Check: 8 + 36 + 54 + 27 = 125. Notice: the 3-face cubes always stay 8, but the 0-face cubes grew from 1 to 27 — as the cube grows, the inside part grows the most.
+
+Now suppose the dice becomes standard: no positions are needed, use the sum-7 rule — 1↔6, 2↔5, 3↔4. If 5 is on top, 2 is at the bottom. But note: finding opposites from two positions is not wrong even for a standard dice — both ways must give the same answer. If the positions give a different answer from sum-7, the dice is not standard.
+
+**What if the cube is cut into only 2 parts?** For example, the n = 3 cube is cut in the middle into just 2 pieces — then there are not 27 small cubes, only 2. The formulas apply only when the cube is cut into n parts on every side. Apply the formula only after reading "cut into n³ small cubes" or "each side divided into n parts" in the question.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Cube ke 4 Formulas aur Dice ka 1 Rule',
+          '7. Summary: The 4 Cube Formulas and the 1 Dice Rule'
+        ),
+        body: t(
+          `Poora article ek jagah par: **Total = n³, 3 faces = 8, 2 faces = 12 × (n − 2), 1 face = 6 × (n − 2)², 0 faces = (n − 2)³.** Aur hamesha check karo: chaaro ka total n³ hona chahiye. n = 3: 8, 12, 6, 1. n = 4: 8, 24, 24, 8. n = 5: 8, 36, 54, 27.
+
+Dice ka rule ek line mein: **jo faces ek position mein saath dikhti hain, woh ek doosre ke opposite nahi ho sakti.** Do positions mein common face ko fix karke side faces ka clockwise order banao — order mein 2 steps door wali faces opposite hoti hain. Aur standard dice mein opposite faces ka sum 7 hota hai — par yeh rule sirf standard dice par lagta hai.
+
+Revision ke liye n = 4 ka dry run dobara karo bina code dekhe: 3 faces 8, 2 faces 24, 1 face 24, 0 faces 8, total 64. Aur dice wala dry run: 1↔3, 2↔6, 5↔4. Agar dono bina ruke ho jaayein, toh cubes aur dice tumhe aa gaye hain. Agle article mein hum calendar aur clock dekhenge — wahan cube ghumana nahi, din aur angle ginna hota hai.`,
+          `The whole article in one place: **Total = n³, 3 faces = 8, 2 faces = 12 × (n − 2), 1 face = 6 × (n − 2)², 0 faces = (n − 2)³.** And always check: the four must add up to n³. n = 3: 8, 12, 6, 1. n = 4: 8, 24, 24, 8. n = 5: 8, 36, 54, 27.
+
+The dice rule in one line: **faces that appear together in one position cannot be opposite each other.** Fix the common face in two positions and build the clockwise order of the side faces — faces 2 steps apart in the order are opposite. And on a standard dice, opposite faces add up to 7 — but this rule applies only to a standard dice.
+
+To revise, redo the n = 4 dry run without looking at the code: 3 faces 8, 2 faces 24, 1 face 24, 0 faces 8, total 64. And the dice dry run: 1↔3, 2↔6, 5↔4. If both go smoothly, you know cubes and dice. In the next article we will look at calendar and clock — there you do not turn a cube, you count days and angles.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'n = 3 Cube: 27 Chhote Cubes ka Hisaab',
+        'n = 3 Cube: The Count of 27 Small Cubes'
+      ),
+      caption: t(
+        'Corner, edge, face aur andar — chaaro ka total 27 hona chahiye',
+        'Corner, edge, face, and inside — the four must add up to 27'
+      ),
+      nodes: [
+        {
+          t: t('3 faces: 8 cubes', '3 faces: 8 cubes'),
+          s: t('Cube ke 8 corners — hamesha 8', 'The 8 corners of the cube — always 8')
+        },
+        {
+          t: t('2 faces: 12 cubes', '2 faces: 12 cubes'),
+          s: t('12 edges × 1 beech wala cube', '12 edges × 1 middle cube')
+        },
+        {
+          t: t('1 face: 6 cubes', '1 face: 6 cubes'),
+          s: t('6 faces ke beech mein 1-1 cube', '1 cube in the middle of each of the 6 faces')
+        },
+        {
+          t: t('0 faces: 1 cube', '0 faces: 1 cube'),
+          s: t('Bilkul andar wala cube — dikhta hi nahi', 'The cube right inside — not even visible')
+        },
+        {
+          t: t('Check: 8 + 12 + 6 + 1 = 27', 'Check: 8 + 12 + 6 + 1 = 27'),
+          s: t('Total n³ se match karna chahiye', 'The total must match n³')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Dice ke Opposite Faces: Do Positions se Nikalo',
+          'Opposite Faces of a Dice: Find Them from Two Positions'
+        ),
+        language: 'python',
+        code: `# Two positions, top face 5 in both.
+# Position A: front 1, right 2.  Position B: front 3, right 6.
+# Side order clockwise: 1, 2, 3, 6. Opposite faces sit two steps apart.
+sides = [1, 2, 3, 6]
+print("1 is opposite", sides[2])
+print("2 is opposite", sides[3])
+print("5 is opposite 4")`,
+        output: `1 is opposite 3
+2 is opposite 6
+5 is opposite 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'n = 3 wale painted cube mein kitne chhote cubes par exactly 2 faces par rang hoga?',
+          'In a painted cube with n = 3, how many small cubes have paint on exactly 2 faces?'
+        ),
+        opts: [
+          t('8', '8'),
+          t('6', '6'),
+          t('12', '12'),
+          t('1', '1')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 2 faces = 12 × (n − 2) = 12 × 1 = 12 — har edge par 1 beech wala cube, 12 edges.',
+          'Correct answer: 2 faces = 12 × (n − 2) = 12 × 1 = 12 — 1 middle cube on each edge, 12 edges.'
+        )
+      },
+      {
+        q: t(
+          'n = 4 wale painted cube mein kitne chhote cubes par exactly 1 face par rang hoga?',
+          'In a painted cube with n = 4, how many small cubes have paint on exactly 1 face?'
+        ),
+        opts: [
+          t('8', '8'),
+          t('16', '16'),
+          t('24', '24'),
+          t('32', '32')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 1 face = 6 × (n − 2)² = 6 × 4 = 24 — har face ke beech mein 4 cubes, 6 faces.',
+          'Correct answer: 1 face = 6 × (n − 2)² = 6 × 4 = 24 — 4 cubes in the middle of each face, 6 faces.'
+        )
+      },
+      {
+        q: t(
+          'Dice ki do positions mein 5 upar hai. Position A mein saamne 1 hai, Position B mein saamne 3 hai. 5 ke opposite kaunsi face hai?',
+          'In two positions of a dice, 5 is on top. In Position A, 1 is in front; in Position B, 3 is in front. Which face is opposite 5?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: side faces ka order 1, 2, 3, 6 hai — 1, 2, 3, 6 chaaro 5 ke aas-paas hain, isliye bachi hui face 4 hi 5 ke opposite hai.',
+          'Correct answer: the side order is 1, 2, 3, 6 — all four sit around 5, so the remaining face 4 is opposite 5.'
+        )
+      },
+      {
+        q: t(
+          'Standard dice mein 1 ke opposite kaunsi face hoti hai?',
+          'On a standard dice, which face is opposite 1?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('3', '3'),
+          t('5', '5'),
+          t('6', '6')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: standard dice mein opposite faces ka sum 7 hota hai — 1 + 6 = 7, isliye 1 ke opposite 6 hai.',
+          'Correct answer: on a standard dice, opposite faces add up to 7 — 1 + 6 = 7, so 6 is opposite 1.'
+        )
+      },
+      {
+        q: t(
+          'n = 3 wale painted cube mein kitne chhote cubes par ek bhi face par rang nahi hoga?',
+          'In a painted cube with n = 3, how many small cubes have paint on no face at all?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('1', '1'),
+          t('6', '6'),
+          t('8', '8')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 0 faces = (n − 2)³ = 1³ = 1 — sirf bilkul andar wala cube bina rang ke hota hai.',
+          'Correct answer: 0 faces = (n − 2)³ = 1³ = 1 — only the cube right inside has no paint.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Total = n³, 3 faces = 8 (hamesha), 2 faces = 12 × (n − 2), 1 face = 6 × (n − 2)², 0 faces = (n − 2)³.',
+        'Total = n³, 3 faces = 8 (always), 2 faces = 12 × (n − 2), 1 face = 6 × (n − 2)², 0 faces = (n − 2)³.'
+      ),
+      t(
+        'Chaaro numbers ka total n³ hona chahiye — yeh 5 second ka check galti turant pakad leta hai.',
+        'The four numbers must add up to n³ — this 5-second check catches mistakes at once.'
+      ),
+      t(
+        'Ek position mein saath dikhne wali faces ek doosre ke opposite nahi ho sakti.',
+        'Faces that appear together in one position cannot be opposite each other.'
+      ),
+      t(
+        'Sum-7 rule (1↔6, 2↔5, 3↔4) sirf standard dice par lagta hai — positions di hon toh positions se nikaalo.',
+        'The sum-7 rule (1↔6, 2↔5, 3↔4) applies only to a standard dice — if positions are given, find opposites from the positions.'
+      ),
+      t(
+        'n = 2 mein saare 8 cubes corner hote hain — 2, 1 aur 0 faces wale cubes zero hote hain.',
+        'With n = 2, all 8 cubes are corners — the 2-face, 1-face, and 0-face counts are zero.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: n = 5 Cube ke Painted Faces Ginna',
+        'Practice: Count the Painted Faces of an n = 5 Cube'
+      ),
+      task: t(
+        'Ek cube ki side 5 hai, saari faces paint ki gayi hain aur use 125 chhote cubes mein kaata gaya hai. Pehle khud formulas se nikaalo: 3 faces 8, 2 faces 36, 1 face 54, 0 faces 27 aane chahiye. Phir starter code run karke verify karo. Done tab hoga jab output mein "check: 125 == 125" print ho.',
+        'A cube of side 5 is painted on all faces and cut into 125 small cubes. First find it yourself with the formulas: 3 faces should be 8, 2 faces 36, 1 face 54, 0 faces 27. Then run the starter code to verify. You are done when the output prints "check: 125 == 125".'
+      ),
+      language: 'python',
+      starter: `# A cube of side 5 is painted and cut into 125 small cubes.
+n = 5
+total = n ** 3
+three = 8
+two = 12 * (n - 2)
+one = 6 * (n - 2) ** 2
+zero = (n - 2) ** 3
+print("total =", total)
+print("3 faces:", three)
+print("2 faces:", two)
+print("1 face:", one)
+print("0 faces:", zero)
+print("check:", three + two + one + zero, "==", total)`,
+      expected: `total = 125
+3 faces: 8
+2 faces: 36
+1 face: 54
+0 faces: 27
+check: 125 == 125`
+    },
+    readMinutes: 12
+  };
+
+const logicCalendarClockLogic: Article = {
+    id: 'logic-calendar-clock-logic',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Calendar & Clock Reasoning — Din aur Angle Ginna',
+      'Calendar and Clock Reasoning — Counting Days and Angles'
+    ),
+    summary: t(
+      'Odd days se kisi bhi date ka weekday nikaalo, leap year pehchano aur ghadi ki suiyon ke beech ka angle ginno — 1 Jan 2026 se lekar 15 Aug 2026 tak.',
+      'Find the weekday of any date with odd days, spot leap years, and measure the angle between clock hands — from 1 Jan 2026 to 15 Aug 2026.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Calendar & Clock Reasoning Kya Hota Hai?',
+          '1. What Is Calendar and Clock Reasoning?'
+        ),
+        body: t(
+          `Calendar reasoning mein tumhe kisi bhi date ka **weekday** (Somvaar, Mangalvaar...) nikaalna hota hai — bina calendar dekhe, sirf gin kar. Iska funda hai **odd days**: ek hafte mein 7 din hote hain, toh 7 se zyada din ginne par sirf remainder matter karta hai. Jaise 365 din ka saal = 52 hafte + **1 odd day**. Matlab 1 Jan 2026 agar Thursday hai, toh 1 Jan 2027 Friday hoga — ek din aage, kyunki 2026 mein 1 odd day hai. Leap year mein 366 din hote hain = 52 hafte + **2 odd days**, toh agle saal ka 1 Jan 2 din aage hoga.
+
+Clock reasoning mein tumhe ghadi ki **hour hand aur minute hand ke beech ka angle** nikaalna hota hai. Minute hand har minute mein 6° chalti hai (360° ÷ 60 minute), aur hour hand har minute mein 0.5° chalti hai (30° per hour ÷ 60). Jaise 3:00 par angle 90° hota hai — hour hand 3 par (90°), minute hand 12 par (0°), farak 90°. 4:20 par angle sirf 10° hota hai — hour hand 130° par, minute hand 120° par, farak 10°.
+
+Dono topics ka ek hi funda hai: **ek unit ka rate pata karo, phir multiply karo.** Calendar mein 1 odd day = 1 weekday aage. Clock mein 1 minute = minute hand 6°, hour hand 0.5°.`,
+          `In calendar reasoning, you must find the **weekday** (Monday, Tuesday...) of any date — without looking at a calendar, only by counting. The idea is **odd days**: a week has 7 days, so when counting more than 7 days, only the remainder matters. For example, a year of 365 days = 52 weeks + **1 odd day**. So if 1 Jan 2026 is a Thursday, 1 Jan 2027 is a Friday — one day ahead, because 2026 has 1 odd day. A leap year has 366 days = 52 weeks + **2 odd days**, so 1 Jan of the next year is 2 days ahead.
+
+In clock reasoning, you must find the **angle between the hour hand and the minute hand**. The minute hand moves 6° per minute (360° ÷ 60 minutes), and the hour hand moves 0.5° per minute (30° per hour ÷ 60). For example, at 3:00 the angle is 90° — the hour hand is at 3 (90°), the minute hand is at 12 (0°), the difference is 90°. At 4:20 the angle is only 10° — the hour hand is at 130°, the minute hand at 120°, the difference is 10°.
+
+Both topics share one idea: **find the rate of one unit, then multiply.** In a calendar, 1 odd day = 1 weekday ahead. In a clock, 1 minute = 6° for the minute hand, 0.5° for the hour hand.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Birthday, Exam Date aur Train ka Time',
+          '2. Real-Life Examples: Birthday, Exam Date, and Train Time'
+        ),
+        body: t(
+          `Soch lo tumhara birthday 15 Aug 2026 ko hai aur tum jaanna chahte ho ki woh kaunsa din hoga. 1 Jan 2026 Thursday hai. Jan se Aug tak ke din ginne par 15 Aug 2026 **Saturday** padta hai — matlab birthday Saturday ko hai, chhutti ka din! Exam mein aise sawal aate hain: "15 Aug 2026 ko kaunsa din hoga?" — iska jawab gin kar nikaalna hota hai, yaad karke nahi.
+
+Doosra example — exam date: 1 Jan 2026 Thursday hai. 2026 leap year nahi hai (365 din), isliye 1 Jan 2027 Friday hoga — sirf 1 odd day aage. Par 2024 leap year tha (366 din), isliye 1 Jan 2024 Monday tha toh 1 Jan 2025 Wednesday hua — 2 din aage. Leap year ka 1 extra din hi 2 odd days banata hai — yahi sabse zyada poochha jaane wala concept hai.
+
+Teesra example — ghadi: tum train pakadne ke liye 4:20 par ghadi dekhte ho. Hour hand 4 se thoda aage hai (130°), minute hand 4 par hai (120°) — dono ke beech sirf 10° ka angle hai, matlab suiyan lagbhag ek saath hain. Aur 3:00 par angle 90° hota hai — suiyan bilkul perpendicular hoti hain. Clock ke sawalon mein hamesha hour hand ki 0.5° per minute wali movement mat bhoolo — yahi sabse common galti hai.`,
+          `Suppose your birthday is on 15 Aug 2026 and you want to know which day it falls on. 1 Jan 2026 is a Thursday. Counting the days from Jan to Aug, 15 Aug 2026 falls on a **Saturday** — so your birthday is on a Saturday, a holiday! Exams ask such questions: "Which day is 15 Aug 2026?" — the answer must be counted, not memorised.
+
+A second example — an exam date: 1 Jan 2026 is a Thursday. 2026 is not a leap year (365 days), so 1 Jan 2027 is a Friday — just 1 odd day ahead. But 2024 was a leap year (366 days), so 1 Jan 2024 was a Monday and 1 Jan 2025 became a Wednesday — 2 days ahead. The 1 extra day of a leap year is what makes 2 odd days — this is the most asked concept.
+
+A third example — a clock: you look at your watch at 4:20 to catch a train. The hour hand is slightly past 4 (130°), the minute hand is at 4 (120°) — the angle between them is only 10°, so the hands are almost together. And at 3:00 the angle is 90° — the hands are exactly perpendicular. In clock questions, never forget the hour hand movement of 0.5° per minute — that is the most common mistake.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 2026 ke Dates aur 4:20 ka Angle — Dry Run',
+          '3. Step-by-Step: Worked Example with Dry Run on 2026 Dates and the 4:20 Angle'
+        ),
+        body: t(
+          `Pehle calendar ka dry run karte hain. Hum jaante hain: **1 Jan 2026 Thursday hai.** Ab 4 dates nikaalte hain.
+
+**Step 1 — 15 Aug 2026:** 1 Jan se 15 Aug tak ke din ginno. Jan 31, Feb 28 (2026 leap nahi hai), Mar 31, Apr 30, May 31, Jun 30, Jul 31 — total 212 din, phir Aug mein 15 din. 1 Jan se 15 Aug tak 227 din ka gap hai. 227 ÷ 7 = 32 hafte + 3 din bachte hain (32 × 7 = 224, 227 − 224 = 3). Thursday se 3 din aage: Friday (1), Saturday (2)... ruko — Thursday + 3 = Sunday? Gino: Thursday + 1 = Friday, + 2 = Saturday, + 3 = Sunday. Hmm, yeh galat lag raha hai — code kehta hai Saturday! Dobara ginno: 1 Jan se 15 Aug tak ka gap **226** din hai, 227 nahi — kyunki 1 Jan ko day 0 maano, 15 Aug day 226 hai. 226 ÷ 7 = 32 hafte + 2 din (224 + 2 = 226). Thursday + 2 = Saturday. **Sahi jawab: Saturday.** Yahi off-by-one galti sabse common hai — isliye hamesha code ya dobara gin kar check karo.
+
+**Step 2 — 1 Jan 2027:** 2026 mein 365 din = 1 odd day. Thursday + 1 = **Friday**.
+
+**Step 3 — 1 Jan 2000:** Yeh Saturday tha — 2000 leap year tha (400 se divide hota hai), isliye century rule yaad rakho.
+
+**Step 4 — Clock 4:20:** Hour hand = 4 × 30 + 20 × 0.5 = 120 + 10 = 130°. Minute hand = 20 × 6 = 120°. Angle = |130 − 120| = **10°**. Neeche wala code calendar wale hisse ko print karta hai.`,
+          `First, the calendar dry run. We know: **1 Jan 2026 is a Thursday.** Now we find 4 dates.
+
+**Step 1 — 15 Aug 2026:** Count the days from 1 Jan to 15 Aug. Jan 31, Feb 28 (2026 is not a leap year), Mar 31, Apr 30, May 31, Jun 30, Jul 31 — 212 days in total, then 15 days in Aug. The gap from 1 Jan to 15 Aug is 227 days. 227 ÷ 7 = 32 weeks + 3 days left (32 × 7 = 224, 227 − 224 = 3). Thursday + 3 days: Friday (1), Saturday (2)... wait — Thursday + 3 = Sunday? Count: Thursday + 1 = Friday, + 2 = Saturday, + 3 = Sunday. Hmm, that looks wrong — the code says Saturday! Count again: the gap from 1 Jan to 15 Aug is **226** days, not 227 — because 1 Jan is day 0, and 15 Aug is day 226. 226 ÷ 7 = 32 weeks + 2 days (224 + 2 = 226). Thursday + 2 = Saturday. **Right answer: Saturday.** This off-by-one mistake is the most common — so always check with code or by counting again.
+
+**Step 2 — 1 Jan 2027:** 2026 has 365 days = 1 odd day. Thursday + 1 = **Friday**.
+
+**Step 3 — 1 Jan 2000:** It was a Saturday — 2000 was a leap year (divisible by 400), so remember the century rule.
+
+**Step 4 — Clock 4:20:** Hour hand = 4 × 30 + 20 × 0.5 = 120 + 10 = 130°. Minute hand = 20 × 6 = 120°. Angle = |130 − 120| = **10°**. The code below prints the calendar part.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 2026 ki Dates ka Weekday Nikalna',
+            'Dry Run: Finding the Weekday of 2026 Dates'
+          ),
+          language: 'python',
+          code: `import datetime
+
+def day_name(date_text):
+    d = datetime.date.fromisoformat(date_text)
+    return d.strftime("%A")
+
+for date_text in ["2026-01-01", "2026-08-15", "2000-01-01", "2024-02-29"]:
+    print(date_text, "->", day_name(date_text))
+
+# 2026 is not a leap year: 365 days = 52 weeks + 1 odd day.
+# So 1 Jan 2027 is one weekday after 1 Jan 2026.
+print("1 Jan 2027 ->", day_name("2027-01-01"))`,
+          output: `2026-01-01 -> Thursday
+2026-08-15 -> Saturday
+2000-01-01 -> Saturday
+2024-02-29 -> Thursday
+1 Jan 2027 -> Friday`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Off-by-One, Leap Year aur Hour Hand',
+          '4. Common Mistakes: Off-by-One, Leap Year, and the Hour Hand'
+        ),
+        body: t(
+          `Sabse badi galti hai **off-by-one** — 1 Jan se 15 Aug tak 227 din gin lena, jabki gap 226 din hai. Upar wale dry run mein yahi galti dikhayi gayi hai: pehli ginti mein Sunday aaya, dobara ginne par Saturday aaya. Isse bachne ka tareeka hai: **1 Jan ko day 0 maano**, aur hamesha 7 se divide karke remainder lo. Ya code se verify karo — exam mein code nahi hoga, par practice mein code se check karne ki aadat galti ko pakad leti hai.
+
+Doosri galti hai **leap year ka rule galat yaad rakhna**. Rule hai: saal 4 se divide ho toh leap year hai, **par** 100 se divide hone wale saal leap nahi hote — **jab tak** woh 400 se divide na hon. Isliye 2024 leap hai, 1900 leap nahi hai (100 se divide hota hai, 400 se nahi), aur 2000 leap hai (400 se divide hota hai). 1900 ko leap maan lena sabse common galti hai.
+
+Teesri galti hai **hour hand ki movement bhoolna**. 4:20 par log kehte hain hour hand 4 par hai (120°) — nahi, woh 20 minute mein 10° aage badh chuki hai (130°). Isi liye angle 20° nahi, 10° hai. Hour hand har minute 0.5° chalti hai — yeh number yaad rakho.
+
+Chauthi galti hai **angle 180° se zyada lena**. Jaise 9:15 par farak 172.5° hai — yeh 180° se kam hai, theek hai. Par agar farak 200° aaye, toh asli angle 360 − 200 = 160° hoga — hamesha **chhota wala angle** lo (0° se 180° ke beech).`,
+          `The biggest mistake is **off-by-one** — counting 227 days from 1 Jan to 15 Aug, when the gap is 226 days. The dry run above shows this mistake: the first count gave Sunday, counting again gave Saturday. The way to avoid it: **treat 1 Jan as day 0**, and always divide by 7 and take the remainder. Or verify with code — there is no code in exams, but the habit of checking with code in practice catches the mistake.
+
+The second mistake is **remembering the leap year rule wrong**. The rule is: a year divisible by 4 is a leap year, **but** years divisible by 100 are not leap — **unless** they are also divisible by 400. So 2024 is a leap year, 1900 is not a leap year (divisible by 100, not by 400), and 2000 is a leap year (divisible by 400). Treating 1900 as a leap year is the most common mistake.
+
+The third mistake is **forgetting the hour hand movement**. At 4:20 people say the hour hand is at 4 (120°) — no, in 20 minutes it has moved 10° ahead (130°). That is why the angle is 10°, not 20°. The hour hand moves 0.5° per minute — remember this number.
+
+The fourth mistake is **taking an angle greater than 180°**. For example, at 9:15 the difference is 172.5° — that is less than 180°, fine. But if the difference comes to 200°, the real angle is 360 − 200 = 160° — always take the **smaller angle** (between 0° and 180°).`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: 29 Feb, 1900 aur 12:00 ka Angle',
+          '5. Edge Cases: 29 Feb, 1900, and the 12:00 Angle'
+        ),
+        body: t(
+          `**29 Feb:** Yeh date sirf leap year mein hoti hai. 29 Feb 2024 Thursday tha. Agar question ho "29 Feb 2024 ko kaunsa din tha?" toh pehle check karo ki 2024 leap hai ya nahi — 2024 ÷ 4 = 506, poora divide hota hai, isliye leap hai. Non-leap year mein 29 Feb ki date hoti hi nahi — agar options mein 29 Feb 2025 dikhe, toh woh sawal hi galat hai ya trap hai.
+
+**1900:** 1900 leap nahi hai, kyunki 1900 ÷ 100 = 19 (poora divide), par 1900 ÷ 400 = 4.75 (poora divide nahi). Isliye Feb 1900 mein 28 din the, 29 nahi. Exam mein 1900 aur 2000 ko ek saath de kar confuse kiya jaata hai — 2000 leap hai, 1900 nahi.
+
+**12:00 ka angle:** Dono suiyan 12 par hoti hain — angle 0° hai. Aur 6:00 par angle 180° hai — suiyan bilkul opposite hoti hain. Yeh do extreme cases yaad rakho: 0° (overlap) aur 180° (opposite).
+
+**Aadhi raat ke baad:** 12:00 ke baad hour hand phir se 0° se chalna shuru karti hai — isliye formula mein hamesha **h % 12** use karo. 13:00 matlab 1:00 hi hota hai ghadi par.`,
+          `**29 Feb:** This date exists only in a leap year. 29 Feb 2024 was a Thursday. If the question is "Which day was 29 Feb 2024?" first check whether 2024 is a leap year — 2024 ÷ 4 = 506, it divides fully, so it is a leap year. In a non-leap year, 29 Feb does not exist at all — if 29 Feb 2025 appears in the options, the question itself is wrong or a trap.
+
+**1900:** 1900 is not a leap year, because 1900 ÷ 100 = 19 (divides fully), but 1900 ÷ 400 = 4.75 (does not divide fully). So Feb 1900 had 28 days, not 29. In exams, 1900 and 2000 are given together to confuse — 2000 is a leap year, 1900 is not.
+
+**The 12:00 angle:** Both hands are at 12 — the angle is 0°. And at 6:00 the angle is 180° — the hands are exactly opposite. Remember these two extreme cases: 0° (overlap) and 180° (opposite).
+
+**After midnight:** After 12:00 the hour hand starts again from 0° — so in the formula always use **h % 12**. 13:00 is the same as 1:00 on a clock.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Saal Badal Jaaye ya Time Badal Jaaye?',
+          '6. What If: The Year Changes or the Time Changes?'
+        ),
+        body: t(
+          `Soch lo saal 2026 se badal kar 2027 ho jaaye. 1 Jan 2027 Friday hai (2026 mein 1 odd day tha). Ab 15 Aug 2027 ka din nikaalna ho toh phir se ginna padega — 2027 bhi non-leap hai, par starting day Friday hai. Matlab har saal ka answer alag hota hai — pichle saal ka weekday yaad karke nahi, naye saal se gin kar nikaalo.
+
+Ab socho time badal jaaye: 4:20 ki jagah 2:30 ho jaaye. Hour hand = 2 × 30 + 30 × 0.5 = 60 + 15 = 75°. Minute hand = 30 × 6 = 180°. Angle = |75 − 180| = 105°. Dekho, angle 10° se badal kar 105° ho gaya — time badalte hi angle badal jaata hai, isliye har time ko naye tareeke se calculate karo.
+
+**What if ghadi 12 ghante ki jagah 24 ghante ki ho?** 24 ghante wali ghadi mein bhi hour hand ek din mein 2 baar ghoomti hai — 13:00 ka angle wahi hota hai jo 1:00 ka hota hai. Isliye hamesha h % 12 karo, chahe time 24-hour format mein diya ho.
+
+**What if date pehle ki ho?** Jaise 1 Jan 2000 Saturday tha — 2000 se pehle jaane par odd days ko ulta ginna padta hai (peeche jaana). Exam mein aam taur par aage ki dates poochhi jaati hain, par peeche jaane par 7 se subtract karke ginna mat bhoolo.`,
+          `Suppose the year changes from 2026 to 2027. 1 Jan 2027 is a Friday (2026 had 1 odd day). Now to find the day of 15 Aug 2027, you must count again — 2027 is also a non-leap year, but the starting day is Friday. So every year gives a different answer — do not use last year weekday from memory, count from the new year.
+
+Now suppose the time changes: 4:20 becomes 2:30. Hour hand = 2 × 30 + 30 × 0.5 = 60 + 15 = 75°. Minute hand = 30 × 6 = 180°. Angle = |75 − 180| = 105°. See, the angle changed from 10° to 105° — when the time changes, the angle changes, so calculate every time afresh.
+
+**What if the clock is 24-hour instead of 12-hour?** On a 24-hour clock, the hour hand still goes round twice a day — the angle at 13:00 is the same as at 1:00. So always use h % 12, even if the time is given in 24-hour format.
+
+**What if the date is earlier?** For example, 1 Jan 2000 was a Saturday — going before 2000, odd days must be counted backwards. Exams usually ask future dates, but when going backwards, do not forget to subtract from 7.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Calendar-Clock ke 4 Numbers',
+          '7. Summary: The 4 Numbers of Calendar and Clock'
+        ),
+        body: t(
+          `Poora article 4 numbers mein: **(1) Normal saal = 1 odd day, leap saal = 2 odd days. (2) Leap rule: 4 se divide, par 100 se divide wala nahi, jab tak 400 se divide na ho. (3) Minute hand = 6° per minute, hour hand = 0.5° per minute. (4) Angle = |hour − minute|, agar 180° se zyada ho toh 360° se ghatao.**
+
+Yaad rakhne wale answers: 1 Jan 2026 Thursday, 15 Aug 2026 Saturday, 1 Jan 2027 Friday, 1 Jan 2000 Saturday, 29 Feb 2024 Thursday. Clock: 3:00 → 90°, 4:20 → 10°, 2:30 → 105°, 6:00 → 180°, 12:00 → 0°.
+
+Revision ke liye ek kaam karo: 1 Jan 2026 (Thursday) se shuru karke 15 Aug 2026 ka din ginno — gap 226 din, remainder 2, Thursday + 2 = Saturday. Aur clock par 4:20 ka angle nikaalo — hour 130°, minute 120°, angle 10°. Agar dono bina ruke ho jaayein, toh calendar aur clock tumhe aa gaye hain. Agle aur aakhri article mein hum order aur ranking dekhenge — wahan din nahi, line mein position ginni hoti hai.`,
+          `The whole article in 4 numbers: **(1) Normal year = 1 odd day, leap year = 2 odd days. (2) Leap rule: divisible by 4, but not if divisible by 100, unless also divisible by 400. (3) Minute hand = 6° per minute, hour hand = 0.5° per minute. (4) Angle = |hour − minute|; if it is more than 180°, subtract from 360°.**
+
+Answers to remember: 1 Jan 2026 Thursday, 15 Aug 2026 Saturday, 1 Jan 2027 Friday, 1 Jan 2000 Saturday, 29 Feb 2024 Thursday. Clock: 3:00 → 90°, 4:20 → 10°, 2:30 → 105°, 6:00 → 180°, 12:00 → 0°.
+
+To revise, do one task: start from 1 Jan 2026 (Thursday) and find the day of 15 Aug 2026 — gap 226 days, remainder 2, Thursday + 2 = Saturday. And find the clock angle at 4:20 — hour 130°, minute 120°, angle 10°. If both go smoothly, you know calendar and clock. In the next and last article we will look at order and ranking — there you count a position in a line, not days.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '2026 ka Calendar Timeline: Jan se Aug Tak',
+        'The 2026 Calendar Timeline: From Jan to Aug'
+      ),
+      caption: t(
+        '1 Jan Thursday se shuru karke 226 din ka gap — remainder 2, isliye 15 Aug Saturday',
+        'Starting from 1 Jan Thursday, a gap of 226 days — remainder 2, so 15 Aug is Saturday'
+      ),
+      nodes: [
+        {
+          t: t('1 Jan 2026: Thursday', '1 Jan 2026: Thursday'),
+          s: t('Starting point — day 0', 'Starting point — day 0')
+        },
+        {
+          t: t('Feb 2026: 28 din', 'Feb 2026: 28 days'),
+          s: t('2026 leap year nahi hai', '2026 is not a leap year')
+        },
+        {
+          t: t('Jan-Jul: 212 din', 'Jan-Jul: 212 days'),
+          s: t('31 + 28 + 31 + 30 + 31 + 30 + 31', '31 + 28 + 31 + 30 + 31 + 30 + 31')
+        },
+        {
+          t: t('Gap: 226 din = 32 hafte + 2', 'Gap: 226 days = 32 weeks + 2'),
+          s: t('226 ÷ 7 = 32, remainder 2', '226 ÷ 7 = 32, remainder 2')
+        },
+        {
+          t: t('15 Aug 2026: Saturday', '15 Aug 2026: Saturday'),
+          s: t('Thursday + 2 din = Saturday', 'Thursday + 2 days = Saturday')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Clock Angle: 3:00, 4:20 aur 2:30 par Suanyon ke Beech ka Angle',
+          'Clock Angle: The Angle Between Hands at 3:00, 4:20, and 2:30'
+        ),
+        language: 'python',
+        code: `def angle(h, m):
+    hour_hand = (h % 12) * 30 + m * 0.5
+    minute_hand = m * 6
+    diff = abs(hour_hand - minute_hand)
+    return min(diff, 360 - diff)
+
+for h, m in [(3, 0), (4, 20), (2, 30)]:
+    print(f"{h}:{m:02d} -> {angle(h, m)} degrees")`,
+        output: `3:00 -> 90.0 degrees
+4:20 -> 10.0 degrees
+2:30 -> 105.0 degrees`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '1 Jan 2026 Thursday hai. 1 Jan 2027 ko kaunsa din hoga?',
+          '1 Jan 2026 is a Thursday. Which day is 1 Jan 2027?'
+        ),
+        opts: [
+          t('Thursday', 'Thursday'),
+          t('Friday', 'Friday'),
+          t('Saturday', 'Saturday'),
+          t('Sunday', 'Sunday')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 2026 normal saal hai (365 din = 1 odd day), isliye 1 Jan 2027 Thursday se 1 din aage — Friday hoga.',
+          'Correct answer: 2026 is a normal year (365 days = 1 odd day), so 1 Jan 2027 is 1 day after Thursday — Friday.'
+        )
+      },
+      {
+        q: t(
+          '15 Aug 2026 ko kaunsa din hoga? (1 Jan 2026 Thursday hai)',
+          'Which day is 15 Aug 2026? (1 Jan 2026 is a Thursday)'
+        ),
+        opts: [
+          t('Friday', 'Friday'),
+          t('Saturday', 'Saturday'),
+          t('Sunday', 'Sunday'),
+          t('Monday', 'Monday')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 1 Jan se 15 Aug tak gap 226 din hai, 226 ÷ 7 ka remainder 2 hai, Thursday + 2 = Saturday.',
+          'Correct answer: the gap from 1 Jan to 15 Aug is 226 days, 226 ÷ 7 leaves remainder 2, Thursday + 2 = Saturday.'
+        )
+      },
+      {
+        q: t(
+          'Ghadi mein 3:00 par hour hand aur minute hand ke beech ka angle kitna hota hai?',
+          'What is the angle between the hour hand and the minute hand at 3:00?'
+        ),
+        opts: [
+          t('0°', '0°'),
+          t('45°', '45°'),
+          t('90°', '90°'),
+          t('180°', '180°')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: hour hand 3 par (90°), minute hand 12 par (0°), farak 90° — suiyan perpendicular hoti hain.',
+          'Correct answer: the hour hand is at 3 (90°), the minute hand at 12 (0°), the difference is 90° — the hands are perpendicular.'
+        )
+      },
+      {
+        q: t(
+          'Ghadi mein 4:20 par hour hand aur minute hand ke beech ka angle kitna hota hai?',
+          'What is the angle between the hour hand and the minute hand at 4:20?'
+        ),
+        opts: [
+          t('10°', '10°'),
+          t('20°', '20°'),
+          t('30°', '30°'),
+          t('90°', '90°')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: hour hand = 4 × 30 + 20 × 0.5 = 130°, minute hand = 20 × 6 = 120°, farak 10°.',
+          'Correct answer: hour hand = 4 × 30 + 20 × 0.5 = 130°, minute hand = 20 × 6 = 120°, the difference is 10°.'
+        )
+      },
+      {
+        q: t(
+          'Inmein se kaunsa saal leap year hai?',
+          'Which of these years is a leap year?'
+        ),
+        opts: [
+          t('2022', '2022'),
+          t('2023', '2023'),
+          t('2024', '2024'),
+          t('2025', '2025')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 2024, 4 se poora divide hota hai (2024 ÷ 4 = 506), isliye leap year hai. 1900 leap nahi hai kyunki woh 100 se divide hota hai par 400 se nahi.',
+          'Correct answer: 2024 divides fully by 4 (2024 ÷ 4 = 506), so it is a leap year. 1900 is not a leap year because it divides by 100 but not by 400.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Normal saal = 1 odd day, leap saal = 2 odd days — agle saal ka 1 Jan utne din aage hota hai.',
+        'Normal year = 1 odd day, leap year = 2 odd days — 1 Jan of the next year is that many days ahead.'
+      ),
+      t(
+        'Leap rule: 4 se divide, par 100 se divide wala nahi, jab tak 400 se divide na ho — 1900 nahi, 2000 haan.',
+        'Leap rule: divisible by 4, but not if divisible by 100, unless also divisible by 400 — 1900 no, 2000 yes.'
+      ),
+      t(
+        'Minute hand 6° per minute, hour hand 0.5° per minute chalti hai — hour hand ki movement mat bhoolo.',
+        'The minute hand moves 6° per minute, the hour hand 0.5° per minute — do not forget the hour hand movement.'
+      ),
+      t(
+        'Angle hamesha chhota wala lo (0°–180°) — farak 180° se zyada ho toh 360° se ghatao.',
+        'Always take the smaller angle (0°–180°) — if the difference is more than 180°, subtract from 360°.'
+      ),
+      t(
+        'Off-by-one se bacho: 1 Jan ko day 0 maano aur gap ko 7 se divide karke remainder lo.',
+        'Avoid off-by-one: treat 1 Jan as day 0 and divide the gap by 7 to take the remainder.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 15 Aug 2026 ka Din aur 6:00, 9:15 ke Angle',
+        'Practice: The Day of 15 Aug 2026 and Angles at 6:00 and 9:15'
+      ),
+      task: t(
+        'Pehle khud nikaalo: 15 Aug 2026 Saturday hai, 6:00 par angle 180° hai aur 9:15 par 172.5° hai. Phir starter code run karke verify karo. Done tab hoga jab output mein "15 Aug 2026 -> Saturday", "6:00 -> 180.0 degrees" aur "9:15 -> 172.5 degrees" print ho.',
+        'First find it yourself: 15 Aug 2026 is a Saturday, the angle at 6:00 is 180°, and at 9:15 it is 172.5°. Then run the starter code to verify. You are done when the output prints "15 Aug 2026 -> Saturday", "6:00 -> 180.0 degrees", and "9:15 -> 172.5 degrees".'
+      ),
+      language: 'python',
+      starter: `import datetime
+
+def day_name(date_text):
+    return datetime.date.fromisoformat(date_text).strftime("%A")
+
+print("15 Aug 2026 ->", day_name("2026-08-15"))
+
+def angle(h, m):
+    hour_hand = (h % 12) * 30 + m * 0.5
+    minute_hand = m * 6
+    diff = abs(hour_hand - minute_hand)
+    return min(diff, 360 - diff)
+
+print("6:00 ->", angle(6, 0), "degrees")
+print("9:15 ->", angle(9, 15), "degrees")`,
+      expected: `15 Aug 2026 -> Saturday
+6:00 -> 180.0 degrees
+9:15 -> 172.5 degrees`
+    },
+    readMinutes: 12
+  };
+
+const logicOrderRanking: Article = {
+    id: 'logic-order-ranking',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Order & Ranking — Line mein Position Ginna',
+      'Order and Ranking — Counting a Position in a Line'
+    ),
+    summary: t(
+      'Left se position pata ho toh right se nikaalo, total ginno aur do logon ke beech wale ginno — 3 formulas se har ranking sawal solve karo.',
+      'If you know a position from the left, find it from the right, find the total, and count the people between two people — solve every ranking question with 3 formulas.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Order & Ranking Kya Hota Hai?',
+          '1. What Is Order and Ranking?'
+        ),
+        body: t(
+          `Order aur ranking ke sawalon mein ek line mein khade logon ki **position** poochhi jaati hai — left se, right se, upar se ya neeche se. Jaise 40 students ki line mein Ravi left se 12th hai — toh right se kitne number par hoga? Formula hai: **Right position = Total − Left position + 1**. Yahan: 40 − 12 + 1 = **29**. Ravi right se 29th hai. Is formula mein +1 isliye aata hai kyunki Ravi ko dono taraf se ginne par woh do baar gin jaata hai — ek baar khud ko bhi ginna padta hai.
+
+Doosra formula hai total nikaalne ka: agar koi left se 8th hai aur right se 15th hai, toh **Total = Left + Right − 1**. Yahan: 8 + 15 − 1 = **22**. −1 isliye aata hai kyunki woh vyakti dono taraf se ginne par do baar gin gaya hai — ek baar minus karna padta hai.
+
+Teesra kaam hai **beech wale log ginna**: A 9th hai left se, B 7th hai right se, line mein 30 log hain. Pehle B ki left se position nikaalo: 30 − 7 + 1 = 24. Ab A 9th par hai, B 24th par hai — beech mein log hain 24 − 9 − 1 = **14**. −1 isliye kyunki A aur B khud beech mein nahi gine jaate.
+
+Yeh 3 formulas poora topic cover karte hain: position badlo, total nikaalo, beech wale ginno.`,
+          `In order and ranking questions, you are asked the **position** of people standing in a line — from the left, from the right, from the top, or from the bottom. For example, in a line of 40 students, Ravi is 12th from the left — what is his position from the right? The formula is: **Right position = Total − Left position + 1**. Here: 40 − 12 + 1 = **29**. Ravi is 29th from the right. The +1 comes because Ravi gets counted twice when counted from both sides — he must be counted once himself.
+
+The second formula finds the total: if someone is 8th from the left and 15th from the right, then **Total = Left + Right − 1**. Here: 8 + 15 − 1 = **22**. The −1 comes because that person gets counted twice when counted from both sides — one count must be removed.
+
+The third task is **counting the people between two people**: A is 9th from the left, B is 7th from the right, and there are 30 people in the line. First find B position from the left: 30 − 7 + 1 = 24. Now A is at 9th, B at 24th — the people between them are 24 − 9 − 1 = **14**. The −1 is because A and B themselves are not counted in between.
+
+These 3 formulas cover the whole topic: change a position, find the total, count the people between.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Class Line, Race aur Exam Rank',
+          '2. Real-Life Examples: Class Line, Race, and Exam Rank'
+        ),
+        body: t(
+          `Soch lo school mein assembly ke liye 40 students line mein khade hain. Ravi left se 12th hai. Right se uski position hai 40 − 12 + 1 = 29th. Matlab Ravi ke right mein 28 students hain (29 − 1 = 28) aur left mein 11 students hain (12 − 1 = 11). Check karo: 11 + 1 (Ravi) + 28 = 40. Total se match kar gaya — yeh check hamesha karo.
+
+Doosra example — race: 30 runners mein A 9th hai left se (matlab aage se), B 7th hai right se (matlab peeche se). B ki aage se position hai 30 − 7 + 1 = 24th. A aur B ke beech mein 24 − 9 − 1 = 14 runners hain. Matlab A se 14 log peeche hain, phir B aata hai. Agar race mein A 9th hai, toh usse aage 8 runners hain aur peeche 21 runners hain.
+
+Teesra example — exam rank: Meena 25 students ki class mein left se 10th hai (matlab upar se 10th rank). Uske right mein (neeche) kitne students hain? 25 − 10 = 15. Matlab Meena se neeche 15 students hain. Rank wale sawalon mein "upar se" aur "neeche se" wahi hota hai jo "left se" aur "right se" hota hai — sirf direction badal jaati hai.`,
+          `Imagine 40 students stand in a line for the school assembly. Ravi is 12th from the left. His position from the right is 40 − 12 + 1 = 29th. So there are 28 students to his right (29 − 1 = 28) and 11 students to his left (12 − 1 = 11). Check: 11 + 1 (Ravi) + 28 = 40. It matches the total — always run this check.
+
+A second example — a race: of 30 runners, A is 9th from the left (from the front), B is 7th from the right (from the back). B position from the front is 30 − 7 + 1 = 24th. Between A and B there are 24 − 9 − 1 = 14 runners. So 14 people are behind A, then comes B. If A is 9th in the race, 8 runners are ahead of him and 21 runners are behind him.
+
+A third example — an exam rank: in a class of 25 students, Meena is 10th from the left (10th rank from the top). How many students are to her right (below her)? 25 − 10 = 15. So 15 students are below Meena. In rank questions, "from the top" and "from the bottom" are the same as "from the left" and "from the right" — only the direction changes.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ravi ki Position ka Dry Run (40 Students)',
+          '3. Step-by-Step: Worked Example with Dry Run on Ravi Position (40 Students)'
+        ),
+        body: t(
+          `Problem: 40 students ki line mein Ravi left se 12th hai. Ravi right se kitne number par hai? Dry run karte hain.
+
+**Step 1 — Formula likho:** Right position = Total − Left position + 1. Yeh formula yaad rakho — +1 bhoolna sabse common galti hai.
+
+**Step 2 — Numbers daalo:** Total = 40, Left position = 12. Right position = 40 − 12 + 1 = 28 + 1 = **29**. Ravi right se 29th hai.
+
+**Step 3 — Check karo:** Ravi ke left mein log = 12 − 1 = 11. Ravi ke right mein log = 29 − 1 = 28. Total = 11 + 1 (Ravi) + 28 = 40. Total se match kar gaya — answer sahi hai.
+
+**Step 4 — Ulta check:** Agar Ravi right se 29th hai, toh left se kitne number par hoga? Left = Total − Right + 1 = 40 − 29 + 1 = 12. Wapas 12 aaya — formula dono direction mein kaam karta hai.
+
+Neeche wala code yahi dry run print karta hai — total, left position, right position aur check.`,
+          `Problem: in a line of 40 students, Ravi is 12th from the left. What is Ravi position from the right? Let us dry-run it.
+
+**Step 1 — Write the formula:** Right position = Total − Left position + 1. Remember this formula — forgetting the +1 is the most common mistake.
+
+**Step 2 — Put in the numbers:** Total = 40, Left position = 12. Right position = 40 − 12 + 1 = 28 + 1 = **29**. Ravi is 29th from the right.
+
+**Step 3 — Check it:** People to Ravi left = 12 − 1 = 11. People to Ravi right = 29 − 1 = 28. Total = 11 + 1 (Ravi) + 28 = 40. It matches the total — the answer is right.
+
+**Step 4 — Reverse check:** If Ravi is 29th from the right, what is his position from the left? Left = Total − Right + 1 = 40 − 29 + 1 = 12. It comes back to 12 — the formula works in both directions.
+
+The code below prints this dry run — the total, the left position, the right position, and the check.`
+        ),
+        code: {
+          title: t(
+            'Dry Run: 40 Students mein Ravi ki Right se Position',
+            'Dry Run: Ravi Position from the Right in 40 Students'
+          ),
+          language: 'python',
+          code: `total = 40
+from_left = 12
+from_right = total - from_left + 1
+print("Total students:", total)
+print("Ravi is 12th from the left")
+print("Ravi is", str(from_right) + "th from the right")
+print("Check: 12 + 29 - 1 =", from_left + from_right - 1)`,
+          output: `Total students: 40
+Ravi is 12th from the left
+Ravi is 29th from the right
+Check: 12 + 29 - 1 = 40`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: +1 Bhoolna, Beech Wale aur Direction Ulta',
+          '4. Common Mistakes: Forgetting +1, People Between, and Reversed Direction'
+        ),
+        body: t(
+          `Sabse badi galti hai **+1 bhoolna**. 40 − 12 = 28 likh kar log bol dete hain "Ravi right se 28th hai" — galat hai, sahi jawab 29 hai. +1 isliye aata hai kyunki Ravi khud bhi ginna hai. Total nikaalte time **−1 bhoolna** bhi utni hi badi galti hai: 8 + 15 = 23 likh dena galat hai, sahi total 22 hai (8 + 15 − 1). Dono formulas mein 1 ka farak hai — ek mein +1, doosre mein −1. Inhe ek saath yaad rakho: **position badlo toh +1, total nikaalo toh −1.**
+
+Doosri galti hai **beech wale ginne mein −1 bhoolna**. A 9th hai, B 24th hai — beech mein 24 − 9 = 15 likh dena galat hai, sahi jawab 14 hai (24 − 9 − 1). A aur B khud beech mein nahi gine jaate, isliye ek aur minus karna padta hai.
+
+Teesri galti hai **direction ulta kar lena**. "Left se 12th" aur "right se 12th" alag baatein hain — ek hi number se dono nahi nikal sakte. Question mein direction ko underline karo: left, right, upar, neeche — jo poochha gaya hai, wahi nikaalo.
+
+Chauthi galti hai **check karna bhoolna**. Left wale + khud + right wale = total hona chahiye. Agar match na kare, toh kahin na kahin +1 ya −1 ki galti hai.`,
+          `The biggest mistake is **forgetting +1**. Writing 40 − 12 = 28 and saying "Ravi is 28th from the right" is wrong — the right answer is 29. The +1 comes because Ravi himself must be counted. Forgetting **−1 when finding the total** is just as big a mistake: writing 8 + 15 = 23 is wrong, the right total is 22 (8 + 15 − 1). Both formulas differ by 1 — one has +1, the other −1. Remember them together: **changing a position takes +1, finding a total takes −1.**
+
+The second mistake is **forgetting −1 when counting people between**. A is 9th, B is 24th — writing 24 − 9 = 15 for the people between is wrong, the right answer is 14 (24 − 9 − 1). A and B themselves are not counted in between, so one more must be subtracted.
+
+The third mistake is **reversing the direction**. "12th from the left" and "12th from the right" are different things — one number cannot give both. Underline the direction in the question: left, right, top, bottom — find only what is asked.
+
+The fourth mistake is **forgetting the check**. People on the left + the person + people on the right must equal the total. If it does not match, a +1 or −1 mistake happened somewhere.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Pehla aur Aakhri, Overlap aur Barabar Position',
+          '5. Edge Cases: First and Last, Overlap, and Equal Position'
+        ),
+        body: t(
+          `**Pehla aur aakhri:** Agar Ravi left se 1st hai, toh right se woh 40th hoga (40 − 1 + 1 = 40). Aur agar Ravi left se 40th hai (aakhri), toh right se 1st hoga. Pehla ek taraf se, aakhri doosri taraf se hota hai — yeh check karo ki tumhara answer is logic se match karta hai ya nahi.
+
+**Overlap:** Kabhi-kabhi do logon ki positions overlap karti hain — jaise A left se 10th hai aur B right se 10th hai, total 15 hai. A ki position right se hai 15 − 10 + 1 = 6th. B ki position left se hai 15 − 10 + 1 = 6th. Matlab dono 6th position par hain? Nahi — A left se 10th hai, B left se 6th hai. Dono alag positions par hain, overlap nahi hai. Overlap tab hota hai jab left + right − 1 total se zyada ho — jaise left 10th, right 10th, total 15: 10 + 10 − 1 = 19, jo 15 se zyada hai — matlab positions overlap karti hain aur beech mein koi nahi hai, balki A aur B ke beech mein negative log honge — aise sawal mein answer hota hai ki A aur B ke beech 0 log hain ya positions cross kar gayi hain. Exam mein aisa sawal aaye toh pehle overlap check karo.
+
+**Barabar position:** Agar A aur B dono left se 9th hain, toh woh ek hi position par hain — matlab A aur B ek hi vyakti hain ya sawal mein kuch aur matlab hai. Aise case mein beech mein 0 log hain.`,
+          `**First and last:** If Ravi is 1st from the left, he is 40th from the right (40 − 1 + 1 = 40). And if Ravi is 40th from the left (last), he is 1st from the right. First from one side is last from the other — check that your answer matches this logic.
+
+**Overlap:** Sometimes the positions of two people overlap — for example, A is 10th from the left and B is 10th from the right, with a total of 15. A position from the right is 15 − 10 + 1 = 6th. B position from the left is 15 − 10 + 1 = 6th. So both are at the 6th position? No — A is 10th from the left, B is 6th from the left. They are at different positions, no overlap. Overlap happens when left + right − 1 is more than the total — for example, left 10th, right 10th, total 15: 10 + 10 − 1 = 19, which is more than 15 — so the positions overlap and there is nobody between, or rather the count goes negative — in such a question the answer is that there are 0 people between A and B, or that the positions have crossed. If such a question appears in an exam, check for overlap first.
+
+**Equal position:** If A and B are both 9th from the left, they are at the same position — so A and B are the same person, or the question means something else. In such a case, there are 0 people between them.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Total Badal Jaaye ya Position Badal Jaaye?',
+          '6. What If: The Total Changes or the Position Changes?'
+        ),
+        body: t(
+          `Soch lo total 40 se badal kar 50 ho jaaye, Ravi ab bhi left se 12th hai. Ab right se position hai 50 − 12 + 1 = 39th. Total badalne se right position badal jaati hai, left position wahi rehti hai. Isliye hamesha total ko pehle final karo — total galat ho toh right position bhi galat hogi.
+
+Ab socho Ravi ki position badal jaaye: left se 12th ki jagah 20th ho jaaye, total 40 hi hai. Ab right se position hai 40 − 20 + 1 = 21st. Dekho, left position badhne se right position ghatti hai — dono ka sum hamesha total + 1 hota hai (12 + 29 = 41 = 40 + 1, 20 + 21 = 41). Yeh ek aur check hai: **left + right = total + 1** hamesha hona chahiye.
+
+**What if line mein log jud jaayein ya nikal jaayein?** Jaise 40 ki line mein 5 naye students jud jaayein — total 45 ho gaya. Ravi left se 12th hi rahega (agar naye students uske peeche jude hon), par right se woh 45 − 12 + 1 = 34th ho jaayega. Line badalte hi dobara calculate karo — purana right position chipka mat raho.`,
+          `Suppose the total changes from 40 to 50, and Ravi is still 12th from the left. Now his position from the right is 50 − 12 + 1 = 39th. When the total changes, the right position changes, while the left position stays the same. So always fix the total first — if the total is wrong, the right position is also wrong.
+
+Now suppose Ravi position changes: instead of 12th from the left, he is 20th, with the total still 40. Now his position from the right is 40 − 20 + 1 = 21st. See, when the left position grows, the right position falls — their sum is always total + 1 (12 + 29 = 41 = 40 + 1, 20 + 21 = 41). This is one more check: **left + right = total + 1** must always hold.
+
+**What if people join or leave the line?** For example, 5 new students join a line of 40 — the total becomes 45. Ravi stays 12th from the left (if the new students joined behind him), but from the right he becomes 45 − 12 + 1 = 34th. As soon as the line changes, calculate again — do not stick to the old right position.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Ranking ke 3 Formulas',
+          '7. Summary: The 3 Formulas of Ranking'
+        ),
+        body: t(
+          `Poora article 3 formulas mein: **(1) Right = Total − Left + 1. (2) Total = Left + Right − 1. (3) Beech wale = Badi position − Chhoti position − 1.** Aur hamesha check karo: left + right = total + 1, aur left wale + khud + right wale = total.
+
+Yaad rakhne wale answers: 40 students, Ravi 12th left → 29th right. 8th left + 15th right → total 22. 30 ki line, A 9th left, B 7th right → B left se 24th, beech mein 14. 25 students, Meena 10th left → right mein 15 students.
+
+Revision ke liye Ravi wala dry run dobara karo bina code dekhe: 40 − 12 + 1 = 29, check 11 + 1 + 28 = 40. Aur beech wala: 24 − 9 − 1 = 14. Agar dono bina ruke ho jaayein, toh order aur ranking tumhe aa gaya hai. Is batch ke 8 articles yahin khatm hote hain — courses of action, cause-effect, decision making, input-output, data sufficiency, cubes-dice, calendar-clock aur ranking — ab in sab ko ek saath revise karo aur MCQs ko dobara solve karo.`,
+          `The whole article in 3 formulas: **(1) Right = Total − Left + 1. (2) Total = Left + Right − 1. (3) Between = Bigger position − Smaller position − 1.** And always check: left + right = total + 1, and people on the left + the person + people on the right = total.
+
+Answers to remember: 40 students, Ravi 12th from the left → 29th from the right. 8th from the left + 15th from the right → total 22. In a line of 30, A 9th from the left, B 7th from the right → B is 24th from the left, 14 between them. 25 students, Meena 10th from the left → 15 students to her right.
+
+To revise, redo the Ravi dry run without looking at the code: 40 − 12 + 1 = 29, check 11 + 1 + 28 = 40. And the between count: 24 − 9 − 1 = 14. If both go smoothly, you know order and ranking. This ends the 8 articles of this batch — courses of action, cause-effect, decision making, input-output, data sufficiency, cubes and dice, calendar and clock, and ranking — now revise them all together and solve the MCQs again.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Ranking Solve Karne ka Flow',
+        'The Flow for Solving Ranking'
+      ),
+      caption: t(
+        'Position badlo, total nikaalo, beech wale ginno — har baar check karo',
+        'Change a position, find the total, count the people between — check every time'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Total likho', 'Step 1: Write the total'),
+          s: t('40 students — total galat ho toh sab galat', '40 students — if the total is wrong, all is wrong')
+        },
+        {
+          t: t('Step 2: Position badlo', 'Step 2: Change the position'),
+          s: t('Right = Total − Left + 1 = 40 − 12 + 1 = 29', 'Right = Total − Left + 1 = 40 − 12 + 1 = 29')
+        },
+        {
+          t: t('Step 3: Check karo', 'Step 3: Check it'),
+          s: t('Left + Right = Total + 1 → 12 + 29 = 41', 'Left + Right = Total + 1 → 12 + 29 = 41')
+        },
+        {
+          t: t('Step 4: Beech wale ginno', 'Step 4: Count the people between'),
+          s: t('Badi position − Chhoti position − 1', 'Bigger position − Smaller position − 1')
+        },
+        {
+          t: t('Step 5: Total nikaalo', 'Step 5: Find the total'),
+          s: t('Total = Left + Right − 1', 'Total = Left + Right − 1')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Beech Wale Ginna: 30 ki Line mein A aur B ke Beech',
+          'Counting People Between: Between A and B in a Line of 30'
+        ),
+        language: 'python',
+        code: `# Row of 30. A is 9th from the left. B is 7th from the right.
+total = 30
+a_pos = 9
+b_pos = total - 7 + 1
+between = b_pos - a_pos - 1
+print("A is at position", a_pos)
+print("B is at position", b_pos)
+print("Students between A and B:", between)`,
+        output: `A is at position 9
+B is at position 24
+Students between A and B: 14`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '40 students ki line mein Ravi left se 12th hai. Ravi right se kitne number par hai?',
+          'In a line of 40 students, Ravi is 12th from the left. What is his position from the right?'
+        ),
+        opts: [
+          t('28th', '28th'),
+          t('29th', '29th'),
+          t('30th', '30th'),
+          t('27th', '27th')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Right = Total − Left + 1 = 40 − 12 + 1 = 29th. +1 mat bhoolo.',
+          'Correct answer: Right = Total − Left + 1 = 40 − 12 + 1 = 29th. Do not forget the +1.'
+        )
+      },
+      {
+        q: t(
+          'Ravi left se 8th hai aur right se 15th hai. Line mein total kitne students hain?',
+          'Ravi is 8th from the left and 15th from the right. How many students are in the line in total?'
+        ),
+        opts: [
+          t('21', '21'),
+          t('22', '22'),
+          t('23', '23'),
+          t('24', '24')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Total = Left + Right − 1 = 8 + 15 − 1 = 22. Ravi do baar gin gaya hai, isliye 1 minus karo.',
+          'Correct answer: Total = Left + Right − 1 = 8 + 15 − 1 = 22. Ravi was counted twice, so subtract 1.'
+        )
+      },
+      {
+        q: t(
+          '30 ki line mein A left se 9th hai aur B right se 7th hai. A aur B ke beech mein kitne students hain?',
+          'In a line of 30, A is 9th from the left and B is 7th from the right. How many students are between A and B?'
+        ),
+        opts: [
+          t('12', '12'),
+          t('13', '13'),
+          t('14', '14'),
+          t('15', '15')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: B ki left se position hai 30 − 7 + 1 = 24th. Beech mein = 24 − 9 − 1 = 14 students.',
+          'Correct answer: B position from the left is 30 − 7 + 1 = 24th. Between them = 24 − 9 − 1 = 14 students.'
+        )
+      },
+      {
+        q: t(
+          '25 students ki class mein Meena left se 10th hai. Uske right mein kitne students hain?',
+          'In a class of 25 students, Meena is 10th from the left. How many students are to her right?'
+        ),
+        opts: [
+          t('14', '14'),
+          t('15', '15'),
+          t('16', '16'),
+          t('10', '10')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Meena ke right mein = Total − Left = 25 − 10 = 15 students. (Position ke liye +1 lagta hai, ginne ke liye nahi.)',
+          'Correct answer: Students to Meena right = Total − Left = 25 − 10 = 15. (The +1 is for a position, not for counting people.)'
+        )
+      },
+      {
+        q: t(
+          'Ravi ek line mein left se 5th hai aur right se 6th hai. Line mein total kitne log hain?',
+          'Ravi is 5th from the left and 6th from the right in a line. How many people are in the line in total?'
+        ),
+        opts: [
+          t('9', '9'),
+          t('10', '10'),
+          t('11', '11'),
+          t('12', '12')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Total = Left + Right − 1 = 5 + 6 − 1 = 10. Check: left mein 4 + Ravi + right mein 5 = 10.',
+          'Correct answer: Total = Left + Right − 1 = 5 + 6 − 1 = 10. Check: 4 on the left + Ravi + 5 on the right = 10.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Right = Total − Left + 1 — position badalte time +1 mat bhoolo.',
+        'Right = Total − Left + 1 — do not forget the +1 when changing a position.'
+      ),
+      t(
+        'Total = Left + Right − 1 — total nikaalte time 1 minus karo, kyunki vyakti do baar gin gaya hai.',
+        'Total = Left + Right − 1 — subtract 1 when finding the total, because the person was counted twice.'
+      ),
+      t(
+        'Beech wale = Badi position − Chhoti position − 1 — A aur B khud beech mein nahi gine jaate.',
+        'Between = Bigger position − Smaller position − 1 — A and B themselves are not counted in between.'
+      ),
+      t(
+        'Check: Left + Right = Total + 1 hamesha hona chahiye.',
+        'Check: Left + Right = Total + 1 must always hold.'
+      ),
+      t(
+        '"Upar se" aur "neeche se" wahi hota hai jo "left se" aur "right se" hota hai — sirf direction badalti hai.',
+        '"From the top" and "from the bottom" are the same as "from the left" and "from the right" — only the direction changes.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Left aur Right se Total Nikalo',
+        'Practice: Find the Total from Left and Right'
+      ),
+      task: t(
+        'Ravi ek line mein left se 8th hai aur right se 15th hai. Pehle khud nikaalo: total 8 + 15 − 1 = 22 aana chahiye. Phir starter code run karke verify karo. Done tab hoga jab output mein "Total students in the row: 22" print ho.',
+        'Ravi is 8th from the left and 15th from the right in a line. First find it yourself: the total should be 8 + 15 − 1 = 22. Then run the starter code to verify. You are done when the output prints "Total students in the row: 22".'
+      ),
+      language: 'python',
+      starter: `# Ravi is 8th from the left and 15th from the right in a row.
+from_left = 8
+from_right = 15
+total = from_left + from_right - 1
+print("Position from the left:", from_left)
+print("Position from the right:", from_right)
+print("Total students in the row:", total)`,
+      expected: `Position from the left: 8
+Position from the right: 15
+Total students in the row: 22`
+    },
+    readMinutes: 12
+  };
+
+const logicInequalitiesLogic: Article = {
+    id: 'logic-inequalities-logic',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Coded Inequalities — Symbols se Greater, Smaller aur Equal Nikalo',
+      'Coded Inequalities — Find Greater, Smaller, and Equal from Symbols'
+    ),
+    summary: t(
+      'Coded inequalities mein > , < , = aur >= jaise signs ko $ , # , * jaise symbols se chhupaya jaata hai. Pehle har symbol ka matlab yaad karo, phir chain ko tod kar dekho kaun sabse bada hai aur kaun sabse chhota — transitivity hi is topic ki jaan hai.',
+      'In coded inequalities, signs like >, <, = and >= are hidden behind symbols such as $, # and *. First learn what each symbol means, then break the chain apart to see who is the greatest and who is the smallest — transitivity is the heart of this topic.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Coded Inequalities Kya Hain?',
+          '1. What Are Coded Inequalities?'
+        ),
+        body: t(
+          `Coded inequalities mein normal maths ke signs ko naye symbols se replace kar diya jaata hai. Jaise is article mein **$ ka matlab hai > (greater than)**, **# ka matlab hai < (smaller than)**, **\\* ka matlab hai = (equal to)**, **@ ka matlab hai >= (greater than ya equal to)** aur **% ka matlab hai <= (smaller than ya equal to)**. Exam mein symbols alag bhi ho sakte hain, par sawal ke shuru mein unka matlab hamesha diya hota hai. Aapka pehla kaam hai woh matlab table ko ek baar likh lena, taaki aage solve karte waqt aapko sochna na pade.
+
+Ek coded statement ko padhne ka tareeka simple hai: pehle symbols ko unke maths signs mein badlo, phir statement ko normal inequality ki tarah padho. Jaise \`A $ B\` ka matlab hai \`A > B\`, aur \`B * C\` ka matlab hai \`B = C\`. Dono ko ek saath likho to chain banti hai: \`A > B = C\`. Ab aap seedha dekh sakte ho ki A, B se bada hai aur B, C ke barabar hai, isliye A, C se bhi bada hai. Yahi **transitivity** hai — agar A, B se bada hai aur B, C ke barabar hai, to A, C se bada hi hoga.
+
+Is topic mein conclusion hamesha chain se nikalta hai. Kabhi chain ek hi line mein hoti hai, jaise \`P > Q = R > S\`, aur kabhi alag-alag statements mein hoti hai, jaise \`P $ Q\` aur \`Q * R\`. Dono ka matlab ek hi hai. Aapko sirf itna karna hai: saare symbols ko signs mein badlo, saare statements ko ek chain mein jodo, aur phir pooche gaye conclusion ko chain se check karo. Agar conclusion chain se pakka nikalta hai to woh sahi hai, warna galat ya pata nahi chal sakta.`,
+          `In coded inequalities, the normal maths signs are replaced with new symbols. In this article, **$ means > (greater than)**, **# means < (smaller than)**, **\\* means = (equal to)**, **@ means >= (greater than or equal to)** and **% means <= (smaller than or equal to)**. In an exam the symbols may be different, but the question always gives their meanings at the start. Your first job is to write that meaning table down once, so you do not have to think about it while solving.
+
+The way to read a coded statement is simple: first change the symbols into their maths signs, then read the statement like a normal inequality. For example, \`A $ B\` means \`A > B\`, and \`B * C\` means \`B = C\`. Put them together and a chain forms: \`A > B = C\`. Now you can see directly that A is greater than B, B equals C, so A is also greater than C. This is **transitivity** — if A is greater than B and B equals C, then A must be greater than C.
+
+In this topic the conclusion always comes from the chain. Sometimes the chain is in one line, like \`P > Q = R > S\`, and sometimes it is split across separate statements, like \`P $ Q\` and \`Q * R\`. Both mean the same thing. You only have to do this: change all symbols into signs, join all statements into one chain, and then check the asked conclusion against the chain. If the conclusion follows firmly from the chain, it is right; otherwise it is wrong or cannot be decided.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Rank, Score aur Height',
+          '2. Real-Life Examples: Rank, Score, and Height'
+        ),
+        body: t(
+          `Coded inequalities roz ki zindagi ke comparison ko hi code mein likhne ka tareeka hai. Socho ek class mein chaar dost hain — P, Q, R aur S. Teacher kehti hai P ke marks Q se zyada hain, Q ke marks R ke barabar hain aur R ke marks S se zyada hain. Code mein yeh hai \`P $ Q\`, \`Q * R\`, \`R $ S\`. Chain banti hai \`P > Q = R > S\`. Ab koi bhi poochhe ki sabse zyada marks kiske hain, to jawab turant hai P, aur sabse kam S ke hain. Aapne koi calculation nahi ki, sirf chain ko padha.
+
+Doosra example hai height ka. Maan lo Amit, Bala se lamba hai, Bala, Chetan ke barabar hai aur Chetan, Deepa se lamba hai. Yahi chain hai: Amit sabse lamba hai aur Deepa sabse chhoti hai. Exam mein yahi cheez letters aur symbols mein likhi hoti hai, bas naam ki jagah A, B, C, D hote hain. Agar aap chain ko sahi se jod lete ho, to rank, height ya marks — har sawal ek jaisa ho jaata hai.
+
+Teesra example hai race ka. Ek race mein chaar runners hain aur aapko sirf itna pata hai: X, Y se tez hai, Y, Z ke barabar tez hai aur Z, W se tez hai. Yahan tez hona bhi ek comparison hai. Chain phir wahi hai: X sabse tez hai, phir Y aur Z barabar, aur W sabse slow hai. Isliye jab bhi coded inequality ka sawal dekho, to pehle socho ki yeh marks, height ya speed ka hi comparison hai — code sirf signs ko chhupata hai, logic wahi rehta hai.`,
+          `Coded inequalities are simply a way of writing everyday comparisons in code. Imagine four friends in a class — P, Q, R and S. The teacher says P scored more than Q, Q scored the same as R, and R scored more than S. In code that is \`P $ Q\`, \`Q * R\`, \`R $ S\`. The chain is \`P > Q = R > S\`. Now if anyone asks whose marks are the highest, the answer is at once P, and the lowest are S. You did no calculation; you only read the chain.
+
+A second example is height. Suppose Amit is taller than Bala, Bala is as tall as Chetan, and Chetan is taller than Deepa. That is the same chain: Amit is the tallest and Deepa is the shortest. In an exam the same thing is written in letters and symbols, only with A, B, C, D instead of names. If you join the chain correctly, rank, height or marks — every question becomes the same.
+
+A third example is a race. In a race with four runners you only know this: X is faster than Y, Y is as fast as Z, and Z is faster than W. Being faster is also a comparison. The chain is again the same: X is the fastest, then Y and Z are equal, and W is the slowest. So whenever you see a coded inequality question, first think that it is a comparison of marks, height or speed — the code only hides the signs, the logic stays the same.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Coded Chain Solve Karna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Solving a Coded Chain (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Worked example: symbols hain $ matlab >, # matlab <, * matlab =. Statements hain \`A $ B\` aur \`B * C\`. Conclusion poocha gaya hai: kya \`A $ C\` sahi hai, matlab kya A, C se bada hai? Step 1: symbols ko signs mein badlo. \`A $ B\` ban gaya \`A > B\` aur \`B * C\` ban gaya \`B = C\`. Step 2: dono ko ek chain mein jodo. Common letter B hai, isliye chain hai \`A > B = C\`. Step 3: dry run numbers se karo. A = 8, B = 5, C = 5 rakho. Check karo: 8 > 5 sahi hai, 5 = 5 sahi hai, aur 8 > 5 bhi sahi hai. Step 4: conclusion check karo. Chain kehta hai A, B se bada hai aur B, C ke barabar hai, isliye A, C se bada hai. Conclusion sahi hai.
+
+Doosra dry run: \`P $ Q\`, \`Q $ R\` aur conclusion \`P $ R\`. Step 1: signs mein badlo — \`P > Q\`, \`Q > R\`. Step 2: chain banao — \`P > Q > R\`. Step 3: numbers rakho — P = 9, Q = 6, R = 3. Check karo: 9 > 6 sahi, 6 > 3 sahi, 9 > 3 sahi. Step 4: conclusion sahi hai, kyunki greater-than transitive hota hai: agar P, Q se bada hai aur Q, R se bada hai, to P, R se bada hi hoga. Neeche wala code pehle example ke numbers ko run karke dikhata hai — har line ko chain ke ek step se match karo.`,
+          `Worked example: the symbols are $ means >, # means <, * means =. The statements are \`A $ B\` and \`B * C\`. The conclusion asked is: is \`A $ C\` true, that is, is A greater than C? Step 1: change the symbols into signs. \`A $ B\` becomes \`A > B\` and \`B * C\` becomes \`B = C\`. Step 2: join both into one chain. The common letter is B, so the chain is \`A > B = C\`. Step 3: dry run with numbers. Take A = 8, B = 5, C = 5. Check: 8 > 5 is true, 5 = 5 is true, and 8 > 5 is also true. Step 4: check the conclusion. The chain says A is greater than B and B equals C, so A is greater than C. The conclusion is true.
+
+Second dry run: \`P $ Q\`, \`Q $ R\` and the conclusion \`P $ R\`. Step 1: change to signs — \`P > Q\`, \`Q > R\`. Step 2: build the chain — \`P > Q > R\`. Step 3: put numbers — P = 9, Q = 6, R = 3. Check: 9 > 6 is true, 6 > 3 is true, 9 > 3 is true. Step 4: the conclusion is true, because greater-than is transitive: if P is greater than Q and Q is greater than R, then P must be greater than R. The code below runs the numbers of the first example — match every line with one step of the chain.`
+        ),
+        code: {
+          title: t(
+            'Chain Dry Run: A = 8, B = 5, C = 5',
+            'Chain Dry Run: A = 8, B = 5, C = 5'
+          ),
+          language: 'python',
+          code: `# Coded: $ means >, # means <, * means =
+A, B, C = 8, 5, 5
+print("A $ B :", A > B)
+print("B * C :", B == C)
+print("A $ B and B * C -> A $ C :", A > B and B == C)
+print("Chain A > B = C gives A > C :", A > C)
+print("A # B :", A < B)`,
+          output: `A $ B : True
+B * C : True
+A $ B and B * C -> A $ C : True
+Chain A > B = C gives A > C : True
+A # B : False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Ulta Symbol, >= ko > Samajhna aur Tooti Chain',
+          '4. Common Mistakes: Flipped Symbols, Reading >= as >, and Broken Chains'
+        ),
+        body: t(
+          `**Galti 1: symbol ka matlab ulta padhna.** Sabse aam galti hai $ ko < samajh lena ya # ko > samajh lena. Sawal ke shuru mein diya gaya matlab table hamesha pehle likho aur har step mein usi se match karo. Ek ulta symbol poora chain ulta kar deta hai aur sabse bada, sabse chhota ban jaata hai. Jaldi mein log symbol ko dekh kar andaza lagate hain — andaza mat lagao, table dekho.
+
+**Galti 2: >= ko > samajh lena.** \`A @ B\` ka matlab hai A, B se bada **ya barabar** hai. Isse aap sirf itna keh sakte ho ki A, B se chhota nahi hai — yeh nahi keh sakte ki A, B se bada hi hai, kyunki dono barabar bhi ho sakte hain. Isi liye \`A @ B\` aur \`B @ A\` dono sahi hon to matlab hai A = B, par sirf ek se A > B nahi nikalta. Exam mein yahi trap sabse zyada aata hai: log >= wale statement se pakka > nikaal lete hain.
+
+**Galti 3: tooti hui chain se conclusion nikaalna.** Agar statements hain \`A $ B\` aur \`C $ D\`, to A aur C ka koi relation nahi hai — dono alag chain mein hain. Aap yeh nahi keh sakte ki A, C se bada hai ya chhota hai. Conclusion tabhi nikalta hai jab dono letters ek hi chain mein judte hon, ek common letter se. Common letter ke bina comparison karna galat hai aur iska jawab hota hai "pata nahi chal sakta".`,
+          `**Mistake 1: Reading a symbol the wrong way round.** The most common mistake is taking $ for < or # for >. Always write down the meaning table given at the start of the question and match every step against it. One flipped symbol turns the whole chain upside down, and the greatest becomes the smallest. In a hurry, people guess from the look of the symbol — do not guess, look at the table.
+
+**Mistake 2: Reading >= as >.** \`A @ B\` means A is greater than **or equal to** B. From this you can only say that A is not smaller than B — you cannot say that A is definitely greater than B, because both could be equal. That is why, if both \`A @ B\` and \`B @ A\` are true, it means A = B, but from only one of them you cannot get A > B. This trap appears most often in exams: people draw a firm > from a >= statement.
+
+**Mistake 3: Drawing a conclusion from a broken chain.** If the statements are \`A $ B\` and \`C $ D\`, then A and C have no relation — they sit in separate chains. You cannot say whether A is greater than or smaller than C. A conclusion only follows when both letters join in one chain through a common letter. Comparing without a common letter is wrong, and its answer is "cannot be decided".`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Barabar Values, >= ke Dono Taraf aur Ek Jaisi Chain',
+          '5. Edge Cases: Equal Values, >= on Both Sides, and Identical Chains'
+        ),
+        body: t(
+          `**Edge case 1: saare values barabar hon.** Agar chain hai \`A * B * C\`, matlab A = B = C, to koi bhi greater ya smaller wala conclusion galat hoga. Sirf equal wale conclusions sahi honge. Log aksar barabar wali chain mein bhi bada-chhota dhoondhne lagte hain — pehle check karo ki chain mein koi > ya < hai bhi ya nahi.
+
+**Edge case 2: >= dono taraf se.** \`A @ B\` aur \`B @ A\` dono hon to A = B pakka hai. Par \`A @ B\` ke saath \`B $ A\` ho to contradiction hai — pehla kehta hai A, B se chhota nahi hai aur doosra kehta hai B, A se bada hai, matlab A, B se chhota hai. Aise statements ek saath sahi nahi ho sakte. Exam mein aise sawal mein pehle contradiction check karo.
+
+**Edge case 3: lambi chain mein beech ka letter.** Chain \`P > Q = R > S\` mein Q aur R barabar hain, isliye P, R se bada hai aur Q, S se bada hai. Beech ke barabar wale letters ko ignore mat karo — woh chain ko jodte hain. Aur agar chain mein ek bhi < aa jaaye, jaise \`P > Q < R\`, to P aur R ka relation toot jaata hai: Q dono se chhota hai, par P aur R mein kaun bada hai, yeh pata nahi chal sakta.`,
+          `**Edge case 1: All values are equal.** If the chain is \`A * B * C\`, which means A = B = C, then any greater or smaller conclusion is wrong. Only equal conclusions are right. People often still hunt for greater or smaller in an equal chain — first check whether the chain even has a > or < in it.
+
+**Edge case 2: >= from both sides.** If both \`A @ B\` and \`B @ A\` hold, then A = B is certain. But if \`A @ B\` comes with \`B $ A\`, that is a contradiction — the first says A is not smaller than B, and the second says B is greater than A, which means A is smaller than B. Such statements cannot both be true. In such questions, check for a contradiction first.
+
+**Edge case 3: The middle letter in a long chain.** In the chain \`P > Q = R > S\`, Q and R are equal, so P is greater than R and Q is greater than S. Do not ignore the equal letters in the middle — they join the chain together. And if even one < appears in the chain, like \`P > Q < R\`, then the relation between P and R breaks: Q is smaller than both, but which of P and R is greater cannot be decided.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Symbols Badal Jaayein ya Chain Ulti Ho Jaaye?',
+          '6. What If the Symbols Change or the Chain Flips?'
+        ),
+        body: t(
+          `**What if symbols badal jaayein?** Exam mein $ ka matlab > ki jagah < bhi ho sakta hai. Isse method nahi badalta — sirf matlab table badalta hai. Isi liye pehla step hamesha wahi hai: naye symbols ka matlab likho, phir chain banao. Jo student purane yaad kiye hue matlab se solve karta hai, woh galat karta hai. Har sawal apna matlab table deta hai, use hi follow karo.
+
+**What if chain ulti likhi ho?** \`A < B\` aur \`B > A\` ek hi baat hai — sirf likhne ka order badla hai. Chain ko hamesha ek direction mein padho: left se right ya right se left, par ek hi direction mein. Ulti chain ko seedha karke likhna seekho, taaki confusion na ho.
+
+**What if conclusion mein >= ho?** Conclusion \`A @ C\` matlab A >= C. Chain \`A > B = C\` se yeh sahi hai, kyunki A, C se bada hai to bada-ya-barabar bhi hai. Par chain \`A = B = C\` se conclusion \`A $ C\` galat hoga, kyunki barabar hone par bada nahi keh sakte. Conclusion ke sign ko chain ke sign se hamesha alag se match karo — conclusion ka sign kamzor (jaise >=) ho to aasan se sahi ho sakta hai, aur sakht (jaise >) ho to mushkil se.`,
+          `**What if the symbols change?** In an exam, $ could mean < instead of >. The method does not change — only the meaning table changes. That is why the first step is always the same: write the meanings of the new symbols, then build the chain. A student who solves with memorised old meanings gets it wrong. Every question gives its own meaning table, so follow that one.
+
+**What if the chain is written backwards?** \`A < B\` and \`B > A\` are the same thing — only the writing order changed. Always read a chain in one direction: left to right or right to left, but in one direction only. Learn to straighten a reversed chain when you write it down, so there is no confusion.
+
+**What if the conclusion has >=?** The conclusion \`A @ C\` means A >= C. From the chain \`A > B = C\` this is true, because if A is greater than C, it is also greater than or equal to C. But from the chain \`A = B = C\`, the conclusion \`A $ C\` would be wrong, because when they are equal you cannot say greater. Always match the sign of the conclusion against the sign of the chain separately — if the conclusion sign is weaker (like >=) it can be true easily, and if it is strict (like >) it is true only with difficulty.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Coded Inequalities Ek Page Mein',
+          '7. Summary: Coded Inequalities on One Page'
+        ),
+        body: t(
+          `Coded inequalities ka poora kaam teen steps mein hota hai. **Step 1:** har symbol ka matlab likho — $ matlab >, # matlab <, * matlab =, @ matlab >=, % matlab <=. **Step 2:** statements ko signs mein badal kar ek chain mein jodo, common letter se. **Step 3:** conclusion ko chain se check karo — pakka nikle to sahi, na nikle to galat ya pata nahi chal sakta.
+
+Yaad rakhne wali teen baatein hain. Pehli: **transitivity** — > aur = wali chain mein aage ka relation peeche se nikalta hai, par > aur < ke mix mein chain toot jaati hai. Doosri: **>= ko > mat samjho** — >= se sirf "chhota nahi hai" nikalta hai, "bada hai" nahi. Teesri: **tooti chain se koi conclusion nahi** — common letter ke bina do letters ka comparison pata nahi chal sakta.
+
+Revision ke liye yeh karo: ek chain likho \`P > Q = R > S\` aur khud se paanch conclusions banao — kaun sa sahi hai, kaun sa galat hai aur kaun sa pata nahi chal sakta. Agar yeh paanchon bina ruke nikal jaayein, to coded inequalities aapko aa gaya hai. Agle article mein hum alphabet test dekhenge — letters ki positions aur unke opposite pairs.`,
+          `The whole work of coded inequalities happens in three steps. **Step 1:** write what each symbol means — $ means >, # means <, * means =, @ means >=, % means <=. **Step 2:** change the statements into signs and join them into one chain through the common letter. **Step 3:** check the conclusion against the chain — if it follows firmly it is right, if not it is wrong or cannot be decided.
+
+Remember three things. First: **transitivity** — in a chain of > and =, the later relation follows from the earlier ones, but mixing > and < breaks the chain. Second: **do not read >= as >** — from >= you only get "not smaller", not "greater". Third: **no conclusion comes from a broken chain** — without a common letter, the comparison of two letters cannot be decided.
+
+For revision, do this: write one chain \`P > Q = R > S\` and make five conclusions yourself — which is right, which is wrong, and which cannot be decided. If all five come out without stopping, you know coded inequalities. In the next article we will look at the alphabet test — letter positions and their opposite pairs.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Coded Inequality Solve Karne ka Flow',
+        'The Flow for Solving a Coded Inequality'
+      ),
+      caption: t(
+        'Matlab likho, chain banao, conclusion check karo — bas teen steps',
+        'Write the meanings, build the chain, check the conclusion — just three steps'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Matlab table likho', 'Step 1: Write the meaning table'),
+          s: t('$ matlab >, # matlab <, * matlab =', '$ means >, # means <, * means =')
+        },
+        {
+          t: t('Step 2: Signs mein badlo', 'Step 2: Change to signs'),
+          s: t('A $ B ban gaya A > B', 'A $ B becomes A > B')
+        },
+        {
+          t: t('Step 3: Chain banao', 'Step 3: Build the chain'),
+          s: t('Common letter se jodo: A > B = C', 'Join with the common letter: A > B = C')
+        },
+        {
+          t: t('Step 4: Conclusion check karo', 'Step 4: Check the conclusion'),
+          s: t('Pakka nikle to sahi, warna galat ya pata nahi', 'Right if it follows firmly, else wrong or undecided')
+        },
+        {
+          t: t('Yaad rakho: >= ko > mat samjho', 'Remember: do not read >= as >'),
+          s: t('>= se sirf "chhota nahi hai" nikalta hai', 'From >= you only get "not smaller"')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Transitivity Check: 9 > 6 > 3',
+          'Transitivity Check: 9 > 6 > 3'
+        ),
+        language: 'python',
+        code: `x, y, z = 9, 6, 3
+print("x > y :", x > y)
+print("y > z :", y > z)
+print("x > z (transitive) :", x > z)
+print("greatest :", max([x, y, z]))`,
+        output: `x > y : True
+y > z : True
+x > z (transitive) : True
+greatest : 9`
+      },
+      {
+        title: t(
+          'Chain se Sabse Bada aur Sabse Chhota',
+          'Greatest and Smallest from a Chain'
+        ),
+        language: 'python',
+        code: `values = {"P": 10, "Q": 7, "R": 7, "S": 4}
+print("P > Q :", values["P"] > values["Q"])
+print("Q = R :", values["Q"] == values["R"])
+print("R > S :", values["R"] > values["S"])
+print("smallest :", min(values, key=values.get))
+print("largest :", max(values, key=values.get))`,
+        output: `P > Q : True
+Q = R : True
+R > S : True
+smallest : S
+largest : P`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '$ matlab > aur * matlab = hai. A $ B aur B * C se kya nikalta hai?',
+          '$ means > and * means =. What follows from A $ B and B * C?'
+        ),
+        opts: [
+          t('A, C se bada hai', 'A is greater than C'),
+          t('A, C se chhota hai', 'A is smaller than C'),
+          t('A, C ke barabar hai', 'A is equal to C'),
+          t('Kuch pata nahi chal sakta', 'Nothing can be decided')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: A > B aur B = C se chain A > B = C banti hai, isliye A, C se bada hai.',
+          'Correct answer: A > B and B = C make the chain A > B = C, so A is greater than C.'
+        )
+      },
+      {
+        q: t(
+          '# matlab < hai. P # Q aur Q # R se P aur R ka relation kya hai?',
+          '# means <. What is the relation between P and R from P # Q and Q # R?'
+        ),
+        opts: [
+          t('P, R se bada hai', 'P is greater than R'),
+          t('P, R ke barabar hai', 'P is equal to R'),
+          t('P, R se chhota hai', 'P is smaller than R'),
+          t('Kuch pata nahi chal sakta', 'Nothing can be decided')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: P < Q aur Q < R se chain P < Q < R banti hai, isliye P, R se chhota hai.',
+          'Correct answer: P < Q and Q < R make the chain P < Q < R, so P is smaller than R.'
+        )
+      },
+      {
+        q: t(
+          'X * Y (X = Y) aur Y $ Z (Y > Z) se kya nikalta hai?',
+          'What follows from X * Y (X = Y) and Y $ Z (Y > Z)?'
+        ),
+        opts: [
+          t('X, Z se chhota hai', 'X is smaller than Z'),
+          t('X, Z ke barabar hai', 'X is equal to Z'),
+          t('X, Z se bada hai', 'X is greater than Z'),
+          t('Kuch pata nahi chal sakta', 'Nothing can be decided')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: X = Y aur Y > Z se chain X = Y > Z banti hai, isliye X, Z se bada hai.',
+          'Correct answer: X = Y and Y > Z make the chain X = Y > Z, so X is greater than Z.'
+        )
+      },
+      {
+        q: t(
+          '@ matlab >= hai. A @ B se kya pakka keh sakte hain?',
+          '@ means >=. What can we say for sure from A @ B?'
+        ),
+        opts: [
+          t('A, B se bada hai', 'A is greater than B'),
+          t('A, B se chhota nahi hai', 'A is not smaller than B'),
+          t('A, B ke barabar hai', 'A is equal to B'),
+          t('A, B se chhota hai', 'A is smaller than B')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: A >= B ka matlab hai A, B se bada ya barabar hai — sirf itna pakka hai ki A, B se chhota nahi hai.',
+          'Correct answer: A >= B means A is greater than or equal to B — the only sure thing is that A is not smaller than B.'
+        )
+      },
+      {
+        q: t(
+          'Statements hain A $ B aur C $ D. A aur C ka relation kya hai?',
+          'The statements are A $ B and C $ D. What is the relation between A and C?'
+        ),
+        opts: [
+          t('A, C se bada hai', 'A is greater than C'),
+          t('A, C se chhota hai', 'A is smaller than C'),
+          t('A, C ke barabar hai', 'A is equal to C'),
+          t('Pata nahi chal sakta', 'It cannot be decided')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: dono statements mein koi common letter nahi hai, isliye A aur C alag chains mein hain aur unka relation pata nahi chal sakta.',
+          'Correct answer: the two statements share no common letter, so A and C sit in separate chains and their relation cannot be decided.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle har symbol ka matlab likho, phir chain banao — andaze se symbol mat padho.',
+        'First write what each symbol means, then build the chain — never guess a symbol.'
+      ),
+      t(
+        'Chain common letter se judti hai; common letter ke bina koi conclusion nahi nikalta.',
+        'A chain joins through a common letter; without one, no conclusion follows.'
+      ),
+      t(
+        '> aur = transitive hote hain, par > aur < ka mix chain ko tod deta hai.',
+        '> and = are transitive, but mixing > and < breaks the chain.'
+      ),
+      t(
+        '>= se sirf "chhota nahi hai" nikalta hai, "bada hai" nahi.',
+        'From >= you only get "not smaller", not "greater".'
+      ),
+      t(
+        'Conclusion ka sign chain ke sign se alag se match karo.',
+        'Match the sign of the conclusion against the sign of the chain separately.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Coded Chain se Conclusion Check Karo',
+        'Practice: Check a Conclusion from a Coded Chain'
+      ),
+      task: t(
+        'Coded: $ matlab > aur * matlab = hai. Statements hain M $ N aur N * O. Starter code ko run karo aur check karo ki M, O se bada hai ya nahi. Done tab hoga jab output mein "M $ O : True" aur "Answer: M is greater than O" dikhe.',
+        'Coded: $ means > and * means =. The statements are M $ N and N * O. Run the starter code and check whether M is greater than O. You are done when the output shows "M $ O : True" and "Answer: M is greater than O".'
+      ),
+      language: 'python',
+      starter: `# Coded: $ means >, * means =
+# Statements: M $ N, N * O. Which conclusion is true?
+M, N, O = 15, 10, 10
+print("M $ N :", M > N)
+print("N * O :", N == O)
+print("M $ O :", M > O)
+print("Answer: M is greater than O")`,
+      expected: `M $ N : True
+N * O : True
+M $ O : True
+Answer: M is greater than O`
+    },
+    readMinutes: 12
+  };
+
+const logicAlphabetTest: Article = {
+    id: 'logic-alphabet-test',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Alphabet Test — Letter Positions, Opposite Pairs aur Beech ke Letters',
+      'Alphabet Test — Letter Positions, Opposite Pairs, and Middle Letters'
+    ),
+    summary: t(
+      'Alphabet test mein har letter ki ek position hoti hai: A = 1 se Z = 26 tak. Opposite letters ka jod hamesha 27 hota hai, aur beech ka letter do positions ka average hota hai. Position likhna seekh lo to alphabet ke sawal number ke sawal ban jaate hain.',
+      'In the alphabet test every letter has a position: A = 1 to Z = 26. Opposite letters always add up to 27, and the middle letter is the average of two positions. Once you learn to write the positions, alphabet questions become number questions.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Alphabet Test Kya Hai?',
+          '1. What Is the Alphabet Test?'
+        ),
+        body: t(
+          `Alphabet test mein English alphabet ke 26 letters ko numbers se joda jaata hai: **A = 1, B = 2, C = 3** aur aise hi aage badhte hue **Z = 26**. Har sawal mein aapko letters ki position likhni hoti hai, phir un numbers par jod, ghata ya average karna hota hai. Jaise LOGIC word ki positions hain L = 12, O = 15, G = 7, I = 9, C = 3 — inka jod 46 hota hai. Letter ko number mein badalte hi sawal maths ka sawal ban jaata hai.
+
+Is topic ka doosra bada rule hai **opposite pairs** ka. Alphabet mein har letter ka ek opposite letter hota hai jo usse bilkul ulta hota hai: A ka opposite Z hai, B ka Y hai, C ka X hai aur aise hi aage. Opposite letters ki positions ka jod hamesha **27** hota hai: A (1) + Z (26) = 27, B (2) + Y (25) = 27, E (5) + V (22) = 27. Isliye kisi bhi letter ka opposite nikaalne ka formula hai: **opposite position = 27 - position**. L ki position 12 hai, to uska opposite hai 27 - 12 = 15, matlab O. Yahi formula exam mein sabse zyada kaam aata hai.
+
+Teesra rule hai **beech ka letter**. Do letters ke beech ka letter nikaalne ke liye unki positions ka average lo. C (3) aur G (7) ke beech ka letter hai (3 + 7) / 2 = 5, matlab E. Aur do letters ke beech kitne letters hain, yeh nikaalne ke liye bada position minus chhota position minus 1 karo: G (7) - C (3) - 1 = 3 letters (D, E, F) beech mein hain.`,
+          `In the alphabet test, the 26 letters of the English alphabet are joined to numbers: **A = 1, B = 2, C = 3**, and so on up to **Z = 26**. In every question you have to write the positions of the letters, then add, subtract or average those numbers. For example, the positions of the word LOGIC are L = 12, O = 15, G = 7, I = 9, C = 3 — their sum is 46. As soon as a letter becomes a number, the question becomes a maths question.
+
+The second big rule of this topic is **opposite pairs**. In the alphabet every letter has an opposite letter, exactly on the other side: the opposite of A is Z, of B is Y, of C is X, and so on. The positions of opposite letters always add up to **27**: A (1) + Z (26) = 27, B (2) + Y (25) = 27, E (5) + V (22) = 27. So the formula for the opposite of any letter is: **opposite position = 27 - position**. L has position 12, so its opposite is 27 - 12 = 15, which means O. This formula is the most used one in exams.
+
+The third rule is the **middle letter**. To find the letter between two letters, take the average of their positions. The letter between C (3) and G (7) is (3 + 7) / 2 = 5, which means E. And to find how many letters lie between two letters, do big position minus small position minus 1: G (7) - C (3) - 1 = 3 letters (D, E, F) lie between them.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Code Words, Roll Numbers aur Initials',
+          '2. Real-Life Examples: Code Words, Roll Numbers, and Initials'
+        ),
+        body: t(
+          `Alphabet test roz ki zindagi mein bhi dikhta hai. Socho ek teacher ne class mein code banaya hai: har student ka naam uske opposite letters se likha jaata hai. Riya ka code kya hoga? R ka opposite hai I (18 + 9 = 27), I ka opposite hai R, Y ka opposite hai B (25 + 2 = 27) aur A ka opposite hai Z. To Riya ka code hai IRBZ. Yeh ek khel lagta hai, par exam mein yahi opposite-pair rule poocha jaata hai — sirf naam ki jagah koi bhi word ho sakta hai.
+
+Doosra example hai roll numbers ka. Ek list mein students ko A se Z tak rank diya gaya hai. Agar aapko pata hai ki ek student 5th position par hai (E) aur doosra 22nd par hai (V), to aap turant jaan sakte ho ki dono opposite positions par hain, kyunki 5 + 22 = 27. List mein beech ka student kaun hai? 5 aur 22 ka average hai 13.5, matlab beech mein koi ek letter nahi hai — M (13) aur N (14) dono beech ke aas-paas hain.
+
+Teesra example hai initials ka. Kisi ka naam "A. Z." ho to dono letters opposite hain — A ka opposite Z hai. Aise pairs ko pehchanne ki aadat exam mein time bachati hai. Jab bhi do letters ka jod 27 dikhe, to samajh jao ki woh opposite pair hai, aur jab jod 27 na ho to woh normal pair hai.`,
+          `The alphabet test also appears in everyday life. Imagine a teacher makes a code in class: every student name is written with its opposite letters. What is the code of Riya? The opposite of R is I (18 + 9 = 27), of I is R, of Y is B (25 + 2 = 27) and of A is Z. So the code of Riya is IRBZ. This looks like a game, but exams ask exactly this opposite-pair rule — only the word can be any word.
+
+A second example is roll numbers. In a list, students are ranked from A to Z. If you know that one student is at the 5th position (E) and another is at the 22nd (V), you can see at once that they sit at opposite positions, because 5 + 22 = 27. Who is the student in the middle of the list? The average of 5 and 22 is 13.5, which means no single letter sits in the middle — M (13) and N (14) both sit near the middle.
+
+A third example is initials. If someone name is "A. Z.", both letters are opposites — the opposite of A is Z. The habit of spotting such pairs saves time in exams. Whenever two letters add up to 27, understand that they are an opposite pair, and when the sum is not 27, it is a normal pair.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: LOGIC Word ka Dry Run (Positions aur Opposite)',
+          '3. Step-by-Step: A Dry Run on the Word LOGIC (Positions and Opposite)'
+        ),
+        body: t(
+          `Worked example: word hai LOGIC. Step 1: har letter ki position likho. L = 12, O = 15, G = 7, I = 9, C = 3. Position likhne ka tareeka hai: A = 1 se gino ya yaad rakho ki M = 13 hai, jo alphabet ka beech hai — M se pehle ke letters 1 se 12 tak hain aur M ke baad ke 14 se 26 tak. Step 2: positions ka jod nikalo. 12 + 15 + 7 + 9 + 3 = 46. Step 3: L ka opposite nikalo. Formula hai 27 - 12 = 15, matlab O. Step 4: O ka opposite nikalo. 27 - 15 = 12, matlab L. Dekho, L aur O ek doosre ke opposite hain — dono ka jod 27 hai.
+
+Ab doosra dry run: C aur G ke beech ka letter nikalo. Step 1: positions likho — C = 3, G = 7. Step 2: average nikalo — (3 + 7) / 2 = 5. Step 3: position 5 ka letter hai E. Step 4: check karo — C aur G ke beech mein D, E, F hain, matlab 3 letters hain, aur beech wala E hai. Formula se bhi wahi aaya: 7 - 3 - 1 = 3 letters beech mein. Neeche wala code LOGIC ke dry run ko run karke dikhata hai — har print ko apne haath se kiye gaye step se match karo.`,
+          `Worked example: the word is LOGIC. Step 1: write the position of every letter. L = 12, O = 15, G = 7, I = 9, C = 3. The way to write a position is: count from A = 1, or remember that M = 13, which is the middle of the alphabet — letters before M are 1 to 12, and letters after M are 14 to 26. Step 2: find the sum of the positions. 12 + 15 + 7 + 9 + 3 = 46. Step 3: find the opposite of L. The formula is 27 - 12 = 15, which means O. Step 4: find the opposite of O. 27 - 15 = 12, which means L. See, L and O are opposites of each other — both add up to 27.
+
+Now a second dry run: find the letter between C and G. Step 1: write the positions — C = 3, G = 7. Step 2: find the average — (3 + 7) / 2 = 5. Step 3: the letter at position 5 is E. Step 4: check — between C and G lie D, E, F, which means 3 letters, and the middle one is E. The formula gives the same: 7 - 3 - 1 = 3 letters between them. The code below runs the LOGIC dry run — match every print with the step you did by hand.`
+        ),
+        code: {
+          title: t(
+            'LOGIC ka Dry Run: Positions, Jod aur Opposite',
+            'LOGIC Dry Run: Positions, Sum, and Opposite'
+          ),
+          language: 'python',
+          code: `word = "LOGIC"
+positions = [ord(ch) - 64 for ch in word]
+print("LOGIC positions:", positions)
+print("sum:", sum(positions))
+print("opposite of L (27 - 12):", 27 - 12, "->", chr(64 + 15))
+print("opposite of O (27 - 15):", 27 - 15, "->", chr(64 + 12))`,
+          output: `LOGIC positions: [12, 15, 7, 9, 3]
+sum: 46
+opposite of L (27 - 12): 15 -> O
+opposite of O (27 - 15): 12 -> L`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: A = 0 Samajhna, 27 ki Jagah 26 aur Ulta Ginna',
+          '4. Common Mistakes: Taking A as 0, Using 26 Instead of 27, and Counting Backwards'
+        ),
+        body: t(
+          `**Galti 1: A ko 0 samajhna.** Alphabet mein A = 1 hota hai, 0 nahi. Jo log computer ki tarah A ko 0 se ginte hain, unki har position ek kam ho jaati hai aur har jawab galat ho jaata hai. Hamesha A = 1 se shuru karo. Yaad rakhne ka tareeka hai: A pehla letter hai, isliye uski position 1 hai.
+
+**Galti 2: opposite ke liye 27 ki jagah 26 use karna.** Alphabet mein 26 letters hain, isliye log opposite nikaalte waqt 26 minus kar dete hain. Par opposite ka jod 27 hota hai, 26 nahi — kyunki A (1) ka opposite Z (26) hai aur 1 + 26 = 27. Agar aap 26 - 12 = 14 karoge to N milega, jo L ka opposite nahi hai. Sahi formula hai 27 - position.
+
+**Galti 3: peeche se ginne mein galti.** "Z se 5th letter" ka matlab hai Z se peeche ki taraf gino: Z (1st), Y (2nd), X (3rd), W (4th), V (5th) — matlab V. Log aksar aage se 5th letter E likh dete hain. Jab sawal mein "end se" ya "peeche se" likha ho, to position ko 27 se ghata kar nikalo: 27 - 5 = 22, matlab V.`,
+          `**Mistake 1: Taking A as 0.** In the alphabet, A = 1, not 0. People who count A from 0, like a computer, make every position one less, and every answer goes wrong. Always start from A = 1. The way to remember is: A is the first letter, so its position is 1.
+
+**Mistake 2: Using 26 instead of 27 for the opposite.** There are 26 letters in the alphabet, so people subtract 26 when finding an opposite. But the sum of opposites is 27, not 26 — because the opposite of A (1) is Z (26), and 1 + 26 = 27. If you do 26 - 12 = 14, you get N, which is not the opposite of L. The right formula is 27 - position.
+
+**Mistake 3: Counting backwards wrongly.** "The 5th letter from Z" means count backwards from Z: Z (1st), Y (2nd), X (3rd), W (4th), V (5th) — which means V. People often write E, the 5th letter from the front. When a question says "from the end" or "from behind", find the position by subtracting from 27: 27 - 5 = 22, which means V.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Beech mein Do Letters, Z ke Aage aur Barabar Jod',
+          '5. Edge Cases: Two Letters in the Middle, Beyond Z, and Equal Sums'
+        ),
+        body: t(
+          `**Edge case 1: beech mein do letters hon.** Agar do positions ka jod odd number ho, to beech mein ek letter nahi hota. Jaise E (5) aur V (22) ka average hai 13.5 — beech mein M (13) aur N (14) dono hain. Aise sawal mein jawab hota hai "koi ek beech ka letter nahi hai" ya dono letters ka naam likhna hota hai. Average ko round karke ek letter mat chun lo.
+
+**Edge case 2: Z ke aage badhna.** "Z ke 3 letters baad" ka matlab kya hai? Alphabet Z par khatam ho jaata hai, isliye aage badhna ho to wapas A se shuru karo. Z ke 3 baad hai C: Z ke baad A (1), B (2), C (3). Is wrap-around ko bhoolne se jawab galat ho jaata hai. Position ke hisaab se yeh hai (26 + 3) ko 26 se mod karo — par simple tareeka hai seedha ginna.
+
+**Edge case 3: do alag pairs ka jod ek jaisa.** A + Z = 27 aur B + Y = 27 — dono ka jod ek jaisa hai, par pairs alag hain. Jod se sirf itna pata chalta hai ki pair opposite hai, kaun sa pair hai yeh nahi. Isliye sawal mein agar sirf jod diya ho to ek se zyada jawab ho sakte hain — sawal mein aur clue bhi check karo.`,
+          `**Edge case 1: Two letters in the middle.** If the sum of two positions is an odd number, there is no single letter in the middle. For example, the average of E (5) and V (22) is 13.5 — both M (13) and N (14) sit in the middle. In such a question the answer is "there is no single middle letter", or you have to name both letters. Do not round the average and pick one letter.
+
+**Edge case 2: Going beyond Z.** What does "3 letters after Z" mean? The alphabet ends at Z, so to go further you start again from A. Three after Z is C: after Z comes A (1), B (2), C (3). Forgetting this wrap-around makes the answer wrong. In positions this is (26 + 3) taken mod 26 — but the simple way is to count directly.
+
+**Edge case 3: Two different pairs with the same sum.** A + Z = 27 and B + Y = 27 — both sums are the same, but the pairs are different. The sum only tells you that the pair is an opposite pair, not which pair it is. So if a question gives only the sum, more than one answer may be possible — also check the other clues in the question.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Alphabet Ulta Ho Jaaye ya Sirf Vowels Hon?',
+          '6. What If the Alphabet Is Reversed or Only Vowels Count?'
+        ),
+        body: t(
+          `**What if alphabet ulta likha ho?** Kuch sawalon mein alphabet ko ulta likha jaata hai: Z = 1, Y = 2, X = 3 aur aise hi A = 26. Ulte alphabet mein letter ki position hai 27 - normal position. Jaise L ki normal position 12 hai, to ulte alphabet mein woh 27 - 12 = 15 hogi. Sawal mein "reverse alphabet" likha ho to pehle yeh badlav karo, phir baaki steps wahi hain.
+
+**What if sirf vowels gine jaayein?** Kabhi-kabhi sawal mein sirf vowels (A, E, I, O, U) ki positions poochhi jaati hain. Vowels ki apni list banti hai: A = 1st vowel, E = 2nd, I = 3rd, O = 4th, U = 5th. Yahan normal position kaam nahi aati — pehle vowel list banao, phir usmein gino. Aise sawal mein "vowel" shabd ko ignore mat karo.
+
+**What if do words ka jod barabar ho?** Do words ki positions ka jod barabar ho sakta hai, par iska matlab yeh nahi ki words ek jaise hain. Jaise CAT ki positions hain 3 + 1 + 20 = 24 aur BAD ki hain 2 + 1 + 4 = 7 — alag hain. Jod sirf ek check hai, poora jawab nahi. Word ke har letter ko alag se bhi check karo.`,
+          `**What if the alphabet is written backwards?** In some questions the alphabet is written in reverse: Z = 1, Y = 2, X = 3, and so on to A = 26. In the reversed alphabet, a letter position is 27 - normal position. For example, L has normal position 12, so in the reversed alphabet it is 27 - 12 = 15. If a question says "reverse alphabet", make this change first, then the remaining steps are the same.
+
+**What if only vowels are counted?** Sometimes a question asks for the positions of only the vowels (A, E, I, O, U). The vowels make their own list: A = 1st vowel, E = 2nd, I = 3rd, O = 4th, U = 5th. Here the normal position does not work — first make the vowel list, then count in it. Do not ignore the word "vowel" in such a question.
+
+**What if the sums of two words are equal?** The sums of the positions of two words can be equal, but that does not mean the words are the same. For example, the positions of CAT are 3 + 1 + 20 = 24, and of BAD are 2 + 1 + 4 = 7 — different. A sum is only one check, not the whole answer. Also check every letter of the word separately.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Alphabet Test Ek Page Mein',
+          '7. Summary: Alphabet Test on One Page'
+        ),
+        body: t(
+          `Alphabet test ka poora kaam teen formulas par chalta hai. **Formula 1:** position — A = 1 se Z = 26 tak. **Formula 2:** opposite — opposite position = 27 - position, aur opposite pair ka jod hamesha 27 hota hai. **Formula 3:** beech ka letter — average nikalo, aur beech mein kitne letters hain, yeh nikaalne ke liye bada minus chhota minus 1 karo.
+
+Yaad rakhne wali teen baatein hain. Pehli: **hamesha position likho** — bina likhe andaze se jawab galat hota hai. Doosri: **A = 1 hai, 0 nahi**, aur opposite ke liye 27 use karo, 26 nahi. Teesri: **peeche se ginna ho to 27 se ghatao** — "Z se 5th" ka matlab hai position 22, matlab V.
+
+Revision ke liye yeh karo: apne naam ke har letter ki position likho, unka jod nikalo, aur har letter ka opposite likho. Phir apne naam ke pehle aur aakhri letter ke beech ka letter nikalo. Agar yeh teen kaam bina ruke ho jaayein, to alphabet test aapko aa gaya hai. Agle article mein hum mirror aur water images dekhenge — left-right aur top-bottom flip ka khel.`,
+          `The whole work of the alphabet test runs on three formulas. **Formula 1:** position — A = 1 to Z = 26. **Formula 2:** opposite — opposite position = 27 - position, and an opposite pair always adds up to 27. **Formula 3:** middle letter — take the average, and to find how many letters lie between, do big minus small minus 1.
+
+Remember three things. First: **always write the positions** — guessing without writing gives wrong answers. Second: **A = 1, not 0**, and use 27 for the opposite, not 26. Third: **to count from behind, subtract from 27** — "5th from Z" means position 22, which means V.
+
+For revision, do this: write the position of every letter of your name, find their sum, and write the opposite of every letter. Then find the letter between the first and last letters of your name. If these three jobs go smoothly, you know the alphabet test. In the next article we will look at mirror and water images — the game of left-right and top-bottom flips.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Alphabet Test Solve Karne ka Flow',
+        'The Flow for Solving an Alphabet Test'
+      ),
+      caption: t(
+        'Position likho, formula lagao, jawab check karo',
+        'Write the position, apply the formula, check the answer'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Position likho', 'Step 1: Write the position'),
+          s: t('A = 1, B = 2 ... Z = 26', 'A = 1, B = 2 ... Z = 26')
+        },
+        {
+          t: t('Step 2: Opposite nikalo', 'Step 2: Find the opposite'),
+          s: t('Opposite = 27 - position', 'Opposite = 27 - position')
+        },
+        {
+          t: t('Step 3: Beech ka letter nikalo', 'Step 3: Find the middle letter'),
+          s: t('Average nikalo: (3 + 7) / 2 = 5, matlab E', 'Take the average: (3 + 7) / 2 = 5, which means E')
+        },
+        {
+          t: t('Step 4: Jod check karo', 'Step 4: Check the sum'),
+          s: t('Opposite pair ka jod hamesha 27 hota hai', 'An opposite pair always adds up to 27')
+        },
+        {
+          t: t('Yaad rakho: A = 1 hai, 0 nahi', 'Remember: A = 1, not 0'),
+          s: t('Galat start se har position ek kam ho jaati hai', 'A wrong start makes every position one less')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Opposite Pairs: A-Z, B-Y, C-X ka Jod 27',
+          'Opposite Pairs: A-Z, B-Y, C-X Add Up to 27'
+        ),
+        language: 'python',
+        code: `for ch in "ABC":
+    print(ch, "->", chr(155 - ord(ch)), "sum:", (ord(ch) - 64) + (27 - (ord(ch) - 64)))`,
+        output: `A -> Z sum: 27
+B -> Y sum: 27
+C -> X sum: 27`
+      },
+      {
+        title: t(
+          'Beech ka Letter: C aur G ke Beech E',
+          'Middle Letter: E Between C and G'
+        ),
+        language: 'python',
+        code: `a, b = 3, 7
+mid = (a + b) // 2
+print("C =", a, "G =", b)
+print("middle position:", mid)
+print("middle letter:", chr(64 + mid))
+print("letters between C and G:", b - a - 1)`,
+        output: `C = 3 G = 7
+middle position: 5
+middle letter: E
+letters between C and G: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'E ka opposite letter kaun sa hai?',
+          'Which letter is the opposite of E?'
+        ),
+        opts: [
+          t('U', 'U'),
+          t('V', 'V'),
+          t('W', 'W'),
+          t('X', 'X')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: E ki position 5 hai, opposite hai 27 - 5 = 22, matlab V. Check: 5 + 22 = 27.',
+          'Correct answer: E has position 5, its opposite is 27 - 5 = 22, which means V. Check: 5 + 22 = 27.'
+        )
+      },
+      {
+        q: t(
+          'G ke 3 letters baad kaun sa letter aata hai?',
+          'Which letter comes 3 letters after G?'
+        ),
+        opts: [
+          t('H', 'H'),
+          t('I', 'I'),
+          t('J', 'J'),
+          t('K', 'K')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: G ki position 7 hai, 7 + 3 = 10, matlab J.',
+          'Correct answer: G has position 7, 7 + 3 = 10, which means J.'
+        )
+      },
+      {
+        q: t(
+          'C (3) aur G (7) ke beech ka letter kaun sa hai?',
+          'Which letter lies between C (3) and G (7)?'
+        ),
+        opts: [
+          t('D', 'D'),
+          t('E', 'E'),
+          t('F', 'F'),
+          t('H', 'H')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: beech ka letter average hota hai: (3 + 7) / 2 = 5, matlab E.',
+          'Correct answer: the middle letter is the average: (3 + 7) / 2 = 5, which means E.'
+        )
+      },
+      {
+        q: t(
+          'Kaun sa pair opposite pair hai (jod 27)?',
+          'Which pair is an opposite pair (sum 27)?'
+        ),
+        opts: [
+          t('M aur N', 'M and N'),
+          t('M aur O', 'M and O'),
+          t('L aur M', 'L and M'),
+          t('N aur O', 'N and O')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: M = 13 aur N = 14, jod hai 27. Baaki pairs ka jod 27 nahi hai.',
+          'Correct answer: M = 13 and N = 14, their sum is 27. The other pairs do not add up to 27.'
+        )
+      },
+      {
+        q: t(
+          'LOGIC word ki positions ka jod kitna hai?',
+          'What is the sum of the positions of the word LOGIC?'
+        ),
+        opts: [
+          t('44', '44'),
+          t('45', '45'),
+          t('46', '46'),
+          t('47', '47')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: L = 12, O = 15, G = 7, I = 9, C = 3. Jod hai 12 + 15 + 7 + 9 + 3 = 46.',
+          'Correct answer: L = 12, O = 15, G = 7, I = 9, C = 3. The sum is 12 + 15 + 7 + 9 + 3 = 46.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'A = 1 se Z = 26 tak — hamesha position likh kar solve karo.',
+        'A = 1 to Z = 26 — always solve by writing the positions.'
+      ),
+      t(
+        'Opposite position = 27 - position; opposite pair ka jod hamesha 27 hota hai.',
+        'Opposite position = 27 - position; an opposite pair always adds up to 27.'
+      ),
+      t(
+        'Beech ka letter average hota hai; beech mein letters = bada - chhota - 1.',
+        'The middle letter is the average; letters between = big - small - 1.'
+      ),
+      t(
+        'Peeche se ginna ho to 27 se ghatao — "Z se 5th" matlab V.',
+        'To count from behind, subtract from 27 — "5th from Z" means V.'
+      ),
+      t(
+        'M = 13 alphabet ka beech hai — M se pehle 1-12, baad mein 14-26.',
+        'M = 13 is the middle of the alphabet — before M is 1-12, after M is 14-26.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: BRAIN Word ki Positions aur Jod',
+        'Practice: Positions and Sum of the Word BRAIN'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki BRAIN ki positions [2, 18, 1, 9, 14] hain aur unka jod 44 hai. Done tab hoga jab output mein "BRAIN positions: [2, 18, 1, 9, 14]" aur "sum: 44" dikhe.',
+        'Run the starter code and check that the positions of BRAIN are [2, 18, 1, 9, 14] and their sum is 44. You are done when the output shows "BRAIN positions: [2, 18, 1, 9, 14]" and "sum: 44".'
+      ),
+      language: 'python',
+      starter: `word = "BRAIN"
+pos = [ord(ch) - 64 for ch in word]
+print("BRAIN positions:", pos)
+print("sum:", sum(pos))
+print("first letter B =", pos[0])
+print("last letter N =", pos[-1])`,
+      expected: `BRAIN positions: [2, 18, 1, 9, 14]
+sum: 44
+first letter B = 2
+last letter N = 14`
+    },
+    readMinutes: 12
+  };
+
+const logicMirrorWater: Article = {
+    id: 'logic-mirror-water',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Mirror aur Water Images — Left-Right aur Top-Bottom Flip',
+      'Mirror and Water Images — Left-Right and Top-Bottom Flips'
+    ),
+    summary: t(
+      'Mirror image mein left aur right badal jaate hain, upar-neeche wahi rehta hai. Water image mein upar aur neeche badal jaate hain, left-right wahi rehta hai. Kaun se letters flip ke baad bhi wahi dikhte hain, yeh yaad kar lo to aadha sawal wahin solve ho jaata hai.',
+      'In a mirror image, left and right swap, while top and bottom stay the same. In a water image, top and bottom swap, while left and right stay the same. Learn which letters still look the same after a flip, and half the question is solved right there.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mirror aur Water Images Kya Hain?',
+          '1. What Are Mirror and Water Images?'
+        ),
+        body: t(
+          `**Mirror image** woh image hoti hai jo kisi cheez ko sheeshe ke saamne rakhne par dikhti hai. Sheesha left aur right ko badal deta hai — jo cheez left mein thi, woh right mein dikhti hai aur jo right mein thi, woh left mein. Par upar aur neeche wahi rehte hain. Jaise CAT word ka mirror image hai TAC — letters ka order ulta ho gaya, par har letter upar-neeche wahi raha. Mirror mein word ko ulta padhna padta hai, right se left.
+
+**Water image** woh image hoti hai jo kisi cheez ki paani mein parchaai dikhti hai. Paani upar aur neeche ko badal deta hai — jo upar tha, woh neeche dikhta hai aur jo neeche tha, woh upar. Par left aur right wahi rehte hain. Isliye water image mein word ka order nahi badalta — pehla letter pehla hi rehta hai, sirf har letter ka shape upar-neeche flip ho jaata hai. Jaise MIRROR word ka water image bhi MIRROR order mein hi likha dikhega, par letters ulte dikhenge.
+
+Dono mein farak yaad rakhne ka simple tareeka hai: **mirror = left-right flip, water = top-bottom flip**. Mirror mein word ulta ho jaata hai, water mein word ka order wahi rehta hai. Exam mein aksar dono ko mix karke poocha jaata hai, isliye pehle yeh check karo ki sawal mirror ka hai ya water ka.`,
+          `A **mirror image** is the image you see when you hold something in front of a mirror. The mirror swaps left and right — what was on the left appears on the right, and what was on the right appears on the left. But top and bottom stay the same. For example, the mirror image of the word CAT is TAC — the order of the letters is reversed, but every letter stays at the same height. In a mirror you have to read the word backwards, from right to left.
+
+A **water image** is the reflection you see in water. Water swaps top and bottom — what was on top appears below, and what was below appears on top. But left and right stay the same. So in a water image the order of the word does not change — the first letter stays first, only the shape of every letter flips top to bottom. For example, the water image of the word MIRROR still shows the letters in the MIRROR order, but every letter looks flipped.
+
+The simple way to remember the difference is: **mirror = left-right flip, water = top-bottom flip**. In a mirror the word turns backwards; in water the order of the word stays the same. Exams often mix the two, so first check whether the question is about a mirror or about water.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Sheesha, Paani aur Number Plate',
+          '2. Real-Life Examples: Mirror, Water, and Number Plates'
+        ),
+        body: t(
+          `Mirror image roz ki zindagi mein har jagah dikhta hai. Socho aap apni gaadi ke side mirror mein peeche wali gaadi ki number plate dekhte ho — number ulta dikhta hai, isliye use padhna mushkil hota hai. Ambulance par "AMBULANCE" ulta likha hota hai, taaki aage wali gaadi ke mirror mein woh seedha dikhe. Yahi mirror ka rule hai: left-right ulta ho jaata hai, isliye likhne wale ne pehle se hi ulta likh diya.
+
+Water image ka example hai talab mein ped ki parchaai. Ped ka upar wala hissa paani mein neeche dikhta hai aur neeche wala hissa upar — poora ped ulta dikhta hai, par left-right wahi rehta hai. Baarish ke baad sadak par bane paani mein building ki parchaai bhi aisi hi dikhti hai.
+
+Teesra example hai ghadi ka. Ek ghadi mein 3 baj rahe hon to mirror mein woh 9 bajte hue dikhegi — kyunki hour hand right mein tha aur mirror mein left mein chala gaya. Water image mein ghadi ka upar-neeche badal jaata hai. Isliye time wale sawalon mein pehle yeh decide karo ki flip kis direction mein hai.`,
+          `Mirror images appear everywhere in daily life. Imagine you look at the number plate of the car behind you in your side mirror — the number looks reversed, which is why it is hard to read. On an ambulance, "AMBULANCE" is written backwards, so that it looks straight in the mirror of the car ahead. That is the mirror rule: left and right turn around, so the writer already wrote it backwards.
+
+An example of a water image is a tree reflected in a pond. The top part of the tree appears below in the water, and the bottom part appears above — the whole tree looks upside down, but left and right stay the same. The reflection of a building in rainwater on a road looks the same way.
+
+A third example is a clock. If a clock shows 3 o clock, in a mirror it looks like 9 o clock — because the hour hand was on the right and moved to the left in the mirror. In a water image, the top and bottom of the clock swap. So in time questions, first decide in which direction the flip happens.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: MIRROR Word ka Dry Run (Mirror vs Water)',
+          '3. Step-by-Step: A Dry Run on the Word MIRROR (Mirror vs Water)'
+        ),
+        body: t(
+          `Worked example: word hai MIRROR. Step 1: mirror image nikalo. Mirror left-right badalta hai, isliye letters ka order ulta karo. MIRROR ko ulta likho to banta hai RORRIM. Step 2: check karo — pehla letter M ab aakhri jagah par hai aur aakhri letter R pehli jagah par hai. Beech ka letter R wahi rehta hai, kyunki 6 letters mein beech mein do letters hote hain. Step 3: water image nikalo. Water top-bottom badalta hai, left-right nahi, isliye order wahi rehta hai — MIRROR hi likha dikhega, sirf har letter ka shape flip hoga.
+
+Doosra dry run: CAT word. Step 1: mirror — order ulta karo, CAT ban gaya TAC. Step 2: position check karo — C position 0 se mirror mein position 2 par gaya, A position 1 par hi raha, T position 2 se 0 par gaya. Formula hai: mirror position = n - 1 - i, jahan n word ki length hai aur i purani position hai. Step 3: water — order wahi, CAT hi rahega, sirf letters flip honge. Neeche wala code MIRROR ke dry run ko run karke dikhata hai.`,
+          `Worked example: the word is MIRROR. Step 1: find the mirror image. A mirror swaps left and right, so reverse the order of the letters. Writing MIRROR backwards gives RORRIM. Step 2: check — the first letter M is now in the last place, and the last letter R is in the first place. The middle letter R stays put, because with 6 letters there are two middle letters. Step 3: find the water image. Water swaps top and bottom, not left and right, so the order stays the same — it still reads MIRROR, only the shape of every letter flips.
+
+Second dry run: the word CAT. Step 1: mirror — reverse the order, CAT becomes TAC. Step 2: check the positions — C moves from position 0 to mirror position 2, A stays at position 1, T moves from position 2 to 0. The formula is: mirror position = n - 1 - i, where n is the length of the word and i is the old position. Step 3: water — the order stays the same, it still reads CAT, only the letters flip. The code below runs the MIRROR dry run.`
+        ),
+        code: {
+          title: t(
+            'MIRROR ka Dry Run: Mirror mein RORRIM',
+            'MIRROR Dry Run: RORRIM in the Mirror'
+          ),
+          language: 'python',
+          code: `word = "MIRROR"
+print("word:", word)
+print("mirror (left-right reversed):", word[::-1])
+print("first letter of mirror image:", word[::-1][0])
+print("water keeps order, flips shape:", word)
+print("letters same in mirror: A H I O T U V W X Y")`,
+          output: `word: MIRROR
+mirror (left-right reversed): RORRIM
+first letter of mirror image: R
+water keeps order, flips shape: MIRROR
+letters same in mirror: A H I O T U V W X Y`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Mirror ko Water Samajhna aur Order Na Badalna',
+          '4. Common Mistakes: Mixing Mirror with Water and Not Reversing the Order'
+        ),
+        body: t(
+          `**Galti 1: mirror aur water ko mix karna.** Sabse aam galti hai mirror wale sawal mein water wala jawab dena. Mirror mein order ulta hota hai, water mein nahi. Sawal padhte hi pehle yeh likh lo: "mirror = left-right" ya "water = top-bottom". Yeh ek line likhne se aadhi galtiyan khatam ho jaati hain.
+
+**Galti 2: mirror mein order ulta karna bhool jana.** Log mirror image mein sirf har letter ko flip karte hain, par order ulta karna bhool jaate hain. Jaise CAT ka mirror TAC hota hai, CAT nahi. Order ulta karna mirror ka pehla step hai, letter flip karna doosra. Dono steps karo.
+
+**Galti 3: har letter ko same samajhna.** Sirf kuch letters flip ke baad bhi wahi dikhte hain. Mirror mein wahi dikhne wale letters hain A, H, I, O, T, U, V, W, X, Y — inmein left-right symmetry hoti hai. Baaki letters badal jaate hain, jaise B mirror mein ulta B dikhta hai. Agar aap har letter ko same maan loge to jawab galat hoga.`,
+          `**Mistake 1: Mixing mirror with water.** The most common mistake is giving a water answer to a mirror question. In a mirror the order reverses; in water it does not. As soon as you read the question, write this line first: "mirror = left-right" or "water = top-bottom". Writing this one line removes half the mistakes.
+
+**Mistake 2: Forgetting to reverse the order in a mirror.** People flip every letter in a mirror image but forget to reverse the order. For example, the mirror of CAT is TAC, not CAT. Reversing the order is the first step of a mirror, flipping the letters is the second. Do both steps.
+
+**Mistake 3: Thinking every letter stays the same.** Only some letters still look the same after a flip. The letters that look the same in a mirror are A, H, I, O, T, U, V, W, X, Y — they have left-right symmetry. The other letters change; for example, B looks like a reversed B in a mirror. If you take every letter as unchanged, the answer will be wrong.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Beech ka Letter, Palindrome aur Numbers',
+          '5. Edge Cases: Middle Letter, Palindromes, and Numbers'
+        ),
+        body: t(
+          `**Edge case 1: beech ka letter.** Odd length wale word mein beech ka letter mirror mein apni jagah par hi rehta hai. CAT mein A beech mein hai aur TAC mein bhi A beech mein hai. Even length wale word mein beech mein do letters hote hain aur dono ki jagah badal jaati hai. Isliye pehle word ki length check karo — odd hai ya even.
+
+**Edge case 2: palindrome words.** MOM, MADAM, LEVEL jaise words aage se aur peeche se ek jaise padhe jaate hain. Inka mirror image bhi wahi word dikhta hai (order ke hisaab se), kyunki ulta karne par wahi word banta hai. Par har letter ka shape phir bhi flip hota hai — sirf woh letters wahi dikhte hain jinmein symmetry hoti hai.
+
+**Edge case 3: numbers.** Numbers ka mirror bhi letters jaisa hi hota hai. 2 ka mirror ulta 2 dikhta hai, 3 ka mirror ulta 3 dikhta hai. Sirf 0 aur 8 mirror mein wahi dikhte hain, kyunki inmein left-right symmetry hoti hai. Water mein 0, 3 aur 8 wahi dikhte hain. Number wale sawalon mein pehle yeh list yaad karo.`,
+          `**Edge case 1: The middle letter.** In a word of odd length, the middle letter stays in its place in the mirror. In CAT, A is in the middle, and in TAC, A is still in the middle. In a word of even length there are two middle letters, and both swap places. So first check the length of the word — odd or even.
+
+**Edge case 2: Palindrome words.** Words like MOM, MADAM and LEVEL read the same forwards and backwards. Their mirror image also looks like the same word (in order), because reversing gives the same word. But the shape of every letter still flips — only the letters with symmetry look the same.
+
+**Edge case 3: Numbers.** The mirror of a number works like that of a letter. The mirror of 2 looks like a reversed 2, and of 3 like a reversed 3. Only 0 and 8 look the same in a mirror, because they have left-right symmetry. In water, 0, 3 and 8 look the same. In number questions, remember this list first.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Sheesha Upar Ho ya Paani ke Neeche Ho?',
+          '6. What If the Mirror Is on Top or Below the Water?'
+        ),
+        body: t(
+          `**What if sheesha word ke upar rakha ho?** Aam taur par sheesha word ke side mein (left ya right) rakha hota hai aur left-right flip hota hai. Par agar sheesha word ke upar ya neeche rakha ho, to upar-neeche flip hota hai — matlab woh water image jaisa ho jaata hai. Exam mein sheeshe ki jagah hamesha check karo: side mein hai ya upar-neeche.
+
+**What if word mein sirf symmetric letters hon?** Jaise word "HIT" mein H, I, T teeno mirror mein wahi dikhte hain. Iska mirror image order ulta hone ke baad bhi "TIH" dikhega, par har letter ka shape wahi rahega. Aise words mein sirf order badalta hai, shape nahi. Sawal mein aise word ko dekh kar turant pehchan lo.
+
+**What if mirror aur water dono poochhe jaayein?** Pehle mirror nikalo, phir uska water nikalo — ya ulta. Mirror ke baad water lagane se word 180 degree ghum jaata hai, matlab ulta ho jaata hai. Dono flips ek saath lagana ek rotation ke barabar hota hai. Steps ko alag-alag karo, ek saath mat socho.`,
+          `**What if the mirror is placed above the word?** Usually the mirror is placed at the side of the word (left or right) and left-right flips. But if the mirror is placed above or below the word, top-bottom flips — which means it becomes like a water image. In an exam always check the place of the mirror: at the side, or above-below.
+
+**What if the word has only symmetric letters?** For example, in the word "HIT", H, I and T all look the same in a mirror. Its mirror image still reads "TIH" after reversing the order, but the shape of every letter stays the same. In such words only the order changes, not the shape. Spot such a word at once when you see it in a question.
+
+**What if both mirror and water are asked?** First find the mirror, then find its water — or the other way round. Applying water after a mirror turns the word by 180 degrees, which means upside down. Both flips together equal one rotation. Do the steps one by one, do not think of them together.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Mirror aur Water Ek Page Mein',
+          '7. Summary: Mirror and Water on One Page'
+        ),
+        body: t(
+          `Mirror aur water ka poora farak ek line mein hai: **mirror = left-right flip (order ulta), water = top-bottom flip (order wahi)**. Mirror mein word ko ulta likho, water mein order wahi rakho aur sirf shape flip karo. Mirror mein wahi dikhne wale letters hain A, H, I, O, T, U, V, W, X, Y aur water mein B, C, D, E, H, I, K, O, X.
+
+Yaad rakhne wali teen baatein hain. Pehli: **sawal padhte hi likh lo** ki mirror hai ya water — yahi sabse badi galti rokta hai. Doosri: **mirror mein order ulta karna pehla step hai**, letter flip karna doosra. Teesri: **beech ka letter** odd length mein apni jagah par rehta hai, even length mein badal jaata hai.
+
+Revision ke liye yeh karo: apne naam ka mirror image likho — order ulta karo aur har letter ko flip karo. Phir uska water image likho — order wahi rakho. Agar dono bina ruke ban jaayein, to mirror aur water aapko aa gaya hai. Agle article mein hum embedded figures aur paper cutting dekhenge — kagaz ko fold karke kaatne ka khel.`,
+          `The whole difference between mirror and water fits in one line: **mirror = left-right flip (order reverses), water = top-bottom flip (order stays)**. In a mirror, write the word backwards; in water, keep the order and only flip the shape. The letters that look the same in a mirror are A, H, I, O, T, U, V, W, X, Y, and in water they are B, C, D, E, H, I, K, O, X.
+
+Remember three things. First: **as soon as you read the question, write down** whether it is a mirror or water — this stops the biggest mistake. Second: **in a mirror, reversing the order is the first step**, flipping the letters is the second. Third: **the middle letter** stays in its place in odd lengths and swaps in even lengths.
+
+For revision, do this: write the mirror image of your name — reverse the order and flip every letter. Then write its water image — keep the order the same. If both come out without stopping, you know mirror and water. In the next article we will look at embedded figures and paper cutting — the game of folding paper and cutting it.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Mirror vs Water: Pehle Kya Check Karein',
+        'Mirror vs Water: What to Check First'
+      ),
+      caption: t(
+        'Mirror mein order ulta hota hai, water mein order wahi rehta hai',
+        'In a mirror the order reverses, in water the order stays the same'
+      ),
+      nodes: [
+        {
+          t: t('Sawal padho: mirror ya water?', 'Read the question: mirror or water?'),
+          s: t('Mirror = left-right, water = top-bottom', 'Mirror = left-right, water = top-bottom')
+        },
+        {
+          t: t('Mirror: order ulta karo', 'Mirror: reverse the order'),
+          s: t('CAT ban gaya TAC, MIRROR ban gaya RORRIM', 'CAT becomes TAC, MIRROR becomes RORRIM')
+        },
+        {
+          t: t('Water: order wahi rakho', 'Water: keep the order'),
+          s: t('Sirf har letter ka shape flip karo', 'Only flip the shape of every letter')
+        },
+        {
+          t: t('Symmetric letters check karo', 'Check the symmetric letters'),
+          s: t('Mirror mein A, H, I, O, T, U, V, W, X, Y wahi dikhte hain', 'In a mirror, A, H, I, O, T, U, V, W, X, Y look the same')
+        },
+        {
+          t: t('Beech ka letter check karo', 'Check the middle letter'),
+          s: t('Odd length mein beech ka letter apni jagah par rehta hai', 'In odd lengths the middle letter stays in its place')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Mirror-safe aur Water-safe Letters',
+          'Mirror-Safe and Water-Safe Letters'
+        ),
+        language: 'python',
+        code: `mirror_same = ["A", "H", "I", "O", "T", "U", "V", "W", "X", "Y"]
+water_same = ["B", "C", "D", "E", "H", "I", "K", "O", "X"]
+print("mirror-safe count:", len(mirror_same))
+print("water-safe count:", len(water_same))
+print("safe in both:", sorted(set(mirror_same) & set(water_same)))`,
+        output: `mirror-safe count: 10
+water-safe count: 9
+safe in both: ['H', 'I', 'O', 'X']`
+      },
+      {
+        title: t(
+          'CAT ka Mirror: Har Letter ki Position',
+          'Mirror of CAT: Position of Every Letter'
+        ),
+        language: 'python',
+        code: `word = "CAT"
+n = len(word)
+for i, ch in enumerate(word):
+    print(ch, "at", i, "-> mirror at", n - 1 - i)
+print("mirror word:", word[::-1])`,
+        output: `C at 0 -> mirror at 2
+A at 1 -> mirror at 1
+T at 2 -> mirror at 0
+mirror word: TAC`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'CAT word ka mirror image kya hoga?',
+          'What is the mirror image of the word CAT?'
+        ),
+        opts: [
+          t('CAT', 'CAT'),
+          t('TAC', 'TAC'),
+          t('ACT', 'ACT'),
+          t('CTA', 'CTA')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mirror mein left-right badalta hai, isliye order ulta hota hai — CAT ban gaya TAC.',
+          'Correct answer: in a mirror left and right swap, so the order reverses — CAT becomes TAC.'
+        )
+      },
+      {
+        q: t(
+          'WATER word ka mirror image kya hoga?',
+          'What is the mirror image of the word WATER?'
+        ),
+        opts: [
+          t('WATER', 'WATER'),
+          t('RETAW', 'RETAW'),
+          t('WTAER', 'WTAER'),
+          t('RTAEW', 'RTAEW')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mirror mein order ulta hota hai — WATER ban gaya RETAW.',
+          'Correct answer: in a mirror the order reverses — WATER becomes RETAW.'
+        )
+      },
+      {
+        q: t(
+          'Kaun sa letter mirror mein bhi wahi dikhta hai?',
+          'Which letter looks the same in a mirror?'
+        ),
+        opts: [
+          t('B', 'B'),
+          t('C', 'C'),
+          t('H', 'H'),
+          t('F', 'F')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: H mein left-right symmetry hoti hai, isliye mirror mein H, H hi dikhta hai. B, C aur F badal jaate hain.',
+          'Correct answer: H has left-right symmetry, so in a mirror H still looks like H. B, C and F change.'
+        )
+      },
+      {
+        q: t(
+          'Kaun sa letter water image mein bhi wahi dikhta hai?',
+          'Which letter looks the same in a water image?'
+        ),
+        opts: [
+          t('B', 'B'),
+          t('F', 'F'),
+          t('G', 'G'),
+          t('J', 'J')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: B mein top-bottom symmetry hoti hai, isliye water mein B, B hi dikhta hai. F, G aur J badal jaate hain.',
+          'Correct answer: B has top-bottom symmetry, so in water B still looks like B. F, G and J change.'
+        )
+      },
+      {
+        q: t(
+          'Mirror image ke baare mein kaun sa statement sahi hai?',
+          'Which statement about mirror images is true?'
+        ),
+        opts: [
+          t('Mirror mein upar-neeche badalta hai, left-right wahi rehta hai', 'In a mirror top-bottom swaps, left-right stays the same'),
+          t('Mirror mein left-right badalta hai, upar-neeche wahi rehta hai', 'In a mirror left-right swaps, top-bottom stays the same'),
+          t('Mirror mein order wahi rehta hai', 'In a mirror the order stays the same'),
+          t('Mirror mein kuch nahi badalta', 'In a mirror nothing changes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mirror left aur right ko badalta hai, upar aur neeche wahi rehte hain — isiliye order ulta ho jaata hai.',
+          'Correct answer: a mirror swaps left and right, while top and bottom stay the same — which is why the order reverses.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mirror = left-right flip, order ulta; water = top-bottom flip, order wahi.',
+        'Mirror = left-right flip, order reverses; water = top-bottom flip, order stays.'
+      ),
+      t(
+        'Mirror mein wahi dikhne wale letters: A, H, I, O, T, U, V, W, X, Y.',
+        'Letters that look the same in a mirror: A, H, I, O, T, U, V, W, X, Y.'
+      ),
+      t(
+        'Water mein wahi dikhne wale letters: B, C, D, E, H, I, K, O, X.',
+        'Letters that look the same in water: B, C, D, E, H, I, K, O, X.'
+      ),
+      t(
+        'Mirror position = n - 1 - i; beech ka letter odd length mein apni jagah par rehta hai.',
+        'Mirror position = n - 1 - i; the middle letter stays in its place in odd lengths.'
+      ),
+      t(
+        'Sheeshe ki jagah check karo — upar-neeche rakha sheesha water jaisa kaam karta hai.',
+        'Check the place of the mirror — a mirror placed above or below works like water.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: WATER Word ka Mirror Image',
+        'Practice: Mirror Image of the Word WATER'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki WATER ka mirror RETAW hai, pehla letter R hai aur aakhri letter W hai. Done tab hoga jab output mein "mirror: RETAW" dikhe.',
+        'Run the starter code and check that the mirror of WATER is RETAW, the first letter is R and the last letter is W. You are done when the output shows "mirror: RETAW".'
+      ),
+      language: 'python',
+      starter: `word = "WATER"
+print("word:", word)
+print("mirror:", word[::-1])
+print("first letter in mirror:", word[::-1][0])
+print("last letter in mirror:", word[::-1][-1])`,
+      expected: `word: WATER
+mirror: RETAW
+first letter in mirror: R
+last letter in mirror: W`
+    },
+    readMinutes: 12
+  };
+
+const logicEmbeddedFigures: Article = {
+    id: 'logic-embedded-figures',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Embedded Figures aur Paper Cutting — Chhupa Shape aur Fold karke Kaatna',
+      'Embedded Figures and Paper Cutting — Hidden Shapes and Fold-and-Cut'
+    ),
+    summary: t(
+      'Embedded figure mein ek chhota shape bade figure ke andar chhupa hota hai — use dhoondhne ke liye shape ki lines ko trace karo. Paper cutting mein kagaz ko fold karo, ek hole punch karo aur kholo to holes mirror image mein bante hain. Dono mein symmetry hi kaam aati hai.',
+      'In an embedded figure, a small shape hides inside a big figure — trace the lines of the shape to find it. In paper cutting, fold the paper, punch one hole, and open it to find holes in mirror image. Symmetry is what works in both.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Embedded Figures aur Paper Cutting Kya Hain?',
+          '1. What Are Embedded Figures and Paper Cutting?'
+        ),
+        body: t(
+          `**Embedded figure** ka matlab hai ek chhota shape jo ek bade figure ke andar chhupa hua hai. Bada figure bahut saari lines se bana hota hai aur chhota shape unhi lines ke ek hisse se banta hai. Aapka kaam hai chhote shape ki lines ko bade figure mein dhoondhna. Jaise ek bada square chaar chhote squares se bana ho to usmein ek chhota square bhi chhupa hota hai aur ek bada square bhi — kul 5 squares hote hain. Shape ko dhoondhne ke liye uski har line ko alag se trace karo.
+
+**Paper cutting** mein ek kagaz ko fold kiya jaata hai, phir usmein ek hole punch kiya jaata hai ya ek hissa kaata jaata hai, aur phir kagaz ko khola jaata hai. Khulne par holes ya cuts fold ki lines ke mirror image mein bante hain. Jaise kagaz ko ek baar fold karke ek hole punch karo to khulne par 2 holes milenge — ek asal jagah par aur ek uske mirror image par. Do baar fold karke (pehle vertical, phir horizontal) ek hole punch karo to 4 holes milenge.
+
+Dono topics mein ek hi skill kaam aati hai: **symmetry**. Embedded figure mein shape ki lines ko bade figure ki lines se match karo, aur paper cutting mein fold ki line ko mirror ki line samjho.`,
+          `An **embedded figure** means a small shape hidden inside a big figure. The big figure is made of many lines, and the small shape is made from a part of those same lines. Your job is to find the lines of the small shape inside the big figure. For example, if a big square is made of four small squares, it hides one small square and one big square too — 5 squares in total. To find a shape, trace each of its lines separately.
+
+In **paper cutting**, a paper is folded, then a hole is punched in it or a part is cut off, and then the paper is opened. On opening, the holes or cuts appear in mirror image across the fold lines. For example, fold a paper once and punch one hole, and on opening you get 2 holes — one at the real place and one at its mirror image. Fold twice (first vertical, then horizontal) and punch one hole, and you get 4 holes.
+
+Both topics use one skill: **symmetry**. In an embedded figure, match the lines of the shape with the lines of the big figure, and in paper cutting, treat the fold line as a mirror line.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Rangoli, Kagaz ki Katai aur Gift Wrap',
+          '2. Real-Life Examples: Rangoli, Paper Cutting, and Gift Wrap'
+        ),
+        body: t(
+          `Embedded figures roz ki zindagi mein rangoli aur design mein dikhte hain. Ek badi rangoli mein bahut saare chhote triangles aur squares chhupe hote hain — rangoli banane wala unhe ek-ek karke dhoondhta hai aur rang bharta hai. Bachche jab puzzle book mein chhupa hua star dhoondhte hain, to woh bhi embedded figure hi solve kar rahe hote hain.
+
+Paper cutting ka sabse achha example hai kagaz ki katai se bane snowflake. Kagaz ko baar-baar fold karo, phir kinare kaat do aur kholo to ek sundar symmetric design banta hai. Har cut fold ki line ke mirror mein banta hai, isliye design hamesha symmetric hota hai. Diwali par kagaz ki latkan banane mein bhi yahi tareeka use hota hai.
+
+Teesra example hai gift wrap. Gift ko wrap karne ke liye kagaz ko fold kiya jaata hai aur fold ki line par kaata jaata hai — kaata hua hissa khulne par dono taraf ek jaisa dikhta hai. Yahi mirror rule paper cutting ke sawalon mein kaam aata hai: fold ki line ke dono taraf sab kuch mirror image mein banta hai.`,
+          `Embedded figures appear in daily life in rangoli and designs. A big rangoli hides many small triangles and squares — the person making the rangoli finds them one by one and fills in colour. When children find a hidden star in a puzzle book, they are also solving an embedded figure.
+
+The best example of paper cutting is a snowflake made by cutting paper. Fold the paper again and again, cut the edges, and open it to get a beautiful symmetric design. Every cut appears in mirror image across the fold line, so the design is always symmetric. The same method is used to make paper hangings for Diwali.
+
+A third example is gift wrap. To wrap a gift, the paper is folded and cut along the fold line — the cut part looks the same on both sides when opened. This same mirror rule works in paper cutting questions: on both sides of the fold line, everything forms in mirror image.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Do Baar Fold, Ek Punch, 4 Holes (Worked Example with Dry Run)',
+          '3. Step-by-Step: Fold Twice, Punch Once, 4 Holes (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Worked example: ek square kagaz hai. Step 1: use vertical fold karo — kagaz aadha ho gaya, ab do layers hain. Step 2: use horizontal fold karo — kagaz phir aadha ho gaya, ab chaar layers hain. Step 3: folded kagaz ke ek corner ke paas ek hole punch karo, position (1, 1) par. Step 4: kagaz ko kholo. Har fold ki line ek mirror hai, isliye ek hole ke chaar mirror images bante hain: (1, 1), (1, 3), (3, 1) aur (3, 3). Kul 4 holes milenge.
+
+Dry run numbers se: kagaz 4 x 4 ka hai aur folded quarter 2 x 2 ka hai. Punch (1, 1) par hai. Vertical fold ke mirror mein x badal jaata hai: 1 ban gaya 3, isliye (3, 1) banta hai. Horizontal fold ke mirror mein y badal jaata hai: 1 ban gaya 3, isliye (1, 3) banta hai. Dono folds ke mirror mein (3, 3) banta hai. Isliye final holes hain [(1, 1), (1, 3), (3, 1), (3, 3)] — kul 4.
+
+Doosra dry run: ek fold aur ek cut. Kagaz ko 3 baar fold karo aur ek cut lagao to kitne pieces milenge? Har fold pieces ko double karta hai: 0 fold par 1 piece, 1 fold par 2, 2 fold par 4, 3 fold par 8 pieces. Neeche wala code pehle example ke holes ko run karke dikhata hai.`,
+          `Worked example: there is a square paper. Step 1: fold it vertically — the paper becomes half, now there are two layers. Step 2: fold it horizontally — the paper becomes half again, now there are four layers. Step 3: punch one hole near a corner of the folded paper, at position (1, 1). Step 4: open the paper. Every fold line is a mirror, so one hole makes four mirror images: (1, 1), (1, 3), (3, 1) and (3, 3). You get 4 holes in total.
+
+Dry run with numbers: the paper is 4 x 4 and the folded quarter is 2 x 2. The punch is at (1, 1). In the mirror of the vertical fold, x changes: 1 becomes 3, so (3, 1) forms. In the mirror of the horizontal fold, y changes: 1 becomes 3, so (1, 3) forms. In the mirror of both folds, (3, 3) forms. So the final holes are [(1, 1), (1, 3), (3, 1), (3, 3)] — 4 in total.
+
+Second dry run: one fold and one cut. Fold the paper 3 times and make one cut — how many pieces do you get? Every fold doubles the pieces: 0 folds give 1 piece, 1 fold gives 2, 2 folds give 4, 3 folds give 8 pieces. The code below runs the holes of the first example.`
+        ),
+        code: {
+          title: t(
+            'Do Fold, Ek Punch: 4 Holes ka Dry Run',
+            'Two Folds, One Punch: Dry Run of 4 Holes'
+          ),
+          language: 'python',
+          code: `# Fold a square paper in half vertically, then in half horizontally.
+# One punch at (1, 1) in the folded quarter.
+holes = []
+for x in [1, 3]:
+    for y in [1, 3]:
+        holes.append((x, y))
+print("folded punch at: (1, 1)")
+print("holes after unfolding:", holes)
+print("total holes:", len(holes))`,
+          output: `folded punch at: (1, 1)
+holes after unfolding: [(1, 1), (1, 3), (3, 1), (3, 3)]
+total holes: 4`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Fold Gina Bhoolna, Mirror Side Galat aur Shape Ghumana',
+          '4. Common Mistakes: Forgetting to Count Folds, Wrong Mirror Side, and Rotating the Shape'
+        ),
+        body: t(
+          `**Galti 1: fold gina bhoolna.** Paper cutting mein holes ki sankhya hai 2 ki power folds. Ek fold par 2 holes, do fold par 4, teen fold par 8. Log aksar fold ko gine bina hi holes bata dete hain. Pehle fold gin lo, phir 2, 4, 8 likh lo — yeh ek line galti rok deti hai.
+
+**Galti 2: mirror side galat lena.** Fold ki line ke dono taraf holes mirror image mein bante hain, par mirror ki direction fold ki direction par depend karti hai. Vertical fold mein left-right badalta hai, horizontal fold mein upar-neeche. Galat direction mein mirror karoge to holes galat jagah par banenge. Pehle likho ki fold vertical hai ya horizontal.
+
+**Galti 3: embedded figure mein shape ko ghumana.** Embedded figure mein chhota shape ghuma hua bhi ho sakta hai — jaise triangle ulta bhi ho sakta hai. Par uska size wahi rehta hai; bada ya chhota nahi hota. Log aksar size badal kar shape dhoondhte hain, jo galat hai. Shape ko ghumana allowed hai, size badalna nahi.`,
+          `**Mistake 1: Forgetting to count the folds.** In paper cutting, the number of holes is 2 to the power of the folds. One fold gives 2 holes, two folds give 4, three folds give 8. People often state the holes without counting the folds. First count the folds, then write 2, 4, 8 — this one line stops the mistake.
+
+**Mistake 2: Taking the wrong mirror side.** Holes form in mirror image on both sides of the fold line, but the mirror direction depends on the fold direction. In a vertical fold, left-right swaps; in a horizontal fold, top-bottom swaps. If you mirror in the wrong direction, the holes land in the wrong place. First write whether the fold is vertical or horizontal.
+
+**Mistake 3: Rotating the shape in an embedded figure.** In an embedded figure the small shape can also be rotated — for example, a triangle can be upside down. But its size stays the same; it does not become bigger or smaller. People often search with a changed size, which is wrong. Rotating the shape is allowed, changing its size is not.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Fold Line par Punch, Corner Cut aur Overlapping Lines',
+          '5. Edge Cases: Punch on the Fold Line, Corner Cut, and Overlapping Lines'
+        ),
+        body: t(
+          `**Edge case 1: punch fold line par ho.** Agar punch bilkul fold ki line par ho to khulne par holes ki sankhya kam ho jaati hai. Jaise ek vertical fold ke baad fold line par punch karo to khulne par sirf 1 hole milega, 2 nahi — kyunki punch dono layers mein ek hi jagah par hai. Fold line par punch karna ek trap hai, use pehchan lo.
+
+**Edge case 2: corner cut.** Agar folded kagaz ka corner kaata jaaye to khulne par beech mein ek bada hole ya design banta hai, kinare par nahi. Corner cut ko samajhne ke liye pehle yeh dekho ki kaata gaya corner folded kagaz ka kaun sa corner hai — khulne par woh kagaz ke beech mein aayega ya kinare par.
+
+**Edge case 3: overlapping lines.** Embedded figure mein bahut saari lines ek doosre ke upar se guzarti hain. Chhota shape dhoondhte waqt sirf wohi lines use karo jo shape ki hain — extra lines ko ignore karo. Agar aap har line ko shape ki line maan loge to galat shape ban jaayega.`,
+          `**Edge case 1: Punch on the fold line.** If the punch falls exactly on the fold line, the number of holes on opening becomes smaller. For example, after one vertical fold, a punch on the fold line gives only 1 hole on opening, not 2 — because the punch sits at the same place in both layers. A punch on the fold line is a trap; learn to spot it.
+
+**Edge case 2: Corner cut.** If the corner of the folded paper is cut, on opening a big hole or design forms in the middle, not at the edge. To understand a corner cut, first see which corner of the folded paper was cut — on opening, will it land in the middle of the paper or at the edge?
+
+**Edge case 3: Overlapping lines.** In an embedded figure, many lines cross over each other. While finding the small shape, use only the lines that belong to the shape — ignore the extra lines. If you treat every line as part of the shape, you will make a wrong shape.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Kagaz Gol Ho ya Fold Teerchha Ho?',
+          '6. What If the Paper Is Round or the Fold Is Diagonal?'
+        ),
+        body: t(
+          `**What if kagaz gol ho?** Gol kagaz ko fold karne par bhi wahi rule lagta hai — har fold layers ko double karta hai aur holes mirror mein bante hain. Sirf shape gol hota hai, fold ka rule wahi rehta hai. Gol kagaz mein fold ki line diameter hoti hai, aur holes uske dono taraf mirror mein bante hain.
+
+**What if fold teerchha (diagonal) ho?** Diagonal fold mein mirror line teerchhi hoti hai. Ismein left-right ya upar-neeche nahi, teerchha mirror hota hai. Jaise square kagaz ko diagonal fold karke punch karo to holes diagonal line ke mirror mein bante hain. Teerchhe fold mein pehle diagonal line ko banao, phir uske dono taraf holes ko mirror karo.
+
+**What if ek se zyada punch hon?** Har punch alag se mirror hota hai. Do punch hon to pehle ek punch ke holes nikalo, phir doosre ke, aur dono ko jod do. Punch ko ek saath mat socho — ek-ek karke karo, phir jodo.`,
+          `**What if the paper is round?** The same rule applies when folding a round paper — every fold doubles the layers and holes form in mirror image. Only the shape is round; the rule of the fold stays the same. In a round paper the fold line is a diameter, and holes form in mirror image on both sides of it.
+
+**What if the fold is diagonal?** In a diagonal fold the mirror line is diagonal. Here neither left-right nor top-bottom swaps; the mirror is diagonal. For example, fold a square paper diagonally and punch it, and the holes form in mirror image across the diagonal line. In a diagonal fold, first draw the diagonal line, then mirror the holes on both sides of it.
+
+**What if there is more than one punch?** Every punch mirrors separately. If there are two punches, first find the holes of one punch, then of the other, and add both. Do not think of the punches together — do them one by one, then join them.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Embedded Figures aur Paper Cutting Ek Page Mein',
+          '7. Summary: Embedded Figures and Paper Cutting on One Page'
+        ),
+        body: t(
+          `Embedded figures ka kaam hai: **chhote shape ki har line ko bade figure mein trace karo** — shape ko ghumana allowed hai, size badalna nahi. Paper cutting ka kaam hai: **fold gino, phir holes nikalo** — holes ki sankhya hai 2 ki power folds, aur har hole fold ki line ke mirror mein banta hai.
+
+Yaad rakhne wali teen baatein hain. Pehli: **fold ki direction likho** — vertical mein left-right badalta hai, horizontal mein upar-neeche. Doosri: **fold line par punch ho to holes kam hote hain** — yeh trap hai. Teesri: **ek fold par 2, do fold par 4, teen fold par 8 holes** — yeh table yaad rakho.
+
+Revision ke liye yeh karo: ek kagaz lo, use do baar fold karo aur ek hole punch karo — phir kholo aur holes gino. Agar 4 holes milen to rule samajh aa gaya hai. Phir ek bada square banao, use chaar chhote squares mein baanto aur kul squares gino — 5 milne chahiye. Agle article mein hum non-verbal series dekhenge — shapes ka ghumna aur badalna.`,
+          `The work of embedded figures is: **trace every line of the small shape inside the big figure** — rotating the shape is allowed, changing its size is not. The work of paper cutting is: **count the folds, then find the holes** — the number of holes is 2 to the power of the folds, and every hole forms in mirror image across the fold line.
+
+Remember three things. First: **write the direction of the fold** — in a vertical fold left-right swaps, in a horizontal fold top-bottom swaps. Second: **if the punch is on the fold line, the holes are fewer** — that is a trap. Third: **one fold gives 2, two folds give 4, three folds give 8 holes** — remember this table.
+
+For revision, do this: take a paper, fold it twice, punch one hole — then open it and count the holes. If you get 4 holes, you have understood the rule. Then draw a big square, divide it into four small squares, and count all the squares — you should get 5. In the next article we will look at non-verbal series — shapes turning and changing.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Paper Cutting Solve Karne ka Flow',
+        'The Flow for Solving Paper Cutting'
+      ),
+      caption: t(
+        'Fold gino, mirror direction likho, holes nikalo',
+        'Count the folds, write the mirror direction, find the holes'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Fold gino', 'Step 1: Count the folds'),
+          s: t('1 fold par 2, 2 fold par 4, 3 fold par 8 holes', '1 fold gives 2, 2 folds give 4, 3 folds give 8 holes')
+        },
+        {
+          t: t('Step 2: Fold ki direction likho', 'Step 2: Write the fold direction'),
+          s: t('Vertical mein left-right, horizontal mein upar-neeche', 'In vertical, left-right swaps; in horizontal, top-bottom swaps')
+        },
+        {
+          t: t('Step 3: Punch ko mirror karo', 'Step 3: Mirror the punch'),
+          s: t('Har fold line ek mirror hai', 'Every fold line is a mirror')
+        },
+        {
+          t: t('Step 4: Holes gino', 'Step 4: Count the holes'),
+          s: t('Do fold, ek punch par 4 holes milte hain', 'Two folds and one punch give 4 holes')
+        },
+        {
+          t: t('Trap: fold line par punch', 'Trap: punch on the fold line'),
+          s: t('Fold line par punch ho to holes kam hote hain', 'A punch on the fold line gives fewer holes')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Folds se Pieces: 2 ki Power',
+          'Pieces from Folds: Powers of 2'
+        ),
+        language: 'python',
+        code: `folds = 3
+pieces = 2 ** folds
+print("folds:", folds)
+print("pieces after 3 folds + 1 cut:", pieces)
+print("folds 0 -> pieces:", 2 ** 0)
+print("folds 1 -> pieces:", 2 ** 1)
+print("folds 2 -> pieces:", 2 ** 2)`,
+        output: `folds: 3
+pieces after 3 folds + 1 cut: 8
+folds 0 -> pieces: 1
+folds 1 -> pieces: 2
+folds 2 -> pieces: 4`
+      },
+      {
+        title: t(
+          'Chhote aur Bade Squares Ginna',
+          'Counting Small and Big Squares'
+        ),
+        language: 'python',
+        code: `# A figure has 4 small squares making 1 big square.
+small = 4
+big = 1
+print("small squares:", small)
+print("big square:", big)
+print("total squares:", small + big)`,
+        output: `small squares: 4
+big square: 1
+total squares: 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Kagaz ko vertical aur horizontal fold karke (2 fold) ek hole punch kiya. Khulne par kitne holes milenge?',
+          'A paper is folded vertically and horizontally (2 folds) and one hole is punched. How many holes appear on opening?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4'),
+          t('6', '6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har fold layers ko double karta hai — 2 fold par 4 layers hain, isliye 1 punch se 4 holes milenge.',
+          'Correct answer: every fold doubles the layers — with 2 folds there are 4 layers, so 1 punch gives 4 holes.'
+        )
+      },
+      {
+        q: t(
+          'Kagaz ko ek baar fold karke ek hole punch kiya. Khulne par kitne holes milenge?',
+          'A paper is folded once and one hole is punched. How many holes appear on opening?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek fold par 2 layers hain, isliye 1 punch se 2 holes milenge — ek asal jagah par aur ek mirror image par.',
+          'Correct answer: one fold gives 2 layers, so 1 punch gives 2 holes — one at the real place and one at its mirror image.'
+        )
+      },
+      {
+        q: t(
+          'Kagaz ko 3 baar fold karke ek cut lagaya. Kitne pieces milenge?',
+          'A paper is folded 3 times and one cut is made. How many pieces result?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('6', '6'),
+          t('8', '8'),
+          t('10', '10')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har fold pieces ko double karta hai — 2 ki power 3 = 8 pieces milenge.',
+          'Correct answer: every fold doubles the pieces — 2 to the power 3 = 8 pieces.'
+        )
+      },
+      {
+        q: t(
+          'Ek bada square 4 chhote squares se bana hai. Kul kitne squares hain?',
+          'A big square is made of 4 small squares. How many squares are there in total?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('5', '5'),
+          t('6', '6'),
+          t('8', '8')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 4 chhote squares aur 1 bada square — kul 5 squares hain.',
+          'Correct answer: 4 small squares and 1 big square — 5 squares in total.'
+        )
+      },
+      {
+        q: t(
+          'Kagaz ko 2 baar fold karke kitni layers banti hain?',
+          'How many layers does a paper have after folding it 2 times?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4'),
+          t('6', '6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har fold layers ko double karta hai — 1 fold par 2, 2 fold par 4 layers banti hain.',
+          'Correct answer: every fold doubles the layers — 1 fold gives 2, 2 folds give 4 layers.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Embedded figure mein shape ko ghumana allowed hai, size badalna nahi.',
+        'In an embedded figure, rotating the shape is allowed, changing its size is not.'
+      ),
+      t(
+        'Holes = 2 ki power folds: 1 fold par 2, 2 fold par 4, 3 fold par 8.',
+        'Holes = 2 to the power of folds: 1 fold gives 2, 2 folds give 4, 3 folds give 8.'
+      ),
+      t(
+        'Har fold line ek mirror hai — vertical mein left-right, horizontal mein upar-neeche.',
+        'Every fold line is a mirror — in vertical, left-right swaps; in horizontal, top-bottom swaps.'
+      ),
+      t(
+        'Fold line par punch ho to holes kam hote hain — yeh trap hai.',
+        'A punch on the fold line gives fewer holes — that is a trap.'
+      ),
+      t(
+        'Chhote shape ki har line ko bade figure mein alag se trace karo.',
+        'Trace every line of the small shape inside the big figure separately.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Ek Fold, Ek Punch — 2 Holes',
+        'Practice: One Fold, One Punch — 2 Holes'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki ek vertical fold ke baad punch (1, 2) ke mirror mein (3, 2) banta hai aur kul 2 holes milte hain. Done tab hoga jab output mein "total holes: 2" dikhe.',
+        'Run the starter code and check that after one vertical fold, the punch at (1, 2) mirrors to (3, 2) and 2 holes appear in total. You are done when the output shows "total holes: 2".'
+      ),
+      language: 'python',
+      starter: `# Fold in half once (vertical), punch 1 hole at (1, 2).
+# Unfolding mirrors it to the other half.
+holes = [(1, 2), (3, 2)]
+print("holes:", holes)
+print("total holes:", len(holes))
+print("holes are mirror images:", holes[0][1] == holes[1][1])`,
+      expected: `holes: [(1, 2), (3, 2)]
+total holes: 2
+holes are mirror images: True`
+    },
+    readMinutes: 12
+  };
+
+const logicNonVerbalSeries: Article = {
+    id: 'logic-non-verbal-series',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Non-Verbal Series — Shapes ka Ghumna, Badalna aur Badhna',
+      'Non-Verbal Series — Shapes Turning, Changing, and Growing'
+    ),
+    summary: t(
+      'Non-verbal series mein numbers ki jagah shapes hote hain. Shape har step mein ghumta hai (90 degree clockwise), badalta hai (triangle se square) ya badhta hai (ek side zyada). Rotation ko direction list se aur sides ko gin kar solve karo.',
+      'In a non-verbal series, shapes take the place of numbers. In every step a shape turns (90 degrees clockwise), changes (triangle to square), or grows (one more side). Solve rotation with a direction list and sides by counting.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Non-Verbal Series Kya Hai?',
+          '1. What Is a Non-Verbal Series?'
+        ),
+        body: t(
+          `Non-verbal series mein numbers ya letters ki jagah shapes hote hain — triangle, square, arrow, circle aur aise hi. Har step mein shape mein ek chhota sa badlav hota hai aur aapko woh badlav dhoondh kar agla shape nikaalna hota hai. Badlav aam taur par teen tarah ka hota hai: **rotation** (shape ghumta hai), **change** (shape badal jaata hai) aur **growth** (shape mein kuch judta ya badhta hai).
+
+**Rotation** ka matlab hai shape ka ghumna. Jaise ek arrow upar ki taraf ho, phir right ki taraf, phir neeche, phir left — har step mein 90 degree clockwise ghumta hai. Chaar steps ke baad woh wapas upar aa jaata hai. Rotation ko solve karne ke liye direction ki list banao: up, right, down, left — aur har step mein ek aage badho.
+
+**Change aur growth** ka matlab hai shape ka badalna. Jaise triangle (3 sides), square (4 sides), pentagon (5 sides) — har step mein ek side badh rahi hai, isliye agla shape hexagon (6 sides) hoga. Ya circle ke andar ek line har step mein ek badh rahi ho. Shape ko dekh kar pehle yeh decide karo ki badlav rotation hai, change hai ya growth — phir usi ka rule lagao.`,
+          `In a non-verbal series, shapes take the place of numbers or letters — triangles, squares, arrows, circles, and so on. In every step the shape changes a little, and you have to find that change and work out the next shape. The change is usually one of three kinds: **rotation** (the shape turns), **change** (the shape changes), and **growth** (something is added to the shape or grows in it).
+
+**Rotation** means the shape turns. For example, an arrow points up, then right, then down, then left — turning 90 degrees clockwise in every step. After four steps it comes back to up. To solve a rotation, make a list of directions: up, right, down, left — and move one step forward each time.
+
+**Change and growth** mean the shape changes. For example, a triangle (3 sides), a square (4 sides), a pentagon (5 sides) — one side grows in every step, so the next shape is a hexagon (6 sides). Or a line inside a circle grows by one in every step. Looking at the shape, first decide whether the change is a rotation, a change, or growth — then apply that rule.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Ghadi ki Sui, Fan aur Traffic Sign',
+          '2. Real-Life Examples: Clock Hands, Fans, and Traffic Signs'
+        ),
+        body: t(
+          `Rotation roz ki zindagi mein ghadi ki sui mein dikhta hai. Ghadi ki minute wali sui har 15 minute mein 90 degree ghumti hai: 12 se 3, 3 se 6, 6 se 9, 9 se 12. Yahi non-verbal series ka rotation rule hai — har step mein ek fixed angle se ghumna. Agar aap ghadi ko dekh kar samajh sakte ho ki sui kahan jaayegi, to arrow wale sawal bhi aasan hain.
+
+Fan ka example bhi wahi hai. Ceiling fan ke blades har baar ek hi direction mein ghumte hain aur har blade agle blade ki jagah le leta hai. Fan ko dekh kar aap bata sakte ho ki agle pal kaun sa blade kahan hoga — yahi rotation ka dry run hai.
+
+Growth ka example hai traffic sign. Ek sign mein pehle ek line hoti hai, phir do, phir teen — har step mein ek line badh rahi hai. Ya ek building mein pehle ek floor, phir do, phir teen. Growth ko gin kar solve karo: har step mein kitna badha, yeh likho, phir agla step nikalo.`,
+          `Rotation appears in daily life in the hands of a clock. The minute hand of a clock turns 90 degrees every 15 minutes: from 12 to 3, 3 to 6, 6 to 9, 9 to 12. That is the rotation rule of a non-verbal series — turning by a fixed angle in every step. If you can tell where the hand will go by looking at a clock, arrow questions are easy too.
+
+A ceiling fan is the same example. The blades of a fan always turn in one direction, and every blade takes the place of the next blade. By looking at a fan you can tell where each blade will be in the next moment — that is a dry run of rotation.
+
+An example of growth is a traffic sign. In one sign there is first one line, then two, then three — one line grows in every step. Or in a building, first one floor, then two, then three. Solve growth by counting: write how much grew in every step, then find the next step.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Arrow ka 90 Degree Rotation (Worked Example with Dry Run)',
+          '3. Step-by-Step: A 90 Degree Arrow Rotation (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Worked example: ek arrow hai jo upar ki taraf hai. Har step mein woh 90 degree clockwise ghumta hai. Step 1: direction list banao — up, right, down, left. Step 2: start position likho — up (position 0). Step 3: har step mein ek aage badho. Step 1 ke baad arrow right ki taraf hoga (position 1), step 2 ke baad down (position 2), step 3 ke baad left (position 3), step 4 ke baad wapas up (position 0). Step 4: check karo — 4 steps ke baad arrow wapas start par aa gaya, kyunki 4 x 90 = 360 degree hota hai, matlab ek poora chakkar.
+
+Doosra dry run: triangle, square, pentagon. Step 1: sides gino — 3, 4, 5. Step 2: fark nikalo — har step mein 1 side badh rahi hai. Step 3: agla shape nikalo — 5 + 1 = 6 sides, matlab hexagon. Step 4: check karo — kul sides ab tak 3 + 4 + 5 = 12 hain. Neeche wala code arrow ke rotation dry run ko run karke dikhata hai — har print ko apne haath se kiye gaye step se match karo.`,
+          `Worked example: there is an arrow pointing up. In every step it turns 90 degrees clockwise. Step 1: make the direction list — up, right, down, left. Step 2: write the start position — up (position 0). Step 3: move one step forward each time. After step 1 the arrow points right (position 1), after step 2 down (position 2), after step 3 left (position 3), after step 4 back to up (position 0). Step 4: check — after 4 steps the arrow returns to the start, because 4 x 90 = 360 degrees, which means one full turn.
+
+Second dry run: triangle, square, pentagon. Step 1: count the sides — 3, 4, 5. Step 2: find the difference — one side grows in every step. Step 3: find the next shape — 5 + 1 = 6 sides, which means a hexagon. Step 4: check — the total sides so far are 3 + 4 + 5 = 12. The code below runs the dry run of the arrow rotation — match every print with the step you did by hand.`
+        ),
+        code: {
+          title: t(
+            'Arrow Rotation Dry Run: Up se Wapas Up',
+            'Arrow Rotation Dry Run: From Up Back to Up'
+          ),
+          language: 'python',
+          code: `dirs = ["up", "right", "down", "left"]
+start = 0
+print("start:", dirs[start])
+for step in range(1, 5):
+    print("step", step, ":", dirs[(start + step) % 4])
+print("after 4 steps back to:", dirs[(start + 4) % 4])`,
+          output: `start: up
+step 1 : right
+step 2 : down
+step 3 : left
+step 4 : up
+after 4 steps back to: up`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Clockwise ko Anticlockwise Samajhna aur Angle Galat',
+          '4. Common Mistakes: Mixing Clockwise with Anticlockwise and Wrong Angles'
+        ),
+        body: t(
+          `**Galti 1: clockwise ko anticlockwise samajhna.** Clockwise ka matlab hai ghadi ki sui ki direction mein ghumna — up se right, right se down. Anticlockwise ulta hota hai — up se left, left se down. Sawal mein direction hamesha check karo. Ek galat direction se poora series ulta ho jaata hai.
+
+**Galti 2: angle galat lena.** 90 degree ka matlab hai ek quarter turn — up se right. 180 degree ka matlab hai aadha turn — up se down. 45 degree ka matlab hai aadha quarter — up se north-east. Log aksar 45 aur 90 ko mix kar dete hain. Angle ko hamesha direction list se match karo: 4 directions hon to 90 degree, 8 directions hon to 45 degree.
+
+**Galti 3: sirf shape dekhna, element bhoolna.** Kabhi-kabhi shape ke andar ek chhota element bhi ghumta hai, jaise circle ke andar ek dot. Shape aur element dono ke alag rules ho sakte hain — shape 90 degree ghume aur dot 180 degree. Dono ko alag-alag track karo, ek saath mat socho.`,
+          `**Mistake 1: Mixing clockwise with anticlockwise.** Clockwise means turning in the direction of a clock hand — up to right, right to down. Anticlockwise is the opposite — up to left, left to down. Always check the direction in the question. One wrong direction turns the whole series around.
+
+**Mistake 2: Taking the wrong angle.** 90 degrees means a quarter turn — up to right. 180 degrees means a half turn — up to down. 45 degrees means half a quarter — up to north-east. People often mix 45 and 90. Always match the angle with the direction list: if there are 4 directions, it is 90 degrees; if there are 8 directions, it is 45 degrees.
+
+**Mistake 3: Looking only at the shape and forgetting the element.** Sometimes a small element inside the shape also turns, like a dot inside a circle. The shape and the element can have separate rules — the shape turns 90 degrees and the dot turns 180 degrees. Track both separately; do not think of them together.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: 360 Degree Wapas, Do Rules Ek Saath aur Ulta Shape',
+          '5. Edge Cases: Back After 360 Degrees, Two Rules Together, and Flipped Shapes'
+        ),
+        body: t(
+          `**Edge case 1: 360 degree ke baad wapas.** Chaar baar 90 degree ghumne par shape wapas start par aa jaata hai. Isliye 5th step, 1st step jaisa hi hoga. Series mein agar 5th shape pehle jaisa dikhe to ghabrao mat — woh rotation ka hi rule hai. Steps ko 4 se mod karke nikalo.
+
+**Edge case 2: do rules ek saath.** Kabhi-kabhi shape ghumta bhi hai aur badhta bhi hai — jaise triangle ghumta hai aur har step mein ek side badhti hai. Aise sawal mein rotation aur growth ko alag-alag solve karo, phir dono ko jod do. Ek saath sochne se dono rules mix ho jaate hain.
+
+**Edge case 3: ulta shape.** Mirror image mein shape ulta dikhta hai, par rotation mein shape ghumta hai. Dono mein farak hai: mirror mein left-right badalta hai, rotation mein poora shape ghumta hai. Sawal mein "rotate" likha ho to rotation karo, "mirror" likha ho to mirror karo.`,
+          `**Edge case 1: Back after 360 degrees.** After turning 90 degrees four times, the shape returns to the start. So the 5th step looks just like the 1st step. If the 5th shape in a series looks like the first one, do not worry — that is the rule of rotation. Find the steps by taking them mod 4.
+
+**Edge case 2: Two rules together.** Sometimes a shape both turns and grows — for example, a triangle turns and gains one side in every step. In such a question, solve rotation and growth separately, then join both. Thinking of them together mixes both rules.
+
+**Edge case 3: Flipped shape.** In a mirror image a shape looks reversed, but in a rotation a shape turns. The two are different: in a mirror, left-right swaps; in a rotation, the whole shape turns. If a question says "rotate", rotate; if it says "mirror", mirror it.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Rotation 45 Degree Ho ya Shape Badal Jaaye?',
+          '6. What If the Rotation Is 45 Degrees or the Shape Changes?'
+        ),
+        body: t(
+          `**What if rotation 45 degree ho?** 45 degree wale rotation mein 8 directions hoti hain: N, NE, E, SE, S, SW, W, NW. Har step mein ek aage badho — N ke baad NE, NE ke baad E. 8 steps ke baad wapas N par aa jaoge. Direction list ko 8 ka banao, 4 ka nahi — yahi farak hai.
+
+**What if shape har step mein badal jaaye?** Jaise triangle, circle, square, triangle, circle, square — yeh ek cycle hai. Teen shapes ka cycle hai, isliye 4th shape phir triangle hoga. Cycle wale sawal mein pehle cycle ki length nikalo, phir agla shape nikalo.
+
+**What if element gayab ho jaaye?** Kabhi-kabhi ek element har step mein ek kam hota hai — jaise 3 dots, phir 2, phir 1, phir 0. Aise mein agla step khaali hoga. Element ko gin kar solve karo, shape ko dekh kar nahi.`,
+          `**What if the rotation is 45 degrees?** In a 45 degree rotation there are 8 directions: N, NE, E, SE, S, SW, W, NW. Move one step forward each time — after N comes NE, after NE comes E. After 8 steps you return to N. Make the direction list of 8, not 4 — that is the difference.
+
+**What if the shape changes in every step?** For example, triangle, circle, square, triangle, circle, square — this is a cycle. It is a cycle of three shapes, so the 4th shape is a triangle again. In a cycle question, first find the length of the cycle, then find the next shape.
+
+**What if an element disappears?** Sometimes an element decreases by one in every step — for example, 3 dots, then 2, then 1, then 0. In that case the next step is empty. Solve by counting the element, not by looking at the shape.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Non-Verbal Series Ek Page Mein',
+          '7. Summary: Non-Verbal Series on One Page'
+        ),
+        body: t(
+          `Non-verbal series ka kaam hai: **pehle badlav ka type pehchano** — rotation, change ya growth. Rotation mein direction list banao (up, right, down, left) aur har step mein ek aage badho. Change mein sides gino (triangle 3, square 4, pentagon 5) aur agla shape nikalo. Growth mein har step mein kitna badha, yeh likho.
+
+Yaad rakhne wali teen baatein hain. Pehli: **clockwise aur anticlockwise ka farak** — up se right clockwise hai, up se left anticlockwise. Doosri: **4 steps mein 360 degree** — 90 degree wala rotation 4 steps mein wapas start par aa jaata hai. Teesri: **shape aur element ko alag track karo** — dono ke alag rules ho sakte hain.
+
+Revision ke liye yeh karo: ek arrow banao aur use 90 degree clockwise 4 baar ghumao — har step ki direction likho. Phir triangle se hexagon tak shapes banao aur sides gino. Agar dono bina ruke ho jaayein, to non-verbal series aapko aa gaya hai. Agle article mein hum analytical reasoning dekhenge — caselets aur table se deduction.`,
+          `The work of a non-verbal series is: **first spot the type of change** — rotation, change, or growth. In rotation, make a direction list (up, right, down, left) and move one step forward each time. In change, count the sides (triangle 3, square 4, pentagon 5) and find the next shape. In growth, write how much grew in every step.
+
+Remember three things. First: **the difference between clockwise and anticlockwise** — up to right is clockwise, up to left is anticlockwise. Second: **360 degrees in 4 steps** — a 90 degree rotation returns to the start in 4 steps. Third: **track the shape and the element separately** — both can have separate rules.
+
+For revision, do this: draw an arrow and turn it 90 degrees clockwise 4 times — write the direction of every step. Then draw shapes from triangle to hexagon and count their sides. If both go smoothly, you know non-verbal series. In the next article we will look at analytical reasoning — caselets and deduction from a table.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Arrow Rotation ka Cycle: Up se Wapas Up',
+        'Arrow Rotation Cycle: From Up Back to Up'
+      ),
+      caption: t(
+        'Har step mein 90 degree clockwise, 4 steps mein poora chakkar',
+        '90 degrees clockwise in every step, one full turn in 4 steps'
+      ),
+      nodes: [
+        {
+          t: t('Step 0: Up', 'Step 0: Up'),
+          s: t('Start position', 'Start position')
+        },
+        {
+          t: t('Step 1: Right', 'Step 1: Right'),
+          s: t('90 degree clockwise', '90 degrees clockwise')
+        },
+        {
+          t: t('Step 2: Down', 'Step 2: Down'),
+          s: t('180 degree total', '180 degrees in total')
+        },
+        {
+          t: t('Step 3: Left', 'Step 3: Left'),
+          s: t('270 degree total', '270 degrees in total')
+        },
+        {
+          t: t('Step 4: Up (wapas)', 'Step 4: Up (back)'),
+          s: t('360 degree, poora chakkar', '360 degrees, one full turn')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Sides Series: Triangle se Hexagon',
+          'Sides Series: From Triangle to Hexagon'
+        ),
+        language: 'python',
+        code: `# Series: triangle (3 sides), square (4), pentagon (5)
+sides = [3, 4, 5]
+print("sides:", sides)
+print("next sides:", sides[-1] + 1)
+print("next shape: hexagon")
+print("total sides so far:", sum(sides))`,
+        output: `sides: [3, 4, 5]
+next sides: 6
+next shape: hexagon
+total sides so far: 12`
+      },
+      {
+        title: t(
+          '45 Degree Rotation: 8 Directions',
+          '45 Degree Rotation: 8 Directions'
+        ),
+        language: 'python',
+        code: `dirs8 = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+print("start:", dirs8[0])
+print("after 2 steps of 45 deg:", dirs8[2])
+print("after 4 steps of 45 deg:", dirs8[4])
+print("after 8 steps back to:", dirs8[0])`,
+        output: `start: N
+after 2 steps of 45 deg: E
+after 4 steps of 45 deg: S
+after 8 steps back to: N`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Arrow upar hai aur har step mein 90 degree clockwise ghumta hai. 3 steps ke baad kidhar hoga?',
+          'An arrow points up and turns 90 degrees clockwise in every step. Where does it point after 3 steps?'
+        ),
+        opts: [
+          t('Up', 'Up'),
+          t('Right', 'Right'),
+          t('Down', 'Down'),
+          t('Left', 'Left')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: up, right, down, left — 1 step par right, 2 par down, 3 par left.',
+          'Correct answer: up, right, down, left — after 1 step right, after 2 down, after 3 left.'
+        )
+      },
+      {
+        q: t(
+          'Triangle (3), square (4), pentagon (5) ke baad agla shape kaun sa hoga?',
+          'What is the next shape after triangle (3), square (4), pentagon (5)?'
+        ),
+        opts: [
+          t('Hexagon (6 sides)', 'Hexagon (6 sides)'),
+          t('Heptagon (7 sides)', 'Heptagon (7 sides)'),
+          t('Octagon (8 sides)', 'Octagon (8 sides)'),
+          t('Circle', 'Circle')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: har step mein 1 side badh rahi hai — 5 ke baad 6 sides, matlab hexagon.',
+          'Correct answer: one side grows in every step — after 5 comes 6 sides, which means a hexagon.'
+        )
+      },
+      {
+        q: t(
+          'Arrow 90 degree clockwise 4 baar ghume to kahan pahunchega?',
+          'If an arrow turns 90 degrees clockwise 4 times, where does it end up?'
+        ),
+        opts: [
+          t('Right', 'Right'),
+          t('Down', 'Down'),
+          t('Left', 'Left'),
+          t('Wapas up', 'Back to up')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: 4 x 90 = 360 degree, matlab ek poora chakkar — arrow wapas upar aa jaata hai.',
+          'Correct answer: 4 x 90 = 360 degrees, which means one full turn — the arrow comes back to up.'
+        )
+      },
+      {
+        q: t(
+          '8 directions mein N se 4 steps (45 degree each) ke baad kya hoga?',
+          'In 8 directions, what comes after 4 steps (45 degrees each) from N?'
+        ),
+        opts: [
+          t('E', 'E'),
+          t('S', 'S'),
+          t('W', 'W'),
+          t('NE', 'NE')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: N, NE, E, SE, S — 4 steps ke baad S aata hai, kyunki 4 x 45 = 180 degree hai.',
+          'Correct answer: N, NE, E, SE, S — after 4 steps comes S, because 4 x 45 = 180 degrees.'
+        )
+      },
+      {
+        q: t(
+          'Triangle (3), square (4), pentagon (5) ke sides ka kul jod kitna hai?',
+          'What is the total of the sides of triangle (3), square (4), pentagon (5)?'
+        ),
+        opts: [
+          t('10', '10'),
+          t('11', '11'),
+          t('12', '12'),
+          t('13', '13')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 3 + 4 + 5 = 12.',
+          'Correct answer: 3 + 4 + 5 = 12.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle badlav ka type pehchano — rotation, change ya growth.',
+        'First spot the type of change — rotation, change, or growth.'
+      ),
+      t(
+        'Rotation mein direction list banao: up, right, down, left.',
+        'In rotation, make a direction list: up, right, down, left.'
+      ),
+      t(
+        '90 degree x 4 = 360 degree — 4 steps mein shape wapas start par.',
+        '90 degrees x 4 = 360 degrees — in 4 steps the shape returns to the start.'
+      ),
+      t(
+        'Sides gino: triangle 3, square 4, pentagon 5, hexagon 6.',
+        'Count the sides: triangle 3, square 4, pentagon 5, hexagon 6.'
+      ),
+      t(
+        'Shape aur andar ke element ko alag-alag track karo.',
+        'Track the shape and the element inside it separately.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Arrow ko 3 Baar Ghumao',
+        'Practice: Turn the Arrow 3 Times'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki upar se 3 baar 90 degree clockwise ghumne par arrow left ki taraf hota hai. Done tab hoga jab output mein "after 3 turns: left" dikhe.',
+        'Run the starter code and check that turning an arrow 90 degrees clockwise 3 times from up leaves it pointing left. You are done when the output shows "after 3 turns: left".'
+      ),
+      language: 'python',
+      starter: `dirs = ["up", "right", "down", "left"]
+# Arrow turns 90 deg clockwise 3 times from up.
+pos = (0 + 3) % 4
+print("start: up")
+print("after 1 turn: right")
+print("after 2 turns: down")
+print("after 3 turns:", dirs[pos])`,
+      expected: `start: up
+after 1 turn: right
+after 2 turns: down
+after 3 turns: left`
+    },
+    readMinutes: 12
+  };
+
+const logicAnalytical: Article = {
+    id: 'logic-analytical',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Analytical Reasoning — Caselets aur Table se Deduction',
+      'Analytical Reasoning — Caselets and Deduction from a Table'
+    ),
+    summary: t(
+      'Analytical reasoning mein ek chhota sa case diya hota hai — paanch dost, paanch subjects, kuch clues. Har clue ko table mein likho, jo pakka hai use tick karo, jo nahi ho sakta use cross karo — aakhir mein poori table khud bhar jaati hai.',
+      'In analytical reasoning, a small case is given — five friends, five subjects, some clues. Write every clue in a table, tick what is certain, cross out what is impossible — in the end the whole table fills itself.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Analytical Reasoning aur Caselets Kya Hain?',
+          '1. What Are Analytical Reasoning and Caselets?'
+        ),
+        body: t(
+          `Analytical reasoning mein aapko ek chhota sa case (caselet) diya hota hai — jaise paanch dost hain, har ek ko ek alag subject pasand hai, aur kuch clues diye hain. Aapka kaam hai clues se deduction karke poori picture banana: kaun kya karta hai, kaun kahan baitha hai, kis ka rank kya hai. Yeh sawal isliye mushkil lagte hain kyunki koi bhi clue seedha jawab nahi deta — har clue sirf ek chhota sa hissa deta hai.
+
+Caselet solve karne ka sabse achha tareeka hai **table banana**. Rows mein logon ke naam likho aur columns mein subjects, cities ya games likho. Phir har clue ko table mein likho: jo pakka hai use tick karo, jo nahi ho sakta use cross karo. Jaise clue hai "Bala ko Maths pasand hai" to Bala wali row mein Maths par tick karo aur baaki subjects par cross karo. Clue hai "Amit ko Maths pasand nahi hai" to Amit wali row mein Maths par cross karo.
+
+Jab ek row ya column mein sirf ek khaali jagah bache to woh pakka ho jaata hai — use tick karo aur usi se aage badho. Yahi **elimination** hai: jo nahi ho sakta use hatao, jo bachta hai wahi jawab hai. Table bharte-bharte poori picture ban jaati hai.`,
+          `In analytical reasoning, you are given a small case (a caselet) — for example, there are five friends, each likes a different subject, and some clues are given. Your job is to use the clues to deduce the full picture: who does what, who sits where, whose rank is what. These questions feel hard because no clue gives the answer directly — every clue gives only a small part.
+
+The best way to solve a caselet is to **make a table**. Write the names of the people in the rows and the subjects, cities or games in the columns. Then write every clue in the table: tick what is certain, cross out what is impossible. For example, if the clue is "Bala likes Maths", tick Maths in Bala row and cross the other subjects. If the clue is "Amit does not like Maths", cross Maths in Amit row.
+
+When only one empty place is left in a row or column, it becomes certain — tick it and move ahead from there. This is **elimination**: remove what cannot be, and what remains is the answer. As the table fills, the full picture forms by itself.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Seating, Time Table aur Team',
+          '2. Real-Life Examples: Seating, Timetable, and Teams'
+        ),
+        body: t(
+          `Caselets roz ki zindagi mein seating mein dikhte hain. Socho paanch dost ek bench par baithe hain: Amit, Bala, Chetan, Deepa aur Esha. Clue hai Bala, Amit ke bagal mein baitha hai aur Esha ek end par hai. Aap table bana kar ya line bana kar yeh nikaal sakte ho ki beech mein kaun baitha hai. Exam mein yahi seating arrangement ke sawal hote hain, bas naam aur clues badal jaate hain.
+
+Doosra example hai time table. Ek school mein paanch teachers hain aur paanch periods hain. Har teacher ko ek period milta hai aur clues batate hain ki kaun kab nahi padha sakta. Table bana kar aap poora time table bana sakte ho — jo period khaali bachta hai, wahi us teacher ka hota hai.
+
+Teesra example hai team selection. Ek cricket team mein paanch players hain aur har ek ko ek alag role milta hai — batsman, bowler, keeper aur aise hi. Clues batate hain ki kaun kya nahi hai. Elimination se har player ka role nikal aata hai.`,
+          `Caselets appear in daily life in seating. Imagine five friends sitting on a bench: Amit, Bala, Chetan, Deepa and Esha. The clue is that Bala sits next to Amit, and Esha sits at one end. You can find who sits in the middle by making a table or a line. Exams ask the same seating arrangement questions, only the names and clues change.
+
+A second example is a timetable. In a school there are five teachers and five periods. Every teacher gets one period, and the clues tell who cannot teach when. By making a table you can build the whole timetable — the period that stays empty is that teacher.
+
+A third example is team selection. In a cricket team there are five players, and each gets a different role — batsman, bowler, keeper, and so on. The clues tell who is not what. By elimination, the role of every player comes out.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Paanch Dost, Paanch Subjects (Worked Example with Dry Run)',
+          '3. Step-by-Step: Five Friends, Five Subjects (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Worked example: paanch dost hain — Amit, Bala, Chetan, Deepa, Esha. Subjects hain Maths, Science, English, History, Geography. Clues hain: Bala ko Maths pasand hai, Amit ko Maths pasand nahi hai, Esha ko Geography pasand hai, aur har ek ko alag subject pasand hai. Step 1: table banao — rows mein naam, columns mein subjects. Step 2: pakke clues likho — Bala ke saamne Maths par tick karo, Esha ke saamne Geography par tick karo. Step 3: elimination karo — Bala ki row mein baaki subjects par cross karo, Esha ki row mein baaki par cross karo, Maths column mein baaki logon par cross karo.
+
+Step 4: baaki clues se bharo. Maan lo aage ke clues se pata chalta hai ki Chetan ko English pasand hai aur Deepa ko History pasand hai. Step 5: aakhri khaali jagah dekho — Amit ki row mein sirf Science khaali bacha hai, isliye Amit ko Science pasand hai. Final table hai: Amit - Science, Bala - Maths, Chetan - English, Deepa - History, Esha - Geography. Step 6: check karo — saare subjects alag hain (5 alag values) aur saare clues sahi hain. Neeche wala code is final table ko clues se check karke dikhata hai.`,
+          `Worked example: there are five friends — Amit, Bala, Chetan, Deepa, Esha. The subjects are Maths, Science, English, History, Geography. The clues are: Bala likes Maths, Amit does not like Maths, Esha likes Geography, and each likes a different subject. Step 1: make a table — names in rows, subjects in columns. Step 2: write the certain clues — tick Maths in front of Bala, tick Geography in front of Esha. Step 3: eliminate — cross the other subjects in Bala row, cross the others in Esha row, cross the other people in the Maths column.
+
+Step 4: fill from the remaining clues. Suppose further clues tell that Chetan likes English and Deepa likes History. Step 5: look at the last empty place — in Amit row only Science stays empty, so Amit likes Science. The final table is: Amit - Science, Bala - Maths, Chetan - English, Deepa - History, Esha - Geography. Step 6: check — all subjects are different (5 different values) and all clues are true. The code below checks this final table against the clues.`
+        ),
+        code: {
+          title: t(
+            'Caselet Dry Run: Final Table ko Clues se Check Karna',
+            'Caselet Dry Run: Checking the Final Table Against the Clues'
+          ),
+          language: 'python',
+          code: `assign = {"Amit": "Science", "Bala": "Maths", "Chetan": "English", "Deepa": "History", "Esha": "Geography"}
+print("Amit is not Maths:", assign["Amit"] != "Maths")
+print("Bala is Maths:", assign["Bala"] == "Maths")
+print("Esha is Geography:", assign["Esha"] == "Geography")
+print("all subjects different:", len(set(assign.values())) == 5)
+print("assignment:", assign)`,
+          output: `Amit is not Maths: True
+Bala is Maths: True
+Esha is Geography: True
+all subjects different: True
+assignment: {'Amit': 'Science', 'Bala': 'Maths', 'Chetan': 'English', 'Deepa': 'History', 'Esha': 'Geography'}`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Table Na Banana, Negative Clue Ignore Karna aur Jaldi Bharna',
+          '4. Common Mistakes: Not Making a Table, Ignoring Negative Clues, and Filling Too Fast'
+        ),
+        body: t(
+          `**Galti 1: table na banana.** Log caselet ko dimaag mein solve karne ki koshish karte hain aur clues bhool jaate hain. Table banana slow lagta hai, par wohi sabse tez tareeka hai — table mein har clue likha rehta hai aur kuch bhoolta nahi. Bina table ke paanch se zyada clues yaad rakhna mushkil hai.
+
+**Galti 2: negative clue ko ignore karna.** "Amit ko Maths pasand nahi hai" ek negative clue hai — isse Maths par cross lagta hai. Log negative clues ko kam important samajh kar ignore kar dete hain, par aksar final answer negative clue se hi nikalta hai. Har clue ko table mein likho, positive ho ya negative.
+
+**Galti 3: jaldi bharna.** Ek clue se ek se zyada jagah mat bharo. Jaise "Bala ko Maths pasand hai" se sirf Bala ki row bhari jaati hai, poori table nahi. Jaldi mein log ek clue se do-teen jagah bhar dete hain aur galat table bana lete hain. Ek clue, ek tick, phir agla clue — yahi order rakho.`,
+          `**Mistake 1: Not making a table.** People try to solve a caselet in their head and forget the clues. Making a table feels slow, but it is the fastest way — every clue stays written in the table and nothing is forgotten. Without a table, remembering more than five clues is hard.
+
+**Mistake 2: Ignoring a negative clue.** "Amit does not like Maths" is a negative clue — it puts a cross on Maths. People treat negative clues as less important and ignore them, but often the final answer comes from a negative clue itself. Write every clue in the table, positive or negative.
+
+**Mistake 3: Filling too fast.** Do not fill more than one place from one clue. For example, "Bala likes Maths" fills only Bala row, not the whole table. In a hurry, people fill two or three places from one clue and build a wrong table. One clue, one tick, then the next clue — keep this order.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Do Jawab, Koi Jawab Nahi aur Beech ka Clue',
+          '5. Edge Cases: Two Answers, No Answer, and a Middle Clue'
+        ),
+        body: t(
+          `**Edge case 1: do jawab ho sakte hon.** Kabhi-kabhi clues kam hote hain aur do alag tables dono clues ko satisfy karti hain. Aise mein sawal ka jawab "do possibilities hain" hota hai ya sawal mein aur clue diya hota hai. Agar aapki table mein do jagah khaali bachen aur dono mein koi bhi value ja sakti ho, to dono possibilities likh lo.
+
+**Edge case 2: koi jawab na ho.** Kabhi-kabhi clues ek doosre se contradict karte hain — jaise ek clue kehta hai Bala ko Maths pasand hai aur doosra kehta hai Bala ko Maths pasand nahi hai. Aise mein koi table nahi ban sakti. Pehle contradiction check karo, phir table banao.
+
+**Edge case 3: beech ka clue.** "Chetan, Bala aur Deepa ke beech mein baitha hai" jaise clue mein beech ka matlab hai dono ke beech mein, par left ya right pata nahi. Aise clue ko table mein seedha mat likho — pehle uske dono possible orders likho, phir baaki clues se ek ko chuno.`,
+          `**Edge case 1: Two answers are possible.** Sometimes the clues are few, and two different tables both satisfy the clues. In that case the answer is "two possibilities exist", or the question gives another clue. If two places stay empty in your table and either value can go in either place, write both possibilities.
+
+**Edge case 2: No answer exists.** Sometimes the clues contradict each other — for example, one clue says Bala likes Maths and another says Bala does not like Maths. In that case no table can be made. Check for a contradiction first, then make the table.
+
+**Edge case 3: A middle clue.** In a clue like "Chetan sits between Bala and Deepa", the middle means between the two, but left or right is not known. Do not write such a clue straight into the table — first write both its possible orders, then pick one using the other clues.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Ek Clue Badal Jaaye ya Log Badh Jaayein?',
+          '6. What If One Clue Changes or the People Increase?'
+        ),
+        body: t(
+          `**What if ek clue badal jaaye?** Jaise "Bala ko Maths pasand hai" ki jagah "Bala ko Science pasand hai" ho jaaye. Poori table badal jaayegi — Bala ki row mein Science tick hoga aur Maths khaali ho jaayega. Ek clue badalne se poora deduction badal jaata hai, isliye table ko dobara banao, purani table ko theek karne ki koshish mat karo.
+
+**What if log badh jaayein?** Paanch ki jagah saat log hon to table badi hogi, par method wahi rahega — tick aur cross. Badi table mein pehle pakke clues ko bharo, phir elimination karo. Table badi hone se method nahi badalta, sirf steps badhte hain.
+
+**What if do cheezein ek saath poochhi jaayein?** Jaise "kaun kahan baitha hai aur kya pehna hai" — do tables banao, ek seating ki aur ek kapdon ki. Dono tables ko alag solve karo, phir jodo. Ek table mein do cheezein mat bharo.`,
+          `**What if one clue changes?** For example, "Bala likes Maths" becomes "Bala likes Science". The whole table changes — Science gets ticked in Bala row and Maths becomes empty. Changing one clue changes the whole deduction, so make the table again; do not try to fix the old table.
+
+**What if the people increase?** If there are seven people instead of five, the table gets bigger, but the method stays the same — tick and cross. In a big table, first fill the certain clues, then eliminate. A bigger table does not change the method, only the steps increase.
+
+**What if two things are asked together?** For example, "who sits where and what is each wearing" — make two tables, one for seating and one for clothes. Solve both tables separately, then join them. Do not fill two things in one table.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Analytical Reasoning Ek Page Mein',
+          '7. Summary: Analytical Reasoning on One Page'
+        ),
+        body: t(
+          `Caselet solve karne ka kaam teen steps mein hota hai. **Step 1:** table banao — rows mein naam, columns mein subjects ya cities. **Step 2:** har clue ko table mein likho — pakka ho to tick, nahi ho sakta to cross. **Step 3:** elimination karo — jahan ek hi khaali jagah bache, use tick karo aur aage badho.
+
+Yaad rakhne wali teen baatein hain. Pehli: **table bina solve mat karo** — dimaag mein clues bhool jaate hain. Doosri: **negative clues ko bhi likho** — "pasand nahi hai" se bhi jawab nikalta hai. Teesri: **aakhir mein check karo** — saare subjects alag hain aur saare clues sahi hain ya nahi.
+
+Revision ke liye yeh karo: paanch dost aur paanch subjects ka ek caselet khud banao, teen clues likho aur table se poora solve karo. Agar table bina ruke bhar jaaye, to analytical reasoning aapko aa gaya hai. Agle article mein hum cryptarithmetic dekhenge — SEND + MORE = MONEY ka famous puzzle.`,
+          `Solving a caselet happens in three steps. **Step 1:** make a table — names in rows, subjects or cities in columns. **Step 2:** write every clue in the table — tick if certain, cross if impossible. **Step 3:** eliminate — where only one empty place is left, tick it and move ahead.
+
+Remember three things. First: **do not solve without a table** — clues are forgotten in the head. Second: **also write the negative clues** — "does not like" also gives an answer. Third: **check at the end** — all subjects are different and all clues are true or not.
+
+For revision, do this: make a caselet yourself with five friends and five subjects, write three clues, and solve it fully from the table. If the table fills without stopping, you know analytical reasoning. In the next article we will look at cryptarithmetic — the famous puzzle SEND + MORE = MONEY.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Caselet Table: Paanch Dost, Paanch Subjects',
+        'Caselet Table: Five Friends, Five Subjects'
+      ),
+      caption: t(
+        'Tick pakka hai, cross nahi ho sakta — jo bachta hai wahi jawab hai',
+        'Tick means certain, cross means impossible — what remains is the answer'
+      ),
+      nodes: [
+        {
+          t: t('Amit — Science', 'Amit — Science'),
+          s: t('Maths nahi, baaki clues se Science bacha', 'Not Maths; Science remained from the other clues')
+        },
+        {
+          t: t('Bala — Maths', 'Bala — Maths'),
+          s: t('Pakka clue: Bala ko Maths pasand hai', 'Certain clue: Bala likes Maths')
+        },
+        {
+          t: t('Chetan — English', 'Chetan — English'),
+          s: t('Clue se English mila', 'English came from a clue')
+        },
+        {
+          t: t('Deepa — History', 'Deepa — History'),
+          s: t('Clue se History mila', 'History came from a clue')
+        },
+        {
+          t: t('Esha — Geography', 'Esha — Geography'),
+          s: t('Pakka clue: Esha ko Geography pasand hai', 'Certain clue: Esha likes Geography')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Options Ginna: 3 Log, 3 Cities',
+          'Counting Options: 3 People, 3 Cities'
+        ),
+        language: 'python',
+        code: `print("3 people, 3 cities:", 3 * 2 * 1, "ways")
+print("after fixing 1 person:", 2 * 1, "ways")
+print("after fixing 2 people:", 1, "way")`,
+        output: `3 people, 3 cities: 6 ways
+after fixing 1 person: 2 ways
+after fixing 2 people: 1 way`
+      },
+      {
+        title: t(
+          'Seating Check: Kaun Kahan Baitha Hai',
+          'Seating Check: Who Sits Where'
+        ),
+        language: 'python',
+        code: `seats = ["Amit", "Bala", "Chetan", "Deepa", "Esha"]
+print("seats:", seats)
+print("Bala next to Amit:", abs(seats.index("Amit") - seats.index("Bala")) == 1)
+print("Esha at an end:", seats[0] == "Esha" or seats[-1] == "Esha")
+print("Chetan in middle:", seats[2] == "Chetan")`,
+        output: `seats: ['Amit', 'Bala', 'Chetan', 'Deepa', 'Esha']
+Bala next to Amit: True
+Esha at an end: True
+Chetan in middle: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Caselet mein Bala ko Maths pasand hai. Bala ka subject kya hai?',
+          'In the caselet, Bala likes Maths. What is Bala subject?'
+        ),
+        opts: [
+          t('Science', 'Science'),
+          t('Maths', 'Maths'),
+          t('English', 'English'),
+          t('History', 'History')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: clue seedha kehta hai ki Bala ko Maths pasand hai, isliye Bala ka subject Maths hai.',
+          'Correct answer: the clue says directly that Bala likes Maths, so Bala subject is Maths.'
+        )
+      },
+      {
+        q: t(
+          'Amit ko Maths pasand nahi hai aur baaki clues se Amit ko Science mila. Amit ka subject kya hai?',
+          'Amit does not like Maths, and the other clues give Amit Science. What is Amit subject?'
+        ),
+        opts: [
+          t('Maths', 'Maths'),
+          t('Geography', 'Geography'),
+          t('Science', 'Science'),
+          t('English', 'English')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Amit ki row mein Maths par cross hai aur baaki subjects mein se sirf Science bachta hai, isliye Amit ka subject Science hai.',
+          'Correct answer: Maths is crossed in Amit row, and of the remaining subjects only Science is left, so Amit subject is Science.'
+        )
+      },
+      {
+        q: t(
+          'Esha ko Geography pasand hai. Esha ka subject kya hai?',
+          'Esha likes Geography. What is Esha subject?'
+        ),
+        opts: [
+          t('Geography', 'Geography'),
+          t('History', 'History'),
+          t('Maths', 'Maths'),
+          t('Science', 'Science')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: clue seedha kehta hai ki Esha ko Geography pasand hai.',
+          'Correct answer: the clue says directly that Esha likes Geography.'
+        )
+      },
+      {
+        q: t(
+          'Paanch dost, paanch alag subjects. Final table mein subjects kitne alag hone chahiye?',
+          'Five friends, five different subjects. How many different subjects should the final table have?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('4', '4'),
+          t('5', '5'),
+          t('6', '6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har ek ko alag subject pasand hai, isliye 5 doston ke 5 alag subjects hone chahiye.',
+          'Correct answer: each likes a different subject, so 5 friends must have 5 different subjects.'
+        )
+      },
+      {
+        q: t(
+          'Chetan ko English aur Deepa ko History mila. Agar Chetan aur Deepa subjects badal lein to Deepa ka subject kya hoga?',
+          'Chetan got English and Deepa got History. If Chetan and Deepa swap subjects, what is Deepa subject?'
+        ),
+        opts: [
+          t('History', 'History'),
+          t('English', 'English'),
+          t('Maths', 'Maths'),
+          t('Science', 'Science')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: swap ke baad Deepa ko Chetan wala subject English milega.',
+          'Correct answer: after the swap, Deepa gets Chetan subject, English.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Table banao — rows mein naam, columns mein subjects ya cities.',
+        'Make a table — names in rows, subjects or cities in columns.'
+      ),
+      t(
+        'Pakka ho to tick, nahi ho sakta to cross — elimination se jawab nikalta hai.',
+        'Tick if certain, cross if impossible — elimination gives the answer.'
+      ),
+      t(
+        'Negative clues ko bhi likho — "pasand nahi hai" se bhi jawab nikalta hai.',
+        'Also write the negative clues — "does not like" also gives an answer.'
+      ),
+      t(
+        'Jahan ek hi khaali jagah bache, woh pakka hai — use tick karo aur aage badho.',
+        'Where only one empty place is left, it is certain — tick it and move ahead.'
+      ),
+      t(
+        'Aakhir mein check karo: saare subjects alag hain aur saare clues sahi hain.',
+        'Check at the end: all subjects are different and all clues are true.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Chaar Dost, Chaar Games',
+        'Practice: Four Friends, Four Games'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki Riya Chess, Kabir Cricket, Tara Football aur Arun Hockey khelte hain aur saare games alag hain. Done tab hoga jab output mein "all games different: True" dikhe.',
+        'Run the starter code and check that Riya plays Chess, Kabir plays Cricket, Tara plays Football and Arun plays Hockey, and all games are different. You are done when the output shows "all games different: True".'
+      ),
+      language: 'python',
+      starter: `# Four friends, four games. Riya plays Chess, Kabir plays Cricket.
+games = {"Riya": "Chess", "Kabir": "Cricket", "Tara": "Football", "Arun": "Hockey"}
+print("Riya:", games["Riya"])
+print("Kabir:", games["Kabir"])
+print("Tara plays Football:", games["Tara"] == "Football")
+print("all games different:", len(set(games.values())) == 4)`,
+      expected: `Riya: Chess
+Kabir: Cricket
+Tara plays Football: True
+all games different: True`
+    },
+    readMinutes: 12
+  };
+
+const logicCryptarithmetic: Article = {
+    id: 'logic-cryptarithmetic',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Cryptarithmetic — SEND + MORE = MONEY ka Puzzle',
+      'Cryptarithmetic — The Puzzle SEND + MORE = MONEY'
+    ),
+    summary: t(
+      'Cryptarithmetic mein har letter ek alag digit hota hai aur aapko jod ya ghata ka puzzle solve karna hota hai. SEND + MORE = MONEY mein M = 1 pakka hai, kyunki do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho. Units column se shuru karo aur carry ko track karo.',
+      'In cryptarithmetic, every letter is a different digit and you have to solve an addition or subtraction puzzle. In SEND + MORE = MONEY, M = 1 is certain, because the sum of two 4-digit numbers is 5-digit only when the carry is 1. Start from the units column and track the carry.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Cryptarithmetic Kya Hai?',
+          '1. What Is Cryptarithmetic?'
+        ),
+        body: t(
+          `Cryptarithmetic ek aisa puzzle hai jismein letters ko digits se replace kiya jaata hai. Har letter ek alag digit hota hai — jaise S ek digit hai, E ek alag digit hai, aur aise hi. Aapko woh digits dhoondhne hote hain jinse jod ya ghata sahi ho jaaye. Sabse famous puzzle hai **SEND + MORE = MONEY**. Ismein 8 alag letters hain — S, E, N, D, M, O, R, Y — aur har ek ko 0 se 9 tak ka ek alag digit milta hai.
+
+Is puzzle ke do golden rules hain. Pehla: **har letter ka digit alag hota hai** — do letters ka digit ek jaisa nahi ho sakta. Doosra: **kisi bhi number ka pehla letter 0 nahi ho sakta** — kyunki SEND ek 4-digit number hai, isliye S 0 nahi ho sakta, aur MONEY ek 5-digit number hai, isliye M bhi 0 nahi ho sakta. Yeh do rules hi puzzle ko solve karne ki shuruaat hain.
+
+Cryptarithmetic ko solve karne ka tareeka hai **column se column** jaana. Units column se shuru karo, phir tens, phir hundreds, phir thousands. Har column mein jod karo, carry nikalo aur agle column mein le jaao. Jaise units column mein D + E = Y hota hai, agar jod 10 se zyada ho to carry 1 agle column mein jaata hai.`,
+          `Cryptarithmetic is a puzzle in which letters are replaced with digits. Every letter is a different digit — S is one digit, E is a different digit, and so on. You have to find the digits that make the addition or subtraction correct. The most famous puzzle is **SEND + MORE = MONEY**. It has 8 different letters — S, E, N, D, M, O, R, Y — and each gets a different digit from 0 to 9.
+
+This puzzle has two golden rules. First: **every letter has a different digit** — two letters cannot share a digit. Second: **the first letter of any number cannot be 0** — because SEND is a 4-digit number, S cannot be 0, and because MONEY is a 5-digit number, M cannot be 0 either. These two rules are the start of solving the puzzle.
+
+The way to solve cryptarithmetic is to go **column by column**. Start from the units column, then tens, then hundreds, then thousands. In every column, add, find the carry, and take it to the next column. For example, in the units column D + E = Y; if the sum is more than 10, carry 1 goes to the next column.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Code Lock, Puzzle Book aur PIN',
+          '2. Real-Life Examples: Code Locks, Puzzle Books, and PINs'
+        ),
+        body: t(
+          `Cryptarithmetic ka sabse seedha real-life example hai code lock. Socho ek lock par letters hain aur aapko woh digits dhoondhne hain jinse lock khule. Har letter ek digit hai aur sirf ek hi combination sahi hai. Puzzle book mein bhi aise hi sawal hote hain — letters ko digits se badlo aur jod ko sahi karo.
+
+Doosra example hai PIN. Ek 4-digit PIN mein har digit alag ho sakta hai aur pehla digit 0 nahi ho sakta — bilkul cryptarithmetic ke rules jaisa. Agar aapko pata ho ki PIN ke digits ka jod kuch hai aur pehla digit 9 hai, to aap baaki digits ko elimination se nikaal sakte ho.
+
+Teesra example hai bachchon ka khel. Bachche letters se numbers banate hain — jaise A = 1, B = 2 likh kar jod karte hain. Cryptarithmetic usi khel ka bada version hai, jismein letters aur digits ka relation pehle se nahi pata hota aur use dhoondhna padta hai.`,
+          `The simplest real-life example of cryptarithmetic is a code lock. Imagine a lock with letters on it, and you have to find the digits that open the lock. Every letter is a digit, and only one combination is right. Puzzle books have the same kind of questions — replace letters with digits and make the sum correct.
+
+A second example is a PIN. In a 4-digit PIN every digit can be different and the first digit cannot be 0 — exactly like the rules of cryptarithmetic. If you know that the digits of the PIN add up to something and the first digit is 9, you can find the other digits by elimination.
+
+A third example is a children game. Children make numbers from letters — like writing A = 1, B = 2 and adding them. Cryptarithmetic is a bigger version of that game, in which the relation between letters and digits is not known in advance and has to be found.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: SEND + MORE = MONEY ka Dry Run',
+          '3. Step-by-Step: A Dry Run of SEND + MORE = MONEY'
+        ),
+        body: t(
+          `Worked example: SEND + MORE = MONEY. Classic jawab hai S = 9, E = 5, N = 6, D = 7, M = 1, O = 0, R = 8, Y = 2. Matlab SEND = 9567, MORE = 1085 aur MONEY = 10652. Step 1: M nikalo. Do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho, isliye MONEY ka pehla digit M = 1 pakka hai. Step 2: units column dekho — D + E = Y. D = 7 aur E = 5 hain, 7 + 5 = 12, isliye Y = 2 likho aur carry 1 agle column mein le jaao.
+
+Step 3: tens column dekho — N + R + carry = E. N = 6, R = 8, carry 1 hain: 6 + 8 + 1 = 15, isliye E = 5 likho aur carry 1 aage le jaao. Step 4: hundreds column — E + O + carry = N. E = 5, O = 0, carry 1: 5 + 0 + 1 = 6, matlab N = 6. Step 5: thousands column — S + M + carry = O. S = 9, M = 1, carry 0: 9 + 1 = 10, matlab O = 0 likho aur carry 1 aage le jaao, jo M = 1 ban jaata hai. Step 6: poora jod check karo — 9567 + 1085 = 10652, jo MONEY ke barabar hai. Neeche wala code is jod ko run karke verify karta hai.`,
+          `Worked example: SEND + MORE = MONEY. The classic answer is S = 9, E = 5, N = 6, D = 7, M = 1, O = 0, R = 8, Y = 2. That means SEND = 9567, MORE = 1085 and MONEY = 10652. Step 1: find M. The sum of two 4-digit numbers is 5-digit only when the carry is 1, so the first digit of MONEY, M = 1, is certain. Step 2: look at the units column — D + E = Y. D = 7 and E = 5, 7 + 5 = 12, so write Y = 2 and take carry 1 to the next column.
+
+Step 3: look at the tens column — N + R + carry = E. N = 6, R = 8, carry 1: 6 + 8 + 1 = 15, so write E = 5 and take carry 1 ahead. Step 4: hundreds column — E + O + carry = N. E = 5, O = 0, carry 1: 5 + 0 + 1 = 6, which means N = 6. Step 5: thousands column — S + M + carry = O. S = 9, M = 1, carry 0: 9 + 1 = 10, which means write O = 0 and take carry 1 ahead, which becomes M = 1. Step 6: check the whole sum — 9567 + 1085 = 10652, which equals MONEY. The code below runs this sum and verifies it.`
+        ),
+        code: {
+          title: t(
+            'SEND + MORE = MONEY ka Verification',
+            'Verifying SEND + MORE = MONEY'
+          ),
+          language: 'python',
+          code: `SEND = 9567
+MORE = 1085
+MONEY = 10652
+print("SEND =", SEND)
+print("MORE =", MORE)
+print("SEND + MORE =", SEND + MORE)
+print("MONEY =", MONEY)
+print("SEND + MORE = MONEY :", SEND + MORE == MONEY)
+print("digits used:", sorted(set(str(SEND) + str(MORE) + str(MONEY))))`,
+          output: `SEND = 9567
+MORE = 1085
+SEND + MORE = 10652
+MONEY = 10652
+SEND + MORE = MONEY : True
+digits used: ['0', '1', '2', '5', '6', '7', '8', '9']`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Do Letters ko Ek Digit, Carry Bhoolna aur 0 Pehle',
+          '4. Common Mistakes: Two Letters Sharing a Digit, Forgetting the Carry, and 0 First'
+        ),
+        body: t(
+          `**Galti 1: do letters ko ek hi digit dena.** Har letter ka digit alag hota hai — agar aap S aur E dono ko 5 de doge to puzzle galat ho jaayega. Har digit use karne ke baad use list se kaat do, taaki woh dobara use na ho. Classic jawab mein 8 alag digits use hue hain: 0, 1, 2, 5, 6, 7, 8, 9.
+
+**Galti 2: carry bhoolna.** Units column mein 7 + 5 = 12 hai — Y = 2 likhna hai aur carry 1 ko agle column mein le jaana hai. Log aksar Y = 12 likh dete hain ya carry bhool jaate hain. Har column mein carry ko likh lo, phir agla column solve karo.
+
+**Galti 3: pehle letter ko 0 dena.** SEND ka pehla letter S hai, isliye S 0 nahi ho sakta. MONEY ka pehla letter M hai, isliye M 0 nahi ho sakta. Agar aap kisi number ke pehle letter ko 0 de doge to woh number chhota ho jaayega aur puzzle galat ho jaayega.`,
+          `**Mistake 1: Giving two letters the same digit.** Every letter has a different digit — if you give both S and E the digit 5, the puzzle goes wrong. After using a digit, cross it off the list so it is not used again. In the classic answer, 8 different digits are used: 0, 1, 2, 5, 6, 7, 8, 9.
+
+**Mistake 2: Forgetting the carry.** In the units column, 7 + 5 = 12 — you have to write Y = 2 and take carry 1 to the next column. People often write Y = 12 or forget the carry. Write the carry in every column, then solve the next column.
+
+**Mistake 3: Giving 0 to the first letter.** The first letter of SEND is S, so S cannot be 0. The first letter of MONEY is M, so M cannot be 0 either. If you give 0 to the first letter of a number, that number becomes smaller and the puzzle goes wrong.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Carry 1 se Zyada, Ek Letter Do Jagah aur Koi Jawab Nahi',
+          '5. Edge Cases: Carry Above 1, One Letter in Two Places, and No Answer'
+        ),
+        body: t(
+          `**Edge case 1: carry 1 se zyada.** Do digits ka jod zyada se zyada 9 + 9 = 18 hota hai, isliye carry sirf 1 ho sakta hai. Par agar teen numbers jud rahe hon to carry 2 bhi ho sakta hai. SEND + MORE mein sirf do numbers hain, isliye carry hamesha 0 ya 1 hai. Carry ko hamesha 0 ya 1 maan kar chalo.
+
+**Edge case 2: ek letter do jagah.** E letter SEND mein bhi hai aur MORE mein bhi hai — dono jagah E ka digit wahi hoga, 5. M letter MORE mein bhi hai aur MONEY mein bhi hai — dono jagah M = 1 hoga. Ek letter ki value har jagah ek hi hoti hai, use alag-alag mat socho.
+
+**Edge case 3: koi jawab na ho.** Kuch cryptarithmetic puzzles ka koi jawab nahi hota — koi bhi digits jod ko sahi nahi karte. Aise mein saare options try karne ke baad bhi koi hal nahi milta. Exam mein aise sawal ka jawab "no solution" ho sakta hai, isliye har puzzle ka hal hoga, yeh mat maan lo.`,
+          `**Edge case 1: Carry above 1.** The sum of two digits is at most 9 + 9 = 18, so the carry can only be 1. But if three numbers are being added, the carry can be 2 as well. In SEND + MORE there are only two numbers, so the carry is always 0 or 1. Always take the carry as 0 or 1.
+
+**Edge case 2: One letter in two places.** The letter E is in SEND and also in MORE — its digit is the same in both places, 5. The letter M is in MORE and also in MONEY — M = 1 in both places. The value of one letter is the same everywhere; do not treat it differently in different places.
+
+**Edge case 3: No answer exists.** Some cryptarithmetic puzzles have no answer — no digits make the sum correct. In that case, no solution is found even after trying all options. In an exam, the answer to such a question can be "no solution", so do not assume every puzzle has an answer.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Jod ki Jagah Ghata Ho ya Letters Badh Jaayein?',
+          '6. What If It Is Subtraction Instead of Addition, or More Letters?'
+        ),
+        body: t(
+          `**What if jod ki jagah ghata ho?** Jaise MONEY - MORE = SEND. Ghata mein bhi wahi rule lagta hai — column se column jaao, par ab borrow ko track karo. Units column mein Y - E = D hota hai, agar Y chhota ho to agle column se borrow lena padta hai. Jod wale puzzle ko ghata mein badal kar bhi solve kiya ja sakta hai — dono ek hi puzzle hain.
+
+**What if letters badh jaayein?** Jaise 10 letters hon to 10 alag digits chahiye — 0 se 9 tak kul 10 digits hain, isliye har digit ek baar use hoga. 10 se zyada letters hon to puzzle ka koi hal nahi ho sakta, kyunki digits hi 10 hain. Letters gin kar pehle yeh check karo ki puzzle possible hai ya nahi.
+
+**What if ek letter ki value pehle se di ho?** Jaise sawal mein likha ho M = 1. To baaki letters ko usi se shuru karo — M = 1 se MONEY ka pehla digit pakka ho jaata hai aur baaki columns aasan ho jaate hain. Di hui value ko pehle likh lo, phir baaki dhoondho.`,
+          `**What if it is subtraction instead of addition?** For example, MONEY - MORE = SEND. In subtraction the same rule applies — go column by column, but now track the borrow. In the units column, Y - E = D; if Y is smaller, you have to borrow from the next column. An addition puzzle can also be solved by turning it into subtraction — both are the same puzzle.
+
+**What if the letters increase?** For example, if there are 10 letters, 10 different digits are needed — there are 10 digits from 0 to 9 in total, so every digit is used once. If there are more than 10 letters, the puzzle cannot have an answer, because there are only 10 digits. First count the letters and check whether the puzzle is possible or not.
+
+**What if the value of one letter is already given?** For example, the question says M = 1. Then start the other letters from there — M = 1 fixes the first digit of MONEY, and the other columns become easy. Write the given value first, then find the rest.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Cryptarithmetic Ek Page Mein',
+          '7. Summary: Cryptarithmetic on One Page'
+        ),
+        body: t(
+          `Cryptarithmetic ka kaam teen steps mein hota hai. **Step 1:** M nikalo — do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho, isliye M = 1. **Step 2:** units column se shuru karo aur har column mein jod karo, carry ko agle column mein le jaao. **Step 3:** poora jod check karo — 9567 + 1085 = 10652 hona chahiye.
+
+Yaad rakhne wali teen baatein hain. Pehli: **har letter ka digit alag hota hai** — ek digit dobara use mat karo. Doosri: **pehla letter 0 nahi ho sakta** — S aur M dono 0 nahi hain. Teesri: **carry ko track karo** — har column mein carry likh lo.
+
+Revision ke liye yeh karo: SEND + MORE = MONEY ko bina jawab dekhe khud solve karo — pehle M = 1 nikalo, phir units column se D + E = Y karo. Agar 9567 + 1085 = 10652 mil jaaye, to cryptarithmetic aapko aa gaya hai. Agle article mein hum matrix reasoning dekhenge — 3x3 grid mein row aur column ka jod.`,
+          `The work of cryptarithmetic happens in three steps. **Step 1:** find M — the sum of two 4-digit numbers is 5-digit only when the carry is 1, so M = 1. **Step 2:** start from the units column and add in every column, taking the carry to the next column. **Step 3:** check the whole sum — 9567 + 1085 must equal 10652.
+
+Remember three things. First: **every letter has a different digit** — do not reuse a digit. Second: **the first letter cannot be 0** — neither S nor M is 0. Third: **track the carry** — write the carry in every column.
+
+For revision, do this: solve SEND + MORE = MONEY yourself without looking at the answer — first find M = 1, then do D + E = Y from the units column. If you get 9567 + 1085 = 10652, you know cryptarithmetic. In the next article we will look at matrix reasoning — row and column sums in a 3x3 grid.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'SEND + MORE = MONEY: Har Letter ka Digit',
+        'SEND + MORE = MONEY: The Digit of Every Letter'
+      ),
+      caption: t(
+        '8 alag letters, 8 alag digits — 9567 + 1085 = 10652',
+        '8 different letters, 8 different digits — 9567 + 1085 = 10652'
+      ),
+      nodes: [
+        {
+          t: t('S = 9, E = 5, N = 6, D = 7', 'S = 9, E = 5, N = 6, D = 7'),
+          s: t('SEND = 9567', 'SEND = 9567')
+        },
+        {
+          t: t('M = 1, O = 0, R = 8', 'M = 1, O = 0, R = 8'),
+          s: t('MORE = 1085', 'MORE = 1085')
+        },
+        {
+          t: t('M = 1, O = 0, N = 6, E = 5, Y = 2', 'M = 1, O = 0, N = 6, E = 5, Y = 2'),
+          s: t('MONEY = 10652', 'MONEY = 10652')
+        },
+        {
+          t: t('Units: 7 + 5 = 12, Y = 2, carry 1', 'Units: 7 + 5 = 12, Y = 2, carry 1'),
+          s: t('Carry ko agle column mein le jaao', 'Take the carry to the next column')
+        },
+        {
+          t: t('M = 1 kyunki jod 5-digit hai', 'M = 1 because the sum is 5-digit'),
+          s: t('Do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho', 'The sum of two 4-digit numbers is 5-digit only when the carry is 1')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Units Column: 7 + 5 = 12, Y = 2, Carry 1',
+          'Units Column: 7 + 5 = 12, Y = 2, Carry 1'
+        ),
+        language: 'python',
+        code: `# Units: D + E = Y (7 + 5 = 12, write 2 carry 1)
+print("7 + 5 =", 7 + 5)
+print("write 2, carry 1:", (7 + 5) % 10, "carry", (7 + 5) // 10)
+print("S + M =", 9 + 1)
+print("MONEY starts with 1, so M = 1:", True)`,
+        output: `7 + 5 = 12
+write 2, carry 1: 2 carry 1
+S + M = 10
+MONEY starts with 1, so M = 1: True`
+      },
+      {
+        title: t(
+          'Doosra Puzzle: TWO + TWO = FOUR',
+          'Second Puzzle: TWO + TWO = FOUR'
+        ),
+        language: 'python',
+        code: `TWO = 734
+FOUR = 1468
+print("TWO =", TWO)
+print("TWO + TWO =", TWO + TWO)
+print("FOUR =", FOUR)
+print("TWO + TWO = FOUR :", TWO + TWO == FOUR)`,
+        output: `TWO = 734
+TWO + TWO = 1468
+FOUR = 1468
+TWO + TWO = FOUR : True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'SEND + MORE = MONEY mein M ka digit kya hai?',
+          'In SEND + MORE = MONEY, what is the digit of M?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('1', '1'),
+          t('2', '2'),
+          t('9', '9')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho, isliye MONEY ka pehla digit M = 1 hai.',
+          'Correct answer: the sum of two 4-digit numbers is 5-digit only when the carry is 1, so the first digit of MONEY, M = 1.'
+        )
+      },
+      {
+        q: t(
+          'SEND + MORE = MONEY mein S ka digit kya hai?',
+          'In SEND + MORE = MONEY, what is the digit of S?'
+        ),
+        opts: [
+          t('8', '8'),
+          t('9', '9'),
+          t('7', '7'),
+          t('6', '6')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: classic jawab mein SEND = 9567 hai, isliye S = 9 hai.',
+          'Correct answer: in the classic answer SEND = 9567, so S = 9.'
+        )
+      },
+      {
+        q: t(
+          'SEND + MORE = MONEY mein O ka digit kya hai?',
+          'In SEND + MORE = MONEY, what is the digit of O?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('0', '0'),
+          t('5', '5')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: classic jawab mein MONEY = 10652 hai, isliye O = 0 hai.',
+          'Correct answer: in the classic answer MONEY = 10652, so O = 0.'
+        )
+      },
+      {
+        q: t(
+          'SEND ka value kya hai?',
+          'What is the value of SEND?'
+        ),
+        opts: [
+          t('9567', '9567'),
+          t('9657', '9657'),
+          t('10652', '10652'),
+          t('1085', '1085')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: S = 9, E = 5, N = 6, D = 7, isliye SEND = 9567 hai.',
+          'Correct answer: S = 9, E = 5, N = 6, D = 7, so SEND = 9567.'
+        )
+      },
+      {
+        q: t(
+          'TWO + TWO = FOUR mein FOUR ka value kya hai? (TWO = 734)',
+          'In TWO + TWO = FOUR, what is the value of FOUR? (TWO = 734)'
+        ),
+        opts: [
+          t('1468', '1468'),
+          t('1486', '1486'),
+          t('1648', '1648'),
+          t('1466', '1466')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 734 + 734 = 1468, isliye FOUR = 1468 hai.',
+          'Correct answer: 734 + 734 = 1468, so FOUR = 1468.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Har letter ka digit alag hota hai — ek digit dobara use mat karo.',
+        'Every letter has a different digit — do not reuse a digit.'
+      ),
+      t(
+        'M = 1 pakka hai, kyunki do 4-digit numbers ka jod 5-digit tabhi hota hai jab carry 1 ho.',
+        'M = 1 is certain, because the sum of two 4-digit numbers is 5-digit only when the carry is 1.'
+      ),
+      t(
+        'Units column se shuru karo aur carry ko har column mein track karo.',
+        'Start from the units column and track the carry in every column.'
+      ),
+      t(
+        'Kisi bhi number ka pehla letter 0 nahi ho sakta.',
+        'The first letter of any number cannot be 0.'
+      ),
+      t(
+        'Classic jawab: 9567 + 1085 = 10652 — hamesha poora jod check karo.',
+        'Classic answer: 9567 + 1085 = 10652 — always check the whole sum.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: SEND + MORE se MONEY Nikalo',
+        'Practice: Find MONEY from SEND + MORE'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki 9567 + 1085 = 10652 hai, MONEY 5-digit hai aur pehla digit 1 hai. Done tab hoga jab output mein "SEND + MORE = 10652" dikhe.',
+        'Run the starter code and check that 9567 + 1085 = 10652, MONEY is 5-digit, and its first digit is 1. You are done when the output shows "SEND + MORE = 10652".'
+      ),
+      language: 'python',
+      starter: `# SEND = 9567, MORE = 1085. Find MONEY by adding.
+SEND = 9567
+MORE = 1085
+MONEY = SEND + MORE
+print("SEND + MORE =", MONEY)
+print("MONEY is 5 digits:", len(str(MONEY)) == 5)
+print("MONEY starts with 1:", str(MONEY)[0] == "1")
+print("check 9567 + 1085 = 10652:", MONEY == 10652)`,
+      expected: `SEND + MORE = 10652
+MONEY is 5 digits: True
+MONEY starts with 1: True
+check 9567 + 1085 = 10652: True`
+    },
+    readMinutes: 12
+  };
+
+const logicMatrix: Article = {
+    id: 'logic-matrix',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Matrix Reasoning — 3x3 Grid mein Row aur Column ka Jod',
+      'Matrix Reasoning — Row and Column Sums in a 3x3 Grid'
+    ),
+    summary: t(
+      'Matrix reasoning mein 3x3 grid ke har row, column aur diagonal ka jod ek jaisa hota hai. Pehle row ka jod nikalo, phir column ka, phir missing number ko jod se ghata kar nikalo. Magic square mein har line ka jod 15 hota hai.',
+      'In matrix reasoning, every row, column and diagonal of a 3x3 grid adds up to the same total. First find the row sum, then the column sum, then find the missing number by subtracting from the sum. In a magic square, every line adds up to 15.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Matrix Reasoning Kya Hai?',
+          '1. What Is Matrix Reasoning?'
+        ),
+        body: t(
+          `Matrix reasoning mein numbers ko ek grid mein likha jaata hai — aam taur par 3 rows aur 3 columns, matlab 3x3 grid. Har row, har column aur kabhi-kabhi diagonal ka bhi ek rule hota hai. Sabse aam rule hai **jod ka rule**: har row ka jod ek jaisa hota hai, har column ka jod bhi wahi hota hai. Aapka kaam hai woh rule dhoondh kar missing number nikaalna.
+
+Sabse famous matrix hai **magic square**: 4, 9, 2 pehli row mein, 3, 5, 7 doosri mein aur 8, 1, 6 teesri mein. Ismein har row ka jod 15 hai: 4 + 9 + 2 = 15, 3 + 5 + 7 = 15, 8 + 1 + 6 = 15. Har column ka jod bhi 15 hai: 4 + 3 + 8 = 15, 9 + 5 + 1 = 15, 2 + 7 + 6 = 15. Dono diagonals ka jod bhi 15 hai: 4 + 5 + 6 = 15 aur 2 + 5 + 8 = 15. Isi liye ise magic square kehte hain — har line ka jod ek jaisa hai.
+
+Matrix solve karne ka pehla step hai **ek poori line ka jod nikaalna**. Jis row ya column mein saare numbers diye hon, uska jod nikalo — wahi magic constant hota hai. Phir jis line mein ek number missing ho, usmein diye hue numbers ko magic constant se ghata do — missing number mil jaayega.`,
+          `In matrix reasoning, numbers are written in a grid — usually 3 rows and 3 columns, a 3x3 grid. Every row, every column, and sometimes the diagonal too, follows a rule. The most common rule is the **sum rule**: every row adds up to the same total, and every column adds up to that same total. Your job is to find that rule and work out the missing number.
+
+The most famous matrix is the **magic square**: 4, 9, 2 in the first row, 3, 5, 7 in the second, and 8, 1, 6 in the third. In it, every row adds up to 15: 4 + 9 + 2 = 15, 3 + 5 + 7 = 15, 8 + 1 + 6 = 15. Every column also adds up to 15: 4 + 3 + 8 = 15, 9 + 5 + 1 = 15, 2 + 7 + 6 = 15. Both diagonals also add up to 15: 4 + 5 + 6 = 15 and 2 + 5 + 8 = 15. That is why it is called a magic square — every line adds up to the same total.
+
+The first step in solving a matrix is to **find the sum of one complete line**. Take the row or column in which all numbers are given and find its sum — that is the magic constant. Then, in the line where one number is missing, subtract the given numbers from the magic constant — you get the missing number.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Sudoku, Marks Table aur Calendar',
+          '2. Real-Life Examples: Sudoku, Marks Tables, and Calendars'
+        ),
+        body: t(
+          `Matrix reasoning ka sabse achha real-life example hai Sudoku. Sudoku mein 9x9 grid hoti hai aur har row, column aur box mein 1 se 9 tak ke numbers ek baar aane chahiye. Aap ek row mein diye hue numbers ko dekh kar missing number nikaalte ho — bilkul matrix reasoning jaisa. Sudoku mein jod ka rule nahi hota, par missing number nikaalne ka tareeka wahi hai.
+
+Doosra example hai marks table. Ek class mein paanch students ke teen subjects ke marks ek table mein likhe hain. Har student ke marks ka total nikalo to pata chalta hai ki kis ka total sabse zyada hai. Har subject ka total nikalo to pata chalta hai ki kis subject mein class ne sabse zyada marks liye. Table ko row se bhi padho aur column se bhi — dono se alag jawab milte hain.
+
+Teesra example hai calendar. Calendar bhi ek matrix hai — 7 columns (hafte ke din) aur 4-5 rows (hafte). Ek date se aap agle hafte ki wahi date nikaal sakte ho, kyunki woh ek row neeche hoti hai. Calendar mein row aur column ka rule samajhna matrix reasoning hi hai.`,
+          `The best real-life example of matrix reasoning is Sudoku. In Sudoku there is a 9x9 grid, and every row, column and box must contain the numbers 1 to 9 once each. You find a missing number by looking at the numbers given in a row — exactly like matrix reasoning. Sudoku has no sum rule, but the way to find a missing number is the same.
+
+A second example is a marks table. In a class, the marks of five students in three subjects are written in a table. Find the total marks of every student, and you know whose total is the highest. Find the total of every subject, and you know in which subject the class scored the most. Read the table by rows and also by columns — both give different answers.
+
+A third example is a calendar. A calendar is also a matrix — 7 columns (days of the week) and 4-5 rows (weeks). From one date you can find the same date next week, because it sits one row below. Understanding the row and column rule of a calendar is matrix reasoning.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Magic Square ka Dry Run (Row, Column, Diagonal)',
+          '3. Step-by-Step: A Dry Run of the Magic Square (Row, Column, Diagonal)'
+        ),
+        body: t(
+          `Worked example: magic square hai [[4, 9, 2], [3, 5, 7], [8, 1, 6]]. Step 1: pehli row ka jod nikalo — 4 + 9 + 2 = 15. Yahi magic constant hai. Step 2: doosri row check karo — 3 + 5 + 7 = 15. Step 3: teesri row check karo — 8 + 1 + 6 = 15. Step 4: columns check karo — pehla column 4 + 3 + 8 = 15, doosra 9 + 5 + 1 = 15, teesra 2 + 7 + 6 = 15. Step 5: diagonals check karo — 4 + 5 + 6 = 15 aur 2 + 5 + 8 = 15. Saari lines ka jod 15 hai, isliye yeh magic square hai.
+
+Doosra dry run: missing number nikalo. Row hai 4, 9, ?. Magic constant 15 hai, isliye ? = 15 - 4 - 9 = 2. Check karo: 4 + 9 + 2 = 15. Teesra dry run: row 2 hai 3, 5, ?. ? = 15 - 3 - 5 = 7. Check karo: 3 + 5 + 7 = 15. Missing number nikaalne ka formula hai: **missing = magic constant - diye hue numbers ka jod**. Neeche wala code magic square ke saare jod run karke dikhata hai.`,
+          `Worked example: the magic square is [[4, 9, 2], [3, 5, 7], [8, 1, 6]]. Step 1: find the sum of the first row — 4 + 9 + 2 = 15. This is the magic constant. Step 2: check the second row — 3 + 5 + 7 = 15. Step 3: check the third row — 8 + 1 + 6 = 15. Step 4: check the columns — the first column 4 + 3 + 8 = 15, the second 9 + 5 + 1 = 15, the third 2 + 7 + 6 = 15. Step 5: check the diagonals — 4 + 5 + 6 = 15 and 2 + 5 + 8 = 15. Every line adds up to 15, so this is a magic square.
+
+Second dry run: find a missing number. The row is 4, 9, ?. The magic constant is 15, so ? = 15 - 4 - 9 = 2. Check: 4 + 9 + 2 = 15. Third dry run: row 2 is 3, 5, ?. ? = 15 - 3 - 5 = 7. Check: 3 + 5 + 7 = 15. The formula for a missing number is: **missing = magic constant - sum of the given numbers**. The code below runs all the sums of the magic square.`
+        ),
+        code: {
+          title: t(
+            'Magic Square Dry Run: Har Line ka Jod 15',
+            'Magic Square Dry Run: Every Line Adds Up to 15'
+          ),
+          language: 'python',
+          code: `sq = [[4, 9, 2], [3, 5, 7], [8, 1, 6]]
+print("row sums:", [sum(r) for r in sq])
+print("col sums:", [sum(sq[i][j] for i in range(3)) for j in range(3)])
+print("diag 1:", sq[0][0] + sq[1][1] + sq[2][2])
+print("diag 2:", sq[0][2] + sq[1][1] + sq[2][0])
+print("magic constant:", 15)
+print("all sums are 15:", True)`,
+          output: `row sums: [15, 15, 15]
+col sums: [15, 15, 15]
+diag 1: 15
+diag 2: 15
+magic constant: 15
+all sums are 15: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Row Dekhna, Diagonal Bhoolna aur Galat Constant',
+          '4. Common Mistakes: Looking Only at Rows, Forgetting Diagonals, and Wrong Constants'
+        ),
+        body: t(
+          `**Galti 1: sirf row dekhna.** Log matrix mein sirf rows ka jod check karte hain aur columns ko bhool jaate hain. Magic square mein rows aur columns dono ka jod ek jaisa hota hai. Agar aapne sirf row check ki to aapko pata nahi chalega ki column ka rule alag hai ya wahi hai. Hamesha row aur column dono check karo.
+
+**Galti 2: diagonal bhoolna.** Kuch matrices mein diagonal ka bhi rule hota hai. Jaise magic square mein dono diagonals ka jod bhi 15 hai. Agar sawal mein diagonal ka zikr ho to use bhi check karo — diagonal se bhi missing number nikal sakta hai.
+
+**Galti 3: galat magic constant lena.** Magic constant wahi hota hai jo poori line ka jod hai. Agar aapne aadhi line ka jod liya ya galat row ka jod liya to missing number galat hoga. Pehle woh row ya column dhoondho jismein saare numbers diye hon, uska jod nikalo — wahi constant hai.`,
+          `**Mistake 1: Looking only at rows.** People check only the row sums in a matrix and forget the columns. In a magic square, the sums of rows and columns are both the same. If you check only the rows, you will not know whether the column rule is different or the same. Always check both rows and columns.
+
+**Mistake 2: Forgetting the diagonals.** In some matrices the diagonals also follow a rule. For example, in a magic square both diagonals also add up to 15. If a question mentions the diagonal, check it too — a missing number can also come from the diagonal.
+
+**Mistake 3: Taking the wrong magic constant.** The magic constant is the sum of a complete line. If you take the sum of half a line or of the wrong row, the missing number will be wrong. First find the row or column in which all numbers are given, find its sum — that is the constant.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Beech ka Number, Do Missing aur Alag Rule',
+          '5. Edge Cases: Middle Number, Two Missing, and a Different Rule'
+        ),
+        body: t(
+          `**Edge case 1: beech ka number.** 3x3 magic square mein beech ka number 5 hota hai — woh har line mein aata hai. Beech ka number magic constant ka ek tihai hota hai: 15 / 3 = 5. Agar beech ka number missing ho to use pehle nikalo, kyunki woh chaar lines mein kaam aata hai.
+
+**Edge case 2: ek line mein do missing numbers hon.** Agar ek row mein do numbers missing hon to sirf jod se jawab nahi niklega — column se bhi check karna padega. Pehle woh line solve karo jismein sirf ek number missing ho, phir usse doosri line bharo. Ek-ek karke solve karo, ek saath nahi.
+
+**Edge case 3: jod ka rule na ho.** Kuch matrices mein rule jod ka nahi hota — jaise har row mein numbers double ho rahe hon ya multiply ho rahe hon. Jaise matrix [[2, 4, 6], [3, 6, 9], [4, 8, 12]] mein har row ka jod alag hai (12, 18, 24), par har row mein teesra number pehle ka teen guna hai. Jod na mile to multiply ya ratio check karo.`,
+          `**Edge case 1: The middle number.** In a 3x3 magic square the middle number is 5 — it appears in every line. The middle number is one third of the magic constant: 15 / 3 = 5. If the middle number is missing, find it first, because it helps in four lines.
+
+**Edge case 2: Two missing numbers in one line.** If two numbers are missing in one row, the sum alone will not give the answer — you must also check the column. First solve the line in which only one number is missing, then use it to fill the other line. Solve one by one, not together.
+
+**Edge case 3: The rule is not the sum.** In some matrices the rule is not the sum — for example, the numbers in every row double, or multiply. In the matrix [[2, 4, 6], [3, 6, 9], [4, 8, 12]], the row sums are different (12, 18, 24), but in every row the third number is three times the first. If the sum does not fit, check multiplication or ratio.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Grid 4x4 Ho ya Rule Multiply Ho?',
+          '6. What If the Grid Is 4x4 or the Rule Is Multiplication?'
+        ),
+        body: t(
+          `**What if grid 4x4 ho?** 4x4 grid mein bhi wahi method lagta hai — pehle ek poori line ka jod nikalo, phir missing number ko ghata kar nikalo. Sirf numbers zyada honge, steps wahi honge. 4x4 magic square ka magic constant 34 hota hai (1 se 16 tak ke numbers ka jod 136 hai, 136 / 4 = 34).
+
+**What if rule multiply ho?** Jaise har row mein pehla number x doosra = teesra ho. Jaise row mein 2, 3, 6 hon to 2 x 3 = 6. Aise mein jod se jawab nahi milega — multiply check karo. Pehle jod try karo, na mile to multiply, phir ratio.
+
+**What if har row ka jod alag ho?** Jaise rows ka jod 12, 18, 24 ho — yeh bhi ek pattern hai, har row mein 6 badh raha hai. To agle row ka jod 30 hoga. Jod ka pattern bhi ek rule ho sakta hai — har row ka jod ek jaisa hona zaroori nahi hai.`,
+          `**What if the grid is 4x4?** The same method applies in a 4x4 grid — first find the sum of one complete line, then find the missing number by subtracting. Only the numbers are more; the steps are the same. The magic constant of a 4x4 magic square is 34 (the sum of the numbers 1 to 16 is 136, and 136 / 4 = 34).
+
+**What if the rule is multiplication?** For example, in every row the first number times the second equals the third. In a row with 2, 3, 6, 2 x 3 = 6. In that case the sum will not give the answer — check multiplication. Try the sum first; if it does not fit, try multiplication, then ratio.
+
+**What if every row has a different sum?** For example, the row sums are 12, 18, 24 — that is also a pattern, growing by 6 in every row. So the next row sum is 30. The pattern of the sums can also be a rule — it is not necessary for every row sum to be the same.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Matrix Reasoning Ek Page Mein',
+          '7. Summary: Matrix Reasoning on One Page'
+        ),
+        body: t(
+          `Matrix reasoning ka kaam teen steps mein hota hai. **Step 1:** ek poori line ka jod nikalo — wahi magic constant hai. **Step 2:** missing number wali line mein diye hue numbers ko constant se ghata do — missing = constant - diye hue numbers ka jod. **Step 3:** jawab ko column aur diagonal se bhi check karo.
+
+Yaad rakhne wali teen baatein hain. Pehli: **magic square mein har line ka jod 15 hota hai** — row, column aur diagonal, teeno. Doosri: **beech ka number 5 hota hai**, jo constant ka ek tihai hai. Teesri: **jod na mile to multiply ya ratio check karo** — har matrix ka rule jod nahi hota.
+
+Revision ke liye yeh karo: magic square [[4, 9, 2], [3, 5, 7], [8, 1, 6]] ko khud likho aur har row, column aur diagonal ka jod nikalo. Phir ek number ko ? se badal kar missing number nikalo. Agar saare jod 15 aayein, to matrix reasoning aapko aa gaya hai. Agle article mein hum statement aur inference dekhenge — "all" aur "some" ka logic.`,
+          `The work of matrix reasoning happens in three steps. **Step 1:** find the sum of one complete line — that is the magic constant. **Step 2:** in the line with the missing number, subtract the given numbers from the constant — missing = constant - sum of the given numbers. **Step 3:** also check the answer with the column and the diagonal.
+
+Remember three things. First: **in a magic square every line adds up to 15** — row, column and diagonal, all three. Second: **the middle number is 5**, which is one third of the constant. Third: **if the sum does not fit, check multiplication or ratio** — not every matrix follows a sum rule.
+
+For revision, do this: write the magic square [[4, 9, 2], [3, 5, 7], [8, 1, 6]] yourself and find the sum of every row, column and diagonal. Then replace one number with ? and find the missing number. If all sums come to 15, you know matrix reasoning. In the next article we will look at statements and inference — the logic of "all" and "some".`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Magic Square: Har Line ka Jod 15',
+        'Magic Square: Every Line Adds Up to 15'
+      ),
+      caption: t(
+        'Row, column aur diagonal — teeno ka jod 15 hai',
+        'Row, column and diagonal — all three add up to 15'
+      ),
+      nodes: [
+        {
+          t: t('Row 1: 4 + 9 + 2 = 15', 'Row 1: 4 + 9 + 2 = 15'),
+          s: t('Pehli row ka jod magic constant hai', 'The sum of the first row is the magic constant')
+        },
+        {
+          t: t('Row 2: 3 + 5 + 7 = 15', 'Row 2: 3 + 5 + 7 = 15'),
+          s: t('Beech ka number 5 hai', 'The middle number is 5')
+        },
+        {
+          t: t('Row 3: 8 + 1 + 6 = 15', 'Row 3: 8 + 1 + 6 = 15'),
+          s: t('Teesri row bhi 15 hai', 'The third row is also 15')
+        },
+        {
+          t: t('Column: 4 + 3 + 8 = 15', 'Column: 4 + 3 + 8 = 15'),
+          s: t('Har column ka jod bhi 15 hai', 'Every column also adds up to 15')
+        },
+        {
+          t: t('Diagonal: 4 + 5 + 6 = 15', 'Diagonal: 4 + 5 + 6 = 15'),
+          s: t('Dono diagonals ka jod bhi 15 hai', 'Both diagonals also add up to 15')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Missing Number: 4 + 9 + ? = 15',
+          'Missing Number: 4 + 9 + ? = 15'
+        ),
+        language: 'python',
+        code: `print("row: 4 + 9 + ? = 15")
+print("missing =", 15 - 4 - 9)
+print("check: 4 + 9 + 2 =", 4 + 9 + 2)`,
+        output: `row: 4 + 9 + ? = 15
+missing = 2
+check: 4 + 9 + 2 = 15`
+      },
+      {
+        title: t(
+          'Doosri Matrix: Har Row mein Teesra Teen Guna',
+          'Second Matrix: Third Number Is Three Times the First in Every Row'
+        ),
+        language: 'python',
+        code: `m = [[2, 4, 6], [3, 6, 9], [4, 8, 12]]
+print("row 1:", m[0], "sum:", sum(m[0]))
+print("row 2:", m[1], "sum:", sum(m[1]))
+print("row 3:", m[2], "sum:", sum(m[2]))
+print("column 3 is triple column 1:", m[0][2] == 3 * m[0][0])`,
+        output: `row 1: [2, 4, 6] sum: 12
+row 2: [3, 6, 9] sum: 18
+row 3: [4, 8, 12] sum: 24
+column 3 is triple column 1: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Magic square mein row 4, 9, ? ka jod 15 hai. ? kya hai?',
+          'In the magic square, the row 4, 9, ? adds up to 15. What is ?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ? = 15 - 4 - 9 = 2. Check: 4 + 9 + 2 = 15.',
+          'Correct answer: ? = 15 - 4 - 9 = 2. Check: 4 + 9 + 2 = 15.'
+        )
+      },
+      {
+        q: t(
+          'Magic square mein row 3, 5, ? ka jod 15 hai. ? kya hai?',
+          'In the magic square, the row 3, 5, ? adds up to 15. What is ?'
+        ),
+        opts: [
+          t('6', '6'),
+          t('7', '7'),
+          t('8', '8'),
+          t('9', '9')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ? = 15 - 3 - 5 = 7. Check: 3 + 5 + 7 = 15.',
+          'Correct answer: ? = 15 - 3 - 5 = 7. Check: 3 + 5 + 7 = 15.'
+        )
+      },
+      {
+        q: t(
+          'Magic square ka magic constant kitna hai?',
+          'What is the magic constant of the magic square?'
+        ),
+        opts: [
+          t('12', '12'),
+          t('14', '14'),
+          t('15', '15'),
+          t('18', '18')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har row, column aur diagonal ka jod 15 hai — 4 + 9 + 2 = 15.',
+          'Correct answer: every row, column and diagonal adds up to 15 — 4 + 9 + 2 = 15.'
+        )
+      },
+      {
+        q: t(
+          'Magic square ke beech ka number kya hai?',
+          'What is the middle number of the magic square?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('5', '5'),
+          t('6', '6'),
+          t('9', '9')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: beech ka number 5 hai — woh magic constant 15 ka ek tihai hai.',
+          'Correct answer: the middle number is 5 — it is one third of the magic constant 15.'
+        )
+      },
+      {
+        q: t(
+          'Matrix [[2, 4, 6], [3, 6, 9], [4, 8, 12]] mein teesri row ka jod kitna hai?',
+          'In the matrix [[2, 4, 6], [3, 6, 9], [4, 8, 12]], what is the sum of the third row?'
+        ),
+        opts: [
+          t('12', '12'),
+          t('18', '18'),
+          t('24', '24'),
+          t('30', '30')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: teesri row hai 4 + 8 + 12 = 24.',
+          'Correct answer: the third row is 4 + 8 + 12 = 24.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle ek poori line ka jod nikalo — wahi magic constant hai.',
+        'First find the sum of one complete line — that is the magic constant.'
+      ),
+      t(
+        'Missing = magic constant - diye hue numbers ka jod.',
+        'Missing = magic constant - sum of the given numbers.'
+      ),
+      t(
+        'Magic square mein har row, column aur diagonal ka jod 15 hota hai.',
+        'In a magic square, every row, column and diagonal adds up to 15.'
+      ),
+      t(
+        'Beech ka number 5 hai — constant ka ek tihai.',
+        'The middle number is 5 — one third of the constant.'
+      ),
+      t(
+        'Jod na mile to multiply ya ratio check karo.',
+        'If the sum does not fit, check multiplication or ratio.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Row 2 ka Missing Number Nikalo',
+        'Practice: Find the Missing Number in Row 2'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki row 3, 5, ? mein missing number 7 hai, kyunki 3 + 5 + 7 = 15 hota hai. Done tab hoga jab output mein "missing = 7" dikhe.',
+        'Run the starter code and check that in the row 3, 5, ?, the missing number is 7, because 3 + 5 + 7 = 15. You are done when the output shows "missing = 7".'
+      ),
+      language: 'python',
+      starter: `# 3x3 grid, each row sums to 15. Find the missing number in row 2.
+# Row 2: 3, 5, ?
+missing = 15 - 3 - 5
+print("row 2: 3, 5, ?")
+print("missing =", missing)
+print("check: 3 + 5 + 7 =", 3 + 5 + 7)
+print("row sums to 15:", 3 + 5 + missing == 15)`,
+      expected: `row 2: 3, 5, ?
+missing = 7
+check: 3 + 5 + 7 = 15
+row sums to 15: True`
+    },
+    readMinutes: 12
+  };
+
+const logicStatementInference: Article = {
+    id: 'logic-statement-inference',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Statement aur Inference — All, Some aur No ka Logic',
+      'Statement and Inference — The Logic of All, Some, and No'
+    ),
+    summary: t(
+      '"All cats are animals" ka matlab hai cats ka set animals ke set ke andar hai. "Some students are singers" ka matlab hai dono sets mein overlap hai. Inference tabhi sahi hota hai jab woh sets se pakka nikalta hai — andaze se nahi.',
+      '"All cats are animals" means the set of cats sits inside the set of animals. "Some students are singers" means the two sets overlap. An inference is right only when it follows firmly from the sets — not from a guess.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Statement aur Inference Kya Hain?',
+          '1. What Are Statements and Inference?'
+        ),
+        body: t(
+          `Statement aur inference ke sawalon mein aapko kuch statements diye hote hain aur phir kuch conclusions diye hote hain. Aapko batana hota hai ki kaun sa conclusion statements se pakka nikalta hai. Jaise statements hain "All cats are animals" aur "Tom is a cat" — to conclusion "Tom is an animal" pakka sahi hai. Yeh logic sets se samajhna sabse aasan hai.
+
+**All** ka matlab hai poora set andar hai. "All cats are animals" ka matlab hai cats ka set, animals ke set ke andar hai — har cat ek animal hai. **Some** ka matlab hai overlap hai. "Some students are singers" ka matlab hai students aur singers ke sets mein kuch log common hain — kam se kam ek student singer hai, par saare nahi. **No** ka matlab hai koi overlap nahi hai. "No cat is a dog" ka matlab hai cats aur dogs ke sets mein koi common member nahi hai.
+
+Inference nikaalne ka tareeka hai **Venn diagram ya sets** banana. Pehle har statement ko set mein badlo, phir conclusion ko set se check karo. Agar conclusion sets se pakka nikalta hai to woh sahi hai, warna galat ya pata nahi chal sakta.`,
+          `In statement and inference questions, you are given some statements and then some conclusions. You have to tell which conclusion follows firmly from the statements. For example, the statements are "All cats are animals" and "Tom is a cat" — then the conclusion "Tom is an animal" is certainly true. This logic is easiest to understand with sets.
+
+**All** means the whole set sits inside. "All cats are animals" means the set of cats sits inside the set of animals — every cat is an animal. **Some** means there is an overlap. "Some students are singers" means the sets of students and singers have some people in common — at least one student is a singer, but not all. **No** means there is no overlap. "No cat is a dog" means the sets of cats and dogs have no member in common.
+
+The way to draw an inference is to make a **Venn diagram or sets**. First change every statement into a set, then check the conclusion against the sets. If the conclusion follows firmly from the sets, it is right; otherwise it is wrong or cannot be decided.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Class, Team aur Library',
+          '2. Real-Life Examples: Class, Team, and Library'
+        ),
+        body: t(
+          `Statement aur inference roz ki zindagi mein class mein dikhta hai. Socho teacher kehti hai "All students in this class are present" aur "Riya is a student in this class" — to aap pakka keh sakte ho ki Riya present hai. Yahi "all" ka logic hai: jo poore set ke liye sahi hai, woh uske har member ke liye sahi hai.
+
+Doosra example hai team ka. Coach kehta hai "Some players are fast" aur "Kabir is a player" — to kya aap keh sakte ho ki Kabir fast hai? Nahi, kyunki "some" ka matlab hai kuch players fast hain, saare nahi. Kabir un fast players mein ho bhi sakta hai aur nahi bhi. Isliye yeh conclusion pata nahi chal sakta — yahi "some" ka trap hai.
+
+Teesra example hai library ka. Librarian kehti hai "No book in this shelf is damaged" aur "This book is on this shelf" — to aap pakka keh sakte ho ki yeh book damaged nahi hai. Yahi "no" ka logic hai: jo poore set ke liye mana hai, woh uske har member ke liye mana hai.`,
+          `Statements and inference appear in daily life in a class. Imagine the teacher says "All students in this class are present" and "Riya is a student in this class" — then you can say for sure that Riya is present. That is the logic of "all": what is true for the whole set is true for every member of it.
+
+A second example is a team. The coach says "Some players are fast" and "Kabir is a player" — can you say that Kabir is fast? No, because "some" means some players are fast, not all. Kabir may be among the fast players, or may not be. So this conclusion cannot be decided — that is the trap of "some".
+
+A third example is a library. The librarian says "No book on this shelf is damaged" and "This book is on this shelf" — then you can say for sure that this book is not damaged. That is the logic of "no": what is denied for the whole set is denied for every member of it.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Cats, Animals aur Pets ka Dry Run',
+          '3. Step-by-Step: A Dry Run on Cats, Animals, and Pets'
+        ),
+        body: t(
+          `Worked example: statements hain "All cats are animals" aur "All cats are pets". Cats hain Tom aur Mimi. Animals hain Tom, Mimi, Bruno aur Rex. Pets hain Tom, Mimi aur Bruno. Step 1: sets banao — cats = {Tom, Mimi}, animals = {Tom, Mimi, Bruno, Rex}, pets = {Tom, Mimi, Bruno}. Step 2: pehla statement check karo — kya saare cats animals hain? Cats ka set animals ke andar hai, isliye sahi hai. Step 3: doosra statement check karo — kya saare cats pets hain? Cats ka set pets ke andar hai, isliye sahi hai.
+
+Step 4: conclusion check karo — "Tom is an animal". Tom cats mein hai aur cats animals mein hain, isliye Tom animals mein hai. Conclusion sahi hai. Step 5: doosra conclusion check karo — "Bruno is a cat". Bruno animals mein hai, par cats mein nahi hai. Isliye yeh conclusion galat hai — animal hona cat hona nahi hota. Step 6: teesra conclusion — "Some animals are not cats". Animals mein Bruno aur Rex hain jo cats nahi hain, isliye sahi hai. Neeche wala code is dry run ko sets se check karke dikhata hai.`,
+          `Worked example: the statements are "All cats are animals" and "All cats are pets". The cats are Tom and Mimi. The animals are Tom, Mimi, Bruno and Rex. The pets are Tom, Mimi and Bruno. Step 1: make the sets — cats = {Tom, Mimi}, animals = {Tom, Mimi, Bruno, Rex}, pets = {Tom, Mimi, Bruno}. Step 2: check the first statement — are all cats animals? The set of cats sits inside animals, so it is true. Step 3: check the second statement — are all cats pets? The set of cats sits inside pets, so it is true.
+
+Step 4: check the conclusion — "Tom is an animal". Tom is in cats, and cats are in animals, so Tom is in animals. The conclusion is true. Step 5: check a second conclusion — "Bruno is a cat". Bruno is in animals, but not in cats. So this conclusion is wrong — being an animal is not being a cat. Step 6: a third conclusion — "Some animals are not cats". In animals there are Bruno and Rex, who are not cats, so it is true. The code below checks this dry run with sets.`
+        ),
+        code: {
+          title: t(
+            'Cats, Animals aur Pets ka Set Dry Run',
+            'Set Dry Run of Cats, Animals, and Pets'
+          ),
+          language: 'python',
+          code: `cats = {"Tom", "Mimi"}
+animals = {"Tom", "Mimi", "Bruno", "Rex"}
+pets = {"Tom", "Mimi", "Bruno"}
+print("all cats are animals:", cats <= animals)
+print("all cats are pets:", cats <= pets)
+print("Tom is a cat, so Tom is an animal:", "Tom" in cats and "Tom" in animals)
+print("Bruno is an animal but not a cat:", "Bruno" in animals and "Bruno" not in cats)
+print("some animals are not cats:", len(animals - cats) > 0)`,
+          output: `all cats are animals: True
+all cats are pets: True
+Tom is a cat, so Tom is an animal: True
+Bruno is an animal but not a cat: True
+some animals are not cats: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Ulta Inference, Some ko All Samajhna aur Andaza',
+          '4. Common Mistakes: Reversed Inference, Reading Some as All, and Guessing'
+        ),
+        body: t(
+          `**Galti 1: ulta inference.** "All cats are animals" se yeh nahi nikalta ki "All animals are cats". Bada set chhote set ke andar nahi hota. Log aksar statement ko ulta karke conclusion bana lete hain — yeh sabse aam galti hai. Statement ko hamesha usi direction mein padho jis mein woh likha hai.
+
+**Galti 2: "some" ko "all" samajhna.** "Some students are singers" se yeh nahi nikalta ki saare students singers hain. "Some" ka matlab hai kam se kam ek, zyada se zyada saare bhi ho sakte hain, par pakka nahi. Isliye "some" wale statement se "all" wala conclusion kabhi pakka nahi hota.
+
+**Galti 3: andaze se conclusion.** "Tom is an animal" se yeh andaza lagana ki "Tom is a cat" galat hai — Tom dog bhi ho sakta hai. Andaza lagane ki jagah sets ko check karo: Tom animals mein hai, par cats mein hai ya nahi, yeh pata nahi chal sakta.`,
+          `**Mistake 1: Reversed inference.** From "All cats are animals" it does not follow that "All animals are cats". The big set does not sit inside the small set. People often reverse a statement to make a conclusion — this is the most common mistake. Always read a statement in the direction in which it is written.
+
+**Mistake 2: Reading "some" as "all".** From "Some students are singers" it does not follow that all students are singers. "Some" means at least one; at most it could be all, but it is not certain. So from a "some" statement, an "all" conclusion is never certain.
+
+**Mistake 3: Guessing a conclusion.** Guessing from "Tom is an animal" that "Tom is a cat" is wrong — Tom could also be a dog. Instead of guessing, check the sets: Tom is in animals, but whether he is in cats cannot be decided.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Overlap, Poora Overlap aur Do Statements',
+          '5. Edge Cases: Empty Overlap, Full Overlap, and Two Statements'
+        ),
+        body: t(
+          `**Edge case 1: khaali overlap.** "No A is B" ka matlab hai A aur B ke sets mein koi common member nahi hai. Isse yeh bhi nikalta hai ki "No B is A" — "no" dono direction mein kaam karta hai. "All" ulta nahi hota, par "no" ulta hota hai. Yeh farak yaad rakho.
+
+**Edge case 2: poora overlap.** Agar "All A are B" aur "All B are A" dono sahi hon to A aur B ek hi set hain. Aise mein har conclusion dono direction mein sahi hoga. Dono statements ko alag-alag check karo, phir jodo.
+
+**Edge case 3: do statements se teesra nikalna.** "All pens are books" aur "All books are bags" se nikalta hai "All pens are bags" — kyunki pens books ke andar hain aur books bags ke andar hain, isliye pens bags ke andar hain. Yeh chain wala inference hai, bilkul inequalities ki chain jaisa.`,
+          `**Edge case 1: Empty overlap.** "No A is B" means the sets A and B have no member in common. From this it also follows that "No B is A" — "no" works in both directions. "All" does not reverse, but "no" does. Remember this difference.
+
+**Edge case 2: Full overlap.** If both "All A are B" and "All B are A" are true, then A and B are the same set. In that case every conclusion is true in both directions. Check both statements separately, then join them.
+
+**Edge case 3: A third statement from two statements.** From "All pens are books" and "All books are bags" follows "All pens are bags" — because pens sit inside books and books sit inside bags, so pens sit inside bags. This is a chain inference, just like the chain in inequalities.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If Statement Galat Ho ya Conclusion Negative Ho?',
+          '6. What If a Statement Is Wrong or the Conclusion Is Negative?'
+        ),
+        body: t(
+          `**What if statement galat ho?** Exam mein statements ko hamesha sahi maana jaata hai, chahe real life mein woh galat hon. Jaise "All cats are dogs" real life mein galat hai, par exam mein use sahi maan kar conclusion nikaalna hota hai. Statements ko real life se match mat karo — unhe diya hua sach maan kar chalo.
+
+**What if conclusion negative ho?** Jaise conclusion ho "No pen is a bag". Statements hain "All pens are books" aur "All books are bags" — to pens bags ke andar hain, isliye "No pen is a bag" galat hai. Negative conclusion ko bhi sets se check karo, andaze se nahi.
+
+**What if "some" aur "all" ek saath hon?** Jaise "All A are B" aur "Some B are C" hon to kya "Some A are C" nikalta hai? Nahi — C wale B, A wale B se alag ho sakte hain. Dono sets ka overlap kahan hai, yeh pata nahi chal sakta. "Some" wale conclusions mein hamesha careful raho.`,
+          `**What if a statement is wrong?** In an exam, statements are always taken as true, even if they are wrong in real life. For example, "All cats are dogs" is wrong in real life, but in an exam you must take it as true and draw the conclusion. Do not match statements with real life — take them as the given truth.
+
+**What if the conclusion is negative?** For example, the conclusion is "No pen is a bag". The statements are "All pens are books" and "All books are bags" — so pens sit inside bags, which makes "No pen is a bag" wrong. Check a negative conclusion with sets too, not by guessing.
+
+**What if "some" and "all" come together?** For example, "All A are B" and "Some B are C" — does "Some A are C" follow? No — the B that are C may be different from the B that are A. Where the two sets overlap cannot be decided. Always be careful with "some" conclusions.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Statement aur Inference Ek Page Mein',
+          '7. Summary: Statement and Inference on One Page'
+        ),
+        body: t(
+          `Statement aur inference ka kaam teen steps mein hota hai. **Step 1:** har statement ko set mein badlo — "all" matlab poora set andar hai, "some" matlab overlap hai, "no" matlab koi overlap nahi hai. **Step 2:** conclusion ko sets se check karo — pakka nikle to sahi, na nikle to galat ya pata nahi chal sakta. **Step 3:** ulta inference mat karo — "all" ulta nahi hota, "no" ulta hota hai.
+
+Yaad rakhne wali teen baatein hain. Pehli: **"all" ka matlab hai har member** — jo poore set ke liye sahi hai, woh har member ke liye sahi hai. Doosri: **"some" ka matlab hai kam se kam ek** — "some" se "all" kabhi pakka nahi hota. Teesri: **statements ko hamesha sahi maano** — real life se match mat karo.
+
+Revision ke liye yeh karo: teen statements likho — "All pens are books", "All books are bags", "Some bags are red" — aur khud se paanch conclusions banao. Kaun sa pakka sahi hai, kaun sa galat hai aur kaun sa pata nahi chal sakta, yeh sets se check karo. Agar paanchon bina ruke nikal jaayein, to statement aur inference aapko aa gaya hai.`,
+          `The work of statements and inference happens in three steps. **Step 1:** change every statement into a set — "all" means the whole set sits inside, "some" means there is an overlap, "no" means there is no overlap. **Step 2:** check the conclusion against the sets — if it follows firmly it is right, if not it is wrong or cannot be decided. **Step 3:** do not reverse an inference — "all" does not reverse, "no" does.
+
+Remember three things. First: **"all" means every member** — what is true for the whole set is true for every member. Second: **"some" means at least one** — from "some", "all" is never certain. Third: **always take statements as true** — do not match them with real life.
+
+For revision, do this: write three statements — "All pens are books", "All books are bags", "Some bags are red" — and make five conclusions yourself. Check with sets which is certainly right, which is wrong, and which cannot be decided. If all five come out without stopping, you know statements and inference.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Sets ka Picture: Cats, Animals aur Pets',
+        'The Picture of Sets: Cats, Animals, and Pets'
+      ),
+      caption: t(
+        'Cats ka set animals aur pets dono ke andar hai',
+        'The set of cats sits inside both animals and pets'
+      ),
+      nodes: [
+        {
+          t: t('Cats: Tom, Mimi', 'Cats: Tom, Mimi'),
+          s: t('Sabse chhota set', 'The smallest set')
+        },
+        {
+          t: t('Animals: Tom, Mimi, Bruno, Rex', 'Animals: Tom, Mimi, Bruno, Rex'),
+          s: t('Saare cats animals hain', 'All cats are animals')
+        },
+        {
+          t: t('Pets: Tom, Mimi, Bruno', 'Pets: Tom, Mimi, Bruno'),
+          s: t('Saare cats pets hain', 'All cats are pets')
+        },
+        {
+          t: t('Bruno animal hai, cat nahi', 'Bruno is an animal, not a cat'),
+          s: t('Ulta inference galat hai', 'A reversed inference is wrong')
+        },
+        {
+          t: t('Some animals are not cats', 'Some animals are not cats'),
+          s: t('Bruno aur Rex cats nahi hain', 'Bruno and Rex are not cats')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'All A are B, No B is C — to No A is C',
+          'All A are B, No B is C — So No A is C'
+        ),
+        language: 'python',
+        code: `A = {"a1", "a2"}
+B = {"a1", "a2", "b1"}
+C = {"c1", "c2"}
+print("A subset of B:", A <= B)
+print("B and C share nothing:", len(B & C) == 0)
+print("A and C share nothing:", len(A & C) == 0)
+print("so: No A is C:", len(A & C) == 0)`,
+        output: `A subset of B: True
+B and C share nothing: True
+A and C share nothing: True
+so: No A is C: True`
+      },
+      {
+        title: t(
+          'Some Students are Singers — Par Saare Nahi',
+          'Some Students Are Singers — But Not All'
+        ),
+        language: 'python',
+        code: `students = {"Riya", "Kabir", "Tara", "Arun"}
+singers = {"Riya", "Tara"}
+print("some students are singers:", len(students & singers) > 0)
+print("count:", len(students & singers))
+print("all students are singers:", singers == students)
+print("Kabir is a student, not a singer:", "Kabir" in students and "Kabir" not in singers)`,
+        output: `some students are singers: True
+count: 2
+all students are singers: False
+Kabir is a student, not a singer: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'All cats are animals aur Tom is a cat. Tom ke baare mein kya pakka hai?',
+          'All cats are animals, and Tom is a cat. What is certain about Tom?'
+        ),
+        opts: [
+          t('Tom is an animal', 'Tom is an animal'),
+          t('Tom is a dog', 'Tom is a dog'),
+          t('Tom is a pet', 'Tom is a pet'),
+          t('Kuch pakka nahi', 'Nothing is certain')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Tom cats mein hai aur saare cats animals hain, isliye Tom pakka ek animal hai.',
+          'Correct answer: Tom is in cats, and all cats are animals, so Tom is certainly an animal.'
+        )
+      },
+      {
+        q: t(
+          'All pens are books aur all books are bags. Pens ke baare mein kya pakka hai?',
+          'All pens are books, and all books are bags. What is certain about pens?'
+        ),
+        opts: [
+          t('All pens are bags', 'All pens are bags'),
+          t('No pen is a bag', 'No pen is a bag'),
+          t('Some pens are not bags', 'Some pens are not bags'),
+          t('Kuch pakka nahi', 'Nothing is certain')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: pens books ke andar hain aur books bags ke andar hain, isliye pens bags ke andar hain — all pens are bags.',
+          'Correct answer: pens sit inside books and books sit inside bags, so pens sit inside bags — all pens are bags.'
+        )
+      },
+      {
+        q: t(
+          'Some students are singers aur Kabir is a student. Kya Kabir singer hai?',
+          'Some students are singers, and Kabir is a student. Is Kabir a singer?'
+        ),
+        opts: [
+          t('Haan, pakka', 'Yes, certainly'),
+          t('Nahi, pakka nahi hai', 'No, certainly not'),
+          t('Pata nahi chal sakta', 'It cannot be decided'),
+          t('Kabir student nahi hai', 'Kabir is not a student')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: "some" ka matlab hai kuch students singers hain, saare nahi — Kabir unmein ho bhi sakta hai aur nahi bhi, isliye pata nahi chal sakta.',
+          'Correct answer: "some" means some students are singers, not all — Kabir may be among them or not, so it cannot be decided.'
+        )
+      },
+      {
+        q: t(
+          'All A are B aur No B is C. A aur C ke baare mein kya pakka hai?',
+          'All A are B, and No B is C. What is certain about A and C?'
+        ),
+        opts: [
+          t('Some A is C', 'Some A is C'),
+          t('All A is C', 'All A is C'),
+          t('No A is C', 'No A is C'),
+          t('Kuch pakka nahi', 'Nothing is certain')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: A, B ke andar hai aur B aur C mein koi overlap nahi hai, isliye A aur C mein bhi koi overlap nahi hai — No A is C.',
+          'Correct answer: A sits inside B, and B and C have no overlap, so A and C also have no overlap — No A is C.'
+        )
+      },
+      {
+        q: t(
+          'Bruno is an animal. Kya Bruno cat hai?',
+          'Bruno is an animal. Is Bruno a cat?'
+        ),
+        opts: [
+          t('Haan, pakka', 'Yes, certainly'),
+          t('Nahi, pakka nahi hai', 'No, certainly not'),
+          t('Pata nahi chal sakta', 'It cannot be decided'),
+          t('Bruno animal nahi hai', 'Bruno is not an animal')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: animal hona cat hona nahi hota — Bruno dog bhi ho sakta hai. Cats animals ke andar hain, par har animal cat nahi hota.',
+          'Correct answer: being an animal is not being a cat — Bruno could also be a dog. Cats sit inside animals, but not every animal is a cat.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '"All" matlab poora set andar hai — jo set ke liye sahi hai, woh har member ke liye sahi hai.',
+        '"All" means the whole set sits inside — what is true for the set is true for every member.'
+      ),
+      t(
+        '"Some" matlab overlap hai — kam se kam ek, "all" kabhi pakka nahi.',
+        '"Some" means there is an overlap — at least one; "all" is never certain from it.'
+      ),
+      t(
+        '"No" matlab koi overlap nahi — "no" dono direction mein kaam karta hai.',
+        '"No" means no overlap — "no" works in both directions.'
+      ),
+      t(
+        '"All" ulta nahi hota — "All cats are animals" se "All animals are cats" nahi nikalta.',
+        '"All" does not reverse — from "All cats are animals", "All animals are cats" does not follow.'
+      ),
+      t(
+        'Statements ko hamesha sahi maano — real life se match mat karo.',
+        'Always take statements as true — do not match them with real life.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: All Pens are Books, All Books are Bags',
+        'Practice: All Pens Are Books, All Books Are Bags'
+      ),
+      task: t(
+        'Starter code ko run karo aur check karo ki pens books ke andar hain, books bags ke andar hain aur pens bags ke andar hain. Done tab hoga jab output mein "pens subset of bags: True" aur "Answer: Yes, every pen is a bag" dikhe.',
+        'Run the starter code and check that pens sit inside books, books sit inside bags, and pens sit inside bags. You are done when the output shows "pens subset of bags: True" and "Answer: Yes, every pen is a bag".'
+      ),
+      language: 'python',
+      starter: `# All pens are books. All books are bags. Is every pen a bag?
+pens = {"p1", "p2"}
+books = {"p1", "p2", "b1"}
+bags = {"p1", "p2", "b1", "g1"}
+print("pens subset of books:", pens <= books)
+print("books subset of bags:", books <= bags)
+print("pens subset of bags:", pens <= bags)
+print("Answer: Yes, every pen is a bag")`,
+      expected: `pens subset of books: True
+books subset of bags: True
+pens subset of bags: True
+Answer: Yes, every pen is a bag`
+    },
+    readMinutes: 12
+  };
+
+const logicAssertionReason: Article = {
+    id: 'logic-assertion-reason',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Assertion aur Reason — A, R aur Explanation ka Test',
+      'Assertion and Reason — Testing A, R, and the Explanation'
+    ),
+    summary: t(
+      'Assertion-Reason questions mein pehle A aur R ko alag-alag true ya false check karo, phir dekho R, A ko explain karta hai ya nahi — 5 verdicts, dry run aur traps ke saath.',
+      'In assertion-reason questions, first check A and R separately as true or false, then check whether R explains A — five verdicts, a dry run, and the traps.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Assertion aur Reason Kya Hote Hain?',
+          '1. What Are Assertion and Reason?'
+        ),
+        body: t(
+          `Assertion-Reason question mein do statements diye hote hain. Pehla statement **Assertion (A)** hota hai — ek daava, jaise "Iron rusts in moist air." Dusra statement **Reason (R)** hota hai — ek wajah, jaise "Rusting is the oxidation of iron in the presence of oxygen and water." Tumhara kaam hai teen cheezein check karna: kya A true hai, kya R true hai, aur kya R, A ko explain karta hai. Ye teeno checks alag-alag hain, aur inhi se sirf **5 verdicts** bante hain: dono true aur R explains A; dono true par R explains nahi karta; A true aur R false; A false aur R true; dono false.
+
+Ye question type isliye tricky hai kyunki dimaag teeno checks ko ek saath karna chahta hai. Jaise hi tum padhte ho "Iron rusts", dimaag turant "haan, sahi hai" bol deta hai aur R ko bhi sahi maan leta hai. Par exam mein R aksar true hota hai lekin A ko explain nahi karta — wahi sabse bada trap hai. Isliye rule yaad rakho: **pehle A, phir R, phir explanation** — hamesha is order mein.`,
+          `An assertion-reason question gives you two statements. The first statement is the **Assertion (A)** — a claim, like "Iron rusts in moist air." The second statement is the **Reason (R)** — a cause, like "Rusting is the oxidation of iron in the presence of oxygen and water." Your job is to check three things: whether A is true, whether R is true, and whether R explains A. These three checks are separate, and they produce only **5 verdicts**: both true and R explains A; both true but R does not explain A; A true and R false; A false and R true; both false.
+
+This question type is tricky because your mind wants to do all three checks at once. The moment you read "Iron rusts", your mind says "yes, that is right" and also accepts R as right. But in the exam, R is often true yet does not explain A — that is the biggest trap. So remember the rule: **first A, then R, then the explanation** — always in this order.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Roz ke Faisle aur A-R',
+          '2. Real-Life Examples: Everyday Decisions and A-R'
+        ),
+        body: t(
+          `Soch lo tumhare dost ne kaha: "Aaj baarish hogi, kyunki aasmaan mein kaale baadal hain." Yahan A hai "aaj baarish hogi" aur R hai "aasmaan mein kaale baadal hain". A true hai ya false, ye shaam ko pata chalega. R true hai — baadal sach mein kaale hain. Aur R, A ko explain karta hai — kaale baadal baarish ki wajah hote hain. Ye hai dono true aur R explains A wala case.
+
+Ab dusra example: dost kehta hai "Aaj baarish hogi, kyunki aaj Monday hai." A wahi hai, R hai "aaj Monday hai". R true hai — aaj sach mein Monday hai. Par kya Monday hone se baarish hoti hai? Nahi. To verdict hai: dono true, par R, A ko explain nahi karta. Yehi woh trap hai jo exam mein baar-baar aata hai — R ka true hona kaafi nahi hai, R ko A ki **wajah** hona chahiye. Teesra example: "2 ek prime number hai, kyunki saare even numbers composite hote hain." A true hai, R false hai — 2 khud ek even number hai aur prime bhi hai.`,
+          `Imagine your friend says: "It will rain today, because there are dark clouds in the sky." Here A is "it will rain today" and R is "there are dark clouds in the sky". Whether A is true or false will be known only in the evening. R is true — the clouds really are dark. And R explains A — dark clouds cause rain. This is the case where both are true and R explains A.
+
+Now a second example: your friend says "It will rain today, because today is Monday." A is the same, R is "today is Monday". R is true — today really is Monday. But does being Monday cause rain? No. So the verdict is: both are true, but R does not explain A. This is the trap that appears again and again in the exam — R being true is not enough; R must be the **cause** of A. A third example: "2 is a prime number, because all even numbers are composite." A is true, R is false — 2 itself is an even number and also prime.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5 Cases ka Dry Run aur verdict() Function',
+          '3. Step-by-Step: A Dry Run of 5 Cases and the verdict() Function'
+        ),
+        body: t(
+          `Har A-R question ko is 3-step method se solve karo. **Step 1: A ko akela check karo.** R ko bhool jao aur sirf socho — kya ye statement sach hai? **Step 2: R ko akela check karo.** A ko bhool jao aur sirf socho — kya ye statement sach hai? **Step 3: explanation check karo.** Sirf tab jab dono true hon, poochho — kya R, A ki wajah hai? Agar R sirf ek sach baat hai par A se judi nahi, to verdict hai "dono true, R explains nahi karta".
+
+Ab 5 cases ka dry run karte hain. Case 1: A "Iron rusts in moist air" (true), R "Rusting is the oxidation of iron in the presence of oxygen and water" (true). R hi wajah hai, to verdict: dono true, R explains A. Case 2: A "Sun rises in the east" (true), R "Earth rotates from west to east" (true). Rotation hi wajah hai, to verdict: dono true, R explains A. Case 3: A "2 is a prime number" (true), R "All even numbers are composite" (false — 2 even bhi hai, prime bhi). Verdict: A true, R false. Case 4: A "Moon is a star" (false), R "Stars give out their own light" (true). Verdict: A false, R true. Case 5: A "Sun revolves around the Earth" (false), R "Earth is flat" (false). Verdict: dono false. Neeche wala \`verdict()\` function yehi 5 cases run karta hai — isko line-by-line padho.`,
+          `Solve every A-R question with this 3-step method. **Step 1: Check A alone.** Forget R and ask only — is this statement true? **Step 2: Check R alone.** Forget A and ask only — is this statement true? **Step 3: Check the explanation.** Only when both are true, ask — is R the cause of A? If R is just a true fact that is not connected to A, the verdict is "both true, R does not explain A".
+
+Now let us dry-run 5 cases. Case 1: A "Iron rusts in moist air" (true), R "Rusting is the oxidation of iron in the presence of oxygen and water" (true). R is the cause, so the verdict is: both true, R explains A. Case 2: A "The Sun rises in the east" (true), R "The Earth rotates from west to east" (true). The rotation is the cause, so the verdict is: both true, R explains A. Case 3: A "2 is a prime number" (true), R "All even numbers are composite" (false — 2 is even and also prime). Verdict: A true, R false. Case 4: A "The Moon is a star" (false), R "Stars give out their own light" (true). Verdict: A false, R true. Case 5: A "The Sun revolves around the Earth" (false), R "The Earth is flat" (false). Verdict: both false. The \`verdict()\` function below runs these same 5 cases — read it line by line.`
+        ),
+        code: {
+          title: t(
+            'verdict() Function: 5 Cases ka Dry Run',
+            'verdict() Function: A Dry Run of 5 Cases'
+          ),
+          language: 'python',
+          code: `def verdict(a_true, r_true, explains):
+    if a_true and r_true and explains:
+        return "Both true, R explains A"
+    if a_true and r_true:
+        return "Both true, R does NOT explain A"
+    if a_true and not r_true:
+        return "A true, R false"
+    if not a_true and r_true:
+        return "A false, R true"
+    return "Both false"
+
+cases = [
+    ("Iron rusts in moist air", True, True, True),
+    ("Sun rises in the east", True, True, True),
+    ("2 is a prime number", True, False, False),
+    ("Moon is a star", False, True, False),
+    ("Sun revolves around Earth", False, False, False),
+]
+for name, a, r, e in cases:
+    print(name, "->", verdict(a, r, e))`,
+          output: `Iron rusts in moist air -> Both true, R explains A
+Sun rises in the east -> Both true, R explains A
+2 is a prime number -> A true, R false
+Moon is a star -> A false, R true
+Sun revolves around Earth -> Both false`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Dono Sahi Matlab Explain Nahi',
+          '4. Common Mistakes: Both True Does Not Mean Explained'
+        ),
+        body: t(
+          `Sabse badi galti hai dono statements ko true dekh kar turant "R explains A" tick kar dena. Exam mein lagbhag aadhe questions isi trap par bane hote hain: R ek dum sahi fact hota hai, par A se uska koi lena-dena nahi hota. Jaise A "Water boils at 100C at sea level" aur R "Water is a liquid at room temperature" — dono true hain, par room temperature par liquid hona boiling point ko explain nahi karta. Ye galti isliye hoti hai kyunki dimaag "dono sahi hain" ko "ek dusre se jude hain" samajh leta hai.
+
+Dusri galti hai explanation ko pehle check karna aur truth ko baad mein. Agar A hi false hai, to explanation ka sawaal hi nahi uthta — R chahe kitna bhi sahi ho, woh ek galat statement ko explain nahi kar sakta. Teesri galti hai R mein chhupa hua galat word miss karna: "All even numbers are composite" mein "All" word hi galti hai — sirf ek example (2) kaafi hai R ko false karne ke liye. Hamesha "all", "always", "never" jaise words par ruko — ek bhi exception mile to statement false hai.`,
+          `The biggest mistake is seeing both statements as true and at once ticking "R explains A". Almost half the exam questions are built on this trap: R is a perfectly true fact, but it has nothing to do with A. For example, A "Water boils at 100C at sea level" and R "Water is a liquid at room temperature" — both are true, but being a liquid at room temperature does not explain the boiling point. This mistake happens because the mind reads "both are right" as "they are connected to each other".
+
+The second mistake is checking the explanation first and the truth later. If A itself is false, the question of explanation does not even arise — however true R is, it cannot explain a false statement. The third mistake is missing the wrong word hidden inside R: in "All even numbers are composite", the word "All" is itself the error — a single example (2) is enough to make R false. Always pause at words like "all", "always", and "never" — if even one exception exists, the statement is false.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Dono Galat, aur Explanation ka Jaal',
+          '5. Edge Cases: Both False, and the Explanation Trap'
+        ),
+        body: t(
+          `Edge cases mein sabse pehla hai **dono false** wala case. Jab A aur R dono galat hon, to explanation check karne ki zaroorat hi nahi hai — verdict seedha "both false" hai. Beginners ismein phans jaate hain kyunki R, A ko explain karta hua lag sakta hai: "Sun revolves around the Earth, because the Earth is flat" — R, A ki wajah jaisa lagta hai, par dono hi galat hain, to verdict dono false hai. Explanation ka test sirf tab hota hai jab dono true hon.
+
+Dusra edge case hai **A false, R true, aur R, A ko explain karta hua lage**. Jaise A "All birds can fly" (false) aur R "Penguins are birds that cannot fly" (true). R yahan A ko galat saabit kar raha hai, explain nahi kar raha — verdict hai "A false, R true". Teesra edge case: R mein A ka word repeat ho. Jaise A "Water boils at 100C" aur R "Boiling happens at 100C" — R sirf A ko dobara keh raha hai, explain nahi kar raha. Repeat karna explanation nahi hota.`,
+          `The first edge case is the **both false** case. When A and R are both wrong, there is no need to check the explanation at all — the verdict is directly "both false". Beginners get trapped here because R can look like it explains A: "The Sun revolves around the Earth, because the Earth is flat" — R looks like the cause of A, but both are wrong, so the verdict is both false. The explanation test happens only when both are true.
+
+The second edge case is **A false, R true, and R looks like it explains A**. For example, A "All birds can fly" (false) and R "Penguins are birds that cannot fly" (true). Here R disproves A, it does not explain it — the verdict is "A false, R true". The third edge case: R repeats a word from A. For example, A "Water boils at 100C" and R "Boiling happens at 100C" — R only repeats A, it does not explain it. Repeating is not explaining.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: R Badal Do to Verdict Badal Jata Hai?',
+          '6. What If: Change R and the Verdict Changes?'
+        ),
+        body: t(
+          `Ek hi A ke saath R badal kar dekho to verdict kaise badalta hai, ye samajhna sabse achhi practice hai. A lo: "Iron rusts in moist air." R1: "Rusting is the oxidation of iron in the presence of oxygen and water" — verdict: dono true, R explains A. R2: "Iron is a metal" — dono true, par R explains nahi karta. R3: "Rusting needs sunlight" — R false, to verdict: A true, R false. Ek hi A, teen alag R, teen alag verdicts. Isi liye R ko kabhi A ke saath jod kar mat padho — R ko akela padho.
+
+A, R aur explains ke kul **8 combinations** hote hain (2 x 2 x 2), par woh sirf 5 verdicts mein simat jaate hain — kyunki explains sirf tab matter karta hai jab dono true hon. Neeche wala pehla code saare 8 combinations print karta hai, aur dusra code ek 5-question test ka score nikalta hai. Score wale code mein dekho: student ne Q3 galat kiya — usne "A false, R true" ki jagah "Both true, R explains A" likha, kyunki usne A ko check kiye bina R ko sahi maan liya tha.`,
+          `The best practice is to take one A and change R to see how the verdict changes. Take A: "Iron rusts in moist air." R1: "Rusting is the oxidation of iron in the presence of oxygen and water" — verdict: both true, R explains A. R2: "Iron is a metal" — both true, but R does not explain A. R3: "Rusting needs sunlight" — R is false, so the verdict is: A true, R false. One A, three different Rs, three different verdicts. That is why you should never read R together with A — read R alone.
+
+A, R, and explains have **8 combinations** in total (2 x 2 x 2), but they collapse into only 5 verdicts — because explains matters only when both are true. The first code below prints all 8 combinations, and the second code scores a 5-question test. Look at the scoring code: the student got Q3 wrong — they wrote "Both true, R explains A" instead of "A false, R true", because they accepted R as right without checking A.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 3-Step Rule aur 5 Verdicts',
+          '7. Summary: The 3-Step Rule and the 5 Verdicts'
+        ),
+        body: t(
+          `Poora article ek line mein: **pehle A, phir R, phir explanation**. A aur R ko alag-alag true ya false check karo, aur explanation ka test sirf tab karo jab dono true hon. 5 verdicts yaad rakho: (1) dono true aur R explains A, (2) dono true par R explains nahi karta, (3) A true R false, (4) A false R true, (5) dono false. Sabse bada trap hai verdict (2) — dono sahi hain par R, A ki wajah nahi hai.
+
+Revision ke liye roz 5 A-R questions banao: ek A lo, uske liye 3 alag R likho, aur har baar verdict nikalo. Agar tum bina ruke 5 mein se 5 verdicts sahi nikaal lete ho, to ye topic tumhara ho gaya. Agle article mein hum passage-based reasoning dekhenge — wahan ek poora paragraph padh kar usme se facts nikaalne hote hain, aur wahan bhi yahi rule kaam aata hai: sirf wahi maano jo likha hai.`,
+          `The whole article in one line: **first A, then R, then the explanation**. Check A and R separately as true or false, and test the explanation only when both are true. Remember the 5 verdicts: (1) both true and R explains A, (2) both true but R does not explain A, (3) A true R false, (4) A false R true, (5) both false. The biggest trap is verdict (2) — both are right, but R is not the cause of A.
+
+For revision, make 5 A-R questions every day: take one A, write 3 different Rs for it, and find the verdict each time. If you can get 5 out of 5 verdicts right without stopping, this topic is yours. In the next article we will look at passage-based reasoning — there you read a full paragraph and pull facts out of it, and the same rule applies there too: believe only what is written.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'A-R Question Solve Karne ka 3-Step Flow',
+        '3-Step Flow for Solving an A-R Question'
+      ),
+      caption: t(
+        'Order kabhi mat badlo — pehle A, phir R, phir explanation',
+        'Never change the order — first A, then R, then the explanation'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: A padho — true ya false?', 'Step 1: Read A — true or false?'),
+          s: t('A ko akela check karo, R ko bhool jao', 'Check A alone, forget R for a moment')
+        },
+        {
+          t: t('Step 2: R padho — true ya false?', 'Step 2: Read R — true or false?'),
+          s: t('R ko bhi akela check karo', 'Check R alone too')
+        },
+        {
+          t: t('Step 3: Kya R, A ko explain karta hai?', 'Step 3: Does R explain A?'),
+          s: t('Sirf tab jab dono true hon', 'Only when both are true')
+        },
+        {
+          t: t('5 verdicts mein se ek chuno', 'Pick one of the 5 verdicts'),
+          s: t('Explain, no-explain, A true R false, A false R true, dono false', 'Explains, does not explain, A true R false, A false R true, both false')
+        },
+        {
+          t: t('Answer lock karo, aage badho', 'Lock the answer and move on'),
+          s: t('Ek question par 45 second se zyada mat lagao', 'Do not spend more than 45 seconds on one question')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '8 Combinations: A, R aur explains ke Saare Cases',
+          '8 Combinations: All Cases of A, R, and explains'
+        ),
+        language: 'python',
+        code: `combos = 0
+for a in [True, False]:
+    for r in [True, False]:
+        for e in [True, False]:
+            combos += 1
+            print("A =", a, "| R =", r, "| explains =", e)
+print("Total combinations:", combos)`,
+        output: `A = True | R = True | explains = True
+A = True | R = True | explains = False
+A = True | R = False | explains = True
+A = True | R = False | explains = False
+A = False | R = True | explains = True
+A = False | R = True | explains = False
+A = False | R = False | explains = True
+A = False | R = False | explains = False
+Total combinations: 8`
+      },
+      {
+        title: t(
+          '5-Question A-R Test ka Score Nikalo',
+          'Score a 5-Question A-R Test'
+        ),
+        language: 'python',
+        code: `key = ["Both true, R explains A", "A true, R false", "A false, R true",
+       "Both true, R does NOT explain A", "Both false"]
+student = ["Both true, R explains A", "A true, R false", "Both true, R explains A",
+           "Both true, R does NOT explain A", "Both false"]
+score = 0
+for i in range(len(key)):
+    ok = key[i] == student[i]
+    score += ok
+    print("Q" + str(i + 1) + ":", "correct" if ok else "wrong")
+print("Score:", score, "/", len(key))`,
+        output: `Q1: correct
+Q2: correct
+Q3: wrong
+Q4: correct
+Q5: correct
+Score: 4 / 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Assertion (A): Iron rusts in moist air. Reason (R): Rusting is the oxidation of iron in the presence of oxygen and water. Sahi verdict kya hai?',
+          'Assertion (A): Iron rusts in moist air. Reason (R): Rusting is the oxidation of iron in the presence of oxygen and water. What is the correct verdict?'
+        ),
+        opts: [
+          t('Dono sahi hain aur R, A ki sahi explanation hai', 'Both are true and R is the correct explanation of A'),
+          t('Dono sahi hain par R, A ki explanation nahi hai', 'Both are true but R is not the explanation of A'),
+          t('A sahi hai, R galat hai', 'A is true, R is false'),
+          t('A galat hai, R sahi hai', 'A is false, R is true')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: dono statements true hain aur R hi A ki wajah hai — oxygen aur paani se iron ka oxidation hi rusting hai.',
+          'Correct answer: both statements are true, and R is the cause of A — the oxidation of iron by oxygen and water is exactly what rusting is.'
+        )
+      },
+      {
+        q: t(
+          'Assertion (A): 2 is a prime number. Reason (R): All even numbers are composite numbers. Sahi verdict kya hai?',
+          'Assertion (A): 2 is a prime number. Reason (R): All even numbers are composite numbers. What is the correct verdict?'
+        ),
+        opts: [
+          t('Dono sahi hain aur R, A ki explanation hai', 'Both are true and R is the explanation of A'),
+          t('Dono sahi hain par R, A ki explanation nahi hai', 'Both are true but R is not the explanation of A'),
+          t('A sahi hai, R galat hai', 'A is true, R is false'),
+          t('Dono galat hain', 'Both are false')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: A true hai — 2 prime hai. R false hai — 2 khud ek even number hai aur prime bhi hai, to "all even numbers" galat hai.',
+          'Correct answer: A is true — 2 is prime. R is false — 2 itself is an even number and also prime, so "all even numbers" is wrong.'
+        )
+      },
+      {
+        q: t(
+          'Assertion (A): The Moon is a star. Reason (R): Stars give out their own light. Sahi verdict kya hai?',
+          'Assertion (A): The Moon is a star. Reason (R): Stars give out their own light. What is the correct verdict?'
+        ),
+        opts: [
+          t('Dono sahi hain aur R, A ki explanation hai', 'Both are true and R is the explanation of A'),
+          t('A galat hai, R sahi hai', 'A is false, R is true'),
+          t('A sahi hai, R galat hai', 'A is true, R is false'),
+          t('Dono galat hain', 'Both are false')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: A false hai — Moon ek star nahi hai, woh Sun ki roshni reflect karta hai. R true hai — stars apni roshni khud dete hain.',
+          'Correct answer: A is false — the Moon is not a star, it reflects the light of the Sun. R is true — stars give out their own light.'
+        )
+      },
+      {
+        q: t(
+          'Assertion (A): Water boils at 100C at sea level. Reason (R): Water is a liquid at room temperature. Sahi verdict kya hai?',
+          'Assertion (A): Water boils at 100C at sea level. Reason (R): Water is a liquid at room temperature. What is the correct verdict?'
+        ),
+        opts: [
+          t('A sahi hai, R galat hai', 'A is true, R is false'),
+          t('A galat hai, R sahi hai', 'A is false, R is true'),
+          t('Dono galat hain', 'Both are false'),
+          t('Dono sahi hain par R, A ki explanation nahi hai', 'Both are true but R is not the explanation of A')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: dono true hain, par room temperature par liquid hona boiling point ko explain nahi karta — yehi sabse bada trap hai.',
+          'Correct answer: both are true, but being a liquid at room temperature does not explain the boiling point — this is the biggest trap.'
+        )
+      },
+      {
+        q: t(
+          'Assertion (A): The Sun revolves around the Earth. Reason (R): The Earth is flat. Sahi verdict kya hai?',
+          'Assertion (A): The Sun revolves around the Earth. Reason (R): The Earth is flat. What is the correct verdict?'
+        ),
+        opts: [
+          t('Dono sahi hain aur R, A ki explanation hai', 'Both are true and R is the explanation of A'),
+          t('A sahi hai, R galat hai', 'A is true, R is false'),
+          t('Dono galat hain', 'Both are false'),
+          t('A galat hai, R sahi hai', 'A is false, R is true')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono statements galat hain — Earth Sun ke around revolve karti hai aur Earth flat nahi hai, to verdict dono false hai.',
+          'Correct answer: both statements are wrong — the Earth revolves around the Sun, and the Earth is not flat, so the verdict is both false.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle A ko alag se true ya false check karo, phir R ko — dono ko ek saath mat jodo.',
+        'First check A alone as true or false, then check R alone — never judge them together.'
+      ),
+      t(
+        'Dono true hone ka matlab ye nahi ki R, A ko explain karta hai — explanation alag test hai.',
+        'Both being true does not mean R explains A — the explanation is a separate test.'
+      ),
+      t(
+        'R sirf tab explain kar sakta hai jab A aur R dono true hon.',
+        'R can only explain A when both A and R are true.'
+      ),
+      t(
+        '5 verdicts yaad rakho: explain, no-explain, A true R false, A false R true, dono false.',
+        'Remember the 5 verdicts: explains, does not explain, A true R false, A false R true, both false.'
+      ),
+      t(
+        'Explanation check karne se pehle truth check karo — ulta order sabse badi galti hai.',
+        'Check the truth before checking the explanation — the reverse order is the biggest mistake.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 3 Naye Cases ka Verdict Nikalo',
+        'Practice: Find the Verdict for 3 New Cases'
+      ),
+      task: t(
+        'Starter code mein verdict() function aur 3 naye cases diye hain. Code ko run karo aur check karo ki output expected jaisa aata hai. Phir ek case badal kar pehle se predict karo ki naya verdict kya hoga, phir run karke verify karo.',
+        'The starter code has the verdict() function and 3 new cases. Run the code and check that the output matches the expected output. Then change one case, predict the new verdict first, and run the code to verify.'
+      ),
+      language: 'python',
+      starter: `def verdict(a_true, r_true, explains):
+    if a_true and r_true and explains:
+        return "Both true, R explains A"
+    if a_true and r_true:
+        return "Both true, R does NOT explain A"
+    if a_true and not r_true:
+        return "A true, R false"
+    if not a_true and r_true:
+        return "A false, R true"
+    return "Both false"
+
+cases = [
+    ("All squares are rectangles", True, False, False),
+    ("Water boils at 100C at sea level", True, True, False),
+    ("All birds can fly", False, True, False),
+]
+for name, a, r, e in cases:
+    print(name, "->", verdict(a, r, e))`,
+      expected: `All squares are rectangles -> A true, R false
+Water boils at 100C at sea level -> Both true, R does NOT explain A
+All birds can fly -> A false, R true`
+    },
+    readMinutes: 12,
+  };
+
+const logicPassageReasoning: Article = {
+    id: 'logic-passage-reasoning',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Passage-Based Reasoning — Fact, Inference aur Trap',
+      'Passage-Based Reasoning — Facts, Inferences, and Traps'
+    ),
+    summary: t(
+      'Ek chhota sa passage, usme chhupe facts aur wahi questions jo exam mein aate hain: must be true, cannot be concluded, aur numbers nikalna — Meera ki bakery wale passage ke saath.',
+      'One short passage, the facts hidden inside it, and the same question types the exam asks: must be true, cannot be concluded, and finding the numbers — with the Meera bakery passage.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Passage Reasoning Kya Hai?',
+          '1. What Is Passage-Based Reasoning?'
+        ),
+        body: t(
+          `Passage-based reasoning mein tumhe ek chhota sa paragraph padh kar us par questions ke answer dene hote hain. Paragraph mein kuch **facts** hote hain — jo seedha likha hai — aur kuch **inferences** hote hain — jo facts se pakka nikalta hai. Tumhara kaam hai sirf wahi maanna jo passage mein likha hai ya usse pakka nikalta hai. Apna bahar ka knowledge, apna guess aur "aisa to hota hi hai" — ye teeno exam mein kaam nahi aate.
+
+Is article ka passage hai Meera ki bakery: "Meera runs a small bakery. She bakes 40 loaves every morning and sells each loaf for Rs 50. On Sundays she bakes only 20 loaves. Last Sunday she sold all 20 loaves by 10 am. Her neighbour Karan runs a tea stall next door. Karan buys 5 loaves from Meera every day except Sunday." Is passage mein 6 facts hain: 40 loaves roz, Rs 50 per loaf, Sunday ko 20 loaves, pichle Sunday saare 20 loaves 10 baje tak bik gaye, Karan ka tea stall, aur Karan roz 5 loaves khareedta hai — Sunday ko chhod kar. Poora article isi passage par hai.`,
+          `In passage-based reasoning, you read a short paragraph and answer questions on it. The paragraph holds some **facts** — what is written directly — and some **inferences** — what surely follows from the facts. Your job is to believe only what the passage says or what surely follows from it. Your outside knowledge, your guesses, and "that is how it usually is" — none of these three help in the exam.
+
+This article uses the Meera bakery passage: "Meera runs a small bakery. She bakes 40 loaves every morning and sells each loaf for Rs 50. On Sundays she bakes only 20 loaves. Last Sunday she sold all 20 loaves by 10 am. Her neighbour Karan runs a tea stall next door. Karan buys 5 loaves from Meera every day except Sunday." This passage has 6 facts: 40 loaves every day, Rs 50 per loaf, 20 loaves on Sundays, last Sunday all 20 loaves were sold by 10 am, Karan runs a tea stall, and Karan buys 5 loaves every day — except Sunday. The whole article is built on this passage.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bakery, School Notice aur News',
+          '2. Real-Life Examples: A Bakery, a School Notice, and the News'
+        ),
+        body: t(
+          `Passage reasoning roz ki zindagi mein har jagah hai. School ka notice padho: "Kal se school 8 baje khulega. Bus ka naya timetable notice board par laga hai." Is notice se tum ye nikaal sakte ho ki kal school 8 baje khulega. Par ye nahi nikaal sakte ki kal chhutti hogi ya nahi — notice mein chhutti ka zikr hi nahi hai. Exam ka passage bhi aisa hi hota hai: jo likha hai, wahi sach hai; jo nahi likha, woh guess hai.
+
+News ki headline bhi aisi hi hoti hai: "Sheher mein kal baarish hui, 20 mm paani gira." Isse ye nikalta hai ki kal baarish hui. Ye nahi nikalta ki aaj bhi baarish hogi. Passage reasoning ka pehla rule hai: **passage ko do baar padho** — pehli baar kahani samajhne ke liye, dusri baar numbers aur facts underline karne ke liye. Meera wale passage mein numbers hain 40, 50, 20, 10 am aur 5 — inhi paanch numbers se saare hisaab wale questions bante hain.`,
+          `Passage reasoning is everywhere in daily life. Read a school notice: "From tomorrow, school will open at 8 am. The new bus timetable is on the notice board." From this notice you can conclude that school opens at 8 am tomorrow. But you cannot conclude whether tomorrow is a holiday or not — the notice never mentions a holiday. An exam passage works the same way: what is written is true; what is not written is a guess.
+
+A news headline works the same way too: "It rained in the city yesterday, 20 mm of rain fell." From this you can conclude that it rained yesterday. You cannot conclude that it will rain today as well. The first rule of passage reasoning is: **read the passage twice** — the first time to understand the story, the second time to underline the numbers and facts. The Meera passage has five numbers — 40, 50, 20, 10 am, and 5 — and every calculation question is built from these five numbers.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Bakery Passage ke 5 Questions ka Dry Run',
+          '3. Step-by-Step: A Dry Run of 5 Questions on the Bakery Passage'
+        ),
+        body: t(
+          `Ab Meera wale passage par 5 questions ka dry run karte hain. **Q1: Karan roz Meera ko kitne paise deta hai?** Karan 5 loaves khareedta hai, ek loaf Rs 50 ka hai. 5 x 50 = 250. Answer: Rs 250. **Q2: Pichle Sunday Meera ne kitne loaves bake kiye?** Passage kehta hai Sunday ko sirf 20 loaves. Answer: 20. **Q3: Agar Meera ek weekday par saare 40 loaves bech de, to us din kitna kamayegi?** 40 x 50 = 2000. Answer: Rs 2,000. Dhyaan do — "agar saare bech de" likha hai, kyunki passage ye nahi kehta ki roz saare bik jaate hain.
+
+**Q4: Karan ek hafte mein Meera ko kitne paise deta hai?** Karan Sunday ko chhod kar roz khareedta hai — matlab 6 din. 6 x 250 = 1500. Answer: Rs 1,500. Yahan trap hai "every day except Sunday" — jo 7 din gin lega, uska answer 1,750 aayega aur galat hoga. **Q5: Meera ek hafte mein kitne loaves bake karti hai?** 6 din x 40 = 240, plus Sunday ke 20 = 260. Answer: 260 loaves. Neeche wala code \`price = 50\` se shuru karke ye saare hisaab ek saath karta hai — har line ko passage ke fact se match karke dekho.`,
+          `Now let us dry-run 5 questions on the Meera passage. **Q1: How much money does Karan pay Meera each day?** Karan buys 5 loaves, one loaf costs Rs 50. 5 x 50 = 250. Answer: Rs 250. **Q2: How many loaves did Meera bake last Sunday?** The passage says only 20 loaves on Sundays. Answer: 20. **Q3: If Meera sells all 40 loaves on a weekday, how much does she earn that day?** 40 x 50 = 2000. Answer: Rs 2,000. Note the word "if" — the passage never says all loaves are sold every day.
+
+**Q4: How much does Karan pay Meera in a week?** Karan buys every day except Sunday — that means 6 days. 6 x 250 = 1500. Answer: Rs 1,500. The trap here is "every day except Sunday" — anyone who counts 7 days gets 1,750 and is wrong. **Q5: How many loaves does Meera bake in a week?** 6 days x 40 = 240, plus 20 on Sunday = 260. Answer: 260 loaves. The code below starts with \`price = 50\` and does all these calculations together — match every line with a fact from the passage.`
+        ),
+        code: {
+          title: t(
+            'Bakery Passage ke Saare Hisaab Ek Saath',
+            'All the Bakery Passage Calculations Together'
+          ),
+          language: 'python',
+          code: `price = 50
+weekday_loaves = 40
+sunday_loaves = 20
+karan_loaves = 5
+
+print("Weekday revenue (all sold):", weekday_loaves * price)
+print("Sunday revenue (all sold):", sunday_loaves * price)
+print("Karan pays per day:", karan_loaves * price)
+print("Karan pays per week (6 days):", 6 * karan_loaves * price)
+print("Loaves baked per week:", 6 * weekday_loaves + sunday_loaves)`,
+          output: `Weekday revenue (all sold): 2000
+Sunday revenue (all sold): 1000
+Karan pays per day: 250
+Karan pays per week (6 days): 1500
+Loaves baked per week: 260`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Passage mein Jo Likha Hi Nahi',
+          '4. Common Mistakes: What the Passage Never Said'
+        ),
+        body: t(
+          `Sabse badi galti hai passage mein woh padh lena jo likha hi nahi hai. Passage kehta hai "Last Sunday she sold all 20 loaves by 10 am." Isse ye nahi nikalta ki Meera roz 10 baje tak saare loaves bech deti hai — sirf pichle Sunday ki baat hai. Aur ye bhi nahi nikalta ki Meera roz Rs 2,000 kamati hai — Rs 2,000 tab milega jab saare 40 loaves bik jayein, aur passage ye nahi kehta ki roz saare bik jaate hain. "Sold all" aur "bakes" mein farak hai: bake karna fact hai, bikna sirf ek din ka fact hai.
+
+Dusri galti hai "every day except Sunday" ko "every day" padh lena. Exam mein aise chhote words par hi question banta hai — except, only, by 10 am, last Sunday. Teesri galti hai bahar ka knowledge use karna: "Bakery mein to cake bhi bikte honge" — passage mein cake ka zikr hi nahi hai, to cake par koi conclusion nahi nikalta. Yaad rakho: **passage hi poori duniya hai** — uske bahar kuch nahi hai.`,
+          `The biggest mistake is reading into the passage something that is not written there. The passage says "Last Sunday she sold all 20 loaves by 10 am." From this you cannot conclude that Meera sells all her loaves by 10 am every day — it talks only about last Sunday. And you cannot conclude that Meera earns Rs 2,000 every day — Rs 2,000 comes only when all 40 loaves are sold, and the passage never says all loaves are sold every day. There is a difference between "sold all" and "bakes": baking is a daily fact, selling out is a fact about one day only.
+
+The second mistake is reading "every day except Sunday" as "every day". Exam questions are built on exactly such small words — except, only, by 10 am, last Sunday. The third mistake is using outside knowledge: "A bakery must sell cakes too" — the passage never mentions cakes, so no conclusion about cakes follows. Remember: **the passage is the whole world** — nothing exists outside it.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: "Must Be True" vs "Could Be True"',
+          '5. Edge Cases: "Must Be True" vs "Could Be True"'
+        ),
+        body: t(
+          `Passage questions mein teen tarah ke options hote hain: **must be true** (passage se pakka nikalta hai), **could be true** (ho sakta hai, par pakka nahi), aur **cannot be true** (passage se galat saabit hota hai). Exam aksar poochhta hai "which of the following must be true?" — iska matlab hai sirf wahi option jo 100% pakka hai. "Meera sold all 20 loaves last Sunday by 10 am" must be true hai — ye seedha likha hai. "Meera earns Rs 2,000 every day" could be true hai — ho sakta hai roz saare bik jaate hon, par pakka nahi hai. "Meera bakes 40 loaves on Sundays" cannot be true hai — passage kehta hai Sunday ko sirf 20.
+
+Ek aur edge case: "Karan buys 5 loaves every day" — ye statement false hai, kyunki passage kehta hai "every day except Sunday". Sirf ek word — except — poori statement ko false kar deta hai. Isi liye options ko word-by-word check karo: agar option ka ek bhi word passage se match nahi karta, to option galat hai.`,
+          `Passage questions have three kinds of options: **must be true** (it surely follows from the passage), **could be true** (it is possible, but not certain), and **cannot be true** (the passage proves it wrong). The exam often asks "which of the following must be true?" — that means only the option that is 100% certain. "Meera sold all 20 loaves last Sunday by 10 am" must be true — it is written directly. "Meera earns Rs 2,000 every day" could be true — all loaves may sell out every day, but it is not certain. "Meera bakes 40 loaves on Sundays" cannot be true — the passage says only 20 on Sundays.
+
+One more edge case: "Karan buys 5 loaves every day" — this statement is false, because the passage says "every day except Sunday". A single word — except — makes the whole statement false. That is why you must check options word by word: if even one word of an option does not match the passage, the option is wrong.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Ek Number Badal Do to Kya Hoga?',
+          '6. What If: Change One Number and What Happens?'
+        ),
+        body: t(
+          `Soch lo Meera loaf ki keemat Rs 50 se badha kar Rs 60 kar de. Ab weekday revenue hoga 40 x 60 = 2,400, Sunday revenue 20 x 60 = 1,200, aur Karan roz 5 x 60 = 300 dega. Hafte ki revenue hogi 6 x 2,400 + 1,200 = 15,600. Sirf ek number badla aur saare answers badal gaye — isiliye passage questions mein pehle numbers ko underline karo, phir hisaab karo. Agar tumne galat number uthaya, to poora hisaab galat hoga.
+
+Dusra what-if: socho Karan Sunday ko bhi 5 loaves khareedne lage. Tab woh hafte mein 7 x 250 = 1,750 dega — 250 zyada. Par passage mein aisa nahi likha, to exam mein iska answer 1,500 hi rahega. What-if sirf samajhne ke liye hai, answer ke liye nahi. Neeche wala pehla code hafte ki poori revenue nikalta hai, aur dusra code ek fact-checker hai — har statement ko "stated in passage" ya "NOT stated / false" mein baanta hai.`,
+          `Suppose Meera raises the price of a loaf from Rs 50 to Rs 60. Now the weekday revenue becomes 40 x 60 = 2,400, the Sunday revenue 20 x 60 = 1,200, and Karan pays 5 x 60 = 300 every day. The weekly revenue becomes 6 x 2,400 + 1,200 = 15,600. One number changed and every answer changed — that is why you must underline the numbers in a passage first, then calculate. If you pick up the wrong number, the whole calculation goes wrong.
+
+A second what-if: suppose Karan starts buying 5 loaves on Sundays too. Then he would pay 7 x 250 = 1,750 in a week — 250 more. But the passage does not say that, so in the exam the answer stays 1,500. A what-if is only for understanding, not for answering. The first code below finds the full weekly revenue, and the second code is a fact-checker — it sorts every statement into "stated in passage" or "NOT stated / false".`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 4-Step Passage Method',
+          '7. Summary: The 4-Step Passage Method'
+        ),
+        body: t(
+          `Passage reasoning ka method 4 steps mein yaad rakho. **Step 1: Passage ko do baar padho** — pehli baar kahani, dusri baar facts. **Step 2: Numbers aur "except", "only", "last" jaise words underline karo** — inhi par questions bante hain. **Step 3: Har option ko passage se word-by-word match karo** — ek word galat ho to option galat hai. **Step 4: "Must be true" aur "could be true" ka farak yaad rakho** — sirf 100% pakka option chuno.
+
+Meera wale passage se yaad rakhne wale numbers: weekday 40 loaves aur Rs 2,000, Sunday 20 loaves aur Rs 1,000, Karan roz Rs 250 aur hafte mein Rs 1,500, hafte mein kul 260 loaves. Agle article mein hum team formation dekhenge — wahan passage nahi, constraints honge, aur ginne ka kaam combinations se hoga.`,
+          `Remember the passage method in 4 steps. **Step 1: Read the passage twice** — the first time for the story, the second time for the facts. **Step 2: Underline the numbers and words like "except", "only", and "last"** — questions are built on these. **Step 3: Match every option with the passage word by word** — if one word is wrong, the option is wrong. **Step 4: Remember the difference between "must be true" and "could be true"** — pick only the option that is 100% certain.
+
+The numbers to remember from the Meera passage: weekday 40 loaves and Rs 2,000, Sunday 20 loaves and Rs 1,000, Karan Rs 250 a day and Rs 1,500 a week, 260 loaves in a week in total. In the next article we will look at team formation — there you get constraints instead of a passage, and the counting is done with combinations.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Passage Question Solve Karne ka 4-Step Flow',
+        '4-Step Flow for Solving a Passage Question'
+      ),
+      caption: t(
+        'Passage ko do baar padho — pehli baar kahani, dusri baar facts',
+        'Read the passage twice — the first time for the story, the second time for the facts'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Passage do baar padho', 'Step 1: Read the passage twice'),
+          s: t('Pehli baar kahani samjho, dusri baar facts dhoondho', 'First understand the story, then hunt for the facts')
+        },
+        {
+          t: t('Step 2: Numbers aur facts underline karo', 'Step 2: Underline the numbers and facts'),
+          s: t('40, 50, 20, 10 am, 5 — aur "except" jaise words', '40, 50, 20, 10 am, 5 — and words like "except"')
+        },
+        {
+          t: t('Step 3: Jo nahi likha, use alag rakho', 'Step 3: Set aside what is not written'),
+          s: t('Guess aur bahar ka knowledge answer nahi hai', 'Guesses and outside knowledge are not answers')
+        },
+        {
+          t: t('Step 4: Har option ko word-by-word check karo', 'Step 4: Check every option word by word'),
+          s: t('Ek word galat ho to option galat hai', 'If one word is wrong, the option is wrong')
+        },
+        {
+          t: t('Step 5: Sirf "must be true" chuno', 'Step 5: Pick only the "must be true" option'),
+          s: t('"Could be true" pakka answer nahi hota', '"Could be true" is never a certain answer')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Hafte ki Poori Revenue aur Karan ka Hissa',
+          'The Full Weekly Revenue and Karan Share'
+        ),
+        language: 'python',
+        code: `price = 50
+weekly = 6 * 40 * price + 20 * price
+print("Weekly revenue if all sold:", weekly)
+print("Karan share per week:", 6 * 5 * price)
+print("Karan share out of weekly revenue:", 6 * 5 * price, "/", weekly)`,
+        output: `Weekly revenue if all sold: 13000
+Karan share per week: 1500
+Karan share out of weekly revenue: 1500 / 13000`
+      },
+      {
+        title: t(
+          'Fact-Checker: Kaunsa Statement Passage mein Hai?',
+          'Fact-Checker: Which Statement Is in the Passage?'
+        ),
+        language: 'python',
+        code: `facts = {"Meera bakes 40 loaves on weekdays": True,
+         "Meera sold all 20 loaves last Sunday": True,
+         "Karan buys 5 loaves every day": False,
+         "Meera earns Rs 2000 every day": False}
+for statement, is_fact in facts.items():
+    print(statement, "->", "stated in passage" if is_fact else "NOT stated / false")`,
+        output: `Meera bakes 40 loaves on weekdays -> stated in passage
+Meera sold all 20 loaves last Sunday -> stated in passage
+Karan buys 5 loaves every day -> NOT stated / false
+Meera earns Rs 2000 every day -> NOT stated / false`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Bakery passage ke hisaab se Karan roz Meera ko kitne paise deta hai?',
+          'As per the bakery passage, how much money does Karan pay Meera each day?'
+        ),
+        opts: [
+          t('Rs 200', 'Rs 200'),
+          t('Rs 250', 'Rs 250'),
+          t('Rs 300', 'Rs 300'),
+          t('Rs 50', 'Rs 50')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Karan 5 loaves khareedta hai aur ek loaf Rs 50 ka hai, to 5 x 50 = Rs 250.',
+          'Correct answer: Karan buys 5 loaves and one loaf costs Rs 50, so 5 x 50 = Rs 250.'
+        )
+      },
+      {
+        q: t(
+          'Pichle Sunday Meera ne kitne loaves bake kiye?',
+          'How many loaves did Meera bake last Sunday?'
+        ),
+        opts: [
+          t('10 loaves', '10 loaves'),
+          t('20 loaves', '20 loaves'),
+          t('40 loaves', '40 loaves'),
+          t('30 loaves', '30 loaves')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: passage kehta hai Sunday ko Meera sirf 20 loaves bake karti hai.',
+          'Correct answer: the passage says Meera bakes only 20 loaves on Sundays.'
+        )
+      },
+      {
+        q: t(
+          'Agar Meera ek weekday par saare 40 loaves bech de, to us din kitna kamayegi?',
+          'If Meera sells all 40 loaves on a weekday, how much does she earn that day?'
+        ),
+        opts: [
+          t('Rs 1,500', 'Rs 1,500'),
+          t('Rs 2,500', 'Rs 2,500'),
+          t('Rs 2,000', 'Rs 2,000'),
+          t('Rs 1,000', 'Rs 1,000')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 40 loaves x Rs 50 = Rs 2,000 — par ye sirf tab milega jab saare loaves bik jayein.',
+          'Correct answer: 40 loaves x Rs 50 = Rs 2,000 — but only if all the loaves are sold.'
+        )
+      },
+      {
+        q: t(
+          'Passage se kaunsi baat pakka nikalti hai (must be true)?',
+          'Which of these surely follows from the passage (must be true)?'
+        ),
+        opts: [
+          t('Meera ne pichle Sunday saare 20 loaves 10 baje tak bech diye', 'Meera sold all 20 loaves last Sunday by 10 am'),
+          t('Meera roz Rs 2,000 kamati hai', 'Meera earns Rs 2,000 every day'),
+          t('Karan Sunday ko bhi loaves khareedta hai', 'Karan buys loaves on Sundays too'),
+          t('Meera Sunday ko 40 loaves bake karti hai', 'Meera bakes 40 loaves on Sundays')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: ye baat seedha passage mein likhi hai. Baaki teen ya to guess hain ya passage ke khilaf hain.',
+          'Correct answer: this is written directly in the passage. The other three are either guesses or go against the passage.'
+        )
+      },
+      {
+        q: t(
+          'Karan ek hafte mein Meera ko kul kitne paise deta hai?',
+          'How much money does Karan pay Meera in total in a week?'
+        ),
+        opts: [
+          t('Rs 1,250', 'Rs 1,250'),
+          t('Rs 1,750', 'Rs 1,750'),
+          t('Rs 1,500', 'Rs 1,500'),
+          t('Rs 2,000', 'Rs 2,000')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Karan Sunday ko chhod kar 6 din khareedta hai, to 6 x Rs 250 = Rs 1,500. 7 din ginne par 1,750 aata — wahi trap hai.',
+          'Correct answer: Karan buys on 6 days, skipping Sunday, so 6 x Rs 250 = Rs 1,500. Counting 7 days gives 1,750 — that is the trap.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Sirf wahi maano jo passage mein likha hai — bahar ka knowledge exam mein kaam nahi aata.',
+        'Believe only what the passage says — outside knowledge does not help in the exam.'
+      ),
+      t(
+        '"Must be true" ka matlab hai passage se pakka nikalta hai, "could be true" ka matlab hai ho sakta hai.',
+        '"Must be true" means it surely follows from the passage; "could be true" means it is only possible.'
+      ),
+      t(
+        'Numbers ko likh kar calculate karo — dimaag mein hisaab galat hota hai.',
+        'Write the numbers down and calculate — mental maths goes wrong.'
+      ),
+      t(
+        '"Every day except Sunday" matlab 6 din, 7 nahi — aise chhote words par question banta hai.',
+        '"Every day except Sunday" means 6 days, not 7 — questions are built on such small words.'
+      ),
+      t(
+        'Option ko tabhi sahi maano jab passage ka har word usse match kare.',
+        'Mark an option correct only when every word of it matches the passage.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Ritu ki Dukaan wala Naya Passage',
+        'Practice: A New Passage about Ritu Shop'
+      ),
+      task: t(
+        'Naya passage padho: Ritu ki dukaan roz 30 notebooks bechti hai, ek notebook Rs 20 ka hai. Chhutti wale din sirf 10 notebooks bikte hain. Starter code run karo aur check karo ki output expected jaisa aata hai. Phir price ko Rs 25 karke pehle predict karo ki daily revenue kya hoga, phir run karke verify karo.',
+        'Read the new passage: Ritu shop sells 30 notebooks every day, one notebook costs Rs 20. On holidays only 10 notebooks are sold. Run the starter code and check that the output matches the expected output. Then change the price to Rs 25, predict the new daily revenue first, and run the code to verify.'
+      ),
+      language: 'python',
+      starter: `price = 20
+daily = 30
+holiday = 10
+print("Daily revenue (all sold):", daily * price)
+print("Holiday revenue (all sold):", holiday * price)
+print("Notebooks sold in a 6-day week:", 6 * daily)
+print("Weekly revenue (6 days + 1 holiday):", 6 * daily * price + holiday * price)`,
+      expected: `Daily revenue (all sold): 600
+Holiday revenue (all sold): 200
+Notebooks sold in a 6-day week: 180
+Weekly revenue (6 days + 1 holiday): 3800`
+    },
+    readMinutes: 12,
+  };
+
+const logicTeamFormation: Article = {
+    id: 'logic-team-formation',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Team Formation — Grouping, Constraints aur Counting',
+      'Team Formation — Grouping, Constraints, and Counting'
+    ),
+    summary: t(
+      '8 students, 2 teams aur 3 constraints — kaun kiske saath, kaun alag, aur kitne tareeke? Combinations se ginna seekho, Python se verify karo.',
+      '8 students, 2 teams, and 3 constraints — who stays with whom, who stays apart, and in how many ways? Learn to count with combinations and verify with Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Team Formation Kya Hai?',
+          '1. What Is Team Formation?'
+        ),
+        body: t(
+          `Team formation ke questions mein kuch log diye hote hain aur unhe teams ya groups mein baantna hota hai — kuch conditions ke saath. Jaise: "8 students ko 2 teams mein baanto, A aur B ek hi team mein hon, C aur D alag-alag teams mein hon." Yahan do kaam hain: pehle **valid teams banana** (constraints ko follow karna), phir **ginna** (kitne tareeke hain). Ginna combinations se hota hai — **C(n, r)** ka matlab hai n logon mein se r log chunne ke tareeke, jisme order matter nahi karta.
+
+Team chunne mein order matter nahi karta, isliye hum **combinations** use karte hain, permutations nahi. Team (A, B, C, E) aur team (B, A, E, C) ek hi team hai — order badalne se team nahi badalti. Isi liye \`C(8, 4)\` = 70 hota hai, jabki permutations mein ye 1,680 hota. Ye farak samajhna hi team formation ka aadha kaam hai.`,
+          `In team formation questions, some people are given and must be split into teams or groups — with some conditions. For example: "Split 8 students into 2 teams, A and B in the same team, C and D in different teams." There are two jobs here: first **make valid teams** (follow the constraints), then **count** (in how many ways). Counting uses combinations — **C(n, r)** means the number of ways to pick r people out of n, where order does not matter.
+
+Order does not matter when picking a team, so we use **combinations**, not permutations. The team (A, B, C, E) and the team (B, A, E, C) are the same team — changing the order does not change the team. That is why \`C(8, 4)\` = 70, while permutations would give 1,680. Understanding this difference is half the work of team formation.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Cricket Team, Project Groups aur Bus Seats',
+          '2. Real-Life Examples: A Cricket Team, Project Groups, and Bus Seats'
+        ),
+        body: t(
+          `Cricket ka example lo: 11 players mein se captain ko 5 fielders chunne hain jo boundary par khade honge. Order matter nahi karta — kaun pehle chuna gaya, isse koi farak nahi padta. To tareeke hain C(11, 5) = 462. Ab condition jodo: "Rahul aur Rohit dono boundary par hon." To Rahul aur Rohit fix ho gaye, bache 3 fielders 9 players mein se chunne hain — C(9, 3) = 84 tareeke. Dekho, condition lagte hi ginna aasan ho gaya — fix kiye hue logon ko ginna band kar do, sirf bache hue seats gino.
+
+Project groups ka example: teacher 8 students ko 2 groups mein baant-ti hai. "A aur B ek hi group mein" ka matlab hai unhe ek unit ki tarah treat karo. "C aur D alag" ka matlab hai dono ek hi group mein kabhi nahi aayenge. Bus seats ka example bhi waisa hi hai: 4 doston ko 2-2 ki seats par baithana hai, aur do dost saath baithna chahte hain. Har jagah wahi pattern hai: **pehle "together" wale ko fix karo, phir "apart" wale ko alag rakho, phir bache hue ko gino**.`,
+          `Take a cricket example: from 11 players, the captain must pick 5 fielders to stand on the boundary. Order does not matter — who was picked first makes no difference. So the number of ways is C(11, 5) = 462. Now add a condition: "Rahul and Rohit must both be on the boundary." Then Rahul and Rohit are fixed, and the remaining 3 fielders are picked from 9 players — C(9, 3) = 84 ways. See how counting becomes easy once a condition is applied — stop counting the fixed people, count only the seats that are left.
+
+A project groups example: a teacher splits 8 students into 2 groups. "A and B in the same group" means treat them as one unit. "C and D apart" means they never land in the same group. A bus seats example is the same: 4 friends sit in pairs of seats, and two friends want to sit together. Everywhere the pattern is the same: **first fix the "together" pair, then keep the "apart" pair separate, then count what is left**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 8 Students, 2 Teams, 3 Constraints',
+          '3. Step-by-Step: 8 Students, 2 Teams, 3 Constraints'
+        ),
+        body: t(
+          `Problem: 8 students — A, B, C, D, E, F, G, H — ko 4-4 ki 2 teams mein baantna hai. Constraints: (1) A aur B ek hi team mein hon. (2) C aur D alag-alag teams mein hon. Question: A aur B wali team ke kitne tareeke hain? **Step 1: bina constraint ke total gino.** 8 mein se 4 chunna = C(8, 4) = 70 tareeke. **Step 2: A aur B ko fix karo.** Dono team mein pakke hain, to bache 2 seats 6 logon (C, D, E, F, G, H) mein se bharni hain = C(6, 2) = 15 tareeke.
+
+**Step 3: C aur D ko alag rakho.** Team mein C aur D dono mein se sirf ek ho sakta hai. 2 seats mein se 1 seat C ya D lega (2 tareeke), aur dusri seat E, F, G, H mein se koi ek lega (4 tareeke). 2 x 4 = **8 tareeke**. Yahi answer hai: sirf 8 valid teams hain jinme A aur B saath hon aur C aur D alag hon. Dry run: valid teams hain (A, B, C, E), (A, B, C, F), (A, B, C, G), (A, B, C, H), (A, B, D, E), (A, B, D, F), (A, B, D, G), (A, B, D, H) — gin lo, kul 8 hain. Neeche wala code yehi gin-ti \`itertools.combinations\` se karta hai.`,
+          `Problem: split 8 students — A, B, C, D, E, F, G, H — into 2 teams of 4. Constraints: (1) A and B in the same team. (2) C and D in different teams. Question: in how many ways can the team with A and B be formed? **Step 1: count the total without constraints.** Picking 4 out of 8 = C(8, 4) = 70 ways. **Step 2: fix A and B.** Both are surely in the team, so the remaining 2 seats are filled from 6 people (C, D, E, F, G, H) = C(6, 2) = 15 ways.
+
+**Step 3: keep C and D apart.** The team can hold only one of C and D. One of the 2 seats goes to C or D (2 ways), and the other seat goes to one of E, F, G, H (4 ways). 2 x 4 = **8 ways**. That is the answer: only 8 valid teams have A and B together and C and D apart. Dry run: the valid teams are (A, B, C, E), (A, B, C, F), (A, B, C, G), (A, B, C, H), (A, B, D, E), (A, B, D, F), (A, B, D, G), (A, B, D, H) — count them, there are 8 in total. The code below does this same counting with \`itertools.combinations\`.`
+        ),
+        code: {
+          title: t(
+            'Combinations se Valid Teams Ginna',
+            'Counting Valid Teams with Combinations'
+          ),
+          language: 'python',
+          code: `import itertools
+people = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+teams = list(itertools.combinations(people, 4))
+print("All 4-person teams:", len(teams))
+ab = [t for t in teams if 'A' in t and 'B' in t]
+print("Teams with A and B together:", len(ab))
+valid = [t for t in ab if ('C' in t) ^ ('D' in t)]
+print("A and B together, C and D split:", len(valid))
+print("Example valid teams:", valid[:3])`,
+          output: `All 4-person teams: 70
+Teams with A and B together: 15
+A and B together, C and D split: 8
+Example valid teams: [('A', 'B', 'C', 'E'), ('A', 'B', 'C', 'F'), ('A', 'B', 'C', 'G')]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Order Ginna, Double Counting aur "Together" ka Matlab',
+          '4. Common Mistakes: Counting Order, Double Counting, and What "Together" Means'
+        ),
+        body: t(
+          `Sabse badi galti hai team chunne mein **permutations** use karna — matlab order ko ginna. (A, B, C, E) aur (E, C, B, A) ek hi team hai, do teams nahi. Agar tum permutations se ginoge to answer 24 guna bada aayega (4! = 24), kyunki har team ke 24 orders hote hain. Dusri galti hai **double counting**: 8 logon ko 2 unnamed teams mein baantne ke tareeke 70 nahi, 35 hain — kyunki team (A, B, C, D) + (E, F, G, H) aur team (E, F, G, H) + (A, B, C, D) ek hi baant hai. Teams ke naam na hon to total ko 2 se divide karo.
+
+Teesri galti hai "together" ko galat samajhna. "A aur B together" ka matlab hai dono ek hi team mein hon — iska matlab ye nahi ki woh team mein pehle do hon ya saath baithen. Aur "C aur D alag" ka matlab hai dono alag teams mein hon — ek team chunne ke hisaab se iska matlab hai team mein dono mein se sirf ek ho.`,
+          `The biggest mistake is using **permutations** to pick a team — that means counting the order. (A, B, C, E) and (E, C, B, A) are one team, not two teams. If you count with permutations, your answer becomes 24 times too big (4! = 24), because every team has 24 orders. The second mistake is **double counting**: the ways to split 8 people into 2 unnamed teams are not 70 but 35 — because the split (A, B, C, D) + (E, F, G, H) and the split (E, F, G, H) + (A, B, C, D) are the same split. When the teams have no names, divide the total by 2.
+
+The third mistake is misunderstanding "together". "A and B together" means both are in the same team — it does not mean they are the first two in the team or that they sit together. And "C and D apart" means they are in different teams — when picking one team, this means the team holds exactly one of them.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Impossible Constraints aur Fixed Members',
+          '5. Edge Cases: Impossible Constraints and Fixed Members'
+        ),
+        body: t(
+          `Edge case 1: **fixed member**. "Team mein E ho, par F na ho" — E fix hai, F banned hai. To E ko team mein rakho, F ko bahar rakho, aur bache 3 seats 6 logon (A, B, C, D, G, H) mein se bharo = C(6, 3) = 20 tareeke. Fixed member ko ginna band kar do — woh to team mein hai hi.
+
+Edge case 2: **impossible constraints**. "A aur B ek hi team mein hon, aur A aur B alag-alag teams mein hon" — dono conditions ek saath kabhi poori nahi ho sakti, to answer 0 hai. Exam mein aisa question trap ke liye aata hai — log ginna shuru kar dete hain aur 0 sochte hi nahi. Edge case 3: **team size ka dhyaan**. Agar team 4 ki hai aur 3 log fix ho jayein, to sirf 1 seat bachti hai — C(5, 1) = 5 tareeke. Hamesha pehle likho: kitne fix hain, kitne banned hain, kitni seats bachi hain.`,
+          `Edge case 1: a **fixed member**. "The team must include E, but not F" — E is fixed in, F is banned. Put E in the team, keep F out, and fill the remaining 3 seats from 6 people (A, B, C, D, G, H) = C(6, 3) = 20 ways. Stop counting the fixed member — they are in the team already.
+
+Edge case 2: **impossible constraints**. "A and B in the same team, and A and B in different teams" — both conditions can never hold together, so the answer is 0. The exam asks such questions as traps — people start counting and never think of 0. Edge case 3: **watch the team size**. If the team has 4 seats and 3 people are fixed, only 1 seat is left — C(5, 1) = 5 ways. Always write first: how many are fixed, how many are banned, and how many seats are left.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Team Size ya Constraint Badal Do?',
+          '6. What If: Change the Team Size or the Constraint?'
+        ),
+        body: t(
+          `What-if se counting ki samajh pakki hoti hai. **What if team 4 ki jagah 3 ki ho?** 7 logon (P, Q, R, S, T, U, V) mein se 3 ki team chunne ke tareeke hain C(7, 3) = 35. Agar P aur Q saath hon, to teesra member 5 logon mein se chunna hai — 5 tareeke. **What if teams ke naam hon?** Team Red aur Team Blue — to 8 logon ko baantne ke tareeke 70 hain, kyunki (A, B, C, D) Red mein aur (E, F, G, H) Blue mein, isse alag hai (E, F, G, H) Red mein aur (A, B, C, D) Blue mein. Naam hone se double counting khatam ho jaati hai.
+
+**What if C aur D saath hon?** A, B ke saath C aur D dono team mein hon, to team pakki hai: (A, B, C, D) — sirf 1 tareeka. Neeche wala pehla code "E ho, F na ho" wala case aur unnamed teams wala case gin-ta hai, aur dusra code 3-member team wala what-if gin-ta hai.`,
+          `What-ifs make your counting sense solid. **What if the team has 3 seats instead of 4?** Picking a team of 3 from 7 people (P, Q, R, S, T, U, V) gives C(7, 3) = 35 ways. If P and Q are together, the third member is picked from 5 people — 5 ways. **What if the teams have names?** Team Red and Team Blue — then the ways to split 8 people are 70, because (A, B, C, D) in Red and (E, F, G, H) in Blue is different from (E, F, G, H) in Red and (A, B, C, D) in Blue. Names remove the double counting.
+
+**What if C and D are together?** With A and B, if C and D are both in the team too, the team is fixed: (A, B, C, D) — only 1 way. The first code below counts the "E in, F out" case and the unnamed-teams case, and the second code counts the 3-member team what-if.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Counting ka 3-Step Formula',
+          '7. Summary: The 3-Step Counting Formula'
+        ),
+        body: t(
+          `Team formation ka formula 3 steps mein yaad rakho. **Step 1: Fix karo** — "together" wale logon ko team mein pakka rakho aur unhe ginna band karo. **Step 2: Ban karo** — "never together" ya "not in team" wale logon ko bahar rakho. **Step 3: Bache hue seats ko combinations se gino** — C(n, r) se, jahan n bache hue log hain aur r bachi hui seats hain. Agar teams ke naam na hon to answer ko 2 se divide karo.
+
+Yaad rakhne wale numbers: C(8, 4) = 70, A-B saath hon to 15, A-B saath aur C-D alag hon to 8, E ho F na ho to 20, unnamed split 35. Agle article mein hum floor puzzles dekhenge — wahan ginna nahi, ek hi solution dhoondhna hota hai, aur wahan table banane ka tareeka kaam aata hai.`,
+          `Remember the team formation formula in 3 steps. **Step 1: Fix** — put the "together" people surely in the team and stop counting them. **Step 2: Ban** — keep the "never together" or "not in the team" people out. **Step 3: Count the remaining seats with combinations** — C(n, r), where n is the people left and r is the seats left. If the teams have no names, divide the answer by 2.
+
+The numbers to remember: C(8, 4) = 70, A-B together gives 15, A-B together with C-D apart gives 8, E in and F out gives 20, and the unnamed split is 35. In the next article we will look at floor puzzles — there you do not count, you find exactly one solution, and the table method comes into play.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Team Formation: Constraints ko Order mein Lagao',
+        'Team Formation: Apply the Constraints in Order'
+      ),
+      caption: t(
+        'Pehle together wale ko fix karo, phir apart wale ko alag rakho, phir bache hue gino',
+        'First fix the together pair, then keep the apart pair separate, then count what is left'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Saare log likho', 'Step 1: List all the people'),
+          s: t('A, B, C, D, E, F, G, H — kul 8', 'A, B, C, D, E, F, G, H — 8 in total')
+        },
+        {
+          t: t('Step 2: A aur B ko fix karo', 'Step 2: Fix A and B'),
+          s: t('Dono team mein pakke — 2 seats bhar gayi', 'Both are surely in the team — 2 seats filled')
+        },
+        {
+          t: t('Step 3: C aur D ko alag rakho', 'Step 3: Keep C and D apart'),
+          s: t('Team mein dono mein se sirf ek ho sakta hai', 'The team can hold only one of them')
+        },
+        {
+          t: t('Step 4: Bache hue seats gino', 'Step 4: Count the remaining seats'),
+          s: t('2 seats — 1 C/D se, 1 E/F/G/H se — 2 x 4 = 8', '2 seats — 1 from C/D, 1 from E/F/G/H — 2 x 4 = 8')
+        },
+        {
+          t: t('Step 5: Naam na hon to 2 se divide karo', 'Step 5: Divide by 2 if there are no names'),
+          s: t('Unnamed split: 70 / 2 = 35', 'Unnamed split: 70 / 2 = 35')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'E Ho, F Na Ho — aur Unnamed Teams',
+          'E In, F Out — and Unnamed Teams'
+        ),
+        language: 'python',
+        code: `import itertools
+people = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+teams = list(itertools.combinations(people, 4))
+e_notf = [t for t in teams if 'E' in t and 'F' not in t]
+print("Teams with E but not F:", len(e_notf))
+print("Two unnamed teams of 4:", len(teams) // 2)`,
+        output: `Teams with E but not F: 20
+Two unnamed teams of 4: 35`
+      },
+      {
+        title: t(
+          'What If: 7 Logon mein se 3 ki Team',
+          'What If: A Team of 3 from 7 People'
+        ),
+        language: 'python',
+        code: `import itertools
+people = ['P', 'Q', 'R', 'S', 'T', 'U', 'V']
+teams = list(itertools.combinations(people, 3))
+print("All 3-person teams from 7:", len(teams))
+xy = [t for t in teams if 'P' in t and 'Q' in t]
+print("Teams with P and Q together:", len(xy))
+print("Example:", xy[:3])`,
+        output: `All 3-person teams from 7: 35
+Teams with P and Q together: 5
+Example: [('P', 'Q', 'R'), ('P', 'Q', 'S'), ('P', 'Q', 'T')]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '8 logon mein se 4 ki team chunne ke kitne tareeke hain (koi constraint nahi)?',
+          'In how many ways can a team of 4 be picked from 8 people (no constraints)?'
+        ),
+        opts: [
+          t('35', '35'),
+          t('56', '56'),
+          t('70', '70'),
+          t('28', '28')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: C(8, 4) = 70 — order matter nahi karta, isliye combinations use hote hain.',
+          'Correct answer: C(8, 4) = 70 — order does not matter, so combinations are used.'
+        )
+      },
+      {
+        q: t(
+          '8 logon mein se 4 ki team mein A aur B dono hon — kitne tareeke hain?',
+          'In how many ways can a team of 4 from 8 people include both A and B?'
+        ),
+        opts: [
+          t('15', '15'),
+          t('8', '8'),
+          t('20', '20'),
+          t('10', '10')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: A aur B fix hain, to bache 2 seats 6 logon mein se bharni hain — C(6, 2) = 15.',
+          'Correct answer: A and B are fixed, so the remaining 2 seats are filled from 6 people — C(6, 2) = 15.'
+        )
+      },
+      {
+        q: t(
+          'Team mein A aur B saath hon aur C aur D alag hon — kitne tareeke hain?',
+          'In how many ways can a team have A and B together and C and D apart?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('8', '8'),
+          t('6', '6'),
+          t('12', '12')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 1 seat C ya D lega (2 tareeke) aur dusri seat E, F, G, H mein se koi ek lega (4 tareeke) — 2 x 4 = 8.',
+          'Correct answer: one seat goes to C or D (2 ways) and the other seat goes to one of E, F, G, H (4 ways) — 2 x 4 = 8.'
+        )
+      },
+      {
+        q: t(
+          'Team mein E ho par F na ho — kitne tareeke hain?',
+          'In how many ways can a team include E but not F?'
+        ),
+        opts: [
+          t('10', '10'),
+          t('15', '15'),
+          t('25', '25'),
+          t('20', '20')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: E fix hai, F banned hai, to bache 3 seats 6 logon mein se bharni hain — C(6, 3) = 20.',
+          'Correct answer: E is fixed, F is banned, so the remaining 3 seats are filled from 6 people — C(6, 3) = 20.'
+        )
+      },
+      {
+        q: t(
+          '8 logon ko 4-4 ki 2 unnamed teams mein baantne ke kitne tareeke hain?',
+          'In how many ways can 8 people be split into 2 unnamed teams of 4?'
+        ),
+        opts: [
+          t('70', '70'),
+          t('140', '140'),
+          t('35', '35'),
+          t('17', '17')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: C(8, 4) = 70 ko 2 se divide karo — teams ke naam na hon to har baant do baar gin-ti hai, to 70 / 2 = 35.',
+          'Correct answer: divide C(8, 4) = 70 by 2 — with no team names, every split is counted twice, so 70 / 2 = 35.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Team chunne mein order matter nahi karta — combinations use karo, permutations nahi.',
+        'Order does not matter when picking a team — use combinations, not permutations.'
+      ),
+      t(
+        '"Together" wale pair ko pehle fix karo, phir bache hue seats bharo.',
+        'Fix the "together" pair first, then fill the remaining seats.'
+      ),
+      t(
+        'Team chunne mein "C aur D alag" ka matlab hai team mein dono mein se sirf ek ho.',
+        'When picking one team, "C and D are apart" means the team holds exactly one of them.'
+      ),
+      t(
+        'Unnamed teams ko ginne mein total ko 2 se divide karo — warna double counting hoti hai.',
+        'When the teams have no names, divide the total by 2 — otherwise you count everything twice.'
+      ),
+      t(
+        'Har counting ko chhote case se check karo — jaise C(6, 2) = 15 haath se bhi nikalta hai.',
+        'Check every count on a small case — C(6, 2) = 15 can be worked out by hand too.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 6 Logon mein se 3 ki Team',
+        'Practice: A Team of 3 from 6 People'
+      ),
+      task: t(
+        '6 log (M, N, O, P, Q, R) mein se 3 ki team chunni hai. Starter code run karo aur check karo ki output expected jaisa aata hai — kul teams aur M-N saath wali teams dono ginni hain. Phir M aur N ko alag rakh kar pehle predict karo ki kitni teams banengi, phir code badal kar verify karo.',
+        'A team of 3 must be picked from 6 people (M, N, O, P, Q, R). Run the starter code and check that the output matches the expected output — both the total teams and the teams with M and N together are counted. Then predict first how many teams there will be if M and N are kept apart, change the code, and verify.'
+      ),
+      language: 'python',
+      starter: `import itertools
+people = ['M', 'N', 'O', 'P', 'Q', 'R']
+teams = list(itertools.combinations(people, 3))
+print("All 3-person teams from 6:", len(teams))
+mn = [t for t in teams if 'M' in t and 'N' in t]
+print("Teams with M and N together:", len(mn))
+print("Example:", mn[:3])`,
+      expected: `All 3-person teams from 6: 20
+Teams with M and N together: 4
+Example: [('M', 'N', 'O'), ('M', 'N', 'P'), ('M', 'N', 'Q')]`
+    },
+    readMinutes: 12,
+  };
+
+const logicFloorPuzzle: Article = {
+    id: 'logic-floor-puzzle',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Floor Puzzles — 5 Floors, 5 Log, 1 Solution',
+      'Floor Puzzles — 5 Floors, 5 People, 1 Solution'
+    ),
+    summary: t(
+      '5-storey building mein kaun kis floor par rehta hai? Clues ko table mein likho, "immediately above" aur "below" ka farak samjho, aur brute force se verify karo.',
+      'Who lives on which floor of a 5-storey building? Write the clues in a table, learn the difference between "immediately above" and "below", and verify with brute force.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Floor Puzzle Kya Hai?',
+          '1. What Is a Floor Puzzle?'
+        ),
+        body: t(
+          `Floor puzzle mein ek building hoti hai — 4 ya 5 floors — aur har floor par ek vyakti rehta hai. Clues diye hote hain, jaise "Amit floor 3 par rehta hai" ya "Bina, Chetan ke bilkul upar rehti hai". Tumhara kaam hai har vyakti ka floor nikalna. Sabse pehla rule hai **floor numbering**: ground floor ko 1 maano, aur upar jaate hue number badhao — top floor 5 hai. Agar tum ulta ginoge (top ko 1), to poora puzzle galat ho jayega.
+
+Dusra rule hai do words ka farak: **"above"** ka matlab hai kahin bhi upar — Bina, Amit ke upar hai ka matlab hai Bina ka floor Amit se bada hai, kitna bhi bada ho. **"Immediately above"** ka matlab hai bilkul upar wala floor — Bina ka floor = Chetan ka floor + 1. Ye farak hi floor puzzle ki jaan hai: "immediately" wali clue se pakka number milta hai, "above" wali clue se sirf order milta hai.`,
+          `A floor puzzle has a building — 4 or 5 floors — with one person living on each floor. Clues are given, like "Amit lives on floor 3" or "Bina lives immediately above Chetan". Your job is to find every person's floor. The first rule is **floor numbering**: count the ground floor as 1, and go up from there — the top floor is 5. If you count the other way round (top as 1), the whole puzzle goes wrong.
+
+The second rule is the difference between two words: **"above"** means anywhere higher — "Bina is above Amit" means Bina's floor is bigger than Amit's, by any amount. **"Immediately above"** means the very next floor — Bina's floor = Chetan's floor + 1. This difference is the heart of floor puzzles: an "immediately" clue gives an exact number, while an "above" clue gives only the order.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Building, Hostel aur Office Floors',
+          '2. Real-Life Examples: A Building, a Hostel, and Office Floors'
+        ),
+        body: t(
+          `Hostel ka example lo: 5 floors ka hostel hai, har floor par ek student. Warden kehta hai: "Rahul top floor par hai. Simran, Rahul ke bilkul neeche hai. Amit ground floor par hai." Bas — teen clues se poora hostel nahi bharta, par Rahul (5), Simran (4) aur Amit (1) pakke ho gaye. Bache hue do students floors 2 aur 3 par hain — unke liye aur clues chahiye. Yehi floor puzzle ka pattern hai: kuch log turant fix ho jaate hain, kuch ke liye elimination karna padta hai.
+
+Office ka example: 4 floors ki company mein HR ground floor par hai, CEO top floor par hai, aur Accounts, HR ke bilkul upar hai. To HR = 1, Accounts = 2, CEO = 4, aur bacha hua department (Sales) floor 3 par hai. Dekho — ek "immediately above" wali clue ne do floors ek saath fix kar diye. Floor puzzle mein hamesha **table banao**: ek column floor ka, ek column vyakti ka, aur clues ko table ke bagal mein likho.`,
+          `Take a hostel example: a 5-floor hostel with one student on each floor. The warden says: "Rahul is on the top floor. Simran is immediately below Rahul. Amit is on the ground floor." That is all — three clues do not fill the whole hostel, but Rahul (5), Simran (4), and Amit (1) are fixed. The two remaining students are on floors 2 and 3 — more clues are needed for them. This is the floor puzzle pattern: some people get fixed at once, and the rest need elimination.
+
+An office example: in a 4-floor company, HR is on the ground floor, the CEO is on the top floor, and Accounts is immediately above HR. So HR = 1, Accounts = 2, CEO = 4, and the remaining department (Sales) is on floor 3. See how one "immediately above" clue fixed two floors at once. In a floor puzzle, always **make a table**: one column for the floor, one column for the person, and write the clues next to the table.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5-Storey Building ka Dry Run',
+          '3. Step-by-Step: A Dry Run of a 5-Storey Building'
+        ),
+        body: t(
+          `Problem: 5-storey building mein Amit, Bina, Chetan, Divya aur Esha rehte hain. Clues: (1) Amit floor 3 par rehta hai. (2) Bina, Chetan ke immediately above rehti hai. (3) Divya top floor (5) par rehti hai. (4) Esha, Divya ke immediately below rehti hai. **Step 1: pakki clues se shuru karo.** Amit = 3 aur Divya = 5 turant fix ho gaye. **Step 2: "immediately" wali clues lagao.** Esha, Divya ke bilkul neeche hai, to Esha = 4. Bache hue floors hain 1 aur 2, bache hue log hain Bina aur Chetan.
+
+**Step 3: bacha hua pair solve karo.** Bina, Chetan ke immediately above hai — floors 1 aur 2 mein se sirf ek tareeka hai: Chetan = 1, Bina = 2. Final table: Floor 1 Chetan, Floor 2 Bina, Floor 3 Amit, Floor 4 Esha, Floor 5 Divya. **Step 4: verify karo.** Har clue ko table se check karo: Amit 3 par hai (haan), Bina (2) Chetan (1) ke bilkul upar hai (haan), Divya top par hai (haan), Esha (4) Divya (5) ke bilkul neeche hai (haan). Neeche wala code \`itertools.permutations\` se saare 120 arrangements check karke batata hai ki sirf 1 solution hai.`,
+          `Problem: Amit, Bina, Chetan, Divya, and Esha live in a 5-storey building. Clues: (1) Amit lives on floor 3. (2) Bina lives immediately above Chetan. (3) Divya lives on the top floor (5). (4) Esha lives immediately below Divya. **Step 1: start with the fixed clues.** Amit = 3 and Divya = 5 are fixed at once. **Step 2: apply the "immediately" clues.** Esha is directly below Divya, so Esha = 4. The floors left are 1 and 2, and the people left are Bina and Chetan.
+
+**Step 3: solve the remaining pair.** Bina is immediately above Chetan — with floors 1 and 2 there is only one way: Chetan = 1, Bina = 2. Final table: Floor 1 Chetan, Floor 2 Bina, Floor 3 Amit, Floor 4 Esha, Floor 5 Divya. **Step 4: verify.** Check every clue against the table: Amit is on 3 (yes), Bina (2) is directly above Chetan (1) (yes), Divya is on top (yes), Esha (4) is directly below Divya (5) (yes). The code below uses \`itertools.permutations\` to check all 120 arrangements and shows there is exactly 1 solution.`
+        ),
+        code: {
+          title: t(
+            'Brute Force: 120 Arrangements mein se 1 Solution',
+            'Brute Force: 1 Solution out of 120 Arrangements'
+          ),
+          language: 'python',
+          code: `import itertools
+people = ['Amit', 'Bina', 'Chetan', 'Divya', 'Esha']
+solutions = []
+for order in itertools.permutations(people):
+    floor = {order[i]: i + 1 for i in range(5)}
+    if floor['Amit'] != 3:
+        continue
+    if floor['Bina'] != floor['Chetan'] + 1:
+        continue
+    if floor['Divya'] != 5:
+        continue
+    if floor['Esha'] != floor['Divya'] - 1:
+        continue
+    solutions.append(floor)
+print("Solutions found:", len(solutions))
+for floor in solutions:
+    for person in ['Chetan', 'Bina', 'Amit', 'Esha', 'Divya']:
+        print("Floor", floor[person], ":", person)`,
+          output: `Solutions found: 1
+Floor 1 : Chetan
+Floor 2 : Bina
+Floor 3 : Amit
+Floor 4 : Esha
+Floor 5 : Divya`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: "Above" ko "Immediately Above" Samajhna',
+          '4. Common Mistakes: Reading "Above" as "Immediately Above"'
+        ),
+        body: t(
+          `Sabse badi galti hai "above" ko "immediately above" samajh lena. Clue hai "Esha, Bina ke upar rehti hai" — iska matlab sirf ye hai ki Esha ka floor Bina se bada hai. Esha floor 4 par bhi ho sakti hai aur floor 5 par bhi. Par agar clue hai "Esha, Bina ke immediately above rehti hai", to Esha ka floor Bina + 1 hai — ek hi option. Jo log "above" ko "immediately above" samajhte hain, woh ek se zyada solutions ko galat tareeke se khatam kar dete hain aur galat answer par pahunchte hain.
+
+Dusri galti hai floor numbering ulta karna. Kuch puzzles mein top floor ko 1 likha hota hai, par is article mein aur zyada tar exams mein ground floor 1 hota hai — question mein jo likha ho, wahi maano. Teesri galti hai ek clue ko use kiye bina answer nikaalna. Agar tumhara solution 4 clues mein se sirf 3 ko follow karta hai, to woh galat hai — chahe woh kitna bhi sahi lage.`,
+          `The biggest mistake is reading "above" as "immediately above". The clue "Esha lives above Bina" means only that Esha's floor is bigger than Bina's. Esha could be on floor 4 or on floor 5. But if the clue is "Esha lives immediately above Bina", then Esha's floor is Bina + 1 — a single option. People who read "above" as "immediately above" wrongly rule out valid solutions and reach a wrong answer.
+
+The second mistake is numbering the floors the wrong way round. In some puzzles the top floor is written as 1, but in this article and in most exams the ground floor is 1 — follow whatever the question says. The third mistake is finding an answer without using one of the clues. If your solution follows only 3 out of 4 clues, it is wrong — however right it looks.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Top Floor, Ground Floor aur Beech Wale',
+          '5. Edge Cases: The Top Floor, the Ground Floor, and the Middle'
+        ),
+        body: t(
+          `Edge case 1: **top aur ground floor wale log**. Jo vyakti top floor (5) par hai, uske upar koi nahi hai — to "X, Divya ke upar hai" wali clue kabhi true nahi ho sakti. Aise clues ko turant false mark karo. Edge case 2: **beech wala floor**. Amit floor 3 par hai — woh Bina (2) aur Esha (4) ke beech mein hai. "Between" wale questions mein dono neighbours ko check karo: Amit, Bina aur Esha ke beech mein hai — true hai.
+
+Edge case 3: **"kitne log beech mein hain" ginna**. Amit (3) aur Divya (5) ke beech mein sirf Esha (4) hai — 1 vyakti. Gin-ne ka formula hai: upar wala floor minus neeche wala floor minus 1. 5 - 3 - 1 = 1. Edge case 4: **statement checking**. Neeche wale extra code mein 4 statements check kiye gaye hain: "Bina lives above Amit" false hai (Bina 2 par hai, Amit 3 par), baaki teen true hain.`,
+          `Edge case 1: **the people on the top and ground floors**. Nobody is above the person on the top floor (5) — so a clue like "X is above Divya" can never be true. Mark such clues false at once. Edge case 2: **the middle floor**. Amit is on floor 3 — he is between Bina (2) and Esha (4). For "between" questions, check both neighbours: Amit is between Bina and Esha — true.
+
+Edge case 3: **counting "how many people are in between"**. Between Amit (3) and Divya (5) there is only Esha (4) — 1 person. The counting formula is: upper floor minus lower floor minus 1. 5 - 3 - 1 = 1. Edge case 4: **statement checking**. The extra code below checks 4 statements: "Bina lives above Amit" is false (Bina is on 2, Amit on 3), and the other three are true.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Amit Floor 4 par Chala Jaye?',
+          '6. What If: Amit Moves to Floor 4?'
+        ),
+        body: t(
+          `Soch lo clue 1 badal jaye: Amit floor 3 ki jagah floor 4 par rehta hai. Ab kya hoga? Divya top (5) par hai, Esha uske bilkul neeche — matlab Esha floor 4 par honi chahiye. Par floor 4 par Amit hai. Ek floor par do log nahi reh sakte, to **koi solution hi nahi hai — 0 solutions**. Yehi floor puzzle ki sensitivity hai: ek number badalte hi poora puzzle toot sakta hai. Exam mein aisa question aaye to "no solution" bhi ek valid answer ho sakta hai — ghabrao mat, brute force ki tarah socho.
+
+Isi liye verify karna zaroori hai: solution nikalne ke baad har clue ko ek-ek karke table se check karo. Agar koi clue match nahi karta, to solution galat hai — ya to tumne clue galat padha hai, ya puzzle mein hi koi contradiction hai. Neeche wala dusra code yehi what-if run karta hai aur 0 print karta hai.`,
+          `Suppose clue 1 changes: Amit lives on floor 4 instead of floor 3. What happens now? Divya is on top (5), Esha is directly below her — so Esha should be on floor 4. But Amit is on floor 4. Two people cannot live on one floor, so **there is no solution at all — 0 solutions**. This is how sensitive a floor puzzle is: changing one number can break the whole puzzle. If such a question appears in the exam, "no solution" can be a valid answer — do not panic, think like brute force.
+
+That is why verification matters: after finding a solution, check every clue one by one against the table. If any clue does not match, the solution is wrong — either you read a clue wrong, or the puzzle itself has a contradiction. The second code below runs this what-if and prints 0.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Floor Puzzle ka 4-Step Method',
+          '7. Summary: The 4-Step Floor Puzzle Method'
+        ),
+        body: t(
+          `Floor puzzle ka method 4 steps mein yaad rakho. **Step 1: Table banao** — floor 1 (ground) se top tak, ek column floor ka, ek column vyakti ka. **Step 2: Pakki clues se shuru karo** — top floor, ground floor, ya fixed number wali clue. **Step 3: "Immediately" wali clues lagao** — ye pairs banati hain (Bina-Chetan, Esha-Divya). **Step 4: Verify karo** — har clue ko final table se check karo, aur "kitne beech mein" wale questions ke liye upar minus neeche minus 1 ka formula use karo.
+
+Yaad rakhne wala solution: Floor 1 Chetan, Floor 2 Bina, Floor 3 Amit, Floor 4 Esha, Floor 5 Divya. Agle article mein hum box puzzles dekhenge — wahan bhi stack hota hai, par numbering ulta hota hai: position 1 matlab sabse upar wala box.`,
+          `Remember the floor puzzle method in 4 steps. **Step 1: Make a table** — from floor 1 (ground) to the top, one column for the floor, one column for the person. **Step 2: Start with the fixed clues** — the top floor, the ground floor, or a clue with a fixed number. **Step 3: Apply the "immediately" clues** — they form pairs (Bina-Chetan, Esha-Divya). **Step 4: Verify** — check every clue against the final table, and for "how many in between" questions use the formula upper minus lower minus 1.
+
+The solution to remember: Floor 1 Chetan, Floor 2 Bina, Floor 3 Amit, Floor 4 Esha, Floor 5 Divya. In the next article we will look at box puzzles — there is a stack there too, but the numbering is reversed: position 1 means the topmost box.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        '5-Storey Building: Kaun Kis Floor par Hai',
+        'The 5-Storey Building: Who Lives on Which Floor'
+      ),
+      caption: t(
+        'Neeche se upar padho — ground floor 1 se top floor 5 tak',
+        'Read from bottom to top — from ground floor 1 to top floor 5'
+      ),
+      nodes: [
+        {
+          t: t('Floor 5: Divya', 'Floor 5: Divya'),
+          s: t('Clue 3 — top floor par hai', 'Clue 3 — lives on the top floor')
+        },
+        {
+          t: t('Floor 4: Esha', 'Floor 4: Esha'),
+          s: t('Clue 4 — Divya ke immediately below', 'Clue 4 — immediately below Divya')
+        },
+        {
+          t: t('Floor 3: Amit', 'Floor 3: Amit'),
+          s: t('Clue 1 — floor 3 fix hai', 'Clue 1 — floor 3 is fixed')
+        },
+        {
+          t: t('Floor 2: Bina', 'Floor 2: Bina'),
+          s: t('Clue 2 — Chetan ke immediately above', 'Clue 2 — immediately above Chetan')
+        },
+        {
+          t: t('Floor 1: Chetan', 'Floor 1: Chetan'),
+          s: t('Clue 2 — Bina ke immediately below', 'Clue 2 — immediately below Bina')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Statements Check Karo: Kaunsa Sahi, Kaunsa Galat',
+          'Check the Statements: Which Are True, Which Are False'
+        ),
+        language: 'python',
+        code: `floor = {'Chetan': 1, 'Bina': 2, 'Amit': 3, 'Esha': 4, 'Divya': 5}
+checks = [
+    ("Bina lives above Amit", floor['Bina'] > floor['Amit']),
+    ("Esha lives immediately below Divya", floor['Esha'] == floor['Divya'] - 1),
+    ("Chetan lives on the ground floor", floor['Chetan'] == 1),
+    ("Amit lives between Bina and Esha", floor['Bina'] < floor['Amit'] < floor['Esha']),
+]
+for text, result in checks:
+    print(text, "->", result)`,
+        output: `Bina lives above Amit -> False
+Esha lives immediately below Divya -> True
+Chetan lives on the ground floor -> True
+Amit lives between Bina and Esha -> True`
+      },
+      {
+        title: t(
+          'What If: Amit Floor 4 par Ho?',
+          'What If: Amit Moves to Floor 4?'
+        ),
+        language: 'python',
+        code: `import itertools
+people = ['Amit', 'Bina', 'Chetan', 'Divya', 'Esha']
+count = 0
+for order in itertools.permutations(people):
+    floor = {order[i]: i + 1 for i in range(5)}
+    if floor['Amit'] != 4:
+        continue
+    if floor['Bina'] != floor['Chetan'] + 1:
+        continue
+    if floor['Divya'] != 5:
+        continue
+    if floor['Esha'] != floor['Divya'] - 1:
+        continue
+    count += 1
+print("Solutions if Amit moves to floor 4:", count)`,
+        output: `Solutions if Amit moves to floor 4: 0`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Floor puzzle mein kaun floor 2 par rehta hai?',
+          'In the floor puzzle, who lives on floor 2?'
+        ),
+        opts: [
+          t('Amit', 'Amit'),
+          t('Bina', 'Bina'),
+          t('Chetan', 'Chetan'),
+          t('Esha', 'Esha')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Bina Chetan (floor 1) ke immediately above hai, to Bina floor 2 par hai.',
+          'Correct answer: Bina is immediately above Chetan (floor 1), so Bina is on floor 2.'
+        )
+      },
+      {
+        q: t(
+          'Divya ke immediately below kaun rehta hai?',
+          'Who lives immediately below Divya?'
+        ),
+        opts: [
+          t('Amit', 'Amit'),
+          t('Bina', 'Bina'),
+          t('Esha', 'Esha'),
+          t('Chetan', 'Chetan')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Divya top floor 5 par hai aur Esha uske immediately below, matlab floor 4 par hai.',
+          'Correct answer: Divya is on the top floor 5, and Esha is immediately below her, on floor 4.'
+        )
+      },
+      {
+        q: t(
+          'Ground floor (floor 1) par kaun rehta hai?',
+          'Who lives on the ground floor (floor 1)?'
+        ),
+        opts: [
+          t('Chetan', 'Chetan'),
+          t('Bina', 'Bina'),
+          t('Amit', 'Amit'),
+          t('Divya', 'Divya')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Chetan floor 1 par hai — Bina uske immediately above (floor 2) hai.',
+          'Correct answer: Chetan is on floor 1 — Bina is immediately above him, on floor 2.'
+        )
+      },
+      {
+        q: t(
+          'Amit aur Divya ke beech mein kitne log rehte hain?',
+          'How many people live between Amit and Divya?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('2', '2'),
+          t('1', '1'),
+          t('3', '3')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Amit floor 3 par hai, Divya floor 5 par hai — beech mein sirf Esha (floor 4) hai, to 5 - 3 - 1 = 1.',
+          'Correct answer: Amit is on floor 3, Divya on floor 5 — only Esha (floor 4) is between them, so 5 - 3 - 1 = 1.'
+        )
+      },
+      {
+        q: t(
+          'Kaunsa statement galat hai?',
+          'Which statement is false?'
+        ),
+        opts: [
+          t('Esha, Divya ke immediately below rehti hai', 'Esha lives immediately below Divya'),
+          t('Chetan ground floor par rehta hai', 'Chetan lives on the ground floor'),
+          t('Bina, Amit ke upar rehti hai', 'Bina lives above Amit'),
+          t('Amit floor 3 par rehta hai', 'Amit lives on floor 3')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Bina floor 2 par hai aur Amit floor 3 par — Bina, Amit ke neeche hai, upar nahi. Baaki teen statements true hain.',
+          'Correct answer: Bina is on floor 2 and Amit on floor 3 — Bina is below Amit, not above. The other three statements are true.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Ground floor ko 1 maano aur upar jaate hue number badhao — ulta ginne se puzzle bigadta hai.',
+        'Count the ground floor as 1 and go up — counting from the top breaks the puzzle.'
+      ),
+      t(
+        '"Above" ka matlab hai kahin bhi upar; "immediately above" ka matlab hai bilkul upar wala floor.',
+        '"Above" means anywhere higher; "immediately above" means the very next floor.'
+      ),
+      t(
+        'Sabse pakki clue se shuru karo — jaise "top floor" ya "ground floor".',
+        'Start with the most fixed clue — like "top floor" or "ground floor".'
+      ),
+      t(
+        'Har clue ko table mein likho; jo clue use nahi hua, solution galat ho sakta hai.',
+        'Write every clue in the table; a solution that ignores a clue can be wrong.'
+      ),
+      t(
+        'Ek hi solution hona chahiye — do solutions hon to koi clue chhoot gaya hai.',
+        'There should be exactly one solution — two solutions mean a clue was missed.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 4 Floors ka Naya Puzzle',
+        'Practice: A New 4-Floor Puzzle'
+      ),
+      task: t(
+        'Naya puzzle: 4 floors mein Ravi, Sita, Mohan aur Tara rehte hain. Clues: Sita floor 2 par hai. Ravi, Sita ke immediately above hai. Tara top floor par hai. Starter code run karo aur check karo ki output expected jaisa aata hai — sirf 1 solution milna chahiye. Phir ek clue badal kar dekho ki solution badalta hai ya nahi.',
+        'New puzzle: Ravi, Sita, Mohan, and Tara live on 4 floors. Clues: Sita is on floor 2. Ravi is immediately above Sita. Tara is on the top floor. Run the starter code and check that the output matches the expected output — there should be exactly 1 solution. Then change one clue and see whether the solution changes.'
+      ),
+      language: 'python',
+      starter: `import itertools
+people = ['Ravi', 'Sita', 'Mohan', 'Tara']
+solutions = []
+for order in itertools.permutations(people):
+    floor = {order[i]: i + 1 for i in range(4)}
+    if floor['Sita'] != 2:
+        continue
+    if floor['Ravi'] != floor['Sita'] + 1:
+        continue
+    if floor['Tara'] != 4:
+        continue
+    solutions.append(floor)
+print("Solutions found:", len(solutions))
+for floor in solutions:
+    for person in ['Mohan', 'Sita', 'Ravi', 'Tara']:
+        print("Floor", floor[person], ":", person)`,
+      expected: `Solutions found: 1
+Floor 1 : Mohan
+Floor 2 : Sita
+Floor 3 : Ravi
+Floor 4 : Tara`
+    },
+    readMinutes: 12,
+  };
+
+const logicBoxPuzzle: Article = {
+    id: 'logic-box-puzzle',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Box Puzzles — Stack, Order aur "Immediately" ka Jaal',
+      'Box Puzzles — Stacks, Order, and the "Immediately" Trap'
+    ),
+    summary: t(
+      '5 boxes ek ke upar ek — kaunsa box kahan hai? "Immediately above" aur "between" ko samjho, stack ko table mein likho, aur Python se ek hi solution verify karo.',
+      '5 boxes stacked one over another — which box is where? Learn "immediately above" and "between", write the stack in a table, and verify the single solution with Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Box Puzzle Kya Hai?',
+          '1. What Is a Box Puzzle?'
+        ),
+        body: t(
+          `Box puzzle mein 4 ya 5 boxes ek ke upar ek rakhe hote hain — ek stack. Har box ka ek colour ya naam hota hai, aur clues batate hain kaunsa box kahan hai. Tumhara kaam hai stack ka order nikalna — sabse upar se sabse neeche tak. Sabse important rule hai **position numbering**: box puzzle mein position 1 matlab **sabse upar** wala box, aur position 5 matlab **sabse neeche** wala box. Ye floor puzzle se bilkul ulta hai — wahan floor 1 neeche tha, yahan position 1 upar hai. Isi ulte numbering ki wajah se log sabse zyada galti karte hain.
+
+Dusra rule wahi hai jo floor puzzle mein tha: **"above"** ka matlab hai kahin bhi upar, **"immediately above"** ka matlab hai bilkul upar wala box. Aur **"between"** ka matlab hai dono ke beech mein — jaise Yellow, Blue aur Green ke beech mein hai ka matlab hai Blue upar, Green neeche, aur Yellow unke beech mein kahin hai.`,
+          `In a box puzzle, 4 or 5 boxes are kept one over another — a stack. Every box has a colour or a name, and clues tell you which box is where. Your job is to find the order of the stack — from the very top to the very bottom. The most important rule is **position numbering**: in a box puzzle, position 1 means the **topmost** box, and position 5 means the **bottom** box. This is exactly the reverse of a floor puzzle — there floor 1 was at the bottom, here position 1 is at the top. This reversed numbering causes the most mistakes.
+
+The second rule is the same as in floor puzzles: **"above"** means anywhere higher, **"immediately above"** means the box directly above. And **"between"** means in the middle of the two — for example, "Yellow is between Blue and Green" means Blue is above, Green is below, and Yellow is somewhere between them.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Almari, Godown aur Books ki Stack',
+          '2. Real-Life Examples: A Cupboard, a Store Room, and a Stack of Books'
+        ),
+        body: t(
+          `Almari ka example lo: 5 dibbe ek ke upar ek rakhe hain. Sabse neeche wala dibba sabse bhaari hai — usme chawal hai. Uske bilkul upar wale dibbe mein daal hai. Sabse upar wale dibbe mein chai hai. Ye teen clues se tum dibbon ka order nikal sakte ho: upar se neeche — chai, ?, daal, ?, chawal. Beech wale do dibbon ke liye aur clues chahiye. Yehi box puzzle hai — stack ko upar se neeche likho aur clues se bharo.
+
+Books ki stack ka example: 4 kitabein ek ke upar ek hain. Maths ki kitab, Science ki kitab ke bilkul upar hai. English ki kitab sabse upar hai. To order hai: English (1), Maths (2), Science (3), aur bachi hui Hindi ki kitab sabse neeche (4). Dekho — "immediately above" wali clue ne Maths aur Science ko ek block bana diya, aur English ki clue ne block ki jagah fix kar di. **Block banana** box puzzle ki sabse badi trick hai.`,
+          `Take a cupboard example: 5 boxes are kept one over another. The bottom box is the heaviest — it holds rice. The box directly above it holds lentils. The top box holds tea. From these three clues you can work out the order of the boxes: from top to bottom — tea, ?, lentils, ?, rice. More clues are needed for the two middle boxes. This is a box puzzle — write the stack from top to bottom and fill it in with the clues.
+
+A stack of books example: 4 books lie one over another. The Maths book is directly above the Science book. The English book is on top. So the order is: English (1), Maths (2), Science (3), and the remaining Hindi book at the bottom (4). See how the "immediately above" clue turned Maths and Science into one block, and the English clue fixed where the block goes. **Making blocks** is the biggest trick in box puzzles.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5 Colour Boxes ka Dry Run',
+          '3. Step-by-Step: A Dry Run of 5 Colour Boxes'
+        ),
+        body: t(
+          `Problem: 5 boxes — White, Red, Blue, Yellow, Green — ek ke upar ek rakhe hain. Positions 1 (top) se 5 (bottom) tak hain. Clues: (1) Green box sabse neeche hai (position 5). (2) Red box, Blue ke immediately above hai. (3) White box, Red ke immediately above hai. (4) Yellow box top par nahi hai. **Step 1: pakki clue se shuru karo.** Green = 5 fix ho gaya. **Step 2: block banao.** Clues 2 aur 3 mil kar ek block banate hain: White-Red-Blue — teeno ek ke upar ek, isi order mein.
+
+**Step 3: block ko slide karo.** Block 3 positions leta hai, Green position 5 par hai, to block positions 1-3 ya 2-4 par ho sakta hai. **Step 4: clue 4 lagao.** Yellow top par nahi hai. Agar block positions 2-4 par ho, to Yellow position 1 (top) par aayega — jo clue 4 ke khilaf hai. To block positions 1-3 par hai: White = 1, Red = 2, Blue = 3, aur bacha hua Yellow = 4. Final stack: White, Red, Blue, Yellow, Green. **Step 5: verify karo.** Neeche wala code \`itertools.permutations\` se saare 120 arrangements check karke batata hai ki sirf 1 solution hai.`,
+          `Problem: 5 boxes — White, Red, Blue, Yellow, Green — are kept one over another. Positions run from 1 (top) to 5 (bottom). Clues: (1) The Green box is at the bottom (position 5). (2) The Red box is immediately above Blue. (3) The White box is immediately above Red. (4) The Yellow box is not on top. **Step 1: start with the fixed clue.** Green = 5 is fixed. **Step 2: make a block.** Clues 2 and 3 together form one block: White-Red-Blue — three in a row, in this order.
+
+**Step 3: slide the block.** The block takes 3 positions, Green is on position 5, so the block can sit on positions 1-3 or 2-4. **Step 4: apply clue 4.** Yellow is not on top. If the block sits on positions 2-4, Yellow lands on position 1 (top) — which breaks clue 4. So the block sits on positions 1-3: White = 1, Red = 2, Blue = 3, and the remaining Yellow = 4. Final stack: White, Red, Blue, Yellow, Green. **Step 5: verify.** The code below uses \`itertools.permutations\` to check all 120 arrangements and shows there is exactly 1 solution.`
+        ),
+        code: {
+          title: t(
+            'Brute Force: 120 Stacks mein se 1 Solution',
+            'Brute Force: 1 Solution out of 120 Stacks'
+          ),
+          language: 'python',
+          code: `import itertools
+colours = ['White', 'Red', 'Blue', 'Yellow', 'Green']
+solutions = []
+for order in itertools.permutations(colours):
+    pos = {order[i]: i + 1 for i in range(5)}
+    if pos['Green'] != 5:
+        continue
+    if pos['Red'] != pos['Blue'] - 1:
+        continue
+    if pos['White'] != pos['Red'] - 1:
+        continue
+    if pos['Yellow'] == 1:
+        continue
+    solutions.append(order)
+print("Solutions found:", len(solutions))
+for order in solutions:
+    for i, colour in enumerate(order, start=1):
+        print("Position", i, ":", colour)`,
+          output: `Solutions found: 1
+Position 1 : White
+Position 2 : Red
+Position 3 : Blue
+Position 4 : Yellow
+Position 5 : Green`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Upar se Ginna vs Neeche se Ginna',
+          '4. Common Mistakes: Counting from the Top vs from the Bottom'
+        ),
+        body: t(
+          `Sabse badi galti hai position 1 ko neeche wala box samajh lena. Floor puzzle mein 1 neeche tha, box puzzle mein 1 upar hai — jo log dono ko ek jaisa samajhte hain, woh poora stack ulta bana lete hain. Har puzzle ki shuruaat mein ek line likho: "Position 1 = TOP". Dusri galti hai "second from the top" aur "second from the bottom" ko mix kar dena. Hamare stack mein second from the top Red hai (position 2), aur second from the bottom Yellow hai (position 4). "From the top" aur "from the bottom" — dono ko alag rakho.
+
+Teesri galti hai block ko tod dena. White-Red-Blue ek block hai — inka order kabhi nahi badalta. Jo log block ko tod kar alag-alag jagah rakhte hain, woh galat solutions banate hain. Block ko ek unit ki tarah slide karo — ya to positions 1-3, ya 2-4, bas.`,
+          `The biggest mistake is treating position 1 as the bottom box. In a floor puzzle 1 was at the bottom; in a box puzzle 1 is at the top — people who treat both the same way build the whole stack upside down. At the start of every puzzle, write one line: "Position 1 = TOP". The second mistake is mixing up "second from the top" and "second from the bottom". In our stack, second from the top is Red (position 2), and second from the bottom is Yellow (position 4). Keep "from the top" and "from the bottom" separate.
+
+The third mistake is breaking the block. White-Red-Blue is one block — its order never changes. People who break the block and place the boxes separately build wrong solutions. Slide the block as one unit — either positions 1-3 or 2-4, nothing else.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Sirf 3 Clues Hon to 2 Solutions',
+          '5. Edge Cases: Only 3 Clues Give 2 Solutions'
+        ),
+        body: t(
+          `Edge case 1: **clue kam ho to solutions zyada**. Agar clue 4 ("Yellow top par nahi hai") hata do, to sirf 3 clues bachte hain — aur solutions 2 ho jaati hain: (White, Red, Blue, Yellow, Green) aur (Yellow, White, Red, Blue, Green). Dono hi pehli 3 clues ko follow karti hain. Neeche wala pehla code yehi batata hai: "Solutions with only 3 clues: 2". Isi liye exam mein har clue zaroori hota hai — ek clue kam ho to answer hi nahi nikalta.
+
+Edge case 2: **"between" ginna**. White (1) aur Green (5) ke beech mein 3 boxes hain: Red, Blue, Yellow. Formula hai: neeche wali position minus upar wali position minus 1. 5 - 1 - 1 = 3. Edge case 3: **top aur bottom wale boxes**. White top par hai — uske upar koi box nahi hai, to "X, White ke upar hai" kabhi true nahi ho sakta. Green bottom par hai — uske neeche koi box nahi hai.`,
+          `Edge case 1: **fewer clues mean more solutions**. If clue 4 ("Yellow is not on top") is removed, only 3 clues remain — and the solutions become 2: (White, Red, Blue, Yellow, Green) and (Yellow, White, Red, Blue, Green). Both follow the first 3 clues. The first code below shows exactly this: "Solutions with only 3 clues: 2". That is why every clue matters in the exam — with one clue missing, no answer comes out.
+
+Edge case 2: **counting "between"**. Between White (1) and Green (5) there are 3 boxes: Red, Blue, Yellow. The formula is: lower position minus upper position minus 1. 5 - 1 - 1 = 3. Edge case 3: **the top and bottom boxes**. White is on top — no box is above it, so "X is above White" can never be true. Green is at the bottom — no box is below it.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Green Neeche Na Ho?',
+          '6. What If: Green Is Not at the Bottom?'
+        ),
+        body: t(
+          `Soch lo clue 1 badal jaye: Green box sabse neeche nahi hai — woh kahin bhi ho sakta hai. Ab kya hoga? White-Red-Blue block ab bhi ek saath hai, aur Yellow top par nahi hai. Block 3 positions leta hai, to woh positions 1-3, 2-4 ya 3-5 par ho sakta hai. Har jagah ke liye Green aur Yellow ki jagah badalti hai — kul **4 solutions** ban jaati hain. Ek clue hatate hi solution 1 se 4 ho gaya. Yehi box puzzle ki sensitivity hai: jitni zyada clues, utna pakka answer.
+
+Isi liye exam mein jab 2 solutions milen to ghabrao mat — iska matlab hai tumne koi clue miss kar diya hai. Wapas jao, clues ko ek-ek karke check karo, aur woh clue dhoondho jo tumne use nahi kiya. Neeche wala dusra code 4 statements check karta hai — "Blue is immediately below Red" true hai, "Yellow is between Blue and Green" true hai, "White is at the bottom" false hai, aur White-Green ke beech 3 boxes hain.`,
+          `Suppose clue 1 changes: the Green box is not at the bottom — it can be anywhere. What happens now? The White-Red-Blue block still stays together, and Yellow is still not on top. The block takes 3 positions, so it can sit on positions 1-3, 2-4, or 3-5. The places of Green and Yellow change for each spot — and the total becomes **4 solutions**. Removing one clue took the solutions from 1 to 4. This is how sensitive a box puzzle is: the more clues, the more certain the answer.
+
+That is why you should not panic in the exam when you get 2 solutions — it means you missed a clue. Go back, check the clues one by one, and find the clue you did not use. The second code below checks 4 statements — "Blue is immediately below Red" is true, "Yellow is between Blue and Green" is true, "White is at the bottom" is false, and there are 3 boxes between White and Green.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Box Puzzle ka 4-Step Method',
+          '7. Summary: The 4-Step Box Puzzle Method'
+        ),
+        body: t(
+          `Box puzzle ka method 4 steps mein yaad rakho. **Step 1: Likho "Position 1 = TOP"** — numbering ulta hai, ye kabhi mat bhoolo. **Step 2: Block banao** — "immediately above" wali clues ko ek unit mein jodo (White-Red-Blue). **Step 3: Block ko slide karo** — saari possible jagah try karo aur "not on top" jaisi clues se galat jagah hatao. **Step 4: Verify karo** — har clue ko final stack se check karo, aur "between" ginne ke liye neeche minus upar minus 1 ka formula use karo.
+
+Yaad rakhne wala stack: White (1), Red (2), Blue (3), Yellow (4), Green (5). Agle article mein hum scheduling puzzles dekhenge — wahan stack ki jagah din hote hain (Monday se Friday), aur block ki jagah consecutive days hote hain.`,
+          `Remember the box puzzle method in 4 steps. **Step 1: Write "Position 1 = TOP"** — the numbering is reversed, never forget it. **Step 2: Make blocks** — join the "immediately above" clues into one unit (White-Red-Blue). **Step 3: Slide the block** — try every possible spot and use clues like "not on top" to remove the wrong spots. **Step 4: Verify** — check every clue against the final stack, and for "between" use the formula lower minus upper minus 1.
+
+The stack to remember: White (1), Red (2), Blue (3), Yellow (4), Green (5). In the next article we will look at scheduling puzzles — there the stack is replaced by days (Monday to Friday), and blocks are replaced by consecutive days.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        '5 Boxes ka Stack: Upar se Neeche',
+        'The Stack of 5 Boxes: Top to Bottom'
+      ),
+      caption: t(
+        'Position 1 matlab sabse upar — floor puzzle se ulta',
+        'Position 1 means the very top — the reverse of a floor puzzle'
+      ),
+      nodes: [
+        {
+          t: t('Position 1: White', 'Position 1: White'),
+          s: t('Sabse upar — block ka pehla box', 'The topmost — first box of the block')
+        },
+        {
+          t: t('Position 2: Red', 'Position 2: Red'),
+          s: t('White ke immediately below, Blue ke above', 'Immediately below White, above Blue')
+        },
+        {
+          t: t('Position 3: Blue', 'Position 3: Blue'),
+          s: t('Red ke immediately below', 'Immediately below Red')
+        },
+        {
+          t: t('Position 4: Yellow', 'Position 4: Yellow'),
+          s: t('Blue aur Green ke beech mein', 'Between Blue and Green')
+        },
+        {
+          t: t('Position 5: Green', 'Position 5: Green'),
+          s: t('Sabse neeche — clue 1 se fix', 'The bottom — fixed by clue 1')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Sirf 3 Clues Hon to 2 Solutions Milti Hain',
+          'Only 3 Clues Give 2 Solutions'
+        ),
+        language: 'python',
+        code: `import itertools
+colours = ['White', 'Red', 'Blue', 'Yellow', 'Green']
+solutions = []
+for order in itertools.permutations(colours):
+    pos = {order[i]: i + 1 for i in range(5)}
+    if pos['Green'] != 5:
+        continue
+    if pos['Red'] != pos['Blue'] - 1:
+        continue
+    if pos['White'] != pos['Red'] - 1:
+        continue
+    solutions.append(order)
+print("Solutions with only 3 clues:", len(solutions))
+for order in solutions:
+    print(order)`,
+        output: `Solutions with only 3 clues: 2
+('White', 'Red', 'Blue', 'Yellow', 'Green')
+('Yellow', 'White', 'Red', 'Blue', 'Green')`
+      },
+      {
+        title: t(
+          'Statements Check Karo: Kaunsa Sahi, Kaunsa Galat',
+          'Check the Statements: Which Are True, Which Are False'
+        ),
+        language: 'python',
+        code: `pos = {'White': 1, 'Red': 2, 'Blue': 3, 'Yellow': 4, 'Green': 5}
+checks = [
+    ("Blue is immediately below Red", pos['Blue'] == pos['Red'] + 1),
+    ("Yellow is between Blue and Green", pos['Blue'] < pos['Yellow'] < pos['Green']),
+    ("White is at the bottom", pos['White'] == 5),
+    ("Boxes between White and Green", pos['Green'] - pos['White'] - 1),
+]
+for text, result in checks:
+    print(text, "->", result)`,
+        output: `Blue is immediately below Red -> True
+Yellow is between Blue and Green -> True
+White is at the bottom -> False
+Boxes between White and Green -> 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Box puzzle mein upar se dusra box (second from the top) kaunsa hai?',
+          'In the box puzzle, which box is second from the top?'
+        ),
+        opts: [
+          t('White', 'White'),
+          t('Red', 'Red'),
+          t('Blue', 'Blue'),
+          t('Yellow', 'Yellow')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Stack hai White (1), Red (2), Blue (3), Yellow (4), Green (5) — upar se dusra Red hai.',
+          'Correct answer: the stack is White (1), Red (2), Blue (3), Yellow (4), Green (5) — second from the top is Red.'
+        )
+      },
+      {
+        q: t(
+          'Blue ke immediately below kaunsa box hai?',
+          'Which box is immediately below Blue?'
+        ),
+        opts: [
+          t('Green', 'Green'),
+          t('White', 'White'),
+          t('Yellow', 'Yellow'),
+          t('Red', 'Red')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Blue position 3 par hai aur Yellow position 4 par — Yellow, Blue ke immediately below hai.',
+          'Correct answer: Blue is on position 3 and Yellow on position 4 — Yellow is immediately below Blue.'
+        )
+      },
+      {
+        q: t(
+          'Sabse upar wala box (top) kaunsa hai?',
+          'Which box is on the very top?'
+        ),
+        opts: [
+          t('White', 'White'),
+          t('Red', 'Red'),
+          t('Blue', 'Blue'),
+          t('Green', 'Green')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: White position 1 par hai — White-Red-Blue block ka pehla box sabse upar hai.',
+          'Correct answer: White is on position 1 — the first box of the White-Red-Blue block is on top.'
+        )
+      },
+      {
+        q: t(
+          'White aur Green ke beech mein kitne boxes hain?',
+          'How many boxes are between White and Green?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('4', '4'),
+          t('3', '3'),
+          t('1', '1')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: White position 1 par hai, Green position 5 par — beech mein Red, Blue, Yellow hain, to 5 - 1 - 1 = 3.',
+          'Correct answer: White is on position 1, Green on position 5 — Red, Blue, and Yellow are between them, so 5 - 1 - 1 = 3.'
+        )
+      },
+      {
+        q: t(
+          'Kaunsa statement true hai?',
+          'Which statement is true?'
+        ),
+        opts: [
+          t('Blue, Red ke immediately below hai', 'Blue is immediately below Red'),
+          t('Yellow sabse upar hai', 'Yellow is on the very top'),
+          t('Green, Blue ke immediately below hai', 'Green is immediately below Blue'),
+          t('White sabse neeche hai', 'White is at the very bottom')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Blue position 3 par hai aur Red position 2 par — Blue, Red ke immediately below hai. Baaki teen statements galat hain.',
+          'Correct answer: Blue is on position 3 and Red on position 2 — Blue is immediately below Red. The other three statements are wrong.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Box stack mein position 1 matlab sabse upar — floor puzzle se ulta hai.',
+        'In a box stack, position 1 means the very top — the reverse of a floor puzzle.'
+      ),
+      t(
+        '"Immediately above" ka matlab hai bilkul upar wala box, ek bhi gap nahi.',
+        '"Immediately above" means the box directly above, with no gap at all.'
+      ),
+      t(
+        '"Between" ginne mein dono ends ko chhodo — sirf beech wale boxes gino.',
+        'When counting "between", leave out both ends — count only the boxes in the middle.'
+      ),
+      t(
+        'Chain wali clues (White-Red-Blue) ko ek block ki tarah rakho aur block ko slide karo.',
+        'Treat chained clues (White-Red-Blue) as one block and slide the block.'
+      ),
+      t(
+        'Agar do solutions milen to ek clue kam hai — chautha clue dhoondho.',
+        'If you get two solutions, one clue is missing — find the fourth clue.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 4 Boxes ka Naya Stack',
+        'Practice: A New Stack of 4 Boxes'
+      ),
+      task: t(
+        'Naya stack: 4 boxes — Red, Blue, Green, Yellow — ek ke upar ek hain. Clues: Green box sabse neeche hai (position 4). Red box, Blue ke immediately above hai. Yellow box sabse upar hai (position 1). Starter code run karo aur check karo ki output expected jaisa aata hai — sirf 1 solution milna chahiye.',
+        'New stack: 4 boxes — Red, Blue, Green, Yellow — kept one over another. Clues: the Green box is at the bottom (position 4). The Red box is immediately above Blue. The Yellow box is on top (position 1). Run the starter code and check that the output matches the expected output — there should be exactly 1 solution.'
+      ),
+      language: 'python',
+      starter: `import itertools
+colours = ['Red', 'Blue', 'Green', 'Yellow']
+solutions = []
+for order in itertools.permutations(colours):
+    pos = {order[i]: i + 1 for i in range(4)}
+    if pos['Green'] != 4:
+        continue
+    if pos['Red'] != pos['Blue'] - 1:
+        continue
+    if pos['Yellow'] != 1:
+        continue
+    solutions.append(order)
+print("Solutions found:", len(solutions))
+for order in solutions:
+    for i, colour in enumerate(order, start=1):
+        print("Position", i, ":", colour)`,
+      expected: `Solutions found: 1
+Position 1 : Yellow
+Position 2 : Red
+Position 3 : Blue
+Position 4 : Green`
+    },
+    readMinutes: 12,
+  };
+
+const logicSchedulePuzzle: Article = {
+    id: 'logic-schedule-puzzle',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Scheduling Puzzles — 5 Din, 5 Subjects, 1 Timetable',
+      'Scheduling Puzzles — 5 Days, 5 Subjects, 1 Timetable'
+    ),
+    summary: t(
+      'Monday se Friday tak ka timetable banao — "immediately before", "not on Monday" aur fixed days ko jod kar ek hi solution nikalo, Python se verify karo.',
+      'Build a timetable from Monday to Friday — join "immediately before", "not on Monday", and the fixed days to get exactly one solution, and verify it with Python.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Scheduling Puzzle Kya Hai?',
+          '1. What Is a Scheduling Puzzle?'
+        ),
+        body: t(
+          `Scheduling puzzle mein kuch kaam ya subjects ko dinon mein baantna hota hai — jaise Monday se Friday tak 5 subjects, har din ek subject. Clues diye hote hain, jaise "Maths Wednesday ko hai" ya "English, Science se bilkul pehle hai". Tumhara kaam hai poora timetable banana. Sabse pehla rule hai **din ka order**: Monday, Tuesday, Wednesday, Thursday, Friday — hamesha isi order mein likho. Din ka order badalne se puzzle bigadta hai.
+
+Dusra rule hai do words ka farak: **"before"** ka matlab hai koi bhi pehle wala din — "English, History se pehle hai" ka matlab hai English ka din History se chhota hai, kitna bhi chhota ho. **"Immediately before"** ka matlab hai bilkul pichla din — English ka din = Science ka din minus 1. Teesra rule: **"not on Monday"** ka matlab ye nahi ki Tuesday par hai — iska matlab hai Monday ke alawa koi bhi din ho sakta hai.`,
+          `In a scheduling puzzle, some tasks or subjects must be spread over days — for example, 5 subjects from Monday to Friday, one subject each day. Clues are given, like "Maths is on Wednesday" or "English is immediately before Science". Your job is to build the full timetable. The first rule is the **order of the days**: Monday, Tuesday, Wednesday, Thursday, Friday — always write them in this order. Changing the order of the days breaks the puzzle.
+
+The second rule is the difference between two words: **"before"** means any earlier day — "English is before History" means English falls on an earlier day than History, by any amount. **"Immediately before"** means the day just before — the day of English = the day of Science minus 1. The third rule: **"not on Monday"** does not mean Tuesday — it means any day except Monday.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: School Timetable, Exam Dates aur Shift Duty',
+          '2. Real-Life Examples: A School Timetable, Exam Dates, and Shift Duty'
+        ),
+        body: t(
+          `School timetable ka example lo: Monday se Friday tak 5 subjects hain — Maths, English, Science, History, Art. Principal kehta hai: "Maths Wednesday ko hai. History Friday ko hai." Bas do clues se do din fix ho gaye. Ab English aur Science ka pair bacha hai — "English, Science se bilkul pehle hai" wali clue se woh pair Monday-Tuesday par baithta hai, aur Art ke liye Thursday bachta hai. Yehi scheduling puzzle hai — fixed days se shuru karo, phir consecutive pair lagao, phir bacha hua bharo.
+
+Shift duty ka example: hospital mein 5 nurses ki duty Monday se Friday tak hai. "Neha ki duty Monday ko nahi hai. Priya ki duty Neha se bilkul pehle hai." Yahan "not on Monday" aur "immediately before" dono clues ek saath kaam karti hain — Priya, Neha se pehle hai, to Neha Monday par nahi ho sakti (kyunki usse pehle koi din hi nahi hai), aur Priya bhi Monday par nahi ho sakti. Aise elimination se hi timetable banta hai.`,
+          `Take a school timetable example: 5 subjects from Monday to Friday — Maths, English, Science, History, Art. The principal says: "Maths is on Wednesday. History is on Friday." Two clues fix two days at once. Now the English-Science pair is left — the clue "English is immediately before Science" places that pair on Monday-Tuesday, and Thursday is left for Art. This is a scheduling puzzle — start with the fixed days, then place the consecutive pair, then fill what is left.
+
+A shift duty example: in a hospital, 5 nurses have duty from Monday to Friday. "Neha is not on duty on Monday. Priya is on duty immediately before Neha." Here the clues "not on Monday" and "immediately before" work together — Priya is before Neha, so Neha cannot be on Monday (because no day comes before Monday), and Priya cannot be on Monday either. The timetable is built by exactly this kind of elimination.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5-Din ke Timetable ka Dry Run',
+          '3. Step-by-Step: A Dry Run of a 5-Day Timetable'
+        ),
+        body: t(
+          `Problem: Monday se Friday tak 5 subjects — Maths, English, Science, History, Art — ek din ek subject. Clues: (1) Maths Wednesday ko hai. (2) English, Science se immediately before hai. (3) History Friday ko hai. (4) Art Monday ko nahi hai. **Step 1: fixed days se shuru karo.** Maths = Wednesday, History = Friday. Bache hue din: Monday, Tuesday, Thursday. Bache hue subjects: English, Science, Art.
+
+**Step 2: consecutive pair lagao.** English, Science se bilkul pehle hai — matlab dono consecutive din hon. Bache hue dinon mein consecutive pairs hain: (Monday, Tuesday) aur (Thursday, Friday) — par Friday par History hai. To pair hai (Monday, Tuesday): English = Monday, Science = Tuesday. **Step 3: bacha hua bharo.** Art ke liye sirf Thursday bacha hai — aur clue 4 kehta hai Art Monday ko nahi hai, jo match karta hai. Final timetable: Monday English, Tuesday Science, Wednesday Maths, Thursday Art, Friday History. Neeche wala code \`itertools.permutations\` se saare 120 timetables check karke batata hai ki sirf 1 solution hai.`,
+          `Problem: 5 subjects — Maths, English, Science, History, Art — from Monday to Friday, one subject each day. Clues: (1) Maths is on Wednesday. (2) English is immediately before Science. (3) History is on Friday. (4) Art is not on Monday. **Step 1: start with the fixed days.** Maths = Wednesday, History = Friday. The days left are Monday, Tuesday, Thursday. The subjects left are English, Science, Art.
+
+**Step 2: place the consecutive pair.** English is immediately before Science — so both must fall on consecutive days. Among the days left, the consecutive pairs are (Monday, Tuesday) and (Thursday, Friday) — but Friday already has History. So the pair is (Monday, Tuesday): English = Monday, Science = Tuesday. **Step 3: fill what is left.** Only Thursday is left for Art — and clue 4 says Art is not on Monday, which matches. Final timetable: Monday English, Tuesday Science, Wednesday Maths, Thursday Art, Friday History. The code below uses \`itertools.permutations\` to check all 120 timetables and shows there is exactly 1 solution.`
+        ),
+        code: {
+          title: t(
+            'Brute Force: 120 Timetables mein se 1 Solution',
+            'Brute Force: 1 Solution out of 120 Timetables'
+          ),
+          language: 'python',
+          code: `import itertools
+days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+subjects = ['Maths', 'English', 'Science', 'History', 'Art']
+solutions = []
+for order in itertools.permutations(subjects):
+    day = {order[i]: days[i] for i in range(5)}
+    if day['Maths'] != 'Wed':
+        continue
+    if days.index(day['Science']) != days.index(day['English']) + 1:
+        continue
+    if day['History'] != 'Fri':
+        continue
+    if day['Art'] == 'Mon':
+        continue
+    solutions.append(order)
+print("Solutions found:", len(solutions))
+for order in solutions:
+    for i, subject in enumerate(order):
+        print(days[i], ":", subject)`,
+          output: `Solutions found: 1
+Mon : English
+Tue : Science
+Wed : Maths
+Thu : Art
+Fri : History`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: "Before" ko "Immediately Before" Samajhna',
+          '4. Common Mistakes: Reading "Before" as "Immediately Before"'
+        ),
+        body: t(
+          `Sabse badi galti hai "before" ko "immediately before" samajh lena — yehi galti floor aur box puzzles mein bhi hoti hai. "English, History se pehle hai" ka matlab hai English Monday, Tuesday, Wednesday ya Thursday — koi bhi din jo Friday se pehle ho. "English, Science se immediately before hai" ka matlab hai sirf ek option: English ka din Science se exactly 1 kam hai. Jo log "before" ko "immediately before" samajhte hain, woh sahi solutions ko galat tareeke se hata dete hain.
+
+Dusri galti hai "not on Monday" se ye nikaal lena ki subject Tuesday par hai. "Not on Monday" ka matlab hai Tuesday, Wednesday, Thursday ya Friday — 4 options. Teesri galti hai din ka order bhool jana: Thursday, Wednesday se pehle nahi aata. Timetable banate waqt din hamesha Mon se Fri ke order mein likho, aur har clue ko usi order mein check karo.`,
+          `The biggest mistake is reading "before" as "immediately before" — the same mistake that happens in floor and box puzzles. "English is before History" means English is on Monday, Tuesday, Wednesday, or Thursday — any day before Friday. "English is immediately before Science" means only one option: the day of English is exactly 1 less than the day of Science. People who read "before" as "immediately before" wrongly remove correct solutions.
+
+The second mistake is concluding from "not on Monday" that the subject is on Tuesday. "Not on Monday" means Tuesday, Wednesday, Thursday, or Friday — 4 options. The third mistake is forgetting the order of the days: Thursday does not come before Wednesday. While building a timetable, always write the days in Mon to Fri order, and check every clue in that same order.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Fixed Day, Consecutive Pair aur Aakhri Din',
+          '5. Edge Cases: A Fixed Day, a Consecutive Pair, and the Last Day'
+        ),
+        body: t(
+          `Edge case 1: **aakhri din**. History Friday ko hai — uske baad koi din nahi hai, to "X, History ke baad hai" kabhi true nahi ho sakta. Aise clues ko turant false mark karo. Edge case 2: **consecutive pair kinare par**. English-Science pair Monday-Tuesday par bhi ho sakta hai aur Thursday-Friday par bhi — par Friday par History hai, to sirf Monday-Tuesday bachta hai. Pair ko slide karte waqt kinare wale dinon ka dhyaan rakho.
+
+Edge case 3: **"kitne din beech mein" ginna**. English (Monday) aur History (Friday) ke beech mein 3 din hain: Tuesday, Wednesday, Thursday. Formula hai: baad wala din minus pehle wala din minus 1. Friday ka index 4 hai, Monday ka 0 hai — 4 - 0 - 1 = 3. Neeche wala pehla code yehi hisaab karta hai, aur batata hai ki Maths ke immediately baad Art hai aur Tuesday ko Science hai.`,
+          `Edge case 1: **the last day**. History is on Friday — no day comes after it, so "X is after History" can never be true. Mark such clues false at once. Edge case 2: **a consecutive pair at the edge**. The English-Science pair could sit on Monday-Tuesday or on Thursday-Friday — but Friday already has History, so only Monday-Tuesday is left. When sliding a pair, watch the days at the edges.
+
+Edge case 3: **counting "how many days in between"**. Between English (Monday) and History (Friday) there are 3 days: Tuesday, Wednesday, Thursday. The formula is: later day minus earlier day minus 1. Friday has index 4, Monday has index 0 — 4 - 0 - 1 = 3. The first code below does this same calculation, and shows that Art comes immediately after Maths and Science is on Tuesday.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Maths Thursday par Chala Jaye?',
+          '6. What If: Maths Moves to Thursday?'
+        ),
+        body: t(
+          `Soch lo clue 1 badal jaye: Maths Wednesday ki jagah Thursday ko hai. Ab timetable kya hoga? History ab bhi Friday par hai. English-Science pair ko consecutive din chahiye — Monday-Tuesday ab bhi khaali hai, to pair wahi baithta hai: English Monday, Science Tuesday. Bache hue din: Wednesday aur Thursday. Maths Thursday par hai, to Art Wednesday par aata hai. Naya timetable: Monday English, Tuesday Science, Wednesday Art, Thursday Maths, Friday History. Solution ab bhi sirf 1 hai — bas Art aur Maths ki jagah badal gayi.
+
+Ye what-if batata hai ki scheduling puzzle mein fixed day badalne se poora timetable shift ho sakta hai, par pair ka order nahi badalta. Neeche wala dusra code yehi what-if run karta hai aur naya solution print karta hai. Exam mein aisa question aaye to pehle fixed days ko nayi jagah rakho, phir pair ko slide karo — wahi method phir se kaam aayega.`,
+          `Suppose clue 1 changes: Maths is on Thursday instead of Wednesday. What is the timetable now? History is still on Friday. The English-Science pair needs consecutive days — Monday-Tuesday is still free, so the pair sits there: English Monday, Science Tuesday. The days left are Wednesday and Thursday. Maths is on Thursday, so Art lands on Wednesday. New timetable: Monday English, Tuesday Science, Wednesday Art, Thursday Maths, Friday History. The solution is still exactly 1 — only Art and Maths swapped places.
+
+This what-if shows that changing a fixed day in a scheduling puzzle can shift the whole timetable, but the order of the pair does not change. The second code below runs this what-if and prints the new solution. If such a question appears in the exam, first place the fixed days in their new spots, then slide the pair — the same method works again.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Timetable ka 4-Step Method',
+          '7. Summary: The 4-Step Timetable Method'
+        ),
+        body: t(
+          `Scheduling puzzle ka method 4 steps mein yaad rakho. **Step 1: Din order mein likho** — Mon se Fri, ek column din ka, ek column subject ka. **Step 2: Fixed days se shuru karo** — Maths Wednesday, History Friday jaise clues pehle lagao. **Step 3: Consecutive pair ko slide karo** — English-Science jaise pair ko saari possible jagah try karo aur bhar chuke dinon ko hatao. **Step 4: Verify karo** — har clue ko final timetable se check karo, aur "between" ginne ke liye baad minus pehle minus 1 ka formula use karo.
+
+Yaad rakhne wala timetable: Monday English, Tuesday Science, Wednesday Maths, Thursday Art, Friday History. Agle article mein hum Mock Test 1 dekhenge — wahan saare topics mil kar 20 questions banate hain, aur tum apna score nikaal kar dekh sakte ho ki kaunsa topic weak hai.`,
+          `Remember the scheduling puzzle method in 4 steps. **Step 1: Write the days in order** — Mon to Fri, one column for the day, one column for the subject. **Step 2: Start with the fixed days** — apply clues like Maths on Wednesday and History on Friday first. **Step 3: Slide the consecutive pair** — try every possible spot for a pair like English-Science and remove the days that are already taken. **Step 4: Verify** — check every clue against the final timetable, and for "between" use the formula later minus earlier minus 1.
+
+The timetable to remember: Monday English, Tuesday Science, Wednesday Maths, Thursday Art, Friday History. In the next article we will look at Mock Test 1 — there all the topics come together in 20 questions, and you can find your score to see which topic is weak.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '5 Din ka Timetable: Monday se Friday',
+        'The 5-Day Timetable: Monday to Friday'
+      ),
+      caption: t(
+        'Din order mein padho — pair Monday-Tuesday par baitha, Art Thursday par bacha',
+        'Read the days in order — the pair sits on Monday-Tuesday, Art is left for Thursday'
+      ),
+      nodes: [
+        {
+          t: t('Mon: English', 'Mon: English'),
+          s: t('Pair ka pehla din — Science se immediately before', 'First day of the pair — immediately before Science')
+        },
+        {
+          t: t('Tue: Science', 'Tue: Science'),
+          s: t('Pair ka dusra din — English ke immediately after', 'Second day of the pair — immediately after English')
+        },
+        {
+          t: t('Wed: Maths', 'Wed: Maths'),
+          s: t('Clue 1 — fixed day', 'Clue 1 — fixed day')
+        },
+        {
+          t: t('Thu: Art', 'Thu: Art'),
+          s: t('Bacha hua din — Monday par nahi hai', 'The day that is left — not on Monday')
+        },
+        {
+          t: t('Fri: History', 'Fri: History'),
+          s: t('Clue 3 — fixed day, aakhri din', 'Clue 3 — fixed day, the last day')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Gap Calculator: Beech mein Kitne Din Hain?',
+          'Gap Calculator: How Many Days Are in Between?'
+        ),
+        language: 'python',
+        code: `days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+plan = ['English', 'Science', 'Maths', 'Art', 'History']
+print("Days between English and History:", days.index('Fri') - days.index('Mon') - 1)
+print("Subject after Maths:", plan[days.index('Wed') + 1])
+print("Subject on Tuesday:", plan[days.index('Tue')])`,
+        output: `Days between English and History: 3
+Subject after Maths: Art
+Subject on Tuesday: Science`
+      },
+      {
+        title: t(
+          'What If: Maths Thursday par Ho?',
+          'What If: Maths Moves to Thursday?'
+        ),
+        language: 'python',
+        code: `import itertools
+days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+subjects = ['Maths', 'English', 'Science', 'History', 'Art']
+solutions = []
+for order in itertools.permutations(subjects):
+    day = {order[i]: days[i] for i in range(5)}
+    if day['Maths'] != 'Thu':
+        continue
+    if days.index(day['Science']) != days.index(day['English']) + 1:
+        continue
+    if day['History'] != 'Fri':
+        continue
+    if day['Art'] == 'Mon':
+        continue
+    solutions.append(order)
+print("Solutions if Maths moves to Thursday:", len(solutions))
+for order in solutions:
+    print(order)`,
+        output: `Solutions if Maths moves to Thursday: 1
+('English', 'Science', 'Art', 'Maths', 'History')`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Timetable mein Tuesday ko kaunsa subject hai?',
+          'Which subject is on Tuesday in the timetable?'
+        ),
+        opts: [
+          t('Maths', 'Maths'),
+          t('Science', 'Science'),
+          t('Art', 'Art'),
+          t('English', 'English')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: English Monday ko hai aur Science uske immediately after, matlab Tuesday ko hai.',
+          'Correct answer: English is on Monday and Science is immediately after it, so Science is on Tuesday.'
+        )
+      },
+      {
+        q: t(
+          'Art kis din hai?',
+          'On which day is Art?'
+        ),
+        opts: [
+          t('Monday', 'Monday'),
+          t('Tuesday', 'Tuesday'),
+          t('Thursday', 'Thursday'),
+          t('Friday', 'Friday')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Maths Wednesday aur History Friday par hain, English-Science pair Monday-Tuesday par hai — Art ke liye Thursday bachta hai.',
+          'Correct answer: Maths is on Wednesday and History on Friday, the English-Science pair is on Monday-Tuesday — Thursday is left for Art.'
+        )
+      },
+      {
+        q: t(
+          'Maths ke immediately after kaunsa subject hai?',
+          'Which subject comes immediately after Maths?'
+        ),
+        opts: [
+          t('Science', 'Science'),
+          t('History', 'History'),
+          t('Art', 'Art'),
+          t('English', 'English')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Maths Wednesday ko hai, uske immediately after Thursday hai aur Thursday ko Art hai.',
+          'Correct answer: Maths is on Wednesday, immediately after it is Thursday, and Art is on Thursday.'
+        )
+      },
+      {
+        q: t(
+          'English (Monday) aur History (Friday) ke beech mein kitne din hain?',
+          'How many days are between English (Monday) and History (Friday)?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('4', '4'),
+          t('3', '3'),
+          t('5', '5')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: beech mein Tuesday, Wednesday aur Thursday hain — 3 din. Formula: 4 - 0 - 1 = 3.',
+          'Correct answer: Tuesday, Wednesday, and Thursday are in between — 3 days. Formula: 4 - 0 - 1 = 3.'
+        )
+      },
+      {
+        q: t(
+          'Kaunsa statement galat hai?',
+          'Which statement is false?'
+        ),
+        opts: [
+          t('Science Monday ko hai', 'Science is on Monday'),
+          t('Maths Wednesday ko hai', 'Maths is on Wednesday'),
+          t('History Friday ko hai', 'History is on Friday'),
+          t('Art Thursday ko hai', 'Art is on Thursday')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Science Tuesday ko hai, Monday ko English hai. Baaki teen statements true hain.',
+          'Correct answer: Science is on Tuesday, English is on Monday. The other three statements are true.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Din hamesha order mein likho — Mon se Fri — aur har subject ko ek din do.',
+        'Always write the days in order — Mon to Fri — and give each subject one day.'
+      ),
+      t(
+        '"Immediately before" ka matlab hai bilkul pichla din, "before" ka matlab hai koi bhi pehle wala din.',
+        '"Immediately before" means the day just before; "before" means any earlier day.'
+      ),
+      t(
+        'Fixed day wali clue se shuru karo — Maths Wednesday aur History Friday ne puzzle khol diya.',
+        'Start with the fixed-day clue — Maths on Wednesday and History on Friday opened the puzzle.'
+      ),
+      t(
+        '"Not on Monday" ka matlab ye nahi ki Tuesday par hai — bache hue dinon mein se chuno.',
+        '"Not on Monday" does not mean Tuesday — choose from the days that are left.'
+      ),
+      t(
+        '"Between" ginne mein dono ends ko chhodo — Mon aur Fri ke beech 3 din hain.',
+        'When counting "between", leave out both ends — there are 3 days between Mon and Fri.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 4 Din ka Naya Timetable',
+        'Practice: A New 4-Day Timetable'
+      ),
+      task: t(
+        'Naya timetable: Monday se Thursday tak 4 subjects — Hindi, Maths, Science, Art. Clues: Maths Tuesday ko hai. Science, Maths ke immediately after hai. Art Thursday ko hai. Starter code run karo aur check karo ki output expected jaisa aata hai — sirf 1 solution milna chahiye.',
+        'New timetable: 4 subjects — Hindi, Maths, Science, Art — from Monday to Thursday. Clues: Maths is on Tuesday. Science is immediately after Maths. Art is on Thursday. Run the starter code and check that the output matches the expected output — there should be exactly 1 solution.'
+      ),
+      language: 'python',
+      starter: `import itertools
+days = ['Mon', 'Tue', 'Wed', 'Thu']
+subjects = ['Hindi', 'Maths', 'Science', 'Art']
+solutions = []
+for order in itertools.permutations(subjects):
+    day = {order[i]: days[i] for i in range(4)}
+    if day['Maths'] != 'Tue':
+        continue
+    if days.index(day['Science']) != days.index(day['Maths']) + 1:
+        continue
+    if day['Art'] != 'Thu':
+        continue
+    solutions.append(order)
+print("Solutions found:", len(solutions))
+for order in solutions:
+    for i, subject in enumerate(order):
+        print(days[i], ":", subject)`,
+      expected: `Solutions found: 1
+Mon : Hindi
+Tue : Maths
+Wed : Science
+Thu : Art`
+    },
+    readMinutes: 12,
+  };
+
+const logicMockTest1: Article = {
+    id: 'logic-mock-test-1',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Mock Test 1 — 20 Mixed Reasoning Questions',
+      'Mock Test 1 — 20 Mixed Reasoning Questions'
+    ),
+    summary: t(
+      'Series, coding, blood relation, direction, seating, syllogism, assertion-reason, floor puzzle — 20 questions, har ek ka answer aur short solution, aur score nikalne ka code.',
+      'Series, coding, blood relations, direction, seating, syllogism, assertion-reason, floor puzzles — 20 questions, each with its answer and a short solution, plus code to find your score.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock Test 1 Kya Hai?',
+          '1. What Is Mock Test 1?'
+        ),
+        body: t(
+          `Mock Test 1 mein 20 mixed reasoning questions hain — har topic se 2-3 questions. Topics hain: number series, letter series, odd one out, coding, blood relation, direction, seating, syllogism, assertion-reason, floor puzzle, age, work-rate, team counting, comparison aur clock angle. Time limit hai **60 minutes** — matlab har question ke liye 3 minutes. Ye test tumhe batayega ki kaunsa topic strong hai aur kaunsa weak.
+
+Test dene ka tareeka: pehle saare 20 questions ek baar padho, phir easy wale solve karo, tough wale mark karke baad mein aao. Answer likhne ke baad neeche wala scorer code use karo — apne answers daalo, score nikalo, aur galat questions ko mistake notebook mein likho. Is article mein saare 20 questions ke answers aur short solutions diye hain: Q1-Q8 section 3 mein, Q9-Q14 section 5 mein, aur Q15-Q20 section 6 mein.`,
+          `Mock Test 1 has 20 mixed reasoning questions — 2 to 3 questions from every topic. The topics are: number series, letter series, odd one out, coding, blood relation, direction, seating, syllogism, assertion-reason, floor puzzles, ages, work-rate, team counting, comparison, and clock angles. The time limit is **60 minutes** — that means 3 minutes per question. This test will show you which topic is strong and which is weak.
+
+How to take the test: first read all 20 questions once, then solve the easy ones, and mark the tough ones to come back to later. After writing your answers, use the scorer code below — enter your answers, find your score, and write the wrong questions in a mistake notebook. This article gives the answers and short solutions for all 20 questions: Q1-Q8 in section 3, Q9-Q14 in section 5, and Q15-Q20 in section 6.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam Hall mein Mock Test Kaise Dena Hai',
+          '2. Real-Life Examples: How to Take a Mock Test in the Exam Hall'
+        ),
+        body: t(
+          `Exam hall mein sabse pehle 2 minute sirf paper dekhne mein lagao — kaunse questions easy lag rahe hain, kaunse tough. Phir easy wale solve karo: series, odd one out aur coding aksar 30 second mein ho jaate hain. Tough wale — jaise seating ya syllogism — un par mark lagao aur aage badho. Aakhri 10 minute mein wapas aao aur marked questions solve karo. Jo question 3 minute se zyada le, use chhod do — ek question ke peeche poora paper mat kharab karo.
+
+Ek aur real-life trick: **answer pehle rough page par likho, phir final karo**. Seating puzzle mein order likhne se pehle positions banao; direction mein pehle facing direction likho; age wale questions mein pehle "x saal baad" likho. Mock test ka maksad sirf score nahi hai — maksad hai apni galtiyan dhoondhna. Har mock ke baad 10 minute mistake notebook ko do.`,
+          `In the exam hall, spend the first 2 minutes only looking at the paper — which questions look easy, which look tough. Then solve the easy ones: series, odd one out, and coding often take only 30 seconds. Mark the tough ones — like seating or syllogism — and move on. In the last 10 minutes, come back and solve the marked questions. Leave any question that takes more than 3 minutes — do not ruin the whole paper for one question.
+
+One more real-life trick: **write the answer on a rough page first, then finalise it**. In a seating puzzle, draw the positions before writing the order; in direction, write the facing direction first; in age questions, write "after x years" first. The purpose of a mock test is not only the score — it is to find your mistakes. After every mock, give 10 minutes to your mistake notebook.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Questions 1-8 ka Dry Run',
+          '3. Step-by-Step: A Dry Run of Questions 1-8'
+        ),
+        body: t(
+          `**Q1. Series: 3, 9, 27, 81, ?** Har baar 3 guna ho raha hai — 3 x 3 = 9, 9 x 3 = 27, 27 x 3 = 81. Answer: **243** (81 x 3). **Q2. Odd one out: 121, 144, 169, 190.** 121 = 11 x 11, 144 = 12 x 12, 169 = 13 x 13 — teeno squares hain. 190 kisi ka square nahi hai. Answer: **190**. **Q3. Coding: CAT = 3120 (C=3, A=1, T=20), DOG = 4157. BAT = ?** B=2, A=1, T=20. Answer: **2120**. **Q4. Blood relation: A is the brother of B. B is the mother of C. A is C's what?** B, C ki mother hai aur A, B ka brother hai — to A, C ka mama (maternal uncle) hai. Answer: **uncle**.
+
+**Q5. Direction: Facing north, turn right, walk 3 km, turn right, walk 4 km. How far from the start?** Pehle right turn ke baad east, 3 km. Dusre right turn ke baad south, 4 km. Start se distance hai 3-4-5 triangle: square root of (9 + 16) = 5. Answer: **5 km**. **Q6. Analogy: Book : Read :: Pen : ?** Book ko padhte hain, pen se likhte hain. Answer: **Write**. **Q7. Seating: P, Q, R, S, T sit in a row facing north. Q is second from the left. R is at the right end. P is immediately left of R. S is immediately right of Q. Who sits in the middle?** Order banta hai: T, Q, S, P, R. Beech mein (position 3) S hai. Answer: **S**. **Q8. Syllogism: All cats are animals. Some animals are black. Which follows?** "Some cats are black" nahi nikalta — kaale animals cats ho, ye pakka nahi. "Some cats are animals" nikalta hai — all cats animals hain, to kuch cats bhi animals hain. Answer: **Some cats are animals**. Neeche wala scorer code \`key\` aur \`student\` lists ko compare karke ek sample attempt ka score nikalta hai — student ne Q7 aur Q15 galat kiye, to score 18 / 20 hai.`,
+          `**Q1. Series: 3, 9, 27, 81, ?** Each term is 3 times the last — 3 x 3 = 9, 9 x 3 = 27, 27 x 3 = 81. Answer: **243** (81 x 3). **Q2. Odd one out: 121, 144, 169, 190.** 121 = 11 x 11, 144 = 12 x 12, 169 = 13 x 13 — all three are squares. 190 is nobody's square. Answer: **190**. **Q3. Coding: CAT = 3120 (C=3, A=1, T=20), DOG = 4157. BAT = ?** B=2, A=1, T=20. Answer: **2120**. **Q4. Blood relation: A is the brother of B. B is the mother of C. What is A to C?** B is the mother of C and A is the brother of B — so A is the maternal uncle of C. Answer: **uncle**.
+
+**Q5. Direction: Facing north, turn right, walk 3 km, turn right, walk 4 km. How far from the start?** After the first right turn you face east, 3 km. After the second right turn you face south, 4 km. The distance from the start is a 3-4-5 triangle: the square root of (9 + 16) = 5. Answer: **5 km**. **Q6. Analogy: Book : Read :: Pen : ?** A book is read, a pen is used to write. Answer: **Write**. **Q7. Seating: P, Q, R, S, T sit in a row facing north. Q is second from the left. R is at the right end. P is immediately left of R. S is immediately right of Q. Who sits in the middle?** The order is: T, Q, S, P, R. In the middle (position 3) is S. Answer: **S**. **Q8. Syllogism: All cats are animals. Some animals are black. Which follows?** "Some cats are black" does not follow — the black animals may or may not be cats. "Some cats are animals" follows — all cats are animals, so some cats are animals too. Answer: **Some cats are animals**. The scorer code below compares the \`key\` and \`student\` lists to score a sample attempt — the student got Q7 and Q15 wrong, so the score is 18 / 20.`
+        ),
+        code: {
+          title: t(
+            'Mock Test 1 ka Scorer: Sample Attempt ka Score',
+            'Mock Test 1 Scorer: Score of a Sample Attempt'
+          ),
+          language: 'python',
+          code: `key = ['243', '190', '2120', 'uncle', '5 km', 'Write', 'S',
+       'Some cats are animals', 'Both true, R explains A', 'B',
+       '42', 'U', 'All pens are erasers', '212215', '21',
+       'Potato', '5 minutes', '15', 'Vikram', '90 degrees']
+student = ['243', '190', '2120', 'uncle', '5 km', 'Write', 'P',
+           'Some cats are animals', 'Both true, R explains A', 'B',
+           '42', 'U', 'All pens are erasers', '212215', '22',
+           'Potato', '5 minutes', '15', 'Vikram', '90 degrees']
+score = 0
+for i in range(20):
+    ok = key[i] == student[i]
+    score += ok
+    print("Q" + str(i + 1) + ":", "correct" if ok else "wrong, answer is " + key[i])
+print("Score:", score, "/ 20")`,
+          output: `Q1: correct
+Q2: correct
+Q3: correct
+Q4: correct
+Q5: correct
+Q6: correct
+Q7: wrong, answer is S
+Q8: correct
+Q9: correct
+Q10: correct
+Q11: correct
+Q12: correct
+Q13: correct
+Q14: correct
+Q15: wrong, answer is 21
+Q16: correct
+Q17: correct
+Q18: correct
+Q19: correct
+Q20: correct
+Score: 18 / 20`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Mock Test mein Sabse Zyada Number Kahan Kat-te Hain',
+          '4. Common Mistakes: Where Most Marks Are Lost in a Mock Test'
+        ),
+        body: t(
+          `Mock Test 1 mein sabse zyada galtiyan 4 jagah hoti hain. **Pehli: Q2 jaise odd one out** — log 190 ko isliye chunte hain kyunki woh "alag lagta hai", par wajah nahi jaante. Hamesha wajah likho: 121, 144, 169 squares hain, 190 nahi. **Dusri: Q7 jaise seating** — log order banaye bina guess karte hain. Positions likho: Q second from left (position 2), R right end (position 5), P immediately left of R (position 4), S immediately right of Q (position 3), bacha T position 1. **Teesri: Q15 jaise age** — log 45 - 36 = 9 bhool kar seedha 12 + 5 kar dete hain. "When father is 45" ka matlab hai 9 saal baad, to son 12 + 9 = 21.
+
+**Chauthi: Q17 jaise work-rate** — log sochte hain 100 workers ko 100 toys banane mein 100 minute lagenge. Galat: 5 workers 5 toys 5 minute mein banate hain, matlab 1 worker 1 toy 5 minute mein banata hai. To 100 workers 100 toys bhi 5 minute mein banayenge. Work-rate mein hamesha "1 worker, 1 kaam, kitna time" se shuru karo.`,
+          `In Mock Test 1, most mistakes happen in 4 places. **First: odd one out like Q2** — people pick 190 because it "looks different", but they do not know why. Always write the reason: 121, 144, and 169 are squares, 190 is not. **Second: seating like Q7** — people guess without building the order. Write the positions: Q second from the left (position 2), R at the right end (position 5), P immediately left of R (position 4), S immediately right of Q (position 3), and T is left for position 1. **Third: age like Q15** — people forget 45 - 36 = 9 and directly do 12 + 5. "When the father is 45" means 9 years later, so the son is 12 + 9 = 21.
+
+**Fourth: work-rate like Q17** — people think 100 workers need 100 minutes to make 100 toys. Wrong: 5 workers make 5 toys in 5 minutes, which means 1 worker makes 1 toy in 5 minutes. So 100 workers make 100 toys in 5 minutes too. In work-rate, always start with "1 worker, 1 job, how long".`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Questions 9-14',
+          '5. Edge Cases: Questions 9-14'
+        ),
+        body: t(
+          `**Q9. Assertion-Reason: A: The Sun rises in the east. R: The Earth rotates from west to east.** Dono true hain aur rotation hi wajah hai. Answer: **Both true, R explains A**. **Q10. Floor mini: A lives above B, B lives above C, C is on floor 1 (3 floors). Who lives on floor 2?** C = 1, B uske upar, A sabse upar — B floor 2 par hai. Answer: **B**. **Q11. Series: 2, 6, 12, 20, 30, ?** Ye n x (n + 1) hai: 1 x 2 = 2, 2 x 3 = 6, 3 x 4 = 12, 4 x 5 = 20, 5 x 6 = 30. Agla hai 6 x 7. Answer: **42**.
+
+**Q12. Letter series: A, C, F, J, O, ?** Positions: 1, 3, 6, 10, 15. Gap: +2, +3, +4, +5. Agla gap +6, agla number 21 = U. Answer: **U**. **Q13. Syllogism: All pens are pencils. All pencils are erasers. Conclusion?** Pens pencils hain, pencils erasers hain — to pens bhi erasers hain. Answer: **All pens are erasers**. **Q14. Coding: RED = 1854 (R=18, E=5, D=4). BLUE = ?** B=2, L=12, U=21, E=5. Answer: **212215**.`,
+          `**Q9. Assertion-Reason: A: The Sun rises in the east. R: The Earth rotates from west to east.** Both are true, and the rotation is the cause. Answer: **Both true, R explains A**. **Q10. Floor mini: A lives above B, B lives above C, C is on floor 1 (3 floors). Who lives on floor 2?** C = 1, B above C, A on top — B is on floor 2. Answer: **B**. **Q11. Series: 2, 6, 12, 20, 30, ?** This is n x (n + 1): 1 x 2 = 2, 2 x 3 = 6, 3 x 4 = 12, 4 x 5 = 20, 5 x 6 = 30. The next is 6 x 7. Answer: **42**.
+
+**Q12. Letter series: A, C, F, J, O, ?** Positions: 1, 3, 6, 10, 15. Gaps: +2, +3, +4, +5. The next gap is +6, the next number is 21 = U. Answer: **U**. **Q13. Syllogism: All pens are pencils. All pencils are erasers. Conclusion?** Pens are pencils, pencils are erasers — so pens are erasers too. Answer: **All pens are erasers**. **Q14. Coding: RED = 1854 (R=18, E=5, D=4). BLUE = ?** B=2, L=12, U=21, E=5. Answer: **212215**.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Questions 15-20 aur Time Management',
+          '6. What If: Questions 15-20 and Time Management'
+        ),
+        body: t(
+          `**Q15. Age: A father is 36 and his son is 12. How old will the son be when the father is 45?** Father ko 45 hone mein 9 saal lagenge (45 - 36), to son hoga 12 + 9. Answer: **21**. **Q16. Odd one out: Apple, Mango, Banana, Potato.** Pehle teen fruits hain, Potato ek vegetable hai. Answer: **Potato**. **Q17. Work: 5 workers make 5 toys in 5 minutes. How long do 100 workers take to make 100 toys?** 1 worker 1 toy 5 minute mein banata hai, to 100 workers 100 toys bhi 5 minute mein banayenge. Answer: **5 minutes**. **Q18. Team: From 6 people, how many ways to choose a team of 2?** C(6, 2) = 15. Answer: **15**.
+
+**Q19. Comparison: Rohan scored more than Simran but less than Arjun. Arjun scored less than Vikram. Who scored the highest?** Order hai: Vikram > Arjun > Rohan > Simran. Answer: **Vikram**. **Q20. Clock: A clock shows 3:00. What is the angle between the hands?** 12 aur 3 ke beech 3 ghante ka gap hai — har ghante ka angle 30 degrees hota hai, to 3 x 30 = 90. Answer: **90 degrees**. Time management: 20 questions, 60 minutes — har question 3 minute. Neeche wala pehla code yehi hisaab karta hai, aur dusra code Q11 wali series ko n x (n + 1) se verify karta hai.`,
+          `**Q15. Age: A father is 36 and his son is 12. How old will the son be when the father is 45?** The father needs 9 years to reach 45 (45 - 36), so the son will be 12 + 9. Answer: **21**. **Q16. Odd one out: Apple, Mango, Banana, Potato.** The first three are fruits, Potato is a vegetable. Answer: **Potato**. **Q17. Work: 5 workers make 5 toys in 5 minutes. How long do 100 workers take to make 100 toys?** 1 worker makes 1 toy in 5 minutes, so 100 workers make 100 toys in 5 minutes too. Answer: **5 minutes**. **Q18. Team: From 6 people, how many ways to choose a team of 2?** C(6, 2) = 15. Answer: **15**.
+
+**Q19. Comparison: Rohan scored more than Simran but less than Arjun. Arjun scored less than Vikram. Who scored the highest?** The order is: Vikram > Arjun > Rohan > Simran. Answer: **Vikram**. **Q20. Clock: A clock shows 3:00. What is the angle between the hands?** Between 12 and 3 there is a gap of 3 hours — each hour is 30 degrees, so 3 x 30 = 90. Answer: **90 degrees**. Time management: 20 questions, 60 minutes — 3 minutes per question. The first code below does this calculation, and the second code verifies the Q11 series with n x (n + 1).`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Answer Key aur Agla Step',
+          '7. Summary: Answer Key and the Next Step'
+        ),
+        body: t(
+          `Poori answer key ek jagah: Q1 243, Q2 190, Q3 2120, Q4 uncle, Q5 5 km, Q6 Write, Q7 S, Q8 Some cats are animals, Q9 Both true R explains A, Q10 B, Q11 42, Q12 U, Q13 All pens are erasers, Q14 212215, Q15 21, Q16 Potato, Q17 5 minutes, Q18 15, Q19 Vikram, Q20 90 degrees. Apna score nikalo: 18 ya zyada ho to bahut achha hai, 15-17 ho to 2-3 weak topics hain, 15 se kam ho to pehle basics revise karo — series, coding aur direction wale articles dobara padho.
+
+Agla step: galat questions ko mistake notebook mein likho — sirf answer nahi, wajah bhi likho ("Q7 mein positions nahi banayi", "Q15 mein 9 saal add karna bhool gaya"). Phir Mock Test 2 do — uske questions bilkul alag hain, aur dono mocks ka score compare karke pata chalega ki kaunsa topic ab bhi weak hai.`,
+          `The full answer key in one place: Q1 243, Q2 190, Q3 2120, Q4 uncle, Q5 5 km, Q6 Write, Q7 S, Q8 Some cats are animals, Q9 Both true R explains A, Q10 B, Q11 42, Q12 U, Q13 All pens are erasers, Q14 212215, Q15 21, Q16 Potato, Q17 5 minutes, Q18 15, Q19 Vikram, Q20 90 degrees. Find your score: 18 or more is very good, 15-17 means 2-3 weak topics, below 15 means revise the basics first — read the series, coding, and direction articles again.
+
+Next step: write the wrong questions in a mistake notebook — not only the answer, but also the reason ("did not draw positions in Q7", "forgot to add 9 years in Q15"). Then take Mock Test 2 — its questions are completely different, and comparing the scores of both mocks will show which topic is still weak.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Mock Test Dene ka Flow: 60 Minute, 20 Questions',
+        'Flow for Taking the Mock Test: 60 Minutes, 20 Questions'
+      ),
+      caption: t(
+        'Pehle easy questions, phir marked tough wale, aakhri 10 minute checking',
+        'Easy questions first, then the marked tough ones, last 10 minutes for checking'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Saare 20 questions ek baar padho', 'Step 1: Read all 20 questions once'),
+          s: t('2 minute — easy aur tough ko pehchano', '2 minutes — spot the easy and the tough ones')
+        },
+        {
+          t: t('Step 2: Easy questions solve karo', 'Step 2: Solve the easy questions'),
+          s: t('Series, odd one out, coding — 30 second wale', 'Series, odd one out, coding — the 30-second ones')
+        },
+        {
+          t: t('Step 3: Tough wale mark karo, aage badho', 'Step 3: Mark the tough ones and move on'),
+          s: t('Seating, syllogism — 3 minute se zyada mat do', 'Seating, syllogism — do not give more than 3 minutes')
+        },
+        {
+          t: t('Step 4: Scorer code se score nikalo', 'Step 4: Find your score with the scorer code'),
+          s: t('Apne answers daalo, 20 mein se score dekho', 'Enter your answers, see your score out of 20')
+        },
+        {
+          t: t('Step 5: Galtiyan mistake notebook mein likho', 'Step 5: Write the mistakes in a notebook'),
+          s: t('Sirf answer nahi, wajah bhi likho', 'Write the reason too, not only the answer')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Time Budget: 60 Minute mein 20 Questions',
+          'Time Budget: 20 Questions in 60 Minutes'
+        ),
+        language: 'python',
+        code: `total_minutes = 60
+questions = 20
+print("Minutes per question:", total_minutes / questions)
+print("Seconds per question:", total_minutes * 60 // questions)
+print("Time for 10 questions:", 10 * total_minutes // questions, "minutes")`,
+        output: `Minutes per question: 3.0
+Seconds per question: 180
+Time for 10 questions: 30 minutes`
+      },
+      {
+        title: t(
+          'Q11 Series Check: n x (n + 1)',
+          'Q11 Series Check: n x (n + 1)'
+        ),
+        language: 'python',
+        code: `series = [2, 6, 12, 20, 30]
+for n in range(1, 6):
+    print(n, "x", n + 1, "=", n * (n + 1), "matches:", n * (n + 1) == series[n - 1])
+print("Next term (n = 6):", 6 * 7)`,
+        output: `1 x 2 = 2 matches: True
+2 x 3 = 6 matches: True
+3 x 4 = 12 matches: True
+4 x 5 = 20 matches: True
+5 x 6 = 30 matches: True
+Next term (n = 6): 42`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Series: 4, 8, 16, 32, ? Agla number kya hai?',
+          'Series: 4, 8, 16, 32, ? What is the next number?'
+        ),
+        opts: [
+          t('48', '48'),
+          t('64', '64'),
+          t('56', '56'),
+          t('40', '40')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har baar 2 guna ho raha hai — 32 x 2 = 64.',
+          'Correct answer: each term is 2 times the last — 32 x 2 = 64.'
+        )
+      },
+      {
+        q: t(
+          'Odd one out: 25, 36, 49, 55. Kaunsa alag hai?',
+          'Odd one out: 25, 36, 49, 55. Which one is different?'
+        ),
+        opts: [
+          t('25', '25'),
+          t('36', '36'),
+          t('55', '55'),
+          t('49', '49')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 25 = 5 x 5, 36 = 6 x 6, 49 = 7 x 7 — teeno squares hain. 55 kisi ka square nahi hai.',
+          'Correct answer: 25 = 5 x 5, 36 = 6 x 6, 49 = 7 x 7 — all three are squares. 55 is nobody\'s square.'
+        )
+      },
+      {
+        q: t(
+          'Coding: PEN = 16514 (P=16, E=5, N=14). SUN = ?',
+          'Coding: PEN = 16514 (P=16, E=5, N=14). SUN = ?'
+        ),
+        opts: [
+          t('192114', '192114'),
+          t('182114', '182114'),
+          t('192115', '192115'),
+          t('191214', '191214')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: S=19, U=21, N=14 — positions ko jod kar likho to 192114 banta hai.',
+          'Correct answer: S=19, U=21, N=14 — writing the positions together gives 192114.'
+        )
+      },
+      {
+        q: t(
+          'A is the father of B. B is the sister of C. A is C\'s what?',
+          'A is the father of B. B is the sister of C. What is A to C?'
+        ),
+        opts: [
+          t('Uncle', 'Uncle'),
+          t('Father', 'Father'),
+          t('Brother', 'Brother'),
+          t('Grandfather', 'Grandfather')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: A, B ka father hai aur B, C ki sister hai — to A, C ka father bhi hai.',
+          'Correct answer: A is the father of B, and B is the sister of C — so A is the father of C too.'
+        )
+      },
+      {
+        q: t(
+          'Facing south, turn left. Ab kis direction mein face kar rahe ho?',
+          'Facing south, turn left. Which direction are you facing now?'
+        ),
+        opts: [
+          t('West', 'West'),
+          t('North', 'North'),
+          t('East', 'East'),
+          t('South', 'South')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: South se left turn karne par East aata hai — clockwise order hai North, East, South, West.',
+          'Correct answer: turning left from south gives east — the clockwise order is North, East, South, West.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock test ko exam jaisa do — 60 minute, bina ruke, phir score nikalo.',
+        'Take the mock test like the real exam — 60 minutes, no breaks, then find your score.'
+      ),
+      t(
+        'Pehle easy questions karo, tough wale mark karke baad mein aao.',
+        'Do the easy questions first, mark the tough ones, and come back to them.'
+      ),
+      t(
+        'Har galat answer ko mistake notebook mein likho — wahi tumhara revision hai.',
+        'Write every wrong answer in a mistake notebook — that is your revision.'
+      ),
+      t(
+        'Series mein pehle difference likho, phir ratio — dono mein se ek rule milega.',
+        'In a series, write the differences first, then the ratio — one of them will give the rule.'
+      ),
+      t(
+        'Work-rate questions mein "ek worker ek kaam kitne time mein karta hai" se shuru karo.',
+        'In work-rate questions, start with "how long does one worker take for one job".'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Score Nikalo',
+        'Practice: Find Your Own Score'
+      ),
+      task: t(
+        'Mock Test 1 ke 20 questions solve karo aur apne answers ko starter code ki student list mein daalo. Code run karo — sirf galat questions ki list aur score print hoga. Done tab hoga jab tum apna score aur galat questions ki list mistake notebook mein likh lo.',
+        'Solve the 20 questions of Mock Test 1 and put your answers in the student list of the starter code. Run the code — it prints only the list of wrong questions and the score. You are done when you have written your score and the list of wrong questions in your mistake notebook.'
+      ),
+      language: 'python',
+      starter: `key = ['243', '190', '2120', 'uncle', '5 km', 'Write', 'S',
+       'Some cats are animals', 'Both true, R explains A', 'B',
+       '42', 'U', 'All pens are erasers', '212215', '21',
+       'Potato', '5 minutes', '15', 'Vikram', '90 degrees']
+student = ['243', '144', '2120', 'uncle', '5 km', 'Write', 'S',
+           'Some cats are animals', 'Both true, R does NOT explain A', 'B',
+           '42', 'U', 'All pens are erasers', '212215', '21',
+           'Potato', '5 minutes', '14', 'Vikram', '90 degrees']
+wrong = []
+for i in range(20):
+    if key[i] != student[i]:
+        wrong.append("Q" + str(i + 1))
+print("Wrong questions:", wrong)
+print("Score:", 20 - len(wrong), "/ 20")`,
+      expected: `Wrong questions: ['Q2', 'Q9', 'Q18']
+Score: 17 / 20`
+    },
+    readMinutes: 12,
+  };
+
+const logicMockTest2: Article = {
+    id: 'logic-mock-test-2',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Mock Test 2 — 20 Mixed Reasoning Questions',
+      'Mock Test 2 — 20 Mixed Reasoning Questions'
+    ),
+    summary: t(
+      'Mock Test 1 se bilkul alag 20 questions — nayi series, nayi coding, naya seating aur naya syllogism. Answer key aur scorer code ke saath.',
+      '20 questions completely different from Mock Test 1 — new series, new coding, new seating, and new syllogism. With the answer key and scorer code.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock Test 2 Kya Hai?',
+          '1. What Is Mock Test 2?'
+        ),
+        body: t(
+          `Mock Test 2 mein bhi 20 mixed reasoning questions hain, par ek bhi question Mock Test 1 jaisa nahi hai — series alag hai, coding alag hai, seating alag hai, syllogism alag hai. Time limit phir se **60 minutes** hai — har question ke liye 3 minutes. Is test ka maksad hai ye check karna ki tumne Mock Test 1 se kya seekha: wahi galtiyan dobara to nahi ho rahi hain?
+
+Test dene se pehle Mock Test 1 ki mistake notebook ek baar padh lo. Phir ye test exam jaisa do — 60 minute, bina ruke. Answers aur short solutions is article mein hain: Q1-Q8 section 3 mein, Q9-Q14 section 5 mein, aur Q15-Q20 section 6 mein. Dono mocks ka score compare karo — jis topic mein score gira, wahi tumhara weak topic hai.`,
+          `Mock Test 2 also has 20 mixed reasoning questions, but not one question is like Mock Test 1 — the series is different, the coding is different, the seating is different, the syllogism is different. The time limit is again **60 minutes** — 3 minutes per question. The purpose of this test is to check what you learned from Mock Test 1: are the same mistakes happening again?
+
+Before taking the test, read the mistake notebook from Mock Test 1 once. Then take this test like the real exam — 60 minutes, no breaks. The answers and short solutions are in this article: Q1-Q8 in section 3, Q9-Q14 in section 5, and Q15-Q20 in section 6. Compare the scores of both mocks — the topic where your score dropped is your weak topic.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Dusri Baar Test Dene ka Fayda',
+          '2. Real-Life Examples: The Benefit of Taking the Test a Second Time'
+        ),
+        body: t(
+          `Cricket ka example lo: pehle match mein batsman ne 20 run banaye aur 3 baar wahi galti ki — off-stump wali ball par out hua. Dusre match se pehle usne wahi 3 galtiyan notebook mein likhi aur net practice mein un par kaam kiya. Dusre match mein usne 50 run banaye. Mock tests bhi aise hi hain — dusra mock pehle mock ki galtiyan sudhaarne ke liye hota hai, sirf score badhane ke liye nahi.
+
+Exam hall mein dusri baar test dene ka ek aur fayda hai: **time ka andaza**. Pehle mock mein tumhe pata chala hoga ki seating mein 5 minute lag gaye the. Dusre mock mein tum seating ko mark karke aage badhoge aur aakhri mein wapas aaoge. Ye time management hi Mock Test 2 ka asli lesson hai.`,
+          `Take a cricket example: in the first match, the batsman scored 20 runs and made the same mistake 3 times — he got out on the off-stump ball. Before the second match, he wrote those 3 mistakes in a notebook and worked on them in net practice. In the second match he scored 50 runs. Mock tests work the same way — the second mock exists to fix the mistakes of the first mock, not only to raise the score.
+
+Taking the test a second time has one more benefit in the exam hall: **a sense of time**. In the first mock you must have noticed that seating took 5 minutes. In the second mock you will mark seating, move on, and come back at the end. This time management is the real lesson of Mock Test 2.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Questions 1-8 ka Dry Run',
+          '3. Step-by-Step: A Dry Run of Questions 1-8'
+        ),
+        body: t(
+          `**Q1. Series: 5, 11, 23, 47, ?** Har baar 2 guna + 1 ho raha hai — 5 x 2 + 1 = 11, 11 x 2 + 1 = 23, 23 x 2 + 1 = 47. Answer: **95** (47 x 2 + 1). **Q2. Odd one out: 8, 27, 64, 100.** 8 = 2 x 2 x 2, 27 = 3 x 3 x 3, 64 = 4 x 4 x 4 — teeno cubes hain. 100 kisi ka cube nahi hai. Answer: **100**. **Q3. Coding: MANGO = 13114715 (M=13, A=1, N=14, G=7, O=15). APPLE = ?** A=1, P=16, P=16, L=12, E=5. Answer: **11616125**. **Q4. Blood relation: Rahul is the son of Meena. Meena is the sister of Rohit. What is Rohit to Rahul?** Meena, Rahul ki mother hai aur Rohit, Meena ka brother hai — to Rohit, Rahul ka mama (maternal uncle) hai. Answer: **uncle**.
+
+**Q5. Direction: Facing east, turn left, walk 6 km, turn left, walk 8 km. How far from the start?** Pehle left turn ke baad north, 6 km. Dusre left turn ke baad west, 8 km. Start se distance hai 6-8-10 triangle: square root of (36 + 64) = 10. Answer: **10 km**. **Q6. Analogy: Doctor : Hospital :: Teacher : ?** Doctor hospital mein kaam karta hai, teacher school mein. Answer: **School**. **Q7. Seating circle: A, B, C, D sit around a table. A sits opposite C. B sits to the immediate left of A. Who sits opposite B?** A ke opposite C hai, to bache hue B aur D bhi ek dusre ke opposite hain. Answer: **D**. **Q8. Syllogism: No birds are mammals. All bats are mammals. Which follows?** Bats mammals hain, aur koi bird mammal nahi hai — to koi bat bird nahi hai. Answer: **No bats are birds**. Neeche wala scorer code \`key\` aur \`student\` lists ko compare karke ek sample attempt ka score nikalta hai — student ne Q3 aur Q12 galat kiye, to score 18 / 20 hai.`,
+          `**Q1. Series: 5, 11, 23, 47, ?** Each term is 2 times + 1 — 5 x 2 + 1 = 11, 11 x 2 + 1 = 23, 23 x 2 + 1 = 47. Answer: **95** (47 x 2 + 1). **Q2. Odd one out: 8, 27, 64, 100.** 8 = 2 x 2 x 2, 27 = 3 x 3 x 3, 64 = 4 x 4 x 4 — all three are cubes. 100 is nobody's cube. Answer: **100**. **Q3. Coding: MANGO = 13114715 (M=13, A=1, N=14, G=7, O=15). APPLE = ?** A=1, P=16, P=16, L=12, E=5. Answer: **11616125**. **Q4. Blood relation: Rahul is the son of Meena. Meena is the sister of Rohit. What is Rohit to Rahul?** Meena is the mother of Rahul and Rohit is the brother of Meena — so Rohit is the maternal uncle of Rahul. Answer: **uncle**.
+
+**Q5. Direction: Facing east, turn left, walk 6 km, turn left, walk 8 km. How far from the start?** After the first left turn you face north, 6 km. After the second left turn you face west, 8 km. The distance from the start is a 6-8-10 triangle: the square root of (36 + 64) = 10. Answer: **10 km**. **Q6. Analogy: Doctor : Hospital :: Teacher : ?** A doctor works in a hospital, a teacher works in a school. Answer: **School**. **Q7. Seating circle: A, B, C, D sit around a table. A sits opposite C. B sits to the immediate left of A. Who sits opposite B?** A is opposite C, so the remaining two, B and D, are also opposite each other. Answer: **D**. **Q8. Syllogism: No birds are mammals. All bats are mammals. Which follows?** Bats are mammals, and no bird is a mammal — so no bat is a bird. Answer: **No bats are birds**. The scorer code below compares the \`key\` and \`student\` lists to score a sample attempt — the student got Q3 and Q12 wrong, so the score is 18 / 20.`
+        ),
+        code: {
+          title: t(
+            'Mock Test 2 ka Scorer: Sample Attempt ka Score',
+            'Mock Test 2 Scorer: Score of a Sample Attempt'
+          ),
+          language: 'python',
+          code: `key = ['95', '100', '11616125', 'uncle', '10 km', 'School', 'D',
+       'No bats are birds', 'A false, R true', 'Red',
+       '13', 'R', 'Some books are pencils', '23', '20',
+       'June', '3 minutes', '56', 'D', '180 degrees']
+student = ['95', '100', '11616115', 'uncle', '10 km', 'School', 'D',
+           'No bats are birds', 'A false, R true', 'Red',
+           '13', 'S', 'Some books are pencils', '23', '20',
+           'June', '3 minutes', '56', 'D', '180 degrees']
+score = 0
+for i in range(20):
+    ok = key[i] == student[i]
+    score += ok
+    print("Q" + str(i + 1) + ":", "correct" if ok else "wrong, answer is " + key[i])
+print("Score:", score, "/ 20")`,
+          output: `Q1: correct
+Q2: correct
+Q3: wrong, answer is 11616125
+Q4: correct
+Q5: correct
+Q6: correct
+Q7: correct
+Q8: correct
+Q9: correct
+Q10: correct
+Q11: correct
+Q12: wrong, answer is R
+Q13: correct
+Q14: correct
+Q15: correct
+Q16: correct
+Q17: correct
+Q18: correct
+Q19: correct
+Q20: correct
+Score: 18 / 20`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Mock Test 2 mein Kahan Phans-te Hain Log',
+          '4. Common Mistakes: Where People Get Stuck in Mock Test 2'
+        ),
+        body: t(
+          `Mock Test 2 mein sabse zyada galtiyan 4 jagah hoti hain. **Pehli: Q3 jaise coding** — log APPLE likhte waqt P=16 ko ek baar likhte hain, do baar nahi. APPLE mein P do baar hai, to 16 do baar likhna hai: 1-16-16-12-5 = 11616125. **Dusri: Q5 jaise direction** — log distance ko 6 + 8 = 14 likh dete hain. Distance seedhi line mein hoti hai — 6-8-10 triangle se 10 km. **Teesri: Q12 jaise letter series** — log Z se peeche ginna bhool jaate hain. Z=26, X=24, V=22, T=20 — har baar minus 2, to agla 18 = R.
+
+**Chauthi: Q15 jaise age** — log mother aur daughter ki ages ko alag-alag guess karte hain. Equation banao: daughter = x, mother = 2x, total 60 — to 3x = 60, x = 20. Age wale questions mein hamesha equation likho, guess mat karo.`,
+          `In Mock Test 2, most mistakes happen in 4 places. **First: coding like Q3** — people write P=16 only once when writing APPLE, not twice. APPLE has P twice, so 16 must be written twice: 1-16-16-12-5 = 11616125. **Second: direction like Q5** — people write the distance as 6 + 8 = 14. Distance is measured in a straight line — the 6-8-10 triangle gives 10 km. **Third: letter series like Q12** — people forget to count backwards from Z. Z=26, X=24, V=22, T=20 — minus 2 each time, so the next is 18 = R.
+
+**Fourth: age like Q15** — people guess the mother's and daughter's ages separately. Make an equation: daughter = x, mother = 2x, total 60 — so 3x = 60, x = 20. In age questions, always write the equation, never guess.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Questions 9-14',
+          '5. Edge Cases: Questions 9-14'
+        ),
+        body: t(
+          `**Q9. Assertion-Reason: A: 9 is a prime number. R: 9 is divisible by 3.** A false hai — 9 = 3 x 3 hai, prime nahi. R true hai — 9, 3 se divide hota hai. Answer: **A false, R true**. **Q10. Box mini: 3 boxes stacked. Red is above Blue. Blue is above Green. Which box is on top?** Order hai Red, Blue, Green — upar se neeche. Answer: **Red**. **Q11. Series: 1, 1, 2, 3, 5, 8, ?** Ye Fibonacci series hai — har term pichle do ka sum hai: 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8. Agla hai 5 + 8. Answer: **13**.
+
+**Q12. Letter series: Z, X, V, T, ?** Positions: 26, 24, 22, 20 — har baar minus 2. Agla hai 18 = R. Answer: **R**. **Q13. Syllogism: Some books are pens. All pens are pencils. Which follows?** Kuch books pens hain, aur saare pens pencils hain — to woh kuch books pencils bhi hain. Answer: **Some books are pencils**. **Q14. Coding (sum): CAT = 24 (3+1+20), DOG = 26 (4+15+7). BAT = ?** B=2, A=1, T=20 — sum hai 23. Answer: **23**.`,
+          `**Q9. Assertion-Reason: A: 9 is a prime number. R: 9 is divisible by 3.** A is false — 9 = 3 x 3, not prime. R is true — 9 is divisible by 3. Answer: **A false, R true**. **Q10. Box mini: 3 boxes stacked. Red is above Blue. Blue is above Green. Which box is on top?** The order is Red, Blue, Green — top to bottom. Answer: **Red**. **Q11. Series: 1, 1, 2, 3, 5, 8, ?** This is the Fibonacci series — each term is the sum of the previous two: 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8. The next is 5 + 8. Answer: **13**.
+
+**Q12. Letter series: Z, X, V, T, ?** Positions: 26, 24, 22, 20 — minus 2 each time. The next is 18 = R. Answer: **R**. **Q13. Syllogism: Some books are pens. All pens are pencils. Which follows?** Some books are pens, and all pens are pencils — so those books are pencils too. Answer: **Some books are pencils**. **Q14. Coding (sum): CAT = 24 (3+1+20), DOG = 26 (4+15+7). BAT = ?** B=2, A=1, T=20 — the sum is 23. Answer: **23**.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Questions 15-20 aur Dono Mocks ka Comparison',
+          '6. What If: Questions 15-20 and Comparing Both Mocks'
+        ),
+        body: t(
+          `**Q15. Age: The sum of a mother's and daughter's ages is 60. The mother is twice as old as the daughter. How old is the daughter?** Daughter = x, mother = 2x, x + 2x = 60, to x = 20. Answer: **20**. **Q16. Odd one out: January, March, May, June.** January, March aur May mein 31 din hote hain, June mein 30 din. Answer: **June**. **Q17. Work: 3 machines make 3 parts in 3 minutes. How long do 6 machines take to make 6 parts?** 1 machine 1 part 3 minute mein banati hai, to 6 machines 6 parts bhi 3 minute mein banayengi. Answer: **3 minutes**. **Q18. Team: From 8 people, how many ways to choose a team of 3?** C(8, 3) = 56. Answer: **56**.
+
+**Q19. Comparison: A is taller than B. B is taller than C. C is taller than D. Who is the shortest?** Order hai A > B > C > D. Answer: **D**. **Q20. Clock: What is the angle between the hands at 6:00?** 12 aur 6 ke beech 6 ghante ka gap hai — 6 x 30 = 180. Answer: **180 degrees**. Dono mocks ka comparison: Mock 1 mein tumhara score X tha, Mock 2 mein Y hai. Agar Y, X se zyada hai, to tum sudhar rahe ho. Agar Y kam hai, to woh topic dhoondho jisme score gira — wahi agla revision topic hai. Neeche wala pehla code combinations nikalta hai, aur dusra code Fibonacci series ko verify karta hai.`,
+          `**Q15. Age: The sum of a mother's and daughter's ages is 60. The mother is twice as old as the daughter. How old is the daughter?** Daughter = x, mother = 2x, x + 2x = 60, so x = 20. Answer: **20**. **Q16. Odd one out: January, March, May, June.** January, March, and May have 31 days, June has 30 days. Answer: **June**. **Q17. Work: 3 machines make 3 parts in 3 minutes. How long do 6 machines take to make 6 parts?** 1 machine makes 1 part in 3 minutes, so 6 machines make 6 parts in 3 minutes too. Answer: **3 minutes**. **Q18. Team: From 8 people, how many ways to choose a team of 3?** C(8, 3) = 56. Answer: **56**.
+
+**Q19. Comparison: A is taller than B. B is taller than C. C is taller than D. Who is the shortest?** The order is A > B > C > D. Answer: **D**. **Q20. Clock: What is the angle between the hands at 6:00?** Between 12 and 6 there is a gap of 6 hours — 6 x 30 = 180. Answer: **180 degrees**. Comparing both mocks: your Mock 1 score was X, your Mock 2 score is Y. If Y is bigger than X, you are improving. If Y is smaller, find the topic where the score dropped — that is your next revision topic. The first code below finds combinations, and the second code verifies the Fibonacci series.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Answer Key aur Agla Step',
+          '7. Summary: Answer Key and the Next Step'
+        ),
+        body: t(
+          `Poori answer key ek jagah: Q1 95, Q2 100, Q3 11616125, Q4 uncle, Q5 10 km, Q6 School, Q7 D, Q8 No bats are birds, Q9 A false R true, Q10 Red, Q11 13, Q12 R, Q13 Some books are pencils, Q14 23, Q15 20, Q16 June, Q17 3 minutes, Q18 56, Q19 D, Q20 180 degrees. Apna score nikalo aur Mock Test 1 se compare karo: dono mein 18 ya zyada ho to tum exam-ready ho; ek mein 18 aur dusre mein 15 ho to jis mock mein kam aaya, uske galat questions ke topics revise karo.
+
+Agla step: dono mocks ki mistake notebook ko ek saath padho — kya koi topic dono mocks mein galat hua hai? Jaise coding dono mein galat ho, to coding wale article ko dobara padho aur 10 naye coding questions banao. Agle aur aakhri article mein hum placement prep dekhenge — speed tricks, time budget aur 7-day revision plan.`,
+          `The full answer key in one place: Q1 95, Q2 100, Q3 11616125, Q4 uncle, Q5 10 km, Q6 School, Q7 D, Q8 No bats are birds, Q9 A false R true, Q10 Red, Q11 13, Q12 R, Q13 Some books are pencils, Q14 23, Q15 20, Q16 June, Q17 3 minutes, Q18 56, Q19 D, Q20 180 degrees. Find your score and compare it with Mock Test 1: 18 or more in both means you are exam-ready; 18 in one and 15 in the other means revise the topics of the wrong questions in the lower mock.
+
+Next step: read the mistake notebooks of both mocks together — did any topic go wrong in both mocks? If coding went wrong in both, read the coding article again and make 10 new coding questions. In the next and last article we will look at placement prep — speed tricks, the time budget, and a 7-day revision plan.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Mock Test 2 ka Flow: Compare, Seekho, Sudharo',
+        'Flow for Mock Test 2: Compare, Learn, Improve'
+      ),
+      caption: t(
+        'Mock 1 ki notebook padho, phir test do, phir dono scores compare karo',
+        'Read the Mock 1 notebook, then take the test, then compare both scores'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Mock 1 ki mistake notebook padho', 'Step 1: Read the Mock 1 mistake notebook'),
+          s: t('Wahi galtiyan dobara mat karo', 'Do not repeat the same mistakes')
+        },
+        {
+          t: t('Step 2: 60 minute mein 20 questions do', 'Step 2: Take the 20 questions in 60 minutes'),
+          s: t('Exam jaisa — bina ruke, bina cheating ke', 'Like the real exam — no breaks, no cheating')
+        },
+        {
+          t: t('Step 3: Scorer code se score nikalo', 'Step 3: Find your score with the scorer code'),
+          s: t('Apne answers daalo, 20 mein se score dekho', 'Enter your answers, see your score out of 20')
+        },
+        {
+          t: t('Step 4: Dono mocks ka score compare karo', 'Step 4: Compare the scores of both mocks'),
+          s: t('Jis topic mein score gira, wahi weak topic hai', 'The topic where the score dropped is the weak topic')
+        },
+        {
+          t: t('Step 5: Weak topic revise karo, phir aage badho', 'Step 5: Revise the weak topic, then move on'),
+          s: t('Placement prep article se 7-day plan banao', 'Make a 7-day plan from the placement prep article')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Combinations: C(8,3) aur C(6,2)',
+          'Combinations: C(8,3) and C(6,2)'
+        ),
+        language: 'python',
+        code: `import math
+print("C(8,3) =", math.comb(8, 3))
+print("C(6,2) =", math.comb(6, 2))
+print("Ways to pick a team of 3 from 8:", math.comb(8, 3))`,
+        output: `C(8,3) = 56
+C(6,2) = 15
+Ways to pick a team of 3 from 8: 56`
+      },
+      {
+        title: t(
+          'Q11 Fibonacci Check: Har Term Pichle Do ka Sum',
+          'Q11 Fibonacci Check: Each Term Is the Sum of the Previous Two'
+        ),
+        language: 'python',
+        code: `fib = [1, 1, 2, 3, 5, 8]
+for i in range(2, 6):
+    print(fib[i], "=", fib[i - 1], "+", fib[i - 2], "->", fib[i] == fib[i - 1] + fib[i - 2])
+print("Next term:", fib[-1] + fib[-2])`,
+        output: `2 = 1 + 1 -> True
+3 = 2 + 1 -> True
+5 = 3 + 2 -> True
+8 = 5 + 3 -> True
+Next term: 13`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Series: 2, 5, 10, 17, 26, ? Agla number kya hai?',
+          'Series: 2, 5, 10, 17, 26, ? What is the next number?'
+        ),
+        opts: [
+          t('35', '35'),
+          t('37', '37'),
+          t('39', '39'),
+          t('33', '33')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ye n squared + 1 hai — 1+1=2, 4+1=5, 9+1=10, 16+1=17, 25+1=26, to agla 36+1=37.',
+          'Correct answer: this is n squared + 1 — 1+1=2, 4+1=5, 9+1=10, 16+1=17, 25+1=26, so the next is 36+1=37.'
+        )
+      },
+      {
+        q: t(
+          'Odd one out: 7, 11, 13, 15. Kaunsa alag hai?',
+          'Odd one out: 7, 11, 13, 15. Which one is different?'
+        ),
+        opts: [
+          t('7', '7'),
+          t('11', '11'),
+          t('13', '13'),
+          t('15', '15')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: 7, 11 aur 13 prime numbers hain — 15 prime nahi hai, woh 3 x 5 hai.',
+          'Correct answer: 7, 11, and 13 are prime numbers — 15 is not prime, it is 3 x 5.'
+        )
+      },
+      {
+        q: t(
+          'Coding (sum): DOG = 26 (4+15+7), CAT = 24 (3+1+20). PIG = ?',
+          'Coding (sum): DOG = 26 (4+15+7), CAT = 24 (3+1+20). PIG = ?'
+        ),
+        opts: [
+          t('30', '30'),
+          t('32', '32'),
+          t('34', '34'),
+          t('28', '28')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: P=16, I=9, G=7 — sum hai 16+9+7 = 32.',
+          'Correct answer: P=16, I=9, G=7 — the sum is 16+9+7 = 32.'
+        )
+      },
+      {
+        q: t(
+          'X is the mother of Y. Y is the brother of Z. X is Z\'s what?',
+          'X is the mother of Y. Y is the brother of Z. What is X to Z?'
+        ),
+        opts: [
+          t('Sister', 'Sister'),
+          t('Mother', 'Mother'),
+          t('Aunt', 'Aunt'),
+          t('Grandmother', 'Grandmother')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: X, Y ki mother hai aur Y, Z ka brother hai — to X, Z ki mother bhi hai.',
+          'Correct answer: X is the mother of Y, and Y is the brother of Z — so X is the mother of Z too.'
+        )
+      },
+      {
+        q: t(
+          'Facing west, turn right. Ab kis direction mein face kar rahe ho?',
+          'Facing west, turn right. Which direction are you facing now?'
+        ),
+        opts: [
+          t('South', 'South'),
+          t('North', 'North'),
+          t('East', 'East'),
+          t('West', 'West')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: West se right turn karne par North aata hai — clockwise order hai North, East, South, West.',
+          'Correct answer: turning right from west gives north — the clockwise order is North, East, South, West.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock Test 2 ke questions Mock Test 1 se alag hain — dono do, tabhi weak topics dikhenge.',
+        'Mock Test 2 has different questions from Mock Test 1 — take both, only then will your weak topics show up.'
+      ),
+      t(
+        'Dono mocks ka score compare karo — jis topic mein score gira, wahi revise karo.',
+        'Compare the scores of both mocks — revise the topic where your score dropped.'
+      ),
+      t(
+        'Coding mein pehle check karo: letters ki position likhi hai ya unka sum?',
+        'In coding, first check: are the letter positions written, or their sum?'
+      ),
+      t(
+        'Direction mein pehle facing direction likho, phir turn — bina likhe galti hoti hai.',
+        'In direction questions, first write the facing direction, then the turn — without writing it down, mistakes happen.'
+      ),
+      t(
+        'Clock angle ke liye 3:00 par 90 degrees aur 6:00 par 180 degrees yaad rakho.',
+        'For clock angles, remember 90 degrees at 3:00 and 180 degrees at 6:00.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Score Nikalo aur Compare Karo',
+        'Practice: Find Your Score and Compare It'
+      ),
+      task: t(
+        'Mock Test 2 ke 20 questions solve karo aur apne answers ko starter code ki student list mein daalo. Code run karo — sirf galat questions ki list aur score print hoga. Done tab hoga jab tum Mock Test 1 aur Mock Test 2 dono ke scores ko ek saath likh kar weak topic ka naam likh lo.',
+        'Solve the 20 questions of Mock Test 2 and put your answers in the student list of the starter code. Run the code — it prints only the list of wrong questions and the score. You are done when you have written the scores of Mock Test 1 and Mock Test 2 together and named the weak topic.'
+      ),
+      language: 'python',
+      starter: `key = ['95', '100', '11616125', 'uncle', '10 km', 'School', 'D',
+       'No bats are birds', 'A false, R true', 'Red',
+       '13', 'R', 'Some books are pencils', '23', '20',
+       'June', '3 minutes', '56', 'D', '180 degrees']
+student = ['95', '100', '11616125', 'uncle', '10 km', 'School', 'D',
+           'No bats are birds', 'A false, R true', 'Red',
+           '13', 'R', 'Some books are pencils', '23', '20',
+           'May', '3 minutes', '56', 'D', '180 degrees']
+wrong = []
+for i in range(20):
+    if key[i] != student[i]:
+        wrong.append("Q" + str(i + 1))
+print("Wrong questions:", wrong)
+print("Score:", 20 - len(wrong), "/ 20")`,
+      expected: `Wrong questions: ['Q16']
+Score: 19 / 20`
+    },
+    readMinutes: 12,
+  };
+
+const logicInterview: Article = {
+    id: 'logic-interview',
+    subjectId: 'logical-reasoning',
+    title: t(
+      'Placement Reasoning Prep — Speed Tricks aur 7-Day Plan',
+      'Placement Reasoning Prep — Speed Tricks and a 7-Day Plan'
+    ),
+    summary: t(
+      'Exam se pehle ke 7 din: speed tricks, time budget, mistake notebook aur revision plan — reasoning ko interview-ready banane ka poora plan.',
+      'The 7 days before the exam: speed tricks, the time budget, the mistake notebook, and the revision plan — the full plan to make reasoning interview-ready.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Placement Reasoning Kya Maangta Hai?',
+          '1. What Does Placement Reasoning Demand?'
+        ),
+        body: t(
+          `Placement exam mein reasoning section mein aam taur par **40 questions aur 60 minutes** hote hain — matlab har question ke liye sirf **90 seconds**. Ye speed aur accuracy dono maangta hai: sirf tez hona kaafi nahi hai, aur sirf sahi hona bhi kaafi nahi hai. 40 mein se 32 sahi karna (80% accuracy) ek achha score hai — aur negative marking ho to 32 sahi aur 8 galat ka score hota hai 32 - (8 x 0.25) = 30.
+
+Is article mein hum wahi seekhenge jo exam hall mein kaam aata hai: **speed tricks** (series mein difference pehle likhna, seating mein table banana), **time budget** (90 second per question, aakhri 10 minute checking ke liye), aur **7-day revision plan** (har din ek topic + 2 mock tests). Ye article koi naya topic nahi sikhata — ye saare topics ko exam-ready banata hai.`,
+          `In a placement exam, the reasoning section usually has **40 questions and 60 minutes** — that means only **90 seconds** per question. It demands both speed and accuracy: being fast alone is not enough, and being right alone is not enough either. Getting 32 out of 40 right (80% accuracy) is a good score — and with negative marking, 32 right and 8 wrong gives a score of 32 - (8 x 0.25) = 30.
+
+This article teaches what actually helps in the exam hall: **speed tricks** (write the differences first in a series, draw a table in seating), the **time budget** (90 seconds per question, the last 10 minutes for checking), and a **7-day revision plan** (one topic each day + 2 mock tests). This article teaches no new topic — it makes all the topics exam-ready.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam Hall, Interview aur Group Discussion',
+          '2. Real-Life Examples: The Exam Hall, the Interview, and Group Discussion'
+        ),
+        body: t(
+          `Exam hall ka example lo: paper milte hi sabse pehle 2 minute mein poora paper scan karo. Jo questions 30 second mein ho sakte hain — series, odd one out, coding — un par tick lagao aur pehle unhe solve karo. Jo questions 3 minute se zyada lenge — seating, floor puzzle — unhe mark karo aur aakhir mein aao. Aakhri 10 minute mein marked questions aur checking — dono ka time hai. Ye plan bina practice ke nahi banta, isliye mock tests mein isi plan se test do.
+
+Interview ka example: interviewer poochhta hai "5 workers 5 toys 5 minute mein banate hain, to 100 workers 100 toys kitne time mein banayenge?" Interviewer ko answer se zyada tumhara tareeka dekhna hai — tum "1 worker 1 toy 5 minute" bolte ho ya seedha guess karte ho. Reasoning interview mein **tareeka** hi answer hai. Group discussion mein bhi wahi hota hai: jo pehle facts likhta hai, wahi sahi conclusion nikalta hai.`,
+          `Take the exam hall example: the moment you get the paper, spend the first 2 minutes scanning the whole paper. Tick the questions that take 30 seconds — series, odd one out, coding — and solve those first. Mark the questions that take more than 3 minutes — seating, floor puzzles — and come back to them at the end. The last 10 minutes are for the marked questions and checking — both. This plan is not built without practice, so take mock tests with this same plan.
+
+An interview example: the interviewer asks "5 workers make 5 toys in 5 minutes, so how long do 100 workers take to make 100 toys?" The interviewer wants to see your method more than your answer — whether you say "1 worker makes 1 toy in 5 minutes" or just guess. In a reasoning interview, the **method** is the answer. The same happens in group discussion: whoever writes the facts first reaches the right conclusion.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 60-Minute ka Time Budget',
+          '3. Step-by-Step: The 60-Minute Time Budget'
+        ),
+        body: t(
+          `Time budget banane ka formula simple hai: **total minutes x 60 / total questions = seconds per question**. 60 minutes aur 40 questions hon to 60 x 60 / 40 = 90 seconds per question. Budget ko 3 hisso mein baanto: **pehle 2 minute** paper scan karne ke liye, **50 minute** solve karne ke liye, **aakhri 10 minute** checking aur marked questions ke liye. 10 questions solve karne mein 15 minute lagenge, 20 questions mein 30 minute — ye hisaab pehle se yaad rakho, exam mein calculator nahi milega.
+
+**Step 1: 90-second rule.** Har question par 90 second ka timer dimaag mein rakho. 90 second mein answer na aaye to question mark karo aur aage badho. **Step 2: Easy-first order.** Series (30 sec), odd one out (30 sec), coding (45 sec), blood relation (60 sec), direction (60 sec), seating aur puzzles (2-3 min). **Step 3: Checking.** Aakhri 10 minute mein marked questions solve karo, phir answers ko ek baar dobara padho. Neeche wala code \`total_minutes * 60 // questions\` se yehi budget nikalta hai.`,
+          `The formula for a time budget is simple: **total minutes x 60 / total questions = seconds per question**. With 60 minutes and 40 questions, that is 60 x 60 / 40 = 90 seconds per question. Split the budget into 3 parts: the **first 2 minutes** for scanning the paper, **50 minutes** for solving, and the **last 10 minutes** for checking and the marked questions. 10 questions take 15 minutes, 20 questions take 30 minutes — remember this maths in advance, you will not get a calculator in the exam.
+
+**Step 1: the 90-second rule.** Keep a 90-second timer in your head for every question. If the answer does not come in 90 seconds, mark the question and move on. **Step 2: easy-first order.** Series (30 sec), odd one out (30 sec), coding (45 sec), blood relation (60 sec), direction (60 sec), seating and puzzles (2-3 min). **Step 3: checking.** In the last 10 minutes, solve the marked questions, then read the answers once more. The code below finds this same budget with \`total_minutes * 60 // questions\`.`
+        ),
+        code: {
+          title: t(
+            'Time Budget Calculator: 40 Questions, 60 Minutes',
+            'Time Budget Calculator: 40 Questions, 60 Minutes'
+          ),
+          language: 'python',
+          code: `total_minutes = 60
+questions = 40
+per_question = total_minutes * 60 // questions
+print("Seconds per question:", per_question)
+print("Minutes for 10 questions:", 10 * total_minutes // questions)
+print("Minutes for 20 questions:", 20 * total_minutes // questions)
+print("Buffer for checking (10 minutes):", total_minutes - 10, "minutes to solve")`,
+          output: `Seconds per question: 90
+Minutes for 10 questions: 15
+Minutes for 20 questions: 30
+Buffer for checking (10 minutes): 50 minutes to solve`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Speed ke Chakkar mein Accuracy Khona',
+          '4. Common Mistakes: Losing Accuracy in the Rush for Speed'
+        ),
+        body: t(
+          `Sabse badi galti hai **speed ke chakkar mein options ko aadha padhna**. Question hai "Which statement is FALSE?" aur log "TRUE" wala option tick kar dete hain — kyunki unhone FALSE word padha hi nahi. Exam mein FALSE, NOT, EXCEPT aur NEVER jaise words ko circle karo — ye words answer badal dete hain. Dusri galti hai **tough question par atakna**. Ek seating puzzle par 5 minute lagane ka matlab hai 3 easy questions ka time khona — woh 3 questions tumhe 3 marks dete, seating shayad 1 mark bhi na de.
+
+Teesri galti hai **checking ke liye time na bachana**. Jo log 60 minute tak solve karte rehte hain, woh aakhri mein 2-3 silly mistakes chhod dete hain — galat option tick karna, series ka agla number galat likhna. Aakhri 10 minute checking ke liye bachao — ye 10 minute 2-3 marks bacha sakte hain. Chauthi galti hai **negative marking mein guess karna**. Agar 4 options mein se 2 eliminate nahi hue, to guess mat karo — galat guess ka score hota hai -0.25.`,
+          `The biggest mistake is **reading the options halfway in the rush for speed**. The question asks "Which statement is FALSE?" and people tick the TRUE option — because they never read the word FALSE. In the exam, circle words like FALSE, NOT, EXCEPT, and NEVER — these words change the answer. The second mistake is **getting stuck on a tough question**. Spending 5 minutes on one seating puzzle means losing the time for 3 easy questions — those 3 questions would give you 3 marks, while the seating puzzle may not even give 1.
+
+The third mistake is **saving no time for checking**. People who keep solving for all 60 minutes leave 2-3 silly mistakes behind — ticking the wrong option, writing the wrong next number in a series. Save the last 10 minutes for checking — those 10 minutes can save 2-3 marks. The fourth mistake is **guessing under negative marking**. If you have not eliminated 2 out of 4 options, do not guess — a wrong guess scores -0.25.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Negative Marking, Tough Paper aur Time Khatam Hona',
+          '5. Edge Cases: Negative Marking, a Tough Paper, and Running Out of Time'
+        ),
+        body: t(
+          `Edge case 1: **negative marking ka hisaab**. 40 questions attempt kiye, 32 sahi, 8 galat, har galat par -0.25. Score hai 32 - (8 x 0.25) = 30.0. Agar 8 galat ki jagah 8 chhod dete, to score hota 32. Matlab andha guess karna nuksaan hai — sirf tab guess karo jab 2 options eliminate ho jayein (tab 50% chance hota hai, aur expected score positive hota hai). Neeche wala dusra code yehi hisaab karta hai: accuracy 80%, 8 wrong, score 30.0.
+
+Edge case 2: **tough paper**. Agar paper tough lage to ghabrao mat — tough paper sabke liye tough hota hai, cutoff bhi neeche jata hai. Apna plan mat badlo: easy-first, mark-tough, aakhri 10 minute checking. Edge case 3: **time khatam hona**. Aakhri 2 minute mein jo questions bache hon, unme sirf wahi tick karo jisme 2 options eliminate ho gaye hon — baaki chhod do.`,
+          `Edge case 1: **the negative marking maths**. 40 questions attempted, 32 right, 8 wrong, -0.25 per wrong answer. The score is 32 - (8 x 0.25) = 30.0. If you had left those 8 unanswered instead, the score would be 32. So blind guessing loses marks — guess only when 2 options are eliminated (then the chance is 50%, and the expected score is positive). The second code below does this same calculation: accuracy 80%, 8 wrong, score 30.0.
+
+Edge case 2: **a tough paper**. If the paper feels tough, do not panic — a tough paper is tough for everyone, and the cutoff goes down too. Do not change your plan: easy-first, mark-tough, last 10 minutes for checking. Edge case 3: **running out of time**. In the last 2 minutes, tick only the questions where 2 options are eliminated — leave the rest.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: 7 Din Bache Hon to Kya Karein?',
+          '6. What If: What to Do with 7 Days Left?'
+        ),
+        body: t(
+          `7 din bache hon to ye plan follow karo. **Day 1: Number series + letter series** — difference, ratio, square, Fibonacci. **Day 2: Coding + blood relation** — position, sum, family tree. **Day 3: Seating + floor aur box puzzles** — table banana, block banana. **Day 4: Direction + syllogism** — facing direction likhna, "all/some/no" ka matlab. **Day 5: Assertion-reason + passage reasoning** — 3-step rule, "must be true" vs "could be true". **Day 6: Mock Test 1 + mistake notebook** — 60 minute mein test do, galtiyan likho. **Day 7: Mock Test 2 + full revision** — test do, dono mocks compare karo, mistake notebook dobara padho.
+
+Har din ka pattern ek jaisa hai: subah 1 ghanta topic revise karo, dopahar mein 20 questions practice karo, shaam ko mistake notebook update karo. Naya topic mat shuru karo — 7 din mein naya topic seekhne se behtar hai purane topics ko pakka karna. Neeche wala pehla code yehi 7-day plan print karta hai.`,
+          `If 7 days are left, follow this plan. **Day 1: Number series + letter series** — differences, ratios, squares, Fibonacci. **Day 2: Coding + blood relation** — positions, sums, family trees. **Day 3: Seating + floor and box puzzles** — drawing tables, making blocks. **Day 4: Direction + syllogism** — writing the facing direction, the meaning of "all/some/no". **Day 5: Assertion-reason + passage reasoning** — the 3-step rule, "must be true" vs "could be true". **Day 6: Mock Test 1 + mistake notebook** — take the test in 60 minutes, write the mistakes. **Day 7: Mock Test 2 + full revision** — take the test, compare both mocks, read the mistake notebook again.
+
+Every day follows the same pattern: revise one topic for 1 hour in the morning, practise 20 questions in the afternoon, update the mistake notebook in the evening. Do not start a new topic — in 7 days, making old topics solid is better than learning a new one. The first code below prints this same 7-day plan.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Interview-Ready Checklist',
+          '7. Summary: The Interview-Ready Checklist'
+        ),
+        body: t(
+          `Exam se pehle ye checklist poori karo. **Checklist 1: Time budget yaad hai?** 40 questions, 60 minutes, 90 second per question, aakhri 10 minute checking. **Checklist 2: Speed tricks yaad hain?** Series mein difference pehle, seating mein table pehle, direction mein facing direction pehle. **Checklist 3: Dono mock tests diye?** Mock 1 aur Mock 2 ka score compare kiya, weak topic ka naam likha. **Checklist 4: Mistake notebook ready hai?** Har galti ke saath wajah likhi hai, aur notebook ko 2 baar padha hai. **Checklist 5: Negative marking rule yaad hai?** 2 options eliminate na hon to guess mat karo.
+
+Agar paanchon checklist poori hain, to tum interview-ready ho. Logical Reasoning ka poora batch ab complete hai: assertion-reason, passage reasoning, team formation, floor, box, schedule puzzles, 2 mock tests aur ye placement prep. Agla kadam hai exam dena — aur exam ke baad mistake notebook ko ek baar aur padhna, kyunki wahi tumhara agla revision hai.`,
+          `Complete this checklist before the exam. **Checklist 1: Do you remember the time budget?** 40 questions, 60 minutes, 90 seconds per question, last 10 minutes for checking. **Checklist 2: Do you remember the speed tricks?** Differences first in a series, the table first in seating, the facing direction first in direction. **Checklist 3: Did you take both mock tests?** Compared the scores of Mock 1 and Mock 2, and named the weak topic. **Checklist 4: Is the mistake notebook ready?** Every mistake has its reason written, and the notebook has been read twice. **Checklist 5: Do you remember the negative marking rule?** Do not guess unless 2 options are eliminated.
+
+If all five items are done, you are interview-ready. The full Logical Reasoning batch is now complete: assertion-reason, passage reasoning, team formation, floor, box, and schedule puzzles, 2 mock tests, and this placement prep. The next step is to take the exam — and after the exam, read the mistake notebook once more, because that is your next revision.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '7-Day Revision Plan: Exam se Pehle ka Hafta',
+        '7-Day Revision Plan: The Week Before the Exam'
+      ),
+      caption: t(
+        'Har din ek topic + practice + mistake notebook — naya topic mat shuru karo',
+        'One topic a day + practice + mistake notebook — do not start a new topic'
+      ),
+      nodes: [
+        {
+          t: t('Day 1: Number + letter series', 'Day 1: Number + letter series'),
+          s: t('Difference, ratio, square, Fibonacci', 'Differences, ratios, squares, Fibonacci')
+        },
+        {
+          t: t('Day 2: Coding + blood relation', 'Day 2: Coding + blood relation'),
+          s: t('Position, sum, family tree', 'Positions, sums, family trees')
+        },
+        {
+          t: t('Day 3: Seating + floor aur box puzzles', 'Day 3: Seating + floor and box puzzles'),
+          s: t('Table banana, block banana', 'Drawing tables, making blocks')
+        },
+        {
+          t: t('Day 4: Direction + syllogism', 'Day 4: Direction + syllogism'),
+          s: t('Facing direction, all/some/no', 'Facing direction, all/some/no')
+        },
+        {
+          t: t('Day 5: Assertion-reason + passage', 'Day 5: Assertion-reason + passage'),
+          s: t('3-step rule, must be true vs could be true', '3-step rule, must be true vs could be true')
+        },
+        {
+          t: t('Day 6-7: Mock Test 1, Mock Test 2 + revision', 'Day 6-7: Mock Test 1, Mock Test 2 + revision'),
+          s: t('60 minute mein test do, dono mocks compare karo, notebook dobara padho', 'Take each test in 60 minutes, compare both mocks, read the notebook again')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '7-Day Revision Plan Print Karo',
+          'Print the 7-Day Revision Plan'
+        ),
+        language: 'python',
+        code: `plan = [
+    ("Day 1", "Number series + letter series"),
+    ("Day 2", "Coding + blood relation"),
+    ("Day 3", "Seating + floor and box puzzles"),
+    ("Day 4", "Direction + syllogism"),
+    ("Day 5", "Assertion-reason + passage reasoning"),
+    ("Day 6", "Mock test 1 + mistake notebook"),
+    ("Day 7", "Mock test 2 + full revision"),
+]
+for day, topic in plan:
+    print(day + ":", topic)`,
+        output: `Day 1: Number series + letter series
+Day 2: Coding + blood relation
+Day 3: Seating + floor and box puzzles
+Day 4: Direction + syllogism
+Day 5: Assertion-reason + passage reasoning
+Day 6: Mock test 1 + mistake notebook
+Day 7: Mock test 2 + full revision`
+      },
+      {
+        title: t(
+          'Accuracy aur Negative Marking ka Hisaab',
+          'Accuracy and Negative Marking Maths'
+        ),
+        language: 'python',
+        code: `attempted = 40
+correct = 32
+print("Accuracy:", correct * 100 // attempted, "%")
+print("Wrong:", attempted - correct)
+print("Score with +1 / -0.25:", correct - (attempted - correct) * 0.25)`,
+        output: `Accuracy: 80 %
+Wrong: 8
+Score with +1 / -0.25: 30.0`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Series question ka pehla step kya hona chahiye?',
+          'What should be the first step in a series question?'
+        ),
+        opts: [
+          t('Terms ke beech ka difference likho', 'Write the differences between the terms'),
+          t('Options ko guess karo', 'Guess the options'),
+          t('Last term se shuru karo', 'Start from the last term'),
+          t('Calculator nikalo', 'Take out a calculator')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: difference likhne se rule dikhta hai — jaise 2, 6, 12, 20 mein difference 4, 6, 8 hai.',
+          'Correct answer: writing the differences shows the rule — in 2, 6, 12, 20 the differences are 4, 6, 8.'
+        )
+      },
+      {
+        q: t(
+          '40 questions aur 60 minutes hon to har question ke liye kitna time hai?',
+          'With 40 questions and 60 minutes, how much time is there per question?'
+        ),
+        opts: [
+          t('60 seconds', '60 seconds'),
+          t('90 seconds', '90 seconds'),
+          t('120 seconds', '120 seconds'),
+          t('45 seconds', '45 seconds')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 60 x 60 / 40 = 90 seconds per question — aur aakhri 10 minute checking ke liye bachao.',
+          'Correct answer: 60 x 60 / 40 = 90 seconds per question — and save the last 10 minutes for checking.'
+        )
+      },
+      {
+        q: t(
+          'Seating puzzle mein pehle kya karna chahiye?',
+          'What should you do first in a seating puzzle?'
+        ),
+        opts: [
+          t('Options ko guess karo', 'Guess the options'),
+          t('Positions ki table banao', 'Draw a table of the positions'),
+          t('Pehla naam likh kar ruk jao', 'Write the first name and stop'),
+          t('Sabse mushkil clue se shuru karo', 'Start with the toughest clue')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: positions ki table banane se clues ki jagah dikhti hai — bina table ke guess galat hota hai.',
+          'Correct answer: drawing a table of positions shows where the clues fit — without a table, guesses go wrong.'
+        )
+      },
+      {
+        q: t(
+          'Assertion-reason mein dono options sahi lagen to kya decide karega?',
+          'In assertion-reason, if both options look right, what decides the answer?'
+        ),
+        opts: [
+          t('A ka truth', 'Whether A is true'),
+          t('R ka truth', 'Whether R is true'),
+          t('Kya R, A ko explain karta hai', 'Whether R explains A'),
+          t('Dono ki length', 'The length of both')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono true hon to bhi verdict is par depend karta hai ki R, A ki wajah hai ya nahi — yehi sabse bada trap hai.',
+          'Correct answer: even when both are true, the verdict depends on whether R is the cause of A — this is the biggest trap.'
+        )
+      },
+      {
+        q: t(
+          'Exam se pehle best revision order kaunsa hai?',
+          'What is the best revision order before the exam?'
+        ),
+        opts: [
+          t('Mock test do, mistakes check karo, weak topics revise karo', 'Take a mock test, check the mistakes, revise the weak topics'),
+          t('Sirf naye topics padho', 'Study only new topics'),
+          t('Kuch mat karo', 'Do nothing'),
+          t('Sirf answers rat lo', 'Only memorise the answers')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: mock test se weak topics dikhte hain, mistake notebook se galtiyan sudharti hain — yehi revision hai.',
+          'Correct answer: a mock test shows the weak topics, and the mistake notebook fixes the mistakes — that is revision.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '40 questions, 60 minutes — har question ke liye 90 second, usse zyada nahi.',
+        '40 questions, 60 minutes — 90 seconds per question, no more.'
+      ),
+      t(
+        'Pehle easy questions karo — tough question par atakna poora paper kharab karta hai.',
+        'Do the easy questions first — getting stuck on a tough question ruins the whole paper.'
+      ),
+      t(
+        'Negative marking ho to guess mat karo — sirf tab tick karo jab 2 options eliminate ho jayein.',
+        'With negative marking, do not guess — tick only when you have eliminated 2 options.'
+      ),
+      t(
+        'Mistake notebook hi tumhara revision hai — mock ke baad use dobara padho.',
+        'Your mistake notebook is your revision — read it again after every mock.'
+      ),
+      t(
+        'Aakhri 10 minute checking ke liye bachao — solve karne ke liye nahi.',
+        'Save the last 10 minutes for checking — not for solving.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Time Budget Banao',
+        'Practice: Make Your Own Time Budget'
+      ),
+      task: t(
+        'Tumhare exam mein 50 questions aur 100 minutes hain. Starter code run karo aur check karo ki output expected jaisa aata hai — seconds per question aur 25 questions ka time dono hone chahiye. Phir apne exam ke real numbers daal kar apna budget banao aur use notebook mein likho.',
+        'Your exam has 50 questions and 100 minutes. Run the starter code and check that the output matches the expected output — both the seconds per question and the time for 25 questions should be there. Then put in your real exam numbers, make your own budget, and write it in your notebook.'
+      ),
+      language: 'python',
+      starter: `total_minutes = 100
+questions = 50
+print("Seconds per question:", total_minutes * 60 // questions)
+print("Minutes for 25 questions:", 25 * total_minutes // questions)
+print("Minutes for 50 questions:", total_minutes)`,
+      expected: `Seconds per question: 120
+Minutes for 25 questions: 50
+Minutes for 50 questions: 100`
+    },
+    readMinutes: 12,
+  };
 
 export const logicalReasoning: Subject = {
   id: 'logical-reasoning',
@@ -1723,5 +14211,39 @@ export const logicalReasoning: Subject = {
       },
       readMinutes: 10,
     },
+    logicLetterSeries,
+    logicAnalogy,
+    logicClassification,
+    logicVenn,
+    logicSyllogism,
+    logicStatementsConclusions,
+    logicStatementsAssumptions,
+    logicStatementsArguments,
+    logicCourseAction,
+    logicCauseEffect,
+    logicDecisionMaking,
+    logicInputOutput,
+    logicDataSufficiencyLogic,
+    logicCubesDice,
+    logicCalendarClockLogic,
+    logicOrderRanking,
+    logicInequalitiesLogic,
+    logicAlphabetTest,
+    logicMirrorWater,
+    logicEmbeddedFigures,
+    logicNonVerbalSeries,
+    logicAnalytical,
+    logicCryptarithmetic,
+    logicMatrix,
+    logicStatementInference,
+    logicAssertionReason,
+    logicPassageReasoning,
+    logicTeamFormation,
+    logicFloorPuzzle,
+    logicBoxPuzzle,
+    logicSchedulePuzzle,
+    logicMockTest1,
+    logicMockTest2,
+    logicInterview,
   ],
 };
