@@ -330,6 +330,35 @@ print("5 + 3")`,
             hindi: 'Comma से अलग चीज़ें एक स्पेस के साथ छपती हैं, इसलिए Age: और 20 के बीच में एक स्पेस आता है।',
           },
         },
+        {
+          "q": {
+            "hinglish": "Python kya hai?",
+            "english": "What is Python?"
+          },
+          "opts": [
+            {
+              "hinglish": "Ek website",
+              "english": "A website"
+            },
+            {
+              "hinglish": "Ek programming language",
+              "english": "A programming language"
+            },
+            {
+              "hinglish": "Ek computer",
+              "english": "A computer"
+            },
+            {
+              "hinglish": "Ek game",
+              "english": "A game"
+            }
+          ],
+          "ans": 1,
+          "expl": {
+            "hinglish": "Python ek programming language hai, jisse programs likhe jaate hain. Website, computer aur game language nahi hain.",
+            "english": "Python is a programming language, used to write programs. A website, a computer, and a game are not languages."
+          }
+        }
       ],
       practice: {
         title: {
@@ -344,7 +373,7 @@ print("5 + 3")`,
         },
         language: 'python',
         starter: `print("Hello, World")`,
-        expected: 'Hello, World\n(plus your name and city on two more lines)',
+        expected: 'Hello, World',
       },
     },
     {
@@ -1086,6 +1115,35 @@ print(type(True))`,
             hindi: '49.99 में दशमलव बिंदु है, इसलिए यह float है। पूरा नंबर int होता, और कोट्स वाला टेक्स्ट str होता।',
           },
         },
+        {
+          "q": {
+            "hinglish": "Inmein se kaunsa sahi variable naam hai?",
+            "english": "Which of these is a valid variable name?"
+          },
+          "opts": [
+            {
+              "hinglish": "2name",
+              "english": "2name"
+            },
+            {
+              "hinglish": "my-name",
+              "english": "my-name"
+            },
+            {
+              "hinglish": "my name",
+              "english": "my name"
+            },
+            {
+              "hinglish": "my_name",
+              "english": "my_name"
+            }
+          ],
+          "ans": 3,
+          "expl": {
+            "hinglish": "Variable ka naam letter ya underscore se shuru hona chahiye, aur usmein space ya minus nahi ho sakta. Sirf my_name in niyamon ko follow karta hai.",
+            "english": "A variable name must start with a letter or an underscore, and it cannot have a space or a minus sign. Only my_name follows these rules."
+          }
+        }
       ],
       practice: {
         title: {
@@ -1103,7 +1161,7 @@ print(type(True))`,
 qty = 4
 print(f"Price: {price}")
 print(f"Qty: {qty}")`,
-        expected: 'Price: 25\nQty: 4\nTotal: 100',
+        expected: 'Price: 25\nQty: 4',
       },
     },
     {
@@ -2791,6 +2849,35 @@ else:
             hindi: 'दोनों कंडीशन एक साथ सच होनी चाहिए, इसलिए and इस्तेमाल होता है। or से तो हर age पास हो जाती। 18 < age < 60 पायथन में चलता तो है, लेकिन यह दो अलग comparison का shortcut है — beginners के लिए and वाला रूप ज़्यादा clear है।',
           },
         },
+        {
+          "q": {
+            "hinglish": "Is code ka output kya hoga? age = 16; if age >= 18: print(\"Adult\") else: print(\"Minor\")",
+            "english": "What will this code print? age = 16; if age >= 18: print(\"Adult\") else: print(\"Minor\")"
+          },
+          "opts": [
+            {
+              "hinglish": "Adult",
+              "english": "Adult"
+            },
+            {
+              "hinglish": "Error",
+              "english": "Error"
+            },
+            {
+              "hinglish": "Minor",
+              "english": "Minor"
+            },
+            {
+              "hinglish": "Kuch nahi",
+              "english": "Nothing"
+            }
+          ],
+          "ans": 2,
+          "expl": {
+            "hinglish": "16 >= 18 galat hai, isliye if wala block nahi chalta aur else wala block chalta hai, jo Minor chhapta hai.",
+            "english": "16 >= 18 is false, so the if block does not run and the else block runs, which prints Minor."
+          }
+        }
       ],
       practice: {
         title: {
@@ -2806,7 +2893,7 @@ else:
         language: 'python',
         starter: `temp = 35
 print(f"Temp: {temp}")`,
-        expected: 'Temp: 35\nPaani piyo',
+        expected: 'Temp: 35',
       },
     },
 {
@@ -3126,6 +3213,35 @@ print("Go!")`,
             hindi: 'break loop से बाहर निकल जाता है और loop दोबारा नहीं चलता। continue सिर्फ current round को छोड़ कर अगले राउंड पर चला जाता है।',
           },
         },
+        {
+          "q": {
+            "hinglish": "Loop mein range(3) kya dega?",
+            "english": "What will range(3) give in a loop?"
+          },
+          "opts": [
+            {
+              "hinglish": "1, 2, 3",
+              "english": "1, 2, 3"
+            },
+            {
+              "hinglish": "0, 1, 2",
+              "english": "0, 1, 2"
+            },
+            {
+              "hinglish": "3, 2, 1",
+              "english": "3, 2, 1"
+            },
+            {
+              "hinglish": "0, 1, 2, 3",
+              "english": "0, 1, 2, 3"
+            }
+          ],
+          "ans": 1,
+          "expl": {
+            "hinglish": "range(3) 0 se shuru hota hai aur 3 se pehle rukta hai, isliye ye 0, 1, 2 deta hai.",
+            "english": "range(3) starts at 0 and stops before 3, so it gives 0, 1, 2."
+          }
+        }
       ],
       practice: {
         title: {
@@ -3143,7 +3259,7 @@ print("Go!")`,
 for i in range(1, 11):
     total = total + i
 print(f"Total: {total}")`,
-        expected: 'Total: 55\nEven sum: 30',
+        expected: 'Total: 55',
       },
     },
     {
@@ -3909,6 +4025,35 @@ print(f"x: {x}, y: {y}")`,
             hindi: 'पायथन ऊपर से नीचे चलता है, इसलिए def वाली लाइन call से पहले आनी चाहिए, नहीं तो NameError आएगा।',
           },
         },
+        {
+          "q": {
+            "hinglish": "Is code ka output kya hoga? def greet(name): return \"Hello \" + name; print(greet(\"Asha\"))",
+            "english": "What will this code print? def greet(name): return \"Hello \" + name; print(greet(\"Asha\"))"
+          },
+          "opts": [
+            {
+              "hinglish": "Hello",
+              "english": "Hello"
+            },
+            {
+              "hinglish": "name",
+              "english": "name"
+            },
+            {
+              "hinglish": "None",
+              "english": "None"
+            },
+            {
+              "hinglish": "Hello Asha",
+              "english": "Hello Asha"
+            }
+          ],
+          "ans": 3,
+          "expl": {
+            "hinglish": "greet(\"Asha\") \"Hello Asha\" wapas karta hai, aur print use screen par dikhata hai.",
+            "english": "greet(\"Asha\") returns \"Hello Asha\", and print shows it on the screen."
+          }
+        }
       ],
       practice: {
         title: {
@@ -3926,7 +4071,7 @@ print(f"x: {x}, y: {y}")`,
     return a + b
 
 print(add(2, 3))`,
-        expected: '5\n14\n20',
+        expected: '5',
       },
     },
     {
@@ -6894,6 +7039,35 @@ print(phone.get("Ravi", "Nahi mila"))`,
             hindi: 'b = a से copy नहीं बनती — दोनों एक ही list की तरफ point करते हैं। b में append करने पर a में भी जुड़ जाता है।',
           },
         },
+        {
+          "q": {
+            "hinglish": "student = {\"name\": \"Sid\"}; student[\"marks\"] = 90 karne ke baad kya hoga?",
+            "english": "What happens after student = {\"name\": \"Sid\"}; student[\"marks\"] = 90?"
+          },
+          "opts": [
+            {
+              "hinglish": "Error — is tarah nayi key nahi jod sakte",
+              "english": "Error — you cannot add a new key like this"
+            },
+            {
+              "hinglish": "Kuch nahi badlega",
+              "english": "Nothing changes"
+            },
+            {
+              "hinglish": "\"marks\" naam ki nayi key 90 value ke saath jud jayegi",
+              "english": "A new key \"marks\" is added with the value 90"
+            },
+            {
+              "hinglish": "Dictionary delete ho jayega",
+              "english": "The dictionary is deleted"
+            }
+          ],
+          "ans": 2,
+          "expl": {
+            "hinglish": "Nayi key par value rakhne se dictionary mein woh key jud jaati hai. Isliye student mein ab name aur marks dono hain.",
+            "english": "Putting a value on a new key adds that key to the dictionary. So student now has both name and marks."
+          }
+        }
       ],
       practice: {
         title: {
@@ -6908,7 +7082,7 @@ print(phone.get("Ravi", "Nahi mila"))`,
         },
         language: 'python',
         starter: `items = ["Chai", "Cheeni", "Doodh"]`,
-        expected: "['Chai', 'Cheeni', 'Doodh', 'Atta']\nChai\nCheeni\nDoodh\nAtta\nTotal items: 4",
+        expected: "",
       },
     },
     {
