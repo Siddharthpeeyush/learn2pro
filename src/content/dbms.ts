@@ -239,6 +239,45 @@ SELECT book_id, title FROM books;`,
         'कागज़ पर गलती सुधारना सस्ता है, बनी हुई टेबल और भरा हुआ डेटा बदलना महँगा है। ईआर मॉडल डिज़ाइन की गलती को शुरू में पकड़ता है।',
       ),
     },
+    {
+      q: {
+        hinglish: 'ER diagram mein relationship ko kis shape mein dikhate hain?',
+        english: 'In an ER diagram, which shape shows a relationship?',
+      },
+      opts: [
+        { hinglish: 'Ek heera (diamond)', english: 'A diamond' },
+        { hinglish: 'Ek dabba (box)', english: 'A box' },
+        { hinglish: 'Ek gol ghaira (circle)', english: 'A circle' },
+        { hinglish: 'Ek seedhi line', english: 'A straight line' },
+      ],
+      ans: 0,
+      expl: {
+        hinglish: 'Article mein likha hai: entities dabbe mein, attributes gol ghare mein, aur relationships heere mein likhte hain. Isiliye diamond sahi hai.',
+        english: 'The article says: entities go in boxes, attributes in circles, and relationships in diamonds. So the diamond is right.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: 'Database organised data hai, DBMS use sambhalne wala software hai.',
+      english: 'A database is organised data, and a DBMS is the software that manages it.',
+    },
+    {
+      hinglish: 'Entity wo cheez hai jiske baare mein data rakhna hai, attribute uski khaasiyat hai, relationship do entities ka connection hai.',
+      english: 'An entity is a thing you keep data about, an attribute is its property, and a relationship is a connection between two entities.',
+    },
+    {
+      hinglish: 'ER diagram mein entity box mein, attribute gol ghare mein, aur relationship heere mein likhte hain.',
+      english: 'In an ER diagram, an entity goes in a box, an attribute in a circle, and a relationship in a diamond.',
+    },
+    {
+      hinglish: 'Har table mein ek key honi chahiye, jo har row ko unique pehchan deti hai.',
+      english: 'Every table must have a key that gives every row a unique identity.',
+    },
+    {
+      hinglish: 'Pehle kagaz par ER model banao, phir table banao — design pehle, table baad mein.',
+      english: 'First draw the ER model on paper, then make the table — design first, table later.',
+    },
   ],
   practice: {
     title: t('Apni library ki table banao', 'Make a table for your own library', 'अपनी लाइब्रेरी की टेबल बनाओ'),
@@ -443,6 +482,45 @@ SELECT exam_id, marks FROM exam;`,
         'अकेले student_id की नहीं बन सकता, क्योंकि एक छात्र के कई विषय हैं। (student_id, subject) दोनों मिलकर हर पंक्ति को अनोखा बनाते हैं।',
       ),
     },
+    {
+      q: {
+        hinglish: 'Foreign key ka main kaam kya hai?',
+        english: 'What is the main job of a foreign key?',
+      },
+      opts: [
+        { hinglish: 'Table ko tez chalana', english: 'To make the table run fast' },
+        { hinglish: 'Har row ko rang dena', english: 'To give every row a colour' },
+        { hinglish: 'Do tables ko jodna aur aisi value rokna jo doosri table mein nahi hai', english: 'To link two tables and block a value that is not in the other table' },
+        { hinglish: 'Table ka naam badalna', english: 'To change the name of the table' },
+      ],
+      ans: 2,
+      expl: {
+        hinglish: 'Foreign key se pata chalta hai ki student_id ki har value students.id mein honi chahiye — 99 wahan nahi hai, isliye insert fail hota hai. Isi se do tables judti hain aur galat data rukta hai.',
+        english: 'A foreign key means every value of student_id must exist in students.id — 99 is not there, so the insert fails. That is how two tables stay linked and wrong data is blocked.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: 'Relational model mein data tables mein rehta hai — har table mein rows aur columns hote hain.',
+      english: 'In the relational model, data lives in tables — every table has rows and columns.',
+    },
+    {
+      hinglish: 'Primary key har row ko unique pehchan deti hai aur kabhi NULL nahi ho sakti.',
+      english: 'A primary key gives every row a unique identity and can never be NULL.',
+    },
+    {
+      hinglish: 'Foreign key ek table ko doosri table se jodti hai — uski har value doosri table ki key mein honi chahiye.',
+      english: 'A foreign key links one table to another — every one of its values must exist in the key of the other table.',
+    },
+    {
+      hinglish: 'PRIMARY KEY ek hi hoti hai, UNIQUE columns kai ho sakte hain.',
+      english: 'There is only one PRIMARY KEY, but there can be many UNIQUE columns.',
+    },
+    {
+      hinglish: 'Composite key mein do ya zyada columns mil kar har row ko unique banate hain.',
+      english: 'In a composite key, two or more columns together make every row unique.',
+    },
   ],
   practice: {
     title: t('Courses table banao — key aur constraint ke saath', 'Make a courses table — with a key and a constraint', 'Courses टेबल बनाओ — की और कंस्ट्रेंट के साथ'),
@@ -633,6 +711,45 @@ ORDER BY marks DESC;`,
         'No student scored above 100, so no row meets the condition. An empty result is not an error — it means "no match".',
         'कोई छात्र 100 से ज़्यादा नंबर नहीं लाया, इसलिए कोई पंक्ति शर्त पूरी नहीं करती। खाली रिज़ल्ट एरर नहीं होता — इसका मतलब है "कोई मैच नहीं"।',
       ),
+    },
+    {
+      q: {
+        hinglish: 'SELECT name FROM students ORDER BY name ASC; pehli row kaun si hogi?',
+        english: 'In SELECT name FROM students ORDER BY name ASC; which row comes first?',
+      },
+      opts: [
+        { hinglish: 'Priya', english: 'Priya' },
+        { hinglish: 'Rahul', english: 'Rahul' },
+        { hinglish: 'Sana', english: 'Sana' },
+        { hinglish: 'Amit', english: 'Amit' },
+      ],
+      ans: 3,
+      expl: {
+        hinglish: 'ORDER BY name ASC naam ko A se Z tak sort karta hai: Amit, Priya, Rahul, Sana. Isiliye Amit pehle aata hai.',
+        english: 'ORDER BY name ASC sorts names from A to Z: Amit, Priya, Rahul, Sana. So Amit comes first.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: 'SELECT columns chun-ta hai, FROM table chun-ta hai, WHERE rows filter karta hai.',
+      english: 'SELECT picks the columns, FROM picks the table, and WHERE filters the rows.',
+    },
+    {
+      hinglish: 'ORDER BY ASC chhote se bada aur DESC bade se chhota order deta hai.',
+      english: 'ORDER BY ASC orders from small to big, and DESC from big to small.',
+    },
+    {
+      hinglish: 'Text ko SQL mein hamesha single quotes mein likhte hain.',
+      english: 'In SQL, text is always written in single quotes.',
+    },
+    {
+      hinglish: 'COUNT, AVG, MAX jaise aggregates hamesha ek row dete hain.',
+      english: 'Aggregates like COUNT, AVG and MAX always give one row.',
+    },
+    {
+      hinglish: 'Khali result error nahi hota — iska matlab hai "koi match nahi".',
+      english: 'An empty result is not an error — it means "no match".',
     },
   ],
   practice: {
@@ -838,6 +955,45 @@ INNER JOIN enrolments ON students.id = enrolments.student_id;`,
         'A LEFT JOIN gives all the rows of the left table, filling NULL where there is no match. Put students on the left so that Amit and Sana appear too.',
         'LEFT JOIN लेफ़्ट टेबल की सारी पंक्तियाँ देता है, मैच न हो तो NULL भर देता है। Students को लेफ़्ट में लिखो, ताकि अमित और सना भी दिखें।',
       ),
+    },
+    {
+      q: {
+        hinglish: 'LEFT JOIN mein Amit ki row mein course kya dikhega?',
+        english: 'In a LEFT JOIN, what appears in the course column of the row for Amit?',
+      },
+      opts: [
+        { hinglish: 'Python', english: 'Python' },
+        { hinglish: 'NULL', english: 'NULL' },
+        { hinglish: '0', english: '0' },
+        { hinglish: 'Khaali string', english: 'An empty string' },
+      ],
+      ans: 1,
+      expl: {
+        hinglish: 'Amit ne koi course nahi liya, isliye uska koi match nahi hai. LEFT JOIN match na hone par NULL bhar deta hai.',
+        english: 'Amit took no course, so he has no match. A LEFT JOIN fills NULL where there is no match.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: 'INNER JOIN sirf wahi rows deta hai jinka match dono tables mein ho.',
+      english: 'INNER JOIN gives only the rows that match in both tables.',
+    },
+    {
+      hinglish: 'LEFT JOIN left table ki saari rows deta hai, match na ho to NULL bhar deta hai.',
+      english: 'A LEFT JOIN gives all the rows of the left table, filling NULL where there is no match.',
+    },
+    {
+      hinglish: 'JOIN hamesha ON ke saath likho — bina ON ke cartesian product banega.',
+      english: 'Always write JOIN with ON — without ON, a cartesian product is made.',
+    },
+    {
+      hinglish: 'CROSS JOIN mein har row har row se judti hai: 4 rows x 3 rows = 12 rows.',
+      english: 'In a CROSS JOIN, every row joins with every row: 4 rows times 3 rows = 12 rows.',
+    },
+    {
+      hinglish: 'Jis table ki saari rows chahiye, use LEFT JOIN mein left taraf likho.',
+      english: 'Put the table whose rows you all need on the left side of a LEFT JOIN.',
     },
   ],
   practice: {
@@ -1053,6 +1209,45 @@ SELECT student_id, course FROM student_courses;`,
         'ज़्यादा टेबल मतलब ज़्यादा जॉइन, और हर जॉइन काम बढ़ाता है। नॉर्मलाइज़ेशन जितना ज़रूरी हो उतना करो — ओवर-नॉर्मलाइज़ेशन क्वेरी को धीमा कर देता है।',
       ),
     },
+    {
+      q: {
+        hinglish: 'Ek table 2NF mein hai. Iska matlab kya hai?',
+        english: 'A table is in 2NF. What does that mean?',
+      },
+      opts: [
+        { hinglish: 'Wo 3NF mein bhi hai', english: 'It is in 3NF too' },
+        { hinglish: 'Usmein koi key nahi hai', english: 'It has no key' },
+        { hinglish: 'Usmein sirf ek column hai', english: 'It has only one column' },
+        { hinglish: 'Wo 1NF mein bhi hai aur usmein koi partial dependency nahi hai', english: 'It is in 1NF too and it has no partial dependency' },
+      ],
+      ans: 3,
+      expl: {
+        hinglish: '2NF ka matlab hai 1NF plus no partial dependency — har non-key column poori key par depend karta hai. 2NF mein hona 3NF ki guarantee nahi deta.',
+        english: '2NF means 1NF plus no partial dependency — every non-key column depends on the whole key. Being in 2NF does not guarantee 3NF.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: '1NF ka rule hai: har cell mein ek hi atomic value honi chahiye.',
+      english: 'The rule of 1NF is: every cell must hold only one atomic value.',
+    },
+    {
+      hinglish: 'Partial dependency 2NF todti hai — non-key column poori key par depend karna chahiye, uske ek hisse par nahi.',
+      english: 'A partial dependency breaks 2NF — a non-key column must depend on the whole key, not on one part of it.',
+    },
+    {
+      hinglish: 'Transitive dependency 3NF todti hai — non-key column seedha key par depend karna chahiye, kisi aur column ke through nahi.',
+      english: 'A transitive dependency breaks 3NF — a non-key column must depend on the key directly, not through another column.',
+    },
+    {
+      hinglish: 'Alag cheezein alag tables mein rakho, taaki ek badlaav ke liye 100 rows na badalni padein.',
+      english: 'Keep different things in different tables, so that one change does not force you to change 100 rows.',
+    },
+    {
+      hinglish: 'Normalization jitna zaroori ho utna karo — zyada tables matlab zyada joins aur slow queries.',
+      english: 'Normalize only as much as needed — more tables mean more joins and slow queries.',
+    },
   ],
   practice: {
     title: t('Gadbad table ko pehchano aur todo', 'Spot the messy table and split it', 'गड़बड़ टेबल को पहचानो और तोड़ो'),
@@ -1246,6 +1441,45 @@ SELECT name, marks FROM students WHERE marks >= 80 ORDER BY marks DESC;`,
         'Durability means this: once COMMIT is done, the data is saved for ever — whether the power fails or the computer shuts down, the data comes back.',
         'ड्यूरेबिलिटी का मतलब है: एक बार COMMIT हो जाए, तो डेटा हमेशा के लिए सेव है — बिजली जाए या कंप्यूटर बंद हो, डेटा वापस आता है।',
       ),
+    },
+    {
+      q: {
+        hinglish: 'ROLLBACK ka kaam kya hai?',
+        english: 'What does ROLLBACK do?',
+      },
+      opts: [
+        { hinglish: 'Table delete karna', english: 'To delete a table' },
+        { hinglish: 'Index banana', english: 'To make an index' },
+        { hinglish: 'Transaction ke saare changes wapas lena', english: 'To undo all the changes of a transaction' },
+        { hinglish: 'Database band karna', english: 'To close the database' },
+      ],
+      ans: 2,
+      expl: {
+        hinglish: 'ROLLBACK se transaction ke saare steps wapas hote hain, jaise kuch hua hi nahi — paise gayab nahi hote.',
+        english: 'ROLLBACK undoes all the steps of a transaction, as if nothing happened — the money does not vanish.',
+      },
+    },
+  ],
+  keyNotes: [
+    {
+      hinglish: 'Atomicity ka matlab hai "sab ya kuch nahi" — aadha transaction mana hai.',
+      english: 'Atomicity means "all or nothing" — half a transaction is not allowed.',
+    },
+    {
+      hinglish: 'ROLLBACK transaction ke saare changes wapas leta hai, jaise kuch hua hi nahi.',
+      english: 'ROLLBACK undoes all the changes of a transaction, as if nothing happened.',
+    },
+    {
+      hinglish: 'COMMIT ke baad data hamesha ke liye save hai — ye durability hai.',
+      english: 'After COMMIT, the data is saved for ever — that is durability.',
+    },
+    {
+      hinglish: 'Bina WHERE ke UPDATE poori table ko badal deta hai — pehle SELECT se check karo.',
+      english: 'An UPDATE without WHERE changes the whole table — check first with SELECT.',
+    },
+    {
+      hinglish: 'Index search ko tez karta hai, lekin har INSERT, UPDATE aur DELETE ko slow kar deta hai.',
+      english: 'An index makes searching fast, but it makes every INSERT, UPDATE and DELETE slow.',
     },
   ],
   practice: {
