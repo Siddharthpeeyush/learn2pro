@@ -2615,6 +2615,11783 @@ Sabse zyada baar: chai -> 4 baar`
   readMinutes: 12,
 };
 
+
+const dsaStrings: Article = {
+    id: 'dsa-strings',
+    subjectId: 'dsa',
+    title: t(
+      'Strings — Indexing, Slicing, Palindrome, Anagram aur KMP',
+      'Strings — Indexing, Slicing, Palindrome, Anagram, and KMP'
+    ),
+    summary: t(
+      'String ko zero se samjho: Python mein string kya hoti hai, indexing aur slicing kaise kaam karti hai, string immutable kyun hoti hai, palindrome aur anagram kaise check karte hain, aur pattern matching mein naive search aur KMP ka idea kya hai.',
+      'Learn strings from scratch: what a string is in Python, how indexing and slicing work, why a string is immutable, how to check a palindrome and an anagram, and what naive search and KMP do in pattern matching.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. String Kya Hai? (Indexing, Slicing aur Immutability)',
+          '1. What Is a String? (Indexing, Slicing, and Immutability)'
+        ),
+        body: t(
+          `String characters ka ek ordered sequence hoti hai, jaise \`madam\` ya \`Learn2Pro\`. Python mein string single ya double quotes mein likhi jaati hai, aur har character ka ek index hota hai. Pehla character index 0 par hota hai, doosra 1 par, aur aakhri character ko index -1 se bhi pakad sakte ho. Isi liye \`s[0]\` pehla character deta hai aur \`s[-1]\` aakhri character deta hai. Indexing se tum string ke kisi bhi ek character tak seedha pahunch sakte ho, bina poori string scan kiye.
+
+Slicing se tum string ka ek hissa nikaal sakte ho: \`s[1:4]\` index 1 se 3 tak ke characters deta hai, kyunki end index 4 include nahi hota. \`s[::-1]\` poori string ko ulta kar deta hai, jo palindrome check mein bahut kaam aata hai. Sabse important baat yeh hai ki Python mein string **immutable** hoti hai — ek baar bani hui string ko badla nahi ja sakta. Tum \`s[0] = 'x'\` nahi likh sakte; naya string banana padega. Isi liye har string operation ek naya string banata hai, aur purana string waise ka waisa rehta hai.`,
+          `A string is an ordered sequence of characters, like \`madam\` or \`Learn2Pro\`. In Python a string is written in single or double quotes, and every character has an index. The first character is at index 0, the second at index 1, and the last character can also be reached with index -1. That is why \`s[0]\` gives the first character and \`s[-1]\` gives the last character. Indexing lets you reach any single character directly, without scanning the whole string.
+
+Slicing lets you take out a part of a string: \`s[1:4]\` gives the characters from index 1 to 3, because the end index 4 is not included. \`s[::-1]\` reverses the whole string, which is very useful for a palindrome check. The most important fact is that a string in Python is **immutable** — once a string is made, it cannot be changed. You cannot write \`s[0] = 'x'\`; you must build a new string. That is why every string operation creates a new string, while the old string stays exactly as it was.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Password, Search Box aur Spell Check',
+          '2. Real-Life Examples: Password, Search Box, and Spell Check'
+        ),
+        body: t(
+          `Strings har jagah hain. Jab tum phone mein password type karte ho, toh phone tumhare typed text ko stored password se character by character compare karta hai — yeh string comparison hai. Search box mein jab tum kuch type karte ho, toh app check karta hai ki tumhara text kisi naam ya title ke andar hai ya nahi — yeh **substring search** hai. Agar tum \`pro\` search karo aur \`Learn2Pro\` usmein mile, toh match mil gaya.
+
+Spell check bhi strings par kaam karta hai: woh tumhare word ko dictionary ke words se compare karta hai aur sabse kareeb wala word suggest karta hai. Anagram wale games mein bhi string ka use hota hai — \`listen\` aur \`silent\` mein same letters hain, bas order alag hai, isliye woh anagrams hain. Chat apps mein message bhejna, email likhna, file ka naam badalna — har kaam ke peeche string operations chalte hain. Jab tum string ko achhe se samajh lete ho, toh text se judi har problem aasan lagne lagti hai.`,
+          `Strings are everywhere. When you type a password on your phone, the phone compares your typed text with the stored password character by character — that is string comparison. When you type in a search box, the app checks whether your text appears inside some name or title — that is **substring search**. If you search for \`pro\` and \`Learn2Pro\` contains it, you have a match.
+
+Spell check also works on strings: it compares your word with words in a dictionary and suggests the closest word. Anagram games use strings too — \`listen\` and \`silent\` have the same letters in a different order, so they are anagrams. Sending a chat message, writing an email, or renaming a file — every one of these tasks runs on string operations. Once you understand strings well, every problem about text starts to feel easy.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Palindrome aur Anagram Check ka Dry Run',
+          '3. Step-by-Step: Palindrome and Anagram Check Dry Run'
+        ),
+        body: t(
+          `Palindrome woh word hota hai jo ulta padhne par bhi same lage, jaise \`madam\`. Check karne ka sabse seedha tareeka hai string ko ulta karke original se compare karna. \`s = "madam"\` lo. \`s[::-1]\` bhi \`madam\` deta hai, isliye \`s == s[::-1]\` True hota hai. Dry run mein steps yeh hain: pehle \`s[0]\` = 'm' aur \`s[-1]\` = 'm' match karte hain, phir \`s[1]\` = 'a' aur \`s[-2]\` = 'a' match karte hain, aur beech wala 'd' akela reh jaata hai. Sab match ho gaye, isliye yeh palindrome hai.
+
+Anagram check mein hum do strings ke letters ko sort karke compare karte hain. \`listen\` ko sort karo toh \`eilnst\` milta hai, aur \`silent\` ko sort karo toh bhi \`eilnst\` milta hai. Dono sorted forms same hain, isliye woh anagrams hain. Slicing bhi isi code mein dikh rahi hai: \`s[1:4]\` = \`ada\` hai, kyunki index 1, 2, 3 par 'a', 'd', 'a' hain. Neeche wala code yeh teeno checks ek saath print karta hai — isko run karke output ko haath se mile hue answer se milao.`,
+          `A palindrome is a word that reads the same backwards, like \`madam\`. The simplest way to check it is to reverse the string and compare it with the original. Take \`s = "madam"\`. \`s[::-1]\` also gives \`madam\`, so \`s == s[::-1]\` is True. In the dry run the steps are: first \`s[0]\` = 'm' and \`s[-1]\` = 'm' match, then \`s[1]\` = 'a' and \`s[-2]\` = 'a' match, and the middle 'd' stays alone. All of them match, so it is a palindrome.
+
+For an anagram check we sort the letters of both strings and compare them. Sorting \`listen\` gives \`eilnst\`, and sorting \`silent\` also gives \`eilnst\`. Both sorted forms are the same, so they are anagrams. Slicing also appears in this code: \`s[1:4]\` = \`ada\`, because index 1, 2, and 3 hold 'a', 'd', and 'a'. The code below prints all three checks together — run it and match the output with the answer you worked out by hand.`
+        ),
+        code: {
+          title: t(
+            'Palindrome Check, Anagram Check aur Slicing',
+            'Palindrome Check, Anagram Check, and Slicing'
+          ),
+          language: 'python',
+          code: `s = "madam"
+print(s == s[::-1])
+print(sorted("listen") == sorted("silent"))
+print(s[0], s[-1], s[1:4])`,
+          output: `True
+True
+m m ada`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Index Out of Range aur String Badalne ki Koshish',
+          '4. Common Mistakes: Index Out of Range and Trying to Change a String'
+        ),
+        body: t(
+          `Strings mein sabse pehli galti hai **index out of range**. Agar string ki length 5 hai, toh valid index 0 se 4 tak hain. \`s[5]\` likhoge toh Python \`IndexError\` dega. Negative index mein bhi yahi hota hai: \`s[-6]\` length 5 wali string par error dega. Slicing mein yeh error nahi aata — \`s[0:100]\` poori string de deta hai — par single index par hamesha length check karo.
+
+Doosri galti hai string ko list samajh kar badalne ki koshish. \`s[0] = 'x'\` likhoge toh \`TypeError\` aayega kyunki string immutable hai. Sahi tareeka hai naya string banana, jaise \`s = 'x' + s[1:]\`. Teesri galti hai \`==\` aur \`is\` ko confuse karna: \`==\` value compare karta hai, \`is\` identity compare karta hai. Do alag strings ki value same ho sakti hai par woh same object na hon, isliye value ke liye hamesha \`==\` use karo.`,
+          `The first common string mistake is **index out of range**. If a string has length 5, the valid indexes are 0 to 4. Writing \`s[5]\` gives an \`IndexError\` in Python. The same happens with a negative index: \`s[-6]\` is an error on a string of length 5. Slicing does not raise this error — \`s[0:100]\` simply gives the whole string — but for a single index you must always check the length.
+
+The second mistake is trying to change a string as if it were a list. Writing \`s[0] = 'x'\` gives a \`TypeError\` because a string is immutable. The correct way is to build a new string, like \`s = 'x' + s[1:]\`. The third mistake is confusing \`==\` with \`is\`: \`==\` compares values, while \`is\` compares identity. Two different strings can hold the same value without being the same object, so always use \`==\` when you compare values.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali String, Ek Character aur Case Sensitivity',
+          '5. Edge Cases: Empty String, One Character, and Case Sensitivity'
+        ),
+        body: t(
+          `Khaali string \`""\` ek valid string hai, aur woh palindrome bhi mani jaati hai kyunki uska ulta bhi khaali hi hota hai. Ek character wali string bhi palindrome hoti hai. Par khaali string par \`s[0]\` likhoge toh \`IndexError\` aayega, isliye pehle length check karo ya slicing use karo. Anagram check mein khaali string sirf khaali string ki anagram hoti hai.
+
+Case sensitivity ek aur edge case hai: Python mein \`'A'\` aur \`'a'\` alag characters hain. Isliye \`'Madam'\` ko seedha palindrome check karoge toh False aayega, kyunki 'M' aur 'm' same nahi hain. Sahi tareeka hai pehle \`s.lower()\` karke dono ko ek hi case mein laana. Spaces aur punctuation bhi dhyaan rakhne wale hain: \`'nurses run'\` jaise sentence palindrome tabhi bante hain jab spaces hata diye jaayein.`,
+          `An empty string \`""\` is a valid string, and it also counts as a palindrome because its reverse is empty too. A string with one character is also a palindrome. But writing \`s[0]\` on an empty string gives an \`IndexError\`, so check the length first or use slicing. In an anagram check, an empty string is an anagram only of another empty string.
+
+Case sensitivity is another edge case: in Python \`'A'\` and \`'a'\` are different characters. So a direct palindrome check on \`'Madam'\` gives False, because 'M' and 'm' are not the same. The correct way is to first call \`s.lower()\` to bring both sides to the same case. Spaces and punctuation also need care: a sentence like \`'nurses run'\` becomes a palindrome only after the spaces are removed.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Naive Search Slow Ho, KMP Kya Karta Hai?',
+          '6. What If: Naive Search Is Slow, What Does KMP Do?'
+        ),
+        body: t(
+          `Pattern matching mein naive search har position par pattern ko ek-ek character se compare karta hai. Agar text ki length n hai aur pattern ki length m hai, toh worst case time **O(n * m)** hota hai. Chhote text ke liye yeh theek hai, par bade text aur lambe pattern par yeh bahut slow ho jaata hai, kyunki har mismatch ke baad woh ek position aage badh kar phir se shuru se compare karta hai.
+
+**KMP** (Knuth-Morris-Pratt) yeh barbaadi bachata hai. Woh pattern ke andar hi ek table banata hai jo batata hai ki mismatch hone par kitna aage jump kar sakte ho, bina pehle se match hue characters ko dobara compare kiye. Isse time **O(n + m)** ho jaata hai. Interview mein tumse poora KMP code likhne ko kam hi kaha jaata hai, par uska idea poochha jaata hai: mismatch par wapas shuru se nahi, table ke hisaab se aage badho. String aur list ka farak bhi yaad rakho: list mutable hoti hai aur uske items kisi bhi type ke ho sakte hain, jabki string immutable hoti hai aur usmein sirf characters hote hain.`,
+          `In pattern matching, naive search compares the pattern character by character at every position. If the text has length n and the pattern has length m, the worst case time is **O(n * m)**. That is fine for a short text, but for a long text and a long pattern it becomes very slow, because after every mismatch it moves one position forward and starts comparing from the beginning again.
+
+**KMP** (Knuth-Morris-Pratt) avoids that waste. It builds a table from the pattern itself, which tells you how far you can jump after a mismatch without comparing the characters that already matched. That brings the time down to **O(n + m)**. In an interview you are rarely asked to write the full KMP code, but you are asked for its idea: after a mismatch, do not go back to the start — jump forward using the table. Also remember the difference between a string and a list: a list is mutable and can hold items of any type, while a string is immutable and holds only characters.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Strings ka Poora Picture',
+          '7. Summary: The Full Picture of Strings'
+        ),
+        body: t(
+          `String characters ka ordered sequence hoti hai. Indexing se ek character milta hai, slicing se ek hissa milta hai, aur \`s[::-1]\` string ko ulta kar deta hai. String **immutable** hoti hai — usko badla nahi ja sakta, sirf naya string banaya ja sakta hai. Palindrome check mein ulta karke compare karo, anagram check mein sort karke compare karo, aur pattern matching mein naive search O(n * m) hota hai jabki KMP O(n + m) mein kaam karta hai.
+
+Yaad rakhne wali baatein: index hamesha length ke andar hona chahiye, \`==\` value ke liye aur \`is\` identity ke liye hota hai, aur case sensitivity se bachne ke liye pehle \`lower()\` karo. List mutable hoti hai, string nahi — yeh farak interview mein baar-baar poochha jaata hai. Agle article mein hum recursion dekhenge, jahan ek function khud ko call karke badi problem ko chhoti problem mein todta hai.`,
+          `A string is an ordered sequence of characters. Indexing gives one character, slicing gives a part, and \`s[::-1]\` reverses the string. A string is **immutable** — it cannot be changed, only a new string can be built. For a palindrome check, reverse and compare; for an anagram check, sort and compare; and in pattern matching, naive search takes O(n * m) while KMP works in O(n + m).
+
+Remember these points: an index must always stay inside the length, \`==\` is for value and \`is\` is for identity, and call \`lower()\` first to avoid case sensitivity problems. A list is mutable, a string is not — that difference is asked again and again in interviews. In the next article we will look at recursion, where a function calls itself to break a big problem into a smaller one.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'String "madam": Index, Slicing aur Reverse',
+        'String "madam": Index, Slicing, and Reverse'
+      ),
+      nodes: [
+        { t: t('Index: 0 1 2 3 4', 'Index: 0 1 2 3 4'), s: t('m a d a m', 'm a d a m') },
+        { t: t('s[0] = m, s[-1] = m', 's[0] = m, s[-1] = m'), s: t('Pehla aur aakhri character same', 'First and last characters are the same') },
+        { t: t('s[1:4] = ada', 's[1:4] = ada'), s: t('End index 4 include nahi hota', 'End index 4 is not included') },
+        { t: t('s[::-1] = madam', 's[::-1] = madam'), s: t('Ulta bhi same, isliye palindrome', 'Reverse is the same, so it is a palindrome') },
+        { t: t('Immutable: s[0] = x error', 'Immutable: s[0] = x is an error'), s: t('Naya string banao, purana badlo mat', 'Build a new string, do not change the old one') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('String Methods: lower, upper, replace, len', 'String Methods: lower, upper, replace, len'),
+        language: 'python',
+        code: `s = "Learn2Pro"
+print(s.lower())
+print(s.upper())
+print(s.replace("2", " to "))
+print(len(s))`,
+        output: `learn2pro
+LEARN2PRO
+Learn to Pro
+9`
+      },
+      {
+        title: t('Naive Pattern Search: "abc" Kahan Kahan Hai?', 'Naive Pattern Search: Where Is "abc"?'),
+        language: 'python',
+        code: `text = "ababcabc"
+pat = "abc"
+found = []
+for i in range(len(text)-len(pat)+1):
+    if text[i:i+len(pat)]==pat: found.append(i)
+print(found)
+print(len(found))`,
+        output: `[2, 5]
+2`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Python mein s = "madam" par s[::-1] kya dega?', 'In Python, what does s[::-1] give for s = "madam"?'),
+        opts: [t('"madam"', '"madam"'), t('"mada"', '"mada"'), t('"adam"', '"adam"'), t('Error', 'Error')],
+        ans: 0,
+        expl: t('Sahi jawab: s[::-1] string ko ulta karta hai, aur "madam" ulta bhi "madam" hi hota hai, isliye yeh palindrome hai.', 'Correct answer: s[::-1] reverses the string, and "madam" reversed is still "madam", so it is a palindrome.')
+      },
+      {
+        q: t('String ke baare mein kaunsi baat sahi hai?', 'Which statement about strings is correct?'),
+        opts: [t('String mutable hoti hai', 'A string is mutable'), t('String immutable hoti hai', 'A string is immutable'), t('String mein sirf numbers hote hain', 'A string holds only numbers'), t('String ko index nahi kiya ja sakta', 'A string cannot be indexed')],
+        ans: 1,
+        expl: t('Sahi jawab: Python mein string immutable hoti hai, isliye s[0] = "x" likhne par TypeError aata hai.', 'Correct answer: a string in Python is immutable, so writing s[0] = "x" raises a TypeError.')
+      },
+      {
+        q: t('"listen" aur "silent" anagrams kyun hain?', 'Why are "listen" and "silent" anagrams?'),
+        opts: [t('Dono ki length alag hai', 'They have different lengths'), t('Dono ke letters sort karne par same hote hain', 'Their letters are the same after sorting'), t('Dono ek hi word hain', 'They are the same word'), t('Dono mein "z" hai', 'Both contain "z"')],
+        ans: 1,
+        expl: t('Sahi jawab: dono ko sort karne par "eilnst" milta hai, isliye unke letters same hain aur woh anagrams hain.', 'Correct answer: sorting both gives "eilnst", so their letters are the same and they are anagrams.')
+      },
+      {
+        q: t('Naive pattern search ka worst case time kya hota hai?', 'What is the worst case time of naive pattern search?'),
+        opts: [t('O(n)', 'O(n)'), t('O(n * m)', 'O(n * m)'), t('O(log n)', 'O(log n)'), t('O(1)', 'O(1)')],
+        ans: 1,
+        expl: t('Sahi jawab: naive search har position par poora pattern compare karta hai, isliye time O(n * m) hota hai, jabki KMP O(n + m) mein karta hai.', 'Correct answer: naive search compares the whole pattern at every position, so the time is O(n * m), while KMP takes O(n + m).')
+      },
+      {
+        q: t('s = "abc" par s[5] likhne par kya hoga?', 'What happens if you write s[5] for s = "abc"?'),
+        opts: [t('"c" milega', 'You get "c"'), t('Khaali string milegi', 'You get an empty string'), t('IndexError aayega', 'An IndexError is raised'), t('"a" milega', 'You get "a"')],
+        ans: 2,
+        expl: t('Sahi jawab: length 3 wali string mein valid index 0, 1, 2 hain, isliye s[5] par IndexError aata hai.', 'Correct answer: a string of length 3 has valid indexes 0, 1, and 2, so s[5] raises an IndexError.')
+      }
+    ],
+    keyNotes: [
+      t('String immutable hoti hai: badalne ke liye naya string banao.', 'A string is immutable: build a new string to change it.'),
+      t('s[::-1] string ko ulta karta hai — palindrome check ka sabse seedha tareeka.', 's[::-1] reverses a string — the simplest palindrome check.'),
+      t('Anagram check: dono strings ko sort karo aur compare karo.', 'Anagram check: sort both strings and compare them.'),
+      t('Naive search O(n * m), KMP O(n + m) — mismatch par KMP dobara compare nahi karta.', 'Naive search is O(n * m), KMP is O(n + m) — KMP does not re-compare after a mismatch.'),
+      t('Value ke liye == use karo, identity ke liye is; case ke liye pehle lower() karo.', 'Use == for value and is for identity; call lower() first to handle case.')
+    ],
+    practice: {
+      title: t('Practice: Sabse Lamba Word Dhoondho', 'Practice: Find the Longest Word'),
+      task: t('Neeche diye gaye sentence ke words ko split karo aur sabse lamba word aur uski length print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Split the words of the sentence below and print the longest word and its length. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `sentence = "practice makes perfect code"
+words = sentence.split()
+longest = ""
+for w in words:
+    if len(w) > len(longest): longest = w
+print(words)
+print("Longest:", longest, "->", len(longest), "letters")`,
+      expected: `['practice', 'makes', 'perfect', 'code']
+Longest: practice -> 8 letters`
+    },
+    readMinutes: 12
+  };
+
+const dsaRecursion: Article = {
+    id: 'dsa-recursion',
+    subjectId: 'dsa',
+    title: t(
+      'Recursion — Base Case, Call Stack, Factorial aur Fibonacci',
+      'Recursion — Base Case, Call Stack, Factorial, and Fibonacci'
+    ),
+    summary: t(
+      'Recursion ko zero se samjho: base case kya hota hai, call stack kaise banta hai, factorial aur Fibonacci ka dry run kaise hota hai, recursion iteration se kab behtar hai, stack overflow kyun hota hai, aur tail recursion ka idea kya hai.',
+      'Learn recursion from scratch: what a base case is, how the call stack builds up, how factorial and Fibonacci dry runs work, when recursion beats iteration, why stack overflow happens, and what tail recursion means.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Recursion Kya Hai? (Base Case aur Call Stack)',
+          '1. What Is Recursion? (Base Case and Call Stack)'
+        ),
+        body: t(
+          `Recursion woh technique hai jismein ek function khud ko call karta hai, par har baar thodi chhoti problem ke saath. Socho tumhe 5 ka factorial nikaalna hai: 5! = 5 x 4!. Aur 4! = 4 x 3!, aur aise hi chalta rehta hai jab tak 1! = 1 na aa jaaye. Har call problem ko ek step chhota kar deti hai, aur aakhir mein ek aisi call aati hai jiska answer seedha pata hota hai. Us aakhri call ko **base case** kehte hain.
+
+Base case ke bina recursion kabhi nahi rukta — function khud ko baar-baar call karta rehta hai aur program crash ho jaata hai. Har recursive function mein do hisse hote hain: base case, jo rukne ki condition hai, aur recursive case, jo problem ko chhota karke khud ko call karta hai. Jab function khud ko call karta hai, toh har call **call stack** mein ek naya frame banati hai. Function tabhi wapas aata hai jab uski andar wali call ka answer mil jaaye, isliye calls ulta order mein wapas aati hain.`,
+          `Recursion is the technique where a function calls itself, each time with a slightly smaller problem. Suppose you need 5 factorial: 5! = 5 x 4!. And 4! = 4 x 3!, and so on until 1! = 1. Every call makes the problem one step smaller, and at the end there is a call whose answer is known directly. That final call is called the **base case**.
+
+Without a base case recursion never stops — the function keeps calling itself and the program crashes. Every recursive function has two parts: the base case, which is the stopping condition, and the recursive case, which makes the problem smaller and calls itself. When a function calls itself, every call creates a new frame on the **call stack**. A function returns only after its inner call returns an answer, so the calls come back in reverse order.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Russian Doll, Mirror aur Folder Search',
+          '2. Real-Life Examples: Russian Doll, Mirror, and Folder Search'
+        ),
+        body: t(
+          `Recursion ka sabse achha example hai **Russian doll**: ek badi doll ke andar usse chhoti doll, uske andar usse chhoti, aur aakhir mein sabse chhoti doll jiske andar kuch nahi hota. Har doll ko kholna ek recursive step hai, aur sabse chhoti doll base case hai. Do aamne-saamne rakhe mirrors mein bhi yahi hota hai — ek mirror mein doosre mirror ki image, usmein phir wahi image, aur aise hi chhoti hoti jaati hai.
+
+Computer mein folder search bhi recursion se hota hai: ek folder ke andar files check karo, phir uske andar wale har sub-folder mein wahi kaam dobara karo. Folder ke andar folder ke andar folder — loop se yeh likhna mushkil hai, recursion se seedha hai. Family tree, maze solve karna, aur tree traverse karna bhi isi pattern par chalte hain: badi problem ko chhoti same-type problem mein tod do.`,
+          `The best example of recursion is a **Russian doll**: a big doll holds a smaller doll, which holds an even smaller one, and finally the smallest doll holds nothing. Opening each doll is a recursive step, and the smallest doll is the base case. Two mirrors facing each other show the same idea — one mirror shows the other mirror, which shows the same image again, getting smaller each time.
+
+Searching folders on a computer also uses recursion: check the files in a folder, then repeat the same work inside every sub-folder. A folder inside a folder inside a folder is hard to write with a loop, but simple with recursion. A family tree, solving a maze, and walking a tree all follow the same pattern: break a big problem into a smaller problem of the same type.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Factorial aur Fibonacci ka Dry Run',
+          '3. Step-by-Step: Factorial and Fibonacci Dry Run'
+        ),
+        body: t(
+          `Factorial ka dry run karte hain: \`fact(5)\` call hota hai. 5 <= 1 nahi hai, isliye woh \`5 * fact(4)\` return karta hai. \`fact(4)\` phir \`4 * fact(3)\` deta hai, \`fact(3)\` deta hai \`3 * fact(2)\`, \`fact(2)\` deta hai \`2 * fact(1)\`, aur \`fact(1)\` base case hai jo seedha 1 return karta hai. Ab stack ulta khulta hai: 2 x 1 = 2, 3 x 2 = 6, 4 x 6 = 24, 5 x 24 = 120. Answer 120 hai, aur har step mein ek hi multiplication hui.
+
+Fibonacci mein \`fib(6)\` do calls banata hai: \`fib(5)\` aur \`fib(4)\`, aur har ek phir do calls banata hai. Yahan calls ka tree banta hai aur wahi sub-problem baar-baar solve hoti hai, isliye plain Fibonacci **exponential time** leta hai. \`fib(0) = 0\` aur \`fib(1) = 1\` base cases hain. Neeche wala code dono functions ko run karta hai — pehle factorial ka stack haath se banao, phir code ka output milao.`,
+          `Let us dry run factorial: \`fact(5)\` is called. 5 <= 1 is false, so it returns \`5 * fact(4)\`. \`fact(4)\` then gives \`4 * fact(3)\`, \`fact(3)\` gives \`3 * fact(2)\`, \`fact(2)\` gives \`2 * fact(1)\`, and \`fact(1)\` is the base case that returns 1 directly. Now the stack unwinds in reverse: 2 x 1 = 2, 3 x 2 = 6, 4 x 6 = 24, and 5 x 24 = 120. The answer is 120, with only one multiplication per step.
+
+In Fibonacci, \`fib(6)\` makes two calls, \`fib(5)\` and \`fib(4)\`, and each of those makes two more calls. Here the calls form a tree and the same sub-problem is solved again and again, so plain Fibonacci takes **exponential time**. \`fib(0) = 0\` and \`fib(1) = 1\` are the base cases. The code below runs both functions — first build the factorial stack by hand, then match it with the code output.`
+        ),
+        code: {
+          title: t(
+            'Factorial aur Fibonacci: Base Case ke Saath',
+            'Factorial and Fibonacci: With a Base Case'
+          ),
+          language: 'python',
+          code: `def fact(n):
+    if n <= 1: return 1
+    return n * fact(n-1)
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1)+fib(n-2)
+print("fact(5) =", fact(5))
+print("fib(6) =", fib(6))
+print("fact(0) =", fact(0))`,
+          output: `fact(5) = 120
+fib(6) = 8
+fact(0) = 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Base Case Bhoolna aur Galat Base Case',
+          '4. Common Mistakes: Forgetting the Base Case and Wrong Base Case'
+        ),
+        body: t(
+          `Sabse badi galti hai **base case bhool jaana**. Agar function mein rukne ki condition hi nahi hai, toh woh khud ko hamesha call karta rahega aur Python \`RecursionError\` dega. Har recursive function likhne se pehle pehle base case likho, phir recursive case likho. Doosri galti hai galat base case: \`fact\` mein agar base case \`n == 0\` par 0 return kar do, toh har answer 0 ho jaayega, kyunki 0 se multiply hota rahega. Sahi base case 1 hai.
+
+Teesri galti hai problem ko chhota na karna: agar recursive call mein wahi \`n\` pass kar diya, toh problem kabhi chhoti nahi hogi aur base case kabhi nahi aayega. Har recursive call mein input ko base case ki taraf badhana chahiye, jaise \`n-1\`. Chauthe, Fibonacci jaise code mein bina soche recursion use karna: woh exponential time leta hai, aur wahan memoization ya loop behtar hota hai.`,
+          `The biggest mistake is **forgetting the base case**. If a function has no stopping condition, it keeps calling itself forever and Python raises a \`RecursionError\`. Write the base case first, before the recursive case, in every recursive function. The second mistake is a wrong base case: in \`fact\`, if the base case returns 0 for \`n == 0\`, every answer becomes 0, because everything gets multiplied by 0. The correct base case is 1.
+
+The third mistake is not making the problem smaller: if the recursive call passes the same \`n\`, the problem never shrinks and the base case never arrives. Every recursive call should move the input toward the base case, like \`n-1\`. Fourth, using recursion without thinking in code like Fibonacci: it takes exponential time, and memoization or a loop is better there.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: n = 0, Negative n aur Bahut Bada n',
+          '5. Edge Cases: n = 0, Negative n, and Very Large n'
+        ),
+        body: t(
+          `Factorial mein \`n = 0\` ek edge case hai: 0! = 1 hota hai, isliye base case \`n <= 1\` par 1 return karna sahi hai. Fibonacci mein \`n = 0\` par 0 aur \`n = 1\` par 1 return hota hai — dono base cases zaroori hain. Negative \`n\` par factorial define hi nahi hota; agar code mein negative input aa jaaye toh function base case tak pahunchega hi nahi aur infinite recursion ho jaayegi. Isliye negative input ko pehle hi handle karo.
+
+Bahut bada \`n\` bhi edge case hai: \`fact(1000)\` ya \`fib(1000)\` par Python ka default recursion limit lagbhag 1000 calls ka hota hai, aur usse zyada par \`RecursionError\` aata hai. Iska matlab recursion har bade input ke liye nahi hai — bade \`n\` ke liye loop behtar hota hai. Khali input par bhi dhyaan do: string ko reverse karne wale recursion mein khaali string base case hoti hai.`,
+          `In factorial, \`n = 0\` is an edge case: 0! = 1, so a base case that returns 1 for \`n <= 1\` is correct. In Fibonacci, \`n = 0\` returns 0 and \`n = 1\` returns 1 — both base cases are needed. Factorial is not defined for negative \`n\`; if a negative input arrives, the function never reaches the base case and recurses forever. So handle negative input first.
+
+A very large \`n\` is also an edge case: \`fact(1000)\` or \`fib(1000)\` hits Python's default recursion limit of about 1000 calls, and beyond that a \`RecursionError\` appears. That means recursion is not for every large input — a loop is better for large \`n\`. Also watch empty input: in a recursion that reverses a string, the empty string is the base case.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Recursion vs Iteration aur Tail Recursion',
+          '6. What If: Recursion vs Iteration and Tail Recursion'
+        ),
+        body: t(
+          `Recursion aur iteration dono se wahi kaam ho sakta hai, par kab kaunsa behtar hai? Recursion tab behtar hota hai jab problem naturally chhoti same-type problems mein tutti ho — jaise tree traverse karna ya maze solve karna. Code chhota aur readable hota hai. Iteration tab behtar hota hai jab problem seedhi line mein chalti ho — jaise 1 se n tak sum karna — kyunki usmein call stack ka kharcha nahi hota aur stack overflow ka risk nahi hota.
+
+**Stack overflow** tab hota hai jab calls itni zyada ho jaayein ki stack ki memory bhar jaaye. Python mein yeh \`RecursionError\` ke roop mein dikhta hai. **Tail recursion** woh recursion hoti hai jismein recursive call function ka aakhri kaam hota hai, uske baad kuch aur calculate nahi karna padta. Kuch languages isko loop mein badal kar stack bachati hain, par Python aisa nahi karta — isliye Python mein tail recursion bhi stack use karta hai. Interview mein yeh farak batana kaafi hai.`,
+          `Recursion and iteration can do the same work, but when is each better? Recursion is better when a problem naturally breaks into smaller problems of the same type — like walking a tree or solving a maze. The code is shorter and easier to read. Iteration is better when a problem runs in a straight line — like adding numbers from 1 to n — because it has no call stack cost and no stack overflow risk.
+
+**Stack overflow** happens when so many calls pile up that the stack memory fills up. In Python it appears as a \`RecursionError\`. **Tail recursion** is recursion where the recursive call is the very last thing the function does, with nothing left to calculate afterwards. Some languages turn that into a loop and save the stack, but Python does not — so in Python even tail recursion uses the stack. In an interview, stating that difference is enough.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Recursion ka Poora Picture',
+          '7. Summary: The Full Picture of Recursion'
+        ),
+        body: t(
+          `Recursion mein function khud ko chhoti problem ke saath call karta hai. Har recursive function mein **base case** hona chahiye, warna woh kabhi nahi rukta. Har call call stack mein ek frame banati hai, aur calls ulta order mein wapas aati hain. Factorial O(n) time leta hai, par plain Fibonacci exponential time leta hai kyunki wahi sub-problem baar-baar solve hoti hai.
+
+Yaad rakhne wali baatein: pehle base case likho, har call mein input ko chhota karo, negative aur bahut bade input ko handle karo, aur tree jaise naturally recursive problems mein recursion use karo. Loop seedhe kaam ke liye behtar hai. Agle article mein hum backtracking dekhenge, jahan recursion ke saath choice try karo, aage badho, aur galat rasta ho toh wapas aakar doosri choice try karo.`,
+          `In recursion, a function calls itself with a smaller problem. Every recursive function must have a **base case**, otherwise it never stops. Every call creates a frame on the call stack, and the calls return in reverse order. Factorial takes O(n) time, but plain Fibonacci takes exponential time because the same sub-problem is solved again and again.
+
+Remember these points: write the base case first, make the input smaller in every call, handle negative and very large inputs, and use recursion for naturally recursive problems like trees. A loop is better for straight work. In the next article we will look at backtracking, where you try a choice with recursion, move ahead, and if the path is wrong, come back and try another choice.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'fact(5) ka Call Stack: Neeche Jaana aur Wapas Aana',
+        'Call Stack of fact(5): Going Down and Coming Back'
+      ),
+      nodes: [
+        { t: t('fact(5) -> 5 * fact(4)', 'fact(5) -> 5 * fact(4)'), s: t('Rukna nahi, aage call karo', 'Do not stop, call ahead') },
+        { t: t('fact(4) -> 4 * fact(3)', 'fact(4) -> 4 * fact(3)'), s: t('Stack mein naya frame', 'A new frame on the stack') },
+        { t: t('fact(3) -> 3 * fact(2)', 'fact(3) -> 3 * fact(2)'), s: t('Problem chhoti hoti ja rahi hai', 'The problem keeps getting smaller') },
+        { t: t('fact(2) -> 2 * fact(1)', 'fact(2) -> 2 * fact(1)'), s: t('Ek aur step', 'One more step') },
+        { t: t('fact(1) = 1: base case', 'fact(1) = 1: base case'), s: t('Ab wapas: 2, 6, 24, 120', 'Now unwind: 2, 6, 24, 120') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Recursion se 1 se n Tak Sum', 'Sum from 1 to n with Recursion'),
+        language: 'python',
+        code: `def total(n):
+    if n == 0: return 0
+    return n + total(n-1)
+print(total(10))
+print(total(0))`,
+        output: `55
+0`
+      },
+      {
+        title: t('Countdown: Recursion se Ulta Count', 'Countdown: Counting Down with Recursion'),
+        language: 'python',
+        code: `def countdown(n):
+    if n == 0:
+        print("Go!")
+        return
+    print(n)
+    countdown(n-1)
+countdown(3)`,
+        output: `3
+2
+1
+Go!`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Recursive function mein base case ka kaam kya hota hai?', 'What is the job of the base case in a recursive function?'),
+        opts: [t('Function ko fast karna', 'To make the function fast'), t('Recursion ko rukne ki condition dena', 'To give recursion a stopping condition'), t('Memory bachana', 'To save memory'), t('Loop chalana', 'To run a loop')],
+        ans: 1,
+        expl: t('Sahi jawab: base case ke bina function khud ko hamesha call karta rahega, isliye base case hi recursion ko rukne ki condition deta hai.', 'Correct answer: without a base case the function keeps calling itself forever, so the base case is what gives recursion its stopping condition.')
+      },
+      {
+        q: t('fact(5) ka answer kya hoga?', 'What is the answer of fact(5)?'),
+        opts: [t('25', '25'), t('60', '60'), t('120', '120'), t('720', '720')],
+        ans: 2,
+        expl: t('Sahi jawab: 5! = 5 x 4 x 3 x 2 x 1 = 120 hota hai.', 'Correct answer: 5! = 5 x 4 x 3 x 2 x 1 = 120.')
+      },
+      {
+        q: t('Plain recursive Fibonacci itna slow kyun hota hai?', 'Why is plain recursive Fibonacci so slow?'),
+        opts: [t('Woh loop use karta hai', 'It uses a loop'), t('Wahi sub-problem baar-baar solve hoti hai', 'The same sub-problem is solved again and again'), t('Usmein base case nahi hota', 'It has no base case'), t('Woh sirf chhote n par chalta hai', 'It only runs on small n')],
+        ans: 1,
+        expl: t('Sahi jawab: fib(n) do calls banata hai aur dono mein wahi values dobara nikalti hain, isliye time exponential ho jaata hai.', 'Correct answer: fib(n) makes two calls and the same values are computed again in both, so the time becomes exponential.')
+      },
+      {
+        q: t('Stack overflow kab hota hai?', 'When does stack overflow happen?'),
+        opts: [t('Jab base case jaldi aa jaaye', 'When the base case comes early'), t('Jab calls itni zyada ho jaayein ki stack bhar jaaye', 'When so many calls pile up that the stack fills up'), t('Jab loop khatam ho jaaye', 'When a loop ends'), t('Jab list khaali ho', 'When a list is empty')],
+        ans: 1,
+        expl: t('Sahi jawab: har call stack mein ek frame banati hai, aur bahut zyada calls par stack ki memory bhar jaati hai aur RecursionError aata hai.', 'Correct answer: every call creates a frame on the stack, and too many calls fill the stack memory and raise a RecursionError.')
+      },
+      {
+        q: t('Tail recursion kya hoti hai?', 'What is tail recursion?'),
+        opts: [t('Recursion jismein recursive call aakhri kaam hoti hai', 'Recursion where the recursive call is the last thing done'), t('Recursion jismein loop hota hai', 'Recursion that has a loop'), t('Recursion jismein base case nahi hota', 'Recursion with no base case'), t('Recursion jo kabhi nahi rukti', 'Recursion that never stops')],
+        ans: 0,
+        expl: t('Sahi jawab: tail recursion mein recursive call ke baad kuch aur calculate nahi karna padta, isliye kuch languages isko loop mein badal deti hain.', 'Correct answer: in tail recursion nothing is left to calculate after the recursive call, so some languages turn it into a loop.')
+      }
+    ],
+    keyNotes: [
+      t('Har recursive function mein base case zaroori hai, warna woh kabhi nahi rukta.', 'Every recursive function needs a base case, otherwise it never stops.'),
+      t('Har call stack mein ek frame banati hai; calls ulta order mein wapas aati hain.', 'Every call creates a frame on the stack; calls return in reverse order.'),
+      t('Factorial O(n) hai, plain Fibonacci exponential hai — wahi sub-problem dobara solve hoti hai.', 'Factorial is O(n), plain Fibonacci is exponential — the same sub-problem is solved again.'),
+      t('Python mein bahut zyada calls par RecursionError aata hai; bade n ke liye loop behtar hai.', 'In Python too many calls raise a RecursionError; a loop is better for large n.'),
+      t('Tree aur maze jaise problems mein recursion behtar, seedhe kaam mein iteration behtar.', 'Recursion is better for tree and maze problems, iteration is better for straight work.')
+    ],
+    practice: {
+      title: t('Practice: Power Function Recursion se Likho', 'Practice: Write a Power Function with Recursion'),
+      task: t('power(base, exp) function likho jo base ki power exp nikaale, base case exp == 0 par 1 return karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Write a power(base, exp) function that finds base raised to exp, returning 1 when exp == 0 as the base case. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `def power(base, exp):
+    if exp == 0: return 1
+    return base * power(base, exp-1)
+print(power(2, 5))
+print(power(3, 3))
+print(power(5, 0))`,
+      expected: `32
+27
+1`
+    },
+    readMinutes: 12
+  };
+
+const dsaBacktracking: Article = {
+    id: 'dsa-backtracking',
+    subjectId: 'dsa',
+    title: t(
+      'Backtracking — Subsets, Permutations, N-Queens aur Rat in a Maze',
+      'Backtracking — Subsets, Permutations, N-Queens, and Rat in a Maze'
+    ),
+    summary: t(
+      'Backtracking ko zero se samjho: choice-explore-unchoose ka pattern kya hai, subsets aur permutations kaise bante hain, N-Queens aur rat in a maze kaise solve hote hain, aur pruning se bekaar raaste kaise kaante hain.',
+      'Learn backtracking from scratch: what the choice-explore-unchoose pattern is, how subsets and permutations are built, how N-Queens and rat in a maze are solved, and how pruning cuts useless paths.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Backtracking Kya Hai? (Choice, Explore, Unchoose)',
+          '1. What Is Backtracking? (Choice, Explore, Unchoose)'
+        ),
+        body: t(
+          `Backtracking ek aisi technique hai jismein tum ek choice try karte ho, aage badh kar dekhte ho ki rasta sahi hai ya nahi, aur agar rasta galat ho toh wapas aakar choice ko hata kar doosri choice try karte ho. Is pattern ko **choice-explore-unchoose** kehte hain. Pehle ek option chuno, phir recursion se aage explore karo, aur wapas aate waqt us choice ko **unchoose** karo taaki doosri choice try kar sako.
+
+Yeh technique wahan kaam aati hai jahan saare possible answers try karne hote hain — jaise subsets banana, permutations banana, ya maze mein rasta dhoondhna. Backtracking recursion par banti hai, par usmein ek extra step hota hai: wapas aate waqt state ko pehle jaisa kar dena. Agar tum unchoose karna bhool jaoge, toh ek choice ka asar doosri choice par padega aur answer galat ho jaayega.`,
+          `Backtracking is a technique where you try a choice, move ahead to see if the path is right, and if the path is wrong, come back, remove that choice, and try another one. This pattern is called **choice-explore-unchoose**. First pick an option, then explore ahead with recursion, and on the way back **unchoose** it so that another choice can be tried.
+
+This technique is used where all possible answers must be tried — like building subsets, building permutations, or finding a path in a maze. Backtracking is built on recursion, but it adds one extra step: restoring the state on the way back. If you forget to unchoose, one choice will affect the next choice and the answer will be wrong.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Maze, Sudoku aur Password Try Karna',
+          '2. Real-Life Examples: Maze, Sudoku, and Trying Passwords'
+        ),
+        body: t(
+          `Maze solve karna backtracking ka sabse seedha example hai. Tum ek mod par pahuncho, ek rasta chuno, aage badho, aur agar rasta band ho toh wapas usi mod par aakar doosra rasta try karo. Har mod par yahi choice-explore-unchoose chalta hai. Sudoku bhi aise hi solve hota hai: ek khaali box mein ek number try karo, aage badho, aur agar aage koi number fit na ho toh wapas aakar doosra number try karo.
+
+Password ya combination lock try karna bhi yahi pattern hai: ek combination try karo, galat ho toh wapas aakar doosri try karo. Chess mein bhi player ek move sochta hai, aage ke moves dekhta hai, aur agar woh line kharab lage toh wapas aakar doosri move sochta hai. Har jagah idea ek hi hai: try karo, check karo, galat ho toh wapas jao.`,
+          `Solving a maze is the simplest example of backtracking. You reach a turn, pick a path, move ahead, and if the path is blocked, come back to the same turn and try another path. The same choice-explore-unchoose runs at every turn. Sudoku is solved the same way: try a number in an empty box, move ahead, and if no number fits later, come back and try another number.
+
+Trying a password or a combination lock follows the same pattern: try one combination, and if it is wrong, come back and try another. In chess a player also thinks of a move, looks at the moves ahead, and if that line looks bad, comes back and thinks of another move. Everywhere the idea is the same: try, check, and if it is wrong, go back.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: [1, 2] ke Subsets ka Dry Run',
+          '3. Step-by-Step: Dry Run of Subsets of [1, 2]'
+        ),
+        body: t(
+          `Subsets matlab ek list ke saare possible groups: [1, 2] ke subsets hain [1, 2], [1], [2] aur []. Har element ke liye do choices hain — lena ya chhodna. Backtracking tree mein pehle element 1 par choice hoti hai. Agar 1 le liya, toh current = [1] ban jaata hai aur aage 2 par choice hoti hai. 2 le liya toh [1, 2] mil gaya, jo ek subset hai. Phir wapas aakar 2 ko unchoose karo, toh current phir [1] ho jaata hai aur [1] bhi ek subset hai.
+
+Ab wapas aakar 1 ko bhi unchoose karo, toh current [] ho jaata hai. Ab 2 par choice hoti hai: 2 lo toh [2] milta hai, chhodo toh [] milta hai. Kul 4 subsets bante hain, aur har leaf par ek subset milta hai. Neeche wala code yahi tree banata hai: pehle include karo, phir exclude karo, aur har baar wapas aate waqt pop karke unchoose karo. Output ka order bhi wahi hai jo dry run mein aaya.`,
+          `Subsets are all the possible groups of a list: the subsets of [1, 2] are [1, 2], [1], [2], and []. Every element has two choices — take it or leave it. In the backtracking tree the first choice is on element 1. If 1 is taken, current becomes [1] and the next choice is on 2. Taking 2 gives [1, 2], which is one subset. Then come back, unchoose 2, so current is [1] again, and [1] is also a subset.
+
+Now come back and unchoose 1 as well, so current becomes []. Now the choice is on 2: taking 2 gives [2], leaving it gives []. Four subsets are made in total, and every leaf gives one subset. The code below builds exactly this tree: first include, then exclude, and pop to unchoose on the way back. The output order is the same as in the dry run.`
+        ),
+        code: {
+          title: t(
+            'Subsets: Choice-Explore-Unchoose ka Pattern',
+            'Subsets: The Choice-Explore-Unchoose Pattern'
+          ),
+          language: 'python',
+          code: `def subsets(nums):
+    result = []
+    def backtrack(i, current):
+        if i == len(nums):
+            result.append(list(current)); return
+        current.append(nums[i]); backtrack(i+1, current); current.pop()
+        backtrack(i+1, current)
+    backtrack(0, [])
+    return result
+print(subsets([1,2]))`,
+          output: `[[1, 2], [1], [2], []]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Unchoose Bhoolna aur List ka Reference',
+          '4. Common Mistakes: Forgetting to Unchoose and List Reference'
+        ),
+        body: t(
+          `Backtracking mein sabse badi galti hai **unchoose karna bhool jaana**. Agar tum \`current.append(x)\` karke recursion karo aur wapas aakar \`current.pop()\` na karo, toh woh choice aage ke saare branches mein chipki rahegi aur answer galat ho jaayega. Har append ka ek pop hona chahiye, har add ka ek remove hona chahiye. Code likhne ke baad yeh pair check karo.
+
+Doosri galti hai list ka **reference** store karna. Agar tum \`result.append(current)\` likhoge, toh result mein wahi list ka reference jayega, aur baad mein pop karne par result ke andar wali list bhi badal jayegi. Sahi tareeka hai \`result.append(list(current))\` — ek copy store karo. Teesri galti hai base case galat rakhna: subsets mein base case tab aata hai jab index list ke end par pahunche, na ki jab current khaali ho.`,
+          `The biggest backtracking mistake is **forgetting to unchoose**. If you call \`current.append(x)\`, recurse, and do not call \`current.pop()\` on the way back, that choice stays stuck in all the branches ahead and the answer becomes wrong. Every append needs a pop, and every add needs a remove. After writing the code, check that pair.
+
+The second mistake is storing a list **reference**. If you write \`result.append(current)\`, the result stores a reference to the same list, and later pops will change the list inside the result too. The correct way is \`result.append(list(current))\` — store a copy. The third mistake is a wrong base case: in subsets the base case arrives when the index reaches the end of the list, not when current is empty.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali List, Ek Element aur Koi Solution Na Ho',
+          '5. Edge Cases: Empty List, One Element, and No Solution'
+        ),
+        body: t(
+          `Khaali list \`[]\` ka ek hi subset hota hai: \`[[]]\`. Yeh base case se hi milta hai, kyunki index 0 par hi list khatam ho jaati hai. Ek element wali list \`[5]\` ke do subsets hote hain: \`[[5], []]\`. Permutations mein ek element ka ek hi permutation hota hai, aur khaali string ka bhi ek permutation hota hai — khaali string khud.
+
+N-Queens mein \`n = 2\` aur \`n = 3\` par koi solution nahi hota — board par queens ko bina attack kiye rakhna possible hi nahi hai. Rat in a maze mein bhi aisa ho sakta hai ki start se end tak koi rasta hi na ho, tab answer khaali hota hai. Aise cases mein code ko crash nahi karna chahiye, khaali answer dena chahiye. Duplicate elements wale input par bhi dhyaan do: \`[1, 1]\` ke subsets mein duplicate subsets ban sakte hain, jinhe handle karne ke liye sorting aur skip karna padta hai.`,
+          `An empty list \`[]\` has exactly one subset: \`[[]]\`. That comes from the base case itself, because the index reaches the end of the list at 0. A one-element list \`[5]\` has two subsets: \`[[5], []]\`. In permutations, one element has one permutation, and an empty string also has one permutation — the empty string itself.
+
+In N-Queens there is no solution for \`n = 2\` and \`n = 3\` — it is impossible to place the queens without attack. In rat in a maze it is also possible that no path exists from start to end, and then the answer is empty. In such cases the code should not crash; it should give an empty answer. Also watch input with duplicate elements: subsets of \`[1, 1]\` can contain duplicate subsets, which need sorting and skipping to handle.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Pruning Na Ho, N-Queens Kitna Slow Hoga?',
+          '6. What If: No Pruning, How Slow Is N-Queens?'
+        ),
+        body: t(
+          `**Pruning** matlab bekaar raaste ko jaldi kaat dena, bina aage explore kiye. N-Queens mein agar do queens ek hi column mein hain, toh woh placement galat hai — aage ki rows try karne ka koi fayda nahi hai. Pruning wahi par ruk jaata hai aur wapas chala jaata hai. Agar pruning na ho, toh har row mein har column try karna padega, aur total combinations \`n^n\` ho jaayenge. n = 8 par yeh 16 million se zyada combinations hain.
+
+Rat in a maze mein bhi pruning hoti hai: agar cell block hai ya pehle se visit ho chuka hai, toh wahan jaana hi nahi hai. Bina pruning ke maze solver har rasta baar-baar try karega aur loop mein phans sakta hai. Isi liye visited set rakhna zaroori hai. Interview mein jab bhi backtracking likho, toh pehle yeh batao ki tum galat raaste ko kab kaatoge — yahi pruning hai, aur yahi backtracking ko brute force se alag karta hai.`,
+          `**Pruning** means cutting a useless path early, without exploring further. In N-Queens, if two queens are in the same column, that placement is wrong — there is no point trying the rows ahead. Pruning stops right there and goes back. Without pruning, every column must be tried in every row, and the total combinations become \`n^n\`. For n = 8 that is more than 16 million combinations.
+
+Rat in a maze also uses pruning: if a cell is blocked or already visited, do not go there at all. Without pruning, the maze solver would try every path again and again and could get stuck in a loop. That is why keeping a visited set is essential. Whenever you write backtracking in an interview, first say when you will cut a wrong path — that is pruning, and that is what separates backtracking from brute force.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Backtracking ka Poora Picture',
+          '7. Summary: The Full Picture of Backtracking'
+        ),
+        body: t(
+          `Backtracking ka pattern hai **choice-explore-unchoose**: ek option chuno, recursion se aage badho, aur wapas aate waqt us option ko hata do. Subsets mein har element ke liye lena ya chhodna hota hai, permutations mein har position par har bacha hua character try hota hai, N-Queens mein har row mein safe column dhoondha jaata hai, aur rat in a maze mein har cell se chaaro disha try hoti hain.
+
+Yaad rakhne wali baatein: har append ka pop hona chahiye, result mein list ki copy store karo, galat raaste ko pruning se jaldi kaato, aur visited set se loop se bacho. Backtracking exponential time leta hai, par pruning usko kaafi had tak tez kar deta hai. Agle article mein hum binary search dekhenge, jo sorted data mein answer ko aadha-aadha karke dhoondhta hai.`,
+          `The backtracking pattern is **choice-explore-unchoose**: pick an option, move ahead with recursion, and remove that option on the way back. In subsets, every element is taken or left; in permutations, every remaining character is tried at every position; in N-Queens, a safe column is found in every row; and in rat in a maze, all four directions are tried from every cell.
+
+Remember these points: every append needs a pop, store a copy of the list in the result, cut wrong paths early with pruning, and use a visited set to avoid loops. Backtracking takes exponential time, but pruning makes it much faster. In the next article we will look at binary search, which finds an answer in sorted data by cutting it in half again and again.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        '[1, 2] ke Subsets ka Tree: Lena ya Chhodna',
+        'Subset Tree of [1, 2]: Take or Leave'
+      ),
+      nodes: [
+        { t: t('Start: []', 'Start: []'), s: t('Element 1 par choice', 'Choice on element 1') },
+        { t: t('1 lo: [1]', 'Take 1: [1]'), s: t('Element 2 par choice', 'Choice on element 2') },
+        { t: t('1 chhodo: []', 'Leave 1: []'), s: t('Element 2 par choice', 'Choice on element 2') },
+        { t: t('[1, 2] aur [1]', '[1, 2] and [1]'), s: t('Do leaves, do subsets', 'Two leaves, two subsets') },
+        { t: t('[2] aur []', '[2] and []'), s: t('Do leaves, do subsets', 'Two leaves, two subsets') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Permutations: "ab" ke Saare Order', 'Permutations: All Orders of "ab"'),
+        language: 'python',
+        code: `def perm(s):
+    if len(s) <= 1: return [s]
+    out=[]
+    for i,ch in enumerate(s):
+        for rest in perm(s[:i]+s[i+1:]): out.append(ch+rest)
+    return out
+print(perm("ab"))
+print(len(perm("abc")))`,
+        output: `['ab', 'ba']
+6`
+      },
+      {
+        title: t('N-Queens: Kitne Solutions Hain?', 'N-Queens: How Many Solutions?'),
+        language: 'python',
+        code: `def count_queens(n):
+    count = 0
+    cols=set(); d1=set(); d2=set()
+    def place(r):
+        nonlocal count
+        if r==n: count+=1; return
+        for c in range(n):
+            if c in cols or (r-c) in d1 or (r+c) in d2: continue
+            cols.add(c); d1.add(r-c); d2.add(r+c)
+            place(r+1)
+            cols.remove(c); d1.remove(r-c); d2.remove(r+c)
+    place(0); return count
+print("4-Queens solutions:", count_queens(4))
+print("1-Queen solutions:", count_queens(1))`,
+        output: `4-Queens solutions: 2
+1-Queen solutions: 1`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Backtracking ka pattern kya hota hai?', 'What is the backtracking pattern?'),
+        opts: [t('Choice-explore-unchoose', 'Choice-explore-unchoose'), t('Sort-search-print', 'Sort-search-print'), t('Push-pop-peek', 'Push-pop-peek'), t('Insert-delete-update', 'Insert-delete-update')],
+        ans: 0,
+        expl: t('Sahi jawab: backtracking mein ek choice try karo, aage explore karo, aur wapas aate waqt us choice ko unchoose karo.', 'Correct answer: in backtracking you try a choice, explore ahead, and unchoose that choice on the way back.')
+      },
+      {
+        q: t('[1, 2] ke kitne subsets hote hain?', 'How many subsets does [1, 2] have?'),
+        opts: [t('2', '2'), t('3', '3'), t('4', '4'), t('6', '6')],
+        ans: 2,
+        expl: t('Sahi jawab: har element ke liye 2 choices hoti hain, isliye 2 x 2 = 4 subsets bante hain: [1, 2], [1], [2], [].', 'Correct answer: every element has 2 choices, so 2 x 2 = 4 subsets are made: [1, 2], [1], [2], [].')
+      },
+      {
+        q: t('Result mein current list ko seedha append karne par kya problem hoti hai?', 'What goes wrong if you append the current list directly to the result?'),
+        opts: [t('Kuch nahi, sahi hai', 'Nothing, it is correct'), t('Reference store hota hai, baad mein pop se result bhi badal jaata hai', 'A reference is stored, so a later pop changes the result too'), t('Code slow ho jaata hai', 'The code becomes slow'), t('Error aata hai', 'An error is raised')],
+        ans: 1,
+        expl: t('Sahi jawab: list ka reference store hota hai, isliye baad mein pop karne par result ke andar wali list bhi badal jaati hai; copy store karni chahiye.', 'Correct answer: a reference to the list is stored, so a later pop also changes the list inside the result; a copy must be stored.')
+      },
+      {
+        q: t('Pruning ka matlab kya hai?', 'What does pruning mean?'),
+        opts: [t('Saare raaste try karna', 'Trying all paths'), t('Bekaar raaste ko jaldi kaat dena', 'Cutting a useless path early'), t('Tree ko sort karna', 'Sorting the tree'), t('Base case hata dena', 'Removing the base case')],
+        ans: 1,
+        expl: t('Sahi jawab: pruning mein galat raaste ko aage explore kiye bina hi kaat diya jaata hai, jaise N-Queens mein attack wali placement par ruk jaana.', 'Correct answer: in pruning a wrong path is cut without exploring further, like stopping at an attacking placement in N-Queens.')
+      },
+      {
+        q: t('4-Queens ke kitne solutions hote hain?', 'How many solutions does 4-Queens have?'),
+        opts: [t('1', '1'), t('2', '2'), t('4', '4'), t('8', '8')],
+        ans: 1,
+        expl: t('Sahi jawab: 4x4 board par sirf 2 tareeke se 4 queens ko bina attack kiye rakha ja sakta hai.', 'Correct answer: on a 4x4 board there are only 2 ways to place 4 queens without attack.')
+      }
+    ],
+    keyNotes: [
+      t('Pattern: choice-explore-unchoose — har append ka pop hona chahiye.', 'Pattern: choice-explore-unchoose — every append needs a pop.'),
+      t('Result mein list ki copy store karo, reference nahi.', 'Store a copy of the list in the result, not a reference.'),
+      t('n elements ke 2^n subsets hote hain; n characters ke n! permutations hote hain.', 'n elements have 2^n subsets; n characters have n! permutations.'),
+      t('Pruning bekaar raaste ko jaldi kaat deta hai — backtracking ko brute force se alag karta hai.', 'Pruning cuts a useless path early — it separates backtracking from brute force.'),
+      t('Visited set se maze mein loop se bacho; n = 2 aur n = 3 par N-Queens ka koi solution nahi.', 'Use a visited set to avoid loops in a maze; N-Queens has no solution for n = 2 and n = 3.')
+    ],
+    practice: {
+      title: t('Practice: Sum 3 Wale Subsets Dhoondho', 'Practice: Find Subsets with Sum 3'),
+      task: t('[1, 2, 3] ke un subsets ko dhoondho jinka sum 3 ho, aur unhe aur unki count print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Find the subsets of [1, 2, 3] whose sum is 3, and print them and their count. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `nums=[1,2,3]; target=3; ans=[]
+def bt(i, cur, s):
+    if s==target: ans.append(list(cur)); return
+    if i==len(nums) or s>target: return
+    cur.append(nums[i]); bt(i+1,cur,s+nums[i]); cur.pop(); bt(i+1,cur,s)
+bt(0,[],0)
+print(ans)
+print("Count:", len(ans))`,
+      expected: `[[1, 2], [3]]
+Count: 2`
+    },
+    readMinutes: 12
+  };
+
+const dsaBinarySearch: Article = {
+    id: 'dsa-binary-search',
+    subjectId: 'dsa',
+    title: t(
+      'Binary Search — First/Last Occurrence, Rotated Array aur Peak Element',
+      'Binary Search — First/Last Occurrence, Rotated Array, and Peak Element'
+    ),
+    summary: t(
+      'Binary search ko gehraai se samjho: sorted array mein aadha-aadha karke kaise dhoondhte hain, first aur last occurrence kaise nikaalte hain, rotated sorted array mein search kaise hota hai, 2D matrix aur peak element mein binary search kaise lagta hai, aur lower/upper bound kya hote hain.',
+      'Learn binary search in depth: how to search a sorted array by cutting it in half, how to find the first and last occurrence, how to search a rotated sorted array, how binary search works in a 2D matrix and for a peak element, and what lower and upper bounds are.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Binary Search Kya Hai? (Sorted Array mein Aadha Karna)',
+          '1. What Is Binary Search? (Halving a Sorted Array)'
+        ),
+        body: t(
+          `Binary search sirf **sorted** array par chalta hai. Idea simple hai: array ke beech wale element ko dekho. Agar woh target ke barabar hai, toh mil gaya. Agar target chhota hai, toh sirf left half mein dhoondho. Agar target bada hai, toh sirf right half mein dhoondho. Har step mein search space aadha ho jaata hai, isliye time **O(log n)** hota hai — 1,000,000 items mein bhi sirf 20 steps lagte hain.
+
+Iske liye do pointers chahiye: \`lo\` aur \`hi\`. Beech ka index hota hai \`mid = (lo + hi) // 2\`. Loop tab tak chalta hai jab tak \`lo <= hi\` hai. Agar loop khatam ho jaaye aur target na mile, toh answer -1 hota hai. Linear search mein har element check karna padta hai, isliye woh O(n) hota hai. Binary search ki shart yaad rakho: array sorted hona chahiye, warna aadha karne ka logic hi galat ho jaayega.`,
+          `Binary search only works on a **sorted** array. The idea is simple: look at the middle element of the array. If it equals the target, you found it. If the target is smaller, search only the left half. If the target is bigger, search only the right half. The search space halves at every step, so the time is **O(log n)** — even 1,000,000 items take only about 20 steps.
+
+You need two pointers: \`lo\` and \`hi\`. The middle index is \`mid = (lo + hi) // 2\`. The loop runs while \`lo <= hi\`. If the loop ends without finding the target, the answer is -1. Linear search checks every element, so it takes O(n). Remember the condition for binary search: the array must be sorted, otherwise the halving logic itself becomes wrong.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Dictionary, Phone Contacts aur Guessing Game',
+          '2. Real-Life Examples: Dictionary, Phone Contacts, and Guessing Game'
+        ),
+        body: t(
+          `Dictionary mein word dhoondhna binary search ka sabse purana example hai. Tum dictionary ko beech se kholte ho: agar word us page ke baad aata hai, toh aage ke pages dekho, warna peeche ke pages dekho. Har baar aadhi dictionary bach jaati hai. Phone contacts mein bhi naam sorted hote hain, isliye search itni fast hoti hai.
+
+Number guessing game mein bhi yahi strategy hoti hai: 1 se 100 ke beech number socho, aur har guess par "chhota" ya "bada" sun kar aadha range kaat do. 7 guesses mein number mil jaata hai. Library mein book dhoondhna, train ki list mein apna naam dhoondhna — har jagah sorted data par binary search chhupa hota hai. Jab data sorted ho aur baar-baar search karna ho, toh binary search hi sahi hathiyaar hai.`,
+          `Finding a word in a dictionary is the oldest example of binary search. You open the dictionary in the middle: if the word comes after that page, look at the later pages, otherwise look at the earlier pages. Half the dictionary is left each time. Names in phone contacts are also sorted, which is why search is so fast.
+
+The number guessing game uses the same strategy: think of a number from 1 to 100, and after every guess, hearing "smaller" or "bigger" cuts half the range. The number is found in 7 guesses. Finding a book in a library or your name in a train list — everywhere, binary search hides inside sorted data. When data is sorted and you must search again and again, binary search is the right tool.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: First aur Last Occurrence ka Dry Run',
+          '3. Step-by-Step: First and Last Occurrence Dry Run'
+        ),
+        body: t(
+          `Array hai \`[1, 2, 2, 2, 3, 4]\` aur target hai 2. Seedha binary search koi bhi 2 de dega, par first occurrence ke liye jab mid par 2 mile, toh rukna nahi hai — left mein bhi 2 ho sakta hai, isliye \`hi = mid - 1\` karke left mein dhoondhte raho, aur answer ko save karte raho. Dry run: lo = 0, hi = 5, mid = 2, arr[2] = 2, answer = 2, hi = 1. Ab lo = 0, hi = 1, mid = 0, arr[0] = 1, target bada hai, lo = 1. Ab lo = 1, hi = 1, mid = 1, arr[1] = 2, answer = 1, hi = 0. Loop khatam, first = 1.
+
+Last occurrence ke liye ulta karo: mid par 2 mile toh \`lo = mid + 1\` karke right mein dhoondho. Isse last = 3 milta hai. Agar target na mile, toh dono -1 dete hain. Neeche wala code dono functions ko ek saath chalata hai — pehle first ka dry run haath se karo, phir output milao.`,
+          `The array is \`[1, 2, 2, 2, 3, 4]\` and the target is 2. A plain binary search would give any 2, but for the first occurrence, when mid holds 2, do not stop — a 2 may also sit on the left, so set \`hi = mid - 1\`, keep searching left, and keep saving the answer. Dry run: lo = 0, hi = 5, mid = 2, arr[2] = 2, answer = 2, hi = 1. Now lo = 0, hi = 1, mid = 0, arr[0] = 1, the target is bigger, lo = 1. Now lo = 1, hi = 1, mid = 1, arr[1] = 2, answer = 1, hi = 0. The loop ends, first = 1.
+
+For the last occurrence do the opposite: when mid holds 2, set \`lo = mid + 1\` and search right. That gives last = 3. If the target is missing, both give -1. The code below runs both functions together — first dry run the first occurrence by hand, then match the output.`
+        ),
+        code: {
+          title: t(
+            'First aur Last Occurrence: Binary Search do Baar',
+            'First and Last Occurrence: Binary Search Twice'
+          ),
+          language: 'python',
+          code: `def first_last(arr, target):
+    def find(first):
+        lo, hi, ans = 0, len(arr)-1, -1
+        while lo <= hi:
+            mid=(lo+hi)//2
+            if arr[mid]==target:
+                ans=mid
+                if first: hi=mid-1
+                else: lo=mid+1
+            elif arr[mid] < target: lo=mid+1
+            else: hi=mid-1
+        return ans
+    return find(True), find(False)
+print(first_last([1,2,2,2,3,4], 2))
+print(first_last([1,2,2,2,3,4], 5))`,
+          output: `(1, 3)
+(-1, -1)`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Unsorted Array, Infinite Loop aur Mid Overflow',
+          '4. Common Mistakes: Unsorted Array, Infinite Loop, and Mid Overflow'
+        ),
+        body: t(
+          `Sabse badi galti hai **unsorted array par binary search chalana**. Agar array sorted nahi hai, toh aadha kaatne ka decision galat hoga aur target hote hue bhi nahi milega. Pehle array ko sort karo, ya confirm karo ki woh sorted hai. Doosri galti hai loop ki condition galat rakhna: \`while lo < hi\` likhoge toh ek element wala case chhoot jaayega. Standard search mein \`while lo <= hi\` likho.
+
+Teesri galti hai pointers ko galat update karna: agar \`mid\` par target nahi mila aur tum \`lo = mid\` likh do, toh loop kabhi khatam nahi hoga kyunki mid wahi rahega. Hamesha \`lo = mid + 1\` ya \`hi = mid - 1\` likho. Chauthe, badi languages mein \`(lo + hi) // 2\` se overflow ho sakta hai, isliye \`lo + (hi - lo) // 2\` likha jaata hai. Python mein overflow nahi hota, par interview mein yeh baat batana achha lagta hai.`,
+          `The biggest mistake is running binary search on an **unsorted array**. If the array is not sorted, the decision to cut half will be wrong and the target will not be found even though it is there. Sort the array first, or confirm that it is sorted. The second mistake is a wrong loop condition: writing \`while lo < hi\` misses the one-element case. In standard search, write \`while lo <= hi\`.
+
+The third mistake is updating the pointers wrongly: if mid does not hold the target and you write \`lo = mid\`, the loop never ends because mid stays the same. Always write \`lo = mid + 1\` or \`hi = mid - 1\`. Fourth, in some languages \`(lo + hi) // 2\` can overflow, so \`lo + (hi - lo) // 2\` is written instead. Python has no overflow, but mentioning this in an interview looks good.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Ek Element aur Duplicate Values',
+          '5. Edge Cases: Empty Array, One Element, and Duplicate Values'
+        ),
+        body: t(
+          `Khaali array \`[]\` par binary search turant -1 deta hai, kyunki lo = 0 aur hi = -1 hota hai aur loop ek baar bhi nahi chalta. Ek element wale array mein mid wahi ek element hota hai — agar woh target hai toh answer 0, warna -1. Target array ke pehle element se chhota ho ya aakhri se bada ho, toh bhi answer -1 hi aata hai.
+
+Duplicate values mein seedha binary search koi bhi occurrence de sakta hai, isliye first aur last ke liye alag logic chahiye, jo section 3 mein dekha. Rotated array mein ek edge case hai jab array bilkul rotate hi na hua ho — tab woh seedha sorted hota hai aur normal binary search chal jaata hai. Peak element mein array ke dono ends par bhi peak ho sakta hai, isliye boundary check zaroori hai.`,
+          `On an empty array \`[]\`, binary search returns -1 at once, because lo = 0 and hi = -1, so the loop never runs. In a one-element array, mid is that one element — if it is the target the answer is 0, otherwise -1. If the target is smaller than the first element or bigger than the last one, the answer is still -1.
+
+With duplicate values, a plain binary search can give any occurrence, so first and last need separate logic, as seen in section 3. In a rotated array, one edge case is when the array was not rotated at all — then it is simply sorted and normal binary search works. For a peak element, a peak can also sit at either end of the array, so a boundary check is needed.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Rotated Array, 2D Matrix aur Peak Element',
+          '6. What If: Rotated Array, 2D Matrix, and Peak Element'
+        ),
+        body: t(
+          `Rotated array jaise \`[4, 5, 6, 7, 0, 1, 2]\` mein bhi binary search chalta hai, par ek extra check ke saath: har step mein dekho ki left half sorted hai ya right half sorted hai. Agar left half sorted hai aur target uske andar hai, toh left mein jao, warna right mein jao. Aadha kaatne ka idea wahi hai, bas sorted half ko pehchan na padta hai.
+
+2D matrix mein jahan har row aur har column sorted hai, wahan top-right corner se shuru karo: agar current value target se badi hai toh ek column peeche jao, agar chhoti hai toh ek row neeche jao. Peak element mein \`arr[mid] < arr[mid+1]\` ho toh peak right mein hai, warna left mein hai — isse peak O(log n) mein mil jaata hai. **Lower bound** matlab target ke barabar ya usse badi pehli value, aur **upper bound** matlab target se badi pehli value.`,
+          `Binary search also works on a rotated array like \`[4, 5, 6, 7, 0, 1, 2]\`, but with one extra check: at every step, see whether the left half is sorted or the right half is sorted. If the left half is sorted and the target lies inside it, go left, otherwise go right. The halving idea is the same, only the sorted half must be identified.
+
+In a 2D matrix where every row and every column is sorted, start from the top-right corner: if the current value is bigger than the target, move one column back; if it is smaller, move one row down. For a peak element, if \`arr[mid] < arr[mid+1]\` then the peak is on the right, otherwise on the left — that finds a peak in O(log n). **Lower bound** means the first value equal to or bigger than the target, and **upper bound** means the first value bigger than the target.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Binary Search ka Poora Picture',
+          '7. Summary: The Full Picture of Binary Search'
+        ),
+        body: t(
+          `Binary search sorted array par chalta hai aur har step mein search space ko aadha kar deta hai, isliye time **O(log n)** hota hai. Mid par target mile toh rukna nahi hai — first ke liye left mein aur last ke liye right mein dhoondhte raho. Rotated array mein pehle sorted half pehchano, 2D matrix mein top-right se chalo, aur peak ke liye mid ko uske neighbour se compare karo.
+
+Yaad rakhne wali baatein: array sorted hona chahiye, loop mein \`lo <= hi\` likho, pointers ko \`mid + 1\` aur \`mid - 1\` se update karo, aur target na mile toh -1 do. Lower bound aur upper bound bhi binary search se hi nikalte hain. Agle article mein hum two pointers aur sliding window dekhenge, jo sorted array aur string par bina extra space ke kaam karte hain.`,
+          `Binary search works on a sorted array and halves the search space at every step, so the time is **O(log n)**. When the target is found at mid, do not stop — keep searching left for the first occurrence and right for the last one. In a rotated array, first identify the sorted half; in a 2D matrix, start from the top-right; and for a peak, compare mid with its neighbour.
+
+Remember these points: the array must be sorted, write \`lo <= hi\` in the loop, update pointers with \`mid + 1\` and \`mid - 1\`, and return -1 when the target is missing. Lower bound and upper bound also come from binary search. In the next article we will look at two pointers and sliding window, which work on sorted arrays and strings without extra space.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Binary Search: Har Step mein Search Space Aadha',
+        'Binary Search: Search Space Halves Each Step'
+      ),
+      nodes: [],
+      headers: [t('Step', 'Step'), t('lo, hi, mid', 'lo, hi, mid'), t('arr[mid]', 'arr[mid]'), t('Kaam', 'Action')],
+      rows: [
+        [t('1', '1'), t('0, 5, 2', '0, 5, 2'), t('2', '2'), t('Target mila, left dhoondho', 'Target found, search left')],
+        [t('2', '2'), t('0, 1, 0', '0, 1, 0'), t('1', '1'), t('Target bada, lo = 1', 'Target is bigger, lo = 1')],
+        [t('3', '3'), t('1, 1, 1', '1, 1, 1'), t('2', '2'), t('First = 1, hi = 0', 'First = 1, hi = 0')],
+        [t('4', '4'), t('1, 0', '1, 0'), t('-', '-'), t('Loop khatam', 'Loop ends')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Rotated Sorted Array mein Search', 'Search in a Rotated Sorted Array'),
+        language: 'python',
+        code: `def search_rotated(arr, target):
+    lo,hi=0,len(arr)-1
+    while lo<=hi:
+        mid=(lo+hi)//2
+        if arr[mid]==target: return mid
+        if arr[lo]<=arr[mid]:
+            if arr[lo]<=target<arr[mid]: hi=mid-1
+            else: lo=mid+1
+        else:
+            if arr[mid]<target<=arr[hi]: lo=mid+1
+            else: hi=mid-1
+    return -1
+print(search_rotated([4,5,6,7,0,1,2],0))
+print(search_rotated([4,5,6,7,0,1,2],3))`,
+        output: `4
+-1`
+      },
+      {
+        title: t('Peak Element: Binary Search se', 'Peak Element: With Binary Search'),
+        language: 'python',
+        code: `def peak(arr):
+    lo,hi=0,len(arr)-1
+    while lo<hi:
+        mid=(lo+hi)//2
+        if arr[mid] < arr[mid+1]: lo=mid+1
+        else: hi=mid
+    return lo
+print(peak([1,3,5,4,2]))
+print(peak([1,2,3,4,5]))`,
+        output: `2
+4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Binary search ke liye sabse zaroori shart kya hai?', 'What is the most important condition for binary search?'),
+        opts: [t('Array khaali ho', 'The array is empty'), t('Array sorted ho', 'The array is sorted'), t('Array mein sirf 2 items hon', 'The array has only 2 items'), t('Array mein duplicate na hon', 'The array has no duplicates')],
+        ans: 1,
+        expl: t('Sahi jawab: binary search aadha kaatne par bharosa karta hai, jo sirf sorted array mein sahi hota hai.', 'Correct answer: binary search relies on cutting in half, which is only correct on a sorted array.')
+      },
+      {
+        q: t('1,000,000 items wale sorted array mein binary search lagbhag kitne steps leta hai?', 'About how many steps does binary search take on a sorted array of 1,000,000 items?'),
+        opts: [t('20', '20'), t('1000', '1000'), t('500000', '500000'), t('1000000', '1000000')],
+        ans: 0,
+        expl: t('Sahi jawab: har step mein space aadha hota hai, isliye log2(1000000) lagbhag 20 steps hote hain.', 'Correct answer: the space halves each step, so log2(1000000) is about 20 steps.')
+      },
+      {
+        q: t('First occurrence dhoondhte waqt mid par target mile toh kya karte hain?', 'When the target is found at mid while finding the first occurrence, what do you do?'),
+        opts: [t('Turant ruk jaate hain', 'Stop at once'), t('Answer save karke left mein dhoondhte hain', 'Save the answer and search left'), t('Right mein dhoondhte hain', 'Search right'), t('-1 return karte hain', 'Return -1')],
+        ans: 1,
+        expl: t('Sahi jawab: left mein bhi target ho sakta hai, isliye answer save karke hi = mid - 1 karke left mein dhoondhte raho.', 'Correct answer: the target may also sit on the left, so save the answer and keep searching left with hi = mid - 1.')
+      },
+      {
+        q: t('Rotated array [4, 5, 6, 7, 0, 1, 2] mein 0 kis index par hai?', 'At which index is 0 in the rotated array [4, 5, 6, 7, 0, 1, 2]?'),
+        opts: [t('0', '0'), t('2', '2'), t('4', '4'), t('6', '6')],
+        ans: 2,
+        expl: t('Sahi jawab: array mein 0 index 4 par hai, aur rotated binary search usee O(log n) mein dhoondh leta hai.', 'Correct answer: 0 is at index 4 in the array, and rotated binary search finds it in O(log n).')
+      },
+      {
+        q: t('Lower bound ka matlab kya hai?', 'What does lower bound mean?'),
+        opts: [t('Target se chhoti aakhri value', 'The last value smaller than the target'), t('Target ke barabar ya usse badi pehli value', 'The first value equal to or bigger than the target'), t('Array ka pehla element', 'The first element of the array'), t('Array ka aakhri element', 'The last element of the array')],
+        ans: 1,
+        expl: t('Sahi jawab: lower bound woh pehli position hoti hai jahan target ke barabar ya usse badi value aati hai.', 'Correct answer: the lower bound is the first position where a value equal to or bigger than the target appears.')
+      }
+    ],
+    keyNotes: [
+      t('Binary search sirf sorted array par chalta hai, time O(log n) hota hai.', 'Binary search only works on a sorted array, and its time is O(log n).'),
+      t('First ke liye mid milne par left dhoondho, last ke liye right dhoondho.', 'For the first occurrence search left after a mid hit, for the last one search right.'),
+      t('Rotated array mein pehle sorted half pehchano, phir aadha kaato.', 'In a rotated array, first identify the sorted half, then cut in half.'),
+      t('Loop mein lo <= hi likho aur pointers ko mid + 1 / mid - 1 se update karo.', 'Write lo <= hi in the loop and update pointers with mid + 1 / mid - 1.'),
+      t('Lower bound: target ke barabar ya usse badi pehli value; upper bound: target se badi pehli value.', 'Lower bound: first value equal to or bigger than the target; upper bound: first value bigger than the target.')
+    ],
+    practice: {
+      title: t('Practice: Lower Bound nikaalo', 'Practice: Find the Lower Bound'),
+      task: t('Sorted list [1, 3, 5, 7, 9] mein 6 aur 10 ka lower bound index nikaalo, aur 5 ka upper bound index bhi nikaalo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Find the lower bound index of 6 and 10 in the sorted list [1, 3, 5, 7, 9], and also the upper bound index of 5. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `import bisect
+arr=[1,3,5,7,9]
+print(bisect.bisect_left(arr,6))
+print(bisect.bisect_left(arr,10))
+print(bisect.bisect_right(arr,5))`,
+      expected: `3
+5
+3`
+    },
+    readMinutes: 12
+  };
+
+const dsaTwoPointers: Article = {
+    id: 'dsa-two-pointers',
+    subjectId: 'dsa',
+    title: t(
+      'Two Pointers aur Sliding Window — Pair Sum, Longest Substring aur Container',
+      'Two Pointers and Sliding Window — Pair Sum, Longest Substring, and Container'
+    ),
+    summary: t(
+      'Two pointers aur sliding window ko zero se samjho: sorted array mein pair sum kaise dhoondhte hain, bina repeat wali sabse lambi substring kaise nikaalte hain, size k wale subarray ka max sum kaise nikaalte hain, aur container with most water kaise solve hota hai.',
+      'Learn two pointers and sliding window from scratch: how to find a pair sum in a sorted array, how to find the longest substring without repeats, how to find the max sum of a subarray of size k, and how to solve container with most water.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Two Pointers aur Sliding Window Kya Hai?',
+          '1. What Are Two Pointers and Sliding Window?'
+        ),
+        body: t(
+          `Two pointers technique mein array par do pointers chalte hain — ek shuru se, ek end se, ya dono ek hi taraf se. Har step mein tum pointers ko dekh kar decide karte ho ki kaunsa pointer aage badhega. Isse nested loop ki zaroorat khatam ho jaati hai aur time **O(n)** ho jaata hai. Pair sum iska sabse seedha example hai: sorted array mein ek pointer left par aur ek right par rakho, aur sum ko target se compare karo.
+
+Sliding window mein ek window hoti hai jiska start aur end hota hai. Window ko aage badhate hue tum uske andar ka answer maintain karte ho, bina window ko dobara scan kiye. Jaise size k wale subarray ka max sum nikaalna ho, toh pehli window ka sum nikaalo, phir har step mein ek element aage se jodo aur ek peeche se hatao. Dono techniques ka idea ek hi hai: dobara kaam mat karo, pointers ko smartly aage badhao.`,
+          `In the two pointers technique, two pointers move over the array — one from the start and one from the end, or both from the same side. At every step you look at the pointers and decide which one moves ahead. That removes the need for a nested loop and makes the time **O(n)**. Pair sum is the simplest example: put one pointer at the left and one at the right of a sorted array, and compare their sum with the target.
+
+In sliding window there is a window with a start and an end. As you slide the window ahead, you keep the answer inside it up to date without scanning the window again. For example, to find the max sum of a subarray of size k, compute the sum of the first window, then at every step add one element at the front and remove one from the back. Both techniques share one idea: do not repeat work, move the pointers smartly.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Train ki Seat, Queue aur Photo Frame',
+          '2. Real-Life Examples: Train Seat, Queue, and Photo Frame'
+        ),
+        body: t(
+          `Two pointers ka example hai train mein do logon ka milna: ek platform ke ek end se chalta hai, doosra doosre end se, aur jab woh milte hain toh kaam ho jaata hai. Sorted list mein pair dhoondhna bhi aisa hi hai — left wala chhota number deta hai, right wala bada number deta hai, aur dono mil kar target banate hain.
+
+Sliding window ka example hai photo frame ko ek lambi photo par slide karna: frame ke andar jo dikhta hai wahi answer hai, aur frame ko aage badhane par sirf naya hissa aata hai aur purana hissa jaata hai. Queue mein bhi window hoti hai — aage se log nikalte hain aur peeche se judte hain. Data stream mein last k items ka average nikaalna bhi sliding window hai: har naye item par purana item hatao aur naya jodo.`,
+          `An example of two pointers is two people meeting on a train platform: one walks from one end, the other from the other end, and when they meet the work is done. Finding a pair in a sorted list is the same — the left one gives a small number, the right one gives a big number, and together they make the target.
+
+An example of sliding window is sliding a photo frame over a long photo: what appears inside the frame is the answer, and moving the frame ahead only brings a new part in and sends an old part out. A queue also has a window — people leave from the front and join from the back. Finding the average of the last k items in a data stream is also a sliding window: on every new item, remove the old one and add the new one.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Pair Sum ka Dry Run',
+          '3. Step-by-Step: Pair Sum Dry Run'
+        ),
+        body: t(
+          `Array hai \`[1, 2, 4, 7, 11, 15]\` aur target hai 15. Left pointer lo = 0 par hai (value 1) aur right pointer hi = 5 par hai (value 15). Sum = 1 + 15 = 16, jo target se bada hai, isliye hi ko ek peeche karo: hi = 4 (value 11). Sum = 1 + 11 = 12, jo target se chhota hai, isliye lo ko ek aage karo: lo = 1 (value 2). Sum = 2 + 11 = 13, chhota hai, lo = 2 (value 4). Sum = 4 + 11 = 15, target mil gaya. Answer hai (4, 11).
+
+Agar sum target se chhota ho toh lo badhao, kyunki chhota number badhane se sum badhega. Agar sum bada ho toh hi ghatao, kyunki bada number ghataane se sum ghatega. Yeh logic sirf sorted array mein chalta hai. Neeche wala code yahi dry run karta hai, aur doosre target 20 par None deta hai kyunki koi pair 20 nahi banata.`,
+          `The array is \`[1, 2, 4, 7, 11, 15]\` and the target is 15. The left pointer lo = 0 holds value 1 and the right pointer hi = 5 holds value 15. Sum = 1 + 15 = 16, which is bigger than the target, so move hi one step back: hi = 4 (value 11). Sum = 1 + 11 = 12, which is smaller than the target, so move lo one step ahead: lo = 1 (value 2). Sum = 2 + 11 = 13, smaller, lo = 2 (value 4). Sum = 4 + 11 = 15, target found. The answer is (4, 11).
+
+If the sum is smaller than the target, increase lo, because raising the small number raises the sum. If the sum is bigger, decrease hi, because lowering the big number lowers the sum. This logic only works on a sorted array. The code below runs exactly this dry run, and gives None for the second target 20 because no pair makes 20.`
+        ),
+        code: {
+          title: t(
+            'Pair Sum: Do Pointers se O(n) mein',
+            'Pair Sum: In O(n) with Two Pointers'
+          ),
+          language: 'python',
+          code: `def pair_sum(arr, target):
+    lo,hi=0,len(arr)-1
+    while lo<hi:
+        s=arr[lo]+arr[hi]
+        if s==target: return (arr[lo],arr[hi])
+        if s<target: lo+=1
+        else: hi-=1
+    return None
+print(pair_sum([1,2,4,7,11,15],15))
+print(pair_sum([1,2,4,7,11,15],20))`,
+          output: `(4, 11)
+None`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Unsorted Array, Window Galat Update aur Pointer Rukna',
+          '4. Common Mistakes: Unsorted Array, Wrong Window Update, and Stuck Pointer'
+        ),
+        body: t(
+          `Pair sum mein sabse badi galti hai **unsorted array par two pointers chalana**. Left aur right wala logic sirf sorted array mein sahi hai — unsorted array mein sum chhota hone par lo badhana galat decision ho sakta hai. Pehle array ko sort karo. Doosri galti hai sliding window mein window ko galat update karna: naya element jodna aur purana hatana — dono steps chahiye. Ek bhool jaoge toh sum galat ho jaayega.
+
+Teesri galti hai longest substring mein start pointer ko peeche le jaana. Jab repeat character mile, toh start ko sirf aage badhana chahiye, kabhi peeche nahi. Isi liye \`start = max(start, seen[ch] + 1)\` likha jaata hai. Chauthe, pointer ko move karna bhool jaana: agar loop mein na lo badhe na hi ghate, toh infinite loop ho jaayega. Har iteration mein kam se kam ek pointer aage badhna chahiye.`,
+          `The biggest pair sum mistake is running two pointers on an **unsorted array**. The left and right logic is only correct on a sorted array — on an unsorted array, increasing lo when the sum is small can be a wrong decision. Sort the array first. The second mistake is updating a sliding window wrongly: adding the new element and removing the old one — both steps are needed. Forgetting one makes the sum wrong.
+
+The third mistake is moving the start pointer backwards in the longest substring problem. When a repeated character appears, start should only move ahead, never back. That is why \`start = max(start, seen[ch] + 1)\` is written. Fourth, forgetting to move a pointer: if neither lo nor hi moves in a loop, it becomes an infinite loop. At least one pointer must move ahead in every iteration.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Ek Element aur Sab Same Characters',
+          '5. Edge Cases: Empty Array, One Element, and All Same Characters'
+        ),
+        body: t(
+          `Khaali array mein pair sum ka answer None hota hai, kyunki lo aur hi hain hi nahi. Ek element wale array mein bhi pair nahi ban sakta, kyunki pair ke liye do alag elements chahiye. Sliding window mein agar \`k\` array ki length se bada ho, toh window ban hi nahi sakti — pehle yeh check karo. Agar \`k\` = 0 ho, toh sum 0 hota hai.
+
+Longest substring mein agar saare characters same hon, jaise \`bbbbb\`, toh answer 1 hota hai. Agar saare characters alag hon, jaise \`abcdef\`, toh answer poori length hoti hai. Container with most water mein agar sirf 2 lines hon, toh answer un dono ki height mein se chhoti height hoti hai. Har problem mein pehle yeh chhote cases socho, phir bada case likho.`,
+          `In an empty array the pair sum answer is None, because lo and hi do not exist. In a one-element array no pair can be made either, because a pair needs two different elements. In sliding window, if \`k\` is bigger than the array length, no window can be formed — check that first. If \`k\` = 0, the sum is 0.
+
+In the longest substring problem, if all characters are the same, like \`bbbbb\`, the answer is 1. If all characters are different, like \`abcdef\`, the answer is the full length. In container with most water, if there are only 2 lines, the answer is the smaller of the two heights. In every problem, think of these small cases first, then write the big case.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Container With Most Water mein Chhoti Line Kyun Move Karein?',
+          '6. What If: In Container With Most Water, Why Move the Shorter Line?'
+        ),
+        body: t(
+          `Container with most water mein do lines ke beech paani ki matra hoti hai \`min(height[left], height[right]) x (right - left)\`. Har step mein chhoti line ko move karna chahiye, badi line ko nahi. Kyun? Kyunki paani ki height chhoti line se decide hoti hai — badi line ko move karne se width kam hogi aur height wahi chhoti wali rahegi, isliye area sirf ghatega. Chhoti line ko move karne par shayad ek badi line mil jaaye aur area badh jaaye.
+
+Yahi greedy choice hai jo is problem ko O(n) mein solve karti hai. Brute force mein har pair check karna padta, jo O(n^2) hota hai. Sliding window mein bhi aisa hi hota hai: fixed size window mein sum ko dobara calculate karne ki jagah sirf ek element jodo aur ek hatao, isliye time O(n) rehta hai. Dono mein idea ek hi hai: har step mein sirf wahi badlo jo answer ko badal sakta hai.`,
+          `In container with most water, the water between two lines is \`min(height[left], height[right]) x (right - left)\`. At every step you should move the shorter line, not the taller one. Why? Because the water height is decided by the shorter line — moving the taller line only reduces the width while the height stays the short one, so the area can only shrink. Moving the shorter line may find a taller line and increase the area.
+
+That greedy choice is what solves this problem in O(n). Brute force would check every pair, which is O(n^2). Sliding window does the same thing: instead of recalculating the sum for a fixed size window, just add one element and remove one, so the time stays O(n). In both, the idea is the same: at every step, change only what can change the answer.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Two Pointers aur Sliding Window ka Poora Picture',
+          '7. Summary: The Full Picture of Two Pointers and Sliding Window'
+        ),
+        body: t(
+          `Two pointers mein do pointers ko dekh kar decide karo ki kaunsa aage badhega — pair sum mein sum chhota ho toh lo badhao, bada ho toh hi ghatao. Sliding window mein window ko aage badhate hue uska sum ya state maintain karo, bina dobara scan kiye. Longest substring mein repeat mile toh start ko aage badhao, aur container mein hamesha chhoti line ko move karo.
+
+Yaad rakhne wali baatein: pair sum ke liye array sorted hona chahiye, window update mein jodna aur hatana dono chahiye, aur har iteration mein kam se kam ek pointer aage badhna chahiye. Dono techniques O(n) time mein chalti hain aur O(1) extra space leti hain. Agle article mein hum prefix sum dekhenge, jo range sum queries ko O(1) mein answer karta hai.`,
+          `In two pointers, look at the two pointers and decide which one moves ahead — in pair sum, if the sum is small increase lo, if it is big decrease hi. In sliding window, keep the sum or state of the window up to date as you slide it ahead, without scanning again. In the longest substring, move start ahead when a repeat appears, and in the container problem always move the shorter line.
+
+Remember these points: the array must be sorted for pair sum, a window update needs both adding and removing, and at least one pointer must move ahead in every iteration. Both techniques run in O(n) time and take O(1) extra space. In the next article we will look at prefix sum, which answers range sum queries in O(1).`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Pair Sum: lo aur hi Ek Doosre ki Taraf',
+        'Pair Sum: lo and hi Moving Toward Each Other'
+      ),
+      nodes: [
+        { t: t('lo = 0 (1), hi = 5 (15)', 'lo = 0 (1), hi = 5 (15)'), s: t('Sum 16 > 15, hi peeche', 'Sum 16 > 15, hi moves back') },
+        { t: t('lo = 0 (1), hi = 4 (11)', 'lo = 0 (1), hi = 4 (11)'), s: t('Sum 12 < 15, lo aage', 'Sum 12 < 15, lo moves ahead') },
+        { t: t('lo = 2 (4), hi = 4 (11)', 'lo = 2 (4), hi = 4 (11)'), s: t('Sum 15 = target, mil gaya', 'Sum 15 = target, found') },
+        { t: t('Sliding window: + naya, - purana', 'Sliding window: + new, - old'), s: t('Window ka sum dobara mat nikaalo', 'Do not recalculate the window sum') },
+        { t: t('Container: chhoti line move karo', 'Container: move the shorter line'), s: t('Badi line move karne se area sirf ghatega', 'Moving the taller line only shrinks the area') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters'),
+        language: 'python',
+        code: `def longest_unique(s):
+    seen={}; start=0; best=0
+    for i,ch in enumerate(s):
+        if ch in seen and seen[ch] >= start: start=seen[ch]+1
+        seen[ch]=i
+        best=max(best, i-start+1)
+    return best
+print(longest_unique("abcabcbb"))
+print(longest_unique("bbbbb"))
+print(longest_unique("pwwkew"))`,
+        output: `3
+1
+3`
+      },
+      {
+        title: t('Max Sum Subarray of Size k', 'Max Sum Subarray of Size k'),
+        language: 'python',
+        code: `def max_sum_k(arr, k):
+    window=sum(arr[:k]); best=window
+    for i in range(k, len(arr)):
+        window += arr[i]-arr[i-k]
+        best=max(best, window)
+    return best
+print(max_sum_k([2,1,5,1,3,2],3))
+print(max_sum_k([1,2,3,4,5],2))`,
+        output: `9
+9`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Pair sum mein sum target se chhota ho toh kya karte hain?', 'In pair sum, what do you do when the sum is smaller than the target?'),
+        opts: [t('hi ghatao', 'Decrease hi'), t('lo badhao', 'Increase lo'), t('Ruk jao', 'Stop'), t('Array sort karo', 'Sort the array')],
+        ans: 1,
+        expl: t('Sahi jawab: sum chhota hai toh chhota number badhana padega, isliye lo ko aage badhao.', 'Correct answer: if the sum is small, the small number must grow, so move lo ahead.')
+      },
+      {
+        q: t('Sliding window ka sabse bada fayda kya hai?', 'What is the biggest benefit of sliding window?'),
+        opts: [t('Window ko dobara scan nahi karna padta', 'The window does not need to be scanned again'), t('Array sort ho jaata hai', 'The array gets sorted'), t('Memory zyada lagti hai', 'It uses more memory'), t('Loop khatam ho jaata hai', 'The loop ends')],
+        ans: 0,
+        expl: t('Sahi jawab: har step mein sirf ek element jodo aur ek hatao, isliye time O(n) rehta hai.', 'Correct answer: at every step just add one element and remove one, so the time stays O(n).')
+      },
+      {
+        q: t('"abcabcbb" mein bina repeat wali sabse lambi substring ki length kya hai?', 'What is the length of the longest substring without repeats in "abcabcbb"?'),
+        opts: [t('2', '2'), t('3', '3'), t('4', '4'), t('8', '8')],
+        ans: 1,
+        expl: t('Sahi jawab: "abc" length 3 ki sabse lambi substring hai, uske baad "a" repeat ho jaata hai.', 'Correct answer: "abc" is the longest substring with length 3, after which "a" repeats.')
+      },
+      {
+        q: t('Container with most water mein kaunsi line move karte hain?', 'In container with most water, which line do you move?'),
+        opts: [t('Badi line', 'The taller line'), t('Chhoti line', 'The shorter line'), t('Dono lines', 'Both lines'), t('Koi bhi nahi', 'Neither')],
+        ans: 1,
+        expl: t('Sahi jawab: paani ki height chhoti line se decide hoti hai, isliye chhoti line ko move karke badi line dhoondhne ki koshish karo.', 'Correct answer: the water height is decided by the shorter line, so move the shorter line to try to find a taller one.')
+      },
+      {
+        q: t('Two pointers ka time complexity kya hota hai?', 'What is the time complexity of two pointers?'),
+        opts: [t('O(n)', 'O(n)'), t('O(n^2)', 'O(n^2)'), t('O(log n)', 'O(log n)'), t('O(n log n)', 'O(n log n)')],
+        ans: 0,
+        expl: t('Sahi jawab: dono pointers array ko ek hi baar mein paar karte hain, isliye time O(n) hota hai.', 'Correct answer: both pointers cross the array in a single pass, so the time is O(n).')
+      }
+    ],
+    keyNotes: [
+      t('Pair sum: sum chhota ho toh lo badhao, bada ho toh hi ghatao — array sorted hona chahiye.', 'Pair sum: if the sum is small increase lo, if big decrease hi — the array must be sorted.'),
+      t('Sliding window: har step mein ek element jodo aur ek hatao, dobara sum mat nikaalo.', 'Sliding window: add one element and remove one each step, do not recalculate the sum.'),
+      t('Longest substring: repeat mile toh start ko sirf aage badhao, kabhi peeche nahi.', 'Longest substring: when a repeat appears, move start only ahead, never back.'),
+      t('Container: hamesha chhoti line move karo, badi line move karne se area sirf ghatega.', 'Container: always move the shorter line, moving the taller line only shrinks the area.'),
+      t('Dono techniques O(n) time aur O(1) extra space mein chalti hain.', 'Both techniques run in O(n) time and O(1) extra space.')
+    ],
+    practice: {
+      title: t('Practice: Container With Most Water', 'Practice: Container With Most Water'),
+      task: t('Heights [1, 8, 6, 2, 5, 4, 8, 3, 7] mein sabse zyada paani wala container dhoondho aur uska area print karo, aur [1, 1] par bhi check karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Find the container with the most water in heights [1, 8, 6, 2, 5, 4, 8, 3, 7] and print its area, and also check [1, 1]. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `def max_area(h):
+    lo,hi=0,len(h)-1; best=0
+    while lo<hi:
+        area=min(h[lo],h[hi])*(hi-lo)
+        best=max(best,area)
+        if h[lo]<h[hi]: lo+=1
+        else: hi-=1
+    return best
+print(max_area([1,8,6,2,5,4,8,3,7]))
+print(max_area([1,1]))`,
+      expected: `49
+1`
+    },
+    readMinutes: 12
+  };
+
+const dsaPrefixSum: Article = {
+    id: 'dsa-prefix-sum',
+    subjectId: 'dsa',
+    title: t(
+      'Prefix Sum aur Difference Array — Range Sum, Subarray Sum aur 2D Prefix',
+      'Prefix Sum and Difference Array — Range Sum, Subarray Sum, and 2D Prefix'
+    ),
+    summary: t(
+      'Prefix sum ko zero se samjho: range sum queries O(1) mein kaise answer hoti hain, subarray sum equals k kaise ginna hai, 2D prefix sum se rectangle ka sum kaise nikaalte hain, aur difference array se range updates O(1) mein kaise karte hain.',
+      'Learn prefix sum from scratch: how range sum queries are answered in O(1), how to count subarrays with sum k, how 2D prefix sum finds a rectangle sum, and how a difference array does range updates in O(1).'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Prefix Sum Kya Hai? (Pehle se Joda Hua Sum)',
+          '1. What Is Prefix Sum? (A Sum Added in Advance)'
+        ),
+        body: t(
+          `Prefix sum ek aisa array hota hai jismein har position par shuru se us position tak ka sum store hota hai. Agar array hai \`[2, 4, 1, 3, 5]\`, toh prefix array hota hai \`[0, 2, 6, 7, 10, 15]\`. Pehla 0 isliye hota hai taaki range sum ka formula seedha ho jaaye. Prefix banane mein O(n) time lagta hai, par uske baad koi bhi range ka sum O(1) mein mil jaata hai.
+
+Range sum ka formula hai: \`sum(l..r) = prefix[r+1] - prefix[l]\`. Jaise sum 1..3 nikaalna ho, toh \`prefix[4] - prefix[1] = 10 - 2 = 8\`, jo 4 + 1 + 3 ke barabar hai. Bina prefix ke har query mein poori range scan karni padti, jo O(n) hoti. Agar 1000 queries hon, toh bina prefix ke 1000 x n kaam hota, prefix ke saath sirf O(n + 1000) kaam hota hai.`,
+          `A prefix sum is an array where every position stores the sum from the start up to that position. If the array is \`[2, 4, 1, 3, 5]\`, the prefix array is \`[0, 2, 6, 7, 10, 15]\`. The first 0 is there so that the range sum formula stays simple. Building the prefix takes O(n) time, but after that any range sum is found in O(1).
+
+The range sum formula is: \`sum(l..r) = prefix[r+1] - prefix[l]\`. For example, to find sum 1..3, compute \`prefix[4] - prefix[1] = 10 - 2 = 8\`, which equals 4 + 1 + 3. Without a prefix, every query must scan the whole range, which takes O(n). With 1000 queries, that is 1000 x n work without a prefix, but only O(n + 1000) work with one.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bank Statement, Marks Total aur Rainfall',
+          '2. Real-Life Examples: Bank Statement, Marks Total, and Rainfall'
+        ),
+        body: t(
+          `Bank statement mein prefix sum chhupa hota hai: har transaction ke baad tumhara balance wahi hota hai jo pehle ke saare transactions ka sum hai. Agar tumhe January se March tak ka total kharcha chahiye, toh March ke end ka balance minus December ke end ka balance kar do — beech ke har transaction ko dobara jodne ki zaroorat nahi hai.
+
+Exam mein bhi yahi hota hai: agar har subject ke marks alag-alag hain aur tumhe 3 subjects ka total chahiye, toh cumulative total se do numbers ka farak nikaal lo. Rainfall data mein bhi kisi bhi mahine ke beech ki total baarish aise hi nikaali jaati hai. Har jagah idea ek hi hai: pehle se jod kar rakho, phir farak se kisi bhi range ka answer nikaalo.`,
+          `A bank statement hides a prefix sum: after every transaction, your balance is the sum of all the transactions before it. If you need the total spending from January to March, subtract the December end balance from the March end balance — there is no need to add every transaction in between again.
+
+The same happens in exams: if every subject has separate marks and you need the total of 3 subjects, take the difference of two cumulative totals. Total rainfall between any two months is found the same way. Everywhere the idea is the same: add in advance, then find any range answer with a difference.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Prefix Array Banana aur Range Sum ka Dry Run',
+          '3. Step-by-Step: Building the Prefix Array and Range Sum Dry Run'
+        ),
+        body: t(
+          `Array hai \`[2, 4, 1, 3, 5]\`. Prefix array \`[0]\` se shuru hota hai. Pehla element 2 jodo: prefix = [0, 2]. Doosra 4 jodo: [0, 2, 6]. Teesra 1 jodo: [0, 2, 6, 7]. Chautha 3 jodo: [0, 2, 6, 7, 10]. Paanchwa 5 jodo: [0, 2, 6, 7, 10, 15]. Ab har prefix[i] ka matlab hai pehle i elements ka sum. Jaise prefix[3] = 7 matlab pehle 3 elements 2 + 4 + 1 = 7 hain.
+
+Ab range sum 1..3 nikaalo: formula hai prefix[4] - prefix[1]. prefix[4] = 10 hai (pehle 4 elements ka sum) aur prefix[1] = 2 hai (pehla element). 10 - 2 = 8, jo 4 + 1 + 3 ke barabar hai. Range sum 0..2 ke liye prefix[3] - prefix[0] = 7 - 0 = 7. Neeche wala code yahi prefix banata hai aur teeno sums print karta hai.`,
+          `The array is \`[2, 4, 1, 3, 5]\`. The prefix array starts as \`[0]\`. Add the first element 2: prefix = [0, 2]. Add the second 4: [0, 2, 6]. Add the third 1: [0, 2, 6, 7]. Add the fourth 3: [0, 2, 6, 7, 10]. Add the fifth 5: [0, 2, 6, 7, 10, 15]. Now every prefix[i] means the sum of the first i elements. For example, prefix[3] = 7 means the first 3 elements add to 2 + 4 + 1 = 7.
+
+Now find range sum 1..3: the formula is prefix[4] - prefix[1]. prefix[4] = 10 (sum of the first 4 elements) and prefix[1] = 2 (the first element). 10 - 2 = 8, which equals 4 + 1 + 3. For range sum 0..2, prefix[3] - prefix[0] = 7 - 0 = 7. The code below builds exactly this prefix and prints all three sums.`
+        ),
+        code: {
+          title: t(
+            'Prefix Array Banana aur Range Sum nikaalna',
+            'Building a Prefix Array and Finding Range Sum'
+          ),
+          language: 'python',
+          code: `arr=[2,4,1,3,5]
+prefix=[0]
+for x in arr: prefix.append(prefix[-1]+x)
+print(prefix)
+print("sum 1..3 =", prefix[4]-prefix[1])
+print("sum 0..2 =", prefix[3]-prefix[0])
+print("total =", prefix[-1])`,
+          output: `[0, 2, 6, 7, 10, 15]
+sum 1..3 = 8
+sum 0..2 = 7
+total = 15`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Off-by-One, Prefix[0] Bhoolna aur Negative Numbers',
+          '4. Common Mistakes: Off-by-One, Forgetting Prefix[0], and Negative Numbers'
+        ),
+        body: t(
+          `Prefix sum mein sabse zyada galti **off-by-one** ki hoti hai. Agar prefix array mein pehla 0 nahi hai, toh range 0 se shuru hone par formula alag ho jaata hai aur galti hoti hai. Hamesha prefix ko \`[0]\` se shuru karo, taaki \`prefix[r+1] - prefix[l]\` har range ke liye ek jaisa rahe. Doosri galti hai index ko confuse karna: prefix[i] pehle i elements ka sum hota hai, i-th element ka nahi.
+
+Teesri galti hai subarray sum equals k mein sirf prefix sum ko count karna. Sahi tareeka hai hash map mein prefix sums ki frequency rakhna: agar \`prefix - k\` pehle dikha hai, toh beech ka subarray ka sum k hai. Chauthe, negative numbers par yeh mat socho ki prefix sum hamesha badhega — negative number se prefix sum ghatega, aur wahi hash map wala logic kaam aata hai.`,
+          `The most common prefix sum mistake is **off-by-one**. If the prefix array does not start with 0, the formula changes for a range starting at 0 and errors appear. Always start the prefix with \`[0]\`, so that \`prefix[r+1] - prefix[l]\` stays the same for every range. The second mistake is confusing the index: prefix[i] is the sum of the first i elements, not the i-th element.
+
+The third mistake, in subarray sum equals k, is counting only the prefix sums. The correct way is to keep the frequency of prefix sums in a hash map: if \`prefix - k\` appeared before, the subarray in between sums to k. Fourth, do not think the prefix sum always grows with negative numbers — a negative number makes the prefix sum fall, and that is exactly where the hash map logic helps.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Negative Numbers aur 2D Boundaries',
+          '5. Edge Cases: Empty Array, Negative Numbers, and 2D Boundaries'
+        ),
+        body: t(
+          `Khaali array ka prefix sirf \`[0]\` hota hai, aur uspar koi range query nahi hoti. Ek element wale array mein prefix hota hai \`[0, x]\`, aur uska total x hota hai. Negative numbers wale array mein prefix sum upar-neeche ho sakta hai, par range sum ka formula wahi rehta hai — farak hamesha sahi answer deta hai.
+
+Subarray sum equals k mein ek edge case hai jab k = 0 ho aur array mein zero ho: khaali subarray ko count nahi karna chahiye, isliye hash map ko \`{0: 1}\` se shuru karo, taaki pehle element se hi subarray bane. 2D prefix sum mein rectangle ke bahar jaane wali boundaries ko handle karna padta hai — row ya column 0 ho toh us taraf ka prefix 0 hota hai.`,
+          `The prefix of an empty array is just \`[0]\`, and no range query runs on it. A one-element array has prefix \`[0, x]\`, and its total is x. In an array with negative numbers the prefix sum can go up and down, but the range sum formula stays the same — the difference always gives the correct answer.
+
+In subarray sum equals k, one edge case is when k = 0 and the array holds a zero: the empty subarray must not be counted, so start the hash map as \`{0: 1}\`, so that a subarray can form from the first element itself. In 2D prefix sum, boundaries outside the rectangle must be handled — when the row or column is 0, the prefix on that side is 0.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Difference Array se Range Updates aur 2D Prefix Sum',
+          '6. What If: Range Updates with Difference Array and 2D Prefix Sum'
+        ),
+        body: t(
+          `Agar tumhe array ke ek range mein baar-baar value add karni ho, toh har baar poori range ko update karna O(n) hota hai. **Difference array** isko O(1) mein kar deta hai: range [l, r] mein v add karne ke liye \`diff[l] += v\` aur \`diff[r+1] -= v\` karo. Saare updates ke baad diff array ka prefix sum nikaalo, toh final array mil jaata hai. Yeh hotel booking aur flight seats jaise problems mein kaam aata hai.
+
+**2D prefix sum** mein har cell par upar aur left ke saare cells ka sum store hota hai. Kisi bhi rectangle ka sum nikaalne ke liye chaar corners ka use hota hai: total minus upar wala hissa minus left wala hissa plus do baar ghata hua corner. Isse image processing mein kisi bhi rectangle ka sum O(1) mein mil jaata hai. Dono ka idea ek hi hai: pehle se jod kar rakho, phir farak se answer nikaalo.`,
+          `If you must add a value to a range of an array again and again, updating the whole range each time takes O(n). A **difference array** does it in O(1): to add v to range [l, r], do \`diff[l] += v\` and \`diff[r+1] -= v\`. After all updates, take the prefix sum of the diff array to get the final array. This is used in problems like hotel booking and flight seats.
+
+In **2D prefix sum**, every cell stores the sum of all cells above and to the left of it. To find the sum of any rectangle, four corners are used: the total minus the upper part minus the left part plus the corner that was subtracted twice. That gives the sum of any rectangle in O(1) in image processing. Both share one idea: add in advance, then find the answer with a difference.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Prefix Sum ka Poora Picture',
+          '7. Summary: The Full Picture of Prefix Sum'
+        ),
+        body: t(
+          `Prefix sum mein pehle se jod kar rakho: \`prefix[r+1] - prefix[l]\` se kisi bhi range ka sum O(1) mein milta hai. Subarray sum equals k ke liye prefix sums ki frequency ko hash map mein rakho. Difference array se range updates O(1) mein hote hain, aur 2D prefix sum se kisi bhi rectangle ka sum O(1) mein milta hai.
+
+Yaad rakhne wali baatein: prefix ko \`[0]\` se shuru karo, off-by-one se bacho, aur negative numbers par bhi formula wahi rehta hai. Prefix sum tab kaam aata hai jab array fix ho aur queries zyada hon. Agle article mein hum sorting ko gehraai se dekhenge — merge sort, quick sort, heap sort aur counting sort kaise kaam karte hain aur kab kaunsa use karna hai.`,
+          `In prefix sum, add in advance: \`prefix[r+1] - prefix[l]\` gives the sum of any range in O(1). For subarray sum equals k, keep the frequency of prefix sums in a hash map. A difference array does range updates in O(1), and 2D prefix sum gives the sum of any rectangle in O(1).
+
+Remember these points: start the prefix with \`[0]\`, avoid off-by-one errors, and the formula stays the same even with negative numbers. Prefix sum helps when the array is fixed and the queries are many. In the next article we will look at sorting in depth — how merge sort, quick sort, heap sort, and counting sort work, and when to use each one.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Prefix Array: Har Position par Pehle se Joda Sum',
+        'Prefix Array: Sum Added in Advance at Every Position'
+      ),
+      nodes: [],
+      headers: [t('i', 'i'), t('arr[i]', 'arr[i]'), t('prefix[i+1]', 'prefix[i+1]'), t('Matlab', 'Meaning')],
+      rows: [
+        [t('0', '0'), t('2', '2'), t('2', '2'), t('Pehla element', 'First element')],
+        [t('1', '1'), t('4', '4'), t('6', '6'), t('2 + 4', '2 + 4')],
+        [t('2', '2'), t('1', '1'), t('7', '7'), t('2 + 4 + 1', '2 + 4 + 1')],
+        [t('3', '3'), t('3', '3'), t('10', '10'), t('2 + 4 + 1 + 3', '2 + 4 + 1 + 3')],
+        [t('4', '4'), t('5', '5'), t('15', '15'), t('Total sum', 'Total sum')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Subarray Sum Equals k: Hash Map se Count', 'Subarray Sum Equals k: Count with a Hash Map'),
+        language: 'python',
+        code: `def count_subarrays(nums, k):
+    freq={0:1}; s=0; count=0
+    for x in nums:
+        s+=x
+        count+=freq.get(s-k,0)
+        freq[s]=freq.get(s,0)+1
+    return count
+print(count_subarrays([1,2,3,2,1],5))
+print(count_subarrays([1,1,1],2))`,
+        output: `2
+2`
+      },
+      {
+        title: t('Difference Array: Range Updates O(1) mein', 'Difference Array: Range Updates in O(1)'),
+        language: 'python',
+        code: `n=5
+diff=[0]*(n+1)
+def add(l, r, v):
+    diff[l]+=v
+    if r+1 < len(diff): diff[r+1]-=v
+add(1,3,10)
+add(2,4,5)
+out=[]; cur=0
+for i in range(n):
+    cur+=diff[i]; out.append(cur)
+print(out)`,
+        output: `[0, 10, 15, 15, 5]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Array [2, 4, 1, 3, 5] ka prefix array kya hoga?', 'What is the prefix array of [2, 4, 1, 3, 5]?'),
+        opts: [t('[2, 6, 7, 10, 15]', '[2, 6, 7, 10, 15]'), t('[0, 2, 6, 7, 10, 15]', '[0, 2, 6, 7, 10, 15]'), t('[0, 2, 4, 1, 3]', '[0, 2, 4, 1, 3]'), t('[15, 10, 7, 6, 2]', '[15, 10, 7, 6, 2]')],
+        ans: 1,
+        expl: t('Sahi jawab: prefix 0 se shuru hota hai aur har step mein ek element judta hai, isliye [0, 2, 6, 7, 10, 15] banta hai.', 'Correct answer: the prefix starts at 0 and one element is added at each step, so [0, 2, 6, 7, 10, 15] is formed.')
+      },
+      {
+        q: t('Range sum 1..3 ka formula kya hai?', 'What is the formula for range sum 1..3?'),
+        opts: [t('prefix[3] - prefix[1]', 'prefix[3] - prefix[1]'), t('prefix[4] - prefix[1]', 'prefix[4] - prefix[1]'), t('prefix[4] + prefix[1]', 'prefix[4] + prefix[1]'), t('prefix[1] - prefix[4]', 'prefix[1] - prefix[4]')],
+        ans: 1,
+        expl: t('Sahi jawab: sum(l..r) = prefix[r+1] - prefix[l] hota hai, isliye sum 1..3 = prefix[4] - prefix[1] = 8.', 'Correct answer: sum(l..r) = prefix[r+1] - prefix[l], so sum 1..3 = prefix[4] - prefix[1] = 8.')
+      },
+      {
+        q: t('Prefix sum banane ke baad ek range query kitne time mein answer hoti hai?', 'After building the prefix sum, how fast is one range query answered?'),
+        opts: [t('O(n)', 'O(n)'), t('O(log n)', 'O(log n)'), t('O(1)', 'O(1)'), t('O(n^2)', 'O(n^2)')],
+        ans: 2,
+        expl: t('Sahi jawab: range sum sirf do prefix values ka farak hota hai, isliye woh O(1) mein milta hai.', 'Correct answer: a range sum is just the difference of two prefix values, so it is found in O(1).')
+      },
+      {
+        q: t('Difference array mein range [l, r] mein v add karne ke liye kya karte hain?', 'In a difference array, what do you do to add v to range [l, r]?'),
+        opts: [t('diff[l] += v aur diff[r+1] -= v', 'diff[l] += v and diff[r+1] -= v'), t('Har element mein v jodo', 'Add v to every element'), t('diff[l] -= v', 'diff[l] -= v'), t('Kuch nahi', 'Nothing')],
+        ans: 0,
+        expl: t('Sahi jawab: diff[l] par v jodne se range shuru hoti hai aur diff[r+1] par v hatane se range khatam hoti hai, phir prefix sum se final array milta hai.', 'Correct answer: adding v at diff[l] starts the range and removing v at diff[r+1] ends it, then the prefix sum gives the final array.')
+      },
+      {
+        q: t('Subarray sum equals k mein hash map mein kya store karte hain?', 'In subarray sum equals k, what do you store in the hash map?'),
+        opts: [t('Array ke elements', 'The array elements'), t('Prefix sums ki frequency', 'The frequency of prefix sums'), t('Sirf k ki value', 'Only the value k'), t('Array ka total', 'The total of the array')],
+        ans: 1,
+        expl: t('Sahi jawab: agar prefix - k pehle dikha hai, toh beech ka subarray ka sum k hai, isliye prefix sums ki frequency store karte hain.', 'Correct answer: if prefix - k appeared before, the subarray in between sums to k, so the frequency of prefix sums is stored.')
+      }
+    ],
+    keyNotes: [
+      t('Prefix sum: sum(l..r) = prefix[r+1] - prefix[l], har query O(1) mein.', 'Prefix sum: sum(l..r) = prefix[r+1] - prefix[l], every query in O(1).'),
+      t('Prefix ko [0] se shuru karo, warna off-by-one galti hogi.', 'Start the prefix with [0], otherwise an off-by-one error will appear.'),
+      t('Subarray sum equals k: prefix sums ki frequency ko hash map mein rakho.', 'Subarray sum equals k: keep the frequency of prefix sums in a hash map.'),
+      t('Difference array: range update ke liye diff[l] += v aur diff[r+1] -= v karo.', 'Difference array: for a range update do diff[l] += v and diff[r+1] -= v.'),
+      t('2D prefix sum: rectangle ka sum chaar corners se O(1) mein milta hai.', '2D prefix sum: a rectangle sum comes from four corners in O(1).')
+    ],
+    practice: {
+      title: t('Practice: Subarray Sum Equals 2 Gino', 'Practice: Count Subarrays with Sum 2'),
+      task: t('[1, 1, 1] mein kitne subarrays ka sum 2 hai? Hash map wala tareeka use karke count print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'How many subarrays of [1, 1, 1] have sum 2? Use the hash map method and print the count. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `nums=[1,1,1]; k=2; count=0; s=0; freq={0:1}
+for x in nums:
+    s+=x; count+=freq.get(s-k,0); freq[s]=freq.get(s,0)+1
+print("Count:", count)`,
+      expected: `Count: 2`
+    },
+    readMinutes: 12
+  };
+
+const dsaSortingDeep: Article = {
+    id: 'dsa-sorting-deep',
+    subjectId: 'dsa',
+    title: t(
+      'Sorting Deep — Merge Sort, Quick Sort, Heap Sort aur Counting Sort',
+      'Sorting Deep — Merge Sort, Quick Sort, Heap Sort, and Counting Sort'
+    ),
+    summary: t(
+      'Sorting ko gehraai se samjho: merge sort, quick sort, heap sort aur counting sort kaise kaam karte hain, stability ka matlab kya hai, kab kaunsa sort use karna hai, aur Python ke sorted() aur sort() mein key function kaise use hota hai.',
+      'Learn sorting in depth: how merge sort, quick sort, heap sort, and counting sort work, what stability means, when to use each sort, and how to use a key function with Python sorted() and sort().'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Sorting Kya Hai? (Stability aur In-Place ka Matlab)',
+          '1. What Is Sorting? (What Stability and In-Place Mean)'
+        ),
+        body: t(
+          `Sorting matlab data ko ek order mein rakhna — chhote se bada, ya bada se chhota. Sorted data par search fast hota hai, duplicate dhoondhna aasan hota hai, aur median nikaalna seedha hota hai. Har sorting algorithm ka time aur space alag hota hai, isliye sahi algorithm chunna zaroori hai.
+
+Do terms yaad rakho. **Stable** sort woh hota hai jo barabar wale elements ka original order bana kar rakhta hai. Jaise do students ke marks barabar hon, toh stable sort mein pehle wala student pehle hi rahega. **In-place** sort woh hota hai jo extra array ke bina, original array ke andar hi sort karta hai. Merge sort stable hota hai par extra space leta hai, quick sort in-place hota hai par stable nahi hota.`,
+          `Sorting means putting data in an order — small to big, or big to small. Searching is fast on sorted data, finding duplicates is easy, and finding the median is simple. Every sorting algorithm has different time and space costs, so choosing the right algorithm matters.
+
+Remember two terms. A **stable** sort keeps the original order of equal elements. For example, if two students have equal marks, the student who came first stays first in a stable sort. An **in-place** sort sorts inside the original array without an extra array. Merge sort is stable but takes extra space, while quick sort is in-place but not stable.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam Rank, Library aur Phone Contacts',
+          '2. Real-Life Examples: Exam Rank, Library, and Phone Contacts'
+        ),
+        body: t(
+          `Exam result mein students ko marks ke hisaab se sort kiya jaata hai — sabse zyada marks wala pehle, sabse kam wala aakhri. Agar do students ke marks barabar hon, toh stable sort mein jisne pehle submit kiya tha woh pehle rahega. Library mein books ko author ke naam se sort kiya jaata hai, taaki koi bhi book jaldi mil jaaye.
+
+Phone contacts naam se sorted hote hain, isliye search fast hoti hai. Online shopping mein price low to high sort karna bhi sorting hai. Har jagah sorting ka use hota hai, par algorithm ka chunaav data par depend karta hai: chhote data ke liye simple sort theek hai, bade data ke liye fast sort chahiye, aur jab range chhoti ho toh counting sort sabse tez hota hai.`,
+          `In an exam result, students are sorted by marks — the highest marks first, the lowest last. If two students have equal marks, a stable sort keeps the one who submitted first ahead. In a library, books are sorted by author name so that any book can be found quickly.
+
+Phone contacts are sorted by name, which is why search is fast. Sorting online shopping results by price from low to high is also sorting. Sorting is used everywhere, but the choice of algorithm depends on the data: a simple sort is fine for small data, a fast sort is needed for big data, and when the range is small, counting sort is the fastest.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Merge Sort ka Dry Run',
+          '3. Step-by-Step: Merge Sort Dry Run'
+        ),
+        body: t(
+          `Merge sort **divide and conquer** par chalta hai: array ko aadha karo, dono halves ko sort karo, phir unhe merge karo. Array hai \`[5, 2, 9, 1, 7]\`. Pehle aadha karo: [5, 2] aur [9, 1, 7]. Phir [5, 2] ko aadha karo: [5] aur [2] — ek element wala array pehle se sorted hota hai. Merge karo: 2 chhota hai, pehle 2, phir 5, toh [2, 5] milta hai.
+
+Doosri taraf [9, 1, 7] ko aadha karo: [9] aur [1, 7]. [1, 7] ko merge karo: [1, 7] milta hai. Phir [9] aur [1, 7] ko merge karo: 1 pehle, phir 7, phir 9, toh [1, 7, 9] milta hai. Aakhir mein [2, 5] aur [1, 7, 9] ko merge karo: 1, 2, 5, 7, 9. Merge karte waqt dono halves ke pehle elements ko compare karo aur chhote ko output mein daalo. Time hamesha **O(n log n)** hota hai.`,
+          `Merge sort works on **divide and conquer**: split the array in half, sort both halves, then merge them. The array is \`[5, 2, 9, 1, 7]\`. First split it: [5, 2] and [9, 1, 7]. Then split [5, 2]: [5] and [2] — a one-element array is already sorted. Merge them: 2 is smaller, so 2 first, then 5, giving [2, 5].
+
+On the other side, split [9, 1, 7]: [9] and [1, 7]. Merge [1, 7] to get [1, 7]. Then merge [9] and [1, 7]: 1 first, then 7, then 9, giving [1, 7, 9]. Finally merge [2, 5] and [1, 7, 9]: 1, 2, 5, 7, 9. While merging, compare the first elements of both halves and put the smaller one in the output. The time is always **O(n log n)**.`
+        ),
+        code: {
+          title: t(
+            'Merge Sort: Divide, Sort, Merge',
+            'Merge Sort: Divide, Sort, Merge'
+          ),
+          language: 'python',
+          code: `def merge_sort(arr):
+    if len(arr)<=1: return arr
+    mid=len(arr)//2
+    left=merge_sort(arr[:mid]); right=merge_sort(arr[mid:])
+    out=[]; i=j=0
+    while i<len(left) and j<len(right):
+        if left[i]<=right[j]: out.append(left[i]); i+=1
+        else: out.append(right[j]); j+=1
+    return out+left[i:]+right[j:]
+print(merge_sort([5,2,9,1,7]))
+print(merge_sort([3,1,2]))
+print(sorted([5,2,9,1,7]))`,
+          output: `[1, 2, 5, 7, 9]
+[1, 2, 3]
+[1, 2, 5, 7, 9]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Quick Sort ka Worst Case aur Stability Bhoolna',
+          '4. Common Mistakes: Quick Sort Worst Case and Forgetting Stability'
+        ),
+        body: t(
+          `Quick sort mein sabse badi galti hai **bura pivot chunna**. Agar array pehle se sorted hai aur tum pehla element pivot bana lo, toh har baar ek taraf khaali aur doosri taraf n-1 elements bachenge, aur time **O(n^2)** ho jaayega. Sahi tareeka hai random pivot chunna ya beech wala element pivot banana. Python ka \`sorted()\` isse bachne ke liye Timsort use karta hai, jo merge sort aur insertion sort ka mix hai.
+
+Doosri galti hai stability ko ignore karna. Agar tumhe barabar wale elements ka order bachana hai, toh quick sort ya heap sort mat use karo — merge sort ya Python ka \`sorted()\` use karo, jo stable hote hain. Teesri galti hai counting sort ko bade range par chalana: agar range 0 se 1,000,000 tak hai, toh counting array bahut bada ho jaayega. Counting sort sirf chhoti range ke liye hai.`,
+          `The biggest quick sort mistake is picking a **bad pivot**. If the array is already sorted and you pick the first element as the pivot, one side will be empty and the other will hold n-1 elements each time, and the time becomes **O(n^2)**. The correct way is to pick a random pivot or the middle element. Python's \`sorted()\` avoids this by using Timsort, a mix of merge sort and insertion sort.
+
+The second mistake is ignoring stability. If you must keep the order of equal elements, do not use quick sort or heap sort — use merge sort or Python's \`sorted()\`, which are stable. The third mistake is running counting sort on a big range: if the range is 0 to 1,000,000, the counting array becomes huge. Counting sort is only for a small range.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Ek Element aur Sab Barabar',
+          '5. Edge Cases: Empty Array, One Element, and All Equal'
+        ),
+        body: t(
+          `Khaali array aur ek element wala array pehle se sorted hote hain — merge sort ka base case yahi hai. Agar saare elements barabar hon, jaise \`[5, 5, 5, 5]\`, toh bhi array sorted hai, par quick sort mein partition galat ho sakta hai aur time O(n^2) ho sakta hai. Isi liye achha pivot zaroori hai.
+
+Counting sort mein agar array mein negative numbers hon, toh seedha counting array nahi ban sakta — pehle minimum value ko shift karna padta hai. Heap sort mein ek element wala heap pehle se hi heap hota hai. Python ke \`sort()\` mein agar list mein alag-alag types hon, jaise number aur string, toh compare karne par error aayega. Sort karne se pehle hamesha yeh check karo ki saare elements ek hi type ke hon.`,
+          `An empty array and a one-element array are already sorted — that is the base case of merge sort. If all elements are equal, like \`[5, 5, 5, 5]\`, the array is sorted too, but in quick sort the partition can go wrong and the time can become O(n^2). That is why a good pivot matters.
+
+In counting sort, if the array holds negative numbers, a counting array cannot be built directly — the minimum value must be shifted first. In heap sort, a one-element heap is already a heap. In Python's \`sort()\`, if a list holds different types, like numbers and strings, comparing them raises an error. Before sorting, always check that all elements are of the same type.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Kab Kaunsa Sort Use Karein? aur Python key Function',
+          '6. What If: When to Use Which Sort? and Python key Function'
+        ),
+        body: t(
+          `Kab kaunsa sort use karna hai, yeh data par depend karta hai. **Merge sort** hamesha O(n log n) deta hai aur stable hota hai, par O(n) extra space leta hai — jab stability chahiye aur space ki parwah nahi, toh yeh best hai. **Quick sort** average O(n log n) deta hai aur in-place hota hai, par worst case O(n^2) hota hai — jab space kam ho aur average speed chahiye, toh yeh best hai. **Heap sort** O(n log n) deta hai aur in-place hota hai, par stable nahi hota — jab top k elements chahiye, toh heap best hai. **Counting sort** O(n + k) deta hai, par sirf chhoti range ke liye.
+
+Python mein \`sorted()\` naya sorted list deta hai aur original list ko nahi badalta, jabki \`sort()\` original list ko hi sort karta hai aur None deta hai. \`key\` function se tum bata sakte ho ki kis hisaab se sort karna hai: \`sorted(students, key=lambda s: s[1])\` marks ke hisaab se sort karta hai, aur \`key=len\` length ke hisaab se sort karta hai.`,
+          `Which sort to use depends on the data. **Merge sort** always gives O(n log n) and is stable, but takes O(n) extra space — it is best when stability is needed and space does not matter. **Quick sort** gives O(n log n) on average and is in-place, but its worst case is O(n^2) — it is best when space is low and average speed is needed. **Heap sort** gives O(n log n) and is in-place, but is not stable — when the top k elements are needed, a heap is best. **Counting sort** gives O(n + k), but only for a small range.
+
+In Python, \`sorted()\` gives a new sorted list and does not change the original list, while \`sort()\` sorts the original list itself and gives None. With a \`key\` function you can say what to sort by: \`sorted(students, key=lambda s: s[1])\` sorts by marks, and \`key=len\` sorts by length.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sorting ka Poora Picture',
+          '7. Summary: The Full Picture of Sorting'
+        ),
+        body: t(
+          `Merge sort divide karke merge karta hai aur hamesha O(n log n) deta hai, stable hota hai par extra space leta hai. Quick sort pivot ke aas-paas partition karta hai, average O(n log n) deta hai par bura pivot worst case O(n^2) bana deta hai. Heap sort heap se sabse bada element nikaal kar sort karta hai, aur counting sort frequency gin kar O(n + k) mein sort karta hai.
+
+Yaad rakhne wali baatein: stability ka matlab hai barabar wale elements ka order bachna, Python ka \`sorted()\` stable hai aur Timsort use karta hai, aur \`key\` function se kisi bhi hisaab se sort kar sakte ho. Agle article mein hum binary search tree dekhenge, jahan inorder traversal se sorted order milta hai.`,
+          `Merge sort divides and merges, always gives O(n log n), is stable, but takes extra space. Quick sort partitions around a pivot, gives O(n log n) on average, but a bad pivot makes the worst case O(n^2). Heap sort sorts by taking the biggest element out of a heap, and counting sort sorts in O(n + k) by counting frequencies.
+
+Remember these points: stability means keeping the order of equal elements, Python's \`sorted()\` is stable and uses Timsort, and a \`key\` function lets you sort by any rule. In the next article we will look at the binary search tree, where inorder traversal gives sorted order.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'Sorting Algorithms: Time Complexity ka Comparison',
+        'Sorting Algorithms: Time Complexity Comparison'
+      ),
+      nodes: [],
+      bars: [
+        { label: t('Merge sort', 'Merge sort'), value: 90, note: t('Hamesha O(n log n)', 'Always O(n log n)') },
+        { label: t('Quick sort (avg)', 'Quick sort (avg)'), value: 90, note: t('Average O(n log n)', 'Average O(n log n)') },
+        { label: t('Heap sort', 'Heap sort'), value: 85, note: t('O(n log n), in-place', 'O(n log n), in-place') },
+        { label: t('Counting sort', 'Counting sort'), value: 95, note: t('O(n + k), chhoti range', 'O(n + k), small range') },
+        { label: t('Bubble sort', 'Bubble sort'), value: 30, note: t('O(n^2), sirf seekhne ke liye', 'O(n^2), only for learning') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Python key Function: Marks aur Length se Sort', 'Python key Function: Sort by Marks and Length'),
+        language: 'python',
+        code: `students=[("Asha",85),("Ravi",92),("Meena",78)]
+print(sorted(students, key=lambda s: s[1]))
+print(sorted(students, key=lambda s: s[1], reverse=True))
+print(sorted(["banana","kiwi","apple"], key=len))`,
+        output: `[('Meena', 78), ('Asha', 85), ('Ravi', 92)]
+[('Ravi', 92), ('Asha', 85), ('Meena', 78)]
+['kiwi', 'apple', 'banana']`
+      },
+      {
+        title: t('Counting Sort: Frequency Gin Kar Sort Karo', 'Counting Sort: Sort by Counting Frequency'),
+        language: 'python',
+        code: `def counting_sort(arr):
+    if not arr: return []
+    mx=max(arr); counts=[0]*(mx+1)
+    for x in arr: counts[x]+=1
+    out=[]
+    for value,c in enumerate(counts): out.extend([value]*c)
+    return out
+print(counting_sort([4,2,2,8,3,3,1]))
+print(counting_sort([3,1,2,1]))`,
+        output: `[1, 2, 2, 3, 3, 4, 8]
+[1, 1, 2, 3]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('Merge sort ka time complexity hamesha kya hota hai?', 'What is the time complexity of merge sort always?'),
+        opts: [t('O(n)', 'O(n)'), t('O(n log n)', 'O(n log n)'), t('O(n^2)', 'O(n^2)'), t('O(log n)', 'O(log n)')],
+        ans: 1,
+        expl: t('Sahi jawab: merge sort array ko aadha karke merge karta hai, isliye har case mein O(n log n) time leta hai.', 'Correct answer: merge sort splits the array in half and merges it, so it takes O(n log n) time in every case.')
+      },
+      {
+        q: t('Stable sort ka matlab kya hai?', 'What does a stable sort mean?'),
+        opts: [t('Woh kabhi slow nahi hota', 'It is never slow'), t('Barabar wale elements ka original order bacha rehta hai', 'Equal elements keep their original order'), t('Woh extra space nahi leta', 'It takes no extra space'), t('Woh sirf numbers sort karta hai', 'It only sorts numbers')],
+        ans: 1,
+        expl: t('Sahi jawab: stable sort mein barabar wale elements ka pehle wala order bana rehta hai, jaise merge sort aur Python ka sorted().', 'Correct answer: in a stable sort, equal elements keep their earlier order, like in merge sort and Python sorted().')
+      },
+      {
+        q: t('Quick sort ka worst case kab hota hai?', 'When does the worst case of quick sort happen?'),
+        opts: [t('Jab pivot bura ho, jaise sorted array par pehla element', 'When the pivot is bad, like the first element on a sorted array'), t('Jab array khaali ho', 'When the array is empty'), t('Jab array mein ek element ho', 'When the array has one element'), t('Jab pivot beech wala ho', 'When the pivot is the middle element')],
+        ans: 0,
+        expl: t('Sahi jawab: bura pivot har baar ek taraf khaali aur doosri taraf n-1 elements chhod deta hai, isliye time O(n^2) ho jaata hai.', 'Correct answer: a bad pivot leaves one side empty and the other with n-1 elements each time, so the time becomes O(n^2).')
+      },
+      {
+        q: t('Counting sort kab best hota hai?', 'When is counting sort best?'),
+        opts: [t('Jab range bahut badi ho', 'When the range is very big'), t('Jab range chhoti ho', 'When the range is small'), t('Jab array mein negative numbers hon', 'When the array has negative numbers'), t('Jab array mein strings hon', 'When the array has strings')],
+        ans: 1,
+        expl: t('Sahi jawab: counting sort frequency gin kar O(n + k) mein sort karta hai, jo sirf chhoti range k par tez hota hai.', 'Correct answer: counting sort sorts in O(n + k) by counting frequencies, which is fast only for a small range k.')
+      },
+      {
+        q: t('sorted() aur sort() mein kya farak hai?', 'What is the difference between sorted() and sort()?'),
+        opts: [t('Koi farak nahi', 'There is no difference'), t('sorted() naya list deta hai, sort() original list ko badalta hai', 'sorted() gives a new list, sort() changes the original list'), t('sort() naya list deta hai', 'sort() gives a new list'), t('sorted() sirf strings sort karta hai', 'sorted() only sorts strings')],
+        ans: 1,
+        expl: t('Sahi jawab: sorted() original list ko nahi badalta aur naya sorted list deta hai, jabki sort() original list ko hi sort karta hai aur None deta hai.', 'Correct answer: sorted() does not change the original list and gives a new sorted list, while sort() sorts the original list itself and gives None.')
+      }
+    ],
+    keyNotes: [
+      t('Merge sort: hamesha O(n log n), stable, par O(n) extra space leta hai.', 'Merge sort: always O(n log n), stable, but takes O(n) extra space.'),
+      t('Quick sort: average O(n log n), in-place, par bura pivot worst case O(n^2) bana deta hai.', 'Quick sort: average O(n log n), in-place, but a bad pivot makes the worst case O(n^2).'),
+      t('Heap sort: O(n log n), in-place, par stable nahi hota.', 'Heap sort: O(n log n), in-place, but not stable.'),
+      t('Counting sort: O(n + k), sirf chhoti range ke liye best hai.', 'Counting sort: O(n + k), best only for a small range.'),
+      t('Python: sorted() naya list deta hai, sort() original ko badalta hai; key se kisi bhi hisaab se sort karo.', 'Python: sorted() gives a new list, sort() changes the original; sort by any rule with key.')
+    ],
+    practice: {
+      title: t('Practice: Heap se Sort Karo', 'Practice: Sort with a Heap'),
+      task: t('heapq use karke [5, 2, 9, 1, 7] ko sort karo: pehle heapify karo, phir 5 baar heappop karke sorted list print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Use heapq to sort [5, 2, 9, 1, 7]: first heapify it, then heappop 5 times and print the sorted list. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `import heapq
+nums=[5,2,9,1,7]
+heapq.heapify(nums)
+print([heapq.heappop(nums) for _ in range(5)])`,
+      expected: `[1, 2, 5, 7, 9]`
+    },
+    readMinutes: 12
+  };
+
+const dsaBst: Article = {
+    id: 'dsa-bst',
+    subjectId: 'dsa',
+    title: t(
+      'Binary Search Tree — Insert, Search, Delete aur Inorder Traversal',
+      'Binary Search Tree — Insert, Search, Delete, and Inorder Traversal'
+    ),
+    summary: t(
+      'Binary search tree ko zero se samjho: insert, search aur delete kaise kaam karte hain, inorder traversal se sorted order kaise milta hai, BST ko kaise validate karte hain, aur BST, binary tree aur hash map mein kya farak hai.',
+      'Learn the binary search tree from scratch: how insert, search, and delete work, how inorder traversal gives sorted order, how to validate a BST, and how a BST differs from a binary tree and a hash map.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. BST Kya Hai? (Left Chhota, Right Bada)',
+          '1. What Is a BST? (Left Smaller, Right Bigger)'
+        ),
+        body: t(
+          `Binary search tree (BST) ek aisa binary tree hota hai jismein har node ke liye ek rule hota hai: left subtree mein saare values node se **chhoti** hoti hain, aur right subtree mein saare values node se **badi** hoti hain. Yeh rule har node par lagta hai, sirf root par nahi. Isi rule ki wajah se BST mein search binary search jaisa fast hota hai — har step mein aadha tree kaat do.
+
+Jaise root 8 ho, toh 3 left mein jaayega kyunki 3 < 8 hai, aur 10 right mein jaayega kyunki 10 > 8 hai. Phir 3 ke left mein 1 aayega aur right mein 6 aayega. Har node ke maximum do children hote hain: left aur right. BST ki height agar balanced ho, toh search, insert aur delete **O(log n)** mein hote hain.`,
+          `A binary search tree (BST) is a binary tree with one rule for every node: all values in the left subtree are **smaller** than the node, and all values in the right subtree are **bigger** than the node. This rule applies to every node, not only the root. Because of this rule, searching a BST is as fast as binary search — half the tree is cut at every step.
+
+For example, if the root is 8, then 3 goes left because 3 < 8, and 10 goes right because 10 > 8. Then 1 goes left of 3 and 6 goes right of 3. Every node has at most two children: left and right. If the BST height is balanced, search, insert, and delete all take **O(log n)**.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Dictionary, File System aur Autocomplete',
+          '2. Real-Life Examples: Dictionary, File System, and Autocomplete'
+        ),
+        body: t(
+          `Dictionary mein words sorted order mein hote hain, aur BST bhi wahi karta hai: inorder traversal se saare words sorted order mein mil jaate hain. File system mein folders aur files bhi tree ki tarah hote hain, aur BST jaisi structure se koi bhi file jaldi mil jaati hai.
+
+Autocomplete mein bhi tree ka use hota hai: jab tum type karte ho, toh system us prefix se shuru hone wale saare words ko sorted order mein dikhata hai. Database mein index bhi BST jaisi structure par banta hai, taaki kisi bhi record ko jaldi dhoondha ja sake. Har jagah idea ek hi hai: data ko aise arrange karo ki search mein aadha data kaat sako.`,
+          `Words in a dictionary sit in sorted order, and a BST does the same: inorder traversal gives all words in sorted order. Folders and files in a file system also form a tree, and a BST-like structure finds any file quickly.
+
+Autocomplete also uses a tree: when you type, the system shows all words starting with that prefix in sorted order. A database index is also built on a BST-like structure so that any record can be found fast. Everywhere the idea is the same: arrange data so that a search can cut half the data away.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Insert, Search aur Inorder ka Dry Run',
+          '3. Step-by-Step: Insert, Search, and Inorder Dry Run'
+        ),
+        body: t(
+          `Values hain \`[8, 3, 10, 1, 6, 14]\`. Pehle 8 root banta hai. 3 aata hai: 3 < 8, left mein jao, khaali hai, toh 3 left child ban jaata hai. 10 aata hai: 10 > 8, right mein jao, khaali hai, toh 10 right child ban jaata hai. 1 aata hai: 1 < 8, left jao, 1 < 3, left jao, khaali hai, toh 1 left child ban jaata hai. 6 aata hai: 6 < 8, left jao, 6 > 3, right jao, khaali hai, toh 6 right child ban jaata hai. 14 aata hai: 14 > 8, right jao, 14 > 10, right jao, khaali hai, toh 14 right child ban jaata hai.
+
+Search 6 ke liye: 6 < 8, left jao; 6 > 3, right jao; 6 mil gaya, True. Search 7 ke liye: 7 < 8, left jao; 7 > 3, right jao; 7 > 6, right jao, khaali hai, False. **Inorder** traversal matlab left, phir node, phir right — isse values sorted order mein milti hain: [1, 3, 6, 8, 10, 14]. Neeche wala code yahi tree banata hai aur teeno answers print karta hai.`,
+          `The values are \`[8, 3, 10, 1, 6, 14]\`. First 8 becomes the root. 3 arrives: 3 < 8, go left, it is empty, so 3 becomes the left child. 10 arrives: 10 > 8, go right, it is empty, so 10 becomes the right child. 1 arrives: 1 < 8, go left; 1 < 3, go left, it is empty, so 1 becomes the left child. 6 arrives: 6 < 8, go left; 6 > 3, go right, it is empty, so 6 becomes the right child. 14 arrives: 14 > 8, go right; 14 > 10, go right, it is empty, so 14 becomes the right child.
+
+To search 6: 6 < 8, go left; 6 > 3, go right; 6 is found, True. To search 7: 7 < 8, go left; 7 > 3, go right; 7 > 6, go right, it is empty, False. **Inorder** traversal means left, then node, then right — that gives the values in sorted order: [1, 3, 6, 8, 10, 14]. The code below builds exactly this tree and prints all three answers.`
+        ),
+        code: {
+          title: t(
+            'BST: Insert, Search aur Inorder Traversal',
+            'BST: Insert, Search, and Inorder Traversal'
+          ),
+          language: 'python',
+          code: `class Node:
+    def __init__(self, key):
+        self.key=key; self.left=None; self.right=None
+def insert(root, key):
+    if root is None: return Node(key)
+    if key < root.key: root.left=insert(root.left,key)
+    elif key > root.key: root.right=insert(root.right,key)
+    return root
+def inorder(root):
+    return inorder(root.left)+[root.key]+inorder(root.right) if root else []
+def search(root, key):
+    if root is None: return False
+    if key==root.key: return True
+    return search(root.left,key) if key<root.key else search(root.right,key)
+root=None
+for k in [8,3,10,1,6,14]:
+    root=insert(root,k)
+print("Inorder:", inorder(root))
+print("Search 6:", search(root,6))
+print("Search 7:", search(root,7))`,
+          output: `Inorder: [1, 3, 6, 8, 10, 14]
+Search 6: True
+Search 7: False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: BST Rule Todna aur Duplicate Insert Karna',
+          '4. Common Mistakes: Breaking the BST Rule and Inserting Duplicates'
+        ),
+        body: t(
+          `Sabse badi galti hai **BST rule ko sirf root par check karna**. BST validate karne ke liye har node par min aur max range check karni padti hai: left subtree ki har value node se chhoti aur right subtree ki har value node se badi honi chahiye. Sirf parent se compare karna kaafi nahi hai — ek node apne parent se chhota ho sakta hai par apne grandparent se bada ho sakta hai, aur tab woh BST nahi rahega.
+
+Doosri galti hai **duplicate values** ko galat handle karna. Is article ke code mein duplicate insert karne par kuch nahi hota — woh ignore ho jaata hai. Kuch implementations mein duplicate left mein jaata hai, kuch mein right mein. Interview mein pehle poochh lo ki duplicate kaise handle karna hai. Teesri galti hai delete ko bhoolna: leaf node ko delete karna aasan hai, par do children wale node ko delete karne ke liye uska successor ya predecessor chahiye.`,
+          `The biggest mistake is checking the **BST rule only at the root**. To validate a BST, a min and max range must be checked at every node: every value in the left subtree must be smaller than the node, and every value in the right subtree must be bigger. Comparing only with the parent is not enough — a node can be smaller than its parent but bigger than its grandparent, and then it is not a BST.
+
+The second mistake is handling **duplicate values** wrongly. In this article's code, inserting a duplicate does nothing — it is ignored. In some designs a duplicate goes left, in others it goes right. In an interview, first ask how duplicates should be handled. The third mistake is forgetting delete: deleting a leaf node is easy, but deleting a node with two children needs its successor or predecessor.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Tree, Ek Node aur Skewed Tree',
+          '5. Edge Cases: Empty Tree, One Node, and Skewed Tree'
+        ),
+        body: t(
+          `Khaali tree mein root None hota hai: search False deta hai, inorder khaali list deta hai, aur pehla insert hi root ban jaata hai. Ek node wale tree mein woh node root bhi hai aur leaf bhi hai — uska inorder sirf [key] hota hai. Delete karne par tree phir se khaali ho jaata hai.
+
+**Skewed tree** sabse important edge case hai: agar values sorted order mein insert karo, jaise [1, 2, 3, 4, 5], toh har node ka sirf right child banta hai aur tree ek line ban jaata hai. Tab height n ho jaati hai aur search O(n) ho jaata hai — BST ka fayda khatam. Isi liye balanced BST chahiye hota hai, jaise AVL tree ya Red-Black tree. Interview mein jab bhi BST ki complexity batao, toh pehle yeh batao ki tree balanced hai ya nahi.`,
+          `In an empty tree the root is None: search gives False, inorder gives an empty list, and the first insert becomes the root. In a one-node tree, that node is both the root and a leaf — its inorder is just [key]. Deleting it makes the tree empty again.
+
+A **skewed tree** is the most important edge case: if values are inserted in sorted order, like [1, 2, 3, 4, 5], every node gets only a right child and the tree becomes a line. Then the height is n and search becomes O(n) — the benefit of a BST is gone. That is why a balanced BST is needed, like an AVL tree or a Red-Black tree. Whenever you state BST complexity in an interview, first say whether the tree is balanced or not.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Delete kaise Karein? BST vs Binary Tree vs Hash Map',
+          '6. What If: How to Delete? BST vs Binary Tree vs Hash Map'
+        ),
+        body: t(
+          `Delete ke teen cases hote hain. **Leaf node**: usee seedha hata do. **Ek child wala node**: uske child ko uski jagah par le aao. **Do children wala node**: uska inorder successor (right subtree ka sabse chhota value) nikaalo, uski value ko node mein copy karo, aur phir successor ko delete karo. Successor ke maximum ek child hota hai, isliye uska delete aasan hota hai.
+
+**BST vs binary tree**: binary tree mein koi order rule nahi hota, isliye search O(n) hota hai; BST mein rule hota hai, isliye search O(log n) hota hai. **BST vs hash map**: hash map mein search average O(1) hota hai, par usmein sorted order nahi milta. BST mein search O(log n) hota hai, par inorder se sorted order milta hai aur range queries aasan hoti hain. Jab sorted order chahiye, toh BST jeetta hai; jab sirf fast lookup chahiye, toh hash map jeetta hai.`,
+          `Delete has three cases. **Leaf node**: remove it directly. **Node with one child**: bring its child into its place. **Node with two children**: find its inorder successor (the smallest value in the right subtree), copy that value into the node, and then delete the successor. The successor has at most one child, so deleting it is easy.
+
+**BST vs binary tree**: a binary tree has no order rule, so search is O(n); a BST has a rule, so search is O(log n). **BST vs hash map**: a hash map searches in O(1) on average, but gives no sorted order. A BST searches in O(log n), but inorder gives sorted order and range queries are easy. When sorted order is needed, the BST wins; when only fast lookup is needed, the hash map wins.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: BST ka Poora Picture',
+          '7. Summary: The Full Picture of BST'
+        ),
+        body: t(
+          `BST mein har node ka left subtree chhota aur right subtree bada hota hai. Insert mein compare karke left ya right jao, search mein bhi wahi karo, aur delete mein teen cases handle karo: leaf, ek child, aur do children. **Inorder traversal** se values sorted order mein milti hain, aur validation ke liye har node par min-max range check karo.
+
+Yaad rakhne wali baatein: balanced BST mein search, insert aur delete O(log n) hote hain, skewed tree mein O(n) ho jaate hain. BST sorted order deta hai, hash map fast lookup deta hai, aur plain binary tree mein koi order rule nahi hota. Agla subject aap batayenge — uske articles bhi isi pattern mein likhe jayenge.`,
+          `In a BST, the left subtree of every node is smaller and the right subtree is bigger. For insert, compare and go left or right; for search, do the same; and for delete, handle three cases: leaf, one child, and two children. **Inorder traversal** gives the values in sorted order, and validation needs a min-max range check at every node.
+
+Remember these points: in a balanced BST, search, insert, and delete are O(log n); in a skewed tree they become O(n). A BST gives sorted order, a hash map gives fast lookup, and a plain binary tree has no order rule. You will tell me the next subject — its articles will be written in the same pattern.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'BST [8, 3, 10, 1, 6, 14]: Left Chhota, Right Bada',
+        'BST [8, 3, 10, 1, 6, 14]: Left Smaller, Right Bigger'
+      ),
+      nodes: [
+        { t: t('Root: 8', 'Root: 8'), s: t('Left < 8, right > 8', 'Left < 8, right > 8') },
+        { t: t('Left: 3', 'Left: 3'), s: t('3 < 8, 1 aur 6 ke parent', '3 < 8, parent of 1 and 6') },
+        { t: t('Right: 10', 'Right: 10'), s: t('10 > 8, 14 ke parent', '10 > 8, parent of 14') },
+        { t: t('1 aur 6: 3 ke children', '1 and 6: children of 3'), s: t('1 < 3, 6 > 3', '1 < 3, 6 > 3') },
+        { t: t('14: 10 ka right child', '14: right child of 10'), s: t('14 > 10', '14 > 10') },
+        { t: t('Inorder: [1, 3, 6, 8, 10, 14]', 'Inorder: [1, 3, 6, 8, 10, 14]'), s: t('Left, node, right se sorted order', 'Left, node, right gives sorted order') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('BST Validate Karo: Min-Max Range se', 'Validate a BST: With Min-Max Range'),
+        language: 'python',
+        code: `class Node2:
+    def __init__(self, key):
+        self.key=key; self.left=None; self.right=None
+def is_valid(root, low=None, high=None):
+    if root is None: return True
+    if (low is not None and root.key<=low) or (high is not None and root.key>=high): return False
+    return is_valid(root.left, low, root.key) and is_valid(root.right, root.key, high)
+r=Node2(8); r.left=Node2(3); r.right=Node2(10)
+print(is_valid(r))
+r.left.key=9
+print(is_valid(r))`,
+        output: `True
+False`
+      },
+      {
+        title: t('BST ka Min aur Max nikaalo', 'Find the Min and Max of a BST'),
+        language: 'python',
+        code: `class Node3:
+    def __init__(self, key):
+        self.key=key; self.left=None; self.right=None
+def ins3(root, key):
+    if root is None: return Node3(key)
+    if key < root.key: root.left=ins3(root.left,key)
+    elif key > root.key: root.right=ins3(root.right,key)
+    return root
+def find_min(root):
+    while root.left: root=root.left
+    return root.key
+def find_max(root):
+    while root.right: root=root.right
+    return root.key
+rt=None
+for k in [8,3,10,1,6,14]: rt=ins3(rt,k)
+print("Min:", find_min(rt))
+print("Max:", find_max(rt))`,
+        output: `Min: 1
+Max: 14`
+      }
+    ],
+    mcqs: [
+      {
+        q: t('BST mein left subtree ke values kaise hote hain?', 'How are the values in the left subtree of a BST?'),
+        opts: [t('Node se bade', 'Bigger than the node'), t('Node se chhote', 'Smaller than the node'), t('Node ke barabar', 'Equal to the node'), t('Kuch bhi', 'Anything')],
+        ans: 1,
+        expl: t('Sahi jawab: BST ka rule hai ki left subtree mein saari values node se chhoti hoti hain aur right subtree mein badi hoti hain.', 'Correct answer: the BST rule is that all values in the left subtree are smaller than the node and all values in the right subtree are bigger.')
+      },
+      {
+        q: t('BST ka inorder traversal kya deta hai?', 'What does inorder traversal of a BST give?'),
+        opts: [t('Random order', 'Random order'), t('Sorted order', 'Sorted order'), t('Ulta sorted order', 'Reverse sorted order'), t('Sirf root', 'Only the root')],
+        ans: 1,
+        expl: t('Sahi jawab: inorder matlab left, node, right, isliye BST mein values chhote se bade order mein milti hain.', 'Correct answer: inorder means left, node, right, so values in a BST come out from small to big.')
+      },
+      {
+        q: t('Balanced BST mein search ka time kya hota hai?', 'What is the search time in a balanced BST?'),
+        opts: [t('O(n)', 'O(n)'), t('O(1)', 'O(1)'), t('O(log n)', 'O(log n)'), t('O(n^2)', 'O(n^2)')],
+        ans: 2,
+        expl: t('Sahi jawab: balanced BST mein har step mein aadha tree kaat do, isliye search O(log n) mein hota hai.', 'Correct answer: in a balanced BST half the tree is cut at every step, so search takes O(log n).')
+      },
+      {
+        q: t('Do children wale node ko delete karne ke liye kya use karte hain?', 'What do you use to delete a node with two children?'),
+        opts: [t('Uska parent', 'Its parent'), t('Uska inorder successor', 'Its inorder successor'), t('Uska left child', 'Its left child'), t('Root ko', 'The root')],
+        ans: 1,
+        expl: t('Sahi jawab: inorder successor ki value ko node mein copy karo aur phir successor ko delete karo, kyunki successor ke maximum ek child hota hai.', 'Correct answer: copy the inorder successor value into the node and then delete the successor, because the successor has at most one child.')
+      },
+      {
+        q: t('Sorted order mein values insert karne par BST kaisa ban jaata hai?', 'What happens to a BST when values are inserted in sorted order?'),
+        opts: [t('Balanced rehta hai', 'It stays balanced'), t('Skewed ho jaata hai aur search O(n) ho jaata hai', 'It becomes skewed and search becomes O(n)'), t('Khaali ho jaata hai', 'It becomes empty'), t('Hash map ban jaata hai', 'It becomes a hash map')],
+        ans: 1,
+        expl: t('Sahi jawab: sorted order mein har node ka sirf ek hi child banta hai, tree ek line ban jaata hai aur search O(n) ho jaata hai.', 'Correct answer: in sorted order every node gets only one child, the tree becomes a line, and search becomes O(n).')
+      }
+    ],
+    keyNotes: [
+      t('BST rule: left subtree chhota, right subtree bada — har node par lagta hai.', 'BST rule: left subtree smaller, right subtree bigger — it applies to every node.'),
+      t('Inorder traversal (left, node, right) se values sorted order mein milti hain.', 'Inorder traversal (left, node, right) gives values in sorted order.'),
+      t('Balanced BST mein search/insert/delete O(log n), skewed tree mein O(n).', 'In a balanced BST search/insert/delete are O(log n), in a skewed tree O(n).'),
+      t('Validate karne ke liye har node par min-max range check karo, sirf parent se nahi.', 'To validate, check a min-max range at every node, not only against the parent.'),
+      t('BST sorted order deta hai, hash map fast lookup deta hai — zaroorat ke hisaab se chuno.', 'A BST gives sorted order, a hash map gives fast lookup — choose by need.')
+    ],
+    practice: {
+      title: t('Practice: BST Banao aur Search Karo', 'Practice: Build a BST and Search It'),
+      task: t('[50, 30, 70, 20, 40, 60, 80] se BST banao, uska inorder print karo, aur 60 aur 25 ko search karke print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.', 'Build a BST from [50, 30, 70, 20, 40, 60, 80], print its inorder, and search for 60 and 25. The starter code is complete and runnable — run it and verify the output matches the expected output.'),
+      language: 'python',
+      starter: `class Node4:
+    def __init__(self, key):
+        self.key=key; self.left=None; self.right=None
+def ins4(root, key):
+    if root is None: return Node4(key)
+    if key < root.key: root.left=ins4(root.left,key)
+    elif key > root.key: root.right=ins4(root.right,key)
+    return root
+def ino4(root):
+    return ino4(root.left)+[root.key]+ino4(root.right) if root else []
+def srch4(root, key):
+    if root is None: return False
+    if key==root.key: return True
+    return srch4(root.left,key) if key<root.key else srch4(root.right,key)
+rt=None
+for k in [50,30,70,20,40,60,80]: rt=ins4(rt,k)
+print("Inorder:", ino4(rt))
+print("Search 60:", srch4(rt,60))
+print("Search 25:", srch4(rt,25))`,
+      expected: `Inorder: [20, 30, 40, 50, 60, 70, 80]
+Search 60: True
+Search 25: False`
+    },
+    readMinutes: 12
+  };
+
+const dsaHeap: Article = {
+    id: 'dsa-heap',
+    subjectId: 'dsa',
+    title: t(
+      'Heap & Priority Queue — Min-Heap, Max-Heap, Heapify, Push/Pop aur Top-K',
+      'Heap & Priority Queue — Min-Heap, Max-Heap, Heapify, Push/Pop, and Top-K'
+    ),
+    summary: t(
+      'Heap ko zero se samjho: min-heap aur max-heap kya hote hain, heapify array ko heap mein kaise badalta hai, push aur pop andar se kaise kaam karte hain, top-k elements heap se O(n log k) mein kaise nikaalte hain, aur heap sort kaise kaam karta hai.',
+      'Learn heaps from scratch: what min-heap and max-heap are, how heapify turns an array into a heap, how push and pop work inside, how to find top-k elements in O(n log k) with a heap, and how heap sort works.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Heap Kya Hai? (Min-Heap, Max-Heap aur Priority Queue)',
+          '1. What Is a Heap? (Min-Heap, Max-Heap, and Priority Queue)'
+        ),
+        body: t(
+          `Heap ek special binary tree hota hai jo array mein store hota hai. Iska ek hi rule hota hai: parent hamesha apne children se chhota ya bada hota hai. **Min-heap** mein parent apne dono children se chhota ya barabar hota hai, isliye sabse chhota element hamesha root par hota hai. **Max-heap** mein ulta hota hai: parent children se bada hota hai, isliye sabse bada element root par hota hai. Heap ko sorted array mat samjho — heap mein sirf parent-child rule follow hota hai, left aur right child ke beech koi order nahi hota. Isliye heap ka array dekh kar aap ye nahi keh sakte ki poora array sorted hai.
+
+Heap ko tree ki tarah draw karte hain, par store array mein karte hain. Index \`i\` par jo element hai, uska left child index \`2*i + 1\` par aur right child \`2*i + 2\` par hota hai, aur parent index \`(i-1)//2\` par hota hai. Isi formula ki wajah se heap ko alag se tree nodes banane ki zaroorat nahi padti — ek simple list hi kaafi hai. Python mein \`heapq\` module min-heap deta hai: \`heapq.heappush\` element daalta hai aur \`heapq.heappop\` sabse chhota element nikaalta hai. Max-heap chahiye toh numbers ko negative karke daalo, ya \`heapq.nlargest\` use karo.
+
+**Priority queue** heap ka sabse common use hai. Normal queue mein jo pehle aaya woh pehle jaata hai (FIFO), par priority queue mein jo sabse important hai woh pehle jaata hai. Hospital ki emergency line socho: serious patient line mein peeche khada ho toh bhi pehle treat hota hai, kyunki uski priority sabse zyada hai. Operating system bhi processes ko priority queue se chalata hai, aur Dijkstra jaise graph algorithms mein heap hi next node choose karta hai. Jab bhi problem mein "sabse chhota" ya "sabse bada" baar-baar nikaalna ho, heap pehla option hota hai.`,
+          `A heap is a special binary tree that is stored in an array. It follows one rule: a parent is always smaller or larger than its children. In a **min-heap**, a parent is smaller than or equal to both its children, so the smallest element is always at the root. In a **max-heap**, the opposite holds: a parent is larger than its children, so the largest element sits at the root. Do not mistake a heap for a sorted array — a heap only follows the parent-child rule, and there is no order between the left and right child. So looking at a heap array, you cannot claim the whole array is sorted.
+
+We draw a heap as a tree, but we store it in an array. The element at index \`i\` has its left child at index \`2*i + 1\`, its right child at \`2*i + 2\`, and its parent at \`(i-1)//2\`. Because of this formula, a heap needs no separate tree nodes — a plain list is enough. Python's \`heapq\` module gives a min-heap: \`heapq.heappush\` adds an element and \`heapq.heappop\` removes the smallest element. For a max-heap, insert the numbers as negatives, or use \`heapq.nlargest\`.
+
+A **priority queue** is the most common use of a heap. In a normal queue, whoever arrives first leaves first (FIFO), but in a priority queue, whoever is most important leaves first. Think of a hospital emergency line: a serious patient is treated first even if they stand at the back of the line, because their priority is highest. Operating systems also schedule processes with a priority queue, and graph algorithms like Dijkstra use a heap to pick the next node. Whenever a problem asks you to repeatedly take out the smallest or largest element, a heap is the first tool to reach for.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Hospital Line, Task Scheduler aur Top Songs',
+          '2. Real-Life Examples: Hospital Line, Task Scheduler, and Top Songs'
+        ),
+        body: t(
+          `Heap roz ki zindagi mein wahan dikhta hai jahan "sabse pehle kaun" ka faisla priority se hota hai, line se nahi. **Hospital emergency** sabse seedha example hai: doctor pehle us patient ko dekhta hai jiski haalat sabse serious hai, chahe woh sabse baad mein aaya ho. Har patient ki ek priority hoti hai, aur heap hamesha sabse zyada priority wale ko root par rakhta hai, isliye next patient O(1) mein mil jaata hai aur naya patient O(log n) mein jud jaata hai.
+
+Doosra example hai **task scheduler**. Aapke laptop par ek saath music app, browser aur backup chal rahe hain. Operating system har process ko priority deta hai aur heap se hamesha sabse zyada priority wala process chunta hai. Agar scheduler har baar saare processes ko scan karke sabse important dhoondhta, toh bahut time waste hota — heap se woh decision turant ho jaata hai.
+
+Teesra example hai **top-k lists**: "top 10 songs", "top 5 scorers", "trending videos". Poori list ko sort karke top 10 nikaalna O(n log n) hota hai, par heap se sirf k size ka heap maintain karke kaam O(n log k) mein ho jaata hai. Jab k chhota ho (jaise 10) aur n bahut bada ho (jaise 10 lakh songs), toh yeh farak bahut bada hota hai. Interview mein "top-k" sunte hi heap sochna chahiye — yahi iska signature problem hai.`,
+          `A heap appears in daily life wherever the question "who goes first?" is decided by priority, not by arrival order. A **hospital emergency** is the simplest example: the doctor sees the most serious patient first, even if that patient arrived last. Every patient has a priority, and a heap always keeps the highest-priority patient at the root, so the next patient is found in O(1) and a new patient joins in O(log n).
+
+A second example is a **task scheduler**. Your laptop runs a music app, a browser, and a backup at the same time. The operating system gives every process a priority and picks the highest-priority process from a heap. If the scheduler scanned all processes every time to find the most important one, it would waste a lot of time — with a heap, that decision is instant.
+
+A third example is **top-k lists**: "top 10 songs", "top 5 scorers", "trending videos". Sorting the whole list to take the top 10 costs O(n log n), but keeping a heap of size k does the job in O(n log k). When k is small (like 10) and n is huge (like 1,000,000 songs), that difference is enormous. In an interview, hearing "top-k" should make you think of a heap at once — it is the signature problem for this data structure.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Heapify, Push aur Pop ka Dry Run',
+          '3. Step-by-Step: Dry Run of Heapify, Push, and Pop'
+        ),
+        body: t(
+          `Ab hum \`[5, 3, 8, 1, 9, 2]\` ko heap mein badalne ka dry run karte hain. **Heapify** array ko bottom-up heap banata hai aur O(n) time leta hai — ek-ek karke push karne se tez, kyunki push karne par har element O(log n) leta hai. Python mein \`heapq.heapify(nums)\` ek hi call mein kaam kar deta hai. Dry run ke baad array banta hai \`[1, 3, 2, 5, 9, 8]\`. Root par 1 hai, jo sabse chhota hai — min-heap ka rule follow ho raha hai. Par dhyaan do: array sorted nahi hai, 9 abhi bhi 8 se pehle hai, kyunki 9 aur 8 alag branches mein hain aur unke beech koi rule nahi hai.
+
+Ab **pop** karte hain: \`heappop\` root 1 ko nikaalta hai. Aakhri element 8 ko root par laaya jaata hai, phir woh neeche **sift-down** hota hai — apne chhote child se swap karte hue sahi jagah par baithta hai. Iske baad heap hota hai \`[2, 3, 8, 5, 9]\` aur root 2 hai. **Push** karte hain: \`heappush(nums, 0)\` 0 ko end mein daalta hai, phir woh upar **sift-up** hota hai — apne parent se swap karte hue root tak pahunchta hai, kyunki 0 sabse chhota hai. Heap banta hai \`[0, 3, 2, 5, 9, 8]\`. Dobara pop karne par 0 nikalta hai aur heap wapas \`[2, 3, 8, 5, 9]\` ho jaata hai.
+
+Is dry run se teen baatein yaad rakho: heapify O(n) hai, push aur pop O(log n) hain, aur peek (root dekhna, \`nums[0]\`) O(1) hai. Neeche wala code yahi poora process print karta hai — isko run karke har line ka output upar wale dry run se match karo.`,
+          `Now let us dry-run turning \`[5, 3, 8, 1, 9, 2]\` into a heap. **Heapify** builds a heap bottom-up in O(n) time — faster than pushing elements one by one, because each push costs O(log n). In Python, one call \`heapq.heapify(nums)\` does the whole job. After the dry run, the array becomes \`[1, 3, 2, 5, 9, 8]\`. The root holds 1, the smallest element — the min-heap rule holds. But notice: the array is not sorted; 9 still comes before 8, because 9 and 8 sit in different branches and no rule compares them.
+
+Now **pop**: \`heappop\` removes the root, 1. The last element, 8, is moved to the root, and then it **sifts down** — swapping with its smaller child until it sits in the right place. The heap becomes \`[2, 3, 8, 5, 9]\` with 2 at the root. Now **push**: \`heappush(nums, 0)\` adds 0 at the end, and then it **sifts up** — swapping with its parent until it reaches the root, because 0 is the smallest. The heap becomes \`[0, 3, 2, 5, 9, 8]\`. Popping again removes 0 and the heap returns to \`[2, 3, 8, 5, 9]\`.
+
+Remember three things from this dry run: heapify is O(n), push and pop are O(log n), and peek (looking at the root, \`nums[0]\`) is O(1). The code below prints this whole process — run it and match every line of output with the dry run above.`
+        ),
+        code: {
+          title: t(
+            'Heapify, Push aur Pop: Poora Process Print Karke Dekho',
+            'Heapify, Push, and Pop: Print the Whole Process'
+          ),
+          language: 'python',
+          code: `import heapq
+
+nums = [5, 3, 8, 1, 9, 2]
+heapq.heapify(nums)
+print("heap:", nums)
+print("smallest:", heapq.heappop(nums))
+heapq.heappush(nums, 0)
+print("after push 0:", nums)
+print("smallest now:", heapq.heappop(nums))
+print("remaining heap:", nums)`,
+          output: `heap: [1, 3, 2, 5, 9, 8]
+smallest: 1
+after push 0: [0, 3, 2, 5, 9, 8]
+smallest now: 0
+remaining heap: [2, 3, 8, 5, 9]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Heap ko Sorted Samajhna aur heapq ka Galat Use',
+          '4. Common Mistakes: Treating a Heap as Sorted and Misusing heapq'
+        ),
+        body: t(
+          `Heap mein sabse common galti hai heap ke array ko **sorted** samajh lena. Heapify ke baad array \`[1, 3, 2, 5, 9, 8]\` banta hai — yeh sorted nahi hai, sirf root sabse chhota hai. Agar aapko sorted order chahiye, toh baar-baar \`heappop\` karna padega, aur wahi **heap sort** hai. Heap ko iterate karke sorted order ki umeed karna galat hai.
+
+**Galti 2: \`heapq\` ko bina heapify kiye use karna.** Agar aap seedha list par \`heappop\` chala do bina \`heapify\` ya \`heappush\` ke, toh woh sabse chhota element nahi dega — woh bas pehla element nikaal dega. \`heapq\` ke functions tabhi sahi kaam karte hain jab list pehle se heap property follow karti ho. Hamesha ya toh \`heapify\` karo ya sirf \`heappush\` se bharo.
+
+**Galti 3: Max-heap ke liye seedha \`heapq\` use karna.** Python ka \`heapq\` sirf min-heap hai. Max-heap chahiye toh har number ko negative karke daalo (\`-x\`), aur nikaalte waqt dobara negative karo. Ya \`heapq.nlargest\` use karo. Beginners aksar bhool jaate hain aur min-heap se max nikaalne ki koshish karte hain.
+
+**Galti 4: \`heappop\` ko khaali heap par chalana.** Khaali list par \`heappop\` \`IndexError\` deta hai. Pop karne se pehle hamesha check karo ki heap khaali toh nahi hai, khaas taur par jab loop mein pop kar rahe ho.`,
+          `The most common heap mistake is treating the heap array as **sorted**. After heapify, the array becomes \`[1, 3, 2, 5, 9, 8]\` — that is not sorted; only the root is the smallest. If you need sorted order, you must call \`heappop\` again and again, and that is exactly **heap sort**. Iterating a heap and expecting sorted order is wrong.
+
+**Mistake 2: Using \`heapq\` without heapify.** If you call \`heappop\` directly on a plain list without \`heapify\` or \`heappush\`, it will not return the smallest element — it will just remove the first element. The \`heapq\` functions only work correctly when the list already follows the heap property. Always either call \`heapify\` first or fill the list only with \`heappush\`.
+
+**Mistake 3: Using \`heapq\` directly for a max-heap.** Python's \`heapq\` is only a min-heap. For a max-heap, insert every number as its negative (\`-x\`) and negate again when you take it out. Or use \`heapq.nlargest\`. Beginners often forget this and try to pull a maximum out of a min-heap.
+
+**Mistake 4: Calling \`heappop\` on an empty heap.** Calling \`heappop\` on an empty list raises an \`IndexError\`. Always check that the heap is not empty before popping, especially when you pop inside a loop.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Heap, Ek Element, Duplicate aur K > N',
+          '5. Edge Cases: Empty Heap, One Element, Duplicates, and K Larger Than N'
+        ),
+        body: t(
+          `**1. Khaali heap.** \`heappop([])\` par \`IndexError\` aata hai. Pop se pehle \`if heap:\` check karo. Top-k code mein bhi jab list khaali ho, toh \`nlargest\` khaali list deta hai, error nahi — yeh farak yaad rakho.
+
+**2. Sirf ek element.** Ek element wala heap valid hota hai: push O(1) jaisa lagta hai kyunki sift-up karne ke liye parent hi nahi hai, aur pop karne par heap khaali ho jaata hai. Koi edge case nahi, bas root hi answer hai.
+
+**3. Duplicate values.** Heap duplicates ko bilkul handle karta hai: \`[3, 3, 3]\` mein pop karne par 3 milega, phir 3, phir 3. Min-heap ka rule "chhota ya barabar" hai, isliye barabar values se koi problem nahi hoti.
+
+**4. K > N (top-k mein k list se bada).** Agar list mein 3 elements hain aur aap top 5 maangte ho, toh \`heapq.nlargest(5, nums)\` sirf 3 elements deta hai, error nahi. Apna khud ka top-k code likh rahe ho toh loop mein heap ke size ka dhyaan rakho, warna khaali heap par pop ho jaayega.
+
+**5. Negative aur zero values.** Heap negative numbers ke saath bhi theek kaam karta hai — min-heap mein sabse chhota (sabse negative) root par aata hai. Max-heap ke liye negative trick use karte waqt zero aur negative ko confuse mat karo: \`-(-5)\` wapas 5 hota hai, isliye push aur pop dono jagah sign badalna mat bhoolo.`,
+          `**1. Empty heap.** \`heappop([])\` raises an \`IndexError\`. Check \`if heap:\` before popping. In top-k code, when the list is empty, \`nlargest\` returns an empty list instead of an error — remember that difference.
+
+**2. Only one element.** A heap with a single element is valid: push feels like O(1) because there is no parent to sift up to, and popping leaves the heap empty. There is no special case — the root is the answer.
+
+**3. Duplicate values.** A heap handles duplicates perfectly: popping from \`[3, 3, 3]\` gives 3, then 3, then 3. The min-heap rule is "smaller or equal", so equal values cause no problem.
+
+**4. K larger than N (in top-k, k bigger than the list).** If the list has 3 elements and you ask for the top 5, \`heapq.nlargest(5, nums)\` returns just 3 elements, not an error. If you write your own top-k code, watch the heap size inside the loop, or you will pop from an empty heap.
+
+**5. Negative numbers and zero.** A heap works fine with negative numbers — in a min-heap the smallest (most negative) value sits at the root. When you use the negative trick for a max-heap, do not confuse zero and negatives: \`-(-5)\` is 5 again, so remember to flip the sign both when pushing and when popping.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Heap vs Sorted List, Top-K aur Heap Sort',
+          '6. What-If: Heap vs Sorted List, Top-K, and Heap Sort'
+        ),
+        body: t(
+          `**What if: heap ki jagah sorted list use karein?** Sorted list mein sabse chhota element O(1) mein milta hai (pehla element), par naya element insert karna O(n) hota hai kyunki baaki elements ko shift karna padta hai. Heap mein insert O(log n) hai aur min nikaalna O(log n) hai. Agar insertions baar-baar ho rahi hain, toh heap jeetta hai. Agar data ek baar sort karke sirf read karna hai, toh sorted list kaafi hai.
+
+**What if: top-k ke liye poori list sort kar dein?** \`sorted(nums)[-3:]\` se top 3 mil jaate hain, par cost O(n log n) hai. Heap wala tareeka O(n log k) hai: pehle k elements ka min-heap banao, phir har naye element ko heap ke root se compare karo — bada hai toh root ko replace karo. Jab k chhota ho aur n bada ho, toh heap bahut tez hota hai. Neeche wala code \`nlargest\` aur \`nsmallest\` dikhata hai, jo andar se yahi heap logic use karte hain.
+
+**What if: heap sort ko samajhna ho?** Heap sort ke do steps hain: pehle \`heapify\` (O(n)), phir baar-baar \`heappop\` karke elements ko sorted order mein nikaalo (n baar O(log n), total O(n log n)). Heap sort in-place hota hai aur extra memory nahi maangta, par woh **stable** nahi hota — barabar elements ka original order badal sakta hai. Interview mein heap sort ka time O(n log n) aur space O(1) yaad rakho.`,
+          `**What if we use a sorted list instead of a heap?** In a sorted list the smallest element is O(1) to get (the first element), but inserting a new element costs O(n) because the other elements must shift. In a heap, insert is O(log n) and removing the minimum is O(log n). If insertions happen again and again, the heap wins. If you sort the data once and only read it afterwards, a sorted list is enough.
+
+**What if we sort the whole list for top-k?** \`sorted(nums)[-3:]\` gives the top 3, but it costs O(n log n). The heap method costs O(n log k): build a min-heap from the first k elements, then compare each new element with the heap root — if it is bigger, replace the root. When k is small and n is large, the heap is much faster. The code below shows \`nlargest\` and \`nsmallest\`, which use this heap logic inside.
+
+**What if you want to understand heap sort?** Heap sort has two steps: first \`heapify\` (O(n)), then repeatedly call \`heappop\` to pull elements out in sorted order (n times O(log n), total O(n log n)). Heap sort works in place and needs no extra memory, but it is not **stable** — the original order of equal elements can change. In interviews, remember heap sort is O(n log n) time and O(1) space.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Heap se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Heap to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Min-heap** mein parent children se chhota hota hai aur sabse chhota element root par hota hai; **max-heap** mein ulta hota hai. Heap array mein store hota hai: index \`i\` ka left child \`2*i+1\`, right child \`2*i+2\`, parent \`(i-1)//2\`. **Heapify** O(n) mein array ko heap banata hai, **push** aur **pop** O(log n) mein chalte hain, aur root dekhna O(1) hai.
+
+Heap ka sabse bada use **priority queue** hai — hospital line, task scheduler, Dijkstra — aur uska signature problem **top-k** hai, jo heap se O(n log k) mein hota hai. Python mein \`heapq\` min-heap deta hai; max-heap ke liye negative trick ya \`nlargest\` use karo. Heap sorted array nahi hota, isliye sorted order ke liye baar-baar pop karna padta hai, aur wahi heap sort hai (O(n log n), in-place, unstable).
+
+Interview mein jab bhi "sabse chhota/bada baar-baar nikaalna hai" ya "top-k" suno, toh heap socho. Revision ke liye \`[5, 3, 8, 1, 9, 2]\` ka dry run khud karo: heapify ke baad array kya hoga, ek pop ke baad kya hoga, 0 push karne par kya hoga. Agar teeno jawab bina code dekhe aa jaayein, toh heap aapko aa gaya hai.`,
+          `Let us tie the whole article together. In a **min-heap**, a parent is smaller than its children and the smallest element sits at the root; in a **max-heap**, the opposite holds. A heap is stored in an array: the element at index \`i\` has its left child at \`2*i+1\`, its right child at \`2*i+2\`, and its parent at \`(i-1)//2\`. **Heapify** turns an array into a heap in O(n), **push** and **pop** run in O(log n), and looking at the root is O(1).
+
+The biggest use of a heap is the **priority queue** — hospital lines, task schedulers, Dijkstra — and its signature problem is **top-k**, which a heap solves in O(n log k). In Python, \`heapq\` gives a min-heap; for a max-heap use the negative trick or \`nlargest\`. A heap is not a sorted array, so sorted order needs repeated pops, and that is heap sort (O(n log n), in place, unstable).
+
+In an interview, whenever you hear "repeatedly take out the smallest or largest" or "top-k", think heap. To revise, dry-run \`[5, 3, 8, 1, 9, 2]\` yourself: what is the array after heapify, what happens after one pop, and what happens after pushing 0? If you can answer all three without looking at the code, you know heaps.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Min-Heap: [1, 3, 2, 5, 9, 8] ka Tree',
+        'Min-Heap: Tree of [1, 3, 2, 5, 9, 8]'
+      ),
+      caption: t(
+        'Root sabse chhota hai, par left aur right child ke beech koi order nahi hai',
+        'The root is the smallest, but there is no order between the left and right child'
+      ),
+      nodes: [
+        { t: t('Root: 1', 'Root: 1'), s: t('Sabse chhota element', 'The smallest element') },
+        { t: t('Left child: 3', 'Left child: 3'), s: t('Parent 1 se bada', 'Larger than parent 1') },
+        { t: t('Right child: 2', 'Right child: 2'), s: t('Parent 1 se bada', 'Larger than parent 1') },
+        { t: t('3 ke children: 5, 9', 'Children of 3: 5, 9'), s: t('Dono 3 se bade', 'Both larger than 3') },
+        { t: t('2 ka child: 8', 'Child of 2: 8'), s: t('8, 2 se bada hai', '8 is larger than 2') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Heap Sort: Heapify karke Baar-Baar Pop Karo', 'Heap Sort: Heapify, Then Pop Again and Again'),
+        language: 'python',
+        code: `import heapq
+
+nums = [7, 2, 9, 4, 1]
+heapq.heapify(nums)
+sorted_nums = [heapq.heappop(nums) for _ in range(len(nums))]
+print("heap sort:", sorted_nums)`,
+        output: `heap sort: [1, 2, 4, 7, 9]`
+      },
+      {
+        title: t('Top-K: nlargest aur nsmallest se Top 3 aur Bottom 2', 'Top-K: Top 3 and Bottom 2 with nlargest and nsmallest'),
+        language: 'python',
+        code: `import heapq
+
+scores = [78, 92, 85, 95, 88, 90]
+print("top 3:", heapq.nlargest(3, scores))
+print("bottom 2:", heapq.nsmallest(2, scores))`,
+        output: `top 3: [95, 92, 90]
+bottom 2: [78, 85]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Min-heap mein root par kaunsa element hota hai?',
+          'Which element sits at the root of a min-heap?'
+        ),
+        opts: [
+          t('Sabse bada element', 'The largest element'),
+          t('Sabse chhota element', 'The smallest element'),
+          t('Beech wala element', 'The middle element'),
+          t('Aakhri element', 'The last element')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: min-heap mein parent hamesha children se chhota hota hai, isliye sabse chhota element root par hota hai.',
+          'Correct answer: in a min-heap a parent is always smaller than its children, so the smallest element sits at the root.'
+        )
+      },
+      {
+        q: t(
+          'Heap mein push aur pop ki time complexity kya hoti hai?',
+          'What is the time complexity of push and pop in a heap?'
+        ),
+        opts: [
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: push aur pop mein element ko tree ki height tak upar ya neeche jaana padta hai, aur heap ki height log n hoti hai.',
+          'Correct answer: push and pop move an element up or down the height of the tree, and the height of a heap is log n.'
+        )
+      },
+      {
+        q: t(
+          'Heapify ki time complexity kya hoti hai?',
+          'What is the time complexity of heapify?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(1)', 'O(1)')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: heapify bottom-up kaam karta hai aur zyada nodes neeche hote hain jahan kaam kam hota hai, isliye total O(n) hota hai, ek-ek karke push karne se tez.',
+          'Correct answer: heapify works bottom-up, and most nodes sit near the bottom where little work is needed, so the total is O(n), faster than pushing one by one.'
+        )
+      },
+      {
+        q: t(
+          'Top-k elements nikaalne ke liye sabse achha tareeka kaunsa hai?',
+          'Which is the best way to find the top-k elements?'
+        ),
+        opts: [
+          t('Poori list sort karo — O(n log n)', 'Sort the whole list — O(n log n)'),
+          t('K size ka heap maintain karo — O(n log k)', 'Keep a heap of size k — O(n log k)'),
+          t('Har baar list scan karo — O(nk)', 'Scan the list every time — O(nk)'),
+          t('List ko reverse karo', 'Reverse the list')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: k size ka heap sirf top-k elements ko yaad rakhta hai, isliye har element par sirf O(log k) kaam hota hai aur total O(n log k) hota hai.',
+          'Correct answer: a heap of size k only remembers the top-k elements, so each element costs only O(log k) and the total is O(n log k).'
+        )
+      },
+      {
+        q: t(
+          'Python ke heapq se max-heap kaise banate hain?',
+          'How do you make a max-heap with Python heapq?'
+        ),
+        opts: [
+          t('heapq.maxheap() use karo', 'Use heapq.maxheap()'),
+          t('Numbers ko negative karke daalo ya nlargest use karo', 'Insert numbers as negatives or use nlargest'),
+          t('List ko reverse karke heapify karo', 'Reverse the list and heapify it'),
+          t('heapq sirf max-heap deta hai', 'heapq only gives a max-heap')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: heapq sirf min-heap deta hai, isliye max-heap ke liye numbers ko negative karke daalte hain ya nlargest use karte hain.',
+          'Correct answer: heapq only gives a min-heap, so for a max-heap you insert numbers as negatives or use nlargest.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Min-heap mein root sabse chhota, max-heap mein root sabse bada hota hai.',
+        'In a min-heap the root is the smallest, in a max-heap the root is the largest.'
+      ),
+      t(
+        'Heapify O(n), push/pop O(log n), root dekhna O(1) hota hai.',
+        'Heapify is O(n), push and pop are O(log n), and looking at the root is O(1).'
+      ),
+      t(
+        'Heap sorted array nahi hota — sirf parent-child rule follow hota hai.',
+        'A heap is not a sorted array — only the parent-child rule holds.'
+      ),
+      t(
+        'Top-k ke liye k size ka heap use karo: O(n log k).',
+        'For top-k, use a heap of size k: O(n log k).'
+      ),
+      t(
+        'Python heapq sirf min-heap deta hai; max-heap ke liye negative trick use karo.',
+        'Python heapq only gives a min-heap; use the negative trick for a max-heap.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 3 Sabse Chhote aur 3 Sabse Bade Marks Nikaalo',
+        'Practice: Find the 3 Smallest and 3 Largest Marks'
+      ),
+      task: t(
+        'Marks ki list mein heapq.nsmallest aur heapq.nlargest se 3 sabse chhote aur 3 sabse bade marks print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Use heapq.nsmallest and heapq.nlargest to print the 3 smallest and 3 largest marks from the list. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `import heapq
+
+marks = [12, 5, 9, 20, 3, 15]
+print("3 smallest:", heapq.nsmallest(3, marks))
+print("3 largest:", heapq.nlargest(3, marks))`,
+      expected: `3 smallest: [3, 5, 9]
+3 largest: [20, 15, 12]`
+    },
+    readMinutes: 12
+  };
+
+const dsaTrie: Article = {
+    id: 'dsa-trie',
+    subjectId: 'dsa',
+    title: t(
+      'Trie — Insert, Search, Prefix Search, Autocomplete aur Word Search',
+      'Trie — Insert, Search, Prefix Search, Autocomplete, and Word Search'
+    ),
+    summary: t(
+      'Trie ko zero se samjho: har node ek character store karta hai, insert aur search prefix ke saath kaise chalte hain, autocomplete prefix se suggestions kaise deta hai, aur trie hash map aur BST se kab behtar hota hai.',
+      'Learn tries from scratch: each node stores one character, how insert and search walk along a prefix, how autocomplete gives suggestions from a prefix, and when a trie beats a hash map and a BST.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Trie Kya Hai? (Prefix Tree aur Har Node par Ek Character)',
+          '1. What Is a Trie? (Prefix Tree, One Character per Node)'
+        ),
+        body: t(
+          `Trie (pronounced "try") ek tree hota hai jo words ko character-by-character store karta hai. Iska naam **reTRIEval** se aaya hai. Har node ek character ko represent karta hai, aur root se kisi node tak ka path ek word ya uska prefix hota hai. Jaise "cat" aur "car" dono "ca" se shuru hote hain, toh trie mein "c" -> "a" wala path dono words ke liye common hota hai, uske baad ek branch "t" ki taraf jaati hai aur doosri "r" ki taraf. Jo node kisi word ka end hota hai, us par ek flag hota hai: \`is_end = True\`.
+
+Trie ko **prefix tree** bhi kehte hain, kyunki iski poori taakat prefix mein hai. Hash map mein aap poora word dhoondh sakte ho, par "ca se shuru hone wale saare words" dhoondhna mushkil hai. Trie mein aap "ca" tak chalte ho, phir uske neeche ka poora subtree hi answer hota hai. Isi liye search engines, dictionaries aur phone keyboards mein trie use hota hai.
+
+Insert, search aur prefix search — teeno ki time complexity **O(L)** hoti hai, jahan L word ki length hai. Yeh dictionary ke size par depend nahi karti: 100 words hon ya 10 lakh, "cat" dhoondhne mein sirf 3 steps lagenge. Space cost zyada hoti hai, kyunki har character ke liye ek node banta hai, par common prefixes share hote hain, isliye words jitne zyada common prefix share karte hain, utni bachat hoti hai.`,
+          `A trie (pronounced "try") is a tree that stores words character by character. Its name comes from **reTRIEval**. Each node stands for one character, and the path from the root to any node forms a word or its prefix. For example, "cat" and "car" both start with "ca", so in a trie the path "c" -> "a" is shared by both words, then one branch goes to "t" and another to "r". The node where a word ends carries a flag: \`is_end = True\`.
+
+A trie is also called a **prefix tree**, because all of its power lies in prefixes. In a hash map you can find a whole word, but finding "all words starting with ca" is hard. In a trie you walk to "ca", and the whole subtree below it is the answer. That is why search engines, dictionaries, and phone keyboards use tries.
+
+Insert, search, and prefix search all run in **O(L)** time, where L is the length of the word. The time does not depend on the size of the dictionary: whether there are 100 words or 1,000,000, finding "cat" takes only 3 steps. The space cost is higher, because every character gets a node, but common prefixes are shared, so the more prefixes words share, the more space is saved.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Autocomplete, Spell Check aur Phone Contacts',
+          '2. Real-Life Examples: Autocomplete, Spell Check, and Phone Contacts'
+        ),
+        body: t(
+          `Trie ka sabse famous use hai **autocomplete**. Jab aap Google mein "how to" type karte ho, toh suggestions turant aate hain: "how to make tea", "how to learn python". Google aapke typed prefix ko trie mein dhoondhta hai aur uske neeche ke saare words ko suggestions ki tarah dikha deta hai. Yeh kaam hash map se bahut mushkil hota, kyunki hash map ko prefix se words nikaalne ka tareeka hi nahi pata hota.
+
+Doosra example hai **spell check aur autocorrect**. Phone keyboard jab aap "helo" type karte ho, toh woh trie mein "hel" prefix ko dhoondhta hai aur dekhta hai ki "hello" aur "help" uske neeche hain — isliye woh "hello" suggest karta hai. Keyboard aapke type kiye hue har character ke saath trie mein ek level neeche jaata hai, isliye suggestions har keystroke par update hote hain.
+
+Teesra example hai **phone contacts aur dictionary apps**. Contact list mein "Ra" type karte hi "Rahul", "Ravi", "Raj" dikhne lagte hain — yeh trie ka prefix search hai. IP routing mein bhi trie use hota hai: router IP address ke prefix ko match karke decide karta hai ki packet kis taraf bhejna hai. Jab bhi problem mein "prefix se shuru hone wale" words hon, toh trie pehla option hota hai.`,
+          `The most famous use of a trie is **autocomplete**. When you type "how to" in Google, suggestions appear instantly: "how to make tea", "how to learn python". Google finds your typed prefix in a trie and shows all the words below it as suggestions. That job is very hard with a hash map, because a hash map has no way to fetch words by prefix.
+
+A second example is **spell check and autocorrect**. When you type "helo" on a phone keyboard, it finds the prefix "hel" in the trie and sees "hello" and "help" below it — so it suggests "hello". With every character you type, the keyboard moves one level deeper in the trie, which is why suggestions update on every keystroke.
+
+A third example is **phone contacts and dictionary apps**. Typing "Ra" in a contact list at once shows "Rahul", "Ravi", and "Raj" — that is trie prefix search. Tries are also used in IP routing: a router matches the prefix of an IP address to decide where to send a packet. Whenever a problem involves words "starting with" a prefix, a trie is the first tool to reach for.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: cat, car, dog Insert Karna aur Search ka Dry Run',
+          '3. Step-by-Step: Dry Run of Inserting cat, car, dog and Searching'
+        ),
+        body: t(
+          `Ab hum teen words — "cat", "car", "dog" — ko ek khaali trie mein insert karne ka dry run karte hain. Har node ke paas ek dict hota hai: \`children\`, jismein character se next node ka mapping hota hai, aur ek flag \`is_end\`, jo batata hai ki yahan koi word khatam hota hai ya nahi.
+
+**"cat" insert karo:** root se "c" nahi hai, toh naya node banao. "c" se "a" nahi hai, naya node banao. "a" se "t" nahi hai, naya node banao aur uska \`is_end = True\` karo. Path bana: root -> c -> a -> t (end).
+
+**"car" insert karo:** root se "c" hai, usse "a" hai — dono share ho gaye, koi naya node nahi bana. "a" se "r" nahi hai, toh naya node banao aur \`is_end = True\` karo. Ab "a" ke do children hain: "t" aur "r". Yahi prefix sharing hai — "ca" sirf ek baar store hua.
+
+**"dog" insert karo:** root se "d" nahi hai, naya node banao, phir "o", phir "g" (end). Path bana: root -> d -> o -> g (end).
+
+Ab **search** karte hain: \`search("cat")\` — c, a, t chalte hain, aakhri node ka \`is_end\` True hai, toh answer True. \`search("ca")\` — c, a tak chalte hain, par "a" wale node ka \`is_end\` False hai (kyunki "ca" koi word nahi hai), toh answer False. Yahi farak hai search aur prefix search mein: \`starts_with("ca")\` sirf ye check karta hai ki path hai ya nahi, \`is_end\` nahi dekhta, isliye answer True aata hai. Neeche wala code yahi poora process chalata hai.`,
+          `Now let us dry-run inserting three words — "cat", "car", "dog" — into an empty trie. Each node holds a dict called \`children\`, mapping a character to the next node, and a flag \`is_end\`, which tells whether a word ends here.
+
+**Insert "cat":** the root has no "c", so create a new node. From "c" there is no "a", so create a node. From "a" there is no "t", so create a node and set its \`is_end = True\`. The path is: root -> c -> a -> t (end).
+
+**Insert "car":** the root has "c", and "c" has "a" — both are shared, so no new node is created. From "a" there is no "r", so create a node and set \`is_end = True\`. Now "a" has two children: "t" and "r". That is prefix sharing — "ca" is stored only once.
+
+**Insert "dog":** the root has no "d", so create a node, then "o", then "g" (end). The path is: root -> d -> o -> g (end).
+
+Now **search**: \`search("cat")\` — walk c, a, t; the last node has \`is_end\` True, so the answer is True. \`search("ca")\` — walk to "a", but the "a" node has \`is_end\` False (because "ca" is not a word), so the answer is False. That is the difference between search and prefix search: \`starts_with("ca")\` only checks whether the path exists and ignores \`is_end\`, so its answer is True. The code below runs this whole process.`
+        ),
+        code: {
+          title: t(
+            'Trie: cat, car, dog Insert Karo aur Search Karo',
+            'Trie: Insert cat, car, dog and Search'
+          ),
+          language: 'python',
+          code: `class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_end = True
+
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return True
+
+t = Trie()
+for w in ["cat", "car", "dog"]:
+    t.insert(w)
+print("search cat:", t.search("cat"))
+print("search ca:", t.search("ca"))
+print("search dog:", t.search("dog"))
+print("prefix ca:", t.starts_with("ca"))
+print("prefix do:", t.starts_with("do"))
+print("prefix ba:", t.starts_with("ba"))`,
+          output: `search cat: True
+search ca: False
+search dog: True
+prefix ca: True
+prefix do: True
+prefix ba: False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: is_end Bhoolna, Prefix ko Word Samajhna aur Case Sensitivity',
+          '4. Common Mistakes: Forgetting is_end, Treating a Prefix as a Word, and Case Sensitivity'
+        ),
+        body: t(
+          `**Galti 1: \`is_end\` flag bhoolna.** Agar aap insert mein aakhri node par \`is_end = True\` karna bhool gaye, toh search hamesha False dega, chahe word insert ho chuka ho. Aur agar search mein \`is_end\` check karna bhool gaye, toh har prefix bhi word lagne lagega — "ca" bhi True ho jaayega. Dono taraf se \`is_end\` hi word aur prefix ka farak batata hai.
+
+**Galti 2: Prefix ko word samajhna.** \`starts_with("ca")\` ka True hona ye nahi batata ki "ca" ek word hai. Interview mein aksar poochha jaata hai: "kya 'app' dictionary mein hai?" — agar sirf "apple" insert hai, toh answer False hai, kyunki "app" ka node \`is_end\` False rakhta hai. Search aur prefix search ko alag functions mein rakho aur confuse mat karo.
+
+**Galti 3: Case sensitivity bhoolna.** Trie mein "Cat" aur "cat" alag words hain, kyunki "C" aur "c" alag characters hain. Agar aapko case-insensitive search chahiye, toh insert aur search dono mein word ko \`lower()\` karo. Ek jagah lower karna aur doosri jagah nahi karna — yeh bug bahut common hai.
+
+**Galti 4: Delete ko ignore karna.** Trie se word delete karna tricky hai: sirf \`is_end\` ko False karna kaafi hai agar us word ka koi lamba word nahi hai, par agar "car" delete karna hai aur "card" bhi hai, toh nodes delete nahi karne chahiye. Beginners aksar poora path delete kar dete hain aur doosre words toot jaate hain.`,
+          `**Mistake 1: Forgetting the \`is_end\` flag.** If you forget to set \`is_end = True\` on the last node during insert, search will always return False even though the word was inserted. And if you forget to check \`is_end\` during search, every prefix will look like a word — "ca" would return True too. On both sides, \`is_end\` is what separates a word from a prefix.
+
+**Mistake 2: Treating a prefix as a word.** \`starts_with("ca")\` returning True does not mean "ca" is a word. Interviewers often ask: "is 'app' in the dictionary?" — if only "apple" was inserted, the answer is False, because the "app" node keeps \`is_end\` False. Keep search and prefix search as separate functions and do not mix them up.
+
+**Mistake 3: Forgetting case sensitivity.** In a trie, "Cat" and "cat" are different words, because "C" and "c" are different characters. If you need case-insensitive search, apply \`lower()\` in both insert and search. Lowercasing in one place and not the other is a very common bug.
+
+**Mistake 4: Ignoring delete.** Deleting a word from a trie is tricky: setting \`is_end\` to False is enough if no longer word shares that path, but if you delete "car" while "card" also exists, you must not delete the nodes. Beginners often delete the whole path and break other words.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali String, Ek Character, Duplicate aur Common Prefix',
+          '5. Edge Cases: Empty String, One Character, Duplicates, and Common Prefix'
+        ),
+        body: t(
+          `**1. Khaali string "".** Khaali string insert karne par root ka hi \`is_end = True\` ho jaata hai, kyunki loop ek baar bhi nahi chalta. Search("") phir root ka \`is_end\` dega. Yeh valid hai, par interview mein poochh lo ki khaali string allowed hai ya nahi — aksar allowed nahi hoti.
+
+**2. Ek character ka word.** "a" insert karne par root ka sirf ek child banta hai. Ismein koi khaas baat nahi, bas yaad rakho ki single-character words bhi \`is_end\` se hi pehchane jaate hain.
+
+**3. Duplicate insert.** Ek hi word dobara insert karne par kuch nahi badalta — wahi nodes dobara use hote hain aur \`is_end\` phir se True hota hai. Trie mein duplicate se koi farak nahi padta, isliye count chahiye toh alag se count rakhna padega.
+
+**4. Sab words ka common prefix.** Agar saare words "pre" se shuru hote hain, toh trie ek seedhi line jaisa ban jaata hai aur space ki bachat sabse zyada hoti hai. Ulta, agar koi common prefix nahi hai, toh har word ke liye alag branch banti hai aur trie list jaisa ho jaata hai — tab hash map behtar ho sakta hai.
+
+**5. Prefix jo kisi word ka end bhi hai.** "app" aur "apple" dono insert hon toh "app" wale node ka \`is_end\` True hota hai aur uske neeche "le" bhi hota hai. Autocomplete mein "app" prefix par "app" khud bhi suggestion mein aana chahiye — isliye DFS mein pehle node ka \`is_end\` check karo, phir children mein jaao.`,
+          `**1. Empty string "".** Inserting an empty string sets the root's own \`is_end = True\`, because the loop never runs. Search("") then returns the root's \`is_end\`. That is valid, but in an interview ask whether an empty string is allowed — usually it is not.
+
+**2. A one-character word.** Inserting "a" creates just one child of the root. There is nothing special here, except that single-character words are also recognised only through \`is_end\`.
+
+**3. Duplicate insert.** Inserting the same word twice changes nothing — the same nodes are reused and \`is_end\` is set to True again. Duplicates make no difference in a trie, so if you need a count, keep a separate counter.
+
+**4. All words sharing a prefix.** If every word starts with "pre", the trie becomes almost a straight line and the space saving is largest. On the other hand, if there is no common prefix at all, every word gets its own branch and the trie behaves like a list — then a hash map may be better.
+
+**5. A prefix that is also the end of a word.** If both "app" and "apple" are inserted, the "app" node has \`is_end\` True and also has "le" below it. In autocomplete, the prefix "app" should suggest "app" itself too — so in the DFS, check the node's \`is_end\` first, then visit its children.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Trie vs Hash Map, Trie vs BST aur Word Search',
+          '6. What-If: Trie vs Hash Map, Trie vs BST, and Word Search'
+        ),
+        body: t(
+          `**What if: hash map use karein?** Hash map mein poora word search O(1) average hota hai, jo trie ke O(L) se tez hai. Par hash map prefix search nahi kar sakta — "app se shuru hone wale saare words" ke liye poori dict scan karni padegi. Autocomplete, spell check aur prefix counting mein trie jeetta hai. Sirf exact word search chahiye toh hash map kaafi hai.
+
+**What if: BST use karein?** BST mein words sorted order mein milte hain aur search O(log n * L) hota hai, kyunki har comparison mein string compare hota hai. Trie mein search sirf word ki length par depend karta hai, dictionary ke size par nahi. Par BST kam memory leta hai, kyunki har character ke liye node nahi banta. Agar prefix search nahi chahiye aur memory kam hai, toh BST theek hai.
+
+**What if: word search board problem ho?** Grid mein words dhoondhne wale problem (Word Search II) mein trie bahut kaam aata hai: board par DFS karte waqt trie mein aage badho, aur agar prefix hi nahi milta toh us branch ko turant kaat do (pruning). Bina trie ke har path par saare words check karne padte, jo bahut slow hota. Neeche wala code autocomplete dikhata hai — prefix "ca" par "car" aur "cat" dono milte hain, kyunki dono ek hi subtree mein hain.`,
+          `**What if we use a hash map?** In a hash map, searching a whole word is O(1) on average, which is faster than a trie's O(L). But a hash map cannot do prefix search — for "all words starting with app" you would have to scan the whole dict. A trie wins for autocomplete, spell check, and prefix counting. If you only need exact word search, a hash map is enough.
+
+**What if we use a BST?** In a BST, words come out in sorted order and search costs O(log n * L), because every comparison compares strings. In a trie, search depends only on the length of the word, not on the size of the dictionary. But a BST uses less memory, because it does not create a node per character. If you do not need prefix search and memory is tight, a BST is fine.
+
+**What if the problem is word search on a board?** In grid word-search problems (Word Search II), a trie helps a lot: while doing DFS on the board, walk forward in the trie at the same time, and if the prefix itself is missing, cut that branch at once (pruning). Without a trie you would have to check all words on every path, which is very slow. The code below shows autocomplete — the prefix "ca" returns both "car" and "cat", because both live in the same subtree.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Trie se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Trie to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Trie** ek tree hai jismein har node ek character store karta hai aur root se node tak ka path ek word ya prefix hota hai. Common prefix wale words path share karte hain, isliye space bachta hai. **Insert, search aur prefix search — teeno O(L)** hote hain, jahan L word ki length hai, dictionary ke size se koi lena-dena nahi hai.
+
+Word aur prefix ka farak sirf \`is_end\` flag batata hai: search mein aakhri node ka \`is_end\` True hona chahiye, prefix search mein sirf path hona kaafi hai. Trie ka sabse bada use **autocomplete** hai — prefix tak chalo, phir uske neeche ka subtree hi saare suggestions hain. Hash map exact search mein tez hai par prefix nahi dhoondh sakta; BST sorted order deta hai par prefix search mein slow hai.
+
+Interview mein jab bhi "prefix", "autocomplete", "spell check" ya "words starting with" suno, toh trie socho. Revision ke liye "cat", "car", "dog" ka dry run khud karo: kaunse nodes share hote hain, \`search("ca")\` False kyun hai, aur \`starts_with("ca")\` True kyun hai. Agar teeno jawab aa jaayein, toh trie aapko aa gaya hai.`,
+          `Let us tie the whole article together. A **trie** is a tree where each node stores one character, and the path from the root to a node forms a word or a prefix. Words with a common prefix share the path, which saves space. **Insert, search, and prefix search are all O(L)**, where L is the length of the word — the size of the dictionary does not matter.
+
+Only the \`is_end\` flag separates a word from a prefix: search needs the last node's \`is_end\` to be True, while prefix search only needs the path to exist. The biggest use of a trie is **autocomplete** — walk to the prefix, and the subtree below it holds all the suggestions. A hash map is faster for exact search but cannot search by prefix; a BST gives sorted order but is slow at prefix search.
+
+In an interview, whenever you hear "prefix", "autocomplete", "spell check", or "words starting with", think trie. To revise, dry-run "cat", "car", and "dog" yourself: which nodes are shared, why \`search("ca")\` is False, and why \`starts_with("ca")\` is True. If you can answer all three, you know tries.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Trie: cat, car, dog ka Tree',
+        'Trie: Tree of cat, car, dog'
+      ),
+      caption: t(
+        '"ca" prefix share hota hai, "dog" ki alag branch hoti hai',
+        'The "ca" prefix is shared, while "dog" has its own branch'
+      ),
+      nodes: [
+        { t: t('Root (khaali)', 'Root (empty)'), s: t('Shuruaat, koi character nahi', 'Start, no character') },
+        { t: t('c -> a', 'c -> a'), s: t('"cat" aur "car" dono ka common prefix', 'Common prefix of "cat" and "car"') },
+        { t: t('a -> t (end)', 'a -> t (end)'), s: t('Word "cat" yahan khatam, is_end = True', 'Word "cat" ends here, is_end = True') },
+        { t: t('a -> r (end)', 'a -> r (end)'), s: t('Word "car" yahan khatam, is_end = True', 'Word "car" ends here, is_end = True') },
+        { t: t('d -> o -> g (end)', 'd -> o -> g (end)'), s: t('Word "dog" ki alag branch', 'Separate branch for word "dog"') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Autocomplete: Prefix "ca" se Saare Words Nikaalo', 'Autocomplete: Get All Words from Prefix "ca"'),
+        language: 'python',
+        code: `class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_end = True
+
+def autocomplete(trie, prefix):
+    node = trie.root
+    for ch in prefix:
+        if ch not in node.children:
+            return []
+        node = node.children[ch]
+    out = []
+    def dfs(n, word):
+        if n.is_end:
+            out.append(word)
+        for ch in sorted(n.children):
+            dfs(n.children[ch], word + ch)
+    dfs(node, prefix)
+    return out
+
+t = Trie()
+for w in ["cat", "car", "dog"]:
+    t.insert(w)
+print("autocomplete ca:", autocomplete(t, "ca"))
+print("autocomplete d:", autocomplete(t, "d"))`,
+        output: `autocomplete ca: ['car', 'cat']
+autocomplete d: ['dog']`
+      },
+      {
+        title: t('Prefix Check: "app" Word Hai ya Sirf Prefix?', 'Prefix Check: Is "app" a Word or Just a Prefix?'),
+        language: 'python',
+        code: `class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_end = True
+
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return True
+
+t = Trie()
+for w in ["apple", "app", "apply", "banana"]:
+    t.insert(w)
+print("search app:", t.search("app"))
+print("search appl:", t.search("appl"))
+print("prefix app:", t.starts_with("app"))`,
+        output: `search app: True
+search appl: False
+prefix app: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Trie mein ek word ko search karne ki time complexity kya hoti hai, jahan L word ki length hai?',
+          'What is the time complexity of searching a word in a trie, where L is the length of the word?'
+        ),
+        opts: [
+          t('O(L)', 'O(L)'),
+          t('O(n), jahan n dictionary ke words hain', 'O(n), where n is the number of words in the dictionary'),
+          t('O(log n)', 'O(log n)'),
+          t('O(1)', 'O(1)')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: trie mein search word ke har character par ek level neeche jaata hai, isliye time sirf word ki length L par depend karta hai, dictionary ke size par nahi.',
+          'Correct answer: search in a trie goes one level deeper per character of the word, so the time depends only on the word length L, not on the size of the dictionary.'
+        )
+      },
+      {
+        q: t(
+          '"cat" aur "car" insert karne ke baad, search("ca") kya dega?',
+          'After inserting "cat" and "car", what does search("ca") return?'
+        ),
+        opts: [
+          t('True, kyunki "ca" prefix hai', 'True, because "ca" is a prefix'),
+          t('False, kyunki "ca" ka is_end False hai', 'False, because the is_end of "ca" is False'),
+          t('Error', 'Error'),
+          t('None', 'None')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "ca" ek prefix hai, poora word nahi — "a" wale node ka is_end False hai, isliye search False deta hai, jabki starts_with True deta hai.',
+          'Correct answer: "ca" is a prefix, not a complete word — the "a" node has is_end False, so search returns False, while starts_with returns True.'
+        )
+      },
+      {
+        q: t(
+          'Autocomplete ke liye trie hash map se behtar kyun hai?',
+          'Why is a trie better than a hash map for autocomplete?'
+        ),
+        opts: [
+          t('Trie kam memory leta hai', 'A trie uses less memory'),
+          t('Trie prefix se saare words dhoondh sakta hai', 'A trie can find all words from a prefix'),
+          t('Hash map mein words store nahi hote', 'A hash map cannot store words'),
+          t('Trie hamesha tez hota hai', 'A trie is always faster')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: trie mein prefix tak chalne ke baad uske neeche ka poora subtree hi saare suggestions hain, jabki hash map ko prefix se words nikaalne ke liye poori dict scan karni padegi.',
+          'Correct answer: in a trie, walking to the prefix gives the whole subtree below it as all the suggestions, while a hash map would have to scan the entire dict to find words by prefix.'
+        )
+      },
+      {
+        q: t(
+          'Trie mein "cat" aur "car" ka common prefix kaunsa hai?',
+          'What is the common prefix of "cat" and "car" in a trie?'
+        ),
+        opts: [
+          t('"c"', '"c"'),
+          t('"ca"', '"ca"'),
+          t('"cat"', '"cat"'),
+          t('Koi common prefix nahi', 'No common prefix')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: dono words "c" phir "a" se shuru hote hain, isliye "ca" wala path dono ke liye share hota hai, uske baad "t" aur "r" ki alag branches banti hain.',
+          'Correct answer: both words start with "c" then "a", so the "ca" path is shared by both, and only after that do separate branches for "t" and "r" appear.'
+        )
+      },
+      {
+        q: t(
+          'Trie mein ek word ka end kaise pehchana jaata hai?',
+          'How is the end of a word recognised in a trie?'
+        ),
+        opts: [
+          t('Node ke children khaali hain', 'The node has no children'),
+          t('Node ka is_end flag True hai', 'The node has its is_end flag set to True'),
+          t('Node root hai', 'The node is the root'),
+          t('Node ki depth word ki length hai', 'The node depth equals the word length')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: is_end flag hi batata hai ki yahan koi word khatam hota hai — bina iske har prefix bhi word lagne lagega, jaise "app" ke andar "ap".',
+          'Correct answer: only the is_end flag tells you a word ends here — without it, every prefix would look like a word, such as "ap" inside "app".'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Trie mein har node ek character store karta hai; root se node tak ka path word ya prefix hota hai.',
+        'In a trie each node stores one character; the path from the root to a node is a word or a prefix.'
+      ),
+      t(
+        'Insert, search aur prefix search — teeno O(L) hote hain, jahan L word ki length hai.',
+        'Insert, search, and prefix search are all O(L), where L is the length of the word.'
+      ),
+      t(
+        'Word aur prefix ka farak sirf is_end flag batata hai.',
+        'Only the is_end flag separates a word from a prefix.'
+      ),
+      t(
+        'Autocomplete mein prefix tak chalo, phir uske neeche ka subtree hi saare suggestions hain.',
+        'For autocomplete, walk to the prefix, and the subtree below it holds all the suggestions.'
+      ),
+      t(
+        'Hash map exact search mein tez hai, par prefix search nahi kar sakta — wahan trie jeetta hai.',
+        'A hash map is faster for exact search, but it cannot do prefix search — that is where a trie wins.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Prefix "app" aur "ban" ke Liye Autocomplete Banao',
+        'Practice: Build Autocomplete for Prefixes "app" and "ban"'
+      ),
+      task: t(
+        'Trie mein apple, app, application, banana aur apply insert karo, phir autocomplete se prefix "app" aur "ban" ke saare words print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Insert apple, app, application, banana, and apply into a trie, then use autocomplete to print all words for prefixes "app" and "ban". The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_end = True
+
+def autocomplete(trie, prefix):
+    node = trie.root
+    for ch in prefix:
+        if ch not in node.children:
+            return []
+        node = node.children[ch]
+    out = []
+    def dfs(n, word):
+        if n.is_end:
+            out.append(word)
+        for ch in sorted(n.children):
+            dfs(n.children[ch], word + ch)
+    dfs(node, prefix)
+    return out
+
+t = Trie()
+for w in ["apple", "app", "application", "banana", "apply"]:
+    t.insert(w)
+print("autocomplete app:", autocomplete(t, "app"))
+print("autocomplete ban:", autocomplete(t, "ban"))`,
+      expected: `autocomplete app: ['app', 'apple', 'application', 'apply']
+autocomplete ban: ['banana']`
+    },
+    readMinutes: 12
+  };
+
+const dsaDisjointSet: Article = {
+    id: 'dsa-disjoint-set',
+    subjectId: 'dsa',
+    title: t(
+      'Union-Find / DSU — Union by Rank, Path Compression, Cycle Detection aur Kruskal',
+      'Union-Find / DSU — Union by Rank, Path Compression, Cycle Detection, and Kruskal'
+    ),
+    summary: t(
+      'Union-Find ko zero se samjho: har element apne set ka parent kaise rakhta hai, union by rank aur path compression find ko lagbhag O(1) kaise banate hain, cycle detection kaise kaam karta hai, aur Kruskal MST mein DSU kahan aata hai.',
+      'Learn Union-Find from scratch: how every element keeps the parent of its set, how union by rank and path compression make find almost O(1), how cycle detection works, and where DSU appears in Kruskal MST.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Union-Find Kya Hai? (Parent Array aur Sets ka Group)',
+          '1. What Is Union-Find? (Parent Array and Groups of Sets)'
+        ),
+        body: t(
+          `Disjoint Set Union (DSU), jise **Union-Find** bhi kehte hain, ek aisi data structure hai jo elements ko groups (sets) mein baant ti hai aur do sawaal ka jawab deti hai: "kya a aur b ek hi group mein hain?" aur "a aur b ko ek group mein mila do". Har element ka ek **parent** hota hai, jo ek array mein store hota hai. Shuru mein har element apna khud ka parent hota hai — matlab har element apna alag set hai. \`parent = [0, 1, 2, 3, 4, 5]\` ka matlab hai 6 elements, 6 alag sets.
+
+**Find** kisi element ka set leader (root) dhoondhta hai: parent ko follow karte hue upar jaao jab tak woh element na mil jaaye jiska parent woh khud hai. **Union** do elements ke sets ko milata hai: pehle dono ke roots dhoondho, phir ek root ka parent doosre root ko bana do. Ab dono sets ek ho gaye. Yeh structure tree jaisa dikhta hai, par tree ulta hota hai — edges neeche se upar (child se parent) ki taraf jaati hain.
+
+DSU ki taakat iski speed hai: sahi optimizations ke saath find aur union lagbhag **O(1)** hote hain — itne tez ki practically constant samjho. Isi liye DSU graph problems mein baar-baar aata hai: connected components ginna, cycle detect karna, Kruskal MST banana, aur "kya do nodes connected hain?" jaise sawaal.`,
+          `Disjoint Set Union (DSU), also called **Union-Find**, is a data structure that splits elements into groups (sets) and answers two questions: "are a and b in the same group?" and "merge the groups of a and b". Every element has a **parent**, stored in an array. At the start, every element is its own parent — meaning every element is a separate set. \`parent = [0, 1, 2, 3, 4, 5]\` means 6 elements in 6 separate sets.
+
+**Find** locates the leader (root) of an element's set: follow parents upward until you reach an element whose parent is itself. **Union** merges the sets of two elements: first find both roots, then make one root the parent of the other. Now both sets are one. The structure looks like a tree, but upside down — edges point upward, from child to parent.
+
+The power of DSU is its speed: with the right optimisations, find and union are almost **O(1)** — so fast that in practice you can treat them as constant. That is why DSU appears again and again in graph problems: counting connected components, detecting cycles, building Kruskal MST, and questions like "are two nodes connected?"`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Dost Groups, Network aur Social Media',
+          '2. Real-Life Examples: Friend Groups, Networks, and Social Media'
+        ),
+        body: t(
+          `DSU ka sabse seedha example hai **dost groups**. College mein 100 students hain. Jab do students dost bante hain, toh unke groups mil jaate hain. "Kya Rahul aur Priya ek hi friend circle mein hain?" — yeh find ka sawaal hai. Har nayi dosti ek union hai. Din ke end mein kitne alag friend circles hain? Yeh connected components ginne ka sawaal hai, jo DSU se turant mil jaata hai.
+
+Doosra example hai **network connectivity**. Computer network mein cables judte rehte hain. "Kya computer A se computer B tak data pahunch sakta hai?" — yeh check karne ke liye poora graph traverse karne ki zaroorat nahi, DSU se sirf ye dekho ki dono ek hi set mein hain ya nahi. Naya cable lagte hi union kar do, aur connectivity hamesha up-to-date rehti hai.
+
+Teesra example hai **Kruskal MST** — minimum spanning tree banane ka algorithm. Kruskal edges ko weight ke hisaab se sort karta hai aur ek-ek karke edge ko tabhi leta hai jab woh cycle na banaye. Cycle check karne ke liye DSU use hota hai: agar edge ke dono ends pehle se ek hi set mein hain, toh edge cycle banayegi, isliye skip karo. Bina DSU ke Kruskal bahut slow ho jaata.`,
+          `The simplest example of DSU is **friend groups**. A college has 100 students. When two students become friends, their groups merge. "Are Rahul and Priya in the same friend circle?" — that is a find question. Every new friendship is a union. At the end of the day, how many separate friend circles are there? That is counting connected components, which DSU answers at once.
+
+A second example is **network connectivity**. In a computer network, cables keep getting connected. "Can data travel from computer A to computer B?" — you do not need to traverse the whole graph to check; with DSU you only check whether both are in the same set. Each new cable is a union, and connectivity stays up to date.
+
+A third example is **Kruskal MST** — the algorithm for building a minimum spanning tree. Kruskal sorts edges by weight and takes each edge only if it does not form a cycle. DSU is used to check for cycles: if both ends of an edge are already in the same set, the edge would form a cycle, so skip it. Without DSU, Kruskal would be very slow.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 6 Nodes par Union, Find aur Path Compression ka Dry Run',
+          '3. Step-by-Step: Dry Run of Union, Find, and Path Compression on 6 Nodes'
+        ),
+        body: t(
+          `Ab hum 6 nodes (0 se 5) par DSU ka dry run karte hain. Shuru mein \`parent = [0, 1, 2, 3, 4, 5]\` aur \`size = [1, 1, 1, 1, 1, 1]\` hai — har node apna khud ka set hai, size 1.
+
+**Union(0, 1):** find(0) = 0, find(1) = 1, dono alag roots hain. Union by size mein chhote set ko bade set ke neeche jodte hain — dono size 1 hain, toh 1 ka parent 0 bana do. Ab \`parent = [0, 0, 2, 3, 4, 5]\`, set {0, 1} ka size 2 ho gaya.
+
+**Union(1, 2):** find(1) = 0 (kyunki 1 ka parent 0 hai), find(2) = 2. 2 ka parent 0 bana do. Ab \`parent = [0, 0, 0, 3, 4, 5]\`, set {0, 1, 2} ka size 3 ho gaya. Dhyaan do: 2 ka parent seedha 0 hai, 1 ke through nahi — union hamesha roots ko jodta hai.
+
+**Union(3, 4):** find(3) = 3, find(4) = 4. 4 ka parent 3 bana do. Ab \`parent = [0, 0, 0, 3, 3, 5]\`. Node 5 abhi bhi akela hai.
+
+Ab **find(2)** karte hain: 2 ka parent 0 hai, 0 ka parent 0 hai (khud), toh root 0 hai. **Path compression** ka matlab hai: find karte waqt raaste mein aane wale har node ka parent seedha root ko bana do, taaki agli baar find aur tez ho. Hamare example mein tree pehle se flat hai, par lambi chain mein path compression tree ko flat kar deta hai — isi liye find lagbhag O(1) ho jaata hai.
+
+**Union(0, 2) dobara:** find(0) = 0, find(2) = 0 — dono ka root ek hi hai, isliye union False deta hai: pehle se ek hi set mein hain, milane ko kuch nahi hai. Yahi check cycle detection mein kaam aata hai. Neeche wala code yahi poora process print karta hai.`,
+          `Now let us dry-run DSU on 6 nodes (0 to 5). At the start, \`parent = [0, 1, 2, 3, 4, 5]\` and \`size = [1, 1, 1, 1, 1, 1]\` — every node is its own set, of size 1.
+
+**Union(0, 1):** find(0) = 0, find(1) = 1, two different roots. In union by size, the smaller set joins under the larger one — both have size 1, so make 1's parent 0. Now \`parent = [0, 0, 2, 3, 4, 5]\`, and the set {0, 1} has size 2.
+
+**Union(1, 2):** find(1) = 0 (because 1's parent is 0), find(2) = 2. Make 2's parent 0. Now \`parent = [0, 0, 0, 3, 4, 5]\`, and the set {0, 1, 2} has size 3. Notice: 2's parent is directly 0, not through 1 — union always joins roots.
+
+**Union(3, 4):** find(3) = 3, find(4) = 4. Make 4's parent 3. Now \`parent = [0, 0, 0, 3, 3, 5]\`. Node 5 is still alone.
+
+Now **find(2)**: 2's parent is 0, and 0's parent is 0 (itself), so the root is 0. **Path compression** means: while finding, point every node along the way directly at the root, so the next find is even faster. In our example the tree is already flat, but in a long chain path compression flattens the tree — that is why find becomes almost O(1).
+
+**Union(0, 2) again:** find(0) = 0, find(2) = 0 — both roots are the same, so union returns False: they are already in one set, and there is nothing to merge. This same check is what cycle detection uses. The code below prints this whole process.`
+        ),
+        code: {
+          title: t(
+            'DSU: Union, Find aur Path Compression ka Dry Run',
+            'DSU: Dry Run of Union, Find, and Path Compression'
+          ),
+          language: 'python',
+          code: `class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+
+    def find(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True
+
+dsu = DSU(6)
+for a, b in [(0, 1), (1, 2), (3, 4)]:
+    print(f"union {a}-{b}:", dsu.union(a, b))
+print("0 and 2 connected:", dsu.find(0) == dsu.find(2))
+print("0 and 3 connected:", dsu.find(0) == dsu.find(3))
+print("union 0-2 again:", dsu.union(0, 2))
+print("parents:", dsu.parent)`,
+          output: `union 0-1: True
+union 1-2: True
+union 3-4: True
+0 and 2 connected: True
+0 and 3 connected: False
+union 0-2 again: False
+parents: [0, 0, 0, 3, 3, 5]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Path Compression Bhoolna aur Union mein Root ki Jagah Node Jodna',
+          '4. Common Mistakes: Forgetting Path Compression and Joining Nodes Instead of Roots'
+        ),
+        body: t(
+          `**Galti 1: Union mein seedha node jodna, root nahi.** Union karte waqt pehle \`find(a)\` aur \`find(b)\` se roots nikaalo, phir roots ko jodo. Agar aap seedha \`parent[a] = b\` kar do, toh tree galat ban jaata hai aur find galat root de sakta hai. Hamare dry run mein union(1, 2) karte waqt 1 ka root 0 tha, isliye 2 ko 0 se joda — 1 se nahi. Yeh farak bahut important hai.
+
+**Galti 2: Path compression ya union by rank mein se ek bhi na lagana.** Bina optimization ke DSU ka tree lambi chain ban sakta hai aur find O(n) ho jaata hai. Dono optimizations ek saath lagao: union by size/rank tree ko chhota rakhta hai, aur path compression find ko tez karta hai. Sirf ek lagane se bhi kaam chal jaata hai, par dono lagane par find lagbhag O(1) ho jaata hai.
+
+**Galti 3: Union ka return value ignore karna.** \`union\` False deta hai jab dono pehle se ek hi set mein hon — yahi cycle detection ka signal hai. Agar aap return value check kiye bina har edge ko lete jaao, toh cycle detect hi nahi hogi aur Kruskal galat MST banayega.
+
+**Galti 4: Find mein recursion ki limit.** Recursive find lambi chain par Python ki recursion limit (1000) ko paar kar sakta hai. Isliye iterative find likho, jaise hamare code mein \`while\` loop hai, ya recursion limit badha lo.`,
+          `**Mistake 1: Joining nodes directly instead of roots in union.** During union, first get the roots with \`find(a)\` and \`find(b)\`, then join the roots. If you write \`parent[a] = b\` directly, the tree becomes wrong and find can return the wrong root. In our dry run, when doing union(1, 2), the root of 1 was 0, so 2 was joined to 0 — not to 1. That difference matters a lot.
+
+**Mistake 2: Skipping path compression or union by rank.** Without optimisation, a DSU tree can grow into a long chain and find becomes O(n). Apply both optimisations together: union by size/rank keeps the tree short, and path compression makes find fast. One alone is enough to get by, but both together make find almost O(1).
+
+**Mistake 3: Ignoring the return value of union.** \`union\` returns False when both elements are already in the same set — that is exactly the signal cycle detection needs. If you keep taking every edge without checking the return value, cycles will never be detected and Kruskal will build a wrong MST.
+
+**Mistake 4: Recursion limit in find.** A recursive find on a long chain can cross Python's recursion limit (1000). So write an iterative find, like the \`while\` loop in our code, or raise the recursion limit.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khud se Union, Pehle se Connected aur Akela Node',
+          '5. Edge Cases: Union with Itself, Already Connected, and a Lone Node'
+        ),
+        body: t(
+          `**1. Khud se union — union(2, 2).** find(2) dono taraf ek hi root deta hai, isliye union False deta hai aur kuch nahi badalta. Yeh safe hai, par code mein check karna achha hota hai ki a aur b alag hain.
+
+**2. Pehle se connected nodes ka union.** Upar wale dry run mein union(0, 2) dobara False diya. Yeh bug nahi hai — yahi batata hai ki dono ek hi set mein hain. Cycle detection isi par based hai: edge (a, b) par union False aaye toh edge cycle banati hai.
+
+**3. Akela node.** Node 5 hamare example mein kisi se juda nahi — uska parent woh khud hai aur size 1 hai. Components ginte waqt akela node bhi ek component hota hai. Hamare example mein components hain {0,1,2}, {3,4}, {5} — total 3.
+
+**4. Saare nodes ek hi set mein.** Agar n-1 successful unions ho jaayein, toh saare nodes ek hi component mein hain. Uske baad har union False dega. Yeh check karna ki graph connected hai ya nahi, isi se hota hai: components == 1 matlab connected.
+
+**5. Directed graph par DSU.** DSU sirf undirected graph ke liye kaam karta hai. Directed graph mein cycle detection ke liye DFS aur colors use karte hain, DSU nahi — kyunki directed edge ka matlab sirf ek taraf jaana hota hai, dono nodes ek set mein nahi hote.`,
+          `**1. Union with itself — union(2, 2).** find(2) gives the same root on both sides, so union returns False and nothing changes. That is safe, but it is good practice to check in code that a and b are different.
+
+**2. Union of already-connected nodes.** In the dry run above, union(0, 2) returned False the second time. That is not a bug — it tells you both are already in one set. Cycle detection is built on this: if union on edge (a, b) returns False, the edge forms a cycle.
+
+**3. A lone node.** Node 5 in our example is joined to nothing — its parent is itself and its size is 1. When counting components, a lone node still counts as one component. In our example the components are {0,1,2}, {3,4}, {5} — 3 in total.
+
+**4. All nodes in one set.** If n-1 unions succeed, all nodes are in a single component. After that, every union returns False. Checking whether a graph is connected works exactly like this: components == 1 means connected.
+
+**5. DSU on a directed graph.** DSU only works for undirected graphs. For cycle detection in a directed graph, use DFS with colours, not DSU — because a directed edge only goes one way, and the two nodes do not belong to one set.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Cycle Detection, Kruskal aur Components Ginna',
+          '6. What-If: Cycle Detection, Kruskal, and Counting Components'
+        ),
+        body: t(
+          `**What if: undirected graph mein cycle dhoondhni ho?** Har edge (a, b) par union karo. Agar union False de, toh a aur b pehle se connected hain, matlab edge cycle banati hai. Neeche wala code dikhata hai: edges (0,1), (1,2), (2,0) mein teesri edge cycle banati hai (True), jabki (0,1), (1,2), (2,3) mein koi cycle nahi hai (False). Yeh check O(E * alpha) mein hota hai, jo practically linear hai.
+
+**What if: Kruskal MST banana ho?** Edges ko weight ke hisaab se sort karo. Har edge ko tabhi MST mein lo jab uske ends alag sets mein hon (union True de). Agar union False de, toh edge skip karo — woh cycle banayegi. Aise karke n-1 edges milte hain, jo minimum spanning tree hoti hai. Bina DSU ke har edge par cycle check karne ke liye BFS/DFS karna padta, jo bahut slow hota.
+
+**What if: components ginne hon?** Saare edges par union karo, phir har node ka root nikaalo aur unique roots gino. Hamare example mein 6 nodes aur edges (0,1), (1,2), (3,4) par components 3 hain. Yeh tareeka islands ginne, provinces ginne aur friend circles ginne mein kaam aata hai.`,
+          `**What if you need to find a cycle in an undirected graph?** Call union on every edge (a, b). If union returns False, a and b are already connected, which means the edge forms a cycle. The code below shows this: among edges (0,1), (1,2), (2,0), the third edge forms a cycle (True), while (0,1), (1,2), (2,3) has no cycle (False). This check runs in O(E * alpha), which is practically linear.
+
+**What if you need to build Kruskal MST?** Sort the edges by weight. Take an edge into the MST only when its ends are in different sets (union returns True). If union returns False, skip the edge — it would form a cycle. Doing this gives n-1 edges, which form the minimum spanning tree. Without DSU, checking for a cycle on every edge would need BFS/DFS, which is much slower.
+
+**What if you need to count components?** Call union on all edges, then find the root of every node and count the unique roots. In our example, 6 nodes with edges (0,1), (1,2), (3,4) give 3 components. This method is used to count islands, provinces, and friend circles.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: DSU se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from DSU to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **DSU** mein har element ka ek parent hota hai; shuru mein har element apna khud ka set hota hai. **Find** root dhoondhta hai, **union** do sets ko milata hai. **Union by size/rank** chhote tree ko bade tree ke neeche jodta hai, aur **path compression** find karte waqt nodes ko seedha root se jod deta hai. Dono mil kar find aur union ko lagbhag **O(1)** bana dete hain.
+
+Union ka False return karna hi **cycle detection** hai: agar edge ke dono ends pehle se ek hi set mein hain, toh edge cycle banati hai. **Kruskal** isi ka use karke MST banata hai — edges ko weight se sort karo, cycle wali edges ko skip karo. **Components ginna** bhi DSU se hota hai: saare edges par union karo, phir unique roots gino.
+
+Interview mein jab bhi "connected hain?", "cycle hai?", "kitne groups hain?" ya "MST banao" suno, toh DSU socho. Revision ke liye 6 nodes ka dry run khud karo: union(0,1), union(1,2), union(3,4) ke baad parent array kya hoga, aur union(0,2) dobara False kyun dega. Agar dono jawab aa jaayein, toh DSU aapko aa gaya hai.`,
+          `Let us tie the whole article together. In **DSU**, every element has a parent; at the start, every element is its own set. **Find** locates the root, and **union** merges two sets. **Union by size/rank** attaches the smaller tree under the larger tree, and **path compression** points nodes directly at the root while finding. Together they make find and union almost **O(1)**.
+
+Union returning False is itself **cycle detection**: if both ends of an edge are already in one set, the edge forms a cycle. **Kruskal** uses this to build an MST — sort edges by weight and skip the ones that form cycles. **Counting components** also uses DSU: union all edges, then count the unique roots.
+
+In an interview, whenever you hear "are they connected?", "is there a cycle?", "how many groups are there?", or "build an MST", think DSU. To revise, dry-run the 6-node example yourself: after union(0,1), union(1,2), and union(3,4), what is the parent array, and why does union(0,2) return False the second time? If you can answer both, you know DSU.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'DSU: 6 Nodes, 3 Components',
+        'DSU: 6 Nodes, 3 Components'
+      ),
+      caption: t(
+        'Union ke baad parent array [0, 0, 0, 3, 3, 5] — 3 alag sets',
+        'After union, parent array [0, 0, 0, 3, 3, 5] — 3 separate sets'
+      ),
+      nodes: [
+        { t: t('Set 1: {0, 1, 2}', 'Set 1: {0, 1, 2}'), s: t('Root 0, size 3', 'Root 0, size 3') },
+        { t: t('Set 2: {3, 4}', 'Set 2: {3, 4}'), s: t('Root 3, size 2', 'Root 3, size 2') },
+        { t: t('Set 3: {5}', 'Set 3: {5}'), s: t('Root 5, size 1, akela node', 'Root 5, size 1, lone node') },
+        { t: t('Union(0, 2) dobara: False', 'Union(0, 2) again: False'), s: t('Dono ka root ek hi hai — cycle ka signal', 'Both share one root — the cycle signal') },
+        { t: t('Find + Path Compression: lagbhag O(1)', 'Find + Path Compression: almost O(1)'), s: t('Union by size tree ko chhota rakhta hai', 'Union by size keeps the tree short') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Cycle Detection: Edge Cycle Banati Hai ya Nahi?', 'Cycle Detection: Does the Edge Form a Cycle?'),
+        language: 'python',
+        code: `class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+
+    def find(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True
+
+def has_cycle(n, edges):
+    d = DSU(n)
+    for a, b in edges:
+        if not d.union(a, b):
+            return True
+    return False
+
+print("cycle in [(0,1),(1,2),(2,0)]:", has_cycle(3, [(0, 1), (1, 2), (2, 0)]))
+print("cycle in [(0,1),(1,2),(2,3)]:", has_cycle(4, [(0, 1), (1, 2), (2, 3)]))`,
+        output: `cycle in [(0,1),(1,2),(2,0)]: True
+cycle in [(0,1),(1,2),(2,3)]: False`
+      },
+      {
+        title: t('Components Ginna: Unique Roots Count Karo', 'Counting Components: Count the Unique Roots'),
+        language: 'python',
+        code: `class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+
+    def find(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True
+
+def count_components(n, edges):
+    d = DSU(n)
+    for a, b in edges:
+        d.union(a, b)
+    return len({d.find(i) for i in range(n)})
+
+print("components:", count_components(6, [(0, 1), (1, 2), (3, 4)]))`,
+        output: `components: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'DSU mein find ka kaam kya hota hai?',
+          'What does find do in DSU?'
+        ),
+        opts: [
+          t('Do sets ko milana', 'Merge two sets'),
+          t('Kisi element ke set ka root (leader) dhoondhna', 'Find the root (leader) of an element set'),
+          t('Naya set banana', 'Create a new set'),
+          t('Set ko delete karna', 'Delete a set')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: find parent ko follow karte hue upar jaata hai jab tak woh element na mil jaaye jiska parent woh khud hai — wahi set ka root hota hai.',
+          'Correct answer: find follows parents upward until it reaches an element whose parent is itself — that is the root of the set.'
+        )
+      },
+      {
+        q: t(
+          'Path compression ka fayda kya hai?',
+          'What is the benefit of path compression?'
+        ),
+        opts: [
+          t('Tree ko lamba karta hai', 'It makes the tree taller'),
+          t('Find karte waqt nodes ko seedha root se jod deta hai, taaki agli find tez ho', 'It points nodes directly at the root during find, so the next find is faster'),
+          t('Sets ko delete karta hai', 'It deletes sets'),
+          t('Memory bachata hai', 'It saves memory')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: path compression raaste ke har node ka parent seedha root bana deta hai, isliye tree flat ho jaata hai aur agli baar find lagbhag O(1) mein hota hai.',
+          'Correct answer: path compression points every node along the way directly at the root, so the tree flattens and the next find runs in almost O(1).'
+        )
+      },
+      {
+        q: t(
+          'Union(a, b) False kab deta hai?',
+          'When does union(a, b) return False?'
+        ),
+        opts: [
+          t('Jab a aur b alag sets mein hon', 'When a and b are in different sets'),
+          t('Jab a aur b pehle se ek hi set mein hon', 'When a and b are already in the same set'),
+          t('Jab set khaali ho', 'When the set is empty'),
+          t('Jab a == b ho hi nahi', 'When a is never equal to b')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: agar dono ke roots ek hi hain, toh milane ko kuch nahi hai aur union False deta hai — yahi cycle detection ka signal hai.',
+          'Correct answer: if both roots are the same, there is nothing to merge and union returns False — that is exactly the cycle detection signal.'
+        )
+      },
+      {
+        q: t(
+          'Kruskal MST mein DSU kis kaam aata hai?',
+          'What is DSU used for in Kruskal MST?'
+        ),
+        opts: [
+          t('Edges ko sort karne ke liye', 'To sort the edges'),
+          t('Ye check karne ke liye ki edge cycle banati hai ya nahi', 'To check whether an edge forms a cycle'),
+          t('Weights ko add karne ke liye', 'To add the weights'),
+          t('Graph ko draw karne ke liye', 'To draw the graph')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Kruskal har edge ko tabhi leta hai jab uske ends alag sets mein hon — agar union False de, toh edge cycle banayegi, isliye use skip karte hain.',
+          'Correct answer: Kruskal takes an edge only when its ends are in different sets — if union returns False, the edge would form a cycle, so it is skipped.'
+        )
+      },
+      {
+        q: t(
+          'DSU kis type ke graph par kaam karta hai?',
+          'Which type of graph does DSU work on?'
+        ),
+        opts: [
+          t('Sirf directed graph', 'Only directed graphs'),
+          t('Sirf undirected graph', 'Only undirected graphs'),
+          t('Sirf weighted graph', 'Only weighted graphs'),
+          t('Sirf tree', 'Only trees')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: DSU sets ko milata hai, jo undirected connection ko represent karta hai — directed graph mein cycle ke liye DFS aur colors use karte hain.',
+          'Correct answer: DSU merges sets, which represents an undirected connection — for cycles in a directed graph, DFS with colours is used instead.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Find root dhoondhta hai, union do sets ko milata hai.',
+        'Find locates the root, union merges two sets.'
+      ),
+      t(
+        'Union by size/rank + path compression se find aur union lagbhag O(1) hote hain.',
+        'Union by size/rank plus path compression make find and union almost O(1).'
+      ),
+      t(
+        'Union ka False dena hi cycle ka signal hai.',
+        'Union returning False is itself the cycle signal.'
+      ),
+      t(
+        'Kruskal mein DSU cycle wali edges ko skip karta hai aur MST banata hai.',
+        'In Kruskal, DSU skips cycle-forming edges and builds the MST.'
+      ),
+      t(
+        'Components ginne ke liye saare edges par union karo, phir unique roots gino.',
+        'To count components, union all edges, then count the unique roots.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Components Gino aur Cycle Check Karo',
+        'Practice: Count Components and Check for a Cycle'
+      ),
+      task: t(
+        '5 nodes aur edges (0,1), (2,3) par components gino, phir edges (0,1), (1,2), (0,2) par cycle check karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Count the components for 5 nodes with edges (0,1), (2,3), then check for a cycle in edges (0,1), (1,2), (0,2). The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.size = [1] * n
+
+    def find(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]
+            x = self.parent[x]
+        return x
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True
+
+def count_components(n, edges):
+    d = DSU(n)
+    for a, b in edges:
+        d.union(a, b)
+    return len({d.find(i) for i in range(n)})
+
+def has_cycle(n, edges):
+    d = DSU(n)
+    for a, b in edges:
+        if not d.union(a, b):
+            return True
+    return False
+
+print("components in 5 nodes, edges (0,1),(2,3):", count_components(5, [(0, 1), (2, 3)]))
+print("cycle in [(0,1),(1,2),(0,2)]:", has_cycle(3, [(0, 1), (1, 2), (0, 2)]))`,
+      expected: `components in 5 nodes, edges (0,1),(2,3): 3
+cycle in [(0,1),(1,2),(0,2)]: True`
+    },
+    readMinutes: 12
+  };
+
+const dsaTreeAdvanced: Article = {
+    id: 'dsa-tree-advanced',
+    subjectId: 'dsa',
+    title: t(
+      'Advanced Trees — LCA, Diameter, Balanced Check, Tree Views aur Serialization',
+      'Advanced Trees — LCA, Diameter, Balanced Check, Tree Views, and Serialization'
+    ),
+    summary: t(
+      'Advanced tree problems ko zero se samjho: lowest common ancestor (LCA) kaise dhoondhte hain, diameter kya hota hai aur kaise nikaalte hain, tree balanced hai ya nahi kaise check karte hain, top aur left view kya hote hain, aur serialization se tree ko string mein kaise badalte hain.',
+      'Learn advanced tree problems from scratch: how to find the lowest common ancestor (LCA), what diameter is and how to compute it, how to check whether a tree is balanced, what top and left views are, and how serialization turns a tree into a string.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Advanced Trees Kya Hain? (LCA, Diameter aur Views)',
+          '1. What Are Advanced Trees? (LCA, Diameter, and Views)'
+        ),
+        body: t(
+          `Basic tree mein aap sirf traverse karte ho — inorder, preorder, postorder. Advanced tree problems mein aap tree ke baare mein sawaal poochhte ho: do nodes ka sabse neeche wala common ancestor kaunsa hai, tree ka sabse lamba path kitna hai, tree balanced hai ya ek taraf jhuka hua hai, aur upar se dekhne par kya dikhta hai. Yeh sawaal interview mein bahut aate hain, kyunki inke answers ke liye recursion ko theek se samajhna padta hai.
+
+**LCA (Lowest Common Ancestor)** do nodes ka woh common ancestor hota hai jo sabse neeche ho — matlab un dono ke sabse kareeb wala common parent. Jaise family tree mein do cousins ka LCA unka common grandfather ho sakta hai. **Diameter** tree ke kisi bhi do nodes ke beech ka sabse lamba path hota hai (edges mein gina jaata hai) — yeh path root se hokar ja bhi sakta hai aur nahi bhi. **Height** root se sabse neeche wale leaf tak ki distance hoti hai, aur **balanced** tree woh hota hai jismein har node ke left aur right subtree ki height mein farak 1 se zyada na ho.
+
+In sab problems ka ek hi pattern hai: ek recursive function jo ek saath do cheezein return karta hai — jaise height aur diameter, ya balanced hai ya nahi aur height. Jo student sirf ek value return karne ki koshish karta hai, woh atak jaata hai; jo tuple return karta hai, woh aage badh jaata hai.`,
+          `In a basic tree you only traverse — inorder, preorder, postorder. In advanced tree problems you ask questions about the tree: what is the lowest common ancestor of two nodes, how long is the longest path in the tree, is the tree balanced or leaning to one side, and what do you see when you look at it from above? These questions appear a lot in interviews, because answering them needs a solid understanding of recursion.
+
+The **LCA (Lowest Common Ancestor)** of two nodes is their common ancestor that sits lowest — the closest shared parent of both. In a family tree, the LCA of two cousins could be their common grandfather. The **diameter** is the longest path between any two nodes in the tree (counted in edges) — that path may or may not pass through the root. The **height** is the distance from the root to the deepest leaf, and a **balanced** tree is one where, for every node, the heights of its left and right subtrees differ by at most 1.
+
+All these problems share one pattern: a recursive function that returns two things at once — such as height and diameter, or whether the tree is balanced and its height. A student who tries to return only one value gets stuck; one who returns a tuple moves ahead.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Family Tree, File System aur Org Chart',
+          '2. Real-Life Examples: Family Tree, File System, and Org Chart'
+        ),
+        body: t(
+          `**Family tree** LCA ka sabse seedha example hai. Do cousins ka common ancestor dhoondhna hi LCA hai: pehle dono ke parents dekho, phir grandparents, jab tak common naam na mil jaaye. Jo common ancestor sabse neeche milega, wahi LCA hai. Genealogy apps isi logic se "aap dono kaise related ho" batate hain.
+
+**File system** mein diameter jaisa sawaal aata hai: do files ke beech ka sabse lamba path kitna hai? Backup tools aur file managers ko pata hona chahiye ki sabse gehra folder kitna gehra hai aur do files kitni door hain. Height batati hai ki folder kitna gehra hai, aur diameter batata hai ki do files ke beech maximum distance kitni hai.
+
+**Org chart** mein balanced check kaam aata hai: agar ek manager ke neeche 10 levels hain aur doosre ke neeche sirf 2, toh org unbalanced hai — ek manager par bahut load hai. Balanced tree mein kaam evenly distribute hota hai, isliye companies apni hierarchy ko balanced rakhne ki koshish karti hain. Tree views bhi yahan kaam aate hain: top view batata hai ki org ke top level par kaun dikhta hai.`,
+          `A **family tree** is the simplest example of LCA. Finding the common ancestor of two cousins is exactly LCA: look at both parents, then grandparents, until a common name appears. The lowest common ancestor you find is the LCA. Genealogy apps use this logic to tell you "how are you two related".
+
+In a **file system**, a diameter-like question appears: how long is the longest path between two files? Backup tools and file managers need to know how deep the deepest folder is and how far apart two files are. Height tells you how deep a folder is, and diameter tells you the maximum distance between two files.
+
+In an **org chart**, the balanced check matters: if one manager has 10 levels below them and another has only 2, the org is unbalanced — one manager carries too much load. In a balanced tree, work is spread evenly, which is why companies try to keep their hierarchy balanced. Tree views help here too: the top view shows who appears at the top level of the org.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: LCA aur Diameter ka Dry Run',
+          '3. Step-by-Step: Dry Run of LCA and Diameter'
+        ),
+        body: t(
+          `Hamara tree hai: root 1, uske left 2 aur right 3, aur 2 ke left 4 aur right 5. Tree dikhta hai aise: 1 ke neeche 2 aur 3, 2 ke neeche 4 aur 5.
+
+**LCA(4, 5) ka dry run:** root 1 par poochho — kya 1, 4 ya 5 hai? Nahi. Left subtree (2) mein jao, right subtree (3) mein jao. Left se answer aata hai 2 (kyunki 4 aur 5 dono 2 ke neeche hain), right se kuch nahi aata. Dono taraf se answer nahi aaya, isliye left wala answer hi LCA hai: **2**. **LCA(4, 3) ka dry run:** root 1 par left se 4 milta hai, right se 3 milta hai — dono taraf se answer aaya, isliye root hi LCA hai: **1**. Yahi LCA ka rule hai: agar left aur right dono se node mile, toh current node LCA hai; agar sirf ek taraf se mile, toh wahi answer upar bhejo.
+
+**Diameter ka dry run:** har node par diameter = left height + right height. Node 4 aur 5 par height 1, diameter 0. Node 2 par left height 1, right height 1, toh diameter = 2. Node 3 par diameter 0. Node 1 (root) par left height 2, right height 1, toh diameter = 3. Poore tree ka diameter in sab mein sabse bada hai: **3 edges** (4 -> 2 -> 1 -> 3). Dhyaan do: diameter root se hokar nahi bhi ja sakta — isliye har node par check karna padta hai. Neeche wala code LCA, height aur diameter — teeno print karta hai.`,
+          `Our tree is: root 1, with left 2 and right 3, and 2 has left 4 and right 5. It looks like this: 1 has 2 and 3 below it, and 2 has 4 and 5 below it.
+
+**Dry run of LCA(4, 5):** at root 1, ask — is 1 equal to 4 or 5? No. Go to the left subtree (2) and the right subtree (3). The left returns 2 (because both 4 and 5 sit under 2), and the right returns nothing. Only one side answered, so the left answer is the LCA: **2**. **Dry run of LCA(4, 3):** from the root, the left returns 4 and the right returns 3 — both sides answered, so the root itself is the LCA: **1**. That is the LCA rule: if both left and right return a node, the current node is the LCA; if only one side returns, pass that answer upward.
+
+**Dry run of diameter:** at every node, diameter = left height + right height. At nodes 4 and 5, height is 1 and diameter is 0. At node 2, left height is 1 and right height is 1, so diameter = 2. At node 3, diameter is 0. At node 1 (the root), left height is 2 and right height is 1, so diameter = 3. The diameter of the whole tree is the largest of all these: **3 edges** (4 -> 2 -> 1 -> 3). Notice: the diameter does not have to pass through the root — that is why you must check every node. The code below prints LCA, height, and diameter — all three.`
+        ),
+        code: {
+          title: t(
+            'LCA, Height aur Diameter: Ek Hi Tree par Teeno',
+            'LCA, Height, and Diameter: All Three on One Tree'
+          ),
+          language: 'python',
+          code: `class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+def lca(node, p, q):
+    if node is None or node.val in (p, q):
+        return node
+    left = lca(node.left, p, q)
+    right = lca(node.right, p, q)
+    if left and right:
+        return node
+    return left or right
+
+print("LCA of 4 and 5:", lca(root, 4, 5).val)
+print("LCA of 4 and 3:", lca(root, 4, 3).val)
+
+def height(node):
+    if node is None:
+        return 0
+    return 1 + max(height(node.left), height(node.right))
+
+print("height:", height(root))
+
+def diameter(node):
+    if node is None:
+        return (0, 0)
+    lh, ld = diameter(node.left)
+    rh, rd = diameter(node.right)
+    h = 1 + max(lh, rh)
+    d = max(ld, rd, lh + rh)
+    return (h, d)
+
+print("diameter (edges):", diameter(root)[1])`,
+          output: `LCA of 4 and 5: 2
+LCA of 4 and 3: 1
+height: 3
+diameter (edges): 3`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Diameter ko Height Samajhna aur LCA mein Ek Taraf Bhoolna',
+          '4. Common Mistakes: Confusing Diameter with Height and Forgetting One Side in LCA'
+        ),
+        body: t(
+          `**Galti 1: Diameter ko height samajh lena.** Height root se leaf tak ki distance hoti hai (hamare tree mein 3), diameter kisi bhi do nodes ke beech ka sabse lamba path hota hai (hamare tree mein 3 edges, par alag tree mein diameter height se bada bhi ho sakta hai). Dono ko nodes mein gin rahe ho ya edges mein, yeh bhi decide karo — interviewer aksar poochhta hai. Hamare code mein diameter edges mein hai: \`lh + rh\`, jahan lh aur rh heights hain.
+
+**Galti 2: LCA mein sirf ek taraf dekhna.** LCA ka code dono subtrees mein recurse karta hai. Agar aap sirf left mein dhoondho aur na mile toh right bhool jao, toh answer galat aayega. Rule yaad rakho: dono taraf se answer aaye toh current node LCA hai, ek taraf se aaye toh wahi answer upar bhejo, dono taraf se na aaye toh None bhejo.
+
+**Galti 3: Balanced check mein sirf root dekhna.** Tree balanced hai ya nahi, yeh sirf root par check karne se nahi pata chalta — har node par check karna padta hai. Ek tree root par balanced lag sakta hai par neeche kisi node par unbalanced ho sakta hai. Isliye \`is_balanced\` function tuple return karta hai: (balanced, height) — har node par dono check hote hain.
+
+**Galti 4: Serialization mein None bhoolna.** Tree ko string mein badalte waqt khaali (None) nodes ko bhi likhna padta hai, warna wapas tree banate waqt structure kho jaata hai. Jaise [1, 2, 3, None, None, 4, 5] mein None batata hai ki 2 ke children nahi hain.`,
+          `**Mistake 1: Confusing diameter with height.** Height is the distance from the root to a leaf (3 in our tree), while diameter is the longest path between any two nodes (3 edges in our tree, but in another tree the diameter can be larger than the height). Also decide whether you count in nodes or edges — interviewers often ask. In our code, diameter is in edges: \`lh + rh\`, where lh and rh are heights.
+
+**Mistake 2: Looking at only one side in LCA.** The LCA code recurses into both subtrees. If you search only the left and forget the right when nothing is found, the answer will be wrong. Remember the rule: if both sides return an answer, the current node is the LCA; if only one side returns, pass that answer up; if neither returns, pass None up.
+
+**Mistake 3: Checking balance only at the root.** Whether a tree is balanced cannot be decided by checking only the root — every node must be checked. A tree can look balanced at the root but be unbalanced at some node below. That is why the \`is_balanced\` function returns a tuple: (balanced, height) — both are checked at every node.
+
+**Mistake 4: Forgetting None in serialisation.** When turning a tree into a string, empty (None) nodes must also be written, or the structure is lost when you rebuild the tree. For example, in [1, 2, 3, None, None, 4, 5], the Nones show that 2 has no children.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Ek Node, Skewed Tree, Ek Node Missing aur Dono Nodes Ek Hi',
+          '5. Edge Cases: One Node, Skewed Tree, One Node Missing, and Both Nodes the Same'
+        ),
+        body: t(
+          `**1. Sirf ek node (root hi tree hai).** Height 1, diameter 0, balanced True. LCA(root, root) root hi hota hai. Yeh base case har recursive function mein handle hona chahiye.
+
+**2. Skewed tree (sirf left ya sirf right).** Jaise 1 -> 2 -> 3 -> 4 sirf left mein. Height 4, diameter 3, balanced False (kyunki har node par ek side ki height 0 hoti hai aur doosri badhti jaati hai). Skewed tree linked list jaisa behave karta hai — isiliye balanced tree important hai.
+
+**3. Ek node tree mein hai hi nahi.** LCA(4, 99) mein 99 tree mein nahi hai. Hamara simple code 4 ko hi return kar dega, kyunki woh sirf ek taraf ka answer upar bhejta hai. Sahi LCA code mein pehle check karna chahiye ki dono nodes tree mein hain ya nahi. Interview mein yeh edge case poochha jaata hai.
+
+**4. Dono nodes ek hi hon — LCA(4, 4).** Answer 4 hi hota hai, kyunki node khud ka ancestor hota hai. Hamare code mein \`node.val in (p, q)\` wali line yahi handle karti hai: node milte hi return kar do.
+
+**5. Khaali tree (root None).** Height 0, diameter 0, balanced True. Har function mein pehle \`if node is None\` check karo, warna \`None.val\` par error aayega.`,
+          `**1. Only one node (the root is the whole tree).** Height 1, diameter 0, balanced True. LCA(root, root) is the root itself. This base case must be handled in every recursive function.
+
+**2. Skewed tree (only left or only right).** For example, 1 -> 2 -> 3 -> 4 going only left. Height is 4, diameter is 3, and balanced is False (because at every node one side has height 0 while the other keeps growing). A skewed tree behaves like a linked list — that is why balanced trees matter.
+
+**3. One node is not in the tree at all.** In LCA(4, 99), 99 is not in the tree. Our simple code would return 4, because it just passes up the one-sided answer. Correct LCA code should first check that both nodes exist in the tree. Interviewers do ask about this edge case.
+
+**4. Both nodes are the same — LCA(4, 4).** The answer is 4 itself, because a node is its own ancestor. The line \`node.val in (p, q)\` in our code handles this: return as soon as the node is found.
+
+**5. Empty tree (root None).** Height 0, diameter 0, balanced True. Check \`if node is None\` first in every function, or you will get an error on \`None.val\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Tree Views, Serialization aur BST mein LCA',
+          '6. What-If: Tree Views, Serialisation, and LCA in a BST'
+        ),
+        body: t(
+          `**What if: top view chahiye?** Top view mein tree ko upar se dekhte hain: har horizontal distance (hd) par sirf pehla dikhai dene wala node aata hai. BFS karte waqt har node ka hd track karo (root 0, left -1, right +1) aur har hd par pehli baar dikha node hi rakho. Hamare tree ka top view hai [4, 2, 1, 3] — 4 hd -2 par, 2 hd -1 par, 1 hd 0 par, 3 hd +1 par. Left view mein har level ka pehla node aata hai: [1, 2, 4].
+
+**What if: tree ko save karna ho?** **Serialization** tree ko string ya list mein badalta hai, jaise [1, 2, 3, 4, 5], aur **deserialization** usse wapas tree banata hai. Level-order traversal karte waqt None ko bhi likho, taaki structure bach jaaye. Yeh technique tab kaam aati hai jab tree ko file ya network par bhejna ho.
+
+**What if: tree BST ho?** BST mein LCA bahut aasan ho jaata hai: root se shuru karo, agar dono nodes root se chhote hain toh left jao, dono bade hain toh right jao, warna root hi LCA hai. BST property ki wajah se poora tree traverse karne ki zaroorat nahi padti — sirf ek path par chalna padta hai, O(h) time mein.`,
+          `**What if you need the top view?** In the top view you look at the tree from above: for each horizontal distance (hd), only the first node you see counts. During BFS, track each node's hd (root 0, left -1, right +1) and keep only the first node seen at each hd. Our tree's top view is [4, 2, 1, 3] — 4 at hd -2, 2 at hd -1, 1 at hd 0, 3 at hd +1. In the left view, the first node of each level appears: [1, 2, 4].
+
+**What if you need to save the tree?** **Serialisation** turns a tree into a string or list, such as [1, 2, 3, 4, 5], and **deserialisation** rebuilds the tree from it. During level-order traversal, write None too, so the structure is preserved. This technique is used when a tree must be sent to a file or over a network.
+
+**What if the tree is a BST?** In a BST, LCA becomes very easy: start at the root; if both nodes are smaller than the root, go left; if both are larger, go right; otherwise the root is the LCA. Because of the BST property, you do not need to traverse the whole tree — you only walk one path, in O(h) time.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Advanced Trees se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Advanced Trees to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **LCA** do nodes ka sabse neeche wala common ancestor hota hai: dono taraf se answer aaye toh current node LCA hai, ek taraf se aaye toh wahi answer upar bhejo. **Diameter** har node par left height + right height ka maximum hota hai, aur yeh root se hokar ja bhi sakta hai aur nahi bhi. **Height** root se leaf tak ki distance hai, aur **balanced** tree mein har node par left aur right height ka farak 1 se zyada nahi hota.
+
+In sab problems ka pattern ek hai: recursion se **tuple return karo** — (height, diameter) ya (balanced, height) — taaki ek hi traversal mein dono answers mil jaayein. **Top view** BFS se horizontal distance track karke milta hai, **left view** har level ka pehla node hota hai, aur **serialization** tree ko None ke saath list mein badal kar save karta hai.
+
+Interview mein jab bhi "LCA", "diameter", "balanced" ya "view" suno, toh recursion + tuple pattern socho. Revision ke liye hamare tree (1, 2, 3, 4, 5) par LCA(4, 5), LCA(5, 3), height aur diameter khud trace karo. Agar chaaro jawab bina code dekhe aa jaayein, toh advanced trees aapko aa gaye hain.`,
+          `Let us tie the whole article together. The **LCA** of two nodes is their lowest common ancestor: if both sides return an answer, the current node is the LCA; if one side returns, pass that answer up. The **diameter** is the maximum of left height + right height over all nodes, and it may or may not pass through the root. The **height** is the distance from the root to a leaf, and in a **balanced** tree the left and right heights differ by at most 1 at every node.
+
+All these problems share one pattern: return a **tuple from recursion** — (height, diameter) or (balanced, height) — so one traversal gives both answers. The **top view** comes from tracking horizontal distance in BFS, the **left view** is the first node of each level, and **serialisation** saves a tree as a list including None.
+
+In an interview, whenever you hear "LCA", "diameter", "balanced", or "view", think recursion plus the tuple pattern. To revise, trace LCA(4, 5), LCA(5, 3), height, and diameter yourself on our tree (1, 2, 3, 4, 5). If you can answer all four without looking at the code, you know advanced trees.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Tree: 1 Root, 2-3 Children, 4-5 Grandchildren',
+        'Tree: Root 1, Children 2-3, Grandchildren 4-5'
+      ),
+      caption: t(
+        'LCA(4, 5) = 2, LCA(4, 3) = 1, diameter = 3 edges',
+        'LCA(4, 5) = 2, LCA(4, 3) = 1, diameter = 3 edges'
+      ),
+      nodes: [
+        { t: t('Root: 1', 'Root: 1'), s: t('Height 3, LCA(4, 3) = 1', 'Height 3, LCA(4, 3) = 1') },
+        { t: t('Left: 2', 'Left: 2'), s: t('LCA(4, 5) = 2', 'LCA(4, 5) = 2') },
+        { t: t('Right: 3', 'Right: 3'), s: t('Leaf, height 1', 'Leaf, height 1') },
+        { t: t('2 ka left: 4', 'Left of 2: 4'), s: t('Leaf, diameter path ka start', 'Leaf, start of the diameter path') },
+        { t: t('2 ka right: 5', 'Right of 2: 5'), s: t('Leaf', 'Leaf') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Balanced Check: Har Node par Height ka Farak Dekho', 'Balanced Check: Look at the Height Difference at Every Node'),
+        language: 'python',
+        code: `class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+def is_balanced(node):
+    if node is None:
+        return (True, 0)
+    lb, lh = is_balanced(node.left)
+    rb, rh = is_balanced(node.right)
+    return (lb and rb and abs(lh - rh) <= 1, 1 + max(lh, rh))
+
+def height(node):
+    if node is None:
+        return 0
+    return 1 + max(height(node.left), height(node.right))
+
+print("balanced:", is_balanced(root)[0])
+print("height of node 2:", height(root.left))`,
+        output: `balanced: True
+height of node 2: 2`
+      },
+      {
+        title: t('Top View: BFS se Horizontal Distance Track Karo', 'Top View: Track Horizontal Distance with BFS'),
+        language: 'python',
+        code: `from collections import deque
+
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+def top_view(node):
+    q = deque([(node, 0)])
+    seen = {}
+    while q:
+        n, hd = q.popleft()
+        if hd not in seen:
+            seen[hd] = n.val
+        if n.left:
+            q.append((n.left, hd - 1))
+        if n.right:
+            q.append((n.right, hd + 1))
+    return [seen[k] for k in sorted(seen)]
+
+print("top view:", top_view(root))`,
+        output: `top view: [4, 2, 1, 3]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Tree mein LCA(4, 5) kya hai, jahan 4 aur 5 dono node 2 ke children hain?',
+          'What is LCA(4, 5) in the tree, where 4 and 5 are both children of node 2?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('4', '4'),
+          t('5', '5')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 4 aur 5 dono 2 ke neeche hain, isliye unka sabse neeche wala common ancestor 2 hai — root 1 bhi common hai, par woh upar hai.',
+          'Correct answer: both 4 and 5 sit under 2, so their lowest common ancestor is 2 — the root 1 is also common, but it sits higher up.'
+        )
+      },
+      {
+        q: t(
+          'Diameter nikaalte waqt har node par kya calculate karte hain?',
+          'What do we calculate at every node when finding the diameter?'
+        ),
+        opts: [
+          t('Sirf height', 'Only the height'),
+          t('Left height + right height', 'Left height + right height'),
+          t('Left height - right height', 'Left height - right height'),
+          t('Nodes ki total ginti', 'The total count of nodes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: kisi node se hokar jaane wala sabse lamba path uske left height aur right height ka sum hota hai, aur poore tree ka diameter in sab mein sabse bada hota hai.',
+          'Correct answer: the longest path passing through a node is the sum of its left height and right height, and the diameter of the whole tree is the largest of these.'
+        )
+      },
+      {
+        q: t(
+          'Tree balanced kab kehlata hai?',
+          'When is a tree called balanced?'
+        ),
+        opts: [
+          t('Jab left aur right mein nodes ki ginti barabar ho', 'When the left and right have an equal number of nodes'),
+          t('Jab har node par left aur right height ka farak 1 se zyada na ho', 'When at every node the left and right heights differ by at most 1'),
+          t('Jab tree mein sirf left children hon', 'When the tree has only left children'),
+          t('Jab height 3 se kam ho', 'When the height is less than 3')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: balanced ka matlab hai har node par dono subtrees ki height mein farak 1 se zyada na ho — sirf root par check karna kaafi nahi hai.',
+          'Correct answer: balanced means that at every node the two subtree heights differ by at most 1 — checking only the root is not enough.'
+        )
+      },
+      {
+        q: t(
+          'Top view mein har horizontal distance par kaunsa node aata hai?',
+          'Which node appears for each horizontal distance in the top view?'
+        ),
+        opts: [
+          t('Sabse neeche wala node', 'The lowest node'),
+          t('Pehli baar dikhai dene wala (sabse upar wala) node', 'The first node seen (the topmost one)'),
+          t('Sabse bada value wala node', 'The node with the largest value'),
+          t('Aakhri level ka node', 'The node from the last level')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: top view mein upar se dekhte hain, isliye har horizontal distance par BFS mein pehli baar milne wala node hi dikhta hai, uske neeche wale chhup jaate hain.',
+          'Correct answer: in the top view you look from above, so for each horizontal distance only the first node met in BFS is visible, and the ones below it stay hidden.'
+        )
+      },
+      {
+        q: t(
+          'Serialization mein None ko kyun likhte hain?',
+          'Why do we write None in serialisation?'
+        ),
+        opts: [
+          t('Taaki string lambi lage', 'To make the string longer'),
+          t('Taaki tree ki structure wapas banate waqt bach jaaye', 'So the structure of the tree is preserved when rebuilding it'),
+          t('None likhna zaroori nahi hai', 'Writing None is not needed'),
+          t('Taaki height badh jaaye', 'To increase the height')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: None batata hai ki kisi node ka child nahi hai — bina None ke deserialization mein pata nahi chalega ki kaunsa node kiska child hai.',
+          'Correct answer: None shows that a node has no child — without None, deserialisation cannot tell which node is the child of which.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'LCA: dono taraf se answer aaye toh current node LCA hai, ek taraf se aaye toh wahi answer upar bhejo.',
+        'LCA: if both sides return an answer, the current node is the LCA; if one side returns, pass that answer up.'
+      ),
+      t(
+        'Diameter har node par left height + right height ka maximum hota hai.',
+        'The diameter is the maximum of left height + right height over all nodes.'
+      ),
+      t(
+        'Balanced tree mein har node par height ka farak 1 se zyada nahi hota.',
+        'In a balanced tree, the height difference at every node is at most 1.'
+      ),
+      t(
+        'Recursion se tuple return karo — (height, diameter) ya (balanced, height).',
+        'Return a tuple from recursion — (height, diameter) or (balanced, height).'
+      ),
+      t(
+        'Top view BFS se milta hai, serialization mein None likhna zaroori hai.',
+        'The top view comes from BFS, and writing None is essential in serialisation.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: LCA(5, 3), Diameter aur Height Nikaalo',
+        'Practice: Find LCA(5, 3), Diameter, and Height'
+      ),
+      task: t(
+        'Wahi tree (root 1, left 2, right 3, 2 ke children 4 aur 5) banao aur LCA(5, 3), diameter aur height print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Build the same tree (root 1, left 2, right 3, children of 2 are 4 and 5) and print LCA(5, 3), diameter, and height. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+def lca(node, p, q):
+    if node is None or node.val in (p, q):
+        return node
+    left = lca(node.left, p, q)
+    right = lca(node.right, p, q)
+    if left and right:
+        return node
+    return left or right
+
+def height(node):
+    if node is None:
+        return 0
+    return 1 + max(height(node.left), height(node.right))
+
+def diameter(node):
+    if node is None:
+        return (0, 0)
+    lh, ld = diameter(node.left)
+    rh, rd = diameter(node.right)
+    h = 1 + max(lh, rh)
+    d = max(ld, rd, lh + rh)
+    return (h, d)
+
+print("LCA of 5 and 3:", lca(root, 5, 3).val)
+print("diameter (edges):", diameter(root)[1])
+print("height:", height(root))`,
+      expected: `LCA of 5 and 3: 1
+diameter (edges): 3
+height: 3`
+    },
+    readMinutes: 12
+  };
+
+const dsaStackAdvanced: Article = {
+    id: 'dsa-stack-advanced',
+    subjectId: 'dsa',
+    title: t(
+      'Monotonic Stack — Next Greater Element, Stock Span aur Largest Rectangle',
+      'Monotonic Stack — Next Greater Element, Stock Span, and Largest Rectangle'
+    ),
+    summary: t(
+      'Monotonic stack ko zero se samjho: stack mein elements ko increasing ya decreasing order mein kaise rakhte hain, next greater element O(n) mein kaise nikalta hai, stock span problem kaise hal hoti hai, aur largest rectangle in histogram kaise banta hai.',
+      'Learn monotonic stacks from scratch: how to keep elements in increasing or decreasing order in a stack, how the next greater element comes out in O(n), how the stock span problem is solved, and how the largest rectangle in a histogram is found.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Monotonic Stack Kya Hai? (Increasing ya Decreasing Order wala Stack)',
+          '1. What Is a Monotonic Stack? (A Stack in Increasing or Decreasing Order)'
+        ),
+        body: t(
+          `Normal stack mein aap kuch bhi push kar sakte ho, koi order nahi hota. **Monotonic stack** mein ek rule hota hai: stack ke andar elements hamesha ek hi order mein rehte hain — ya toh increasing (neeche se upar badhte hue) ya decreasing (neeche se upar ghat te hue). Naya element push karne se pehle woh elements pop kar diye jaate hain jo rule todte hain. Isi liye iska naam monotonic hai — stack ka order kabhi ulta nahi hota.
+
+Monotonic stack ka use tab hota hai jab har element ke liye uska **paas wala bada ya chhota** element dhoondhna ho. Jaise "har element ka next greater element kya hai?" — normal tareeke se har element ke liye aage scan karna O(n^2) hota hai, par monotonic stack se ek hi pass mein O(n) mein ho jaata hai. Kyunki har element sirf ek baar push aur ek baar pop hota hai, total kaam O(n) hi rehta hai.
+
+Do tarah ke monotonic stack hote hain: **decreasing stack** (upar se neeche ghat ta hua) next greater element ke liye, aur **increasing stack** (upar se neeche badhta hua) next smaller element ke liye. Kaunsa use karna hai, yeh problem batati hai: "greater" chahiye toh decreasing stack, "smaller" chahiye toh increasing stack. Yeh ulta lag sakta hai, isliye dry run se yaad karo, ratto mat.`,
+          `In a normal stack you can push anything, with no order at all. A **monotonic stack** follows one rule: the elements inside the stack always stay in one order — either increasing (growing from bottom to top) or decreasing (shrinking from bottom to top). Before pushing a new element, you pop the elements that break the rule. That is why it is called monotonic — the order of the stack never flips.
+
+A monotonic stack is used when you need the **nearest larger or smaller** element for every element. For example, "what is the next greater element of each element?" — scanning forward for every element the normal way costs O(n^2), but a monotonic stack does it in O(n) in a single pass. Because every element is pushed once and popped once, the total work stays O(n).
+
+There are two kinds of monotonic stack: a **decreasing stack** (shrinking from bottom to top) for the next greater element, and an **increasing stack** (growing from bottom to top) for the next smaller element. Which one to use depends on the problem: if you need "greater", use a decreasing stack; if you need "smaller", use an increasing stack. That can feel backwards, so remember it from the dry run, not by memorising it.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Stock Price, Building Skyline aur Daily Temperatures',
+          '2. Real-Life Examples: Stock Price, Building Skyline, and Daily Temperatures'
+        ),
+        body: t(
+          `**Stock price** monotonic stack ka sabse famous example hai. Har din ka price diya hai, aur poochha hai ki har din ke baad kitne din tak price usse zyada nahi hua — yahi **stock span** hai. Trader ko yeh jaanna hota hai ki kisi din ka price kitne din tak sabse zyada raha. Stack mein pichle dinon ke prices decreasing order mein rakho, aur naya price aate hi chhote prices ko pop kar do — jo bachta hai, wahi span batata hai.
+
+Doosra example hai **building skyline**. Sheher mein buildings ki heights di hain, aur poochha hai ki sabse bada rectangle kitna ban sakta hai — yahi **largest rectangle in histogram** hai. Har building ke liye uski height tak ka rectangle tab tak fail sakta hai jab tak usse chhoti building na aa jaaye. Monotonic stack har building ke left aur right mein pehli chhoti building dhoondhta hai, aur wahi rectangle ki width batata hai.
+
+Teesra example hai **daily temperatures**: har din ke liye kitne din baad temperature zyada hoga? Yeh next greater element ka hi roop hai. Weather app isi logic se batata hai ki "3 din baad garmi badhegi". Jab bhi problem mein "next greater/smaller" ya "kitne din tak" jaisa sawaal ho, toh monotonic stack socho.`,
+          `**Stock price** is the most famous example of a monotonic stack. You are given the price for each day and asked how many days the price stayed at or below that day's price — that is the **stock span**. A trader wants to know how many days a given day's price remained the highest. Keep the previous days' prices in a decreasing stack, and when a new price arrives, pop the smaller prices — what remains tells you the span.
+
+A second example is a **building skyline**. You are given the heights of buildings and asked how large a rectangle can be formed — that is the **largest rectangle in a histogram**. The rectangle at any building's height can spread until a shorter building appears. A monotonic stack finds the first shorter building on the left and right of every building, and that gives the width of the rectangle.
+
+A third example is **daily temperatures**: for each day, how many days later will the temperature be higher? That is just the next greater element in another form. A weather app uses this logic to say "the heat will rise in 3 days". Whenever a problem asks "next greater/smaller" or "for how many days", think monotonic stack.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Next Greater Element ka Dry Run',
+          '3. Step-by-Step: Dry Run of Next Greater Element'
+        ),
+        body: t(
+          `Ab hum \`[4, 5, 2, 25, 7, 8]\` ka next greater element (NGE) nikaalte hain. NGE ka matlab hai: har element ke right mein pehla element jo usse bada ho; agar koi bada na ho toh -1. Stack mein hum **indices** store karte hain, values nahi — kyunki answer ko sahi position par likhna hota hai. Stack decreasing order mein rahega: neeche se upar values ghat ti hui.
+
+**i=0, x=4:** stack khaali hai, 0 push karo. Stack: [0].
+**i=1, x=5:** stack ke top par 0 hai, \`nums[0] = 4 < 5\`, toh pop karo aur \`res[0] = 5\` likho. Stack khaali ho gaya, 1 push karo. Stack: [1].
+**i=2, x=2:** top 1 hai, \`nums[1] = 5 < 2\` nahi hai, toh pop nahi karo. 2 push karo. Stack: [1, 2].
+**i=3, x=25:** top 2 hai, \`nums[2] = 2 < 25\`, pop karo, \`res[2] = 25\`. Top 1 hai, \`nums[1] = 5 < 25\`, pop karo, \`res[1] = 25\`. Stack khaali, 3 push karo. Stack: [3].
+**i=4, x=7:** top 3 hai, \`nums[3] = 25 < 7\` nahi hai, 4 push karo. Stack: [3, 4].
+**i=5, x=8:** top 4 hai, \`nums[4] = 7 < 8\`, pop karo, \`res[4] = 8\`. Top 3 hai, 25 < 8 nahi hai, 5 push karo. Stack: [3, 5].
+
+End mein stack mein bache indices 3 aur 5 ka NGE -1 rehta hai (pehle se set tha). Final answer: **[5, 25, 25, -1, 8, -1]**. Har element ek baar push aur ek baar pop hua, isliye total O(n) time laga. Neeche wala code yahi algorithm chalata hai.`,
+          `Now let us find the next greater element (NGE) of \`[4, 5, 2, 25, 7, 8]\`. The NGE of an element is the first element to its right that is larger than it; if there is none, the answer is -1. The stack stores **indices**, not values — because each answer must be written at the right position. The stack stays in decreasing order: values shrink from bottom to top.
+
+**i=0, x=4:** the stack is empty, so push 0. Stack: [0].
+**i=1, x=5:** the top is 0, and \`nums[0] = 4 < 5\`, so pop it and write \`res[0] = 5\`. The stack is empty, so push 1. Stack: [1].
+**i=2, x=2:** the top is 1, and \`nums[1] = 5 < 2\` is false, so do not pop. Push 2. Stack: [1, 2].
+**i=3, x=25:** the top is 2, and \`nums[2] = 2 < 25\`, so pop it and write \`res[2] = 25\`. The top is 1, and \`nums[1] = 5 < 25\`, so pop it and write \`res[1] = 25\`. The stack is empty, so push 3. Stack: [3].
+**i=4, x=7:** the top is 3, and \`nums[3] = 25 < 7\` is false, so push 4. Stack: [3, 4].
+**i=5, x=8:** the top is 4, and \`nums[4] = 7 < 8\`, so pop it and write \`res[4] = 8\`. The top is 3, and 25 < 8 is false, so push 5. Stack: [3, 5].
+
+At the end, the indices left in the stack, 3 and 5, keep their NGE of -1 (set at the start). The final answer is **[5, 25, 25, -1, 8, -1]**. Every element was pushed once and popped once, so the total time is O(n). The code below runs this exact algorithm.`
+        ),
+        code: {
+          title: t(
+            'Next Greater Element: Monotonic Stack se O(n) mein',
+            'Next Greater Element: O(n) with a Monotonic Stack'
+          ),
+          language: 'python',
+          code: `def next_greater(nums):
+    res = [-1] * len(nums)
+    stack = []
+    for i, x in enumerate(nums):
+        while stack and nums[stack[-1]] < x:
+            res[stack.pop()] = x
+        stack.append(i)
+    return res
+
+print("next greater:", next_greater([4, 5, 2, 25, 7, 8]))`,
+          output: `next greater: [5, 25, 25, -1, 8, -1]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Values ki Jagah Index, Barabar Values aur Warm-up ke Bina Shuru Karna',
+          '4. Common Mistakes: Values Instead of Indices, Equal Values, and Starting Without a Warm-up'
+        ),
+        body: t(
+          `**Galti 1: Stack mein values store karna, indices nahi.** NGE mein answer ko sahi position par likhna hota hai — \`res[i]\` — isliye stack mein index chahiye, value nahi. Value store karoge toh pata hi nahi chalega ki answer kis position par likhna hai. Stock span mein bhi index chahiye, kyunki span \`i - stack[-1]\` se nikalta hai.
+
+**Galti 2: Barabar values par galat comparison.** NGE mein condition hai \`nums[stack[-1]] < x\` (strictly chhota). Agar aap \`<= \` use kar do, toh barabar values bhi pop ho jaayengi aur answer galat aayega. Stock span mein ulta hai: condition hai \`prices[stack[-1]] <= p\`, kyunki span mein barabar price bhi count hota hai. Har problem mein socho ki barabar value pop honi chahiye ya nahi — yahi sabse common bug hai.
+
+**Galti 3: Valid parentheses ko monotonic stack samajhna.** Valid parentheses bhi stack se hal hota hai, par woh monotonic stack nahi hai — usmein koi order rule nahi hota, sirf matching hota hai. Dono ko confuse mat karo. Valid parentheses warm-up hai: stack ka basic use samajhne ke liye, monotonic stack uska advanced use hai.
+
+**Galti 4: Stack ko end mein khaali karna bhoolna.** Largest rectangle mein aakhri mein ek dummy 0 add karte hain, taaki stack mein bache hue elements bhi process ho jaayein. Bina dummy ke aakhri buildings ka rectangle kabhi calculate hi nahi hoga.`,
+          `**Mistake 1: Storing values in the stack instead of indices.** In NGE, the answer must be written at the right position — \`res[i]\` — so the stack needs the index, not the value. If you store the value, you will not know where to write the answer. Stock span also needs the index, because the span comes from \`i - stack[-1]\`.
+
+**Mistake 2: Wrong comparison for equal values.** In NGE the condition is \`nums[stack[-1]] < x\` (strictly smaller). If you use \`<= \`, equal values will also be popped and the answer will be wrong. In stock span it is the opposite: the condition is \`prices[stack[-1]] <= p\`, because an equal price also counts in the span. In every problem, think about whether an equal value should be popped — that is the most common bug.
+
+**Mistake 3: Treating valid parentheses as a monotonic stack.** Valid parentheses is also solved with a stack, but it is not a monotonic stack — there is no order rule there, only matching. Do not confuse the two. Valid parentheses is a warm-up: it teaches the basic use of a stack, while a monotonic stack is the advanced use.
+
+**Mistake 4: Forgetting to empty the stack at the end.** In the largest rectangle problem, a dummy 0 is added at the end so the elements left in the stack also get processed. Without the dummy, the rectangles of the last buildings would never be calculated.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali List, Ek Element, Sab Barabar aur Decreasing Array',
+          '5. Edge Cases: Empty List, One Element, All Equal, and Decreasing Array'
+        ),
+        body: t(
+          `**1. Khaali list.** \`next_greater([])\` khaali list deta hai, koi error nahi. Loop ek baar bhi nahi chalta. Yeh safe hai, par code mein check karna achha hota hai.
+
+**2. Sirf ek element.** \`next_greater([5])\` deta hai \`[-1]\`, kyunki uske right mein kuch nahi hai. Stock span \`[1]\` deta hai, kyunki span kam se kam 1 hota hai (khud ka din).
+
+**3. Sab values barabar — [3, 3, 3].** NGE mein \`<\` condition ki wajah se koi pop nahi hota, isliye answer \`[-1, -1, -1]\` aata hai. Stock span mein \`<= \` ki wajah se har baar pop hota hai aur span \`[1, 2, 3]\` aata hai. Yahi farak dono problems ka hai — comparison operator hi answer badal deta hai.
+
+**4. Decreasing array — [5, 4, 3, 2, 1].** Kisi ka bhi next greater nahi hai, isliye answer \`[-1, -1, -1, -1, -1]\` aata hai aur stack mein saare indices bach jaate hain. Stock span \`[1, 1, 1, 1, 1]\` aata hai, kyunki har din ka price pichle din se kam hai.
+
+**5. Increasing array — [1, 2, 3, 4, 5].** Har element ka NGE agla element hai: \`[2, 3, 4, 5, -1]\`. Stack mein kabhi ek se zyada element nahi bachta, kyunki har naya element pichle ko pop kar deta hai.`,
+          `**1. Empty list.** \`next_greater([])\` returns an empty list, with no error. The loop never runs. That is safe, but checking for it in code is good practice.
+
+**2. Only one element.** \`next_greater([5])\` gives \`[-1]\`, because there is nothing to its right. Stock span gives \`[1]\`, because the span is at least 1 (the day itself).
+
+**3. All values equal — [3, 3, 3].** In NGE, the \`<\` condition means nothing is popped, so the answer is \`[-1, -1, -1]\`. In stock span, the \`<= \` condition pops every time, so the span is \`[1, 2, 3]\`. That difference is what separates the two problems — the comparison operator alone changes the answer.
+
+**4. Decreasing array — [5, 4, 3, 2, 1].** Nothing has a next greater element, so the answer is \`[-1, -1, -1, -1, -1]\` and all indices stay in the stack. Stock span gives \`[1, 1, 1, 1, 1]\`, because each day's price is lower than the previous day.
+
+**5. Increasing array — [1, 2, 3, 4, 5].** Every element's NGE is the next element: \`[2, 3, 4, 5, -1]\`. The stack never holds more than one element, because each new element pops the previous one.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Stock Span, Largest Rectangle aur Valid Parentheses',
+          '6. What-If: Stock Span, Largest Rectangle, and Valid Parentheses'
+        ),
+        body: t(
+          `**What if: stock span nikaalna ho?** Prices \`[100, 80, 60, 70, 60, 75, 85]\` hain. Har din ke liye span woh din hain jab tak price us din se zyada nahi hua. Stack mein indices decreasing order mein rakho aur \`<= \` se pop karo. Answer aata hai \`[1, 1, 1, 2, 1, 4, 6]\` — aakhri din 85 ka span 6 hai, kyunki usse pehle 6 dinon mein koi price 85 se zyada nahi tha (sirf 100 zyada tha, jo 6 din pehle tha). Neeche wala code yahi dikhata hai.
+
+**What if: largest rectangle nikaalna ho?** Heights \`[2, 1, 5, 6, 2, 3]\` hain. Har bar (building) ke liye rectangle ki height uski khud ki height hoti hai, aur width tab tak failti hai jab tak chhoti building na aa jaaye. Stack increasing order mein rakho; jab chhoti height aaye, toh badi heights ko pop karke unka area nikaalo. Sabse bada area **10** aata hai (heights 5 aur 6, width 2). Aakhri mein dummy 0 add karna mat bhoolo.
+
+**What if: valid parentheses check karna ho (warm-up)?** String "()[]{}" mein har opening bracket ko stack mein daalo, aur closing bracket aane par top ko check karo — match hua toh pop karo, nahi toh False. End mein stack khaali hona chahiye. "([)]" mein False aata hai, kyunki "(" ke baad "]" aaya. Yeh monotonic nahi hai, par stack ki pehchan ke liye best warm-up hai.`,
+          `**What if you need the stock span?** The prices are \`[100, 80, 60, 70, 60, 75, 85]\`. For each day, the span is the number of days the price did not go above that day's price. Keep indices in a decreasing stack and pop with \`<= \`. The answer is \`[1, 1, 1, 2, 1, 4, 6]\` — the last day, 85, has a span of 6, because no price in the previous 6 days was higher than 85 (only 100 was higher, 6 days earlier). The code below shows this.
+
+**What if you need the largest rectangle?** The heights are \`[2, 1, 5, 6, 2, 3]\`. For each bar (building), the rectangle's height is its own height, and its width spreads until a shorter building appears. Keep the stack in increasing order; when a shorter height arrives, pop the taller heights and compute their areas. The largest area is **10** (heights 5 and 6, width 2). Do not forget to add the dummy 0 at the end.
+
+**What if you need to check valid parentheses (warm-up)?** In the string "()[]{}", push every opening bracket onto the stack, and when a closing bracket arrives, check the top — if it matches, pop it; if not, return False. At the end the stack must be empty. "([)]" gives False, because "(" is followed by "]". This is not monotonic, but it is the best warm-up for recognising how a stack works.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Monotonic Stack se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Monotonic Stack to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Monotonic stack** mein elements hamesha ek order mein rehte hain — increasing ya decreasing — aur naya element push karne se pehle rule todne wale elements pop ho jaate hain. Har element sirf ek baar push aur ek baar pop hota hai, isliye **saare monotonic stack problems O(n)** mein hote hain, jabki brute force O(n^2) hota hai.
+
+**Next greater element** ke liye decreasing stack use karo aur \`<\` se pop karo. **Stock span** ke liye bhi decreasing stack, par \`<= \` se pop karo — barabar price bhi span mein count hota hai. **Largest rectangle** ke liye increasing stack use karo aur aakhri mein dummy 0 add karo. **Valid parentheses** monotonic nahi hai, par stack ka best warm-up hai.
+
+Interview mein jab bhi "next greater", "next smaller", "stock span", "kitne din tak" ya "largest rectangle" suno, toh monotonic stack socho. Revision ke liye \`[4, 5, 2, 25, 7, 8]\` ka dry run khud karo: har step par stack kya hoga aur answer kab likha jaayega. Agar poora dry run bina code dekhe ho jaaye, toh monotonic stack aapko aa gaya hai.`,
+          `Let us tie the whole article together. In a **monotonic stack**, elements always stay in one order — increasing or decreasing — and before pushing a new element, the ones that break the rule are popped. Every element is pushed once and popped once, so **all monotonic stack problems run in O(n)**, while brute force takes O(n^2).
+
+For the **next greater element**, use a decreasing stack and pop with \`<\`. For **stock span**, also use a decreasing stack, but pop with \`<= \` — an equal price also counts in the span. For the **largest rectangle**, use an increasing stack and add a dummy 0 at the end. **Valid parentheses** is not monotonic, but it is the best warm-up for stacks.
+
+In an interview, whenever you hear "next greater", "next smaller", "stock span", "for how many days", or "largest rectangle", think monotonic stack. To revise, dry-run \`[4, 5, 2, 25, 7, 8]\` yourself: what is the stack at each step, and when is each answer written? If the whole dry run works without looking at the code, you know monotonic stacks.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'Largest Rectangle: Heights [2, 1, 5, 6, 2, 3]',
+        'Largest Rectangle: Heights [2, 1, 5, 6, 2, 3]'
+      ),
+      caption: t(
+        'Sabse bada rectangle heights 5 aur 6 se banta hai, area 10',
+        'The largest rectangle comes from heights 5 and 6, area 10'
+      ),
+      nodes: [],
+      bars: [
+        { label: t('Height 2', 'Height 2'), value: 33 },
+        { label: t('Height 1', 'Height 1'), value: 17 },
+        { label: t('Height 5', 'Height 5'), value: 83 },
+        { label: t('Height 6', 'Height 6'), value: 100 },
+        { label: t('Height 2', 'Height 2'), value: 33 },
+        { label: t('Height 3', 'Height 3'), value: 50 }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Stock Span: Har Din ka Span Nikaalo', 'Stock Span: Find the Span of Each Day'),
+        language: 'python',
+        code: `def stock_span(prices):
+    span = []
+    stack = []
+    for i, p in enumerate(prices):
+        while stack and prices[stack[-1]] <= p:
+            stack.pop()
+        span.append(i - stack[-1] if stack else i + 1)
+        stack.append(i)
+    return span
+
+print("stock span:", stock_span([100, 80, 60, 70, 60, 75, 85]))`,
+        output: `stock span: [1, 1, 1, 2, 1, 4, 6]`
+      },
+      {
+        title: t('Valid Parentheses (Warm-up): Stack se Brackets Match Karo', 'Valid Parentheses (Warm-up): Match Brackets with a Stack'),
+        language: 'python',
+        code: `def valid(s):
+    stack = []
+    pairs = {")": "(", "]": "[", "}": "{"}
+    for ch in s:
+        if ch in "([{":
+            stack.append(ch)
+        elif not stack or stack.pop() != pairs[ch]:
+            return False
+    return not stack
+
+print("valid ()[]{}:", valid("()[]{}"))
+print("valid ([)]:", valid("([)]"))
+print("valid ((())):", valid("((()))"))`,
+        output: `valid ()[]{}: True
+valid ([)]: False
+valid ((())): True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Monotonic stack mein har element kitni baar push aur pop hota hai?',
+          'How many times is each element pushed and popped in a monotonic stack?'
+        ),
+        opts: [
+          t('Ek baar push, ek baar pop — total O(n)', 'Once pushed, once popped — total O(n)'),
+          t('Har baar push, kabhi pop nahi', 'Pushed every time, never popped'),
+          t('n baar push, n baar pop', 'Pushed n times, popped n times'),
+          t('Sirf ek baar push', 'Only pushed once')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: har element stack mein ek hi baar aata hai aur ek hi baar nikalta hai, isliye poora algorithm O(n) mein chalta hai, brute force ke O(n^2) ki jagah.',
+          'Correct answer: every element enters the stack once and leaves once, so the whole algorithm runs in O(n), instead of the brute force O(n^2).'
+        )
+      },
+      {
+        q: t(
+          '[4, 5, 2, 25, 7, 8] mein 5 ka next greater element kya hai?',
+          'In [4, 5, 2, 25, 7, 8], what is the next greater element of 5?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('25', '25'),
+          t('7', '7'),
+          t('-1', '-1')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 5 ke right mein pehla usse bada element 25 hai (2 chhota hai, isliye skip hota hai) — isliye NGE 25 hai.',
+          'Correct answer: the first element to the right of 5 that is larger than it is 25 (2 is smaller, so it is skipped) — so the NGE is 25.'
+        )
+      },
+      {
+        q: t(
+          'Next greater element ke liye kaunsa stack use hota hai?',
+          'Which stack is used for the next greater element?'
+        ),
+        opts: [
+          t('Increasing stack', 'Increasing stack'),
+          t('Decreasing stack', 'Decreasing stack'),
+          t('Normal stack, koi order nahi', 'Normal stack, no order'),
+          t('Queue', 'Queue')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: decreasing stack mein top par hamesha chhota element hota hai, isliye naya bada element aate hi chhote elements pop hote hain aur unka NGE mil jaata hai.',
+          'Correct answer: in a decreasing stack the top always holds a smaller element, so when a new larger element arrives, the smaller elements are popped and their NGE is found.'
+        )
+      },
+      {
+        q: t(
+          'Stock span mein barabar price ko pop kyun karte hain (<=)?',
+          'Why do we pop an equal price in stock span (<=)?'
+        ),
+        opts: [
+          t('Kyunki barabar price bhi span mein count hota hai', 'Because an equal price also counts in the span'),
+          t('Kyunki stack khaali karna hota hai', 'Because the stack must be emptied'),
+          t('Kyunki price galat hai', 'Because the price is wrong'),
+          t('Pop nahi karte, sirf dekhte hain', 'We do not pop, we only look')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: span woh din gin ta hai jab tak price us din se zyada nahi hua — barabar price zyada nahi hai, isliye woh bhi span mein aata hai, aur NGE mein iske ulta < use hota hai.',
+          'Correct answer: the span counts the days until the price went above that day — an equal price is not above it, so it also counts in the span, while NGE uses < for the opposite reason.'
+        )
+      },
+      {
+        q: t(
+          'Largest rectangle mein aakhri mein dummy 0 kyun add karte hain?',
+          'Why do we add a dummy 0 at the end in the largest rectangle problem?'
+        ),
+        opts: [
+          t('Taaki stack mein bache elements bhi process ho jaayein', 'So the elements left in the stack also get processed'),
+          t('Taaki area 0 ho jaaye', 'To make the area 0'),
+          t('Taaki heights badh jaayein', 'To increase the heights'),
+          t('Dummy ki zaroorat nahi hoti', 'No dummy is needed')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: dummy 0 sabse chhota hota hai, isliye woh stack ke saare bache hue bars ko pop karwa deta hai aur unke rectangles calculate ho jaate hain.',
+          'Correct answer: the dummy 0 is the smallest, so it forces all the remaining bars in the stack to pop, and their rectangles get calculated.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Monotonic stack mein elements hamesha ek order mein rehte hain — increasing ya decreasing.',
+        'In a monotonic stack, elements always stay in one order — increasing or decreasing.'
+      ),
+      t(
+        'Har element ek baar push aur ek baar pop hota hai, isliye total O(n) hota hai.',
+        'Every element is pushed once and popped once, so the total is O(n).'
+      ),
+      t(
+        'Next greater ke liye decreasing stack aur < use karo; stock span mein <= use karo.',
+        'For next greater, use a decreasing stack and <; in stock span, use <=.'
+      ),
+      t(
+        'Largest rectangle mein aakhri mein dummy 0 add karo, taaki stack khaali ho jaaye.',
+        'In the largest rectangle, add a dummy 0 at the end so the stack empties.'
+      ),
+      t(
+        'Stack mein values nahi, indices store karo — answer ko sahi position par likhna hota hai.',
+        'Store indices in the stack, not values — the answer must be written at the right position.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Largest Rectangle in Histogram Nikaalo',
+        'Practice: Find the Largest Rectangle in a Histogram'
+      ),
+      task: t(
+        'Heights [2, 1, 5, 6, 2, 3] ke liye largest rectangle ka area nikaalo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai (answer 10 hona chahiye).',
+        'Find the area of the largest rectangle for heights [2, 1, 5, 6, 2, 3]. The starter code is complete and runnable — run it and verify the output matches the expected output (the answer should be 10).'
+      ),
+      language: 'python',
+      starter: `def largest_rectangle(heights):
+    stack = []
+    best = 0
+    for i, h in enumerate(heights + [0]):
+        while stack and heights[stack[-1]] > h:
+            height_v = heights[stack.pop()]
+            width = i if not stack else i - stack[-1] - 1
+            best = max(best, height_v * width)
+        stack.append(i)
+    return best
+
+print("largest rectangle [2,1,5,6,2,3]:", largest_rectangle([2, 1, 5, 6, 2, 3]))`,
+      expected: `largest rectangle [2,1,5,6,2,3]: 10`
+    },
+    readMinutes: 12
+  };
+
+const dsaQueueDeque: Article = {
+    id: 'dsa-queue-deque',
+    subjectId: 'dsa',
+    title: t(
+      'Deque & LRU Cache — Deque Operations, Sliding Window Maximum aur LRU Cache',
+      'Deque & LRU Cache — Deque Operations, Sliding Window Maximum, and LRU Cache'
+    ),
+    summary: t(
+      'Deque aur LRU cache ko zero se samjho: deque mein dono taraf se insert aur delete O(1) mein kaise hote hain, sliding window maximum deque se O(n) mein kaise nikalta hai, aur LRU cache dict + doubly linked list (OrderedDict) se kaise kaam karta hai.',
+      'Learn deques and LRU cache from scratch: how a deque inserts and deletes from both ends in O(1), how the sliding window maximum comes out in O(n) with a deque, and how an LRU cache works with a dict plus a doubly linked list (OrderedDict).'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Deque Kya Hai? (Double-Ended Queue aur Dono Taraf se O(1))',
+          '1. What Is a Deque? (Double-Ended Queue, O(1) from Both Ends)'
+        ),
+        body: t(
+          `**Deque** (double-ended queue) ek aisi queue hai jismein aap dono taraf se elements daal aur nikaal sakte ho: aage se bhi aur peeche se bhi. Normal queue mein sirf peeche se daalo aur aage se nikaalo (FIFO). Stack mein sirf ek taraf se daalo aur nikaalo (LIFO). Deque mein dono taraf ki freedom hoti hai — isliye iska naam double-ended hai.
+
+Python mein \`collections.deque\` use hota hai: \`append\` peeche daalta hai, \`appendleft\` aage daalta hai, \`pop\` peeche se nikaalta hai, \`popleft\` aage se nikaalta hai — chaaro **O(1)** hote hain. List se farak samjho: list mein \`pop(0)\` O(n) hota hai, kyunki saare elements ko shift karna padta hai, par deque mein \`popleft\` O(1) hota hai. Isi liye jab bhi aage se baar-baar nikaalna ho, toh list ki jagah deque use karo.
+
+Deque ka sabse bada use **sliding window** problems mein hai, jahan window aage badhti hai aur purane elements ko aage se nikaalna hota hai. Aur deque ka doosra bada use **LRU cache** mein hai, jahan sabse purana use hua element aage se nikalta hai. Dono mein deque ki dono taraf wali taakat kaam aati hai.`,
+          `A **deque** (double-ended queue) is a queue where you can add and remove elements from both ends: from the front and from the back. In a normal queue you only add at the back and remove from the front (FIFO). In a stack you only add and remove from one end (LIFO). A deque gives you freedom on both ends — hence the name double-ended.
+
+In Python, \`collections.deque\` is used: \`append\` adds at the back, \`appendleft\` adds at the front, \`pop\` removes from the back, and \`popleft\` removes from the front — all four are **O(1)**. Compare with a list: \`pop(0)\` on a list is O(n), because all elements must shift, but \`popleft\` on a deque is O(1). That is why, whenever you repeatedly remove from the front, you should use a deque instead of a list.
+
+The biggest use of a deque is in **sliding window** problems, where the window moves forward and old elements must be removed from the front. Its second big use is in an **LRU cache**, where the least recently used element leaves from the front. Both uses rely on the deque's power on both ends.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Browser History, Undo aur Cache',
+          '2. Real-Life Examples: Browser History, Undo, and Cache'
+        ),
+        body: t(
+          `**Browser history** deque jaisa kaam karta hai: naya page peeche judta hai, back button aage se nikaalta hai. Aap aage bhi ja sakte ho aur peeche bhi — dono taraf movement hoti hai. Isi liye browser history ko deque se model karte hain.
+
+Doosra example hai **undo/redo**. Text editor mein undo karne par aakhri action wapas hota hai, redo karne par phir se aage badhte hain. Dono taraf ki movement deque ki tarah hai. Kuch editors mein undo history ki limit hoti hai — purane actions aage se nikal jaate hain, naye peeche judte hain.
+
+Teesra example hai **cache** — phone aur computer ki memory. Cache mein jagah kam hoti hai, isliye jab naya data aata hai toh sabse purana data nikalna padta hai. Yeh **LRU (Least Recently Used)** policy hai: jo data sabse lambe time se use nahi hua, use pehle nikaalo. Browser bhi visited pages ko cache karta hai, aur jab cache bhar jaata hai toh sabse purana page nikal jaata hai. Interview mein LRU sabse zyada poochha jaane wala design problem hai.`,
+          `**Browser history** works like a deque: a new page joins at the back, and the back button removes from the front. You can move forward and backward — movement happens on both ends. That is why browser history is modelled with a deque.
+
+A second example is **undo/redo**. In a text editor, undo takes back the last action, and redo moves forward again. That two-way movement is like a deque. Some editors limit the undo history — old actions leave from the front while new ones join at the back.
+
+A third example is a **cache** — the memory of a phone or computer. A cache has little space, so when new data arrives, the oldest data must leave. That is the **LRU (Least Recently Used)** policy: remove the data that has not been used for the longest time. Browsers also cache visited pages, and when the cache fills up, the oldest page leaves. In interviews, LRU is one of the most frequently asked design problems.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Sliding Window Maximum ka Dry Run',
+          '3. Step-by-Step: Dry Run of Sliding Window Maximum'
+        ),
+        body: t(
+          `Ab hum \`[1, 3, -1, -3, 5, 3, 6, 7]\` par window size k=3 ka sliding window maximum nikaalte hain. Har window ka maximum chahiye, aur windows hain: [1,3,-1], [3,-1,-3], [-1,-3,5], [-3,5,3], [5,3,6], [3,6,7]. Brute force mein har window ko scan karna O(n*k) hota hai. Deque se O(n) mein ho jaata hai.
+
+Deque mein hum **indices** store karte hain, aur deque ke andar values decreasing order mein rehti hain — sabse bada aage, chhote peeche. Har naye element par do kaam hote hain: pehle window se bahar gaye indices ko aage se nikaalo (\`dq[0] <= i - k\`), phir peeche se woh indices nikaalo jo naye element se chhote hain (kyunki woh kabhi maximum nahi ban sakte).
+
+**i=0, x=1:** deque khaali, 0 daalo. Deque: [0].
+**i=1, x=3:** peeche se 0 nikaalo (1 < 3), 1 daalo. Deque: [1]. Window poori nahi hui.
+**i=2, x=-1:** -1 chhota hai, peeche daalo. Deque: [1, 2]. Window [1,3,-1] ka max = nums[1] = **3**.
+**i=3, x=-3:** peeche daalo. Deque: [1, 2, 3]. Window [3,-1,-3] ka max = **3**.
+**i=4, x=5:** peeche se 3, 2, 1 nikaalo (sab 5 se chhote), 4 daalo. Deque: [4]. Window [-1,-3,5] ka max = **5**.
+**i=5, x=3:** peeche daalo. Deque: [4, 5]. Window [-3,5,3] ka max = **5**.
+**i=6, x=6:** peeche se 5, 4 nikaalo, 6 daalo. Deque: [6]. Window [5,3,6] ka max = **6**.
+**i=7, x=7:** peeche se 6 nikaalo, 7 daalo. Deque: [7]. Window [3,6,7] ka max = **7**.
+
+Final answer: **[3, 3, 5, 5, 6, 7]**. Har index ek baar aata hai aur ek baar jaata hai, isliye total O(n) hai. Neeche wala code yahi algorithm chalata hai.`,
+          `Now let us find the sliding window maximum for \`[1, 3, -1, -3, 5, 3, 6, 7]\` with window size k=3. We need the maximum of every window, and the windows are: [1,3,-1], [3,-1,-3], [-1,-3,5], [-3,5,3], [5,3,6], [3,6,7]. Brute force scans every window in O(n*k). With a deque it takes O(n).
+
+The deque stores **indices**, and the values inside stay in decreasing order — the largest at the front, the smaller ones behind. For each new element, two things happen: first, remove indices that have left the window from the front (\`dq[0] <= i - k\`); then remove indices from the back that are smaller than the new element (because they can never become the maximum).
+
+**i=0, x=1:** the deque is empty, so add 0. Deque: [0].
+**i=1, x=3:** remove 0 from the back (1 < 3), add 1. Deque: [1]. The window is not full yet.
+**i=2, x=-1:** -1 is smaller, so add it at the back. Deque: [1, 2]. The max of window [1,3,-1] is nums[1] = **3**.
+**i=3, x=-3:** add it at the back. Deque: [1, 2, 3]. The max of window [3,-1,-3] is **3**.
+**i=4, x=5:** remove 3, 2, 1 from the back (all smaller than 5), add 4. Deque: [4]. The max of window [-1,-3,5] is **5**.
+**i=5, x=3:** add it at the back. Deque: [4, 5]. The max of window [-3,5,3] is **5**.
+**i=6, x=6:** remove 5, 4 from the back, add 6. Deque: [6]. The max of window [5,3,6] is **6**.
+**i=7, x=7:** remove 6 from the back, add 7. Deque: [7]. The max of window [3,6,7] is **7**.
+
+The final answer is **[3, 3, 5, 5, 6, 7]**. Every index enters once and leaves once, so the total is O(n). The code below runs this exact algorithm.`
+        ),
+        code: {
+          title: t(
+            'Sliding Window Maximum: Deque se O(n) mein',
+            'Sliding Window Maximum: O(n) with a Deque'
+          ),
+          language: 'python',
+          code: `from collections import deque
+
+def sliding_max(nums, k):
+    dq = deque()
+    out = []
+    for i, x in enumerate(nums):
+        while dq and dq[0] <= i - k:
+            dq.popleft()
+        while dq and nums[dq[-1]] < x:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            out.append(nums[dq[0]])
+    return out
+
+print("sliding max k=3:", sliding_max([1, 3, -1, -3, 5, 3, 6, 7], 3))`,
+          output: `sliding max k=3: [3, 3, 5, 5, 6, 7]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: List se popleft, Window se Bahar Index aur LRU mein Order',
+          '4. Common Mistakes: popleft from a List, Out-of-Window Index, and Order in LRU'
+        ),
+        body: t(
+          `**Galti 1: List par \`pop(0)\` use karna.** List mein \`pop(0)\` O(n) hota hai, kyunki saare elements shift hote hain. Sliding window mein yeh poora algorithm O(n^2) bana dega. Hamesha \`collections.deque\` use karo aur \`popleft()\` se O(1) mein nikaalo.
+
+**Galti 2: Window se bahar gaye index ko deque mein rehne dena.** Har naye element par pehle check karo ki deque ke aage wala index window se bahar toh nahi gaya (\`dq[0] <= i - k\`). Agar yeh check bhool gaye, toh purana maximum answer mein aata rahega, jo galat hoga. Yeh check pehle aata hai, pop karne wala check baad mein.
+
+**Galti 3: LRU mein get par order update karna bhoolna.** LRU mein jab bhi kisi key ko \`get\` karo, toh use sabse recent bana do (\`move_to_end\`). Agar get par order update nahi kiya, toh recently use hua item bhi evict ho jaayega — aur wahi LRU ka sabse bada bug hai. Put par bhi pehle se maujood key ko move karna padta hai.
+
+**Galti 4: LRU mein capacity check galat jagah karna.** Pehle key ko daalo ya update karo, phir check karo ki size capacity se zyada toh nahi hua, aur tabhi sabse purana item nikaalo (\`popitem(last=False)\`). Agar pehle hi nikaal diya, toh capacity kabhi full hi nahi hogi aur cache galat kaam karega.`,
+          `**Mistake 1: Using \`pop(0)\` on a list.** \`pop(0)\` on a list is O(n), because all elements shift. In a sliding window, that would make the whole algorithm O(n^2). Always use \`collections.deque\` and remove in O(1) with \`popleft()\`.
+
+**Mistake 2: Leaving an out-of-window index in the deque.** For each new element, first check whether the front index has left the window (\`dq[0] <= i - k\`). If you forget this check, the old maximum will keep appearing in the answer, which is wrong. This check comes first; the pop check comes after.
+
+**Mistake 3: Forgetting to update the order on get in LRU.** In LRU, whenever you \`get\` a key, make it the most recent one (\`move_to_end\`). If you do not update the order on get, a recently used item can still be evicted — and that is the biggest LRU bug. On put, an existing key must also be moved.
+
+**Mistake 4: Checking capacity at the wrong place in LRU.** First insert or update the key, then check whether the size went over capacity, and only then remove the oldest item (\`popitem(last=False)\`). If you remove first, the capacity will never fill up and the cache will behave wrongly.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: K=1, K=N, Khaali Deque aur Capacity 1 wala LRU',
+          '5. Edge Cases: K=1, K=N, Empty Deque, and LRU with Capacity 1'
+        ),
+        body: t(
+          `**1. K = 1 (window size 1).** Har window ka maximum wahi element hai, isliye answer poori list ke barabar hota hai. Deque mein har baar ek hi index rehta hai. Yeh trivial case hai, par test mein aata hai.
+
+**2. K = N (window poori list hai).** Sirf ek window hai aur uska maximum poori list ka maximum hai. Answer mein sirf ek element aata hai. Code mein \`i >= k - 1\` wali condition sirf aakhri index par True hoti hai.
+
+**3. Khaali deque par pop.** Khaali deque par \`popleft()\` ya \`pop()\` \`IndexError\` deta hai. Sliding window mein deque kabhi khaali nahi hota jab answer likhte hain, kyunki har iteration mein ek index daala jaata hai. Phir bhi \`while dq and ...\` mein \`dq\` check karna mat bhoolo.
+
+**4. LRU capacity 1.** Sirf ek hi item reh sakta hai. Har naya put purane ko nikaal deta hai. \`get\` karne par sirf wahi key milegi jo sabse aakhri mein daali gayi thi. Yeh edge case LRU ke eviction logic ko test karta hai.
+
+**5. LRU mein missing key ka get.** Missing key par \`get\` -1 deta hai (hamare code mein), aur order mein koi badlaav nahi hota. Kuch implementations mein missing key par exception aata hai — interviewer se poochh lo ki kya return karna hai.`,
+          `**1. K = 1 (window size 1).** The maximum of every window is the element itself, so the answer equals the whole list. The deque holds only one index at a time. This is a trivial case, but it appears in tests.
+
+**2. K = N (the window is the whole list).** There is only one window, and its maximum is the maximum of the whole list. The answer has just one element. In the code, the condition \`i >= k - 1\` becomes True only at the last index.
+
+**3. Pop from an empty deque.** Calling \`popleft()\` or \`pop()\` on an empty deque raises an \`IndexError\`. In a sliding window, the deque is never empty when an answer is written, because one index is added every iteration. Still, never forget the \`dq\` check in \`while dq and ...\`.
+
+**4. LRU with capacity 1.** Only one item can stay. Every new put removes the old one. \`get\` will only find the key that was put in last. This edge case tests the eviction logic of LRU.
+
+**5. Get of a missing key in LRU.** Getting a missing key returns -1 (in our code), and the order does not change. Some implementations raise an exception for a missing key — ask the interviewer what to return.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Deque vs List, LRU ka Design aur Rotate',
+          '6. What-If: Deque vs List, LRU Design, and Rotate'
+        ),
+        body: t(
+          `**What if: deque ki jagah list use karein?** List mein peeche se kaam O(1) hai, par aage se kaam O(n) hai. Deque mein dono taraf O(1) hai. Sliding window aur LRU mein aage se baar-baar nikaalna hota hai, isliye deque jeetta hai. Sirf peeche se kaam ho toh list kaafi hai.
+
+**What if: LRU cache banana ho?** Do cheezein chahiye: ek dict (key se value, O(1) lookup) aur ek order (kaun sabse purana hai). Python mein \`OrderedDict\` dono kaam ek saath karta hai: dict jaisa lookup aur order yaad rakhna. \`get\` par \`move_to_end(key)\` karo, \`put\` par pehle se maujood key ko move karo, naya key daalo, aur agar size capacity se zyada ho jaaye toh \`popitem(last=False)\` se sabse purana nikaalo. Neeche wala code capacity 2 wala LRU dikhata hai: put(1, 10), put(2, 20), get(1) = 10, put(3, 30) karne par 2 evict hota hai kyunki 1 abhi use hua tha.
+
+**What if: deque ko rotate karna ho?** \`deque.rotate(1)\` aakhri element ko aage le aata hai, \`rotate(-1)\` pehle element ko peeche le jaata hai. Yeh round-robin scheduling aur circular buffer mein kaam aata hai. List mein rotate karna O(n) hota hai, deque mein O(k) hota hai.`,
+          `**What if we use a list instead of a deque?** In a list, work at the back is O(1), but work at the front is O(n). In a deque, both ends are O(1). Sliding window and LRU repeatedly remove from the front, so the deque wins. If you only work at the back, a list is enough.
+
+**What if you need to build an LRU cache?** You need two things: a dict (key to value, O(1) lookup) and an order (which item is oldest). In Python, \`OrderedDict\` does both at once: dict-like lookup plus remembering the order. On \`get\`, call \`move_to_end(key)\`; on \`put\`, move an existing key, add the new key, and if the size goes over capacity, remove the oldest with \`popitem(last=False)\`. The code below shows an LRU with capacity 2: put(1, 10), put(2, 20), get(1) = 10, and put(3, 30) evicts 2, because 1 was just used.
+
+**What if you need to rotate a deque?** \`deque.rotate(1)\` brings the last element to the front, and \`rotate(-1)\` sends the first element to the back. That is useful in round-robin scheduling and circular buffers. Rotating a list costs O(n), while rotating a deque costs O(k).`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Deque aur LRU se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Deque and LRU to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Deque** mein dono taraf se insert aur delete O(1) mein hote hain: \`append\`, \`appendleft\`, \`pop\`, \`popleft\`. List mein \`pop(0)\` O(n) hota hai, isliye aage se kaam ho toh deque use karo. **Sliding window maximum** deque se O(n) mein nikalta hai: deque mein indices decreasing order mein rakho, window se bahar gaye indices ko aage se nikaalo, aur chhote indices ko peeche se nikaalo.
+
+**LRU cache** dict + order se banta hai: Python mein \`OrderedDict\` use karo. \`get\` aur \`put\` dono par key ko sabse recent banao (\`move_to_end\`), aur capacity bharne par sabse purana item nikaalo (\`popitem(last=False)\`). LRU ke \`get\` aur \`put\` dono O(1) hote hain.
+
+Interview mein jab bhi "sliding window maximum" ya "LRU cache" suno, toh deque socho. Revision ke liye \`[1, 3, -1, -3, 5, 3, 6, 7]\`, k=3 ka dry run khud karo aur LRU capacity 2 ka sequence (put 1, put 2, get 1, put 3) trace karo. Agar dono bina code dekhe ho jaayein, toh deque aur LRU aapko aa gaye hain.`,
+          `Let us tie the whole article together. In a **deque**, insert and delete from both ends are O(1): \`append\`, \`appendleft\`, \`pop\`, \`popleft\`. In a list, \`pop(0)\` is O(n), so use a deque whenever you work from the front. The **sliding window maximum** comes out in O(n) with a deque: keep indices in decreasing order, remove out-of-window indices from the front, and remove smaller indices from the back.
+
+An **LRU cache** is built from a dict plus an order: in Python, use \`OrderedDict\`. On both \`get\` and \`put\`, make the key the most recent (\`move_to_end\`), and when capacity fills up, remove the oldest item (\`popitem(last=False)\`). Both LRU \`get\` and \`put\` are O(1).
+
+In an interview, whenever you hear "sliding window maximum" or "LRU cache", think deque. To revise, dry-run \`[1, 3, -1, -3, 5, 3, 6, 7]\` with k=3 yourself, and trace the LRU capacity 2 sequence (put 1, put 2, get 1, put 3). If both work without looking at the code, you know deques and LRU.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'LRU Cache (Capacity 2): Put, Get aur Eviction ka Flow',
+        'LRU Cache (Capacity 2): Flow of Put, Get, and Eviction'
+      ),
+      caption: t(
+        'Get par key recent hoti hai, capacity bharne par sabse purana nikalta hai',
+        'Get makes a key recent, and when capacity fills up the oldest leaves'
+      ),
+      nodes: [
+        { t: t('Put(1, 10), Put(2, 20)', 'Put(1, 10), Put(2, 20)'), s: t('Cache: [1, 2], 1 sabse purana', 'Cache: [1, 2], 1 is the oldest') },
+        { t: t('Get(1) = 10', 'Get(1) = 10'), s: t('1 recent ho gaya, order: [2, 1]', '1 becomes recent, order: [2, 1]') },
+        { t: t('Put(3, 30)', 'Put(3, 30)'), s: t('Capacity full, sabse purana 2 evict hota hai', 'Capacity full, the oldest, 2, is evicted') },
+        { t: t('Get(2) = -1 (missing)', 'Get(2) = -1 (missing)'), s: t('2 cache mein nahi hai', '2 is not in the cache') },
+        { t: t('Cache ab: [1, 3]', 'Cache now: [1, 3]'), s: t('Get aur Put dono O(1)', 'Get and Put are both O(1)') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Deque Basics: Dono Taraf se Daalo aur Nikaalo', 'Deque Basics: Add and Remove from Both Ends'),
+        language: 'python',
+        code: `from collections import deque
+
+d = deque([1, 2, 3])
+d.appendleft(0)
+d.append(4)
+print("deque:", list(d))
+print("popleft:", d.popleft())
+print("pop:", d.pop())
+print("after pops:", list(d))
+d.rotate(1)
+print("rotate 1:", list(d))`,
+        output: `deque: [0, 1, 2, 3, 4]
+popleft: 0
+pop: 4
+after pops: [1, 2, 3]
+rotate 1: [3, 1, 2]`
+      },
+      {
+        title: t('LRU Cache: OrderedDict se Get aur Put', 'LRU Cache: Get and Put with OrderedDict'),
+        language: 'python',
+        code: `from collections import OrderedDict
+
+class LRU:
+    def __init__(self, cap):
+        self.cap = cap
+        self.cache = OrderedDict()
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.cap:
+            self.cache.popitem(last=False)
+
+cache = LRU(2)
+cache.put(1, 10)
+cache.put(2, 20)
+print("get 1:", cache.get(1))
+cache.put(3, 30)
+print("get 2 (evicted):", cache.get(2))
+print("get 3:", cache.get(3))
+print("cache keys:", list(cache.cache.keys()))`,
+        output: `get 1: 10
+get 2 (evicted): -1
+get 3: 30
+cache keys: [1, 3]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Deque mein popleft ki time complexity kya hoti hai?',
+          'What is the time complexity of popleft in a deque?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n log n)', 'O(n log n)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: deque dono taraf se O(1) mein kaam karta hai, jabki list mein pop(0) O(n) hota hai kyunki saare elements shift hote hain.',
+          'Correct answer: a deque works in O(1) from both ends, while pop(0) on a list is O(n) because all elements shift.'
+        )
+      },
+      {
+        q: t(
+          'Sliding window maximum mein deque mein kya store karte hain?',
+          'What do we store in the deque for the sliding window maximum?'
+        ),
+        opts: [
+          t('Values', 'Values'),
+          t('Indices, decreasing order mein', 'Indices, in decreasing order'),
+          t('Window ka sum', 'The sum of the window'),
+          t('Sirf maximum', 'Only the maximum')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: indices store karte hain taaki pata chal sake ki kaunsa index window se bahar gaya hai, aur values decreasing order mein rehti hain taaki aage wala hamesha maximum ho.',
+          'Correct answer: we store indices so we can tell which index left the window, and the values stay in decreasing order so the front is always the maximum.'
+        )
+      },
+      {
+        q: t(
+          'LRU cache mein jab capacity bhar jaaye, toh kaunsa item nikalta hai?',
+          'In an LRU cache, which item leaves when capacity fills up?'
+        ),
+        opts: [
+          t('Sabse naya item', 'The newest item'),
+          t('Sabse purana use hua (least recently used) item', 'The least recently used item'),
+          t('Sabse bada value wala item', 'The item with the largest value'),
+          t('Random item', 'A random item')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: LRU ka matlab hai Least Recently Used — jo item sabse lambe time se use nahi hua, use pehle nikaalte hain, kyunki woh dobara use hone ki sabse kam sambhavna rakhta hai.',
+          'Correct answer: LRU means Least Recently Used — the item that has not been used for the longest time leaves first, because it is least likely to be used again.'
+        )
+      },
+      {
+        q: t(
+          'LRU mein get karne par kya karna zaroori hai?',
+          'What must be done when getting a key in LRU?'
+        ),
+        opts: [
+          t('Kuch nahi, sirf value do', 'Nothing, just return the value'),
+          t('Key ko sabse recent banao (move_to_end)', 'Make the key the most recent (move_to_end)'),
+          t('Key ko delete karo', 'Delete the key'),
+          t('Cache ko khaali karo', 'Empty the cache')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: get ka matlab hai key abhi use hui hai, isliye use recent banana padta hai — warna recently use hua item bhi evict ho jaayega, jo LRU ka sabse bada bug hai.',
+          'Correct answer: getting a key means it was just used, so it must be made recent — otherwise a recently used item could be evicted, which is the biggest LRU bug.'
+        )
+      },
+      {
+        q: t(
+          'Sliding window maximum ki time complexity deque se kya hoti hai?',
+          'What is the time complexity of the sliding window maximum with a deque?'
+        ),
+        opts: [
+          t('O(n*k)', 'O(n*k)'),
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(k)', 'O(k)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har index deque mein ek baar aata hai aur ek baar jaata hai, isliye total kaam O(n) hota hai, brute force ke O(n*k) ki jagah.',
+          'Correct answer: every index enters the deque once and leaves once, so the total work is O(n), instead of the brute force O(n*k).'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Deque mein dono taraf se insert aur delete O(1) hote hain; list mein pop(0) O(n) hota hai.',
+        'In a deque, insert and delete from both ends are O(1); in a list, pop(0) is O(n).'
+      ),
+      t(
+        'Sliding window maximum mein indices decreasing order mein rakho aur window se bahar gaye indices nikaalo.',
+        'In the sliding window maximum, keep indices in decreasing order and remove out-of-window indices.'
+      ),
+      t(
+        'LRU mein get aur put dono par key ko sabse recent banao (move_to_end).',
+        'In LRU, make the key the most recent on both get and put (move_to_end).'
+      ),
+      t(
+        'Capacity bharne par sabse purana item popitem(last=False) se nikaalo.',
+        'When capacity fills up, remove the oldest item with popitem(last=False).'
+      ),
+      t(
+        'Sliding window maximum O(n) hai, LRU ke get aur put O(1) hain.',
+        'The sliding window maximum is O(n), and LRU get and put are O(1).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Sliding Window Maximum (k=2) aur LRU Cache Chalao',
+        'Practice: Run Sliding Window Maximum (k=2) and an LRU Cache'
+      ),
+      task: t(
+        '[4, 2, 6, 1, 3] par k=2 ka sliding window maximum nikaalo, phir capacity 2 wala LRU chalao: put(1,1), put(2,2), get(1), put(3,3), get(2), get(3). Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Find the sliding window maximum with k=2 for [4, 2, 6, 1, 3], then run an LRU cache with capacity 2: put(1,1), put(2,2), get(1), put(3,3), get(2), get(3). The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `from collections import deque, OrderedDict
+
+def sliding_max(nums, k):
+    dq = deque()
+    out = []
+    for i, x in enumerate(nums):
+        while dq and dq[0] <= i - k:
+            dq.popleft()
+        while dq and nums[dq[-1]] < x:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            out.append(nums[dq[0]])
+    return out
+
+print("sliding max k=2 [4,2,6,1,3]:", sliding_max([4, 2, 6, 1, 3], 2))
+
+class LRU:
+    def __init__(self, cap):
+        self.cap = cap
+        self.cache = OrderedDict()
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.cap:
+            self.cache.popitem(last=False)
+
+c2 = LRU(2)
+c2.put(1, 1)
+c2.put(2, 2)
+print("get 1:", c2.get(1))
+c2.put(3, 3)
+print("get 2 (evicted):", c2.get(2))
+print("get 3:", c2.get(3))`,
+      expected: `sliding max k=2 [4,2,6,1,3]: [4, 6, 6, 3]
+get 1: 1
+get 2 (evicted): -1
+get 3: 3`
+    },
+    readMinutes: 12
+  };
+
+const dsaLinkedListAdvanced: Article = {
+    id: 'dsa-linked-list-advanced',
+    subjectId: 'dsa',
+    title: t(
+      'Advanced Linked Lists — Fast/Slow Pointers, Cycle Detection, Reverse in Groups aur Merge',
+      'Advanced Linked Lists — Fast/Slow Pointers, Cycle Detection, Reverse in Groups, and Merge'
+    ),
+    summary: t(
+      'Advanced linked list problems ko zero se samjho: fast aur slow pointers se middle aur cycle kaise dhoondhte hain, Floyd cycle detection kaise kaam karta hai, k ke groups mein reverse kaise karte hain, aur do sorted lists ko kaise merge karte hain.',
+      'Learn advanced linked list problems from scratch: how fast and slow pointers find the middle and a cycle, how Floyd cycle detection works, how to reverse in groups of k, and how to merge two sorted lists.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Advanced Linked Lists Kya Hain? (Fast/Slow Pointers ka Idea)',
+          '1. What Are Advanced Linked Lists? (The Fast/Slow Pointer Idea)'
+        ),
+        body: t(
+          `Basic linked list mein aap sirf aage badhte ho — ek node se agle node par. Advanced problems mein aap **do pointers** ek saath chalate ho: ek tez (fast) aur ek dheere (slow). Fast pointer ek step mein do nodes aage jaata hai, slow pointer ek step mein ek node. Yeh simple idea bahut powerful hai, kyunki isse aap bina list ki length jaane middle nikaal sakte ho, aur cycle bhi detect kar sakte ho.
+
+**Middle node** nikaalne ke liye dono pointers ko head se shuru karo. Jab fast pointer end par pahunchega, toh slow pointer bilkul middle par hoga — kyunki fast ne double distance cover ki hai. List [1, 2, 3, 4, 5] mein fast 1 -> 3 -> 5 -> None jaata hai, aur slow 1 -> 2 -> 3 jaata hai — middle 3 hai. Yeh O(n) time aur O(1) space mein hota hai, bina length ginne.
+
+**Cycle detection** mein bhi yahi idea hai, jise **Floyd ka algorithm** kehte hain. Agar list mein cycle hai, toh fast pointer slow pointer ko pakad lega — jaise race track par tez dhaavak dheere dhaavak ko lap karke pakad leta hai. Agar cycle nahi hai, toh fast pointer end par pahunch jaayega aur None mil jaayega. Yeh interview ka sabse famous linked list problem hai.`,
+          `In a basic linked list you only move forward — from one node to the next. In advanced problems you run **two pointers** together: one fast and one slow. The fast pointer moves two nodes per step, and the slow pointer moves one node per step. This simple idea is very powerful, because it lets you find the middle without knowing the length of the list, and it also detects cycles.
+
+To find the **middle node**, start both pointers at the head. When the fast pointer reaches the end, the slow pointer will be exactly in the middle — because the fast pointer covered double the distance. In the list [1, 2, 3, 4, 5], the fast pointer goes 1 -> 3 -> 5 -> None, and the slow pointer goes 1 -> 2 -> 3 — the middle is 3. This takes O(n) time and O(1) space, without counting the length.
+
+**Cycle detection** uses the same idea, called **Floyd's algorithm**. If the list has a cycle, the fast pointer will catch the slow pointer — just as a fast runner laps a slow runner on a race track. If there is no cycle, the fast pointer reaches the end and finds None. This is the most famous linked list problem in interviews.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Race Track, Music Playlist aur Train Bogies',
+          '2. Real-Life Examples: Race Track, Music Playlist, and Train Coaches'
+        ),
+        body: t(
+          `**Race track** Floyd algorithm ka sabse seedha example hai. Do dhaavak ek circular track par bhaag rahe hain — ek tez, ek dheere. Tez dhaavak dheere dhaavak ko ek na ek din pakad lega, kyunki track circular hai aur woh har lap mein aage badhta hai. Agar track seedha hota (cycle nahi), toh tez dhaavak finish line par pahunch jaata aur kabhi wapas nahi aata. Yahi logic linked list mein cycle detect karta hai.
+
+Doosra example hai **music playlist**. Playlist mein gaane ek ke baad ek chalte hain. Agar playlist mein loop hai (aakhri gaane ke baad pehla gaana phir se), toh woh cycle hai. Music app ko pata hona chahiye ki playlist khatam hogi ya loop mein chalti rahegi — isliye woh cycle check karta hai.
+
+Teesra example hai **train bogies**. Train ke dibbe ek ke peeche ek jude hote hain — yeh linked list hai. Beech wala dibba dhoondhna ho toh do logon ko bhejo: ek ek dibba aage badhe, doosra do dibbe — jab doosra aakhri dibbe par pahunche, toh pehla beech mein hoga. Yeh fast/slow pointer ka real-life roop hai.`,
+          `A **race track** is the simplest example of Floyd's algorithm. Two runners run on a circular track — one fast, one slow. The fast runner will catch the slow runner one day, because the track is circular and the fast runner gains ground every lap. If the track were straight (no cycle), the fast runner would reach the finish line and never come back. That same logic detects a cycle in a linked list.
+
+A second example is a **music playlist**. Songs play one after another. If the playlist loops (after the last song, the first song plays again), that is a cycle. A music app needs to know whether the playlist will end or keep looping — so it checks for a cycle.
+
+A third example is **train coaches**. The coaches of a train are joined one behind another — that is a linked list. To find the middle coach, send two people: one moves one coach at a time, the other moves two coaches — when the second reaches the last coach, the first will be in the middle. That is the fast/slow pointer idea in real life.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Floyd Cycle Detection aur Middle Node ka Dry Run',
+          '3. Step-by-Step: Dry Run of Floyd Cycle Detection and the Middle Node'
+        ),
+        body: t(
+          `Ab hum list [1, 2, 3, 4, 5] par fast/slow pointers ka dry run karte hain. Dono pointers head (1) se shuru hote hain. Har step mein slow ek node aage jaata hai, fast do nodes aage jaata hai.
+
+**Step 0:** slow = 1, fast = 1 (dono head par).
+**Step 1:** slow = 2, fast = 3.
+**Step 2:** slow = 3, fast = 5.
+**Step 3:** slow = 4, fast = None (5 ka next None hai, fast aage nahi badh sakta, loop ruk jaata hai).
+
+Loop isliye ruka kyunki \`fast\` ya \`fast.next\` None ho gaya — matlab list mein **koi cycle nahi hai**. Agar cycle hoti, toh fast kabhi None par nahi pahunchta aur ek na ek din slow ko pakad leta.
+
+Middle nikaalne ke liye wahi pointers use karo: jab fast end par pahunche, toh slow middle par hota hai. Upar wale dry run mein fast jab 5 par tha, toh slow 3 par tha — **middle 3 hai**. Dhyaan do: step 2 mein slow 3 par tha aur fast 5 par tha — usi waqt slow middle par tha, kyunki fast aakhri node par tha.
+
+Ab **cycle banate hain**: aakhri node (5) ka next, node 2 se jod do. Ab fast kabhi None par nahi pahunchega — woh 2 -> 4 -> 1 (cycle mein ghoom kar) -> 3 -> 5 -> 2... chalta rahega. Slow bhi cycle mein ghoomta rahega, aur fast use pakad lega — \`slow is fast\` True ho jaayega. Neeche wala code pehle bina cycle ke check karta hai, phir cycle bana kar check karta hai, phir cycle ko fix karke dobara check karta hai.`,
+          `Now let us dry-run fast/slow pointers on the list [1, 2, 3, 4, 5]. Both pointers start at the head (1). At each step, the slow pointer moves one node forward and the fast pointer moves two nodes forward.
+
+**Step 0:** slow = 1, fast = 1 (both at the head).
+**Step 1:** slow = 2, fast = 3.
+**Step 2:** slow = 3, fast = 5.
+**Step 3:** slow = 4, fast = None (the next of 5 is None, so the fast pointer cannot move further, and the loop stops).
+
+The loop stopped because \`fast\` or \`fast.next\` became None — which means there is **no cycle** in the list. If there were a cycle, the fast pointer would never reach None and would catch the slow pointer one day.
+
+To find the middle, use the same pointers: when the fast pointer reaches the end, the slow pointer is in the middle. In the dry run above, when the fast pointer was at 5, the slow pointer was at 3 — the **middle is 3**. Notice: at step 2, the slow pointer was at 3 and the fast pointer was at 5 — the slow pointer was already in the middle then, because the fast pointer was at the last node.
+
+Now **create a cycle**: link the next of the last node (5) to node 2. Now the fast pointer will never reach None — it will keep going 2 -> 4 -> 1 (around the cycle) -> 3 -> 5 -> 2... The slow pointer will also loop in the cycle, and the fast pointer will catch it — \`slow is fast\` becomes True. The code below first checks without a cycle, then creates a cycle and checks, then fixes the cycle and checks again.`
+        ),
+        code: {
+          title: t(
+            'Floyd: Middle Node aur Cycle Detection ek Saath',
+            'Floyd: Middle Node and Cycle Detection Together'
+          ),
+          language: 'python',
+          code: `class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+def build(vals):
+    head = ListNode(vals[0])
+    cur = head
+    for v in vals[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+    return head
+
+def to_list(head):
+    out = []
+    while head:
+        out.append(head.val)
+        head = head.next
+    return out
+
+def middle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow.val
+
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+
+head = build([1, 2, 3, 4, 5])
+print("list:", to_list(head))
+print("middle:", middle(head))
+print("has cycle:", has_cycle(head))
+tail = head
+while tail.next:
+    tail = tail.next
+tail.next = head.next
+print("has cycle after link:", has_cycle(head))
+tail.next = None
+print("has cycle after fix:", has_cycle(head))`,
+          output: `list: [1, 2, 3, 4, 5]
+middle: 3
+has cycle: False
+has cycle after link: True
+has cycle after fix: False`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: None Check Bhoolna, slow is fast ki Jagah == aur Links Todna',
+          '4. Common Mistakes: Forgetting the None Check, Using == Instead of slow is fast, and Breaking Links'
+        ),
+        body: t(
+          `**Galti 1: \`fast.next.next\` par None check bhoolna.** Loop ki condition hai \`while fast and fast.next:\` — dono check zaroori hain. Agar sirf \`while fast:\` likha, toh aakhri node par \`fast.next\` None hoga aur \`fast.next.next\` par error aayega. Yeh sabse common crash hai.
+
+**Galti 2: \`slow == fast\` ki jagah \`slow is fast\` bhoolna.** Cycle detection mein check karna hota hai ki dono pointers **ek hi node object** par hain, isliye \`is\` use karo. \`==\` value compare karta hai — agar do alag nodes ki value barabar ho (jaise do nodes mein 3 ho), toh \`==\` galat True de dega. Python mein \`ListNode\` ke liye \`==\` default \`is\` jaisa hi kaam karta hai, par \`is\` likhna saaf aur sahi hai.
+
+**Galti 3: Reverse karte waqt next ko save karna bhoolna.** List reverse karte waqt pehle \`nxt = cur.next\` se agla node save karo, phir \`cur.next = prev\` karo. Agar pehle hi \`cur.next\` badal diya, toh aage ke nodes ka rasta kho jaayega aur list toot jaayegi. Yeh bug har beginner se hota hai.
+
+**Galti 4: Reverse in groups mein group ke baad link bhoolna.** Har group ko reverse karne ke baad us group ki tail ko agle group se jodna padta hai. Agar yeh link bhool gaye, toh list ke tukde alag ho jaayenge. Dummy node use karo taaki head ka khayal na rakhna pade.`,
+          `**Mistake 1: Forgetting the None check before \`fast.next.next\`.** The loop condition is \`while fast and fast.next:\` — both checks are needed. If you write only \`while fast:\`, then at the last node \`fast.next\` will be None and \`fast.next.next\` will raise an error. This is the most common crash.
+
+**Mistake 2: Using \`==\` instead of \`slow is fast\`.** In cycle detection you must check that both pointers are on the **same node object**, so use \`is\`. \`==\` compares values — if two different nodes hold the same value (for example, two nodes with 3), \`==\` would wrongly give True. In Python, \`==\` on \`ListNode\` works like \`is\` by default, but writing \`is\` is clear and correct.
+
+**Mistake 3: Forgetting to save next while reversing.** When reversing a list, first save the next node with \`nxt = cur.next\`, then do \`cur.next = prev\`. If you change \`cur.next\` first, the path to the following nodes is lost and the list breaks. Every beginner makes this bug once.
+
+**Mistake 4: Forgetting to link groups in reverse in groups.** After reversing each group, its tail must be linked to the next group. If you forget this link, the list falls into separate pieces. Use a dummy node so you do not have to worry about the head.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali List, Ek Node, Do Nodes aur Cycle ka Start',
+          '5. Edge Cases: Empty List, One Node, Two Nodes, and the Start of a Cycle'
+        ),
+        body: t(
+          `**1. Khaali list (head None).** \`middle(None)\` par slow aur fast dono None hain, loop nahi chalta. Code mein pehle check karo ki head None toh nahi hai, warna \`slow.val\` par error aayega. \`has_cycle(None)\` False deta hai, kyunki loop ki condition pehle hi False hai.
+
+**2. Sirf ek node.** Middle wahi node hai, cycle nahi hai (jab tak node khud se na juda ho). Agar node ka next woh khud hai, toh cycle hai — fast aur slow pehle step mein hi mil jaayenge.
+
+**3. Do nodes — [1, 2].** Middle 2 aata hai (hamare code mein slow aage badhta hai jab tak fast aage badh sakta hai). Kuch definitions mein middle 1 hota hai — interviewer se poochh lo ki even length mein pehla middle chahiye ya doosra. Yeh farak aksar test mein aata hai.
+
+**4. Cycle ka start dhoondhna.** Cycle hai yeh pata chalne ke baad uska start dhoondhne ke liye ek pointer ko head par wapas lao aur dono ko ek-ek step chalao — jahan milenge, wahi cycle ka start hai. Yeh Floyd ka second part hai, interview mein aksar poochha jaata hai.
+
+**5. Reverse in groups mein aakhri group chhota ho.** List [1, 2, 3, 4, 5] ko k=3 mein reverse karo toh pehla group [3, 2, 1] banta hai aur aakhri group [4, 5] waisa hi rehta hai, kyunki usmein 3 nodes nahi hain. Code mein \`n >= k\` wali condition yahi handle karti hai.`,
+          `**1. Empty list (head None).** In \`middle(None)\`, both slow and fast are None, and the loop never runs. Check first whether the head is None, or \`slow.val\` will raise an error. \`has_cycle(None)\` returns False, because the loop condition is False from the start.
+
+**2. Only one node.** The middle is that node itself, and there is no cycle (unless the node points to itself). If the node's next is itself, there is a cycle — fast and slow will meet on the very first step.
+
+**3. Two nodes — [1, 2].** The middle comes out as 2 (in our code, the slow pointer moves as long as the fast pointer can move). Some definitions give 1 as the middle — ask the interviewer whether an even length needs the first or the second middle. That difference often appears in tests.
+
+**4. Finding the start of a cycle.** After detecting a cycle, bring one pointer back to the head and move both one step at a time — where they meet is the start of the cycle. That is the second part of Floyd's algorithm, and it is often asked in interviews.
+
+**5. The last group is smaller in reverse in groups.** Reversing [1, 2, 3, 4, 5] with k=3 gives the first group [3, 2, 1], and the last group [4, 5] stays as it is, because it does not have 3 nodes. The condition \`n >= k\` in the code handles exactly this.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Reverse in Groups, Merge Two Sorted Lists aur Poori List Reverse',
+          '6. What-If: Reverse in Groups, Merge Two Sorted Lists, and Reverse the Whole List'
+        ),
+        body: t(
+          `**What if: k ke groups mein reverse karna ho?** List [1, 2, 3, 4, 5] ko k=2 mein reverse karo toh [2, 1, 4, 3, 5] banta hai, aur k=3 mein [3, 2, 1, 4, 5] banta hai. Har group ko alag se reverse karo aur groups ko jod do. Dummy node se head ko handle karna aasan ho jaata hai. Neeche wala code dono cases dikhata hai.
+
+**What if: do sorted lists merge karni hon?** Lists [1, 3, 5] aur [2, 4, 6] ko merge karo toh [1, 2, 3, 4, 5, 6] banta hai. Dono lists ke heads ko compare karo, chhote wale ko answer mein jodo, aur us list mein aage badho. Dummy node se shuru karo taaki pehla node handle karna aasan ho. Yeh merge sort ka merge step hai, aur time O(n + m) hota hai.
+
+**What if: poori list reverse karni ho?** Teen pointers use karo: prev, cur, nxt. Har step mein \`nxt = cur.next\` se agla save karo, \`cur.next = prev\` se link ulta karo, phir prev aur cur ko aage badhao. List [1, 2, 3, 4] reverse hokar [4, 3, 2, 1] ban jaati hai. Yeh pattern reverse in groups ke andar bhi use hota hai.`,
+          `**What if you need to reverse in groups of k?** Reversing [1, 2, 3, 4, 5] with k=2 gives [2, 1, 4, 3, 5], and with k=3 it gives [3, 2, 1, 4, 5]. Reverse each group separately and join the groups. A dummy node makes handling the head easy. The code below shows both cases.
+
+**What if you need to merge two sorted lists?** Merging [1, 3, 5] and [2, 4, 6] gives [1, 2, 3, 4, 5, 6]. Compare the heads of both lists, attach the smaller one to the answer, and move forward in that list. Start with a dummy node so the first node is easy to handle. This is the merge step of merge sort, and it takes O(n + m) time.
+
+**What if you need to reverse the whole list?** Use three pointers: prev, cur, nxt. At each step, save the next node with \`nxt = cur.next\`, flip the link with \`cur.next = prev\`, then move prev and cur forward. The list [1, 2, 3, 4] becomes [4, 3, 2, 1] after reversing. This same pattern is used inside reverse in groups.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Advanced Linked Lists se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Advanced Linked Lists to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Fast/slow pointers** advanced linked list ka sabse important pattern hai: fast do steps, slow ek step. **Middle** nikaalne ke liye dono ko head se chalao — jab fast end par pahunche, slow middle par hoga. **Cycle detection (Floyd)** mein agar fast slow ko pakad le, toh cycle hai; agar fast None par pahunche, toh cycle nahi hai.
+
+**Reverse** karte waqt hamesha \`nxt\` se agla node pehle save karo, phir link ulta karo. **Reverse in groups** mein har group ko alag se reverse karo aur dummy node se groups ko jodo — aakhri chhota group waisa hi rehta hai. **Merge** mein do sorted lists ke heads ko compare karo aur chhote ko answer mein jodo — O(n + m) time lagta hai.
+
+Interview mein jab bhi "middle", "cycle", "reverse" ya "merge" suno, toh fast/slow ya three-pointer pattern socho. Revision ke liye [1, 2, 3, 4, 5] par fast/slow ka dry run khud karo: har step par slow aur fast kahan honge, aur cycle banane par kab milenge. Agar poora dry run bina code dekhe ho jaaye, toh advanced linked lists aapko aa gayi hain.`,
+          `Let us tie the whole article together. **Fast/slow pointers** are the most important pattern in advanced linked lists: the fast pointer takes two steps, the slow pointer takes one. To find the **middle**, run both from the head — when the fast pointer reaches the end, the slow pointer is in the middle. In **cycle detection (Floyd)**, if the fast pointer catches the slow pointer, there is a cycle; if the fast pointer reaches None, there is no cycle.
+
+When **reversing**, always save the next node first with \`nxt\`, then flip the link. In **reverse in groups**, reverse each group separately and join the groups with a dummy node — the last smaller group stays as it is. In **merge**, compare the heads of two sorted lists and attach the smaller one to the answer — it takes O(n + m) time.
+
+In an interview, whenever you hear "middle", "cycle", "reverse", or "merge", think of the fast/slow or three-pointer pattern. To revise, dry-run fast/slow on [1, 2, 3, 4, 5] yourself: where are slow and fast at each step, and when would they meet if a cycle were added? If the whole dry run works without looking at the code, you know advanced linked lists.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Floyd Cycle Detection: Slow ek Step, Fast do Steps',
+        'Floyd Cycle Detection: Slow Takes One Step, Fast Takes Two'
+      ),
+      caption: t(
+        'Cycle ho toh fast slow ko pakad leta hai, nahi toh fast None par pahunch jaata hai',
+        'If there is a cycle, fast catches slow; otherwise fast reaches None'
+      ),
+      nodes: [
+        { t: t('Start: slow = 1, fast = 1', 'Start: slow = 1, fast = 1'), s: t('Dono head par', 'Both at the head') },
+        { t: t('Step 1: slow = 2, fast = 3', 'Step 1: slow = 2, fast = 3'), s: t('Fast double aage', 'Fast is double ahead') },
+        { t: t('Step 2: slow = 3, fast = 5', 'Step 2: slow = 3, fast = 5'), s: t('Slow middle par hai', 'Slow is at the middle') },
+        { t: t('Step 3: fast = None', 'Step 3: fast = None'), s: t('Koi cycle nahi hai', 'There is no cycle') },
+        { t: t('Cycle ho toh: slow is fast', 'If there is a cycle: slow is fast'), s: t('Fast slow ko pakad leta hai', 'Fast catches slow') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Reverse in Groups: k=2 aur k=3 Dono Dekho', 'Reverse in Groups: See Both k=2 and k=3'),
+        language: 'python',
+        code: `class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+def build(vals):
+    head = ListNode(vals[0])
+    cur = head
+    for v in vals[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+    return head
+
+def to_list(head):
+    out = []
+    while head:
+        out.append(head.val)
+        head = head.next
+    return out
+
+def reverse_k(head, k):
+    n = 0
+    cur = head
+    while cur:
+        n += 1
+        cur = cur.next
+    dummy = ListNode(0)
+    dummy.next = head
+    prev_group = dummy
+    while n >= k:
+        prev = None
+        cur = prev_group.next
+        for _ in range(k):
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        tail = prev_group.next
+        prev_group.next = prev
+        tail.next = cur
+        prev_group = tail
+        n -= k
+    return dummy.next
+
+print("reverse k=2:", to_list(reverse_k(build([1, 2, 3, 4, 5]), 2)))
+print("reverse k=3:", to_list(reverse_k(build([1, 2, 3, 4, 5]), 3)))`,
+        output: `reverse k=2: [2, 1, 4, 3, 5]
+reverse k=3: [3, 2, 1, 4, 5]`
+      },
+      {
+        title: t('Merge Two Sorted Lists: [1,3,5] aur [2,4,6]', 'Merge Two Sorted Lists: [1,3,5] and [2,4,6]'),
+        language: 'python',
+        code: `class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+def build(vals):
+    head = ListNode(vals[0])
+    cur = head
+    for v in vals[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+    return head
+
+def to_list(head):
+    out = []
+    while head:
+        out.append(head.val)
+        head = head.next
+    return out
+
+def merge(a, b):
+    dummy = ListNode(0)
+    cur = dummy
+    while a and b:
+        if a.val <= b.val:
+            cur.next = a
+            a = a.next
+        else:
+            cur.next = b
+            b = b.next
+        cur = cur.next
+    cur.next = a or b
+    return dummy.next
+
+print("merge [1,3,5] + [2,4,6]:", to_list(merge(build([1, 3, 5]), build([2, 4, 6]))))`,
+        output: `merge [1,3,5] + [2,4,6]: [1, 2, 3, 4, 5, 6]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Fast/slow pointers se middle nikaalte waqt fast pointer kitne steps chalta hai?',
+          'When finding the middle with fast/slow pointers, how many steps does the fast pointer take?'
+        ),
+        opts: [
+          t('Ek step', 'One step'),
+          t('Do steps', 'Two steps'),
+          t('Teen steps', 'Three steps'),
+          t('Zero steps', 'Zero steps')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fast pointer har baar do nodes aage jaata hai aur slow ek node — jab fast end par pahunchega, toh slow bilkul middle par hoga.',
+          'Correct answer: the fast pointer moves two nodes each time and the slow pointer moves one node — when the fast pointer reaches the end, the slow pointer is exactly in the middle.'
+        )
+      },
+      {
+        q: t(
+          'Floyd cycle detection mein cycle kaise pata chalti hai?',
+          'How is a cycle found in Floyd cycle detection?'
+        ),
+        opts: [
+          t('Fast pointer None par pahunch jaata hai', 'The fast pointer reaches None'),
+          t('Fast pointer slow pointer ko pakad leta hai (slow is fast)', 'The fast pointer catches the slow pointer (slow is fast)'),
+          t('List ki length gin kar', 'By counting the length of the list'),
+          t('Sab nodes ko sort karke', 'By sorting all the nodes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cycle mein fast pointer kabhi None par nahi pahunchega aur slow ko lap karke pakad lega — jaise circular track par tez dhaavak dheere dhaavak ko pakad leta hai.',
+          'Correct answer: in a cycle the fast pointer never reaches None and laps the slow pointer — just as a fast runner catches a slow runner on a circular track.'
+        )
+      },
+      {
+        q: t(
+          '[1, 2, 3, 4, 5] ko k=2 mein reverse karne par kya milega?',
+          'What do you get by reversing [1, 2, 3, 4, 5] with k=2?'
+        ),
+        opts: [
+          t('[2, 1, 4, 3, 5]', '[2, 1, 4, 3, 5]'),
+          t('[5, 4, 3, 2, 1]', '[5, 4, 3, 2, 1]'),
+          t('[3, 2, 1, 4, 5]', '[3, 2, 1, 4, 5]'),
+          t('[1, 2, 3, 4, 5]', '[1, 2, 3, 4, 5]')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: har 2 nodes ka group reverse hota hai — [1,2] se [2,1], [3,4] se [4,3], aur aakhri [5] waisa hi rehta hai.',
+          'Correct answer: each group of 2 nodes is reversed — [1,2] becomes [2,1], [3,4] becomes [4,3], and the last [5] stays as it is.'
+        )
+      },
+      {
+        q: t(
+          'List reverse karte waqt sabse pehle kya karna chahiye?',
+          'What should you do first when reversing a list?'
+        ),
+        opts: [
+          t('cur.next ko prev par set karo', 'Set cur.next to prev'),
+          t('Agla node nxt mein save karo', 'Save the next node in nxt'),
+          t('Prev ko None karo', 'Set prev to None'),
+          t('Head ko delete karo', 'Delete the head')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle nxt = cur.next se agla node save karo, phir cur.next badlo — warna aage ke nodes ka rasta kho jaayega aur list toot jaayegi.',
+          'Correct answer: first save the next node with nxt = cur.next, then change cur.next — otherwise the path to the following nodes is lost and the list breaks.'
+        )
+      },
+      {
+        q: t(
+          'Do sorted lists merge karne ki time complexity kya hoti hai?',
+          'What is the time complexity of merging two sorted lists?'
+        ),
+        opts: [
+          t('O(n * m)', 'O(n * m)'),
+          t('O(n + m)', 'O(n + m)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(1)', 'O(1)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har node ko sirf ek baar dekhte hain aur chhote wale ko answer mein jodte hain, isliye total time dono lists ki length ka sum hota hai.',
+          'Correct answer: every node is visited only once and the smaller one is attached to the answer, so the total time is the sum of both list lengths.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Fast pointer do steps, slow pointer ek step — jab fast end par pahunche, slow middle par hoga.',
+        'The fast pointer takes two steps, the slow pointer one step — when fast reaches the end, slow is in the middle.'
+      ),
+      t(
+        'Cycle mein fast slow ko pakad leta hai (slow is fast); cycle na ho toh fast None par pahunchta hai.',
+        'In a cycle, fast catches slow (slow is fast); without a cycle, fast reaches None.'
+      ),
+      t(
+        'Reverse karte waqt pehle nxt mein agla node save karo, phir link ulta karo.',
+        'When reversing, first save the next node in nxt, then flip the link.'
+      ),
+      t(
+        'Reverse in groups mein aakhri chhota group waisa hi rehta hai.',
+        'In reverse in groups, the last smaller group stays as it is.'
+      ),
+      t(
+        'Merge mein dono heads ko compare karo aur chhote ko answer mein jodo — O(n + m).',
+        'In merge, compare both heads and attach the smaller one to the answer — O(n + m).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: List Reverse Karo aur Middle Nikaalo',
+        'Practice: Reverse a List and Find the Middle'
+      ),
+      task: t(
+        'List [1, 2, 3, 4] ko reverse karke [4, 3, 2, 1] banao, aur list [10, 20, 30, 40, 50] ka middle nikaalo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Reverse the list [1, 2, 3, 4] to get [4, 3, 2, 1], and find the middle of the list [10, 20, 30, 40, 50]. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+def build(vals):
+    head = ListNode(vals[0])
+    cur = head
+    for v in vals[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+    return head
+
+def to_list(head):
+    out = []
+    while head:
+        out.append(head.val)
+        head = head.next
+    return out
+
+def reverse_list(head):
+    prev = None
+    cur = head
+    while cur:
+        nxt = cur.next
+        cur.next = prev
+        prev = cur
+        cur = nxt
+    return prev
+
+def middle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow.val
+
+print("reverse [1,2,3,4]:", to_list(reverse_list(build([1, 2, 3, 4]))))
+print("middle of [10,20,30,40,50]:", middle(build([10, 20, 30, 40, 50])))`,
+      expected: `reverse [1,2,3,4]: [4, 3, 2, 1]
+middle of [10,20,30,40,50]: 30`
+    },
+    readMinutes: 12
+  };
+
+const dsaSegmentTree: Article = {
+    id: 'dsa-segment-tree',
+    subjectId: 'dsa',
+    title: t(
+      'Segment Tree & Fenwick Tree (BIT) — Range Sum/Min Queries aur Point Updates',
+      'Segment Tree & Fenwick Tree (BIT) — Range Sum/Min Queries and Point Updates'
+    ),
+    summary: t(
+      'Segment tree aur Fenwick tree ko zero se samjho: range sum aur range min queries O(log n) mein kaise hoti hain, point update kaise kaam karta hai, build/query/update ka dry run kaisa hota hai, aur prefix sum se kab segment tree behtar hota hai.',
+      'Learn segment trees and Fenwick trees from scratch: how range sum and range min queries run in O(log n), how a point update works, what the build/query/update dry run looks like, and when a segment tree beats a prefix sum.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Segment Tree Kya Hai? (Range ko Tukdon mein Baantna)',
+          '1. What Is a Segment Tree? (Splitting a Range into Pieces)'
+        ),
+        body: t(
+          `Segment tree ek binary tree hota hai jo array ke **ranges** ko store karta hai. Har node ek range ka answer rakhta hai: jaise sum, minimum ya maximum. Root poore array ka answer rakhta hai, uske children aadhe-aadhe array ka answer rakhte hain, aur leaves ek-ek element ko rakhte hain. Array \`[1, 3, 5, 7, 9, 11]\` par root ka sum 36 hota hai, left child (0-2) ka sum 9 hota hai, right child (3-5) ka sum 27 hota hai.
+
+Segment tree ka use tab hota hai jab aapko baar-baar **range queries** poochhni hon aur **updates** bhi karni hon. Jaise "index 1 se 3 tak ka sum kya hai?" aur "index 1 ki value 10 kar do". Prefix sum se range sum O(1) mein milta hai, par update karne par poora prefix sum dobara banana padta hai — O(n). Segment tree mein query aur update dono **O(log n)** hote hain, kyunki har baar sirf tree ki height tak jaana padta hai.
+
+**Fenwick tree (BIT)** segment tree ka chhota bhai hai: woh bhi range sum aur point update O(log n) mein karta hai, par sirf woh operations jo **invertible** hon (jaise sum). Range minimum ke liye BIT kaam nahi karta, wahan segment tree chahiye. BIT kam memory leta hai aur code chhota hota hai, isliye sum wale problems mein BIT pasand kiya jaata hai.`,
+          `A segment tree is a binary tree that stores the answers for **ranges** of an array. Each node holds the answer for one range: a sum, a minimum, or a maximum. The root holds the answer for the whole array, its children hold the answers for the two halves, and the leaves hold single elements. For the array \`[1, 3, 5, 7, 9, 11]\`, the root sum is 36, the left child (0-2) sum is 9, and the right child (3-5) sum is 27.
+
+A segment tree is used when you need to ask **range queries** again and again and also make **updates**. For example, "what is the sum from index 1 to 3?" and "set index 1 to 10". A prefix sum gives a range sum in O(1), but after an update the whole prefix sum must be rebuilt — O(n). In a segment tree, both query and update are **O(log n)**, because you only travel down the height of the tree.
+
+A **Fenwick tree (BIT)** is the segment tree's smaller sibling: it also does range sum and point update in O(log n), but only for operations that are **invertible** (like sum). A BIT cannot do range minimum — for that you need a segment tree. A BIT uses less memory and shorter code, so it is preferred for sum problems.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Scoreboard, Stock Range aur Sensor Data',
+          '2. Real-Life Examples: Scoreboard, Stock Range, and Sensor Data'
+        ),
+        body: t(
+          `**Scoreboard** segment tree ka sabse seedha example hai. Cricket match mein har ball par score badhta hai, aur commentator poochhta hai: "pichle 10 overs mein kitne runs bane?" Yeh range sum query hai, aur har ball par update hoti hai. Prefix sum se har ball ke baad poora sum dobara banana padta, segment tree se sirf O(log n) mein update ho jaata hai.
+
+Doosra example hai **stock range**: "pichle 30 dinon mein sabse kam price kya tha?" Yeh range minimum query hai. Stock prices har din update hote hain, isliye prefix sum kaam nahi karta — segment tree chahiye, kyunki minimum invertible nahi hota aur BIT se nahi nikalta.
+
+Teesra example hai **sensor data**: temperature sensors har minute reading bhejte hain, aur dashboard poochhta hai "pichle 1 ghante ka average temperature kya tha?" Yeh range sum query hai, jismein updates lagatar aati rehti hain. Database aur analytics systems mein segment tree jaisi structures hi range queries ko tez banati hain.`,
+          `A **scoreboard** is the simplest example of a segment tree. In a cricket match, the score grows with every ball, and the commentator asks: "how many runs were scored in the last 10 overs?" That is a range sum query, with an update on every ball. With a prefix sum, the whole sum would have to be rebuilt after every ball; with a segment tree, the update takes only O(log n).
+
+A second example is a **stock range**: "what was the lowest price in the last 30 days?" That is a range minimum query. Stock prices update every day, so a prefix sum does not work — a segment tree is needed, because minimum is not invertible and a BIT cannot compute it.
+
+A third example is **sensor data**: temperature sensors send a reading every minute, and a dashboard asks "what was the average temperature in the last hour?" That is a range sum query with constant updates. In databases and analytics systems, structures like segment trees are what make range queries fast.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Build, Query aur Update ka Dry Run',
+          '3. Step-by-Step: Dry Run of Build, Query, and Update'
+        ),
+        body: t(
+          `Ab hum array \`[1, 3, 5, 7, 9, 11]\` par segment tree ka dry run karte hain. Tree ko array \`tree\` mein store karte hain, size \`4 * n\` hota hai. Har node ka index \`node\` hai, aur woh range \`[l, r]\` ko cover karta hai. Mid nikaal kar range ko do hisson mein baant te hain: left child \`2*node+1\`, right child \`2*node+2\`.
+
+**Build:** leaves mein single elements hain: [1], [3], [5], [7], [9], [11]. Unke parents mein sum hota hai: [1,3] ka sum 4, [5,7] ka sum 12, [9,11] ka sum 20. Uske upar [1,3,5,7] ka sum 16 aur [9,11] ka sum 20. Root par poora sum **36** hota hai. Build O(n) time leta hai.
+
+**Query sum(1, 3):** root range [0,5] hai, query [1,3] hai. Root ka range query se bada hai, toh dono children mein jao. Left child [0,2] se [1,2] ka hissa milta hai: 3 + 5 = 8. Right child [3,5] se [3,3] ka hissa milta hai: 7. Total **15** hota hai. Sirf O(log n) nodes visit hote hain — poora array scan nahi hota.
+
+**Update index 1 ko 10 karo:** leaf [1,1] ki value 3 se 10 ho jaati hai. Phir upar jaate hue har parent ka sum update karo: [0,1] ka sum 11 ho jaata hai, [0,2] ka sum 16 ho jaata hai, root ka sum 43 ho jaata hai. Ab query sum(1, 3) dobara karo toh **22** milta hai (10 + 5 + 7). Update bhi O(log n) mein hoti hai. Neeche wala code yahi poora process print karta hai.`,
+          `Now let us dry-run a segment tree on the array \`[1, 3, 5, 7, 9, 11]\`. The tree is stored in an array called \`tree\`, of size \`4 * n\`. Each node has an index \`node\` and covers a range \`[l, r]\`. Splitting at the mid divides the range into two halves: the left child is \`2*node+1\` and the right child is \`2*node+2\`.
+
+**Build:** the leaves hold single elements: [1], [3], [5], [7], [9], [11]. Their parents hold sums: [1,3] sums to 4, [5,7] sums to 12, [9,11] sums to 20. Above them, [1,3,5,7] sums to 16 and [9,11] sums to 20. The root holds the full sum, **36**. Building takes O(n) time.
+
+**Query sum(1, 3):** the root covers [0,5] and the query is [1,3]. The root range is larger than the query, so go into both children. From the left child [0,2], the part [1,2] gives 3 + 5 = 8. From the right child [3,5], the part [3,3] gives 7. The total is **15**. Only O(log n) nodes are visited — the whole array is never scanned.
+
+**Update index 1 to 10:** the leaf [1,1] changes from 3 to 10. Then, moving upward, update every parent sum: [0,1] becomes 11, [0,2] becomes 16, and the root becomes 43. Now querying sum(1, 3) again gives **22** (10 + 5 + 7). Update also takes O(log n). The code below prints this whole process.`
+        ),
+        code: {
+          title: t(
+            'Segment Tree: Build, Range Sum Query aur Point Update',
+            'Segment Tree: Build, Range Sum Query, and Point Update'
+          ),
+          language: 'python',
+          code: `class SegTree:
+    def __init__(self, arr):
+        self.n = len(arr)
+        self.tree = [0] * (4 * self.n)
+        self.build(arr, 0, 0, self.n - 1)
+
+    def build(self, arr, node, l, r):
+        if l == r:
+            self.tree[node] = arr[l]
+            return
+        mid = (l + r) // 2
+        self.build(arr, 2 * node + 1, l, mid)
+        self.build(arr, 2 * node + 2, mid + 1, r)
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+    def query(self, node, l, r, ql, qr):
+        if qr < l or ql > r:
+            return 0
+        if ql <= l and r <= qr:
+            return self.tree[node]
+        mid = (l + r) // 2
+        return self.query(2 * node + 1, l, mid, ql, qr) + self.query(2 * node + 2, mid + 1, r, ql, qr)
+
+    def range_sum(self, ql, qr):
+        return self.query(0, 0, self.n - 1, ql, qr)
+
+    def update(self, node, l, r, idx, val):
+        if l == r:
+            self.tree[node] = val
+            return
+        mid = (l + r) // 2
+        if idx <= mid:
+            self.update(2 * node + 1, l, mid, idx, val)
+        else:
+            self.update(2 * node + 2, mid + 1, r, idx, val)
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+    def point_update(self, idx, val):
+        self.update(0, 0, self.n - 1, idx, val)
+
+st = SegTree([1, 3, 5, 7, 9, 11])
+print("sum 1-3:", st.range_sum(1, 3))
+print("sum 0-5:", st.range_sum(0, 5))
+st.point_update(1, 10)
+print("after update index 1 to 10, sum 1-3:", st.range_sum(1, 3))
+print("after update, sum 0-5:", st.range_sum(0, 5))`,
+          output: `sum 1-3: 15
+sum 0-5: 36
+after update index 1 to 10, sum 1-3: 22
+after update, sum 0-5: 43`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Tree ka Size, Query ke Base Cases aur Update mein Leaf',
+          '4. Common Mistakes: Tree Size, Query Base Cases, and the Leaf in Update'
+        ),
+        body: t(
+          `**Galti 1: Tree ka size \`4 * n\` se kam rakhna.** Segment tree ke liye \`4 * n\` size safe hota hai, kyunki tree poora binary tree nahi hota — aakhri level adhura ho sakta hai. \`2 * n\` size rakhoge toh index out of range ho jaayega. Hamesha \`4 * n\` use karo, yeh standard hai.
+
+**Galti 2: Query mein base cases ulta karna.** Query mein do base cases hain: agar range poori tarah bahar hai (\`qr < l or ql > r\`), toh 0 return karo (sum ke liye identity); agar range poori tarah andar hai (\`ql <= l and r <= qr\`), toh node ka value return karo. Dono ko ulta kar doge toh answer galat aayega. Minimum ke liye bahar wale case mein infinity return karna padta hai, 0 nahi — yeh farak yaad rakho.
+
+**Galti 3: Update mein leaf par rukna bhoolna.** Update mein jab \`l == r\` ho jaaye, toh wahi leaf hai — uski value badlo aur return karo. Agar leaf par nahi ruke, toh recursion aage badhta rahega aur galat index par update ho jaayega. Update ke baad wapas aate hue har parent ka value dobara calculate karna mat bhoolo.
+
+**Galti 4: BIT mein 1-indexed bhoolna.** Fenwick tree 1-indexed hota hai: index 0 use nahi hota. Agar aap 0-indexed array ko seedha BIT mein daal do bina +1 kiye, toh \`i & -i\` wala logic galat kaam karega aur infinite loop bhi ho sakta hai. Hamare code mein \`add\` aur \`prefix\` dono mein \`i += 1\` kiya gaya hai.`,
+          `**Mistake 1: Making the tree smaller than \`4 * n\`.** A size of \`4 * n\` is safe for a segment tree, because the tree is not a complete binary tree — the last level can be incomplete. With a size of \`2 * n\` you will get an index out of range. Always use \`4 * n\`; that is the standard.
+
+**Mistake 2: Mixing up the base cases in query.** A query has two base cases: if the range is fully outside (\`qr < l or ql > r\`), return 0 (the identity for sum); if the range is fully inside (\`ql <= l and r <= qr\`), return the node's value. Swap them and the answer will be wrong. For minimum, the outside case must return infinity, not 0 — remember that difference.
+
+**Mistake 3: Forgetting to stop at the leaf in update.** In an update, when \`l == r\`, that is the leaf — change its value and return. If you do not stop at the leaf, the recursion keeps going and updates the wrong index. On the way back up, do not forget to recalculate every parent's value.
+
+**Mistake 4: Forgetting that a BIT is 1-indexed.** A Fenwick tree is 1-indexed: index 0 is not used. If you put a 0-indexed array straight into a BIT without adding 1, the \`i & -i\` logic will work wrongly and can even loop forever. In our code, both \`add\` and \`prefix\` do \`i += 1\`.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Ek Element, Query Poora Array, Query Bahar aur Khaali Range',
+          '5. Edge Cases: One Element, Query Over the Whole Array, Query Outside, and Empty Range'
+        ),
+        body: t(
+          `**1. Sirf ek element.** Array [7] par root hi leaf hai. Query sum(0, 0) = 7 deta hai, update index 0 ko 5 karne par root 5 ho jaata hai. Yeh base case har function mein handle hota hai.
+
+**2. Query poora array — sum(0, n-1).** Root ka value hi answer hota hai, O(1) mein mil jaata hai, kyunki root ka range query ke barabar hai. Yeh segment tree ka sabse tez query hai.
+
+**3. Query poori tarah bahar — sum(10, 20) jab n=6 ho.** Hamara code \`qr < l or ql > r\` wale case mein 0 deta hai. Par interview mein poochh lo ki aisi query allowed hai ya nahi — aksar inputs valid hote hain, par defensive code mein check karna achha hota hai.
+
+**4. Khaali range — ql > qr.** Jaise sum(3, 2). Yeh invalid query hai. Hamare code mein yeh 0 dega, kyunki har node par bahar wala case trigger hoga. Sahi code mein pehle hi check karke 0 return karna chahiye.
+
+**5. BIT mein prefix(0) aur range_sum(0, 0).** BIT mein prefix sum index 0 tak ka sum hota hai, aur range_sum(l, r) = prefix(r) - prefix(l-1) hota hai. Jab l = 0 ho, toh prefix(-1) nahi nikaalte — seedha prefix(r) hi answer hota hai. Hamare code mein yeh check hai: \`prefix(l - 1) if l > 0 else 0\`.`,
+          `**1. Only one element.** For the array [7], the root is itself the leaf. Query sum(0, 0) gives 7, and updating index 0 to 5 makes the root 5. This base case is handled in every function.
+
+**2. Query over the whole array — sum(0, n-1).** The root's value is the answer, found in O(1), because the root range equals the query. This is the fastest query in a segment tree.
+
+**3. Query fully outside — sum(10, 20) when n=6.** Our code returns 0 through the \`qr < l or ql > r\` case. But ask in an interview whether such a query is allowed — inputs are usually valid, but checking defensively is good practice.
+
+**4. Empty range — ql > qr.** For example, sum(3, 2). That is an invalid query. Our code gives 0, because the outside case triggers at every node. Correct code should check this first and return 0.
+
+**5. prefix(0) and range_sum(0, 0) in a BIT.** In a BIT, a prefix sum is the sum up to index 0, and range_sum(l, r) = prefix(r) - prefix(l-1). When l = 0, you do not compute prefix(-1) — prefix(r) itself is the answer. Our code has this check: \`prefix(l - 1) if l > 0 else 0\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Prefix Sum vs Segment Tree, BIT aur Range Minimum',
+          '6. What-If: Prefix Sum vs Segment Tree, BIT, and Range Minimum'
+        ),
+        body: t(
+          `**What if: sirf queries hon, updates na hon?** Tab prefix sum best hai: build O(n), query O(1), memory O(n). Segment tree banane ki zaroorat nahi hai. Interview mein pehle poochho ki updates hain ya nahi — yahi faisla badal deta hai.
+
+**What if: updates bhi hon aur sirf sum chahiye?** Tab BIT best hai: build O(n log n) ya O(n), query aur update O(log n), memory O(n), aur code segment tree se chhota hai. Neeche wala code BIT dikhata hai: array [1, 3, 5, 7, 9, 11] par prefix(3) = 16 aur range(1, 3) = 15 aata hai. Index 1 par 7 add karne ke baad range(1, 3) = 22 ho jaata hai — wahi answer jo segment tree ne diya tha.
+
+**What if: range minimum ya maximum chahiye?** Tab segment tree chahiye, kyunki BIT minimum nahi kar sakta — minimum ka koi inverse nahi hota. Segment tree mein sum ki jagah min use karo aur bahar wale case mein infinity return karo. Neeche wala code range minimum dikhata hai: [4, 2, 7, 1, 9, 3] par min(0, 5) = 1, min(2, 4) = 1, min(0, 1) = 2.
+
+**What if: lazy propagation?** Jab range update karni ho (jaise range [1, 4] mein 5 add karo), toh segment tree mein **lazy propagation** use hota hai — update ko neeche jaane se roko aur node par pending mark karo. Yeh advanced topic hai, par naam yaad rakho: range update + range query ke liye lazy segment tree chahiye.`,
+          `**What if there are only queries and no updates?** Then a prefix sum is best: build O(n), query O(1), memory O(n). There is no need to build a segment tree. In an interview, first ask whether there are updates — that alone changes the decision.
+
+**What if there are updates too, and you only need sums?** Then a BIT is best: build O(n log n) or O(n), query and update O(log n), memory O(n), and the code is shorter than a segment tree. The code below shows a BIT: for the array [1, 3, 5, 7, 9, 11], prefix(3) = 16 and range(1, 3) = 15. After adding 7 at index 1, range(1, 3) becomes 22 — the same answer the segment tree gave.
+
+**What if you need range minimum or maximum?** Then you need a segment tree, because a BIT cannot do minimum — minimum has no inverse. In a segment tree, use min instead of sum and return infinity for the outside case. The code below shows range minimum: for [4, 2, 7, 1, 9, 3], min(0, 5) = 1, min(2, 4) = 1, and min(0, 1) = 2.
+
+**What if you need a range update?** When you must update a whole range (for example, add 5 to range [1, 4]), a segment tree uses **lazy propagation** — stop the update from going down and mark it pending on the node. That is an advanced topic, but remember the name: range update plus range query needs a lazy segment tree.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Segment Tree aur BIT se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Segment Tree and BIT to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Segment tree** mein har node ek range ka answer rakhta hai: root poora array, children aadhe-aadhe, leaves single elements. **Build** O(n), **query** aur **point update** dono O(log n) hote hain. Tree ka size \`4 * n\` rakho. Query mein do base cases hain: range bahar ho toh identity return karo (sum ke liye 0, min ke liye infinity), range andar ho toh node ka value return karo.
+
+**Prefix sum** tab best hai jab sirf queries hon aur updates na hon: query O(1), par update O(n). **BIT (Fenwick tree)** sum wale problems mein best hai: query aur update O(log n), code chhota, memory kam — par minimum nahi kar sakta. **Segment tree** har operation kar sakta hai: sum, min, max, gcd — bas operation ka identity sahi rakho.
+
+Interview mein jab bhi "range query + update" suno, toh pehle poochho: updates hain? Sirf sum chahiye ya min/max bhi? Uske baad prefix sum, BIT ya segment tree mein se chuno. Revision ke liye \`[1, 3, 5, 7, 9, 11]\` par build, query sum(1, 3) aur update index 1 ko 10 karne ka dry run khud karo. Agar teeno jawab bina code dekhe aa jaayein, toh segment tree aapko aa gaya hai.`,
+          `Let us tie the whole article together. In a **segment tree**, each node holds the answer for one range: the root holds the whole array, the children hold the halves, and the leaves hold single elements. **Build** is O(n), and **query** and **point update** are both O(log n). Keep the tree size at \`4 * n\`. A query has two base cases: if the range is outside, return the identity (0 for sum, infinity for min); if the range is inside, return the node's value.
+
+A **prefix sum** is best when there are only queries and no updates: query O(1), but update O(n). A **BIT (Fenwick tree)** is best for sum problems: query and update O(log n), short code, low memory — but it cannot do minimum. A **segment tree** can do every operation: sum, min, max, gcd — just keep the operation's identity correct.
+
+In an interview, whenever you hear "range query plus update", first ask: are there updates? Do you need only sum, or min/max too? Then choose among prefix sum, BIT, and segment tree. To revise, dry-run build, query sum(1, 3), and update index 1 to 10 yourself on \`[1, 3, 5, 7, 9, 11]\`. If you can answer all three without looking at the code, you know segment trees.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Segment Tree: [1, 3, 5, 7, 9, 11] ka Sum Tree',
+        'Segment Tree: Sum Tree of [1, 3, 5, 7, 9, 11]'
+      ),
+      caption: t(
+        'Root 36, query sum(1, 3) = 15, update ke baad 22',
+        'Root 36, query sum(1, 3) = 15, and 22 after the update'
+      ),
+      nodes: [
+        { t: t('Root [0-5]: 36', 'Root [0-5]: 36'), s: t('Poore array ka sum', 'Sum of the whole array') },
+        { t: t('Left [0-2]: 9', 'Left [0-2]: 9'), s: t('1 + 3 + 5', '1 + 3 + 5') },
+        { t: t('Right [3-5]: 27', 'Right [3-5]: 27'), s: t('7 + 9 + 11', '7 + 9 + 11') },
+        { t: t('Query [1-3]: 15', 'Query [1-3]: 15'), s: t('3 + 5 + 7, sirf O(log n) nodes visit', '3 + 5 + 7, only O(log n) nodes visited') },
+        { t: t('Update index 1 to 10: root 43', 'Update index 1 to 10: root 43'), s: t('Leaf se root tak har parent update hota hai', 'Every parent from the leaf to the root is updated') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Fenwick Tree (BIT): Prefix Sum aur Range Sum', 'Fenwick Tree (BIT): Prefix Sum and Range Sum'),
+        language: 'python',
+        code: `class BIT:
+    def __init__(self, n):
+        self.n = n
+        self.bit = [0] * (n + 1)
+
+    def add(self, i, delta):
+        i += 1
+        while i <= self.n:
+            self.bit[i] += delta
+            i += i & -i
+
+    def prefix(self, i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += self.bit[i]
+            i -= i & -i
+        return s
+
+    def range_sum(self, l, r):
+        return self.prefix(r) - (self.prefix(l - 1) if l > 0 else 0)
+
+bit = BIT(6)
+for i, v in enumerate([1, 3, 5, 7, 9, 11]):
+    bit.add(i, v)
+print("BIT prefix 3:", bit.prefix(3))
+print("BIT range 1-3:", bit.range_sum(1, 3))
+bit.add(1, 7)
+print("BIT after add 7 at index 1, range 1-3:", bit.range_sum(1, 3))`,
+        output: `BIT prefix 3: 16
+BIT range 1-3: 15
+BIT after add 7 at index 1, range 1-3: 22`
+      },
+      {
+        title: t('Range Minimum: Segment Tree se Min Nikaalo', 'Range Minimum: Find the Minimum with a Segment Tree'),
+        language: 'python',
+        code: `class SegMin:
+    def __init__(self, arr):
+        self.n = len(arr)
+        self.tree = [0] * (4 * self.n)
+        self.build(arr, 0, 0, self.n - 1)
+
+    def build(self, arr, node, l, r):
+        if l == r:
+            self.tree[node] = arr[l]
+            return
+        mid = (l + r) // 2
+        self.build(arr, 2 * node + 1, l, mid)
+        self.build(arr, 2 * node + 2, mid + 1, r)
+        self.tree[node] = min(self.tree[2 * node + 1], self.tree[2 * node + 2])
+
+    def query(self, node, l, r, ql, qr):
+        if qr < l or ql > r:
+            return 10 ** 9
+        if ql <= l and r <= qr:
+            return self.tree[node]
+        mid = (l + r) // 2
+        return min(self.query(2 * node + 1, l, mid, ql, qr), self.query(2 * node + 2, mid + 1, r, ql, qr))
+
+    def range_min(self, ql, qr):
+        return self.query(0, 0, self.n - 1, ql, qr)
+
+sm = SegMin([4, 2, 7, 1, 9, 3])
+print("min 0-5:", sm.range_min(0, 5))
+print("min 2-4:", sm.range_min(2, 4))
+print("min 0-1:", sm.range_min(0, 1))`,
+        output: `min 0-5: 1
+min 2-4: 1
+min 0-1: 2`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Segment tree mein range query aur point update ki time complexity kya hoti hai?',
+          'What is the time complexity of a range query and a point update in a segment tree?'
+        ),
+        opts: [
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: query aur update dono mein sirf tree ki height tak jaana padta hai, aur segment tree ki height log n hoti hai.',
+          'Correct answer: both query and update only travel down the height of the tree, and the height of a segment tree is log n.'
+        )
+      },
+      {
+        q: t(
+          'Segment tree ka size kitna rakhte hain?',
+          'How large is a segment tree kept?'
+        ),
+        opts: [
+          t('2 * n', '2 * n'),
+          t('4 * n', '4 * n'),
+          t('n', 'n'),
+          t('n log n', 'n log n')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: segment tree poora binary tree nahi hota, aakhri level adhura ho sakta hai, isliye 4 * n size safe hota hai.',
+          'Correct answer: a segment tree is not a complete binary tree, and the last level can be incomplete, so a size of 4 * n is safe.'
+        )
+      },
+      {
+        q: t(
+          'Sirf queries hon aur updates na hon, toh sabse best kya hai?',
+          'If there are only queries and no updates, what is best?'
+        ),
+        opts: [
+          t('Segment tree', 'Segment tree'),
+          t('Prefix sum — query O(1)', 'Prefix sum — query O(1)'),
+          t('BIT', 'BIT'),
+          t('Brute force', 'Brute force')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina updates ke prefix sum query O(1) mein deta hai, isliye segment tree ya BIT banane ki zaroorat nahi hoti.',
+          'Correct answer: without updates, a prefix sum answers a query in O(1), so there is no need to build a segment tree or a BIT.'
+        )
+      },
+      {
+        q: t(
+          'Fenwick tree (BIT) se range minimum kyun nahi nikal sakte?',
+          'Why can a Fenwick tree (BIT) not find a range minimum?'
+        ),
+        opts: [
+          t('BIT bahut slow hota hai', 'A BIT is very slow'),
+          t('Minimum ka koi inverse nahi hota', 'Minimum has no inverse'),
+          t('BIT mein tree nahi hota', 'A BIT has no tree'),
+          t('BIT sirf maximum karta hai', 'A BIT only does maximum')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: BIT range sum ko prefix(r) - prefix(l-1) se nikalta hai, jo sirf invertible operations par kaam karta hai — minimum ka inverse nahi hota, isliye BIT se min nahi nikalta.',
+          'Correct answer: a BIT computes a range sum as prefix(r) - prefix(l-1), which only works for invertible operations — minimum has no inverse, so a BIT cannot find a minimum.'
+        )
+      },
+      {
+        q: t(
+          'Range update (poori range mein add karna) ke liye segment tree mein kya use hota hai?',
+          'What is used in a segment tree for a range update (adding to a whole range)?'
+        ),
+        opts: [
+          t('Lazy propagation', 'Lazy propagation'),
+          t('Heapify', 'Heapify'),
+          t('Path compression', 'Path compression'),
+          t('Binary search', 'Binary search')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: lazy propagation update ko node par pending mark karke rok deta hai aur zaroorat padne par hi neeche bhejta hai, isliye range update bhi O(log n) mein ho jaati hai.',
+          'Correct answer: lazy propagation marks the update as pending on the node and only pushes it down when needed, so a range update also runs in O(log n).'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Segment tree mein har node ek range ka answer rakhta hai; build O(n), query aur update O(log n).',
+        'In a segment tree, each node holds the answer for one range; build is O(n), query and update are O(log n).'
+      ),
+      t(
+        'Tree ka size 4 * n rakho; query mein bahar range par identity return karo.',
+        'Keep the tree size at 4 * n; in a query, return the identity for an outside range.'
+      ),
+      t(
+        'Sirf queries hon toh prefix sum best hai (query O(1)); updates hon toh segment tree ya BIT.',
+        'With only queries, a prefix sum is best (query O(1)); with updates, use a segment tree or BIT.'
+      ),
+      t(
+        'BIT sum ke liye best hai, par minimum nahi kar sakta — minimum ka inverse nahi hota.',
+        'A BIT is best for sums, but it cannot do minimum — minimum has no inverse.'
+      ),
+      t(
+        'Range update ke liye lazy propagation use hota hai.',
+        'Lazy propagation is used for range updates.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Range Sum Queries aur Point Update Karo',
+        'Practice: Do Range Sum Queries and a Point Update'
+      ),
+      task: t(
+        'Array [2, 4, 6, 8, 10] par segment tree banao, sum(0, 4) aur sum(2, 4) nikaalo, phir index 0 ko 5 karke sum(0, 4) aur sum(0, 1) dobara nikaalo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Build a segment tree on the array [2, 4, 6, 8, 10], find sum(0, 4) and sum(2, 4), then set index 0 to 5 and find sum(0, 4) and sum(0, 1) again. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `class SegTree:
+    def __init__(self, arr):
+        self.n = len(arr)
+        self.tree = [0] * (4 * self.n)
+        self.build(arr, 0, 0, self.n - 1)
+
+    def build(self, arr, node, l, r):
+        if l == r:
+            self.tree[node] = arr[l]
+            return
+        mid = (l + r) // 2
+        self.build(arr, 2 * node + 1, l, mid)
+        self.build(arr, 2 * node + 2, mid + 1, r)
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+    def query(self, node, l, r, ql, qr):
+        if qr < l or ql > r:
+            return 0
+        if ql <= l and r <= qr:
+            return self.tree[node]
+        mid = (l + r) // 2
+        return self.query(2 * node + 1, l, mid, ql, qr) + self.query(2 * node + 2, mid + 1, r, ql, qr)
+
+    def range_sum(self, ql, qr):
+        return self.query(0, 0, self.n - 1, ql, qr)
+
+    def update(self, node, l, r, idx, val):
+        if l == r:
+            self.tree[node] = val
+            return
+        mid = (l + r) // 2
+        if idx <= mid:
+            self.update(2 * node + 1, l, mid, idx, val)
+        else:
+            self.update(2 * node + 2, mid + 1, r, idx, val)
+        self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
+
+    def point_update(self, idx, val):
+        self.update(0, 0, self.n - 1, idx, val)
+
+st2 = SegTree([2, 4, 6, 8, 10])
+print("sum 0-4:", st2.range_sum(0, 4))
+print("sum 2-4:", st2.range_sum(2, 4))
+st2.point_update(0, 5)
+print("after update index 0 to 5, sum 0-4:", st2.range_sum(0, 4))
+print("after update, sum 0-1:", st2.range_sum(0, 1))`,
+      expected: `sum 0-4: 30
+sum 2-4: 24
+after update index 0 to 5, sum 0-4: 33
+after update, sum 0-1: 9`
+    },
+    readMinutes: 12
+  };
+
+const dsaShortestPath: Article = {
+    id: 'dsa-shortest-path',
+    subjectId: 'dsa',
+    title: t(
+      'Shortest Path — Dijkstra, Bellman-Ford, Floyd-Warshall aur 0-1 BFS',
+      'Shortest Path — Dijkstra, Bellman-Ford, Floyd-Warshall, and 0-1 BFS'
+    ),
+    summary: t(
+      'Shortest path ko zero se samjho: Dijkstra heap ke saath fastest route kaise nikaalta hai, Bellman-Ford negative weights ko kaise handle karta hai, Floyd-Warshall saare pairs ka shortest distance ek saath kaise nikaalta hai, 0-1 BFS kab kaam aata hai, aur kis problem mein kaunsa algorithm chunna hai.',
+      'Learn shortest paths from scratch: how Dijkstra with a heap finds the fastest route, how Bellman-Ford handles negative weights, how Floyd-Warshall finds all-pairs shortest distances at once, when 0-1 BFS helps, and which algorithm to pick for each problem.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Shortest Path Kya Hai? (Dijkstra, Bellman-Ford aur Floyd-Warshall)',
+          '1. What Is a Shortest Path? (Dijkstra, Bellman-Ford, and Floyd-Warshall)'
+        ),
+        body: t(
+          `Ek weighted graph mein har edge par ek number likha hota hai, jise **weight** kehte hain. Yeh weight distance, time, ya cost kuch bhi ho sakta hai. **Shortest path** ka matlab hai start node se end node tak jaane wala woh rasta jiska total weight sabse kam ho. Socho aapko sheher A se sheher E jaana hai aur beech mein kai raste hain — ek rasta chhota par traffic wala hai, doosra lamba par khaali hai. Shortest path woh rasta hai jiska total time sabse kam ho, sirf sabse kam edges wala rasta nahi.
+
+Is problem ke teen mashhoor algorithms hain. **Dijkstra** sabse famous hai: woh hamesha us node ko pehle pakadta hai jiska distance ab tak sabse kam hai, aur ek **min-heap** use karke yeh kaam fast karta hai. Yeh sirf tab sahi kaam karta hai jab saare weights **non-negative** hon, matlab zero ya usse bade. **Bellman-Ford** thoda slow hai par **negative weights** bhi handle kar leta hai, aur negative cycle ko detect bhi kar sakta hai. **Floyd-Warshall** ek hi baar mein **saare pairs** ke beech shortest distance nikaal deta hai, isliye jab har node se har node ka distance chahiye ho toh yeh best hai.
+
+Teeno ka ek hi core idea hai: **relaxation**. Agar start se node \`v\` tak jaane ka rasta node \`u\` se hokar jaata hai, aur \`dist[u] + weight(u, v)\` ab tak ke \`dist[v]\` se kam hai, toh \`dist[v]\` ko update kar do. Bas yahi ek line baar-baar chalti hai, aur farak sirf itna hai ki kaunsa algorithm kis order mein edges ko relax karta hai.`,
+          `In a weighted graph, every edge carries a number called its **weight**. The weight can mean distance, time, or cost. The **shortest path** is the route from the start node to the end node whose total weight is smallest. Imagine travelling from city A to city E with several routes in between — one route is short but full of traffic, another is long but empty. The shortest path is the route with the smallest total time, not simply the route with the fewest edges.
+
+Three famous algorithms solve this problem. **Dijkstra** is the best known: it always picks next the node whose distance so far is smallest, and it uses a **min-heap** to do that fast. It works correctly only when all weights are **non-negative**, meaning zero or more. **Bellman-Ford** is slower but also handles **negative weights**, and it can even detect a negative cycle. **Floyd-Warshall** finds the shortest distance between **all pairs** of nodes in one run, so it is best when you need every distance at once.
+
+All three share one core idea: **relaxation**. If the route to node \`v\` passes through node \`u\`, and \`dist[u] + weight(u, v)\` is smaller than the current \`dist[v]\`, then update \`dist[v]\`. That single step repeats again and again, and the algorithms differ only in the order in which they relax the edges.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Maps, Flight Tickets aur Network Routing',
+          '2. Real-Life Examples: Maps, Flight Tickets, and Network Routing'
+        ),
+        body: t(
+          `Shortest path ka sabse seedha example hai **Google Maps**. Jab aap ek jagah se doosri jagah ka rasta poochhte ho, toh Maps ke peeche Dijkstra jaisa algorithm chal raha hota hai. Sadkein edges hain, chauraha nodes hain, aur har sadak ka weight us par lagne wala time hai. Traffic badle toh weight badal jaata hai aur rasta bhi badal sakta hai. Isi liye Maps kabhi aapko lamba rasta dikhata hai — kyunki total time ke hisaab se wahi shortest hai.
+
+Doosra example hai **flight tickets**. Delhi se Mumbai seedha flight mehenga ho sakta hai, par Delhi se Jaipur aur Jaipur se Mumbai jaana sasta pad sakta hai. Har flight ek edge hai aur ticket price uska weight hai. Sabse sasta safar nikaalna shortest path problem hi hai. Airlines ke systems bhi isi tarah routes ko optimize karte hain.
+
+Teesra example hai **network routing**. Internet par aapka data ek router se doosre router tak jaata hai. Har link par delay hota hai, aur routers woh rasta chunte hain jiska total delay sabse kam ho. Yahan Bellman-Ford ke purane version se inspired routing protocols saalon tak use hote rahe. Jab bhi aapko "sabse kam kharcha" ya "sabse kam time" mein kisi network se guzarna ho, toh aap shortest path problem ko solve kar rahe ho.`,
+          `The simplest example of a shortest path is **Google Maps**. When you ask for a route from one place to another, an algorithm like Dijkstra runs behind the scenes. Roads are edges, crossings are nodes, and each road's weight is the time it takes to cross it. When traffic changes, the weight changes and the route can change too. That is why Maps sometimes shows you a longer road — because by total time, that road is the shortest.
+
+A second example is **flight tickets**. A direct flight from Delhi to Mumbai may be costly, while going Delhi to Jaipur and then Jaipur to Mumbai may be cheaper. Each flight is an edge and the ticket price is its weight. Finding the cheapest trip is exactly a shortest path problem. Airline systems optimise routes in the same way.
+
+A third example is **network routing**. Your data on the internet travels from one router to another. Every link has a delay, and routers choose the route with the smallest total delay. Routing protocols inspired by an early version of Bellman-Ford were used for years. Whenever you must cross a network with the smallest cost or the smallest time, you are solving a shortest path problem.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Dijkstra ka Dry Run Heap ke Saath',
+          '3. Step-by-Step: A Dijkstra Dry Run with a Heap'
+        ),
+        body: t(
+          `Ab hum ek chhote graph par Dijkstra ko haath se chala kar dekhenge. Graph mein 5 nodes hain: A, B, C, D, E. Edges hain: A se B (4), A se C (2), B se C (1), B se D (5), C se D (8), C se E (10), D se E (2). Start node A hai. Shuru mein \`dist\` hai: A = 0, baaki sab **infinity** (matlab abhi pata nahi). Min-heap mein sirf (0, A) hai.
+
+Heap se sabse chhota nikaalo: (0, A). A ke neighbours ko relax karo: B ko 0 + 4 = 4 milta hai, C ko 0 + 2 = 2 milta hai. Heap mein ab (2, C) aur (4, B) hain. Agla sabse chhota hai (2, C). C se D ko 2 + 8 = 10 aur E ko 2 + 10 = 12 milta hai. Heap mein (4, B), (10, D), (12, E) hain. Agla hai (4, B). B se C ko 4 + 1 = 5 milta hai, par C ka distance pehle se 2 hai, isliye no update. B se D ko 4 + 5 = 9 milta hai, jo 10 se kam hai, isliye D = 9 ho gaya.
+
+Agla hai (9, D). D se E ko 9 + 2 = 11 milta hai, jo 12 se kam hai, isliye E = 11 ho gaya. Aakhir mein (11, E) nikalta hai aur heap khaali ho jaata hai. Final distances: A = 0, B = 4, C = 2, D = 9, E = 11. Dhyaan do: B ka distance 4 hai, kyunki C se B ki koi edge hi nahi hai — graph directed hai, isliye edge ka direction matter karta hai.
+
+Yahan ek bahut important baat hai: Dijkstra ek baar jab kisi node ko heap se nikaal leta hai, toh uska distance **final** ho jaata hai, woh dobara kabhi nahi badlega. Yahi greedy choice hai, aur yahi wajah hai ki Dijkstra non-negative weights par sahi hai — negative edge hoti toh baad mein koi aur chhota rasta mil sakta tha. Neeche wala code yahi dry run print karta hai.`,
+          `Now let us run Dijkstra by hand on a small graph. The graph has 5 nodes: A, B, C, D, E. The edges are: A to B (4), A to C (2), B to C (1), B to D (5), C to D (8), C to E (10), D to E (2). The start node is A. At the start, \`dist\` is: A = 0, and all others are **infinity** (meaning unknown yet). The min-heap holds only (0, A).
+
+Take the smallest from the heap: (0, A). Relax the neighbours of A: B gets 0 + 4 = 4, and C gets 0 + 2 = 2. The heap now holds (2, C) and (4, B). The next smallest is (2, C). From C, D gets 2 + 8 = 10 and E gets 2 + 10 = 12. The heap holds (4, B), (10, D), and (12, E). Next is (4, B). From B, C would get 4 + 1 = 5, but C is already 2, so there is no update. From B, D gets 4 + 5 = 9, which is less than 10, so D becomes 9.
+
+Next is (9, D). From D, E gets 9 + 2 = 11, which is less than 12, so E becomes 11. Finally (11, E) comes out and the heap is empty. Final distances: A = 0, B = 4, C = 2, D = 9, E = 11. Notice that B is 4, because there is no edge from C to B — the graph is directed, so the direction of each edge matters.
+
+One very important point: once Dijkstra takes a node out of the heap, its distance is **final** and never changes again. That is the greedy choice, and it is also why Dijkstra is correct only for non-negative weights — with a negative edge, a shorter route could still appear later. The code below prints exactly this dry run.`
+        ),
+        code: {
+          title: t(
+            'Dijkstra: A se Saare Nodes ki Shortest Distance',
+            'Dijkstra: Shortest Distance from A to All Nodes'
+          ),
+          language: 'python',
+          code: `import heapq
+
+graph = {
+    'A': [('B', 4), ('C', 2)],
+    'B': [('C', 1), ('D', 5)],
+    'C': [('D', 8), ('E', 10)],
+    'D': [('E', 2)],
+    'E': [],
+}
+
+dist = {node: float('inf') for node in graph}
+dist['A'] = 0
+heap = [(0, 'A')]
+
+while heap:
+    d, node = heapq.heappop(heap)
+    if d > dist[node]:
+        continue
+    for nxt, w in graph[node]:
+        if d + w < dist[nxt]:
+            dist[nxt] = d + w
+            heapq.heappush(heap, (dist[nxt], nxt))
+
+for node in ['A', 'B', 'C', 'D', 'E']:
+    print(node, '->', dist[node])`,
+          output: `A -> 0
+B -> 4
+C -> 2
+D -> 9
+E -> 11`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Negative Weight, Visited Galat Jagah aur INF',
+          '4. Common Mistakes: Negative Weights, Marking Visited Too Early, and INF'
+        ),
+        body: t(
+          `Shortest path mein sabse badi galti hai **Dijkstra ko negative weights par chalana**. Beginners sochte hain ki Dijkstra har graph par kaam karta hai, par negative edge hone par uski greedy choice galat ho jaati hai — ek baar final mana gaya node baad mein aur chhota distance pa sakta hai. Negative weight dikhe toh turant Bellman-Ford par switch karo.
+
+**Galti 2: visited ko push karte time mark karna.** Dijkstra mein node ko visited tab mark karo jab woh heap se **nikle**, push karte time nahi. Push karte time mark kar doge toh us node ka behtar distance baad mein kabhi update nahi hoga. Isi liye code mein \`if d > dist[node]: continue\` wali line hoti hai — purani entry heap mein padi reh sakti hai, use skip kar do.
+
+**Galti 3: INF ko chhota number samajhna.** Agar aap \`dist\` ko 999 se initialize karte ho aur asli path ka weight 1000 ho jaaye, toh answer galat aayega. Python mein \`float('inf')\` use karo, woh hamesha sabse bada rehta hai.`,
+          `The biggest mistake in shortest paths is **running Dijkstra on negative weights**. Beginners think Dijkstra works on every graph, but with a negative edge its greedy choice breaks — a node already declared final could later get an even shorter distance. If you see a negative weight, switch to Bellman-Ford at once.
+
+**Mistake 2: marking a node visited when you push it.** In Dijkstra, mark a node visited when it **comes out** of the heap, not when you push it. If you mark it on push, a better distance found later can never update it. That is why the code has the line \`if d > dist[node]: continue\` — an old entry can sit in the heap, and you simply skip it.
+
+**Mistake 3: treating INF as a small number.** If you start \`dist\` at 999 and the real path weighs 1000, the answer will be wrong. In Python use \`float('inf')\`; it stays larger than any real distance.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Disconnected Graph, Negative Cycle aur Zero Weight',
+          '5. Edge Cases: Disconnected Graph, Negative Cycle, and Zero Weight'
+        ),
+        body: t(
+          `Pehla edge case hai **disconnected graph**. Agar end node start se connected hi nahi hai, toh uska distance hamesha infinity rahega. Code mein iska matlab hai answer print karne se pehle check karo ki distance ab bhi \`inf\` hai ya nahi, warna aap infinity ko number samajh kar galat output de doge. Interview mein is case ka answer hai "no path" ya -1.
+
+Doosra edge case hai **negative cycle**. Bellman-Ford V-1 baar relax karne ke baad ek aur baar check karta hai: agar Vth baar bhi koi distance kam ho jaaye, toh graph mein negative cycle hai aur shortest path define hi nahi hota, kyunki cycle ko baar-baar ghoom kar distance hamesha kam kiya ja sakta hai. Is case mein algorithm ko ruk kar "negative cycle" report karna chahiye.
+
+Teesra edge case hai **zero weight edges**. Zero weight Dijkstra ke liye theek hai, par 0-1 BFS mein yeh khaas ho jaata hai: jab weights sirf 0 ya 1 hon, toh heap ki jagah **deque** use karo — 0 weight wali edge par node ko aage (left) daalo aur 1 weight wali par peeche (right). Isse O(V + E) time milta hai, heap se bhi fast.`,
+          `The first edge case is a **disconnected graph**. If the end node is not connected to the start at all, its distance stays infinity forever. In code, that means you must check whether the distance is still \`inf\` before printing it, or you will print infinity as if it were a number. In an interview, the answer for this case is "no path" or -1.
+
+The second edge case is a **negative cycle**. After relaxing V-1 times, Bellman-Ford checks once more: if any distance still improves on the Vth round, the graph has a negative cycle and the shortest path is not even defined, because looping around the cycle can keep reducing the distance forever. In this case the algorithm should stop and report "negative cycle".
+
+The third edge case is **zero weight edges**. Zero weight is fine for Dijkstra, but it becomes special in 0-1 BFS: when weights are only 0 or 1, use a **deque** instead of a heap — put a node at the front (left) for a 0-weight edge and at the back (right) for a 1-weight edge. That gives O(V + E) time, even faster than a heap.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Kaunsa Algorithm Kab? (Dijkstra vs Bellman-Ford vs Floyd-Warshall)',
+          '6. What-If: Which Algorithm When? (Dijkstra vs Bellman-Ford vs Floyd-Warshall)'
+        ),
+        body: t(
+          `**What if: sirf ek source se saare nodes ka distance chahiye aur weights non-negative hain?** Toh Dijkstra use karo, heap ke saath time O((V + E) log V) hota hai. Yeh single-source problems ka default answer hai aur interview mein sabse zyada poochha jaata hai.
+
+**What if: weights mein negative values hain?** Toh Dijkstra galat ho sakta hai, isliye Bellman-Ford use karo. Iska time O(V x E) hota hai, slow hai par negative weights aur negative cycle dono handle karta hai. Negative cycle detect karna ho toh yahi ek option hai.
+
+**What if: har node se har node ka distance chahiye?** Toh Floyd-Warshall use karo. Iska time O(V^3) hota hai aur yeh ek 2D table bhar kar saare pairs ka answer ek saath de deta hai. Chhote graph (V lagbhag 100-400) ke liye yeh perfect hai. Bade graph par har source se Dijkstra chalana behtar hota hai.
+
+**What if: weights sirf 0 ya 1 hain?** Toh heap mat lagao, 0-1 BFS use karo. Deque se O(V + E) time milta hai. Yeh grid wale problems mein bahut aata hai jahan ek step ki cost 0 ya 1 hoti hai.`,
+          `**What if you need distances from one source to all nodes and weights are non-negative?** Use Dijkstra with a heap; its time is O((V + E) log V). This is the default answer for single-source problems and the most asked in interviews.
+
+**What if the weights include negative values?** Dijkstra may give wrong answers, so use Bellman-Ford. Its time is O(V x E) — slow, but it handles both negative weights and negative cycles. To detect a negative cycle, this is the only option.
+
+**What if you need the distance from every node to every node?** Use Floyd-Warshall. Its time is O(V^3), and it fills a 2D table to answer all pairs at once. It is perfect for small graphs (V around 100-400). For a large graph, running Dijkstra from each source is better.
+
+**What if the weights are only 0 or 1?** Do not use a heap; use 0-1 BFS. A deque gives O(V + E) time. This appears often in grid problems where one step costs 0 or 1.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Shortest Path se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Shortest Path to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **relaxation** hi shortest path ki jaan hai, aur algorithms sirf relax karne ka order badalte hain. **Dijkstra** heap ke saath non-negative weights par sabse fast hai — O((V + E) log V). **Bellman-Ford** V-1 baar saari edges relax karta hai, negative weights handle karta hai aur Vth baar mein negative cycle pakadta hai — O(V x E). **Floyd-Warshall** ek 2D table se saare pairs ka shortest distance nikaalta hai — O(V^3). Weights sirf 0 ya 1 hon toh **0-1 BFS** deque se O(V + E) mein kaam karta hai.
+
+Interview mein jab bhi "minimum cost", "minimum time" ya "cheapest route" suno, toh pehle graph banao, weights likho, aur phir socho: negative weight hai ya nahi, ek source hai ya saare pairs. Is ek sawaal se sahi algorithm mil jaata hai. Revision ke liye upar wala Dijkstra dry run khud haath se dobara karo — A = 0, C = 2, B = 4, D = 9, E = 11. Agar yeh sequence bina code dekhe nikal jaaye, toh shortest path aapko aa gaya hai. Agle article mein hum MST aur topological sort dekhenge — wahan sabse sasta network banana aur kaam ka sahi order nikaalna seekhenge.`,
+          `The whole article in one line: **relaxation** is the heart of shortest paths, and the algorithms only change the order of relaxing. **Dijkstra** with a heap is fastest for non-negative weights — O((V + E) log V). **Bellman-Ford** relaxes all edges V-1 times, handles negative weights, and catches a negative cycle on the Vth round — O(V x E). **Floyd-Warshall** uses a 2D table to find all-pairs shortest distances — O(V^3). When weights are only 0 or 1, **0-1 BFS** with a deque does the job in O(V + E).
+
+In an interview, whenever you hear "minimum cost", "minimum time", or "cheapest route", first build the graph, write the weights, and then ask: are there negative weights, and do I need one source or all pairs? That one question picks the right algorithm. To revise, repeat the Dijkstra dry run above by hand — A = 0, C = 2, B = 4, D = 9, E = 11. If you can produce that sequence without looking at the code, you know shortest paths. In the next article we will look at MST and topological sort — there you will learn to build the cheapest network and to find the correct order of tasks.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Dijkstra ka Flow: Heap se Chhota Node, Neighbours Relax',
+        'Dijkstra Flow: Smallest Node from Heap, Relax Neighbours'
+      ),
+      nodes: [
+        {
+          t: t('Start: dist[A] = 0, baaki inf', 'Start: dist[A] = 0, others inf'),
+          s: t('Heap mein (0, A) daalo', 'Push (0, A) into the heap')
+        },
+        {
+          t: t('Heap se sabse chhota (d, node) nikaalo', 'Pop the smallest (d, node) from the heap'),
+          s: t('Purani entry ho toh skip karo', 'Skip it if it is an old entry')
+        },
+        {
+          t: t('Har neighbour ko relax karo', 'Relax every neighbour'),
+          s: t('dist[u] + w < dist[v] ho toh update karo', 'Update when dist[u] + w < dist[v]')
+        },
+        {
+          t: t('Heap khaali hone tak repeat karo', 'Repeat until the heap is empty'),
+          s: t('Jo node heap se nikla, uska distance final hai', 'A node popped from the heap has its final distance')
+        },
+        {
+          t: t('Final: A=0, C=2, B=4, D=9, E=11', 'Final: A=0, C=2, B=4, D=9, E=11'),
+          s: t('Negative weight ho toh Dijkstra mat chalao', 'Do not run Dijkstra with negative weights')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Bellman-Ford: Negative Edge ke Saath Shortest Distance',
+          'Bellman-Ford: Shortest Distance with a Negative Edge'
+        ),
+        language: 'python',
+        code: `edges = [('A', 'B', 4), ('A', 'C', 2), ('B', 'C', -3), ('C', 'D', 2), ('B', 'D', 5)]
+nodes = ['A', 'B', 'C', 'D']
+dist = {n: float('inf') for n in nodes}
+dist['A'] = 0
+
+for _ in range(len(nodes) - 1):
+    for u, v, w in edges:
+        if dist[u] + w < dist[v]:
+            dist[v] = dist[u] + w
+
+for n in nodes:
+    print(n, '->', dist[n])`,
+        output: `A -> 0
+B -> 4
+C -> 1
+D -> 3`
+      },
+      {
+        title: t(
+          'Floyd-Warshall: 3 Nodes ke Saare Pairs ka Distance',
+          'Floyd-Warshall: All-Pairs Distance for 3 Nodes'
+        ),
+        language: 'python',
+        code: `INF = 999
+dist = [[0, 3, INF], [INF, 0, 1], [2, INF, 0]]
+n = 3
+
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            if dist[i][k] + dist[k][j] < dist[i][j]:
+                dist[i][j] = dist[i][k] + dist[k][j]
+
+for row in dist:
+    print(row)`,
+        output: `[0, 3, 4]
+[3, 0, 1]
+[2, 5, 0]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Dijkstra algorithm kis tarah ke weights par sahi kaam karta hai?',
+          'On which kind of weights does Dijkstra work correctly?'
+        ),
+        opts: [
+          t('Sirf negative weights par', 'Only on negative weights'),
+          t('Sirf zero weights par', 'Only on zero weights'),
+          t('Sirf non-negative weights par', 'Only on non-negative weights'),
+          t('Har tarah ke weights par', 'On all kinds of weights')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Dijkstra ki greedy choice is baat par depend karti hai ki baad mein koi chhota rasta nahi milega, jo negative edge ke saath toot jaati hai.',
+          'Correct answer: Dijkstra greedy choice depends on no shorter route appearing later, which breaks when a negative edge exists.'
+        )
+      },
+      {
+        q: t(
+          'Bellman-Ford V nodes wale graph mein edges ko kitni baar relax karta hai?',
+          'How many times does Bellman-Ford relax the edges in a graph with V nodes?'
+        ),
+        opts: [
+          t('1 baar', '1 time'),
+          t('V baar', 'V times'),
+          t('V - 1 baar', 'V - 1 times'),
+          t('V x V baar', 'V x V times')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: bina cycle wala shortest path zyada se zyada V - 1 edges ka hota hai, isliye V - 1 rounds kaafi hain; Vth round mein improvement mile toh negative cycle hai.',
+          'Correct answer: a shortest path without a cycle has at most V - 1 edges, so V - 1 rounds are enough; an improvement in the Vth round means a negative cycle.'
+        )
+      },
+      {
+        q: t(
+          'Floyd-Warshall algorithm ka time complexity kya hai?',
+          'What is the time complexity of the Floyd-Warshall algorithm?'
+        ),
+        opts: [
+          t('O(V + E)', 'O(V + E)'),
+          t('O(V log V)', 'O(V log V)'),
+          t('O(V x E)', 'O(V x E)'),
+          t('O(V^3)', 'O(V^3)')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: Floyd-Warshall mein k, i aur j ke teen nested loops hote hain, isliye time O(V^3) hota hai.',
+          'Correct answer: Floyd-Warshall has three nested loops over k, i, and j, so its time is O(V^3).'
+        )
+      },
+      {
+        q: t(
+          'Weights sirf 0 ya 1 hon toh sabse fast kaunsa algorithm hai?',
+          'When weights are only 0 or 1, which algorithm is fastest?'
+        ),
+        opts: [
+          t('Dijkstra heap ke saath', 'Dijkstra with a heap'),
+          t('0-1 BFS deque ke saath', '0-1 BFS with a deque'),
+          t('Bellman-Ford', 'Bellman-Ford'),
+          t('Floyd-Warshall', 'Floyd-Warshall')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 0-1 BFS mein 0 weight wali edge par node aage aur 1 weight wali par peeche jaata hai, isse O(V + E) time milta hai.',
+          'Correct answer: in 0-1 BFS a 0-weight edge puts the node at the front and a 1-weight edge at the back, giving O(V + E) time.'
+        )
+      },
+      {
+        q: t(
+          'Dijkstra mein node ko visited kab mark karna chahiye?',
+          'In Dijkstra, when should a node be marked visited?'
+        ),
+        opts: [
+          t('Heap mein push karte time', 'When pushing it into the heap'),
+          t('Heap se nikaalte time', 'When popping it from the heap'),
+          t('Graph banate time', 'When building the graph'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: node ka distance tabhi final hota hai jab woh heap se sabse chhota ban kar nikle; push karte time mark karne se behtar distance miss ho jaata hai.',
+          'Correct answer: a node distance is final only when it pops out as the smallest from the heap; marking on push can miss a better distance.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Relaxation hi shortest path ki jaan hai: dist[u] + w < dist[v] ho toh dist[v] update karo.',
+        'Relaxation is the heart of shortest paths: update dist[v] when dist[u] + w < dist[v].'
+      ),
+      t(
+        'Dijkstra: heap ke saath, non-negative weights par, O((V + E) log V).',
+        'Dijkstra: with a heap, for non-negative weights, O((V + E) log V).'
+      ),
+      t(
+        'Bellman-Ford: V - 1 rounds, negative weights handle karta hai, Vth round mein negative cycle pakadta hai.',
+        'Bellman-Ford: V - 1 rounds, handles negative weights, and catches a negative cycle in the Vth round.'
+      ),
+      t(
+        'Floyd-Warshall: 2D table se saare pairs ka distance, O(V^3), chhote graph ke liye best.',
+        'Floyd-Warshall: all-pairs distance from a 2D table, O(V^3), best for small graphs.'
+      ),
+      t(
+        'Weights sirf 0 ya 1 hon toh 0-1 BFS deque se O(V + E) mein kaam karta hai.',
+        'When weights are only 0 or 1, 0-1 BFS with a deque works in O(V + E).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: S se C tak ka Shortest Distance Nikaalo',
+        'Practice: Find the Shortest Distance from S to C'
+      ),
+      task: t(
+        'Neeche diye gaye graph par Dijkstra chalakar S se har node ki shortest distance print karo aur S se C ka shortest distance alag se print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Run Dijkstra on the graph below, print the shortest distance from S to every node, and print the shortest distance from S to C separately. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `import heapq
+
+graph = {'S': [('A', 2), ('B', 5)], 'A': [('B', 1), ('C', 4)], 'B': [('C', 1)], 'C': []}
+dist = {n: 10 ** 9 for n in graph}
+dist['S'] = 0
+heap = [(0, 'S')]
+
+while heap:
+    d, node = heapq.heappop(heap)
+    if d > dist[node]:
+        continue
+    for nxt, w in graph[node]:
+        if d + w < dist[nxt]:
+            dist[nxt] = d + w
+            heapq.heappush(heap, (dist[nxt], nxt))
+
+print(dist)
+print('Shortest S to C:', dist['C'])`,
+      expected: `{'S': 0, 'A': 2, 'B': 3, 'C': 4}
+Shortest S to C: 4`
+    },
+    readMinutes: 12
+  };
+
+const dsaMstTopo: Article = {
+    id: 'dsa-mst-topo',
+    subjectId: 'dsa',
+    title: t(
+      'MST aur Topological Sort — Prim, Kruskal, Kahn aur Course Schedule',
+      'MST and Topological Sort — Prim, Kruskal, Kahn, and Course Schedule'
+    ),
+    summary: t(
+      'MST aur topological sort ko zero se samjho: Prim aur Kruskal se sabse sasta spanning tree kaise banate hain, DSU union-find kaise kaam karta hai, Kahn ke BFS aur DFS se tasks ka sahi order kaise nikaalte hain, aur Course Schedule problem mein cycle kaise pakdi jaati hai.',
+      'Learn MST and topological sort from scratch: how Prim and Kruskal build the cheapest spanning tree, how DSU union-find works, how Kahn BFS and DFS find the correct order of tasks, and how the Course Schedule problem catches a cycle.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. MST aur Topological Sort Kya Hain? (Spanning Tree aur Task Order)',
+          '1. What Are MST and Topological Sort? (Spanning Tree and Task Order)'
+        ),
+        body: t(
+          `Ek **spanning tree** ek aisa tree hai jo graph ke saare nodes ko connect karta hai aur usmein **koi cycle nahi** hoti. Agar graph mein V nodes hain, toh spanning tree mein hamesha V - 1 edges hoti hain. Weighted graph mein kai spanning trees ho sakte hain, aur jinka total weight sabse kam ho, use **Minimum Spanning Tree (MST)** kehte hain. Socho aapko 4 shehron ko cable se jodna hai aur har cable ki cost alag hai — MST woh tareeka hai jismein total cost sabse kam ho aur saare sheher connected rahen.
+
+**Topological sort** ek alag problem hai. Directed graph mein kabhi-kabhi tasks ke beech dependency hoti hai: pehle A karo, phir B, phir C. Topological sort nodes ka woh order hai jismein har edge \`u -> v\` ke liye \`u\` hamesha \`v\` se pehle aaye. Yeh order sirf tab possible hai jab graph mein **koi cycle na ho**, matlab graph ek **DAG (Directed Acyclic Graph)** ho. Cycle ho toh koi bhi order sahi nahi hota — A pehle B se, B pehle A se, yeh impossible hai.
+
+Dono topics ka connection yeh hai ki dono mein hum graph ko ek khaas order mein process karte hain: MST mein edges ko weight ke order mein, topological sort mein nodes ko dependency ke order mein.`,
+          `A **spanning tree** is a tree that connects all nodes of a graph and has **no cycle**. If the graph has V nodes, a spanning tree always has V - 1 edges. A weighted graph can have many spanning trees, and the one with the smallest total weight is called the **Minimum Spanning Tree (MST)**. Imagine connecting 4 cities with cable, where each cable has a different cost — the MST is the way to connect all cities at the smallest total cost.
+
+**Topological sort** is a different problem. In a directed graph, tasks can depend on each other: first do A, then B, then C. A topological sort is an order of nodes where, for every edge \`u -> v\`, \`u\` always comes before \`v\`. This order is possible only when the graph has **no cycle**, meaning it is a **DAG (Directed Acyclic Graph)**. With a cycle, no order can work — A before B and B before A is impossible.
+
+The link between the two topics is that both process a graph in a special order: MST processes edges in weight order, and topological sort processes nodes in dependency order.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Cable Network, Course Plan aur Build System',
+          '2. Real-Life Examples: Cable Network, Course Plan, and Build System'
+        ),
+        body: t(
+          `MST ka sabse seedha example hai **cable ya road network**. Ek telecom company ko 4 shehron ko fibre cable se jodna hai. Har pair ke beech cable bichhane ki cost alag hai. Company ko sirf 3 cables chahiye (4 nodes ke liye V - 1 = 3 edges), aur woh 3 sabse sasti cables chunna chahti hai jo saare shehron ko connect karein. Yahi MST hai — bina cycle ke, sabse kam total cost.
+
+Topological sort ka example hai **course plan**. Maan lo Data Structures padhne se pehle Programming aani chahiye, aur Algorithms se pehle Data Structures. Yeh dependencies ek DAG banati hain. Topological sort woh order deta hai jismein aap courses le sakte ho bina kisi rule ko tode: Programming, Data Structures, Algorithms. Agar do courses ek doosre par depend karein, toh cycle ban jaati hai aur koi plan possible nahi.
+
+Teesra example hai **build system**. Software mein ek file doosri file par depend karti hai. Build tool pehle woh files compile karta hai jinki koi dependency nahi, phir un par depend karne wali files. Yeh bhi topological sort hi hai — galat order mein compile karoge toh error aayega kyunki zaroori file abhi bani hi nahi.`,
+          `The simplest example of MST is a **cable or road network**. A telecom company must connect 4 cities with fibre cable. The cost of laying cable between each pair is different. The company needs only 3 cables (V - 1 = 3 edges for 4 nodes), and it wants the 3 cheapest cables that still connect all cities. That is the MST — no cycle, smallest total cost.
+
+An example of topological sort is a **course plan**. Suppose you must know Programming before Data Structures, and Data Structures before Algorithms. These dependencies form a DAG. Topological sort gives the order in which you can take the courses without breaking any rule: Programming, Data Structures, Algorithms. If two courses depend on each other, a cycle forms and no plan is possible.
+
+A third example is a **build system**. In software, one file depends on another file. The build tool first compiles the files with no dependencies, then the files that depend on them. That is also topological sort — compiling in the wrong order gives an error because the needed file does not exist yet.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Kruskal ka Dry Run DSU ke Saath',
+          '3. Step-by-Step: A Kruskal Dry Run with DSU'
+        ),
+        body: t(
+          `Ab hum Kruskal ko haath se chala kar dekhenge. Graph mein 4 nodes hain: 0, 1, 2, 3. Edges hain: (1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5). Kruskal ka pehla step hai saari edges ko **weight ke hisaab se sort** karna. Sort karne ke baad order hai: (1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5).
+
+Doosra step hai **DSU (Disjoint Set Union)**. Shuru mein har node apne alag set mein hai: {0}, {1}, {2}, {3}. DSU ka \`find\` batata hai ki node kis set mein hai, aur \`union\` do sets ko mila deta hai. Edge tabhi MST mein aati hai jab uske dono nodes **alag sets** mein hon — warna cycle ban jaayegi.
+
+Dry run:
+- **(1, 2, 1):** 1 aur 2 alag sets mein hain. Edge lo. Set ban gaya {1, 2}. Total = 1.
+- **(1, 3, 2):** 1 ka set {1, 2} hai, 3 alag hai. Edge lo. Set ban gaya {1, 2, 3}. Total = 3.
+- **(0, 2, 3):** 0 alag hai, 2 ka set {1, 2, 3} hai. Edge lo. Set ban gaya {0, 1, 2, 3}. Total = 6.
+- **(0, 1, 4):** 0 aur 1 dono ek hi set mein hain. Edge mat lo, warna cycle banegi.
+- **(2, 3, 5):** dono ek hi set mein hain. Edge mat lo.
+
+MST mein 3 edges aayi: (1, 2, 1), (1, 3, 2), (0, 2, 3). Total weight = 6. Yahi minimum hai — koi bhi aur spanning tree isse sasta nahi ho sakta. Neeche wala code yahi process print karta hai, aur dhyaan do: sort hamesha **weight** se karna hai, node number se nahi.`,
+          `Now let us run Kruskal by hand. The graph has 4 nodes: 0, 1, 2, 3. The edges are: (1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5). The first step of Kruskal is to sort all edges by **weight**. After sorting, the order is: (1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5).
+
+The second step is **DSU (Disjoint Set Union)**. At the start, every node is in its own set: {0}, {1}, {2}, {3}. DSU \`find\` tells which set a node belongs to, and \`union\` merges two sets. An edge joins the MST only when its two nodes are in **different sets** — otherwise it would form a cycle.
+
+Dry run:
+- **(1, 2, 1):** 1 and 2 are in different sets. Take the edge. The set becomes {1, 2}. Total = 1.
+- **(1, 3, 2):** the set of 1 is {1, 2}, and 3 is separate. Take the edge. The set becomes {1, 2, 3}. Total = 3.
+- **(0, 2, 3):** 0 is separate, and the set of 2 is {1, 2, 3}. Take the edge. The set becomes {0, 1, 2, 3}. Total = 6.
+- **(0, 1, 4):** 0 and 1 are in the same set. Skip the edge, or it would form a cycle.
+- **(2, 3, 5):** both are in the same set. Skip the edge.
+
+The MST has 3 edges: (1, 2, 1), (1, 3, 2), (0, 2, 3). Total weight = 6. That is the minimum — no other spanning tree can be cheaper. The code below prints exactly this process, and note: always sort by **weight**, not by node number.`
+        ),
+        code: {
+          title: t(
+            'Kruskal: DSU se MST Banana aur Total Weight',
+            'Kruskal: Building the MST with DSU and Total Weight'
+          ),
+          language: 'python',
+          code: `edges = [(1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5)]
+parent = {i: i for i in range(4)}
+
+def find(x):
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    return x
+
+def union(a, b):
+    parent[find(a)] = find(b)
+
+edges.sort(key=lambda e: e[2])
+mst = []
+total = 0
+for u, v, w in edges:
+    if find(u) != find(v):
+        union(u, v)
+        mst.append((u, v, w))
+        total += w
+
+print('MST edges:', mst)
+print('Total weight:', total)`,
+          output: `MST edges: [(1, 2, 1), (1, 3, 2), (0, 2, 3)]
+Total weight: 6`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sort Galat Cheez se, Cycle Check Bhoolna aur In-Degree',
+          '4. Common Mistakes: Sorting by the Wrong Thing, Forgetting the Cycle Check, and In-Degree'
+        ),
+        body: t(
+          `**Galti 1: edges ko node number se sort karna.** Kruskal mein sort hamesha **weight** se hota hai. Python mein \`edges.sort()\` tuple ko pehle element (node) se sort karta hai, jo galat hai. Hamesha \`edges.sort(key=lambda e: e[2])\` likho, jahan \`e[2]\` weight hai. Yeh is article ki sabse aasan aur sabse common galti hai.
+
+**Galti 2: cycle check ke bina edge lena.** Agar aap DSU ke \`find\` se check kiye bina har edge le loge, toh cycle ban jaayegi aur tree nahi rahega. Har edge se pehle poochho: kya dono nodes alag sets mein hain? Sirf haan hone par edge lo aur \`union\` karo.
+
+**Galti 3: Kahn mein in-degree galat banana.** Topological sort ke Kahn method mein har node ki **in-degree** matlab us par aane wali edges ki count hoti hai. Beginners kabhi out-degree gin lete hain ya in-degree update karna bhool jaate hain. Jab kisi node ko order mein daalo, toh uske saare neighbours ki in-degree 1 kam karo, aur jiski in-degree 0 ho jaaye use queue mein daalo.`,
+          `**Mistake 1: sorting edges by node number.** In Kruskal, always sort by **weight**. In Python, plain \`edges.sort()\` sorts a tuple by its first element (the node), which is wrong. Always write \`edges.sort(key=lambda e: e[2])\`, where \`e[2]\` is the weight. This is the easiest and most common mistake in this article.
+
+**Mistake 2: taking an edge without a cycle check.** If you take every edge without checking with DSU \`find\`, you will form a cycle and the result will not be a tree. Before each edge, ask: are the two nodes in different sets? Take the edge and call \`union\` only when the answer is yes.
+
+**Mistake 3: building in-degree wrong in Kahn.** In the Kahn method for topological sort, the **in-degree** of a node is the count of edges coming into it. Beginners sometimes count out-degree instead, or forget to update in-degree. When you place a node in the order, reduce the in-degree of all its neighbours by 1, and push into the queue any neighbour whose in-degree becomes 0.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Disconnected Graph, Barabar Weights aur Cycle wala DAG',
+          '5. Edge Cases: Disconnected Graph, Equal Weights, and a DAG with a Cycle'
+        ),
+        body: t(
+          `Pehla edge case hai **disconnected graph**. Agar graph ke nodes ek doosre se connected hi nahi hain, toh ek spanning tree se saare nodes connect nahi honge. Is case mein Kruskal ek **forest** banata hai — har connected part ka apna MST. Interview mein poochho ki graph connected hai ya nahi, warna answer galat ho jaayega.
+
+Doosra edge case hai **barabar weights**. Jab kai edges ka weight ek jaisa ho, toh MST unique nahi hota — kai alag MST ho sakte hain, par sabka total weight ek hi hoga. Kruskal jo bhi pehle mile use le lega. Isliye interviewer kabhi yeh nahi poochhta ki "kaunsi edges aayi", woh poochhta hai "total weight kitna hai".
+
+Teesra edge case hai **cycle wala graph topological sort mein**. Agar graph mein cycle hai, toh Kahn ka queue khaali ho jaayega jabki saare nodes order mein nahi aaye. Iska matlab hai order possible nahi hai. Course Schedule problem mein yahi check hota hai: agar order ki length courses ki count se kam hai, toh answer hai "courses complete nahi ho sakte".`,
+          `The first edge case is a **disconnected graph**. If the nodes are not connected to each other at all, one spanning tree cannot connect them all. In this case Kruskal builds a **forest** — each connected part gets its own MST. In an interview, ask whether the graph is connected, or the answer will be wrong.
+
+The second edge case is **equal weights**. When several edges share the same weight, the MST is not unique — many different MSTs can exist, but all have the same total weight. Kruskal simply takes whichever comes first. That is why an interviewer never asks "which edges came", but asks "what is the total weight".
+
+The third edge case is a **graph with a cycle in topological sort**. If the graph has a cycle, Kahn queue becomes empty while some nodes are still not in the order. That means no valid order exists. The Course Schedule problem checks exactly this: if the order is shorter than the number of courses, the answer is "the courses cannot be finished".`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Prim vs Kruskal, Kahn vs DFS aur Course Schedule',
+          '6. What-If: Prim vs Kruskal, Kahn vs DFS, and Course Schedule'
+        ),
+        body: t(
+          `**What if: graph dense hai (edges bahut zyada hain)?** Toh Prim behtar hai, kyunki woh heap se node-by-node tree badhata hai aur edges sort nahi karta. Dense graph par Kruskal ka sorting mehenga padta hai. Prim ka time heap ke saath O((V + E) log V) hota hai.
+
+**What if: graph sparse hai (edges kam hain)?** Toh Kruskal behtar hai. Sort karne mein O(E log E) lagta hai aur DSU ke operations lagbhag O(1) hote hain. Sparse graph par yeh Prim se simple aur fast hota hai.
+
+**What if: topological sort DFS se karna ho?** Kahn BFS method se karta hai, par DFS se bhi ho sakta hai: node par DFS karo, uske saare neighbours ko pehle process karo, phir node ko stack mein daalo. Aakhir mein stack ko ulta kar do, wahi topological order hai. DFS method mein cycle detect karne ke liye **recursion stack** use hota hai — agar DFS mein koi node dobara usi stack mein mile, toh cycle hai.
+
+**What if: Course Schedule problem ho?** Ismein \`numCourses\` aur \`prerequisites\` diye hote hain, jaise [1, 0] matlab course 1 ke liye course 0 pehle karna hai. Kahn chalao: agar saare courses order mein aa gaye toh answer True, warna False.`,
+          `**What if the graph is dense (very many edges)?** Then Prim is better, because it grows the tree node by node from a heap and never sorts the edges. On a dense graph, Kruskal sorting is costly. Prim with a heap takes O((V + E) log V) time.
+
+**What if the graph is sparse (few edges)?** Then Kruskal is better. Sorting takes O(E log E) and DSU operations take almost O(1). On a sparse graph this is simpler and faster than Prim.
+
+**What if you do topological sort with DFS?** Kahn uses BFS, but DFS works too: run DFS on a node, process all its neighbours first, then push the node onto a stack. At the end, reverse the stack — that is the topological order. In the DFS method, a **recursion stack** detects cycles — if DFS meets a node already in that stack, there is a cycle.
+
+**What if the problem is Course Schedule?** It gives \`numCourses\` and \`prerequisites\`, like [1, 0], which means course 1 needs course 0 first. Run Kahn: if all courses appear in the order, the answer is True, else False.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: MST aur Topological Sort se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from MST and Topological Sort to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **MST** sabse saste tareeke se saare nodes ko jodta hai aur **topological sort** tasks ko dependency ke sahi order mein lagata hai. **Kruskal** edges ko weight se sort karta hai aur DSU se cycle check karke edge leta hai — O(E log E). **Prim** ek node se shuru karke heap se sabse sasti edge jodta jata hai — O((V + E) log V). Dono ka total weight is example mein 6 aaya, jo sahi hai kyunki MST ka total weight hamesha ek hi hota hai.
+
+**Topological sort** sirf DAG par possible hai. **Kahn** in-degree 0 wale nodes ko queue se nikaal kar order banata hai, **DFS** nodes ko stack mein daal kar ulta karta hai. Agar order mein saare nodes na aayein, toh graph mein cycle hai aur Course Schedule ka answer False hai.
+
+Interview mein MST poochha jaaye toh pehle poochho: graph connected hai ya nahi, aur edges kitni hain — dense ho toh Prim, sparse ho toh Kruskal. Topological sort poochha jaaye toh pehle cycle check karo. Revision ke liye Kruskal dry run dobara karo: (1, 2, 1), (1, 3, 2), (0, 2, 3) — total 6. Agle article mein hum graph ke advanced topics dekhenge: cycle detection, bipartite check aur strongly connected components.`,
+          `The whole article in one line: an **MST** connects all nodes at the smallest cost, and **topological sort** places tasks in the correct dependency order. **Kruskal** sorts edges by weight and takes an edge only after a DSU cycle check — O(E log E). **Prim** starts from one node and keeps adding the cheapest edge from a heap — O((V + E) log V). Both give total weight 6 in this example, which is correct because the total weight of an MST is always the same.
+
+**Topological sort** is possible only on a DAG. **Kahn** builds the order by taking nodes with in-degree 0 from a queue, and **DFS** pushes nodes onto a stack and reverses it. If some nodes never enter the order, the graph has a cycle and the Course Schedule answer is False.
+
+In an interview, if MST is asked, first ask: is the graph connected, and how many edges are there — dense means Prim, sparse means Kruskal. If topological sort is asked, check for a cycle first. To revise, repeat the Kruskal dry run: (1, 2, 1), (1, 3, 2), (0, 2, 3) — total 6. In the next article we will look at advanced graph topics: cycle detection, bipartite check, and strongly connected components.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Kruskal se MST: Sort, Check, Union',
+        'MST by Kruskal: Sort, Check, Union'
+      ),
+      nodes: [
+        {
+          t: t('Edges ko weight se sort karo', 'Sort edges by weight'),
+          s: t('(1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5)', '(1, 2, 1), (1, 3, 2), (0, 2, 3), (0, 1, 4), (2, 3, 5)')
+        },
+        {
+          t: t('DSU: har node apna alag set', 'DSU: every node in its own set'),
+          s: t('find se set pata karo, union se milao', 'find tells the set, union merges sets')
+        },
+        {
+          t: t('Edge lo sirf jab sets alag hon', 'Take an edge only when the sets differ'),
+          s: t('Ek hi set ho toh cycle banegi, edge chhodo', 'Same set means a cycle, so skip the edge')
+        },
+        {
+          t: t('MST: 3 edges, total weight 6', 'MST: 3 edges, total weight 6'),
+          s: t('V - 1 = 3 edges, saare nodes connected', 'V - 1 = 3 edges, all nodes connected')
+        },
+        {
+          t: t('Topo sort: in-degree 0 se shuru karo', 'Topo sort: start from in-degree 0'),
+          s: t('Kahn: queue se node nikaalo, neighbours ki in-degree ghatao', 'Kahn: pop a node from the queue, reduce neighbours in-degree')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Prim: Heap se MST Banana',
+          'Prim: Building the MST with a Heap'
+        ),
+        language: 'python',
+        code: `import heapq
+
+graph = {0: [(1, 4), (2, 3)], 1: [(0, 4), (2, 1), (3, 2)], 2: [(0, 3), (1, 1), (3, 5)], 3: [(1, 2), (2, 5)]}
+visited = {0}
+heap = [(w, 0, nxt) for nxt, w in graph[0]]
+heapq.heapify(heap)
+total = 0
+picked = []
+
+while heap and len(visited) < 4:
+    w, u, v = heapq.heappop(heap)
+    if v in visited:
+        continue
+    visited.add(v)
+    total += w
+    picked.append((u, v, w))
+    for nxt, wt in graph[v]:
+        if nxt not in visited:
+            heapq.heappush(heap, (wt, v, nxt))
+
+print('Prim edges:', picked)
+print('Total weight:', total)`,
+        output: `Prim edges: [(0, 2, 3), (2, 1, 1), (1, 3, 2)]
+Total weight: 6`
+      },
+      {
+        title: t(
+          'Kahn: BFS se Topological Order',
+          'Kahn: Topological Order with BFS'
+        ),
+        language: 'python',
+        code: `graph = {0: [1, 2], 1: [3], 2: [3], 3: []}
+indeg = {n: 0 for n in graph}
+for u in graph:
+    for v in graph[u]:
+        indeg[v] += 1
+
+queue = [n for n in graph if indeg[n] == 0]
+order = []
+while queue:
+    node = queue.pop(0)
+    order.append(node)
+    for v in graph[node]:
+        indeg[v] -= 1
+        if indeg[v] == 0:
+            queue.append(v)
+
+print('Topological order:', order)`,
+        output: `Topological order: [0, 1, 2, 3]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'V nodes wale spanning tree mein kitni edges hoti hain?',
+          'How many edges does a spanning tree with V nodes have?'
+        ),
+        opts: [
+          t('V edges', 'V edges'),
+          t('V - 1 edges', 'V - 1 edges'),
+          t('V + 1 edges', 'V + 1 edges'),
+          t('2V edges', '2V edges')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: tree mein cycle nahi hoti aur saare nodes connected hote hain, isliye edges hamesha V - 1 hoti hain.',
+          'Correct answer: a tree has no cycle and connects all nodes, so it always has V - 1 edges.'
+        )
+      },
+      {
+        q: t(
+          'Kruskal mein edges ko kis cheez se sort karte hain?',
+          'In Kruskal, what do we sort the edges by?'
+        ),
+        opts: [
+          t('Node number se', 'By node number'),
+          t('Weight se', 'By weight'),
+          t('Degree se', 'By degree'),
+          t('Sort karte hi nahi', 'We do not sort at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Kruskal sabse sasti edge ko pehle leta hai, isliye sort hamesha weight se hota hai.',
+          'Correct answer: Kruskal takes the cheapest edge first, so sorting is always by weight.'
+        )
+      },
+      {
+        q: t(
+          'Topological sort kis graph par possible hai?',
+          'On which graph is topological sort possible?'
+        ),
+        opts: [
+          t('Sirf undirected graph par', 'Only on an undirected graph'),
+          t('Sirf cycle wale directed graph par', 'Only on a directed graph with a cycle'),
+          t('Sirf DAG par', 'Only on a DAG'),
+          t('Har graph par', 'On every graph')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: cycle mein har node kisi na kisi se pehle aana chahta hai, isliye cycle wale graph ka koi valid order nahi hota.',
+          'Correct answer: in a cycle every node must come before some other node, so a graph with a cycle has no valid order.'
+        )
+      },
+      {
+        q: t(
+          'Kahn method mein queue mein pehle kaunse nodes jaate hain?',
+          'In the Kahn method, which nodes go into the queue first?'
+        ),
+        opts: [
+          t('Jinki in-degree 0 hai', 'Nodes with in-degree 0'),
+          t('Jinki out-degree 0 hai', 'Nodes with out-degree 0'),
+          t('Jinki degree sabse zyada hai', 'Nodes with the highest degree'),
+          t('Saare nodes ek saath', 'All nodes at once')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: in-degree 0 matlab node par koi dependency nahi hai, isliye use pehle process kiya ja sakta hai.',
+          'Correct answer: in-degree 0 means the node has no dependency, so it can be processed first.'
+        )
+      },
+      {
+        q: t(
+          'Course Schedule problem mein cycle mile toh answer kya hota hai?',
+          'In the Course Schedule problem, what is the answer when a cycle is found?'
+        ),
+        opts: [
+          t('True — courses complete ho sakte hain', 'True — the courses can be finished'),
+          t('False — courses complete nahi ho sakte', 'False — the courses cannot be finished'),
+          t('Order ulta kar do', 'Reverse the order'),
+          t('Ek course hata do', 'Remove one course')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cycle ka matlab hai do courses ek doosre par depend karte hain, isliye koi bhi order kaam nahi karega.',
+          'Correct answer: a cycle means two courses depend on each other, so no order can work.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Spanning tree mein V - 1 edges hoti hain aur koi cycle nahi hoti; MST ka total weight sabse kam hota hai.',
+        'A spanning tree has V - 1 edges and no cycle; an MST has the smallest total weight.'
+      ),
+      t(
+        'Kruskal: weight se sort karo, DSU se cycle check karo, sirf alag sets wali edge lo.',
+        'Kruskal: sort by weight, check cycles with DSU, and take an edge only across different sets.'
+      ),
+      t(
+        'Prim: ek node se shuru karo, heap se sabse sasti edge jodte jao; dense graph par behtar.',
+        'Prim: start from one node and keep adding the cheapest edge from a heap; better on dense graphs.'
+      ),
+      t(
+        'Topological sort sirf DAG par possible hai; Kahn in-degree 0 se shuru karta hai.',
+        'Topological sort is possible only on a DAG; Kahn starts from in-degree 0.'
+      ),
+      t(
+        'Kahn mein order chhota rahe toh cycle hai — Course Schedule ka answer False hota hai.',
+        'If the Kahn order comes out short, there is a cycle — the Course Schedule answer is False.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Course Schedule — Kya Saare Courses Complete Ho Sakte Hain?',
+        'Practice: Course Schedule — Can All Courses Be Finished?'
+      ),
+      task: t(
+        '4 courses hain aur prerequisites hain: course 1 ke liye 0, course 2 ke liye 0, course 3 ke liye 1 aur 2. Kahn chalakar batao ki saare courses complete ho sakte hain ya nahi, aur ek valid order print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'There are 4 courses with prerequisites: course 1 needs 0, course 2 needs 0, course 3 needs 1 and 2. Run Kahn to tell whether all courses can be finished, and print one valid order. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `prereq = [(1, 0), (2, 0), (3, 1), (3, 2)]
+graph = {0: [], 1: [], 2: [], 3: []}
+indeg = {n: 0 for n in graph}
+for course, pre in prereq:
+    graph[pre].append(course)
+    indeg[course] += 1
+
+queue = [n for n in graph if indeg[n] == 0]
+order = []
+while queue:
+    node = queue.pop(0)
+    order.append(node)
+    for v in graph[node]:
+        indeg[v] -= 1
+        if indeg[v] == 0:
+            queue.append(v)
+
+print('Can finish all courses:', len(order) == 4)
+print('Order:', order)`,
+      expected: `Can finish all courses: True
+Order: [0, 1, 2, 3]`
+    },
+    readMinutes: 12
+  };
+
+const dsaGraphAdvanced: Article = {
+    id: 'dsa-graph-advanced',
+    subjectId: 'dsa',
+    title: t(
+      'Graph Advanced — Cycle Detection, Bipartite Check aur SCC',
+      'Graph Advanced — Cycle Detection, Bipartite Check, and SCC'
+    ),
+    summary: t(
+      'Graph ke advanced topics ko zero se samjho: directed graph mein DFS colours aur recursion stack se cycle kaise pakadte hain, undirected graph mein cycle kaise check karte hain, bipartite check mein do colours kaise kaam karte hain, Kosaraju se strongly connected components kaise nikaalte hain, aur connected components kaise ginte hain.',
+      'Learn advanced graph topics from scratch: how to catch a cycle in a directed graph with DFS colours and a recursion stack, how to check cycles in an undirected graph, how two colours power the bipartite check, how Kosaraju finds strongly connected components, and how to count connected components.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Graph Advanced Kya Hai? (Cycle, Bipartite aur SCC)',
+          '1. What Is Advanced Graph Theory? (Cycle, Bipartite, and SCC)'
+        ),
+        body: t(
+          `BFS aur DFS seekhne ke baad graph ke teen bade sawaal bachte hain. Pehla: **graph mein cycle hai ya nahi?** Cycle ka matlab hai ek rasta jo shuru hokar wapas usi node par aa jaaye. Cycle ko pakadna zaroori hai kyunki topological sort sirf bina cycle wale graph par chalta hai, aur bahut saare algorithms cycle par atak jaate hain.
+
+Doosra sawaal: **graph bipartite hai ya nahi?** Bipartite graph woh hai jiske nodes ko do groups mein baanta ja sake, taaki har edge ek group se doosre group mein jaaye, ek hi group ke andar koi edge na ho. Yeh problem do colours se solve hoti hai: pehle node ko colour 0 do, uske neighbours ko colour 1, unke neighbours ko phir 0, aur aise hi aage. Agar kabhi do connected nodes ko ek hi colour mil jaaye, toh graph bipartite nahi hai.
+
+Teesra sawaal: **strongly connected components (SCC) kya hain?** Directed graph mein ek SCC nodes ka woh group hai jismein har node se har doosre node tak rasta ho. Yeh group Kosaraju algorithm se milte hain, jo do baar DFS chalata hai — ek baar graph par aur ek baar ulta graph par.`,
+          `After learning BFS and DFS, three big graph questions remain. First: **does the graph have a cycle?** A cycle is a route that starts at a node and comes back to the same node. Catching cycles matters because topological sort works only on graphs without cycles, and many algorithms get stuck on cycles.
+
+Second: **is the graph bipartite?** A bipartite graph is one whose nodes can be split into two groups so that every edge goes from one group to the other, with no edge inside a single group. This problem is solved with two colours: give the first node colour 0, its neighbours colour 1, their neighbours colour 0 again, and so on. If two connected nodes ever get the same colour, the graph is not bipartite.
+
+Third: **what are strongly connected components (SCC)?** In a directed graph, an SCC is a group of nodes where every node can reach every other node in the group. These groups are found by the Kosaraju algorithm, which runs DFS twice — once on the graph and once on the reversed graph.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Deadlock, Team Split aur Web Pages',
+          '2. Real-Life Examples: Deadlock, Team Split, and Web Pages'
+        ),
+        body: t(
+          `Cycle detection ka sabse seedha example hai **deadlock**. Operating system mein ek process dusre process ke resource ka wait karta hai, aur doosra pehle ka. Yeh wait-for graph mein cycle hai, aur cycle ka matlab hai system atak gaya hai — koi bhi process aage nahi badh sakta. Isi liye OS cycle detect karke deadlock ko pakadta hai.
+
+Bipartite check ka example hai **team split**. Maan lo kuch log hain aur kuch pairs aapas mein nahi banna chahte — unhe alag teams mein rakhna hai. Har "nahi banna chahte" ek edge hai, aur teams do colours hain. Agar graph bipartite hai, toh split possible hai; agar triangle jaisa odd cycle hai, toh split impossible hai.
+
+SCC ka example hai **web pages**. Ek website ke pages ek doosre ko link karte hain. Jo pages ek doosre tak aane-jaane ke raste se connected hain, woh ek SCC banate hain — matlab woh ek hi group ke pages hain jahan se aap kahin bhi ghoom kar wapas aa sakte ho. Search engines isi structure ko samajh kar pages ko group karte hain.`,
+          `The simplest example of cycle detection is a **deadlock**. In an operating system, one process waits for a resource held by a second process, while the second waits for the first. That is a cycle in the wait-for graph, and a cycle means the system is stuck — no process can move forward. That is why the OS detects cycles to catch deadlocks.
+
+An example of the bipartite check is a **team split**. Suppose some people must not be placed together — each such pair is an edge, and the two teams are the two colours. If the graph is bipartite, the split is possible; if there is an odd cycle like a triangle, the split is impossible.
+
+An example of SCC is **web pages**. Pages on a website link to each other. Pages that can reach each other by some route form one SCC — a group where you can wander anywhere and still return. Search engines group pages by understanding exactly this structure.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Bipartite Check ka Dry Run Do Colours se',
+          '3. Step-by-Step: A Bipartite Check Dry Run with Two Colours'
+        ),
+        body: t(
+          `Ab hum ek square graph par bipartite check ko haath se chala kar dekhenge. Graph mein 4 nodes hain: 0, 1, 2, 3. Edges hain: 0-1, 1-2, 2-3, 3-0. Yeh ek square hai. Shuru mein kisi node ka colour nahi hai. Node 0 ko colour 0 do aur queue mein daalo. Queue hai [0].
+
+Queue se 0 nikaalo. Uske neighbours hain 1 aur 3. Dono ko ulta colour do: colour 1. Queue hai [1, 3]. Ab 1 nikaalo. Uske neighbours hain 0 aur 2. 0 ka colour pehle se 0 hai, jo 1 se alag hai — theek hai. 2 ko colour 0 do. Queue hai [3, 2]. Ab 3 nikaalo. Uske neighbours hain 0 aur 2. 0 ka colour 0 hai, 3 ka colour 1 hai — alag hain, theek hai. 2 ka colour 0 hai, 3 ka colour 1 hai — alag hain, theek hai.
+
+Aakhir mein 2 nikaalo. Uske neighbours 1 aur 3 dono ka colour 1 hai, aur 2 ka colour 0 hai — alag hain, theek hai. Kahi bhi do connected nodes ka colour ek jaisa nahi mila, isliye graph **bipartite** hai. Groups hain: {0, 2} aur {1, 3}. Agar ismein ek edge 0-2 aur hoti, toh 0 aur 2 dono ka colour 0 hota aur check fail ho jaata — triangle jaisa odd cycle bipartite nahi hota. Neeche wala code yahi dry run karta hai.`,
+          `Now let us run the bipartite check by hand on a square graph. The graph has 4 nodes: 0, 1, 2, 3. The edges are: 0-1, 1-2, 2-3, 3-0. This is a square. At the start, no node has a colour. Give node 0 colour 0 and put it in the queue. The queue is [0].
+
+Take 0 out of the queue. Its neighbours are 1 and 3. Give both the opposite colour: colour 1. The queue is [1, 3]. Now take 1. Its neighbours are 0 and 2. Node 0 already has colour 0, which differs from 1 — fine. Give 2 colour 0. The queue is [3, 2]. Now take 3. Its neighbours are 0 and 2. Node 0 has colour 0 and 3 has colour 1 — different, fine. Node 2 has colour 0 and 3 has colour 1 — different, fine.
+
+Finally take 2. Its neighbours 1 and 3 both have colour 1, while 2 has colour 0 — different, fine. Nowhere did two connected nodes share a colour, so the graph is **bipartite**. The groups are: {0, 2} and {1, 3}. If there were one more edge, 0-2, then 0 and 2 would both have colour 0 and the check would fail — an odd cycle like a triangle is never bipartite. The code below runs exactly this dry run.`
+        ),
+        code: {
+          title: t(
+            'Bipartite Check: Do Colours se Square Graph Test Karna',
+            'Bipartite Check: Testing a Square Graph with Two Colours'
+          ),
+          language: 'python',
+          code: `graph = {0: [1, 3], 1: [0, 2], 2: [1, 3], 3: [0, 2]}
+colour = {0: 0}
+queue = [0]
+ok = True
+
+while queue:
+    node = queue.pop(0)
+    for nxt in graph[node]:
+        if nxt not in colour:
+            colour[nxt] = 1 - colour[node]
+            queue.append(nxt)
+        elif colour[nxt] == colour[node]:
+            ok = False
+
+print('Colours:', colour)
+print('Is bipartite:', ok)`,
+          output: `Colours: {0: 0, 1: 1, 3: 1, 2: 0}
+Is bipartite: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Parent ko Cycle Samajhna, Colour Reset aur Ek Component',
+          '4. Common Mistakes: Treating the Parent as a Cycle, Resetting Colours, and One Component'
+        ),
+        body: t(
+          `**Galti 1: undirected graph mein parent ko cycle samajhna.** Undirected DFS mein har node apne parent se connected hota hai. Agar aap parent ko dekh kar "cycle mil gaya" bol doge, toh har tree mein cycle dikhega. Isi liye DFS mein parent ko alag se pass karo aur sirf tab cycle mano jab visited node parent na ho.
+
+**Galti 2: directed graph mein sirf visited se cycle check karna.** Directed graph mein ek node visited ho sakta hai par cycle na ho — jaise diamond shape mein node 3 do raste se pahuncha ja sakta hai. Isi liye teen colours use karte hain: white (unvisited), grey (recursion stack mein hai), black (poora done). Cycle tabhi hai jab aapko **grey** node mile.
+
+**Galti 3: sirf ek component check karna.** Graph disconnected ho sakta hai. Agar aapne sirf node 0 se DFS chalaya, toh doosre component ki cycle ya bipartite fail miss ho jaayegi. Hamesha saare nodes par loop chalao aur jo node unvisited ho usse DFS/BFS shuru karo.`,
+          `**Mistake 1: treating the parent as a cycle in an undirected graph.** In undirected DFS, every node is connected to its parent. If you call that a cycle, every tree would look cyclic. That is why DFS passes the parent separately and counts a cycle only when the visited node is not the parent.
+
+**Mistake 2: checking cycles in a directed graph with only a visited set.** In a directed graph, a node can be visited without any cycle — in a diamond shape, node 3 can be reached by two routes. That is why we use three colours: white (unvisited), grey (in the recursion stack), black (fully done). A cycle exists only when you meet a **grey** node.
+
+**Mistake 3: checking only one component.** A graph can be disconnected. If you run DFS only from node 0, you will miss a cycle or a bipartite failure in another component. Always loop over all nodes and start DFS/BFS from any node that is still unvisited.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Self-Loop, Diamond Shape aur Single Node',
+          '5. Edge Cases: Self-Loop, Diamond Shape, and Single Node'
+        ),
+        body: t(
+          `Pehla edge case hai **self-loop**. Agar kisi node par khud se edge hai, jaise 2 -> 2, toh woh turant cycle hai — directed ho ya undirected. Self-loop wale node ka colour bhi khud se takra jaata hai, isliye bipartite check bhi fail ho jaata hai. Code likhte time self-loop ko alag se handle karne ki zaroorat nahi, sahi algorithm use khud pakad lega.
+
+Doosra edge case hai **diamond shape**. Graph hai: 0 -> 1, 0 -> 2, 1 -> 3, 2 -> 3. Yahan node 3 do raste se pahuncha ja sakta hai, par koi cycle nahi hai. Sirf visited set se cycle check karoge toh 3 ko dobara dekh kar galat cycle report kar doge. Teen colours wala method yahi farak pakadta hai — 3 jab dobara mile toh woh black hota hai, grey nahi.
+
+Teesra edge case hai **single node**. Ek node aur koi edge nahi — na cycle hai, na bipartite fail hai, aur ek hi connected component hai. SCC mein bhi single node apna ek SCC hota hai.`,
+          `The first edge case is a **self-loop**. If a node has an edge to itself, like 2 -> 2, that is at once a cycle — directed or undirected. Its colour also clashes with itself, so the bipartite check fails too. You do not need special code for a self-loop; a correct algorithm catches it on its own.
+
+The second edge case is the **diamond shape**. The graph is: 0 -> 1, 0 -> 2, 1 -> 3, 2 -> 3. Here node 3 can be reached by two routes, but there is no cycle. If you check cycles with only a visited set, you will wrongly report a cycle when you see 3 again. The three-colour method catches exactly this difference — when 3 appears again it is black, not grey.
+
+The third edge case is a **single node**. One node and no edges — no cycle, no bipartite failure, and exactly one connected component. In SCC terms, a single node is also its own SCC.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Directed vs Undirected Cycle, Kosaraju vs Tarjan aur Components',
+          '6. What-If: Directed vs Undirected Cycle, Kosaraju vs Tarjan, and Components'
+        ),
+        body: t(
+          `**What if: undirected graph mein cycle check karna ho?** Toh DFS mein parent pass karo. Agar koi visited neighbour mile jo parent na ho, toh cycle hai. Yeh method O(V + E) mein chalta hai aur simple hai.
+
+**What if: directed graph mein cycle check karna ho?** Toh teen colours (white, grey, black) use karo ya Kahn topological sort chalao. Kahn mein agar order chhota rahe, toh cycle hai. Dono tareeke sahi hain; Kahn wala tareeka topological sort ke saath free mein mil jaata hai.
+
+**What if: SCC nikaalne hon?** Toh **Kosaraju** use karo: pehle DFS se nodes ko finish time ke order mein stack karo, phir graph ko ulta karke stack ke order mein DFS chalao — har DFS ek SCC deta hai. **Tarjan** bhi ek hi DFS mein SCC nikaal leta hai, par uska code thoda mushkil hai. Interview mein Kosaraju ka idea samjha do, wahi kaafi hai.
+
+**What if: connected components ginne hon?** Toh undirected graph mein DFS/BFS se har component ko ek baar visit karo aur count badhao. Neeche wale practice mein yahi karna hai.`,
+          `**What if you must check a cycle in an undirected graph?** Pass the parent into DFS. If you meet a visited neighbour that is not the parent, there is a cycle. This method runs in O(V + E) and is simple.
+
+**What if you must check a cycle in a directed graph?** Use three colours (white, grey, black), or run Kahn topological sort. In Kahn, if the order comes out short, there is a cycle. Both ways are correct; the Kahn way comes free with topological sort.
+
+**What if you must find SCCs?** Use **Kosaraju**: first run DFS and stack nodes in finish-time order, then reverse the graph and run DFS in stack order — each DFS gives one SCC. **Tarjan** also finds SCCs in a single DFS, but its code is a little harder. In an interview, explaining the Kosaraju idea is enough.
+
+**What if you must count connected components?** In an undirected graph, visit each component once with DFS/BFS and increase the count. That is exactly what the practice below asks for.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Graph Advanced se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Advanced Graphs to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **cycle** ko pakadna, **bipartite** ko do colours se check karna, aur **SCC** ko do DFS se nikaalna — yahi graph advanced hai. Undirected cycle mein parent ko skip karo, directed cycle mein teen colours ya Kahn use karo. Bipartite check mein BFS se colours baanto aur jahan do connected nodes ka colour ek ho, wahan fail kar do. Kosaraju mein pehle finish order nikalo, phir ulta graph par DFS chalao — har DFS ek SCC hai.
+
+Interview mein graph ka sawaal aate hi pehle poochho: directed hai ya undirected, aur cycle ka sawaal hai ya components ka. Is ek sawaal se sahi method mil jaata hai. Revision ke liye square graph ka bipartite dry run dobara karo: colours {0: 0, 1: 1, 2: 0, 3: 1} aur groups {0, 2} aur {1, 3}. Agar yeh bina code dekhe nikal jaaye, toh graph advanced aapko aa gaya hai. Agle article mein hum Dynamic Programming shuru karenge — overlapping subproblems aur optimal substructure se.`,
+          `The whole article in one line: catching a **cycle**, checking **bipartite** with two colours, and finding **SCC** with two rounds of DFS — that is advanced graphs. In an undirected cycle check, skip the parent; in a directed cycle check, use three colours or Kahn. In the bipartite check, spread colours with BFS and fail wherever two connected nodes share a colour. In Kosaraju, first find the finish order, then run DFS on the reversed graph — each DFS is one SCC.
+
+In an interview, the moment a graph question appears, first ask: directed or undirected, and is it about cycles or components? That one question picks the right method. To revise, repeat the square graph bipartite dry run: colours {0: 0, 1: 1, 2: 0, 3: 1} and groups {0, 2} and {1, 3}. If you can produce that without looking at the code, you know advanced graphs. In the next article we will start Dynamic Programming — overlapping subproblems and optimal substructure.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Bipartite Square: Do Colours, Do Groups',
+        'Bipartite Square: Two Colours, Two Groups'
+      ),
+      nodes: [
+        {
+          t: t('Node 0: colour 0', 'Node 0: colour 0'),
+          s: t('Group A ka pehla node', 'First node of group A')
+        },
+        {
+          t: t('Node 1: colour 1', 'Node 1: colour 1'),
+          s: t('Group B, 0 ka neighbour', 'Group B, neighbour of 0')
+        },
+        {
+          t: t('Node 2: colour 0', 'Node 2: colour 0'),
+          s: t('Group A, 1 ka neighbour', 'Group A, neighbour of 1')
+        },
+        {
+          t: t('Node 3: colour 1', 'Node 3: colour 1'),
+          s: t('Group B, 2 aur 0 ka neighbour', 'Group B, neighbour of 2 and 0')
+        },
+        {
+          t: t('Koi edge ek hi group ke andar nahi', 'No edge stays inside one group'),
+          s: t('Isliye graph bipartite hai', 'So the graph is bipartite')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Undirected Cycle: Triangle Graph mein DFS',
+          'Undirected Cycle: DFS on a Triangle Graph'
+        ),
+        language: 'python',
+        code: `graph = {0: [1, 2], 1: [0, 2], 2: [0, 1]}
+visited = set()
+
+def dfs(node, parent):
+    visited.add(node)
+    for nxt in graph[node]:
+        if nxt not in visited:
+            if dfs(nxt, node):
+                return True
+        elif nxt != parent:
+            return True
+    return False
+
+print('Has cycle:', dfs(0, -1))`,
+        output: `Has cycle: True`
+      },
+      {
+        title: t(
+          'Kosaraju: Strongly Connected Components Ginna',
+          'Kosaraju: Counting Strongly Connected Components'
+        ),
+        language: 'python',
+        code: `graph = {0: [1], 1: [2], 2: [0, 3], 3: [4], 4: []}
+rev = {n: [] for n in graph}
+for u in graph:
+    for v in graph[u]:
+        rev[v].append(u)
+
+visited = set()
+order = []
+
+def dfs1(n):
+    visited.add(n)
+    for nxt in graph[n]:
+        if nxt not in visited:
+            dfs1(nxt)
+    order.append(n)
+
+for n in graph:
+    if n not in visited:
+        dfs1(n)
+
+visited = set()
+def dfs2(n, comp):
+    visited.add(n)
+    comp.append(n)
+    for nxt in rev[n]:
+        if nxt not in visited:
+            dfs2(nxt, comp)
+
+comps = []
+for n in reversed(order):
+    if n not in visited:
+        comp = []
+        dfs2(n, comp)
+        comps.append(sorted(comp))
+
+print('SCCs:', comps)
+print('Number of SCCs:', len(comps))`,
+        output: `SCCs: [[0, 1, 2], [3], [4]]
+Number of SCCs: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Directed graph mein cycle detect karne ke liye kaunsa method sahi hai?',
+          'Which method correctly detects a cycle in a directed graph?'
+        ),
+        opts: [
+          t('Sirf visited set', 'Only a visited set'),
+          t('Teen colours: white, grey, black', 'Three colours: white, grey, black'),
+          t('Sirf degree ginna', 'Only counting degree'),
+          t('Sirf BFS chalana', 'Only running BFS')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: diamond shape mein node do raste se visited ho sakta hai bina cycle ke; grey colour batata hai ki node abhi recursion stack mein hai.',
+          'Correct answer: in a diamond shape a node can be visited by two routes with no cycle; the grey colour shows the node is still in the recursion stack.'
+        )
+      },
+      {
+        q: t(
+          'Triangle graph (3 nodes, 3 edges) bipartite hai ya nahi?',
+          'Is a triangle graph (3 nodes, 3 edges) bipartite or not?'
+        ),
+        opts: [
+          t('Haan, bipartite hai', 'Yes, it is bipartite'),
+          t('Nahi, odd cycle ki wajah se nahi', 'No, because of the odd cycle'),
+          t('Sirf directed hone par', 'Only when directed'),
+          t('Sirf 4 nodes hone par', 'Only with 4 nodes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: triangle mein 3 nodes ka cycle hai; do colours se teesre node ko dono colours me se koi bhi do toh ek neighbour se takra jaayega.',
+          'Correct answer: a triangle has a 3-node cycle; with two colours, any colour for the third node clashes with one neighbour.'
+        )
+      },
+      {
+        q: t(
+          'Undirected graph mein DFS se cycle check karte time kya skip karna chahiye?',
+          'When checking a cycle with DFS in an undirected graph, what should you skip?'
+        ),
+        opts: [
+          t('Parent node ko', 'The parent node'),
+          t('Root node ko', 'The root node'),
+          t('Leaf node ko', 'The leaf node'),
+          t('Kuch nahi', 'Nothing')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: har node apne parent se connected hota hai, isliye parent ko dekh kar cycle manna galat hoga.',
+          'Correct answer: every node is connected to its parent, so treating the parent as a cycle would be wrong.'
+        )
+      },
+      {
+        q: t(
+          'Kosaraju algorithm mein doosra DFS kis graph par chalta hai?',
+          'In the Kosaraju algorithm, the second DFS runs on which graph?'
+        ),
+        opts: [
+          t('Usi graph par', 'On the same graph'),
+          t('Ulte (reversed) graph par', 'On the reversed graph'),
+          t('Bina edges wale graph par', 'On a graph with no edges'),
+          t('Sirf ek node par', 'On a single node')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ulta graph par DFS se wahi nodes milte hain jo pehle SCC ke andar se ek doosre tak pahunch sakte hain.',
+          'Correct answer: DFS on the reversed graph finds exactly the nodes that can reach each other inside the first SCC.'
+        )
+      },
+      {
+        q: t(
+          'Disconnected graph mein cycle check karte time kya karna chahiye?',
+          'When checking for a cycle in a disconnected graph, what should you do?'
+        ),
+        opts: [
+          t('Sirf node 0 se DFS chalao', 'Run DFS only from node 0'),
+          t('Saare unvisited nodes se DFS chalao', 'Run DFS from every unvisited node'),
+          t('Cycle check mat karo', 'Do not check for a cycle'),
+          t('Sirf pehla component check karo', 'Check only the first component')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har component mein alag cycle ho sakti hai, isliye saare components ko check karna zaroori hai.',
+          'Correct answer: each component can hold its own cycle, so every component must be checked.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Undirected cycle: DFS mein parent ko skip karo; visited neighbour parent na ho toh cycle hai.',
+        'Undirected cycle: skip the parent in DFS; a visited neighbour that is not the parent means a cycle.'
+      ),
+      t(
+        'Directed cycle: teen colours use karo — grey node milna hi cycle hai.',
+        'Directed cycle: use three colours — meeting a grey node means a cycle.'
+      ),
+      t(
+        'Bipartite: do colours se check karo; odd cycle ho toh graph bipartite nahi hota.',
+        'Bipartite: check with two colours; an odd cycle means the graph is not bipartite.'
+      ),
+      t(
+        'Kosaraju: pehle finish order, phir ulta graph par DFS — har DFS ek SCC deta hai.',
+        'Kosaraju: first the finish order, then DFS on the reversed graph — each DFS gives one SCC.'
+      ),
+      t(
+        'Disconnected graph mein saare components ko alag se check karo.',
+        'In a disconnected graph, check every component separately.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Connected Components Ginna',
+        'Practice: Count the Connected Components'
+      ),
+      task: t(
+        'Neeche diye gaye undirected graph mein kitne connected components hain, yeh nikaalo aur har component ke nodes print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Find how many connected components the undirected graph below has, and print the nodes of each component. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `graph = {0: [1], 1: [0], 2: [3], 3: [2], 4: []}
+visited = set()
+comps = []
+
+for start in graph:
+    if start in visited:
+        continue
+    stack = [start]
+    visited.add(start)
+    comp = []
+    while stack:
+        node = stack.pop()
+        comp.append(node)
+        for nxt in graph[node]:
+            if nxt not in visited:
+                visited.add(nxt)
+                stack.append(nxt)
+    comps.append(sorted(comp))
+
+print('Components:', comps)
+print('Count:', len(comps))`,
+      expected: `Components: [[0, 1], [2, 3], [4]]
+Count: 3`
+    },
+    readMinutes: 12
+  };
+
+const dsaDpIntro: Article = {
+    id: 'dsa-dp-intro',
+    subjectId: 'dsa',
+    title: t(
+      'Dynamic Programming Intro — Memoization, Tabulation, Fibonacci aur House Robber',
+      'Dynamic Programming Intro — Memoization, Tabulation, Fibonacci, and House Robber'
+    ),
+    summary: t(
+      'Dynamic Programming ko zero se samjho: overlapping subproblems aur optimal substructure kya hote hain, memoization aur tabulation mein kya farak hai, Fibonacci ko exponential se linear kaise laate hain, aur climbing stairs aur house robber jaise problems mein DP table kaise banti hai.',
+      'Learn Dynamic Programming from scratch: what overlapping subproblems and optimal substructure mean, how memoization differs from tabulation, how Fibonacci goes from exponential to linear time, and how the DP table is built in problems like climbing stairs and house robber.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Dynamic Programming Kya Hai? (Overlapping Subproblems aur Optimal Substructure)',
+          '1. What Is Dynamic Programming? (Overlapping Subproblems and Optimal Substructure)'
+        ),
+        body: t(
+          `**Dynamic Programming (DP)** ek technique hai jo badi problem ko chhoti-chhoti same tarah ki problems mein todti hai, unke answers ko **save** karke rakhti hai, aur dobara compute karne ki jagah saved answer use karti hai. DP sirf tab kaam karta hai jab problem mein do properties hon.
+
+Pehli property hai **overlapping subproblems**: matlab ek hi chhoti problem baar-baar solve karni padti hai. Fibonacci mein \`fib(5)\` ke liye \`fib(3)\` do baar chahiye hota hai, \`fib(2)\` teen baar. Bina save kiye recursion wahi kaam baar-baar karta hai, isliye time exponential ho jaata hai. DP pehli baar compute karke answer save kar leta hai, aur dobara wahi answer turant de deta hai.
+
+Doosri property hai **optimal substructure**: matlab badi problem ka best answer uski chhoti problems ke best answers se ban sakta hai. Climbing stairs mein 5th stair tak pahunchne ke tareeke = 4th stair ke tareeke + 3rd stair ke tareeke. Agar chhoti problems ka answer best hai, toh badi ka bhi best ban jaayega. Dono properties hon toh DP lagao, ek bhi na ho toh DP galat hoga.`,
+          `**Dynamic Programming (DP)** is a technique that breaks a big problem into smaller problems of the same kind, **saves** their answers, and reuses a saved answer instead of computing it again. DP works only when the problem has two properties.
+
+The first property is **overlapping subproblems**: the same small problem must be solved again and again. In Fibonacci, \`fib(5)\` needs \`fib(3)\` twice and \`fib(2)\` three times. Without saving, recursion repeats the same work, so the time becomes exponential. DP computes an answer once, saves it, and returns the saved answer at once the next time.
+
+The second property is **optimal substructure**: the best answer to the big problem can be built from the best answers to its smaller problems. In climbing stairs, the ways to reach the 5th stair = the ways to reach the 4th stair + the ways to reach the 3rd stair. If the small answers are the best, the big answer built from them is the best too. Apply DP only when both properties hold; if even one is missing, DP will be wrong.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Shortcuts, Bill Split aur Game Score',
+          '2. Real-Life Examples: Shortcuts, Bill Split, and Game Score'
+        ),
+        body: t(
+          `DP ka sabse seedha example hai **shortcut yaad rakhna**. Aap roz ek hi raste se office jaate ho. Pehle din aapne teen raste try kiye aur sabse fast wala yaad kar liya. Agle din se aap dobara teen raste try nahi karte — yaad kiya hua answer use karte ho. Yahi memoization hai: pehli baar compute karo, phir yaad rakho.
+
+Doosra example hai **bill split**. Maan lo 4 doston ko 1000 rupees ka bill baantna hai aur har baar alag tareeke se baantna hai. Har baar poora hisaab dobara karne ki jagah aap chhote hisaab ko save karke bade hisaab mein use karte ho. DP bhi yahi karta hai — chhote answers se bada answer banata hai.
+
+Teesra example hai **game score**. Ek game mein har level par aap left ya right ja sakte ho aur har level par points milte hain. Last level tak max score nikaalna DP hai: har level par best score save karo, aur agle level par usi se aage badho.`,
+          `The simplest example of DP is **remembering a shortcut**. You travel to the office by the same route every day. On the first day you tried three routes and remembered the fastest one. From the next day you do not try all three routes again — you use the remembered answer. That is memoization: compute once, then remember.
+
+A second example is **splitting a bill**. Suppose 4 friends must split a 1000 rupee bill in different ways. Instead of doing the whole calculation again each time, you save the small calculations and reuse them in the big one. DP does the same — it builds the big answer from small answers.
+
+A third example is a **game score**. In a game, at each level you can go left or right and earn points. Finding the maximum score up to the last level is DP: save the best score at each level, and move forward from it to the next level.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Climbing Stairs ka Dry Run Table ke Saath',
+          '3. Step-by-Step: A Climbing Stairs Dry Run with a Table'
+        ),
+        body: t(
+          `Ab hum climbing stairs problem ko haath se solve karenge. Problem hai: aapko n stairs chadhni hain, aur har baar aap 1 ya 2 stairs chadh sakte ho. Total kitne tareeke hain? 5 stairs ke liye dry run karte hain.
+
+Pehle **recurrence** nikalo: 5th stair par pahunchne ke do tareeke hain — 4th stair se 1 step, ya 3rd stair se 2 steps. Isliye \`ways(5) = ways(4) + ways(3)\`. Yeh Fibonacci jaisa hi pattern hai. Base cases hain: \`ways(1) = 1\` (sirf 1 step) aur \`ways(2) = 2\` (1+1 ya 2).
+
+Ab table bharte hain:
+- **ways(1) = 1**, **ways(2) = 2**.
+- **ways(3) = ways(2) + ways(1) = 2 + 1 = 3**.
+- **ways(4) = ways(3) + ways(2) = 3 + 2 = 5**.
+- **ways(5) = ways(4) + ways(3) = 5 + 3 = 8**.
+
+Answer hai 8. Neeche wala code sirf do variables se yahi table banata hai, kyunki har step par sirf pichhle do answers chahiye hote hain. Yahi **space optimization** hai — poori table rakhne ki zaroorat nahi, sirf \`a\` aur \`b\` kaafi hain. Dhyaan do: recurrence likhna hi DP ka sabse important step hai; recurrence galat hui toh poora answer galat hoga.`,
+          `Now let us solve the climbing stairs problem by hand. The problem is: you must climb n stairs, and each time you can climb 1 or 2 stairs. How many ways are there in total? Let us dry run for 5 stairs.
+
+First find the **recurrence**: there are two ways to reach the 5th stair — 1 step from the 4th stair, or 2 steps from the 3rd stair. So \`ways(5) = ways(4) + ways(3)\`. This is the same pattern as Fibonacci. The base cases are: \`ways(1) = 1\` (only 1 step) and \`ways(2) = 2\` (1+1 or 2).
+
+Now fill the table:
+- **ways(1) = 1**, **ways(2) = 2**.
+- **ways(3) = ways(2) + ways(1) = 2 + 1 = 3**.
+- **ways(4) = ways(3) + ways(2) = 3 + 2 = 5**.
+- **ways(5) = ways(4) + ways(3) = 5 + 3 = 8**.
+
+The answer is 8. The code below builds the same table with only two variables, because each step needs only the previous two answers. That is **space optimization** — you do not need the whole table, just \`a\` and \`b\`. Note: writing the recurrence is the most important step in DP; if the recurrence is wrong, the whole answer is wrong.`
+        ),
+        code: {
+          title: t(
+            'Climbing Stairs: 5 Stairs Chadhne ke Tareeke',
+            'Climbing Stairs: Ways to Climb 5 Stairs'
+          ),
+          language: 'python',
+          code: `def climb(n):
+    if n <= 2:
+        return n
+    a, b = 1, 2
+    for step in range(3, n + 1):
+        a, b = b, a + b
+        print(f"step {step}: ways = {b}")
+    return b
+
+print('Ways to climb 5 stairs:', climb(5))`,
+          output: `step 3: ways = 3
+step 4: ways = 5
+step 5: ways = 8
+Ways to climb 5 stairs: 8`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Recurrence Galat, Base Case Bhoolna aur Memo Reset',
+          '4. Common Mistakes: Wrong Recurrence, Forgotten Base Case, and Memo Reset'
+        ),
+        body: t(
+          `**Galti 1: recurrence galat likhna.** Beginners aksar sochte hain ki har DP problem mein \`dp[i] = dp[i-1] + dp[i-2]\` hota hai. Yeh sirf Fibonacci jaisi problems mein hota hai. House robber mein recurrence hai \`dp[i] = max(dp[i-1], dp[i-2] + houses[i])\` — matlab ya toh aaj ka ghar skip karo, ya do ghar pehle wala best + aaj ka paisa lo. Recurrence problem se nikalti hai, yaad se nahi.
+
+**Galti 2: base case bhoolna.** Agar \`fib(0)\` ya \`fib(1)\` define nahi kiya, toh recursion kabhi rukega nahi. Har DP mein pehle socho: sabse chhoti problem ka answer kya hai? Climbing stairs mein \`ways(0) = 1\` bhi kaam aata hai — 0 stairs chadhne ka ek tareeka hai, kuch na karna.
+
+**Galti 3: memo ko har test case mein reset na karna.** Agar aap ek hi memo dict ko do alag inputs par use karte ho, toh purane answers naye problem mein ghus jaayenge. Har naye input ke liye naya memo banao.`,
+          `**Mistake 1: writing the wrong recurrence.** Beginners often think every DP problem uses \`dp[i] = dp[i-1] + dp[i-2]\`. That is true only for Fibonacci-like problems. In house robber the recurrence is \`dp[i] = max(dp[i-1], dp[i-2] + houses[i])\` — either skip today house, or take the best from two houses ago plus today money. The recurrence comes from the problem, not from memory.
+
+**Mistake 2: forgetting the base case.** If \`fib(0)\` or \`fib(1)\` is not defined, the recursion never stops. In every DP, first ask: what is the answer to the smallest problem? In climbing stairs, \`ways(0) = 1\` is also useful — there is one way to climb 0 stairs, which is to do nothing.
+
+**Mistake 3: not resetting memo for each test case.** If you reuse one memo dict for two different inputs, old answers will leak into the new problem. Create a fresh memo for every new input.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: n = 0, n = 1 aur Bada n',
+          '5. Edge Cases: n = 0, n = 1, and Large n'
+        ),
+        body: t(
+          `Pehla edge case hai **n = 0**. Climbing stairs mein 0 stairs ka answer 1 hota hai — ek khaali tareeka. Fibonacci mein \`fib(0) = 0\` hota hai. Har problem ka n = 0 alag hota hai, isliye base case hamesha problem se poochh kar likho.
+
+Doosra edge case hai **n = 1**. Bahut saare DP solutions mein loop 2 ya 3 se shuru hota hai, aur n = 1 hone par loop chalta hi nahi. Isi liye code mein pehle \`if n <= 2: return n\` jaisi guard line likhi jaati hai. Bina guard ke n = 1 par galat answer ya error aayega.
+
+Teesra edge case hai **bada n**. Plain recursion se \`fib(50)\` bhi ghanton mein nahi chalega, kyunki time exponential hai. Memoization ya tabulation se \`fib(50)\` ek second se bhi kam mein chal jaata hai. Interview mein hamesha poochho ki n kitna bada ho sakta hai — isse pata chalega ki memoization kaafi hai ya space optimization chahiye.`,
+          `The first edge case is **n = 0**. In climbing stairs, the answer for 0 stairs is 1 — one empty way. In Fibonacci, \`fib(0) = 0\`. Every problem treats n = 0 differently, so always write the base case by asking the problem itself.
+
+The second edge case is **n = 1**. Many DP solutions start their loop from 2 or 3, and when n = 1 the loop never runs at all. That is why code has a guard line like \`if n <= 2: return n\` first. Without the guard, n = 1 gives a wrong answer or an error.
+
+The third edge case is **large n**. Plain recursion cannot finish even \`fib(50)\` in hours, because the time is exponential. With memoization or tabulation, \`fib(50)\` runs in less than a second. In an interview, always ask how large n can be — that tells you whether memoization is enough or space optimization is needed.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Memoization vs Tabulation, Recursion vs Loop aur Space',
+          '6. What-If: Memoization vs Tabulation, Recursion vs Loop, and Space'
+        ),
+        body: t(
+          `**What if: memoization use karein?** Memoization **top-down** hai: badi problem se shuru karo, recursion se chhoti problems par jao, aur answer ko dict mein save karo. Code likhna aasan hai kyunki recurrence seedha recursion mein likhi jaati hai. Par recursion ki depth zyada hone par stack overflow ho sakta hai.
+
+**What if: tabulation use karein?** Tabulation **bottom-up** hai: sabse chhoti problem se shuru karo aur table ko aage bharte jao. Ismein recursion nahi hoti, isliye stack overflow ka risk nahi. Dono ka time O(n) hota hai, par tabulation aksar thoda fast hota hai kyunki function call ka kharcha nahi hota.
+
+**What if: space kam karni ho?** Agar recurrence mein sirf pichhle 1-2 answers chahiye hon, toh poori table mat rakho — sirf 2 variables rakho, jaise climbing stairs wale code mein \`a\` aur \`b\`. Yeh O(n) space ko O(1) bana deta hai. Par jahan poori table baad mein chahiye ho (jaise LCS mein wapas rasta nikaalna ho), wahan table rakhni hi padegi.`,
+          `**What if you use memoization?** Memoization is **top-down**: start from the big problem, go to smaller problems with recursion, and save each answer in a dict. It is easy to write because the recurrence maps directly onto recursion. But if the recursion goes too deep, the stack can overflow.
+
+**What if you use tabulation?** Tabulation is **bottom-up**: start from the smallest problem and fill the table forward. There is no recursion, so there is no risk of stack overflow. Both take O(n) time, but tabulation is often a little faster because there is no function call cost.
+
+**What if you must save space?** If the recurrence needs only the previous 1-2 answers, do not keep the whole table — keep just 2 variables, like \`a\` and \`b\` in the climbing stairs code. That turns O(n) space into O(1). But where the full table is needed later (like tracing the path back in LCS), you must keep the table.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: DP Intro se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from DP Intro to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **DP = recurrence + saved answers**. Pehle check karo ki problem mein **overlapping subproblems** aur **optimal substructure** hain ya nahi. Phir recurrence likho, base cases likho, aur phir memoization (top-down) ya tabulation (bottom-up) se solve karo. Fibonacci plain recursion se O(2^n) mein chalta hai, memoization ya tabulation se O(n) mein. Climbing stairs mein ways(5) = 8 aata hai, aur house robber mein [2, 7, 9, 3, 1] ka max 12 aata hai.
+
+Interview mein DP ka sawaal aate hi pehle recurrence bolo, phir base case, phir code likho. Interviewer ko recurrence sunna pasand hai — code toh uske baad aasan hai. Revision ke liye climbing stairs ka table dobara bharo: 1, 2, 3, 5, 8. Agar yeh sequence bina code dekhe nikal jaaye, toh DP intro aapko aa gaya hai. Agle article mein hum knapsack dekhenge — wahan 2D table bharna seekhenge.`,
+          `The whole article in one line: **DP = recurrence + saved answers**. First check whether the problem has **overlapping subproblems** and **optimal substructure**. Then write the recurrence, write the base cases, and solve with memoization (top-down) or tabulation (bottom-up). Fibonacci runs in O(2^n) with plain recursion and in O(n) with memoization or tabulation. In climbing stairs, ways(5) = 8, and in house robber, [2, 7, 9, 3, 1] gives a maximum of 12.
+
+In an interview, the moment a DP question appears, first state the recurrence, then the base case, then write the code. The interviewer likes hearing the recurrence — the code after that is easy. To revise, fill the climbing stairs table again: 1, 2, 3, 5, 8. If you can produce that sequence without looking at the code, you know the DP intro. In the next article we will look at knapsack — there you will learn to fill a 2D table.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Fibonacci Recursion Tree: Kaam Kyun Repeat Hota Hai',
+        'Fibonacci Recursion Tree: Why Work Repeats'
+      ),
+      nodes: [
+        {
+          t: t('fib(5)', 'fib(5)'),
+          s: t('fib(4) + fib(3) chahiye', 'Needs fib(4) + fib(3)')
+        },
+        {
+          t: t('fib(4) = fib(3) + fib(2)', 'fib(4) = fib(3) + fib(2)'),
+          s: t('fib(3) yahan dobara aaya', 'fib(3) appears again here')
+        },
+        {
+          t: t('fib(3) do baar, fib(2) teen baar', 'fib(3) twice, fib(2) three times'),
+          s: t('Yahi overlapping subproblems hain', 'These are the overlapping subproblems')
+        },
+        {
+          t: t('Memo: pehli baar save karo, dobara turant do', 'Memo: save the first time, return at once next time'),
+          s: t('Time O(2^n) se O(n) ho jaata hai', 'Time drops from O(2^n) to O(n)')
+        },
+        {
+          t: t('Tabulation: 0, 1 se table bharo', 'Tabulation: fill the table from 0, 1'),
+          s: t('fib(10) = 55', 'fib(10) = 55')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'House Robber: Aas-Paas wale Ghar Skip Karo',
+          'House Robber: Skip Neighbouring Houses'
+        ),
+        language: 'python',
+        code: `houses = [2, 7, 9, 3, 1]
+prev2, prev1 = 0, 0
+for money in houses:
+    prev2, prev1 = prev1, max(prev1, prev2 + money)
+print('Max money:', prev1)`,
+        output: `Max money: 12`
+      },
+      {
+        title: t(
+          'Fibonacci: Memoization vs Tabulation',
+          'Fibonacci: Memoization vs Tabulation'
+        ),
+        language: 'python',
+        code: `memo = {}
+
+def fib_memo(n):
+    if n <= 1:
+        return n
+    if n not in memo:
+        memo[n] = fib_memo(n - 1) + fib_memo(n - 2)
+    return memo[n]
+
+print('Memo fib(10):', fib_memo(10))
+
+table = [0, 1]
+for i in range(2, 11):
+    table.append(table[i - 1] + table[i - 2])
+print('Tab fib(10):', table[10])`,
+        output: `Memo fib(10): 55
+Tab fib(10): 55`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Dynamic Programming kab kaam karta hai?',
+          'When does Dynamic Programming work?'
+        ),
+        opts: [
+          t('Jab problem mein overlapping subproblems aur optimal substructure hon', 'When the problem has overlapping subproblems and optimal substructure'),
+          t('Har problem par', 'On every problem'),
+          t('Sirf sorting problems par', 'Only on sorting problems'),
+          t('Sirf graph problems par', 'Only on graph problems')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: bina overlapping subproblems ke save karne ka fayda nahi, aur bina optimal substructure ke chhote answers se bada answer nahi ban sakta.',
+          'Correct answer: without overlapping subproblems there is nothing to save, and without optimal substructure small answers cannot build the big answer.'
+        )
+      },
+      {
+        q: t(
+          'Plain recursion se fib(10) ka time complexity kya hota hai?',
+          'What is the time complexity of fib(10) with plain recursion?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(2^n)', 'O(2^n)'),
+          t('O(1)', 'O(1)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: har call do calls banata hai aur wahi kaam baar-baar hota hai, isliye time exponential O(2^n) hota hai.',
+          'Correct answer: each call makes two calls and repeats the same work, so the time is exponential O(2^n).'
+        )
+      },
+      {
+        q: t(
+          'Memoization aur tabulation mein kya farak hai?',
+          'What is the difference between memoization and tabulation?'
+        ),
+        opts: [
+          t('Memoization top-down hai, tabulation bottom-up hai', 'Memoization is top-down, tabulation is bottom-up'),
+          t('Dono ek hi cheez hain', 'Both are the same thing'),
+          t('Memoization slow hai, tabulation galat hai', 'Memoization is slow, tabulation is wrong'),
+          t('Tabulation sirf Fibonacci par chalta hai', 'Tabulation works only on Fibonacci')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: memoization badi problem se shuru karke recursion se neeche jaata hai, tabulation chhoti problem se shuru karke table aage bharata hai.',
+          'Correct answer: memoization starts from the big problem and goes down with recursion, while tabulation starts from the small problem and fills the table forward.'
+        )
+      },
+      {
+        q: t(
+          'Climbing stairs mein 5 stairs chadhne ke kitne tareeke hain?',
+          'In climbing stairs, how many ways are there to climb 5 stairs?'
+        ),
+        opts: [
+          t('5', '5'),
+          t('6', '6'),
+          t('8', '8'),
+          t('13', '13')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: ways(5) = ways(4) + ways(3) = 5 + 3 = 8.',
+          'Correct answer: ways(5) = ways(4) + ways(3) = 5 + 3 = 8.'
+        )
+      },
+      {
+        q: t(
+          'House robber [2, 7, 9, 3, 1] mein max kitna paisa loot sakte hain?',
+          'In house robber [2, 7, 9, 3, 1], what is the maximum money you can rob?'
+        ),
+        opts: [
+          t('10', '10'),
+          t('11', '11'),
+          t('12', '12'),
+          t('22', '22')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 2 + 9 + 1 = 12 sabse zyada hai; aas-paas wale ghar ek saath nahi loot sakte.',
+          'Correct answer: 2 + 9 + 1 = 12 is the maximum; neighbouring houses cannot be robbed together.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'DP ke liye do properties chahiye: overlapping subproblems aur optimal substructure.',
+        'DP needs two properties: overlapping subproblems and optimal substructure.'
+      ),
+      t(
+        'Recurrence likhna DP ka sabse important step hai; base cases pehle likho.',
+        'Writing the recurrence is the most important step in DP; write the base cases first.'
+      ),
+      t(
+        'Memoization top-down hai, tabulation bottom-up hai; dono ka time O(n) hota hai.',
+        'Memoization is top-down, tabulation is bottom-up; both take O(n) time.'
+      ),
+      t(
+        'Climbing stairs: ways(n) = ways(n-1) + ways(n-2); ways(5) = 8.',
+        'Climbing stairs: ways(n) = ways(n-1) + ways(n-2); ways(5) = 8.'
+      ),
+      t(
+        'Sirf pichhle 1-2 answers chahiye hon toh table ki jagah 2 variables se O(1) space milti hai.',
+        'When only the previous 1-2 answers are needed, 2 variables give O(1) space instead of a table.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 6 Stairs Chadhne ke Tareeke Nikaalo',
+        'Practice: Find the Ways to Climb 6 Stairs'
+      ),
+      task: t(
+        'Climbing stairs wale tareeke se 6 stairs chadhne ke total tareeke nikaalo aur print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Use the climbing stairs method to find the total ways to climb 6 stairs and print the answer. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `n = 6
+a, b = 1, 2
+for step in range(3, n + 1):
+    a, b = b, a + b
+print('Ways to climb 6 stairs:', b)`,
+      expected: `Ways to climb 6 stairs: 13`
+    },
+    readMinutes: 12
+  };
+
+const dsaDpKnapsack: Article = {
+    id: 'dsa-dp-knapsack',
+    subjectId: 'dsa',
+    title: t(
+      'Knapsack — 0/1 Knapsack, Unbounded, Subset Sum aur Coin Change',
+      'Knapsack — 0/1 Knapsack, Unbounded, Subset Sum, and Coin Change'
+    ),
+    summary: t(
+      'Knapsack ko zero se samjho: 0/1 knapsack mein har item ek baar lo ya chhodo, unbounded mein ek hi item baar-baar lo, subset sum mein target sum ban sakta hai ya nahi, aur coin change mein min coins aur total ways kaise nikaalte hain — sab ek hi 2D table se.',
+      'Learn knapsack from scratch: in 0/1 knapsack take each item once or skip it, in unbounded take the same item again and again, in subset sum check whether the target sum is possible, and in coin change find the minimum coins and the total ways — all from one 2D table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Knapsack Kya Hai? (0/1, Unbounded aur Subset Sum)',
+          '1. What Is Knapsack? (0/1, Unbounded, and Subset Sum)'
+        ),
+        body: t(
+          `**Knapsack problem** mein aapke paas ek bag hai jiski capacity fixed hai, aur kai items hain jinmein har ek ka **weight** aur **value** hai. Aapko bag mein woh items bharne hain jinse total value sabse zyada ho, par total weight capacity se zyada na ho. Yeh DP ka sabse famous 2D problem hai, kyunki ismein do cheezein ek saath badalti hain: items aur capacity.
+
+**0/1 knapsack** mein har item ko ya toh lo (1) ya chhodo (0) — ek item ko do baar nahi le sakte. **Unbounded knapsack** mein ek hi item ko baar-baar le sakte ho, jaise coins — ek hi coin ko kai baar use kar sakte ho. **Subset sum** knapsack ka chhota version hai: value ki jagah sirf yeh poochha jaata hai ki kya kuch items ka total weight target ke barabar ho sakta hai.
+
+Sabka core ek hi hai: har item ke liye do choice hoti hain — lo ya chhodo. Jo choice behtar answer de, use lo. Yeh choice hi recurrence banati hai.`,
+          `In the **knapsack problem**, you have a bag with a fixed capacity and several items, each with a **weight** and a **value**. You must fill the bag with items that give the highest total value, without letting the total weight pass the capacity. This is the most famous 2D DP problem, because two things change together: the items and the capacity.
+
+In **0/1 knapsack**, each item is either taken (1) or skipped (0) — you cannot take one item twice. In **unbounded knapsack**, you can take the same item again and again, like coins — one coin can be used many times. **Subset sum** is a smaller version of knapsack: instead of value, it only asks whether some items can add up exactly to the target.
+
+The core is the same in all of them: for every item there are two choices — take it or skip it. Take whichever choice gives the better answer. That choice is what builds the recurrence.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bag Packing, Budget aur Coins',
+          '2. Real-Life Examples: Bag Packing, Budget, and Coins'
+        ),
+        body: t(
+          `Knapsack ka sabse seedha example hai **bag packing**. Aapko trip par jaana hai, bag mein sirf 5 kg jagah hai, aur aapke paas kai cheezein hain — camera (2 kg, bahut zaroori), books (3 kg, kam zaroori), jacket (4 kg, beech mein). Kaunsi cheezein lein taaki total fayda sabse zyada ho aur weight 5 kg se zyada na ho? Yahi 0/1 knapsack hai.
+
+Doosra example hai **budget**. Aapke paas 5000 rupees hain aur kai courses hain jinmein har ek ki fees aur fayda alag hai. Kaunse courses lein taaki total fayda sabse zyada ho? Yahan budget capacity hai aur courses items hain.
+
+Teesra example hai **coins**. Aapko 11 rupees banane hain aur coins hain 1, 2 aur 5 ke. Sabse kam coins mein 11 kaise banayein? Answer hai 5 + 5 + 1, matlab 3 coins. Yahi coin change problem hai, jo unbounded knapsack ka hi ek roop hai.`,
+          `The simplest example of knapsack is **bag packing**. You are going on a trip, your bag holds only 5 kg, and you have several things — a camera (2 kg, very useful), books (3 kg, less useful), a jacket (4 kg, in between). Which things should you take so the total benefit is highest and the weight stays under 5 kg? That is exactly 0/1 knapsack.
+
+A second example is a **budget**. You have 5000 rupees and several courses, each with a different fee and benefit. Which courses should you take for the highest total benefit? Here the budget is the capacity and the courses are the items.
+
+A third example is **coins**. You must make 11 rupees with coins of 1, 2, and 5. How do you make 11 with the fewest coins? The answer is 5 + 5 + 1, which is 3 coins. That is the coin change problem, which is a form of unbounded knapsack.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 0/1 Knapsack ka Dry Run 2D Table se',
+          '3. Step-by-Step: A 0/1 Knapsack Dry Run with a 2D Table'
+        ),
+        body: t(
+          `Ab hum 0/1 knapsack ko haath se solve karenge. Items hain: weights [2, 3, 4, 5] aur values [3, 4, 5, 6]. Capacity hai 5. Table \`dp[i][w]\` ka matlab hai: pehle \`i\` items se, capacity \`w\` ke andar, max kitni value mil sakti hai. Table mein 5 rows (0 se 4 items) aur 6 columns (capacity 0 se 5) hain.
+
+Recurrence hai: agar item \`i\` ka weight capacity \`w\` se zyada hai, toh item lo hi nahi sakte, isliye \`dp[i][w] = dp[i-1][w]\`. Agar weight fit hota hai, toh do choice hain — item chhodo (\`dp[i-1][w]\`) ya item lo (\`dp[i-1][w - weight] + value\`) — inmein se jo bada ho use lo.
+
+Table bharte hain:
+- **Row 0 (koi item nahi):** saari values 0 hain.
+- **Row 1 (weight 2, value 3):** capacity 0-1 par 0, capacity 2-5 par 3.
+- **Row 2 (weight 3, value 4):** capacity 3 par 4, capacity 5 par 3 + 4 = 7 (dono items).
+- **Row 3 (weight 4, value 5):** capacity 5 par max 7 hi rehta hai.
+- **Row 4 (weight 5, value 6):** capacity 5 par max 7 hi rehta hai.
+
+Final answer hai **7** — items 1 aur 2 (weight 2 + 3 = 5, value 3 + 4 = 7). Neeche wala code yahi table print karta hai.`,
+          `Now let us solve 0/1 knapsack by hand. The items are: weights [2, 3, 4, 5] and values [3, 4, 5, 6]. The capacity is 5. The table \`dp[i][w]\` means: using the first \`i\` items, within capacity \`w\`, what is the maximum value possible? The table has 5 rows (0 to 4 items) and 6 columns (capacity 0 to 5).
+
+The recurrence is: if the weight of item \`i\` is more than capacity \`w\`, you cannot take the item, so \`dp[i][w] = dp[i-1][w]\`. If the weight fits, there are two choices — skip the item (\`dp[i-1][w]\`) or take it (\`dp[i-1][w - weight] + value\`) — take whichever is larger.
+
+Fill the table:
+- **Row 0 (no items):** all values are 0.
+- **Row 1 (weight 2, value 3):** 0 for capacity 0-1, and 3 for capacity 2-5.
+- **Row 2 (weight 3, value 4):** 4 at capacity 3, and 3 + 4 = 7 at capacity 5 (both items).
+- **Row 3 (weight 4, value 5):** the maximum at capacity 5 stays 7.
+- **Row 4 (weight 5, value 6):** the maximum at capacity 5 stays 7.
+
+The final answer is **7** — items 1 and 2 (weight 2 + 3 = 5, value 3 + 4 = 7). The code below prints exactly this table.`
+        ),
+        code: {
+          title: t(
+            '0/1 Knapsack: 2D Table Bharna aur Max Value',
+            '0/1 Knapsack: Filling the 2D Table and Max Value'
+          ),
+          language: 'python',
+          code: `weights = [2, 3, 4, 5]
+values = [3, 4, 5, 6]
+cap = 5
+n = len(weights)
+dp = [[0] * (cap + 1) for _ in range(n + 1)]
+
+for i in range(1, n + 1):
+    for w in range(cap + 1):
+        if weights[i - 1] <= w:
+            dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + values[i - 1])
+        else:
+            dp[i][w] = dp[i - 1][w]
+
+for row in dp:
+    print(row)
+print('Max value:', dp[n][cap])`,
+          output: `[0, 0, 0, 0, 0, 0]
+[0, 0, 3, 3, 3, 3]
+[0, 0, 3, 4, 4, 7]
+[0, 0, 3, 4, 5, 7]
+[0, 0, 3, 4, 5, 7]
+Max value: 7`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: 0/1 vs Unbounded, Loop Direction aur Table Index',
+          '4. Common Mistakes: 0/1 vs Unbounded, Loop Direction, and Table Index'
+        ),
+        body: t(
+          `**Galti 1: 0/1 aur unbounded mein farak na samajhna.** 0/1 mein har item ek baar use hota hai, isliye 1D DP mein capacity ka loop **peeche se** (ulta) chalao. Unbounded mein ek hi item baar-baar use hota hai, isliye loop **aage se** chalao. Loop ki direction galat hui toh 0/1 problem unbounded ban jaayegi aur answer galat aayega.
+
+**Galti 2: table index galat karna.** \`dp[i][w]\` mein \`i\` items ki count hai, par item ka weight \`weights[i-1]\` hota hai, \`weights[i]\` nahi. Beginners aksar \`weights[i]\` likh dete hain aur index error ya galat answer paate hain. Hamesha yaad rakho: row \`i\` matlab pehle \`i\` items, aur current item ka index \`i - 1\` hai.
+
+**Galti 3: coin change mein min coins aur ways ko mix karna.** Min coins mein recurrence hai \`dp[a] = min(dp[a], dp[a - c] + 1)\`, aur ways mein hai \`dp[a] += dp[a - c]\`. Dono ke loop bhi alag hain: ways mein pehle coins ka loop, phir amount ka loop — warna order alag-alag count ho jaayega.`,
+          `**Mistake 1: not knowing the difference between 0/1 and unbounded.** In 0/1, each item is used once, so in 1D DP the capacity loop must run **backwards**. In unbounded, the same item can be used again and again, so the loop runs **forwards**. If the loop direction is wrong, a 0/1 problem turns into an unbounded one and the answer is wrong.
+
+**Mistake 2: using the wrong table index.** In \`dp[i][w]\`, \`i\` is the count of items, but the weight of the item is \`weights[i-1]\`, not \`weights[i]\`. Beginners often write \`weights[i]\` and get an index error or a wrong answer. Always remember: row \`i\` means the first \`i\` items, and the current item has index \`i - 1\`.
+
+**Mistake 3: mixing up min coins and ways in coin change.** For min coins the recurrence is \`dp[a] = min(dp[a], dp[a - c] + 1)\`, and for ways it is \`dp[a] += dp[a - c]\`. Their loops also differ: for ways, loop over coins first and then over amounts — otherwise different orders get counted separately.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Capacity 0, Item Bada aur Amount 0',
+          '5. Edge Cases: Capacity 0, Oversized Item, and Amount 0'
+        ),
+        body: t(
+          `Pehla edge case hai **capacity 0**. Agar bag ki capacity 0 hai, toh max value 0 hai — kuch bhi nahi le sakte. Table ki pehli column (w = 0) hamesha 0 hoti hai. Isi tarah 0 items hone par bhi max value 0 hoti hai.
+
+Doosra edge case hai **item capacity se bada**. Agar ek item ka weight capacity se zyada hai, toh woh item kabhi bag mein nahi aa sakta. Recurrence mein yahi check hai: \`if weights[i-1] <= w\` warna \`dp[i][w] = dp[i-1][w]\`. Aise item ko table bharte time skip kar do.
+
+Teesra edge case hai **amount 0 coin change mein**. 0 rupees banane ka ek tareeka hai — koi coin na lo. Isi liye ways wale DP mein \`dp[0] = 1\` hota hai. Min coins mein \`dp[0] = 0\` hota hai — 0 rupees ke liye 0 coins chahiye. Agar amount ban hi nahi sakta, toh answer -1 hota hai.`,
+          `The first edge case is **capacity 0**. If the bag capacity is 0, the maximum value is 0 — nothing can be taken. The first column of the table (w = 0) is always 0. In the same way, with 0 items the maximum value is also 0.
+
+The second edge case is an **item larger than the capacity**. If one item weighs more than the capacity, it can never go into the bag. The recurrence has exactly this check: \`if weights[i-1] <= w\`, else \`dp[i][w] = dp[i-1][w]\`. Skip such an item while filling the table.
+
+The third edge case is **amount 0 in coin change**. There is one way to make 0 rupees — take no coin at all. That is why \`dp[0] = 1\` in the ways DP. In min coins, \`dp[0] = 0\` — 0 rupees needs 0 coins. If the amount cannot be made at all, the answer is -1.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Greedy se Kaam Chalega? 1D Table aur Subset Sum',
+          '6. What-If: Will Greedy Work? 1D Table and Subset Sum'
+        ),
+        body: t(
+          `**What if: greedy use kar lein?** 0/1 knapsack mein greedy fail hota hai. Sabse zyada value/weight ratio wala item pehle lene se hamesha best answer nahi milta — kabhi ek mehenga item lene se do achhe items ki jagah chali jaati hai. Fractional knapsack mein greedy chalta hai kyunki item ko kaat sakte ho, par 0/1 mein item ko kaat nahi sakte. Isi liye 0/1 ke liye DP chahiye.
+
+**What if: 1D table use karni ho?** 2D table ko 1D mein badla ja sakta hai: \`dp[w]\` matlab capacity \`w\` ke liye max value. Par dhyaan rakho: 0/1 mein loop **peeche se** chalao, warna ek hi item kai baar use ho jaayega. Unbounded mein loop **aage se** chalao, taaki item dobara use ho sake.
+
+**What if: subset sum poochha ho?** Subset sum mein value nahi hoti, sirf True/False hota hai: \`dp[s]\` matlab kya sum \`s\` ban sakta hai. Recurrence hai: item lo toh \`dp[s - num]\` check karo. Neeche wala code batata hai ki [3, 34, 4, 12, 5, 2] se sum 9 ban sakta hai — 4 + 5 ya 3 + 4 + 2 se.`,
+          `**What if you use greedy?** Greedy fails in 0/1 knapsack. Taking the item with the highest value/weight ratio first does not always give the best answer — sometimes one costly item takes the space of two good items. Greedy works in fractional knapsack because an item can be cut, but in 0/1 an item cannot be cut. That is why 0/1 needs DP.
+
+**What if you use a 1D table?** The 2D table can be reduced to 1D: \`dp[w]\` means the maximum value for capacity \`w\`. But remember: in 0/1, run the loop **backwards**, or one item will be used many times. In unbounded, run the loop **forwards**, so the item can be reused.
+
+**What if the question is subset sum?** In subset sum there is no value, only True/False: \`dp[s]\` means whether sum \`s\` is possible. The recurrence is: to take an item, check \`dp[s - num]\`. The code below shows that [3, 34, 4, 12, 5, 2] can make sum 9 — with 4 + 5 or 3 + 4 + 2.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Knapsack se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Knapsack to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **har item ke liye do choice — lo ya chhodo — aur behtar wali lo**. 0/1 knapsack mein table \`dp[i][w]\` bharte hain aur answer hai \`dp[n][cap]\`; is example mein max value 7 aayi. Unbounded mein ek hi item baar-baar le sakte ho, isliye 1D loop aage se chalta hai. Subset sum mein sirf True/False bharte hain, aur coin change mein min coins ke liye \`min\` aur ways ke liye \`+\` use karte hain.
+
+Interview mein knapsack ka sawaal aate hi pehle poochho: item ek baar use hoga ya baar-baar, aur answer value chahiye ya True/False. Is ek sawaal se sahi recurrence mil jaati hai. Revision ke liye upar wali table dobara bharo: last row [0, 0, 3, 4, 5, 7] aur max value 7. Agar yeh bina code dekhe nikal jaaye, toh knapsack aapko aa gaya hai. Agle article mein hum strings par DP dekhenge — LCS aur edit distance.`,
+          `The whole article in one line: **for every item there are two choices — take it or skip it — and take the better one**. In 0/1 knapsack we fill the table \`dp[i][w]\` and the answer is \`dp[n][cap]\`; in this example the maximum value is 7. In unbounded, the same item can be taken again and again, so the 1D loop runs forwards. In subset sum we fill only True/False, and in coin change we use \`min\` for minimum coins and \`+\` for ways.
+
+In an interview, the moment a knapsack question appears, first ask: is each item used once or again and again, and do I need a value or True/False? That one question gives the right recurrence. To revise, fill the table above again: the last row is [0, 0, 3, 4, 5, 7] and the maximum value is 7. If you can produce that without looking at the code, you know knapsack. In the next article we will look at DP on strings — LCS and edit distance.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Knapsack Table: Rows = Items, Columns = Capacity',
+        'Knapsack Table: Rows = Items, Columns = Capacity'
+      ),
+      nodes: [],
+      headers: [
+        t('Items / Cap', 'Items / Cap'),
+        t('0', '0'),
+        t('2', '2'),
+        t('3', '3'),
+        t('5', '5')
+      ],
+      rows: [
+        [t('0 items', '0 items'), t('0', '0'), t('0', '0'), t('0', '0'), t('0', '0')],
+        [t('Item 1 (2, 3)', 'Item 1 (2, 3)'), t('0', '0'), t('3', '3'), t('3', '3'), t('3', '3')],
+        [t('Item 2 (3, 4)', 'Item 2 (3, 4)'), t('0', '0'), t('3', '3'), t('4', '4'), t('7', '7')],
+        [t('Item 3 (4, 5)', 'Item 3 (4, 5)'), t('0', '0'), t('3', '3'), t('4', '4'), t('7', '7')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Subset Sum: Kya Target 9 Ban Sakta Hai?',
+          'Subset Sum: Can Target 9 Be Made?'
+        ),
+        language: 'python',
+        code: `nums = [3, 34, 4, 12, 5, 2]
+target = 9
+dp = [False] * (target + 1)
+dp[0] = True
+
+for num in nums:
+    for s in range(target, num - 1, -1):
+        if dp[s - num]:
+            dp[s] = True
+
+print('Can make 9:', dp[target])`,
+        output: `Can make 9: True`
+      },
+      {
+        title: t(
+          'Coin Change: 11 Rupees ke Liye Min Coins',
+          'Coin Change: Min Coins for 11 Rupees'
+        ),
+        language: 'python',
+        code: `coins = [1, 2, 5]
+amount = 11
+dp = [10 ** 9] * (amount + 1)
+dp[0] = 0
+
+for a in range(1, amount + 1):
+    for c in coins:
+        if c <= a:
+            dp[a] = min(dp[a], dp[a - c] + 1)
+
+print('Min coins for 11:', dp[amount])`,
+        output: `Min coins for 11: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '0/1 knapsack aur unbounded knapsack mein kya farak hai?',
+          'What is the difference between 0/1 knapsack and unbounded knapsack?'
+        ),
+        opts: [
+          t('0/1 mein har item ek baar, unbounded mein baar-baar', 'In 0/1 each item once, in unbounded again and again'),
+          t('Dono mein har item ek baar', 'In both, each item once'),
+          t('0/1 mein capacity nahi hoti', 'In 0/1 there is no capacity'),
+          t('Koi farak nahi hai', 'There is no difference')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 0/1 mein item ko lo ya chhodo, dobara nahi; unbounded mein ek hi item kai baar le sakte ho, jaise coins.',
+          'Correct answer: in 0/1 you take an item or skip it, never twice; in unbounded you can take the same item many times, like coins.'
+        )
+      },
+      {
+        q: t(
+          '0/1 knapsack ki 1D table mein capacity ka loop kis direction mein chalana chahiye?',
+          'In the 1D table for 0/1 knapsack, which direction should the capacity loop run?'
+        ),
+        opts: [
+          t('Aage se (0 se cap tak)', 'Forwards (0 to cap)'),
+          t('Peeche se (cap se 0 tak)', 'Backwards (cap to 0)'),
+          t('Dono direction mein', 'In both directions'),
+          t('Loop ki zaroorat nahi', 'No loop is needed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: peeche se chalane par item ek hi baar use hota hai; aage se chalane par wahi item dobara use ho jaayega.',
+          'Correct answer: running backwards uses each item only once; running forwards would reuse the same item.'
+        )
+      },
+      {
+        q: t(
+          'Weights [2, 3, 4, 5], values [3, 4, 5, 6], capacity 5 — max value kitni hai?',
+          'Weights [2, 3, 4, 5], values [3, 4, 5, 6], capacity 5 — what is the maximum value?'
+        ),
+        opts: [
+          t('6', '6'),
+          t('7', '7'),
+          t('9', '9'),
+          t('10', '10')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: items 1 aur 2 lo (weight 2 + 3 = 5, value 3 + 4 = 7); isse zyada value capacity 5 mein nahi ban sakti.',
+          'Correct answer: take items 1 and 2 (weight 2 + 3 = 5, value 3 + 4 = 7); no higher value fits in capacity 5.'
+        )
+      },
+      {
+        q: t(
+          'Coin change (min coins) mein dp[0] ki value kya hoti hai?',
+          'In coin change (min coins), what is the value of dp[0]?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('1', '1'),
+          t('Infinity', 'Infinity'),
+          t('-1', '-1')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 0 rupees banane ke liye 0 coins chahiye; ways wale DP mein dp[0] = 1 hota hai kyunki ek khaali tareeka hota hai.',
+          'Correct answer: 0 rupees needs 0 coins; in the ways DP, dp[0] = 1 because there is one empty way.'
+        )
+      },
+      {
+        q: t(
+          '0/1 knapsack mein greedy (sabse zyada value/weight pehle) kyun fail hota hai?',
+          'Why does greedy (highest value/weight first) fail in 0/1 knapsack?'
+        ),
+        opts: [
+          t('Kyunki item ko kaat nahi sakte, ek item do achhe items ki jagah le sakta hai', 'Because an item cannot be cut, one item can take the space of two good items'),
+          t('Kyunki greedy hamesha slow hota hai', 'Because greedy is always slow'),
+          t('Kyunki greedy mein table nahi banti', 'Because greedy builds no table'),
+          t('Greedy kabhi fail nahi hota', 'Greedy never fails')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: fractional knapsack mein item kaat sakte ho isliye greedy chalta hai, par 0/1 mein poora item lena padta hai.',
+          'Correct answer: in fractional knapsack you can cut an item so greedy works, but in 0/1 you must take the whole item.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '0/1 knapsack: har item ek baar — lo ya chhodo; recurrence dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight] + value).',
+        '0/1 knapsack: each item once — take or skip; recurrence dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight] + value).'
+      ),
+      t(
+        '1D table mein 0/1 ka loop peeche se, unbounded ka loop aage se chalao.',
+        'In a 1D table, run the 0/1 loop backwards and the unbounded loop forwards.'
+      ),
+      t(
+        'Subset sum mein sirf True/False bharte hain; coin change ways mein dp[0] = 1 hota hai.',
+        'In subset sum fill only True/False; in coin change ways, dp[0] = 1.'
+      ),
+      t(
+        'Coin change min coins: 11 rupees ke liye 5 + 5 + 1 = 3 coins.',
+        'Coin change min coins: 11 rupees needs 5 + 5 + 1 = 3 coins.'
+      ),
+      t(
+        'Greedy 0/1 knapsack mein fail hota hai, fractional mein chalta hai.',
+        'Greedy fails in 0/1 knapsack and works in fractional knapsack.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 5 Rupees Banane ke Kitne Tareeke Hain?',
+        'Practice: How Many Ways Are There to Make 5 Rupees?'
+      ),
+      task: t(
+        'Coins hain [1, 2, 5] aur amount hai 5. DP se nikaalo ki 5 rupees banane ke kitne tareeke hain aur print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'The coins are [1, 2, 5] and the amount is 5. Use DP to find how many ways there are to make 5 rupees and print the answer. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `coins = [1, 2, 5]
+amount = 5
+dp = [0] * (amount + 1)
+dp[0] = 1
+
+for c in coins:
+    for a in range(c, amount + 1):
+        dp[a] += dp[a - c]
+
+print('Ways to make 5:', dp[amount])`,
+      expected: `Ways to make 5: 4`
+    },
+    readMinutes: 12
+  };
+
+const dsaDpStrings: Article = {
+    id: 'dsa-dp-strings',
+    subjectId: 'dsa',
+    title: t(
+      'DP on Strings — LCS, Edit Distance aur Longest Palindrome',
+      'DP on Strings — LCS, Edit Distance, and Longest Palindrome'
+    ),
+    summary: t(
+      'Strings par DP ko zero se samjho: longest common subsequence (LCS) ka table kaise banta hai, edit distance mein insert, delete aur replace kaise ginte hain, longest palindromic subsequence aur substring mein kya farak hai, aur do strings ko compare karne wale problems mein DP table se answer kaise nikaalte hain.',
+      'Learn DP on strings from scratch: how the longest common subsequence (LCS) table is built, how edit distance counts insert, delete, and replace, how the longest palindromic subsequence differs from the longest palindromic substring, and how to read the answer from the DP table in string comparison problems.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. DP on Strings Kya Hai? (LCS, Edit Distance aur Palindrome)',
+          '1. What Is DP on Strings? (LCS, Edit Distance, and Palindrome)'
+        ),
+        body: t(
+          `Strings par DP mein hum do strings ko ek saath compare karte hain aur ek **2D table** bharte hain. Table ka cell \`dp[i][j]\` batata hai ki pehli string ke pehle \`i\` characters aur doosri string ke pehle \`j\` characters ke liye answer kya hai. Har cell sirf apne upar, left aur upar-left wale cells par depend karta hai — isliye table ko upar se neeche, left se right bharte hain.
+
+**LCS (Longest Common Subsequence)** ka matlab hai woh sabse lambi sequence jo dono strings mein ek hi order mein aaye, par characters ke beech mein gap ho sakta hai. **Edit distance** ka matlab hai ek string ko doosri mein badalne ke liye sabse kam operations — insert, delete ya replace. **Longest palindromic subsequence** ka matlab hai string ke andar sabse lamba palindrome jo characters ko skip karke ban sakta hai.
+
+Teeno mein ek hi pattern hai: agar dono characters **barabar** hain, toh answer diagonal cell se aata hai; agar **alag** hain, toh upar aur left mein se behtar wala chuno.`,
+          `In DP on strings, we compare two strings together and fill a **2D table**. The cell \`dp[i][j]\` tells the answer for the first \`i\` characters of the first string and the first \`j\` characters of the second string. Each cell depends only on the cells above, to the left, and diagonally above-left — so the table is filled from top to bottom, left to right.
+
+**LCS (Longest Common Subsequence)** is the longest sequence that appears in both strings in the same order, with gaps allowed between characters. **Edit distance** is the smallest number of operations — insert, delete, or replace — needed to change one string into another. The **longest palindromic subsequence** is the longest palindrome that can be formed from a string by skipping characters.
+
+All three share one pattern: if the two characters are **equal**, the answer comes from the diagonal cell; if they are **different**, take the better of the cell above and the cell to the left.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Spell Check, DNA Match aur Diff Tool',
+          '2. Real-Life Examples: Spell Check, DNA Match, and Diff Tool'
+        ),
+        body: t(
+          `DP on strings ka sabse seedha example hai **spell check**. Aap "kitten" likhte ho aur sahi spelling "sitting" hai. Kitne changes chahiye? Edit distance batata hai: 3 changes — k ko s se replace karo, e ko i se replace karo, aur end mein g insert karo. Har word processor yahi calculation karta hai.
+
+Doosra example hai **DNA match**. Do DNA sequences mein common pattern dhoondhna LCS hi hai. Scientists do sequences ka LCS nikaal kar batate hain ki woh kitni similar hain. Yahan characters A, C, G, T hote hain, par algorithm wahi hai.
+
+Teesra example hai **diff tool**. Jab aap Git mein do files ko compare karte ho, toh tool batata hai ki kaunsi lines add hui, kaunsi delete hui aur kaunsi change hui. Iske peeche bhi LCS jaisa hi DP chalta hai.`,
+          `The simplest example of DP on strings is **spell check**. You type "kitten" and the correct spelling is "sitting". How many changes are needed? Edit distance says 3 — replace k with s, replace e with i, and insert g at the end. Every word processor does exactly this calculation.
+
+A second example is **DNA matching**. Finding the common pattern in two DNA sequences is LCS. Scientists compute the LCS of two sequences to tell how similar they are. Here the characters are A, C, G, T, but the algorithm is the same.
+
+A third example is the **diff tool**. When you compare two files in Git, the tool shows which lines were added, deleted, or changed. Behind it runs DP much like LCS.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: LCS ka Dry Run Table ke Saath',
+          '3. Step-by-Step: An LCS Dry Run with a Table'
+        ),
+        body: t(
+          `Ab hum LCS ko haath se solve karenge. Strings hain: \`a = 'ABCBDAB'\` aur \`b = 'BDCABA'\`. Table \`dp[i][j]\` ka matlab hai: \`a\` ke pehle \`i\` characters aur \`b\` ke pehle \`j\` characters ka LCS length. Table mein 8 rows aur 7 columns hain (0 wali row aur column bhi hoti hai).
+
+Recurrence hai: agar \`a[i-1] == b[j-1]\` ho, toh \`dp[i][j] = dp[i-1][j-1] + 1\` — matlab dono characters match hue, isliye diagonal answer mein 1 jod do. Agar characters alag hon, toh \`dp[i][j] = max(dp[i-1][j], dp[i][j-1])\` — matlab ek character skip karo aur behtar wala answer lo.
+
+Table bharne ke baad last cell \`dp[7][6] = 4\` aata hai, matlab LCS ki length **4** hai. Ek LCS hai **BCBA**: B dono mein hai, phir C, phir B, phir A — order dono strings mein ek hi hai. Table se wapas rasta nikaalne ke liye last cell se shuru karo: agar characters barabar hon toh character lo aur diagonal jao, warna bade wale cell ki taraf jao. Neeche wala code length aur ek LCS dono print karta hai.`,
+          `Now let us solve LCS by hand. The strings are: \`a = 'ABCBDAB'\` and \`b = 'BDCABA'\`. The table \`dp[i][j]\` means the LCS length of the first \`i\` characters of \`a\` and the first \`j\` characters of \`b\`. The table has 8 rows and 7 columns (including the 0 row and column).
+
+The recurrence is: if \`a[i-1] == b[j-1]\`, then \`dp[i][j] = dp[i-1][j-1] + 1\` — the two characters match, so add 1 to the diagonal answer. If the characters differ, then \`dp[i][j] = max(dp[i-1][j], dp[i][j-1])\` — skip one character and take the better answer.
+
+After filling the table, the last cell \`dp[7][6] = 4\`, so the LCS length is **4**. One LCS is **BCBA**: B appears in both, then C, then B, then A — the order is the same in both strings. To trace the path back from the table, start at the last cell: if the characters are equal, take the character and move diagonally; otherwise move toward the larger cell. The code below prints both the length and one LCS.`
+        ),
+        code: {
+          title: t(
+            'LCS: ABCBDAB aur BDCABA ka Longest Common Subsequence',
+            'LCS: Longest Common Subsequence of ABCBDAB and BDCABA'
+          ),
+          language: 'python',
+          code: `a = 'ABCBDAB'
+b = 'BDCABA'
+m, n = len(a), len(b)
+dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+        if a[i - 1] == b[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1] + 1
+        else:
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+print('LCS length:', dp[m][n])
+
+i, j = m, n
+lcs = []
+while i > 0 and j > 0:
+    if a[i - 1] == b[j - 1]:
+        lcs.append(a[i - 1])
+        i -= 1
+        j -= 1
+    elif dp[i - 1][j] >= dp[i][j - 1]:
+        i -= 1
+    else:
+        j -= 1
+print('One LCS:', ''.join(reversed(lcs)))`,
+          output: `LCS length: 4
+One LCS: BCBA`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Subsequence vs Substring, Index Shift aur Backtrack',
+          '4. Common Mistakes: Subsequence vs Substring, Index Shift, and Backtrack'
+        ),
+        body: t(
+          `**Galti 1: subsequence aur substring ko ek samajhna.** Subsequence mein characters ke beech gap ho sakta hai, substring mein nahi — substring mein characters lagatar hone chahiye. LCS mein gap allowed hai, longest palindromic **substring** mein nahi. Dono ki recurrence alag hai, isliye problem padhte hi poochho: gap allowed hai ya nahi.
+
+**Galti 2: index shift bhoolna.** Table mein row \`i\` ka matlab hai pehle \`i\` characters, par string ka character hai \`a[i-1]\`. Beginners aksar \`a[i]\` likh dete hain aur index error ya galat answer paate hain. Hamesha yaad rakho: table 1-based hai, string 0-based hai.
+
+**Galti 3: backtrack mein galat direction jaana.** LCS ka string nikaalte time jab characters barabar hon toh diagonal jao, warna **bade wale** cell ki taraf jao. Agar dono barabar hon toh koi bhi direction chalega, par ek hi direction consistently use karo.`,
+          `**Mistake 1: treating subsequence and substring as the same.** In a subsequence, gaps between characters are allowed; in a substring they are not — the characters must be next to each other. Gaps are allowed in LCS, but not in the longest palindromic **substring**. The two recurrences differ, so when reading a problem, first ask: are gaps allowed or not?
+
+**Mistake 2: forgetting the index shift.** In the table, row \`i\` means the first \`i\` characters, but the string character is \`a[i-1]\`. Beginners often write \`a[i]\` and get an index error or a wrong answer. Always remember: the table is 1-based, the string is 0-based.
+
+**Mistake 3: going the wrong way while backtracking.** When finding the LCS string, if the characters are equal, move diagonally; otherwise move toward the **larger** cell. If both are equal, either direction works, but use one direction consistently.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali String, Ek hi Character aur Dono Strings Barabar',
+          '5. Edge Cases: Empty String, One Character, and Identical Strings'
+        ),
+        body: t(
+          `Pehla edge case hai **khaali string**. Agar ek string khaali hai, toh LCS ki length 0 hoti hai aur edit distance doosri string ki length ke barabar hota hai — har character insert karna padega. Table ki pehli row aur pehli column isi liye hoti hai: \`dp[0][j] = j\` aur \`dp[i][0] = i\` edit distance mein.
+
+Doosra edge case hai **ek hi character**. Agar dono strings ek hi character ki hain, toh LCS length 1 hai aur edit distance 0 hai. Agar characters alag hon, toh LCS 0 aur edit distance 1 (replace) hota hai.
+
+Teesra edge case hai **dono strings barabar**. Agar strings bilkul ek jaisi hain, toh LCS poori string hoti hai aur edit distance 0 hota hai. Interview mein yeh case check karne se pata chal jaata hai ki code mein base case sahi hai ya nahi.`,
+          `The first edge case is an **empty string**. If one string is empty, the LCS length is 0 and the edit distance equals the length of the other string — every character must be inserted. That is why the table has a first row and column: \`dp[0][j] = j\` and \`dp[i][0] = i\` in edit distance.
+
+The second edge case is a **single character**. If both strings are the same single character, the LCS length is 1 and the edit distance is 0. If the characters differ, the LCS is 0 and the edit distance is 1 (replace).
+
+The third edge case is **identical strings**. If the strings are exactly the same, the LCS is the whole string and the edit distance is 0. In an interview, checking this case shows whether the base case in the code is correct.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Sirf Length Chahiye? Palindrome Substring aur Space',
+          '6. What-If: Only the Length? Palindrome Substring and Space'
+        ),
+        body: t(
+          `**What if: sirf LCS ki length chahiye, string nahi?** Toh bhi table bharni padegi, par backtrack nahi karna padega. Sirf last cell \`dp[m][n]\` hi answer hai. Code chhota ho jaata hai aur galti ka chance kam ho jaata hai.
+
+**What if: longest palindromic substring chahiye?** Substring mein characters lagatar hone chahiye, isliye iska DP alag hai: \`dp[i][j]\` tabhi True hota hai jab \`s[i] == s[j]\` aur beech ka part palindrome ho. Is problem ko expand-around-center se bhi solve kar sakte ho — har center se palindrome ko dono taraf badhao. Subsequence wale problem mein yeh method kaam nahi karta.
+
+**What if: space kam karni ho?** LCS aur edit distance mein har cell ko sirf upar wali row aur current row chahiye hoti hai, isliye 2 rows se kaam chal jaata hai — O(n) space. Par agar LCS ka string bhi nikaalna ho, toh poori table rakhni padegi.`,
+          `**What if you need only the LCS length, not the string?** You must still fill the table, but you can skip the backtrack. The last cell \`dp[m][n]\` alone is the answer. The code becomes shorter and less error-prone.
+
+**What if you need the longest palindromic substring?** In a substring the characters must be next to each other, so its DP is different: \`dp[i][j]\` is True only when \`s[i] == s[j]\` and the middle part is a palindrome. This problem can also be solved by expanding around each centre — grow the palindrome outward from every centre. That method does not work for the subsequence version.
+
+**What if you must save space?** In LCS and edit distance, each cell needs only the row above and the current row, so 2 rows are enough — O(n) space. But if you must also find the LCS string, you have to keep the whole table.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: DP on Strings se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from DP on Strings to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **characters barabar hon toh diagonal + 1, alag hon toh upar aur left mein se behtar wala**. LCS mein is recurrence se length 4 milti hai (ABCBDAB aur BDCABA ke liye, LCS BCBA). Edit distance mein teeno operations — insert, delete, replace — mein se sabse sasta wala chuno; kitten se sitting mein 3 operations lagte hain. Longest palindromic subsequence mein string ko ulta karke LCS nikaal lo, wahi answer hai.
+
+Interview mein strings ka sawaal aate hi pehle poochho: subsequence hai ya substring, aur sirf length chahiye ya string bhi. Is ek sawaal se sahi recurrence mil jaati hai. Revision ke liye LCS table ka last cell dobara bharo: dp[7][6] = 4. Agar yeh bina code dekhe nikal jaaye, toh DP on strings aapko aa gaya hai. Agle article mein hum grids par DP dekhenge — unique paths aur minimum path sum.`,
+          `The whole article in one line: **if the characters are equal, take the diagonal + 1; if they differ, take the better of the cell above and the cell to the left**. With this recurrence, LCS gives length 4 for ABCBDAB and BDCABA (LCS BCBA). In edit distance, take the cheapest of the three operations — insert, delete, replace; kitten to sitting takes 3 operations. For the longest palindromic subsequence, reverse the string and find the LCS — that is the answer.
+
+In an interview, the moment a strings question appears, first ask: subsequence or substring, and do I need only the length or the string too? That one question gives the right recurrence. To revise, fill the last cell of the LCS table again: dp[7][6] = 4. If you can produce that without looking at the code, you know DP on strings. In the next article we will look at DP on grids — unique paths and minimum path sum.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'LCS Table: Match ho toh Diagonal + 1',
+        'LCS Table: Match Means Diagonal + 1'
+      ),
+      nodes: [],
+      headers: [
+        t('a / b', 'a / b'),
+        t('', ''),
+        t('B', 'B'),
+        t('D', 'D'),
+        t('C', 'C'),
+        t('A', 'A')
+      ],
+      rows: [
+        [t('', ''), t('0', '0'), t('0', '0'), t('0', '0'), t('0', '0'), t('0', '0')],
+        [t('A', 'A'), t('0', '0'), t('0', '0'), t('0', '0'), t('0', '0'), t('1', '1')],
+        [t('B', 'B'), t('0', '0'), t('1', '1'), t('1', '1'), t('1', '1'), t('1', '1')],
+        [t('C', 'C'), t('0', '0'), t('1', '1'), t('1', '1'), t('2', '2'), t('2', '2')],
+        [t('B', 'B'), t('0', '0'), t('1', '1'), t('1', '1'), t('2', '2'), t('2', '2')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Edit Distance: kitten se sitting',
+          'Edit Distance: kitten to sitting'
+        ),
+        language: 'python',
+        code: `a, b = 'kitten', 'sitting'
+m, n = len(a), len(b)
+dp = [[0] * (n + 1) for _ in range(m + 1)]
+for i in range(m + 1):
+    dp[i][0] = i
+for j in range(n + 1):
+    dp[0][j] = j
+
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+        if a[i - 1] == b[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1]
+        else:
+            dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+
+print('Edit distance kitten -> sitting:', dp[m][n])`,
+        output: `Edit distance kitten -> sitting: 3`
+      },
+      {
+        title: t(
+          'Longest Palindromic Subsequence: bbbab',
+          'Longest Palindromic Subsequence: bbbab'
+        ),
+        language: 'python',
+        code: `s = 'bbbab'
+n = len(s)
+dp = [[0] * n for _ in range(n)]
+for i in range(n):
+    dp[i][i] = 1
+
+for length in range(2, n + 1):
+    for i in range(n - length + 1):
+        j = i + length - 1
+        if s[i] == s[j]:
+            dp[i][j] = 2 if length == 2 else dp[i + 1][j - 1] + 2
+        else:
+            dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+
+print('Longest palindromic subsequence of bbbab:', dp[0][n - 1])`,
+        output: `Longest palindromic subsequence of bbbab: 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'LCS mein agar dono characters barabar hon toh kya karte hain?',
+          'In LCS, what do you do when the two characters are equal?'
+        ),
+        opts: [
+          t('Diagonal cell + 1 lete hain', 'Take the diagonal cell + 1'),
+          t('Upar wale cell ko lete hain', 'Take the cell above'),
+          t('Left wale cell ko lete hain', 'Take the cell to the left'),
+          t('0 likhte hain', 'Write 0')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: characters match hue toh woh LCS ka hissa ban jaate hain, isliye diagonal answer mein 1 jodte hain.',
+          'Correct answer: matching characters become part of the LCS, so add 1 to the diagonal answer.'
+        )
+      },
+      {
+        q: t(
+          'ABCBDAB aur BDCABA ka LCS length kitna hai?',
+          'What is the LCS length of ABCBDAB and BDCABA?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('3', '3'),
+          t('4', '4'),
+          t('6', '6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: ek LCS hai BCBA, jiski length 4 hai; isse lambi common subsequence nahi ban sakti.',
+          'Correct answer: one LCS is BCBA, with length 4; no longer common subsequence exists.'
+        )
+      },
+      {
+        q: t(
+          'Edit distance mein kaunse operations gine jaate hain?',
+          'Which operations are counted in edit distance?'
+        ),
+        opts: [
+          t('Sirf insert', 'Only insert'),
+          t('Insert, delete aur replace', 'Insert, delete, and replace'),
+          t('Sirf swap', 'Only swap'),
+          t('Sirf delete', 'Only delete')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: edit distance teeno operations mein se sabse kam total ginata hai — kitten se sitting mein 3 lagte hain.',
+          'Correct answer: edit distance counts the smallest total of all three operations — kitten to sitting takes 3.'
+        )
+      },
+      {
+        q: t(
+          'Subsequence aur substring mein kya farak hai?',
+          'What is the difference between a subsequence and a substring?'
+        ),
+        opts: [
+          t('Subsequence mein gap allowed hai, substring mein nahi', 'A subsequence allows gaps, a substring does not'),
+          t('Substring mein gap allowed hai, subsequence mein nahi', 'A substring allows gaps, a subsequence does not'),
+          t('Dono ek hi hain', 'Both are the same'),
+          t('Subsequence hamesha lamba hota hai', 'A subsequence is always longer')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: subsequence mein characters skip kar sakte ho, substring mein characters lagatar hone chahiye.',
+          'Correct answer: in a subsequence you can skip characters, while in a substring the characters must be next to each other.'
+        )
+      },
+      {
+        q: t(
+          'LCS table mein dp[i][j] kis par depend karta hai?',
+          'In the LCS table, what does dp[i][j] depend on?'
+        ),
+        opts: [
+          t('Sirf upar wale cell par', 'Only on the cell above'),
+          t('Upar, left aur diagonal cells par', 'On the cells above, to the left, and diagonally'),
+          t('Sirf pehli row par', 'Only on the first row'),
+          t('Kisi par nahi', 'On nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: match ho toh diagonal + 1, warna upar aur left mein se bada wala — isliye table ko order mein bharte hain.',
+          'Correct answer: on a match take the diagonal + 1, otherwise take the larger of above and left — so the table is filled in order.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'LCS: characters barabar hon toh diagonal + 1, warna max(upar, left).',
+        'LCS: if characters are equal, take the diagonal + 1, else max(above, left).'
+      ),
+      t(
+        'Edit distance: insert, delete aur replace mein se sabse sasta wala chuno; kitten se sitting = 3.',
+        'Edit distance: take the cheapest of insert, delete, and replace; kitten to sitting = 3.'
+      ),
+      t(
+        'Subsequence mein gap allowed hai, substring mein nahi — recurrence alag hoti hai.',
+        'A subsequence allows gaps, a substring does not — the recurrences differ.'
+      ),
+      t(
+        'Table 1-based hai, string 0-based hai: character a[i-1] hota hai.',
+        'The table is 1-based, the string is 0-based: the character is a[i-1].'
+      ),
+      t(
+        'Sirf length chahiye toh 2 rows kaafi hain; string bhi chahiye toh poori table rakho.',
+        'For only the length, 2 rows are enough; for the string too, keep the whole table.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: AGGTAB aur GXTXAYB ka LCS Length Nikaalo',
+        'Practice: Find the LCS Length of AGGTAB and GXTXAYB'
+      ),
+      task: t(
+        'AGGTAB aur GXTXAYB ka LCS length DP table se nikaalo aur print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Find the LCS length of AGGTAB and GXTXAYB with a DP table and print it. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `a, b = 'AGGTAB', 'GXTXAYB'
+m, n = len(a), len(b)
+dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+        if a[i - 1] == b[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1] + 1
+        else:
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+print('LCS length:', dp[m][n])`,
+      expected: `LCS length: 4`
+    },
+    readMinutes: 12
+  };
+
+const dsaDpGrids: Article = {
+    id: 'dsa-dp-grids',
+    subjectId: 'dsa',
+    title: t(
+      'DP on Grids — Unique Paths, Minimum Path Sum aur Gold Mine',
+      'DP on Grids — Unique Paths, Minimum Path Sum, and Gold Mine'
+    ),
+    summary: t(
+      'Grids par DP ko zero se samjho: unique paths mein table kaise bharte hain, minimum path sum mein har cell par best rasta kaise chunte hain, gold mine jaise problems mein neeche jaane ke teen tareeke kaise kaam karte hain, aur DP table ko kis order mein bharna chahiye.',
+      'Learn DP on grids from scratch: how to fill the table in unique paths, how to pick the best route at each cell in minimum path sum, how the three ways of moving down work in gold mine style problems, and in which order the DP table should be filled.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. DP on Grids Kya Hai? (Table Bharna aur Filling Order)',
+          '1. What Is DP on Grids? (Filling the Table and the Filling Order)'
+        ),
+        body: t(
+          `Grid problems mein aapko ek **m x n table** diya hota hai aur aapko ek corner se doosre corner tak jaana hota hai. Har cell par ek number hota hai — kabhi cost, kabhi gold, kabhi obstacle. DP ka kaam hai har cell par woh best answer likhna jo us cell tak pahunchne ke liye possible hai.
+
+Grid DP ka sabse important rule hai **filling order**: cell \`dp[i][j]\` sirf upar wale cell \`dp[i-1][j]\` aur left wale cell \`dp[i][j-1]\` par depend karta hai. Isliye table ko **upar se neeche aur left se right** bharte hain — pehli row aur pehli column pehle, phir baaki cells. Agar aap ulta order mein bharoge, toh zaroori cells abhi khaali honge aur answer galat aayega.
+
+Grid DP mein moves bhi fixed hote hain: unique paths mein sirf **right ya down** ja sakte ho, minimum path sum mein bhi wahi, aur gold mine mein **down, down-left ya down-right** ja sakte ho. Moves badle toh recurrence bhi badal jaati hai.`,
+          `In grid problems, you are given an **m x n table** and must travel from one corner to the other. Each cell holds a number — sometimes a cost, sometimes gold, sometimes an obstacle. The job of DP is to write in each cell the best answer possible for reaching that cell.
+
+The most important rule of grid DP is the **filling order**: cell \`dp[i][j]\` depends only on the cell above, \`dp[i-1][j]\`, and the cell to the left, \`dp[i][j-1]\`. So the table is filled **top to bottom and left to right** — the first row and first column first, then the rest. If you fill in the reverse order, the needed cells will still be empty and the answer will be wrong.
+
+Moves in grid DP are also fixed: in unique paths you can go only **right or down**, the same in minimum path sum, and in gold mine you can go **down, down-left, or down-right**. When the moves change, the recurrence changes too.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Robot, Delivery Route aur Game Board',
+          '2. Real-Life Examples: Robot, Delivery Route, and Game Board'
+        ),
+        body: t(
+          `Grid DP ka sabse seedha example hai **robot**. Ek robot warehouse ke grid mein upar-left corner se neeche-right corner tak jaana chahta hai, aur sirf right ya down ja sakta hai. Kitne alag raste hain? Yahi unique paths problem hai. 3x3 grid mein 6 raste hain.
+
+Doosra example hai **delivery route**. Sheher ka grid hai aur har road par traffic cost hai. Delivery boy ko sabse kam total cost wala rasta chahiye. Har crossing par woh upar se aaye raste aur left se aaye raste mein se sasta wala chunta hai — yahi minimum path sum hai.
+
+Teesra example hai **game board**. Ek game mein har cell mein gold hai aur player upar se neeche jaata hai, har step par left, seedha ya right ja sakta hai. Sabse zyada gold kaise mile? Yeh gold mine problem hai — har cell par upar ke teen cells mein se best wala chuno.`,
+          `The simplest example of grid DP is a **robot**. A robot in a warehouse grid wants to go from the top-left corner to the bottom-right corner, and it can move only right or down. How many different routes are there? That is the unique paths problem. A 3x3 grid has 6 routes.
+
+A second example is a **delivery route**. A city grid has a traffic cost on every road. The delivery boy needs the route with the smallest total cost. At every crossing he picks the cheaper of the route from above and the route from the left — that is minimum path sum.
+
+A third example is a **game board**. In a game, every cell holds gold and the player moves from top to bottom, going left, straight, or right at each step. How do you collect the most gold? That is the gold mine problem — at each cell, take the best of the three cells above.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Minimum Path Sum ka Dry Run Table ke Saath',
+          '3. Step-by-Step: A Minimum Path Sum Dry Run with a Table'
+        ),
+        body: t(
+          `Ab hum minimum path sum ko haath se solve karenge. Grid hai: pehli row 1, 3, 1; doosri row 1, 5, 1; teesri row 4, 2, 1. Start hai upar-left (1) aur end hai neeche-right (1). Sirf right ya down ja sakte ho. \`dp[i][j]\` ka matlab hai (0,0) se (i,j) tak ka minimum total cost.
+
+Pehle **pehli row** bharo: sirf right ja sakte ho, isliye cost jodte jao: [1, 4, 5]. Phir **pehli column** bharo: sirf down ja sakte ho: [1, 2, 6]. Ab baaki cells bharo, har cell par upar aur left mein se chhota wala + apna number:
+- **(1,1) = 5:** min(4, 2) + 5 = 7.
+- **(1,2) = 1:** min(5, 7) + 1 = 6.
+- **(2,1) = 2:** min(7, 6) + 2 = 8.
+- **(2,2) = 1:** min(6, 8) + 1 = 7.
+
+Final table hai: pehli row [1, 4, 5], doosri row [2, 7, 6], teesri row [6, 8, 7]. Answer hai **7**. Best rasta hai: 1 -> 3 -> 1 -> 1 -> 1, matlab right, right, down, down: 1 + 3 + 1 + 1 + 1 = 7. Table se rasta dhyaan se padho — har cell par jis taraf se aaye ho, wohi rasta hai. Neeche wala code yahi table print karta hai.`,
+          `Now let us solve minimum path sum by hand. The grid is: first row 1, 3, 1; second row 1, 5, 1; third row 4, 2, 1. The start is the top-left (1) and the end is the bottom-right (1). You can move only right or down. \`dp[i][j]\` means the minimum total cost from (0,0) to (i,j).
+
+First fill the **first row**: you can only go right, so keep adding: [1, 4, 5]. Then fill the **first column**: you can only go down: [1, 2, 6]. Now fill the rest, taking at each cell the smaller of above and left, plus its own number:
+- **(1,1) = 5:** min(4, 2) + 5 = 7.
+- **(1,2) = 1:** min(5, 7) + 1 = 6.
+- **(2,1) = 2:** min(7, 6) + 2 = 8.
+- **(2,2) = 1:** min(6, 8) + 1 = 7.
+
+The final table is: first row [1, 4, 5], second row [2, 7, 6], third row [6, 8, 7]. The answer is **7**. The best route is: 1 -> 3 -> 1 -> 1 -> 1, meaning right, right, down, down: 1 + 3 + 1 + 1 + 1 = 7. Read the route carefully from the table. The code below prints exactly this table.`
+        ),
+        code: {
+          title: t(
+            'Minimum Path Sum: 3x3 Grid ka Best Rasta',
+            'Minimum Path Sum: Best Route in a 3x3 Grid'
+          ),
+          language: 'python',
+          code: `grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
+rows, cols = len(grid), len(grid[0])
+dp = [[0] * cols for _ in range(rows)]
+
+for i in range(rows):
+    for j in range(cols):
+        if i == 0 and j == 0:
+            dp[i][j] = grid[i][j]
+        elif i == 0:
+            dp[i][j] = dp[i][j - 1] + grid[i][j]
+        elif j == 0:
+            dp[i][j] = dp[i - 1][j] + grid[i][j]
+        else:
+            dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+
+for row in dp:
+    print(row)
+print('Minimum path sum:', dp[rows - 1][cols - 1])`,
+          output: `[1, 4, 5]
+[2, 7, 6]
+[6, 8, 7]
+Minimum path sum: 7`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Pehli Row/Column Bhoolna, Obstacle aur Filling Order',
+          '4. Common Mistakes: Forgetting the First Row/Column, Obstacles, and Filling Order'
+        ),
+        body: t(
+          `**Galti 1: pehli row aur pehli column ko normal cell samajhna.** Pehli row mein sirf left se aa sakte ho aur pehli column mein sirf upar se. Agar aap in par bhi \`min(upar, left)\` lagaaoge, toh index -1 par chale jaaoge ya galat answer paaoge. In dono ko alag se bharo, jaise upar wale code mein \`elif\` se kiya hai.
+
+**Galti 2: obstacle ko ignore karna.** Agar grid mein obstacle (jaise -1 ya 1) hai, toh us cell par rasta nahi ban sakta. Unique paths mein obstacle wale cell ki value 0 hoti hai — wahan se koi rasta nahi jaata. Beginners aksar obstacle ko normal cell samajh kar count kar lete hain.
+
+**Galti 3: galat filling order.** Agar aap table ko neeche se upar bharoge, toh \`dp[i-1][j]\` abhi khaali hoga. Hamesha upar se neeche aur left se right bharo, taaki har cell ke dependencies pehle se bhari hon.`,
+          `**Mistake 1: treating the first row and first column like normal cells.** In the first row you can only come from the left, and in the first column only from above. If you apply \`min(above, left)\` to them too, you will reach index -1 or get a wrong answer. Fill these two separately, as the \`elif\` branches do in the code above.
+
+**Mistake 2: ignoring obstacles.** If the grid has an obstacle, no route can pass through that cell. In unique paths, an obstacle cell has value 0 — no route goes through it. Beginners often count an obstacle cell as a normal cell.
+
+**Mistake 3: using the wrong filling order.** If you fill the table from bottom to top, \`dp[i-1][j]\` will still be empty. Always fill top to bottom and left to right, so that every cell's dependencies are already filled.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: 1x1 Grid, 1 Row, Obstacle Start ya End par',
+          '5. Edge Cases: 1x1 Grid, 1 Row, and Obstacle at Start or End'
+        ),
+        body: t(
+          `Pehla edge case hai **1x1 grid**. Sirf ek cell hai, wahi start hai aur wahi end hai. Unique paths mein answer 1 hai aur minimum path sum mein answer usi cell ka number hai. Code mein \`dp[0][0] = grid[0][0]\` wali line yahi handle karti hai.
+
+Doosra edge case hai **sirf 1 row ya 1 column**. Aise grid mein sirf ek hi rasta hota hai — seedha right ya seedha down. Unique paths mein answer hamesha 1 hota hai, aur minimum path sum mein answer poori row ya column ka sum hota hai.
+
+Teesra edge case hai **obstacle start ya end par**. Agar start cell par hi obstacle hai, toh kahin nahi jaa sakte — answer 0 hai. Agar end par obstacle hai, toh bhi answer 0 hai. Code likhte time pehle yeh check karo, warna table bharne ke baad bhi galat answer aayega.`,
+          `The first edge case is a **1x1 grid**. There is only one cell, which is both the start and the end. In unique paths the answer is 1, and in minimum path sum the answer is that cell's number. The line \`dp[0][0] = grid[0][0]\` in the code handles exactly this.
+
+The second edge case is **only 1 row or 1 column**. In such a grid there is only one route — straight right or straight down. In unique paths the answer is always 1, and in minimum path sum the answer is the sum of the whole row or column.
+
+The third edge case is an **obstacle at the start or the end**. If the start cell itself has an obstacle, you cannot go anywhere — the answer is 0. If the end has an obstacle, the answer is also 0. Check this first when writing code, or the filled table will still give a wrong answer.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Gold Mine, Max Cherries aur Sirf 1 Row Space',
+          '6. What-If: Gold Mine, Max Cherries, and Only 1 Row of Space'
+        ),
+        body: t(
+          `**What if: gold mine problem ho?** Gold mine mein upar se neeche jaate ho aur har step par down-left, down ya down-right ja sakte ho. Recurrence hai: \`dp[i][j] = mine[i][j] + max(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1])\`. Neeche wale example mein max gold 13 aata hai. Dhyaan do: yahan **max** use hota hai, min nahi, kyunki gold zyada chahiye.
+
+**What if: max cherries jaisa problem ho?** Usmein do log ek saath grid par chalte hain aur dono ki cherries ginni jaati hain. Yeh thoda advanced hai — state mein dono ki positions hoti hain, isliye 3D DP banta hai. Concept wahi hai: har step par dono ke best moves ko combine karo.
+
+**What if: space kam karni ho?** Minimum path sum aur unique paths mein har row ko sirf pichhli row chahiye hoti hai, isliye 1 row se kaam chal jaata hai — O(n) space. Par agar rasta bhi print karna ho, toh poori table rakhni padegi.`,
+          `**What if the problem is gold mine?** In gold mine you move from top to bottom, and at each step you can go down-left, down, or down-right. The recurrence is: \`dp[i][j] = mine[i][j] + max(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1])\`. In the example below, the maximum gold is 13. Note: here **max** is used, not min, because you want more gold.
+
+**What if the problem is like max cherries?** There, two people walk on the grid together and both their cherries are counted. That is a little advanced — the state holds both positions, so it becomes a 3D DP. The concept is the same: combine the best moves of both at each step.
+
+**What if you must save space?** In minimum path sum and unique paths, each row needs only the previous row, so 1 row is enough — O(n) space. But if you must also print the route, you have to keep the whole table.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: DP on Grids se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from DP on Grids to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **table ko upar se neeche aur left se right bharo, aur har cell par upar aur left mein se behtar wala chuno**. Unique paths mein \`dp[i][j] = dp[i-1][j] + dp[i][j-1]\` hota hai — 3x3 grid mein 6 raste, 3x7 mein 28. Minimum path sum mein \`dp[i][j] = min(upar, left) + grid[i][j]\` hota hai — is example mein answer 7 aaya. Gold mine mein teen upar wale cells mein se max lo.
+
+Interview mein grid ka sawaal aate hi pehle poochho: moves kaunse hain, obstacle hai ya nahi, aur answer count chahiye ya min/max. Is ek sawaal se sahi recurrence mil jaati hai. Revision ke liye minimum path sum ki table dobara bharo: last row [6, 8, 7] aur answer 7. Agar yeh bina code dekhe nikal jaaye, toh DP on grids aapko aa gaya hai. Agle article mein hum greedy algorithms dekhenge — jahan local best choice hi global best hoti hai.`,
+          `The whole article in one line: **fill the table top to bottom and left to right, and at each cell take the better of above and left**. In unique paths, \`dp[i][j] = dp[i-1][j] + dp[i][j-1]\` — a 3x3 grid has 6 routes, a 3x7 grid has 28. In minimum path sum, \`dp[i][j] = min(above, left) + grid[i][j]\` — in this example the answer is 7. In gold mine, take the max of the three cells above.
+
+In an interview, the moment a grid question appears, first ask: which moves are allowed, is there an obstacle, and do I need a count or a min/max? That one question gives the right recurrence. To revise, fill the minimum path sum table again: the last row is [6, 8, 7] and the answer is 7. If you can produce that without looking at the code, you know DP on grids. In the next article we will look at greedy algorithms — where the locally best choice is also the globally best one.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Minimum Path Sum: Har Cell par Best Rasta',
+        'Minimum Path Sum: Best Route at Each Cell'
+      ),
+      nodes: [
+        {
+          t: t('Start (0,0) = 1', 'Start (0,0) = 1'),
+          s: t('Pehli row aur column seedha jodte jao', 'Add straight along the first row and column')
+        },
+        {
+          t: t('Cell (1,1): min(4, 2) + 5 = 7', 'Cell (1,1): min(4, 2) + 5 = 7'),
+          s: t('Upar 4 hai, left 2 hai — chhota wala lo', 'Above is 4, left is 2 — take the smaller')
+        },
+        {
+          t: t('Cell (1,2): min(5, 7) + 1 = 6', 'Cell (1,2): min(5, 7) + 1 = 6'),
+          s: t('Upar se aana sasta hai', 'Coming from above is cheaper')
+        },
+        {
+          t: t('Cell (2,2): min(6, 8) + 1 = 7', 'Cell (2,2): min(6, 8) + 1 = 7'),
+          s: t('End cell hi answer hai', 'The end cell is the answer')
+        },
+        {
+          t: t('Best rasta: right, right, down, down', 'Best route: right, right, down, down'),
+          s: t('Total: 1 + 3 + 1 + 1 + 1 = 7', 'Total: 1 + 3 + 1 + 1 + 1 = 7')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Unique Paths: 3x7 Grid mein Kitne Raste?',
+          'Unique Paths: How Many Routes in a 3x7 Grid?'
+        ),
+        language: 'python',
+        code: `m, n = 3, 7
+dp = [[1] * n for _ in range(m)]
+for i in range(1, m):
+    for j in range(1, n):
+        dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+print('Unique paths in 3x7 grid:', dp[m - 1][n - 1])`,
+        output: `Unique paths in 3x7 grid: 28`
+      },
+      {
+        title: t(
+          'Gold Mine: Upar se Neeche Sabse Zyada Gold',
+          'Gold Mine: Maximum Gold from Top to Bottom'
+        ),
+        language: 'python',
+        code: `mine = [[1, 3, 3], [2, 1, 4], [0, 6, 4]]
+rows, cols = len(mine), len(mine[0])
+dp = [row[:] for row in mine]
+
+for i in range(1, rows):
+    for j in range(cols):
+        best = dp[i - 1][j]
+        if j > 0:
+            best = max(best, dp[i - 1][j - 1])
+        if j < cols - 1:
+            best = max(best, dp[i - 1][j + 1])
+        dp[i][j] = mine[i][j] + best
+
+for row in dp:
+    print(row)
+print('Max gold:', max(dp[rows - 1]))`,
+        output: `[1, 3, 3]
+[5, 4, 7]
+[5, 13, 11]
+Max gold: 13`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Grid DP mein table ko kis order mein bharna chahiye?',
+          'In which order should the grid DP table be filled?'
+        ),
+        opts: [
+          t('Neeche se upar', 'Bottom to top'),
+          t('Upar se neeche, left se right', 'Top to bottom, left to right'),
+          t('Right se left', 'Right to left'),
+          t('Kisi bhi order mein', 'In any order')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har cell upar aur left wale cells par depend karta hai, isliye woh pehle bhare hone chahiye.',
+          'Correct answer: each cell depends on the cells above and to the left, so those must be filled first.'
+        )
+      },
+      {
+        q: t(
+          '3x3 grid mein unique paths kitne hote hain (sirf right ya down)?',
+          'How many unique paths are there in a 3x3 grid (only right or down)?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('6', '6'),
+          t('9', '9'),
+          t('12', '12')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: dp table ki last cell 6 hoti hai — har cell upar aur left ka sum hota hai.',
+          'Correct answer: the last cell of the dp table is 6 — each cell is the sum of above and left.'
+        )
+      },
+      {
+        q: t(
+          'Minimum path sum mein har cell par kya karte hain?',
+          'In minimum path sum, what do you do at each cell?'
+        ),
+        opts: [
+          t('Upar aur left mein se bada wala + apna number', 'Larger of above and left + own number'),
+          t('Upar aur left mein se chhota wala + apna number', 'Smaller of above and left + own number'),
+          t('Sirf upar wala + apna number', 'Only above + own number'),
+          t('Sirf left wala + apna number', 'Only left + own number')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: minimum path ke liye dono taraf se aane wale raste mein se sasta wala chahiye.',
+          'Correct answer: for the minimum path you need the cheaper of the two incoming routes.'
+        )
+      },
+      {
+        q: t(
+          'Grid mein obstacle wale cell ki unique paths mein value kya hoti hai?',
+          'In unique paths, what is the value of an obstacle cell in the grid?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('0', '0'),
+          t('Infinity', 'Infinity'),
+          t('-1', '-1')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: obstacle wale cell se koi rasta nahi jaata, isliye uski value 0 hoti hai.',
+          'Correct answer: no route passes through an obstacle cell, so its value is 0.'
+        )
+      },
+      {
+        q: t(
+          'Gold mine problem mein har cell par kya use karte hain — min ya max?',
+          'In the gold mine problem, what do you use at each cell — min or max?'
+        ),
+        opts: [
+          t('Min, kyunki cost kam chahiye', 'Min, because cost should be low'),
+          t('Max, kyunki gold zyada chahiye', 'Max, because more gold is wanted'),
+          t('Dono ka average', 'The average of both'),
+          t('Sirf left wala', 'Only the left one')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: gold mine mein sabse zyada gold chahiye, isliye upar ke teen cells mein se max lete hain.',
+          'Correct answer: in gold mine you want the most gold, so you take the max of the three cells above.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Grid DP mein table upar se neeche, left se right bharo — dependencies pehle bhari honi chahiye.',
+        'In grid DP, fill the table top to bottom, left to right — dependencies must be filled first.'
+      ),
+      t(
+        'Unique paths: dp[i][j] = dp[i-1][j] + dp[i][j-1]; 3x3 mein 6 raste, 3x7 mein 28.',
+        'Unique paths: dp[i][j] = dp[i-1][j] + dp[i][j-1]; 6 routes in 3x3, 28 in 3x7.'
+      ),
+      t(
+        'Minimum path sum: dp[i][j] = min(upar, left) + grid[i][j]; is example mein answer 7.',
+        'Minimum path sum: dp[i][j] = min(above, left) + grid[i][j]; the answer here is 7.'
+      ),
+      t(
+        'Pehli row aur pehli column ko alag se bharo; obstacle wale cell ki value 0 hoti hai.',
+        'Fill the first row and column separately; an obstacle cell has value 0.'
+      ),
+      t(
+        'Gold mine mein teen upar wale cells mein se max lo; sirf 1 row se O(n) space milti hai.',
+        'In gold mine take the max of the three cells above; 1 row gives O(n) space.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 3x3 Grid mein Unique Paths Ginna',
+        'Practice: Count Unique Paths in a 3x3 Grid'
+      ),
+      task: t(
+        '3x3 grid mein upar-left se neeche-right tak sirf right ya down jaakar kitne alag raste hain, yeh nikaalo aur poori DP table bhi print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'Find how many different routes there are from the top-left to the bottom-right of a 3x3 grid, moving only right or down, and also print the full DP table. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `m, n = 3, 3
+dp = [[1] * n for _ in range(m)]
+for i in range(1, m):
+    for j in range(1, n):
+        dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+
+for row in dp:
+    print(row)
+print('Unique paths in 3x3 grid:', dp[m - 1][n - 1])`,
+      expected: `[1, 1, 1]
+[1, 2, 3]
+[1, 3, 6]
+Unique paths in 3x3 grid: 6`
+    },
+    readMinutes: 12
+  };
+
+const dsaGreedy: Article = {
+    id: 'dsa-greedy',
+    subjectId: 'dsa',
+    title: t(
+      'Greedy Algorithms — Activity Selection, Fractional Knapsack aur Huffman Coding',
+      'Greedy Algorithms — Activity Selection, Fractional Knapsack, and Huffman Coding'
+    ),
+    summary: t(
+      'Greedy algorithms ko zero se samjho: activity selection mein jaldi khatam hone wali activity pehle kyun lete hain, fractional knapsack mein value/weight ratio kaise kaam karta hai, Huffman coding se text compress kaise hota hai, interval scheduling kaise karte hain, aur greedy kab fail hota hai — coin change ka counterexample ke saath.',
+      'Learn greedy algorithms from scratch: why activity selection takes the earliest-finishing activity first, how the value/weight ratio works in fractional knapsack, how Huffman coding compresses text, how to do interval scheduling, and when greedy fails — with the coin change counterexample.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Greedy Kya Hai? (Local Best Choice aur Greedy Choice Property)',
+          '1. What Is Greedy? (Local Best Choice and Greedy Choice Property)'
+        ),
+        body: t(
+          `**Greedy algorithm** woh hai jo har step par wahi choice karta hai jo **us waqt sabse achhi** lagti hai, bina aage ke steps ke baare mein soche. Na peeche mud kar dekhta hai, na dobara sochta hai — jo choice abhi best hai, use pakad lo aur aage badho. Isi liye greedy fast hota hai: na table bharni padti hai, na recursion chahiye.
+
+Greedy sirf tab sahi answer deta hai jab problem mein do properties hon. Pehli hai **greedy choice property**: matlab har step par locally best choice lene se global best answer mil jaata hai. Activity selection mein jaldi khatam hone wali activity lene se hamesha max activities milti hain. Doosri hai **optimal substructure**: badi problem ka best answer chhoti problems ke best answers se ban sakta hai — yeh property DP mein bhi hoti hai.
+
+DP aur greedy ka farak yeh hai: DP saari choices try karke best chunta hai, greedy sirf ek choice try karta hai — jo abhi best lagti hai. Isi liye greedy O(n log n) mein chal jaata hai, jabki DP ko table bharni padti hai.`,
+          `A **greedy algorithm** is one that at each step makes the choice that looks **best right now**, without thinking about later steps. It never looks back and never reconsiders — it takes the choice that is best at this moment and moves on. That is why greedy is fast: no table to fill, no recursion needed.
+
+Greedy gives the correct answer only when the problem has two properties. The first is the **greedy choice property**: taking the locally best choice at each step leads to the globally best answer. In activity selection, taking the earliest-finishing activity always gives the maximum number of activities. The second is **optimal substructure**: the best answer to the big problem can be built from the best answers to smaller problems — this property also appears in DP.
+
+The difference between DP and greedy is this: DP tries all choices and picks the best, while greedy tries only one choice — the one that looks best now. That is why greedy runs in O(n log n), while DP must fill a table.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Meeting Room, Bag Packing aur File Compress',
+          '2. Real-Life Examples: Meeting Room, Bag Packing, and File Compression'
+        ),
+        body: t(
+          `Greedy ka sabse seedha example hai **meeting room**. Ek room hai aur kai meetings hain, har ek ka start aur end time hai. Sabse zyada meetings kaise karayein? Har baar woh meeting lo jo sabse jaldi khatam hoti hai — isse room jaldi khaali hota hai aur aage aur meetings aa jaati hain. Yahi activity selection hai.
+
+Doosra example hai **bag packing (fractional)**. Aapko bag mein cheezein bharni hain aur cheezon ko kaat sakte ho — jaise sone ka powder ya chawal. Har baar sabse zyada value per kg wali cheez lo, jab tak bag bhar na jaaye. Yahan greedy sahi hai kyunki item kaat sakte ho.
+
+Teesra example hai **file compress (Huffman coding)**. Text file mein kuch characters baar-baar aate hain (jaise 'e') aur kuch kam (jaise 'z'). Huffman coding baar-baar aane wale character ko chhota code deta hai aur kam aane wale ko bada code, isse file chhoti ho jaati hai. Yeh bhi greedy hai — har step par do sabse kam frequency wale nodes ko milao.`,
+          `The simplest example of greedy is a **meeting room**. There is one room and many meetings, each with a start and end time. How do you fit the most meetings? Each time, take the meeting that finishes earliest — that frees the room sooner and leaves space for more meetings. That is activity selection.
+
+A second example is **bag packing (fractional)**. You must fill a bag with things that can be cut — like gold powder or rice. Each time, take the thing with the highest value per kg, until the bag is full. Greedy is correct here because an item can be cut.
+
+A third example is **file compression (Huffman coding)**. In a text file, some characters appear again and again (like 'e') and some rarely (like 'z'). Huffman coding gives a short code to frequent characters and a long code to rare ones, which shrinks the file. This is also greedy — at each step, merge the two nodes with the smallest frequency.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Activity Selection ka Dry Run Sort ke Saath',
+          '3. Step-by-Step: An Activity Selection Dry Run with Sorting'
+        ),
+        body: t(
+          `Ab hum activity selection ko haath se solve karenge. Activities hain (start, end): (1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), (8, 12), (2, 14), (12, 16). Pehla step hai saari activities ko **end time ke hisaab se sort** karna. Sort karne ke baad order hai: (1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), (8, 12), (2, 14), (12, 16).
+
+Doosra step hai greedy choice: pehli activity hamesha lo, kyunki woh sabse jaldi khatam hoti hai. Phir har agli activity ko sirf tab lo jab uska start time pichhli li hui activity ke end time se **barabar ya bada** ho.
+
+Dry run:
+- **(1, 4) lo.** Last end = 4.
+- **(3, 5) chhodo.** Start 3 < 4, overlap hai.
+- **(0, 6) chhodo.** Start 0 < 4, overlap hai.
+- **(5, 7) lo.** Start 5 >= 4. Last end = 7.
+- **(3, 9), (5, 9), (6, 10) chhodo.** Sabka start 7 se kam hai.
+- **(8, 11) lo.** Start 8 >= 7. Last end = 11.
+- **(8, 12), (2, 14) chhodo.** Start 11 se kam hai.
+- **(12, 16) lo.** Start 12 >= 11. Last end = 16.
+
+Total **4 activities** chuni gayi: (1, 4), (5, 7), (8, 11), (12, 16). Yahi maximum hai — 5 activities kabhi nahi ho sakti. Neeche wala code yahi dry run karta hai.`,
+          `Now let us solve activity selection by hand. The activities are (start, end): (1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), (8, 12), (2, 14), (12, 16). The first step is to sort all activities by **end time**. After sorting, the order is: (1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), (8, 12), (2, 14), (12, 16).
+
+The second step is the greedy choice: always take the first activity, because it finishes earliest. Then take each next activity only when its start time is **equal to or greater than** the end time of the last taken activity.
+
+Dry run:
+- **Take (1, 4).** Last end = 4.
+- **Skip (3, 5).** Start 3 < 4, it overlaps.
+- **Skip (0, 6).** Start 0 < 4, it overlaps.
+- **Take (5, 7).** Start 5 >= 4. Last end = 7.
+- **Skip (3, 9), (5, 9), (6, 10).** All start before 7.
+- **Take (8, 11).** Start 8 >= 7. Last end = 11.
+- **Skip (8, 12), (2, 14).** Both start before 11.
+- **Take (12, 16).** Start 12 >= 11. Last end = 16.
+
+In total, **4 activities** are picked: (1, 4), (5, 7), (8, 11), (12, 16). That is the maximum — 5 activities are never possible. The code below runs exactly this dry run.`
+        ),
+        code: {
+          title: t(
+            'Activity Selection: Sabse Zyada Meetings Chunna',
+            'Activity Selection: Picking the Maximum Meetings'
+          ),
+          language: 'python',
+          code: `acts = [(1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), (8, 12), (2, 14), (12, 16)]
+acts.sort(key=lambda x: x[1])
+picked = [acts[0]]
+
+for start, end in acts[1:]:
+    if start >= picked[-1][1]:
+        picked.append((start, end))
+
+print('Picked activities:', picked)
+print('Max count:', len(picked))`,
+          output: `Picked activities: [(1, 4), (5, 7), (8, 11), (12, 16)]
+Max count: 4`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Start Time se Sort, Overlap Check aur Greedy Har Jagah',
+          '4. Common Mistakes: Sorting by Start Time, Overlap Check, and Greedy Everywhere'
+        ),
+        body: t(
+          `**Galti 1: activities ko start time se sort karna.** Activity selection mein sort hamesha **end time** se hota hai. Start time se sort karoge toh pehli activity bahut lambi ho sakti hai aur aage ki kai activities block ho jaayengi. Yeh is article ki sabse common galti hai — sort key hamesha \`x[1]\` (end time) honi chahiye.
+
+**Galti 2: overlap check mein galat sign use karna.** Activity tabhi lo jab \`start >= last_end\` ho. Agar aap \`start > last_end\` likh doge, toh woh activity miss ho jaayegi jo bilkul last end par shuru hoti hai — jaise ek meeting 4 par khatam ho aur doosri 4 par shuru ho, woh bilkul valid hai.
+
+**Galti 3: greedy ko har problem par lagana.** Greedy sirf wahan chalta hai jahan greedy choice property ho. 0/1 knapsack aur coin change (min coins) mein greedy fail hota hai. Problem dekhte hi greedy mat lagao — pehle socho ki locally best choice se global best milega ya nahi.`,
+          `**Mistake 1: sorting activities by start time.** In activity selection, sorting is always by **end time**. If you sort by start time, the first activity can be very long and block many later activities. This is the most common mistake in this article — the sort key must always be \`x[1]\` (end time).
+
+**Mistake 2: using the wrong sign in the overlap check.** Take an activity only when \`start >= last_end\`. If you write \`start > last_end\`, you will miss an activity that starts exactly when the last one ends — for example, one meeting ends at 4 and another starts at 4, which is perfectly valid.
+
+**Mistake 3: applying greedy to every problem.** Greedy works only where the greedy choice property holds. It fails in 0/1 knapsack and in coin change (min coins). Do not apply greedy the moment you see a problem — first ask whether the locally best choice leads to the global best.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Barabar End Time, Ek hi Activity aur Sab Overlap',
+          '5. Edge Cases: Equal End Time, One Activity, and All Overlapping'
+        ),
+        body: t(
+          `Pehla edge case hai **barabar end time**. Agar do activities ka end time ek jaisa ho, toh koi bhi pehle le sakte ho — dono se count ek hi aayega. Sort stable hota hai, isliye pehle wali pehle aayegi, par answer par koi farak nahi padta.
+
+Doosra edge case hai **ek hi activity**. Agar sirf ek activity hai, toh answer hamesha 1 hai. Code mein \`picked = [acts[0]]\` wali line yahi handle karti hai. Khaali list ho toh code crash karega, isliye pehle check karo ki list khaali toh nahi.
+
+Teesra edge case hai **sab activities overlap karti hon**. Agar har activity doosri se overlap karti hai, toh sirf 1 activity chun sakte ho — woh jo sabse jaldi khatam hoti hai. Greedy yahan bhi sahi hai, kyunki pehli activity hi best hai.`,
+          `The first edge case is **equal end time**. If two activities share the same end time, you can take either one first — the count stays the same. Sorting is stable, so the earlier one comes first, but the answer does not change.
+
+The second edge case is a **single activity**. If there is only one activity, the answer is always 1. The line \`picked = [acts[0]]\` in the code handles exactly this. If the list is empty, the code will crash, so first check that the list is not empty.
+
+The third edge case is **all activities overlapping**. If every activity overlaps the others, you can pick only 1 activity — the one that finishes earliest. Greedy is correct here too, because the first activity is the best one.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Greedy vs DP, Huffman Coding aur Interval Scheduling',
+          '6. What-If: Greedy vs DP, Huffman Coding, and Interval Scheduling'
+        ),
+        body: t(
+          `**What if: coin change mein greedy chalega?** Nahi — yahi greedy ka sabse famous counterexample hai. Coins hain [4, 3, 1] aur amount hai 6. Greedy sabse bada coin pehle leta hai: 4 + 1 + 1 = 3 coins. Par best answer hai 3 + 3 = 2 coins. Greedy yahan fail hota hai kyunki 4 lene ke baad bacha hua 2 sirf 1 + 1 se ban sakta hai. Is problem ke liye DP chahiye.
+
+**What if: fractional knapsack ho?** Wahan greedy chalta hai. Items ko value/weight ratio se sort karo aur jab tak bag bhar na jaaye, sabse achha ratio wala item lo — zaroorat pade toh item ko kaat lo. Is example mein items (60, 10), (100, 20), (120, 30) aur capacity 50 par max value 240.0 aati hai.
+
+**What if: Huffman coding karna ho?** Har step par do sabse kam frequency wale characters ko milakar ek naya node banao, aur aise hi aage badho. End mein jo tree banta hai, usse har character ka code milta hai — baar-baar aane wale character ko chhota code, kam aane wale ko bada. Yeh greedy isliye sahi hai kyunki kam frequency wale characters ko bada code dena hi best hota hai.
+
+**What if: interval scheduling mein rooms ginne hon?** Activity selection mein max activities ginni jaati hain; agar saari meetings karani hon toh minimum kitne rooms chahiye, yeh alag problem hai — wahan start aur end times ko sort karke overlap count karte hain.`,
+          `**What if greedy is used for coin change?** No — this is the most famous counterexample for greedy. The coins are [4, 3, 1] and the amount is 6. Greedy takes the biggest coin first: 4 + 1 + 1 = 3 coins. But the best answer is 3 + 3 = 2 coins. Greedy fails here because after taking 4, the remaining 2 can only be made as 1 + 1. This problem needs DP.
+
+**What if it is fractional knapsack?** There greedy works. Sort items by value/weight ratio and keep taking the best ratio until the bag is full — cut an item if needed. In this example, items (60, 10), (100, 20), (120, 30) with capacity 50 give a maximum value of 240.0.
+
+**What if you must do Huffman coding?** At each step, merge the two characters with the smallest frequency into a new node, and continue. The tree you get at the end gives each character its code — a short code for frequent characters and a long code for rare ones. This greedy is correct because giving rare characters long codes is the best choice.
+
+**What if interval scheduling must count rooms?** Activity selection counts the maximum activities; if all meetings must happen, the minimum number of rooms needed is a different problem — there you sort start and end times and count overlaps.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Greedy se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Greedy to the Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **har step par abhi ki best choice lo, aur pehle check karo ki greedy yahan sahi hai ya nahi**. Activity selection mein end time se sort karo aur \`start >= last_end\` par activity lo — is example mein 4 activities milti hain. Fractional knapsack mein value/weight ratio se sort karo aur item kaat lo — max value 240.0 aati hai. Huffman coding mein do sabse kam frequency wale nodes ko milao.
+
+Greedy ka sabse bada lesson hai uski limit: coins [4, 3, 1] aur amount 6 par greedy 3 coins deta hai jabki best 2 hai. Interview mein greedy bolne se pehle yeh counterexample yaad rakho, aur poochho: kya locally best choice se global best milega? Agar haan, toh greedy O(n log n) mein kaam khatam karega. Revision ke liye activity selection ka dry run dobara karo: (1, 4), (5, 7), (8, 11), (12, 16) — total 4. Agar yeh bina code dekhe nikal jaaye, toh greedy aapko aa gaya hai.`,
+          `The whole article in one line: **at each step take the best choice right now, and first check whether greedy is even correct here**. In activity selection, sort by end time and take an activity when \`start >= last_end\` — this example gives 4 activities. In fractional knapsack, sort by value/weight ratio and cut items — the maximum value is 240.0. In Huffman coding, merge the two nodes with the smallest frequency.
+
+The biggest lesson of greedy is its limit: with coins [4, 3, 1] and amount 6, greedy gives 3 coins while the best is 2. Before saying greedy in an interview, remember this counterexample and ask: does the locally best choice lead to the global best? If yes, greedy finishes the job in O(n log n). To revise, repeat the activity selection dry run: (1, 4), (5, 7), (8, 11), (12, 16) — total 4. If you can produce that without looking at the code, you know greedy.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        'Activity Selection: Timeline par Chuni Hui Meetings',
+        'Activity Selection: Picked Meetings on a Timeline'
+      ),
+      nodes: [
+        {
+          t: t('1-4: pehli meeting lo', '1-4: take the first meeting'),
+          s: t('Sabse jaldi khatam hoti hai', 'It finishes earliest')
+        },
+        {
+          t: t('5-7: doosri meeting lo', '5-7: take the second meeting'),
+          s: t('Start 5 >= last end 4', 'Start 5 >= last end 4')
+        },
+        {
+          t: t('8-11: teesri meeting lo', '8-11: take the third meeting'),
+          s: t('Start 8 >= last end 7', 'Start 8 >= last end 7')
+        },
+        {
+          t: t('12-16: chauthee meeting lo', '12-16: take the fourth meeting'),
+          s: t('Start 12 >= last end 11', 'Start 12 >= last end 11')
+        },
+        {
+          t: t('Total: 4 meetings — maximum hai', 'Total: 4 meetings — the maximum'),
+          s: t('Greedy fail: coins [4, 3, 1], amount 6 — greedy 3, best 2', 'Greedy fails: coins [4, 3, 1], amount 6 — greedy 3, best 2')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Fractional Knapsack: Ratio se Sort karke Bag Bharna',
+          'Fractional Knapsack: Filling the Bag by Ratio'
+        ),
+        language: 'python',
+        code: `items = [(60, 10), (100, 20), (120, 30)]
+cap = 50
+items.sort(key=lambda x: x[0] / x[1], reverse=True)
+total = 0.0
+
+for value, weight in items:
+    if cap >= weight:
+        total += value
+        cap -= weight
+    else:
+        total += value * cap / weight
+        cap = 0
+
+print('Max value:', total)`,
+        output: `Max value: 240.0`
+      },
+      {
+        title: t(
+          'Greedy Fail: Coin Change Counterexample',
+          'Greedy Fails: Coin Change Counterexample'
+        ),
+        language: 'python',
+        code: `coins = [4, 3, 1]
+amount = 6
+greedy = 0
+left = amount
+
+for c in coins:
+    greedy += left // c
+    left = left % c
+
+print('Greedy coins for 6 with [4, 3, 1]:', greedy)
+print('Optimal coins for 6: 2  (3 + 3)')`,
+        output: `Greedy coins for 6 with [4, 3, 1]: 3
+Optimal coins for 6: 2  (3 + 3)`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Activity selection mein activities ko kis cheez se sort karte hain?',
+          'In activity selection, what do we sort the activities by?'
+        ),
+        opts: [
+          t('Start time se', 'By start time'),
+          t('End time se', 'By end time'),
+          t('Duration se', 'By duration'),
+          t('Sort karte hi nahi', 'We do not sort at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jaldi khatam hone wali activity lene se room jaldi khaali hota hai aur aage aur activities aa jaati hain.',
+          'Correct answer: taking the earliest-finishing activity frees the room sooner and leaves space for more activities.'
+        )
+      },
+      {
+        q: t(
+          'Coins [4, 3, 1] aur amount 6 par greedy kitne coins deta hai?',
+          'With coins [4, 3, 1] and amount 6, how many coins does greedy give?'
+        ),
+        opts: [
+          t('2 coins', '2 coins'),
+          t('3 coins', '3 coins'),
+          t('4 coins', '4 coins'),
+          t('6 coins', '6 coins')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: greedy 4 leta hai, phir 1 + 1, total 3 coins; best answer 3 + 3 = 2 coins hai, isliye greedy yahan fail hota hai.',
+          'Correct answer: greedy takes 4, then 1 + 1, for a total of 3 coins; the best answer is 3 + 3 = 2 coins, so greedy fails here.'
+        )
+      },
+      {
+        q: t(
+          'Fractional knapsack mein greedy kyun sahi hai?',
+          'Why is greedy correct in fractional knapsack?'
+        ),
+        opts: [
+          t('Kyunki item ko kaat sakte hain', 'Because an item can be cut'),
+          t('Kyunki items kam hote hain', 'Because there are few items'),
+          t('Kyunki capacity badi hoti hai', 'Because the capacity is large'),
+          t('Kyunki value hamesha barabar hoti hai', 'Because the value is always equal')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: item kaat sakne se value/weight ratio wala hissa lena hamesha best hota hai; 0/1 mein item kaat nahi sakte isliye greedy fail hota hai.',
+          'Correct answer: when an item can be cut, taking the best value/weight part is always best; in 0/1 an item cannot be cut, so greedy fails.'
+        )
+      },
+      {
+        q: t(
+          'Huffman coding mein har step par kya karte hain?',
+          'In Huffman coding, what do you do at each step?'
+        ),
+        opts: [
+          t('Do sabse zyada frequency wale nodes milate hain', 'Merge the two nodes with the highest frequency'),
+          t('Do sabse kam frequency wale nodes milate hain', 'Merge the two nodes with the smallest frequency'),
+          t('Sabse bada character hatate hain', 'Remove the biggest character'),
+          t('Kuch nahi karte', 'Do nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: kam frequency wale characters ko bada code milega, isliye unhe pehle milakar tree mein neeche rakha jaata hai.',
+          'Correct answer: rare characters get long codes, so they are merged first and placed deep in the tree.'
+        )
+      },
+      {
+        q: t(
+          'Greedy algorithm kab sahi answer deta hai?',
+          'When does a greedy algorithm give the correct answer?'
+        ),
+        opts: [
+          t('Har problem par', 'On every problem'),
+          t('Jab greedy choice property aur optimal substructure hon', 'When the greedy choice property and optimal substructure hold'),
+          t('Jab problem chhota ho', 'When the problem is small'),
+          t('Jab table bharna mushkil ho', 'When filling a table is hard')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sirf tabhi locally best choice se global best milta hai jab greedy choice property ho; warna DP chahiye.',
+          'Correct answer: the locally best choice leads to the global best only when the greedy choice property holds; otherwise DP is needed.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Greedy: har step par abhi ki best choice lo; sirf tab sahi jab greedy choice property ho.',
+        'Greedy: take the best choice right now at each step; correct only when the greedy choice property holds.'
+      ),
+      t(
+        'Activity selection: end time se sort karo, start >= last end par lo; is example mein 4 activities.',
+        'Activity selection: sort by end time, take when start >= last end; this example gives 4 activities.'
+      ),
+      t(
+        'Fractional knapsack: value/weight ratio se sort karo, item kaat lo; max value 240.0.',
+        'Fractional knapsack: sort by value/weight ratio and cut items; maximum value 240.0.'
+      ),
+      t(
+        'Huffman coding: do sabse kam frequency wale nodes milao; frequent character ko chhota code milta hai.',
+        'Huffman coding: merge the two nodes with the smallest frequency; frequent characters get short codes.'
+      ),
+      t(
+        'Greedy fail: coins [4, 3, 1], amount 6 — greedy 3 coins, best 2 coins (3 + 3).',
+        'Greedy fails: coins [4, 3, 1], amount 6 — greedy 3 coins, best 2 coins (3 + 3).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Fractional Knapsack se Max Value Nikaalo',
+        'Practice: Find the Max Value with Fractional Knapsack'
+      ),
+      task: t(
+        'Items hain (value, weight): (60, 10), (100, 20), (120, 30) aur capacity hai 50. Greedy se max value nikaalo aur har item ko full liya ya part liya, yeh bhi print karo. Starter code poora runnable hai — isko run karke verify karo ki output expected jaisa aata hai.',
+        'The items are (value, weight): (60, 10), (100, 20), (120, 30) and the capacity is 50. Use greedy to find the maximum value and also print whether each item was taken fully or partly. The starter code is complete and runnable — run it and verify the output matches the expected output.'
+      ),
+      language: 'python',
+      starter: `items = [(60, 10), (100, 20), (120, 30)]
+cap = 50
+items.sort(key=lambda x: x[0] / x[1], reverse=True)
+total = 0.0
+taken = []
+
+for value, weight in items:
+    if cap >= weight:
+        total += value
+        cap -= weight
+        taken.append((value, weight, 'full'))
+    elif cap > 0:
+        total += value * cap / weight
+        taken.append((value, weight, 'part'))
+        cap = 0
+
+print('Taken:', taken)
+print('Max value:', total)`,
+      expected: `Taken: [(60, 10, 'full'), (100, 20, 'full'), (120, 30, 'part')]
+Max value: 240.0`
+    },
+    readMinutes: 12
+  };
+
+const dsaDivideConquer: Article = {
+    id: 'dsa-divide-conquer',
+    subjectId: 'dsa',
+    title: t(
+      'Divide & Conquer — Bade Problem ko Chhote Tukdo mein Todo',
+      'Divide & Conquer — Break a Big Problem into Small Pieces'
+    ),
+    summary: t(
+      'Divide and conquer ko zero se samjho: bade problem ko chhote tukdo mein divide karna, har tukde ko solve karna, aur answers ko combine karna. Merge sort aur quick sort isi idea par chalte hain, binary search bhi ek divide and conquer hai, aur maximum subarray jaise problems mein yeh plain loop se kaise jeetta hai.',
+      'Learn divide and conquer from scratch: split a big problem into small pieces, solve each piece, and combine the answers. Merge sort and quick sort run on this idea, binary search is also divide and conquer, and problems like maximum subarray show how it beats a plain loop.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Divide & Conquer Kya Hai? (Divide, Conquer, Combine)',
+          '1. What Is Divide & Conquer? (Divide, Conquer, Combine)'
+        ),
+        body: t(
+          `Divide and conquer ek problem-solving tareeka hai jismein hum bade problem ko seedha solve karne ki jagah usko chhote-chhote tukdo mein tod dete hain. Iske teen steps hote hain. **Divide:** problem ko aise tukdo mein baanto jo original problem jaise hi hon, bas chhote hon. **Conquer:** har tukde ko solve karo — agar tukda bahut chhota hai toh seedha solve karo, warna usko phir se divide karo. **Combine:** tukdo ke answers ko jod kar poore problem ka answer banao.
+
+Socho aapko 1000 pages wali kitaab mein ek naam dhoondhna hai. Poori kitaab ek-ek page padhna slow hai. Divide and conquer wala tareeka hai: kitaab ko beech se kholo, dekho naam left half mein hai ya right half mein, aur sirf usi half mein dhoondho. Har step mein kaam aadha ho jaata hai. Yahi binary search ka idea hai, aur yahi divide and conquer ki jaan hai — har step mein problem chhota hota jaata hai.
+
+Is tareeke ko **recursion** ke saath likha jaata hai, kyunki har tukda original problem ka chhota version hota hai. Base case woh chhota tukda hai jisko bina divide kiye solve kar sakte ho, jaise ek element wali list pehle se sorted hoti hai. Agar base case sahi nahi hai toh recursion kabhi rukega nahi, isliye divide and conquer likhte time pehle base case socho, phir divide aur combine socho.`,
+          `Divide and conquer is a problem-solving method where, instead of solving a big problem directly, we break it into small pieces. It has three steps. **Divide:** split the problem into pieces that look like the original problem, only smaller. **Conquer:** solve each piece — if a piece is very small, solve it directly, otherwise divide it again. **Combine:** join the answers of the pieces to make the answer of the whole problem.
+
+Imagine you must find a name in a 1000-page book. Reading every page one by one is slow. The divide and conquer way is: open the book in the middle, check whether the name is in the left half or the right half, and search only that half. At every step the work becomes half as big. That is the idea of binary search, and it is the heart of divide and conquer — at every step the problem keeps getting smaller.
+
+This method is written with **recursion**, because every piece is a smaller version of the original problem. The base case is the small piece you can solve without dividing, such as a list of one element, which is already sorted. If the base case is wrong, the recursion will never stop, so when you write divide and conquer, think of the base case first, then the divide and combine steps.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Kitaab, Tournament aur Phone Book',
+          '2. Real-Life Examples: A Book, a Tournament, and a Phone Book'
+        ),
+        body: t(
+          `Divide and conquer roz ki zindagi mein har jagah hai. Sabse seedha example hai **phone book ya dictionary**. Aap "Mohan" dhoondh rahe ho — aap pehla page nahi kholte, beech ka page kholte ho. Agar "Mohan" us page ke word se pehle aata hai toh left half mein dhoondhte ho, warna right half mein. Har baar aadhi kitaab khatam ho jaati hai. Yahi binary search hai, aur yahi divide and conquer hai.
+
+Doosra example hai **tournament**. 8 teams mein se best team dhoondhni hai. Aap 8 teams ko ek saath compare nahi karte — pehle 4 matches khelte ho, 4 winners milte hain, phir 2 matches, phir final. Har round mein teams aadhi ho jaati hain. Tournament ka structure hi divide and conquer hai: chhote matches jeeto, winners ko combine karo, aur end mein champion mil jaata hai.
+
+Teesra example hai **bade kaam ko baantna**. Agar 1000 files ko sort karna hai toh ek aadmi poora kaam na karke 10 logon mein baant de — har ek 100 files sort kare, phir sorted parts ko merge kar de. Merge sort bilkul yahi karta hai: list ko aadha karo, dono halves ko sort karo, phir dono sorted halves ko merge karo. Computer mein bhi yahi hota hai — bade kaam ko todna, alag-alag solve karna, phir jodna.`,
+          `Divide and conquer is everywhere in daily life. The simplest example is a **phone book or dictionary**. You are looking for "Mohan" — you do not open the first page, you open a middle page. If "Mohan" comes before the word on that page, you search the left half, otherwise the right half. Each time, half the book is finished. That is binary search, and that is divide and conquer.
+
+A second example is a **tournament**. You must find the best team out of 8 teams. You do not compare all 8 teams at once — first you play 4 matches, get 4 winners, then 2 matches, then a final. In every round the teams become half as many. The tournament structure itself is divide and conquer: win the small matches, combine the winners, and in the end you get the champion.
+
+A third example is **splitting a big job**. If 1000 files must be sorted, one person does not do the whole job — it is split among 10 people, each sorts 100 files, and then the sorted parts are merged. Merge sort does exactly this: split the list in half, sort both halves, then merge the two sorted halves. The same thing happens inside a computer — break a big job, solve the parts separately, then join them.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Merge Sort ka Dry Run [38, 27, 43, 3, 9, 82, 10] par',
+          '3. Step-by-Step: A Merge Sort Dry Run on [38, 27, 43, 3, 9, 82, 10]'
+        ),
+        body: t(
+          `Ab merge sort ko haath se chala kar dekhte hain. List hai [38, 27, 43, 3, 9, 82, 10]. Pehle divide karte hain: beech se todo — left half [38, 27, 43, 3] aur right half [9, 82, 10]. Left half ko phir todo: [38, 27] aur [43, 3]. Inko phir todo: [38], [27], [43], [3] — ab har tukda ek element ka hai, aur ek element wali list hamesha sorted hoti hai. Yahi base case hai.
+
+Ab combine karte hain, neeche se upar. [38] aur [27] ko merge karo: 27 chhota hai, phir 38 — mil gaya [27, 38]. [43] aur [3] ko merge karo: [3, 43]. Ab [27, 38] aur [3, 43] ko merge karo: pehle 3, phir 27, phir 38, phir 43 — mil gaya [3, 27, 38, 43]. Right half mein [9, 82, 10] ko aise hi todo aur merge karo: [9] aur [82, 10] se pehle [10, 82] banta hai, phir [9, 10, 82]. Aakhir mein [3, 27, 38, 43] aur [9, 10, 82] ko merge karo: 3, 9, 10, 27, 38, 43, 82. Poori list sorted hai.
+
+Merge karne ka tareeka samjho: dono sorted lists ke pehle element ko compare karo, chhota wala result mein daalo, aur us list mein aage badho. Har element sirf ek baar compare hota hai, isliye merge karna O(n) hota hai. Divide karne mein list log n baar aadhi hoti hai, isliye merge sort ka total time **O(n log n)** hota hai. Neeche wala code yahi process chalata hai — isko run karo aur output dekho.`,
+          `Now let us run merge sort by hand. The list is [38, 27, 43, 3, 9, 82, 10]. First divide it: split it in the middle — the left half is [38, 27, 43, 3] and the right half is [9, 82, 10]. Split the left half again: [38, 27] and [43, 3]. Split those again: [38], [27], [43], [3] — now every piece has one element, and a list of one element is always sorted. That is the base case.
+
+Now combine, from the bottom up. Merge [38] and [27]: 27 is smaller, then 38 — we get [27, 38]. Merge [43] and [3]: [3, 43]. Now merge [27, 38] and [3, 43]: first 3, then 27, then 38, then 43 — we get [3, 27, 38, 43]. In the right half, split and merge [9, 82, 10] the same way: [9] and [82, 10] first give [10, 82], then [9, 10, 82]. Finally merge [3, 27, 38, 43] and [9, 10, 82]: 3, 9, 10, 27, 38, 43, 82. The whole list is sorted.
+
+Understand how merging works: compare the first element of both sorted lists, put the smaller one in the result, and move ahead in that list. Every element is compared only once, so merging is O(n). Dividing splits the list in half log n times, so the total time of merge sort is **O(n log n)**. The code below runs this same process — run it and look at the output.`
+        ),
+        code: {
+          title: t(
+            'Merge Sort: Divide, Conquer, Combine',
+            'Merge Sort: Divide, Conquer, Combine'
+          ),
+          language: 'python',
+          code: `def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    result = []
+    i = 0
+    j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result += left[i:]
+    result += right[j:]
+    return result
+
+print(merge_sort([38, 27, 43, 3, 9, 82, 10]))
+print(merge_sort([5, 2, 4, 1, 3]))`,
+          output: `[3, 9, 10, 27, 38, 43, 82]
+[1, 2, 3, 4, 5]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Base Case Bhoolna, Galat Combine aur Extra Copy',
+          '4. Common Mistakes: Forgetting the Base Case, Wrong Combine, and Extra Copies'
+        ),
+        body: t(
+          `Divide and conquer mein sabse badi galti hai **base case bhoolna ya galat likhna**. Agar \`merge_sort\` mein \`len(arr) <= 1\` ki jagah \`len(arr) == 0\` likh diya, toh ek element wali list phir se divide hogi aur recursion kabhi nahi rukega. Har divide and conquer function mein pehle poochho: "sabse chhota input kya hai, aur uska answer seedha kya hai?" Wahi base case hai.
+
+**Galti 2: combine step galat karna.** Divide karna aasan hai, combine karna mushkil. Merge sort mein agar merge karte time ek list ke bache hue elements ko result mein jodna bhool gaye (\`result += left[i:]\`), toh elements gayab ho jaayenge aur sorted list adhoori milegi. Quick sort mein pivot ko dono sides mein se ek mein rakhna bhool jaana bhi aisi hi galti hai. Combine step ko hamesha chhote example par haath se check karo.
+
+**Galti 3: har problem par divide and conquer laga dena.** Agar problem ke tukde ek doosre se alag nahi hain aur baar-baar wahi tukda solve karna pad raha hai, toh divide and conquer slow ho jaata hai — wahan memoization ya DP chahiye. Fibonacci ko divide and conquer se likhoge toh wahi calls baar-baar honge aur time exponential ho jaayega. Divide and conquer tab achha hai jab tukde **independent** hon, matlab ek tukde ka answer doosre par depend na kare.
+
+**Galti 4: extra copies se space badha dena.** Python mein \`arr[:mid]\` har baar nayi list banata hai, isliye merge sort O(n log n) space bhi le sakta hai agar dhyaan na do. Interview mein yeh poochha jaata hai — isliye batao ki merge sort ko O(n) extra space chahiye, aur quick sort in-place hota hai isliye uska extra space O(log n) hota hai.`,
+          `The biggest mistake in divide and conquer is **forgetting the base case or writing it wrong**. If in \`merge_sort\` you write \`len(arr) == 0\` instead of \`len(arr) <= 1\`, a list of one element will be divided again and the recursion will never stop. In every divide and conquer function, first ask: "what is the smallest input, and what is its answer directly?" That is the base case.
+
+**Mistake 2: writing the combine step wrong.** Dividing is easy, combining is hard. In merge sort, if you forget to add the leftover elements of one list to the result (\`result += left[i:]\`), elements will vanish and the sorted list will be incomplete. In quick sort, forgetting to place the pivot in one of the two sides is the same kind of mistake. Always check the combine step by hand on a small example.
+
+**Mistake 3: applying divide and conquer to every problem.** If the pieces of a problem are not separate from each other and the same piece must be solved again and again, divide and conquer becomes slow — that is where memoization or DP is needed. If you write Fibonacci with divide and conquer, the same calls repeat and the time becomes exponential. Divide and conquer is good when the pieces are **independent**, meaning the answer of one piece does not depend on another.
+
+**Mistake 4: growing the space with extra copies.** In Python, \`arr[:mid]\` creates a new list every time, so merge sort can also take O(n log n) space if you are not careful. Interviewers ask about this — so explain that merge sort needs O(n) extra space, while quick sort works in place, so its extra space is O(log n).`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali List, Ek Element, Sorted List aur Duplicate Values',
+          '5. Edge Cases: Empty List, One Element, Sorted List, and Duplicate Values'
+        ),
+        body: t(
+          `Divide and conquer ke edge cases chhote hain, par inhi par code fail hota hai. **Khaali list:** \`merge_sort([])\` ko \`[]\` return karna chahiye, crash nahi. Hamara base case \`len(arr) <= 1\` khaali list ko bhi pakad leta hai, isliye yeh safe hai. **Ek element:** \`[7]\` pehle se sorted hai, usko divide karne ki zaroorat nahi — base case yahi karta hai.
+
+**Pehle se sorted list:** merge sort par iska koi farak nahi padta, woh hamesha O(n log n) mein chalta hai. Par quick sort par farak padta hai — agar pivot hamesha pehla element ho aur list pehle se sorted ho, toh ek side khaali aur doosri side mein n-1 elements honge, aur quick sort O(n^2) ho jaata hai. Isi liye real quick sort mein pivot ko random ya beech se chuna jaata hai.
+
+**Duplicate values:** merge sort mein \`left[i] <= right[j]\` likha hai, isliye barabar values mein left wala pehle aata hai aur sort **stable** rehta hai — matlab barabar elements ka original order bana rehta hai. Quick sort mein \`<= pivot\` aur \`> pivot\` ka farak samjho: agar dono sides mein \`<\` aur \`>\` use karoge aur pivot ke barabar values ko handle nahi karoge, toh kuch values gayab ya galat jagah par ja sakti hain. **Sab values barabar hon** toh bhi code ko sahi chalna chahiye — yeh test interviewer zaroor karta hai.`,
+          `The edge cases of divide and conquer are small, but code fails on exactly these. **Empty list:** \`merge_sort([])\` should return \`[]\`, not crash. Our base case \`len(arr) <= 1\` also catches the empty list, so it is safe. **One element:** \`[7]\` is already sorted, there is no need to divide it — the base case does exactly that.
+
+**Already sorted list:** merge sort is not affected by this, it always runs in O(n log n). But quick sort is affected — if the pivot is always the first element and the list is already sorted, one side will be empty and the other side will hold n-1 elements, and quick sort becomes O(n^2). That is why real quick sort picks the pivot at random or from the middle.
+
+**Duplicate values:** merge sort uses \`left[i] <= right[j]\`, so when values are equal the left one comes first and the sort stays **stable** — meaning equal elements keep their original order. In quick sort, understand the difference between \`<= pivot\` and \`> pivot\`: if you use \`<\` and \`>\` on both sides and do not handle values equal to the pivot, some values can vanish or land in the wrong place. **When all values are equal**, the code must still work correctly — interviewers always test this.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Quick Sort vs Merge Sort, Binary Search aur Maximum Subarray',
+          '6. What-If: Quick Sort vs Merge Sort, Binary Search, and Maximum Subarray'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: merge sort ki jagah quick sort use karein?** Dono O(n log n) average time dete hain. Merge sort hamesha O(n log n) deta hai aur stable hota hai, par usko extra O(n) space chahiye. Quick sort in-place hota hai aur average mein tez hota hai, par worst case O(n^2) ho sakta hai aur woh stable nahi hota. Agar stability chahiye toh merge sort, agar memory kam hai toh quick sort. Interview mein yahi comparison poochha jaata hai.
+
+**What if: binary search ko divide and conquer bolo?** Haan, binary search divide and conquer ka sabse simple example hai: divide — list ko beech se todo; conquer — sirf ek half mein dhoondho, doosre ko phenk do; combine — kuch combine karna hi nahi hai, kyunki answer ek half mein hi hai. Isi liye binary search O(log n) mein chalta hai — har step mein kaam aadha ho jaata hai. Neeche wala code binary search ko dikhata hai.
+
+**What if: maximum subarray ko plain loop se karein?** Kadane ka algorithm O(n) mein maximum subarray nikaal leta hai, aur woh divide and conquer se behtar hai. Par divide and conquer wala version seekhne layak hai: list ko aadha karo, left half ka max subarray, right half ka max subarray, aur beech ko cross karne wala max subarray — teeno mein se sabse bada answer hai. Yeh O(n log n) mein chalta hai. Interview mein poochha jaata hai ki divide and conquer wala version kaise kaam karta hai, isliye uska idea yaad rakho, chahe Kadane tez ho.`,
+          `Now let us ask "what-if" questions. **What if we use quick sort instead of merge sort?** Both give O(n log n) average time. Merge sort always gives O(n log n) and is stable, but it needs extra O(n) space. Quick sort works in place and is faster on average, but its worst case can be O(n^2) and it is not stable. If you need stability, use merge sort; if memory is tight, use quick sort. Interviewers ask exactly this comparison.
+
+**What if binary search is called divide and conquer?** Yes, binary search is the simplest example of divide and conquer: divide — split the list in the middle; conquer — search only one half and throw the other away; combine — there is nothing to combine, because the answer is in one half only. That is why binary search runs in O(log n) — at every step the work becomes half. The code below shows binary search.
+
+**What if we find the maximum subarray with a plain loop?** Kadane's algorithm finds the maximum subarray in O(n), and it is better than divide and conquer. But the divide and conquer version is worth learning: split the list in half, find the max subarray in the left half, in the right half, and the max subarray that crosses the middle — the biggest of the three is the answer. It runs in O(n log n). In interviews they ask how the divide and conquer version works, so remember its idea even though Kadane is faster.`
+        ),
+        code: {
+          title: t(
+            'Quick Sort: Pivot ke Aas-Paas Divide Karna',
+            'Quick Sort: Dividing Around a Pivot'
+          ),
+          language: 'python',
+          code: `def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    small = [x for x in arr[1:] if x <= pivot]
+    big = [x for x in arr[1:] if x > pivot]
+    return quick_sort(small) + [pivot] + quick_sort(big)
+
+print(quick_sort([33, 10, 55, 71, 29, 3, 18]))`,
+          output: `[3, 10, 18, 29, 33, 55, 71]`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Divide, Conquer, Combine — Aur Kab Use Karein',
+          '7. Summary: Divide, Conquer, Combine — and When to Use Them'
+        ),
+        body: t(
+          `Poora article ek line mein: **divide and conquer** matlab bade problem ko chhote independent tukdo mein todo, har tukde ko solve karo, aur answers ko combine karo. **Merge sort** iska classic example hai — divide O(log n) levels, merge O(n) per level, total **O(n log n)** time aur O(n) space. **Quick sort** bhi O(n log n) average deta hai, in-place hota hai, par worst case O(n^2) ho sakta hai. **Binary search** divide and conquer ka sabse chhota roop hai aur O(log n) mein chalta hai.
+
+Divide and conquer tab use karo jab problem ko independent tukdo mein toda ja sake aur combine step saaf ho. Jab tukde overlap karte hon aur wahi kaam baar-baar ho raha ho, toh DP ya memoization socho. Base case hamesha pehle likho, combine step ko chhote example par haath se check karo, aur edge cases — khaali list, ek element, duplicates — ko test karo.
+
+Revision ke liye merge sort ka dry run ek baar khud karo: [38, 27, 43, 3, 9, 82, 10] ko divide karte jao jab tak ek-ek element na bache, phir merge karte hue upar aao. Agar yeh dry run bina ruke ho jaaye, toh divide and conquer aapko aa gaya hai. Agle article mein hum bit manipulation dekhenge — jahan numbers ko bits ke level par tod kar kaam karte hain.`,
+          `The whole article in one line: **divide and conquer** means breaking a big problem into small independent pieces, solving each piece, and combining the answers. **Merge sort** is the classic example — divide over O(log n) levels, merge in O(n) per level, total **O(n log n)** time and O(n) space. **Quick sort** also gives O(n log n) on average, works in place, but its worst case can be O(n^2). **Binary search** is the smallest form of divide and conquer and runs in O(log n).
+
+Use divide and conquer when a problem can be split into independent pieces and the combine step is clear. When the pieces overlap and the same work repeats, think of DP or memoization. Always write the base case first, check the combine step by hand on a small example, and test the edge cases — empty list, one element, duplicates.
+
+To revise, do the merge sort dry run once yourself: keep dividing [38, 27, 43, 3, 9, 82, 10] until only single elements remain, then merge your way back up. If that dry run goes smoothly, you know divide and conquer. In the next article we will look at bit manipulation — where we work with numbers at the level of bits.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Merge Sort: Divide, Conquer, Combine',
+        'Merge Sort: Divide, Conquer, Combine'
+      ),
+      caption: t(
+        'List aadhi hoti jaati hai, phir sorted tukde merge hote hue upar aate hain',
+        'The list keeps splitting in half, then sorted pieces merge back up'
+      ),
+      nodes: [
+        {
+          t: t('Divide: [38, 27, 43, 3, 9, 82, 10]', 'Divide: [38, 27, 43, 3, 9, 82, 10]'),
+          s: t('Beech se todo: left [38, 27, 43, 3], right [9, 82, 10]', 'Split in the middle: left [38, 27, 43, 3], right [9, 82, 10]')
+        },
+        {
+          t: t('Base case: ek element wali list', 'Base case: a list of one element'),
+          s: t('Ek element hamesha sorted hota hai, divide ruk jaata hai', 'One element is always sorted, dividing stops here')
+        },
+        {
+          t: t('Conquer: chhote tukde sort karo', 'Conquer: sort the small pieces'),
+          s: t('[27, 38] aur [3, 43] merge se bane', '[27, 38] and [3, 43] are made by merging')
+        },
+        {
+          t: t('Combine: sorted halves ko merge karo', 'Combine: merge the sorted halves'),
+          s: t('[3, 27, 38, 43] + [9, 10, 82] = [3, 9, 10, 27, 38, 43, 82]', '[3, 27, 38, 43] + [9, 10, 82] = [3, 9, 10, 27, 38, 43, 82]')
+        },
+        {
+          t: t('Time: O(n log n), Space: O(n)', 'Time: O(n log n), Space: O(n)'),
+          s: t('log n levels, har level par O(n) merge ka kaam', 'log n levels, O(n) merge work on each level')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Binary Search: Har Step mein Aadha Kaam',
+          'Binary Search: Half the Work at Every Step'
+        ),
+        language: 'python',
+        code: `def binary_search(arr, target):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        if arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+nums = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+print(binary_search(nums, 23))
+print(binary_search(nums, 50))`,
+        output: `5
+-1`
+      },
+      {
+        title: t(
+          'Maximum Subarray: Kadane ka O(n) Tareeka',
+          'Maximum Subarray: Kadane O(n) Method'
+        ),
+        language: 'python',
+        code: `def max_subarray(arr):
+    best = arr[0]
+    current = arr[0]
+    for x in arr[1:]:
+        if current + x > x:
+            current = current + x
+        else:
+            current = x
+        if current > best:
+            best = current
+    return best
+
+print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+print(max_subarray([5, 4, -1, 7, 8]))`,
+        output: `6
+23`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Divide and conquer ke teen steps ka sahi order kya hai?',
+          'What is the correct order of the three steps of divide and conquer?'
+        ),
+        opts: [
+          t('Combine, Divide, Conquer', 'Combine, Divide, Conquer'),
+          t('Divide, Conquer, Combine', 'Divide, Conquer, Combine'),
+          t('Conquer, Combine, Divide', 'Conquer, Combine, Divide'),
+          t('Divide, Combine, Conquer', 'Divide, Combine, Conquer')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle problem ko divide karo, phir tukdo ko conquer karo, phir answers ko combine karo — yahi divide and conquer ka order hai.',
+          'Correct answer: first divide the problem, then conquer the pieces, then combine the answers — that is the order of divide and conquer.'
+        )
+      },
+      {
+        q: t(
+          'Merge sort ka time complexity kya hota hai?',
+          'What is the time complexity of merge sort?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(n^2)', 'O(n^2)'),
+          t('O(log n)', 'O(log n)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: merge sort mein log n levels hote hain aur har level par O(n) merge ka kaam hota hai, isliye total O(n log n) hota hai.',
+          'Correct answer: merge sort has log n levels and O(n) merge work on each level, so the total is O(n log n).'
+        )
+      },
+      {
+        q: t(
+          'Binary search kis par kaam karta hai?',
+          'What does binary search work on?'
+        ),
+        opts: [
+          t('Sirf unsorted list par', 'Only on an unsorted list'),
+          t('Sirf sorted list par', 'Only on a sorted list'),
+          t('Sirf linked list par', 'Only on a linked list'),
+          t('Sirf string par', 'Only on a string')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: binary search beech wala element dekh kar ek half ko phenk deta hai, aur yeh tabhi sahi hai jab list sorted ho.',
+          'Correct answer: binary search looks at the middle element and throws away one half, and that is only correct when the list is sorted.'
+        )
+      },
+      {
+        q: t(
+          'Quick sort ka worst case time complexity kab hota hai?',
+          'When does quick sort show its worst case time complexity?'
+        ),
+        opts: [
+          t('Jab pivot hamesha sabse chhota ya sabse bada element ho', 'When the pivot is always the smallest or the largest element'),
+          t('Jab list mein duplicate values hon', 'When the list has duplicate values'),
+          t('Jab list khaali ho', 'When the list is empty'),
+          t('Jab list mein ek element ho', 'When the list has one element')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: bura pivot chunne par ek side khaali aur doosri side mein n-1 elements hote hain, aur quick sort O(n^2) ho jaata hai.',
+          'Correct answer: with a bad pivot, one side is empty and the other side holds n-1 elements, and quick sort becomes O(n^2).'
+        )
+      },
+      {
+        q: t(
+          'Merge sort stable kyun hota hai?',
+          'Why is merge sort stable?'
+        ),
+        opts: [
+          t('Kyunki woh in-place sort karta hai', 'Because it sorts in place'),
+          t('Kyunki merge mein barabar values par left wala pehle aata hai', 'Because in merging, when values are equal the left one comes first'),
+          t('Kyunki woh pivot use nahi karta', 'Because it does not use a pivot'),
+          t('Kyunki woh O(n) time mein chalta hai', 'Because it runs in O(n) time')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: merge mein left[i] <= right[j] use hota hai, isliye barabar elements ka original order bana rehta hai — yahi stability hai.',
+          'Correct answer: merging uses left[i] <= right[j], so equal elements keep their original order — that is stability.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Divide and conquer: divide karo, tukdo ko solve karo, answers ko combine karo.',
+        'Divide and conquer: divide, solve the pieces, combine the answers.'
+      ),
+      t(
+        'Merge sort O(n log n) time aur O(n) space leta hai aur stable hota hai.',
+        'Merge sort takes O(n log n) time and O(n) space and is stable.'
+      ),
+      t(
+        'Quick sort average O(n log n) deta hai, par bura pivot use O(n^2) bana deta hai.',
+        'Quick sort gives O(n log n) on average, but a bad pivot makes it O(n^2).'
+      ),
+      t(
+        'Binary search divide and conquer hai aur sorted list par O(log n) mein chalta hai.',
+        'Binary search is divide and conquer and runs in O(log n) on a sorted list.'
+      ),
+      t(
+        'Base case pehle likho, combine step ko haath se check karo, aur overlapping tukdo par DP socho.',
+        'Write the base case first, check the combine step by hand, and think of DP when pieces overlap.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Divide & Conquer se Maximum Dhoondho',
+        'Practice: Find the Maximum with Divide & Conquer'
+      ),
+      task: t(
+        'Neeche diya gaya code divide and conquer se list ka sabse bada number nikaalta hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir list ko badal kar [4, 9, 2, 15, 7, 11] ki jagah apni list daalo aur check karo ki answer sahi hai.',
+        'The code below finds the largest number in a list with divide and conquer. Run it and verify the output matches the expected output. Then change the list [4, 9, 2, 15, 7, 11] to your own list and check that the answer is correct.'
+      ),
+      language: 'python',
+      starter: `def find_max(arr):
+    if len(arr) == 1:
+        return arr[0]
+    mid = len(arr) // 2
+    left_max = find_max(arr[:mid])
+    right_max = find_max(arr[mid:])
+    if left_max > right_max:
+        return left_max
+    return right_max
+
+print(find_max([4, 9, 2, 15, 7, 11]))
+print(find_max([-3, -1, -7]))`,
+      expected: `15
+-1`
+    },
+    readMinutes: 12
+  };
+
+const dsaBitManipulation: Article = {
+    id: 'dsa-bit-manipulation',
+    subjectId: 'dsa',
+    title: t(
+      'Bit Manipulation — AND, OR, XOR aur Shifts se Tez Kaam',
+      'Bit Manipulation — Fast Work with AND, OR, XOR, and Shifts'
+    ),
+    summary: t(
+      'Bit manipulation ko zero se samjho: har number ke peeche 0 aur 1 ke bits hote hain, aur AND, OR, XOR, NOT aur shifts se aap bina loop ke kaam kar sakte ho. XOR se single number dhoondhna, power of two check karna, set bits ginna, bina temp ke swap karna, aur kisi bit ko get, set ya clear karna — sab ek hi article mein.',
+      'Learn bit manipulation from scratch: behind every number there are bits of 0 and 1, and with AND, OR, XOR, NOT, and shifts you can work without a loop. Finding the single number with XOR, checking a power of two, counting set bits, swapping without a temp variable, and getting, setting, or clearing a bit — all in one article.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Bit Manipulation Kya Hai? (Bits, AND, OR, XOR, NOT, Shifts)',
+          '1. What Is Bit Manipulation? (Bits, AND, OR, XOR, NOT, Shifts)'
+        ),
+        body: t(
+          `Computer ke andar har number 0 aur 1 ke bits se bana hota hai. Number 10 ko binary mein likho toh 1010 hota hai — matlab 8 + 0 + 2 + 0. **Bit manipulation** ka matlab hai in bits par seedha kaam karna, bina number ko poora todhe. Iske 6 basic operators hain. **AND (&):** dono bits 1 hon toh 1, warna 0. **OR (|):** koi ek bit 1 ho toh 1. **XOR (^):** bits alag hon toh 1, same hon toh 0. **NOT (~):** har bit ko ulta kar do. **Left shift (<<):** bits ko left le jao, matlab number ko 2 se multiply karo. **Right shift (>>):** bits ko right le jao, matlab number ko 2 se divide karo.
+
+Ek example lo: 5 hai 0101 aur 3 hai 0011. 5 & 3 = 0001 = 1, kyunki sirf pehla bit dono mein 1 hai. 5 | 3 = 0111 = 7. 5 ^ 3 = 0110 = 6. 5 << 1 = 1010 = 10, matlab 5 ko 2 se multiply kiya. 5 >> 1 = 0010 = 2, matlab 5 ko 2 se divide kiya. Yeh operations bahut tez hote hain kyunki computer inko seedha hardware par karta hai — inmein loop nahi chalta.
+
+Bit manipulation seekhne ka sabse achha tareeka hai chhote numbers ko binary mein likh kar haath se operator lagana. Jab aapko 10 ka binary 1010 dikhne lage, toh XOR aur shifts aapko magic nahi, simple arithmetic lagne lagenge. Is article mein hum har operator ko ek real problem ke saath dekhenge.`,
+          `Inside a computer, every number is made of bits of 0 and 1. The number 10 in binary is 1010 — meaning 8 + 0 + 2 + 0. **Bit manipulation** means working directly on these bits, without breaking the whole number apart. There are 6 basic operators. **AND (&):** 1 only if both bits are 1, otherwise 0. **OR (|):** 1 if any bit is 1. **XOR (^):** 1 if the bits are different, 0 if they are the same. **NOT (~):** flip every bit. **Left shift (<<):** move bits to the left, which means multiplying the number by 2. **Right shift (>>):** move bits to the right, which means dividing the number by 2.
+
+Take an example: 5 is 0101 and 3 is 0011. 5 & 3 = 0001 = 1, because only the first bit is 1 in both. 5 | 3 = 0111 = 7. 5 ^ 3 = 0110 = 6. 5 << 1 = 1010 = 10, which is 5 multiplied by 2. 5 >> 1 = 0010 = 2, which is 5 divided by 2. These operations are very fast because the computer does them directly in hardware — no loop runs in them.
+
+The best way to learn bit manipulation is to write small numbers in binary and apply the operators by hand. When you start seeing 10 as 1010, XOR and shifts will stop feeling like magic and start feeling like simple arithmetic. In this article we will see every operator with a real problem.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Light Switch, Password aur Permission Flags',
+          '2. Real-Life Examples: Light Switches, Passwords, and Permission Flags'
+        ),
+        body: t(
+          `Bits roz ki zindagi mein switch ki tarah kaam karte hain. Socho aapke ghar mein 4 lights hain aur har light ka ek switch hai — on ya off. Chaaro switches ko ek number se represent kar sakte ho: 1010 matlab pehli aur teesri light on hai, baaki off. Ek bit ko on karna matlab us light ko jalana, ek bit ko off karna matlab bujhana. Yahi **flags** ka idea hai.
+
+Computer mein **permissions** aise hi store hote hain. File ko read, write aur execute ki permission chahiye — teen bits kaafi hain. Read = 4 (100), Write = 2 (010), Execute = 1 (001). Agar kisi ko read aur write chahiye toh 4 | 2 = 6 (110). Permission check karna matlab ek bit ko dekhna: kya read wala bit on hai? Yeh kaam AND se hota hai aur yeh bahut tez hota hai — isiliye operating system permissions ko bits mein rakhta hai, list mein nahi.
+
+Teesra example hai **toggle**. XOR se aap kisi bhi bit ko ulta kar sakte ho: 1 ko 0 aur 0 ko 1. Light ka switch bhi aisa hi hai — ek baar dabao toh on, dobara dabao toh off. Password aur security mein bhi XOR use hota hai: message ko ek key se XOR karo toh woh unreadable ho jaata hai, phir se wahi key se XOR karo toh original message wapas mil jaata hai. Yahi XOR ki sabse khaas property hai — do baar XOR karne par wahi cheez wapas milti hai.`,
+          `Bits work like switches in daily life. Imagine your house has 4 lights and each light has a switch — on or off. All four switches can be shown by one number: 1010 means the first and third lights are on, and the rest are off. Turning one bit on means switching that light on, turning it off means switching it off. That is the idea of **flags**.
+
+In a computer, **permissions** are stored just like this. A file needs read, write, and execute permission — three bits are enough. Read = 4 (100), Write = 2 (010), Execute = 1 (001). If someone needs read and write, that is 4 | 2 = 6 (110). Checking a permission means looking at one bit: is the read bit on? That work is done with AND and it is very fast — that is why operating systems store permissions as bits, not as a list.
+
+A third example is **toggle**. With XOR you can flip any bit: 1 becomes 0 and 0 becomes 1. A light switch works the same way — press once for on, press again for off. XOR is also used in passwords and security: XOR a message with a key and it becomes unreadable, XOR it again with the same key and the original message comes back. That is the most special property of XOR — XOR twice and you get the same thing back.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: XOR se Single Number aur Power of Two ka Dry Run',
+          '3. Step-by-Step: A Dry Run of Single Number with XOR and the Power of Two Check'
+        ),
+        body: t(
+          `Ab do classic problems ko haath se chalate hain. Pehla problem hai **single number**: list [4, 1, 2, 1, 2] mein har number do baar aata hai, sirf ek number ek baar aata hai. Use dhoondho. XOR ki property yaad rakho: \`a ^ a = 0\` aur \`a ^ 0 = a\`. Matlab jo number do baar aayega, woh XOR mein cancel ho jaayega.
+
+Dry run karte hain. \`single\` ko 0 se shuru karo. 4 se XOR karo: 0 ^ 4 = 4. 1 se XOR karo: 4 ^ 1 = 5 (binary 100 ^ 001 = 101). 2 se XOR karo: 5 ^ 2 = 7 (101 ^ 010 = 111). 1 se phir XOR karo: 7 ^ 1 = 6 (111 ^ 001 = 110) — 1 cancel ho gaya. 2 se phir XOR karo: 6 ^ 2 = 4 (110 ^ 010 = 100) — 2 cancel ho gaya. Answer hai 4, jo ek baar aaya tha. Poora kaam ek pass mein, O(n) time aur O(1) space mein ho gaya — na dict chahiye, na sorting.
+
+Doosra problem hai **power of two check**. 8 hai 1000, 16 hai 10000, 7 hai 0111. Dekho: power of two mein sirf ek bit 1 hota hai. \`n & (n - 1)\` kya karta hai? 8 & 7 = 1000 & 0111 = 0000 = 0, isliye 8 power of two hai. 7 & 6 = 0111 & 0110 = 0110 = 6, jo 0 nahi hai, isliye 7 power of two nahi hai. Formula hai: \`n > 0 and (n & (n - 1)) == 0\`. Neeche wala code dono problems ko chalata hai.`,
+          `Now let us run two classic problems by hand. The first problem is **single number**: in the list [4, 1, 2, 1, 2], every number appears twice except one number that appears once. Find it. Remember the property of XOR: \`a ^ a = 0\` and \`a ^ 0 = a\`. That means a number that appears twice cancels itself out in XOR.
+
+Let us do the dry run. Start \`single\` at 0. XOR with 4: 0 ^ 4 = 4. XOR with 1: 4 ^ 1 = 5 (binary 100 ^ 001 = 101). XOR with 2: 5 ^ 2 = 7 (101 ^ 010 = 111). XOR with 1 again: 7 ^ 1 = 6 (111 ^ 001 = 110) — 1 is cancelled. XOR with 2 again: 6 ^ 2 = 4 (110 ^ 010 = 100) — 2 is cancelled. The answer is 4, the number that appeared once. The whole job is done in one pass, in O(n) time and O(1) space — no dict is needed, no sorting.
+
+The second problem is the **power of two check**. 8 is 1000, 16 is 10000, and 7 is 0111. See the pattern: a power of two has only one bit set to 1. What does \`n & (n - 1)\` do? 8 & 7 = 1000 & 0111 = 0000 = 0, so 8 is a power of two. 7 & 6 = 0111 & 0110 = 0110 = 6, which is not 0, so 7 is not a power of two. The formula is: \`n > 0 and (n & (n - 1)) == 0\`. The code below runs both problems.`
+        ),
+        code: {
+          title: t(
+            'XOR se Single Number aur Power of Two Check',
+            'Single Number with XOR and the Power of Two Check'
+          ),
+          language: 'python',
+          code: `nums = [4, 1, 2, 1, 2]
+single = 0
+for n in nums:
+    single = single ^ n
+print("Single number:", single)
+
+def is_power_of_two(n):
+    return n > 0 and (n & (n - 1)) == 0
+
+print("8 is power of two:", is_power_of_two(8))
+print("7 is power of two:", is_power_of_two(7))
+print("16 is power of two:", is_power_of_two(16))`,
+          output: `Single number: 4
+8 is power of two: True
+7 is power of two: False
+16 is power of two: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Precedence, Negative Numbers aur ~ ka Matlab',
+          '4. Common Mistakes: Precedence, Negative Numbers, and What ~ Means'
+        ),
+        body: t(
+          `Bit manipulation mein sabse zyada galtiyan chhoti-chhoti cheezon par hoti hain. **Galti 1: operator precedence.** Python mein \`&\` aur \`|\` ka precedence comparison operators se alag hota hai. \`n & n - 1 == 0\` likhoge toh Python pehle \`n - 1 == 0\` ko samajh sakta hai — hamesha brackets lagao: \`(n & (n - 1)) == 0\`. Brackets lagana free hai, par bug mehenga padta hai.
+
+**Galti 2: ~ ko NOT samajh kar galat answer.** Python mein \`~5\` ka answer -6 hota hai, 2 nahi. Kyun? Kyunki Python numbers ko two's complement mein store karta hai aur ~ har bit ko ulta kar deta hai, sign bit bhi. Formula yaad rakho: \`~n = -n - 1\`. Agar aapko sirf 4 bits ko ulta karna hai toh mask use karo: \`5 ^ 0b1111\` = 10. Mask ke bina ~ se hamesha negative number milega.
+
+**Galti 3: shift ko multiply samajh kar galat use.** \`n << 1\` matlab n * 2 hai, par sirf positive numbers ke liye seedha hai. Negative numbers par right shift ka behavior alag ho sakta hai, kyunki sign bit bhar jaata hai. Aur \`n << 100\` jaise bade shift se number bahut bada ho jaata hai. Shift use karne se pehle socho ki number positive hai ya negative.
+
+**Galti 4: XOR swap ko har jagah use karna.** XOR se swap karna cool lagta hai, par agar aap ek hi variable ko khud se swap kar do (\`a ^ a\`) toh answer 0 ho jaata hai aur data kho jaata hai. Real code mein simple swap \`a, b = b, a\` use karo — woh readable hai aur galti nahi karta. XOR swap interview mein dikhane ke liye hai, production code mein nahi.`,
+          `In bit manipulation, most mistakes happen on small things. **Mistake 1: operator precedence.** In Python, \`&\` and \`|\` have different precedence from comparison operators. If you write \`n & n - 1 == 0\`, Python can read it in an unexpected way — always use brackets: \`(n & (n - 1)) == 0\`. Brackets are free, but a bug is costly.
+
+**Mistake 2: misreading ~ as NOT.** In Python, \`~5\` gives -6, not 2. Why? Because Python stores numbers in two's complement and ~ flips every bit, including the sign bit. Remember the formula: \`~n = -n - 1\`. If you only want to flip 4 bits, use a mask: \`5 ^ 0b1111\` = 10. Without a mask, ~ will always give a negative number.
+
+**Mistake 3: treating a shift as multiplication without thinking.** \`n << 1\` means n * 2, but that is simple only for positive numbers. On negative numbers, a right shift can behave differently, because the sign bit gets filled in. And a large shift like \`n << 100\` makes the number huge. Before using a shift, think about whether the number is positive or negative.
+
+**Mistake 4: using the XOR swap everywhere.** Swapping with XOR looks cool, but if you swap a variable with itself (\`a ^ a\`), the answer becomes 0 and the data is lost. In real code, use the simple swap \`a, b = b, a\` — it is readable and it does not make mistakes. The XOR swap is for showing in an interview, not for production code.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Zero, Negative Numbers aur Sab Bits 1',
+          '5. Edge Cases: Zero, Negative Numbers, and All Bits Set to 1'
+        ),
+        body: t(
+          `Bit manipulation ke edge cases ko yaad rakho. **Zero:** 0 power of two nahi hai, isliye formula mein \`n > 0\` zaroori hai. Bina iske, \`0 & (0 - 1)\` = 0 aayega aur 0 galat tareeke se power of two lagne lagega. **Ek:** 1 power of two hai (2 ki power 0), aur \`1 & 0\` = 0 hota hai, isliye formula sahi answer deta hai.
+
+**Negative numbers:** -8 ka binary two's complement mein hota hai aur usmein bahut saare 1 bits hote hain. \`count_bits\` wala loop \`while n > 0\` negative number par ek bhi baar nahi chalega aur 0 return karega — yeh galat hai. Negative numbers ke liye pehle socho ki aapko kya chahiye: Python mein \`bin(-8)\` = '-0b1000' hota hai, isliye bits ginne se pehle number ko positive banao ya mask use karo.
+
+**Sab bits 1:** 7 hai 0111, 15 hai 1111 — inmein set bits ginna matlab har bit ko check karna. 15 ke 4 set bits hain. **Bade numbers:** Python mein integers ki koi fixed size nahi hoti, isliye \`1 << 100\` bhi chal jaata hai aur bahut bada number ban jaata hai. C ya Java mein aisa nahi hota — wahan bits fixed hote hain aur shift se bits bahar gir jaate hain. Interview mein yeh farak poochha jaata hai, isliye yaad rakho ki Python ka behavior alag hai.`,
+          `Remember the edge cases of bit manipulation. **Zero:** 0 is not a power of two, so the \`n > 0\` part of the formula is essential. Without it, \`0 & (0 - 1)\` gives 0 and 0 would wrongly look like a power of two. **One:** 1 is a power of two (2 to the power 0), and \`1 & 0\` = 0, so the formula gives the right answer.
+
+**Negative numbers:** -8 in binary uses two's complement and has many bits set to 1. The \`count_bits\` loop with \`while n > 0\` will not run even once on a negative number and will return 0 — that is wrong. For negative numbers, first think about what you want: in Python, \`bin(-8)\` = '-0b1000', so make the number positive or use a mask before counting bits.
+
+**All bits set to 1:** 7 is 0111 and 15 is 1111 — counting set bits means checking every bit. 15 has 4 set bits. **Large numbers:** in Python, integers have no fixed size, so \`1 << 100\` also works and makes a very large number. In C or Java that is not the case — there the bits are fixed and a shift drops bits off the end. Interviewers ask about this difference, so remember that Python behaves differently.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Bit Tricks se Loop Hatana aur Permission Flags',
+          '6. What-If: Removing Loops with Bit Tricks, and Permission Flags'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: set bits ginne ke liye loop na use karein?** Python mein \`bin(29).count("1")\` ek line mein kaam kar deta hai, aur woh bhi O(1) jaisa hi hai. Par interview mein loop wala version poochha jaata hai, kyunki usse pata chalta hai ki aapko \`n & 1\` aur \`n >> 1\` samajh aata hai. Dono tareeke yaad rakho: shortcut real code ke liye, loop interview ke liye.
+
+**What if: kisi bit ko check, set ya clear karna ho?** Teen formulas yaad rakho. Bit ko check karo: \`(n >> i) & 1\` — number ko right shift karo aur pehla bit dekho. Bit ko set karo: \`n | (1 << i)\` — us position par 1 daal do. Bit ko clear karo: \`n & ~(1 << i)\` — us position par 0 daal do. Yeh formulas permissions, flags aur game boards mein har jagah use hote hain. Neeche wala practice code inhi ko chalata hai.
+
+**What if: do numbers ko bina temp ke swap karna ho?** XOR swap teen steps mein hota hai: \`a = a ^ b\`, \`b = a ^ b\`, \`a = a ^ b\`. Pehle step mein a mein dono ki jaankari aa jaati hai, doosre mein b ko original a mil jaata hai, teesre mein a ko original b mil jaata hai. Yeh kaam karta hai, par aaj ke code mein iski zaroorat nahi hai — Python mein \`a, b = b, a\` zyada saaf hai. Interviewer ko yeh dikhana hai ki aapko XOR ki property samajh aati hai, bas.`,
+          `Now let us ask "what-if" questions. **What if we count set bits without a loop?** In Python, \`bin(29).count("1")\` does the job in one line, and it is also close to O(1). But in interviews they ask for the loop version, because it shows that you understand \`n & 1\` and \`n >> 1\`. Remember both ways: the shortcut for real code, the loop for the interview.
+
+**What if you must check, set, or clear a bit?** Remember three formulas. Check a bit: \`(n >> i) & 1\` — shift the number right and look at the first bit. Set a bit: \`n | (1 << i)\` — put a 1 at that position. Clear a bit: \`n & ~(1 << i)\` — put a 0 at that position. These formulas are used everywhere in permissions, flags, and game boards. The practice code below runs exactly these.
+
+**What if you must swap two numbers without a temp variable?** The XOR swap takes three steps: \`a = a ^ b\`, \`b = a ^ b\`, \`a = a ^ b\`. In the first step, a holds the information of both numbers; in the second step, b gets the original a; in the third step, a gets the original b. It works, but in today's code there is no need for it — in Python, \`a, b = b, a\` is much clearer. It only shows the interviewer that you understand the property of XOR.`
+        ),
+        code: {
+          title: t(
+            'Bina Temp ke Swap: XOR ke Teen Steps',
+            'Swap Without a Temp: Three XOR Steps'
+          ),
+          language: 'python',
+          code: `a = 5
+b = 9
+print("Before:", a, b)
+a = a ^ b
+b = a ^ b
+a = a ^ b
+print("After:", a, b)`,
+          output: `Before: 5 9
+After: 9 5`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: XOR, Shifts aur Bit Formulas',
+          '7. Summary: XOR, Shifts, and Bit Formulas'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. **AND (&)** dono 1 hon toh 1, **OR (|)** koi ek 1 ho toh 1, **XOR (^)** bits alag hon toh 1, **NOT (~)** har bit ulta, **left shift (<<)** matlab * 2, **right shift (>>)** matlab / 2. XOR ki do khaas properties yaad rakho: \`a ^ a = 0\` aur \`a ^ 0 = a\` — inhi se single number problem O(n) time aur O(1) space mein solve hota hai.
+
+**Power of two** check karna hai toh formula hai \`n > 0 and (n & (n - 1)) == 0\`. **Set bits** ginne hain toh \`n & 1\` se pehla bit dekho aur \`n >> 1\` se aage badho. **Bit ko check** karna hai toh \`(n >> i) & 1\`, **set** karna hai toh \`n | (1 << i)\`, **clear** karna hai toh \`n & ~(1 << i)\`. Brackets hamesha lagao, ~ ka matlab yaad rakho (\`~n = -n - 1\`), aur zero aur negative numbers ko test karo.
+
+Bit manipulation interview mein isliye poochha jaata hai kyunki isse pata chalta hai ki aapko computer ke andar ka kaam samajh aata hai ya nahi. Yeh tricks har jagah kaam aate hain — permissions, flags, hashing, aur tez code mein. Agle article mein hum maths dekhenge — GCD, sieve, aur fast power.`,
+          `Let us tie the whole article together. **AND (&)** gives 1 only if both bits are 1, **OR (|)** gives 1 if any bit is 1, **XOR (^)** gives 1 if the bits are different, **NOT (~)** flips every bit, **left shift (<<)** means * 2, and **right shift (>>)** means / 2. Remember the two special properties of XOR: \`a ^ a = 0\` and \`a ^ 0 = a\` — these are what solve the single number problem in O(n) time and O(1) space.
+
+To check a **power of two**, the formula is \`n > 0 and (n & (n - 1)) == 0\`. To count **set bits**, look at the first bit with \`n & 1\` and move ahead with \`n >> 1\`. To **check** a bit, use \`(n >> i) & 1\`; to **set** a bit, use \`n | (1 << i)\`; to **clear** a bit, use \`n & ~(1 << i)\`. Always use brackets, remember what ~ means (\`~n = -n - 1\`), and test zero and negative numbers.
+
+Bit manipulation is asked in interviews because it shows whether you understand how a computer works inside. These tricks are useful everywhere — in permissions, flags, hashing, and fast code. In the next article we will look at maths — GCD, sieve, and fast power.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Bit Operators: 5 aur 3 par Kya Hota Hai',
+        'Bit Operators: What Happens with 5 and 3'
+      ),
+      caption: t(
+        '5 hai 0101 aur 3 hai 0011 — har operator bit-by-bit kaam karta hai',
+        '5 is 0101 and 3 is 0011 — every operator works bit by bit'
+      ),
+      nodes: [],
+      headers: [
+        t('Operator', 'Operator'),
+        t('Example', 'Example'),
+        t('Answer', 'Answer')
+      ],
+      rows: [
+        [t('AND (&)', 'AND (&)'), t('5 & 3', '5 & 3'), t('1 (0001)', '1 (0001)')],
+        [t('OR (|)', 'OR (|)'), t('5 | 3', '5 | 3'), t('7 (0111)', '7 (0111)')],
+        [t('XOR (^)', 'XOR (^)'), t('5 ^ 3', '5 ^ 3'), t('6 (0110)', '6 (0110)')],
+        [t('Left shift (<<)', 'Left shift (<<)'), t('5 << 1', '5 << 1'), t('10 (1010)', '10 (1010)')],
+        [t('Right shift (>>)', 'Right shift (>>'), t('5 >> 1', '5 >> 1'), t('2 (0010)', '2 (0010)')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Set Bits Ginna: 29 mein Kitne 1 Hain',
+          'Counting Set Bits: How Many 1s Are in 29'
+        ),
+        language: 'python',
+        code: `def count_bits(n):
+    count = 0
+    while n > 0:
+        count += n & 1
+        n = n >> 1
+    return count
+
+print(count_bits(29))
+print(count_bits(7))
+print(count_bits(16))`,
+        output: `4
+3
+1`
+      },
+      {
+        title: t(
+          'XOR se Message ko Encode aur Decode Karna',
+          'Encoding and Decoding a Message with XOR'
+        ),
+        language: 'python',
+        code: `key = 42
+message = 100
+encoded = message ^ key
+decoded = encoded ^ key
+print("Original:", message)
+print("Encoded:", encoded)
+print("Decoded:", decoded)`,
+        output: `Original: 100
+Encoded: 78
+Decoded: 100`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '5 ^ 3 ka answer kya hai? (5 hai 0101, 3 hai 0011)',
+          'What is the answer of 5 ^ 3? (5 is 0101, 3 is 0011)'
+        ),
+        opts: [
+          t('1', '1'),
+          t('7', '7'),
+          t('6', '6'),
+          t('2', '2')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: XOR mein bits alag hon toh 1 milta hai — 0101 ^ 0011 = 0110 = 6.',
+          'Correct answer: in XOR, different bits give 1 — 0101 ^ 0011 = 0110 = 6.'
+        )
+      },
+      {
+        q: t(
+          'List [4, 1, 2, 1, 2] mein single number kaise dhoondhte hain?',
+          'How do you find the single number in the list [4, 1, 2, 1, 2]?'
+        ),
+        opts: [
+          t('Saare numbers ko add karke', 'By adding all the numbers'),
+          t('Saare numbers ka XOR karke', 'By XORing all the numbers'),
+          t('List ko sort karke', 'By sorting the list'),
+          t('Saare numbers ko multiply karke', 'By multiplying all the numbers')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: a ^ a = 0 hota hai, isliye do baar aane wale numbers cancel ho jaate hain aur sirf ek baar aane wala number bachta hai.',
+          'Correct answer: a ^ a = 0, so numbers that appear twice cancel out and only the number that appears once is left.'
+        )
+      },
+      {
+        q: t(
+          'Kaunsa number power of two hai?',
+          'Which number is a power of two?'
+        ),
+        opts: [
+          t('7', '7'),
+          t('12', '12'),
+          t('16', '16'),
+          t('18', '18')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 16 hai 10000, usmein sirf ek bit 1 hai, aur (16 & 15) == 0 hota hai — 7, 12 aur 18 mein ek se zyada bits 1 hain.',
+          'Correct answer: 16 is 10000, it has only one bit set to 1, and (16 & 15) == 0 — 7, 12, and 18 have more than one bit set to 1.'
+        )
+      },
+      {
+        q: t(
+          'Python mein ~5 ka answer kya hai?',
+          'What is the answer of ~5 in Python?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('-6', '-6'),
+          t('5', '5'),
+          t('0', '0')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ~n = -n - 1 hota hai, isliye ~5 = -6 hota hai — ~ sirf bits ko ulta nahi karta, sign bit bhi ulta ho jaata hai.',
+          'Correct answer: ~n = -n - 1, so ~5 = -6 — ~ does not only flip the bits, the sign bit flips too.'
+        )
+      },
+      {
+        q: t(
+          'n = 10 (1010) mein bit 0 ko set karne ka sahi tareeka kya hai?',
+          'What is the correct way to set bit 0 in n = 10 (1010)?'
+        ),
+        opts: [
+          t('n & (1 << 0)', 'n & (1 << 0)'),
+          t('n | (1 << 0)', 'n | (1 << 0)'),
+          t('n ^ (1 << 0)', 'n ^ (1 << 0)'),
+          t('n >> 0', 'n >> 0')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bit set karne ke liye OR use hota hai — n | (1 << 0) = 1011 = 11, jabki AND bit ko check karta hai aur XOR bit ko toggle karta hai.',
+          'Correct answer: to set a bit you use OR — n | (1 << 0) = 1011 = 11, while AND checks a bit and XOR toggles a bit.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'XOR: a ^ a = 0 aur a ^ 0 = a — do baar aane wale numbers cancel ho jaate hain.',
+        'XOR: a ^ a = 0 and a ^ 0 = a — numbers that appear twice cancel out.'
+      ),
+      t(
+        'Power of two check: n > 0 and (n & (n - 1)) == 0.',
+        'Power of two check: n > 0 and (n & (n - 1)) == 0.'
+      ),
+      t(
+        'Left shift matlab * 2, right shift matlab / 2.',
+        'Left shift means * 2, right shift means / 2.'
+      ),
+      t(
+        'Bit check: (n >> i) & 1, set: n | (1 << i), clear: n & ~(1 << i).',
+        'Check a bit: (n >> i) & 1, set: n | (1 << i), clear: n & ~(1 << i).'
+      ),
+      t(
+        '~n = -n - 1 hota hai, aur bit operators par hamesha brackets lagao.',
+        '~n = -n - 1, and always use brackets around bit operators.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Bit ko Get, Set aur Clear Karo',
+        'Practice: Get, Set, and Clear a Bit'
+      ),
+      task: t(
+        'Neeche diya gaya code n = 10 (1010) par bit operations chalata hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir n ki value badal kar 12 karo aur khud calculate karo ki bit 2 aur bit 3 kya honge.',
+        'The code below runs bit operations on n = 10 (1010). Run it and verify the output matches the expected output. Then change n to 12 and work out yourself what bit 2 and bit 3 will be.'
+      ),
+      language: 'python',
+      starter: `n = 10
+print("n =", n, "binary:", bin(n))
+print("Bit 1:", (n >> 1) & 1)
+print("Bit 3:", (n >> 3) & 1)
+set_bit = n | (1 << 0)
+print("Set bit 0:", set_bit, bin(set_bit))
+clear_bit = n & ~(1 << 3)
+print("Clear bit 3:", clear_bit, bin(clear_bit))`,
+      expected: `n = 10 binary: 0b1010
+Bit 1: 1
+Bit 3: 1
+Set bit 0: 11 0b1011
+Clear bit 3: 2 0b10`
+    },
+    readMinutes: 12
+  };
+
+const dsaMath: Article = {
+    id: 'dsa-math',
+    subjectId: 'dsa',
+    title: t(
+      'Math for DSA — GCD, Sieve, Primes aur Fast Power',
+      'Maths for DSA — GCD, Sieve, Primes, and Fast Power'
+    ),
+    summary: t(
+      'DSA ke liye zaroori maths ko zero se samjho: Euclid ka algorithm se GCD aur LCM, sieve of Eratosthenes se 30 tak ke primes, prime check karne ka tez tareeka, modular arithmetic, binary exponentiation se fast power, aur factorials aur combinations ka idea.',
+      'Learn the maths you need for DSA from scratch: GCD and LCM with Euclid algorithm, primes up to 30 with the sieve of Eratosthenes, a fast way to check primes, modular arithmetic, fast power with binary exponentiation, and the idea of factorials and combinations.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Math for DSA Kya Hai? (GCD, Prime, Mod aur Power)',
+          '1. What Is Maths for DSA? (GCD, Prime, Mod, and Power)'
+        ),
+        body: t(
+          `DSA mein maths sirf formula yaad karne ka naam nahi hai — yeh woh tools hain jo har doosre problem mein kaam aate hain. **GCD** matlab greatest common divisor: do numbers ka sabse bada common factor. **LCM** matlab least common multiple: do numbers ka sabse chhota common multiple. **Prime** matlab woh number jo sirf 1 aur khud se divide hota hai. **Modular arithmetic** matlab bade numbers ko ek limit ke andar rakhna. **Fast power** matlab badi power ko tez tareeke se nikaalna.
+
+Yeh sab ek doosre se jude hain. GCD nikaalna aata hai toh LCM bhi nikaal sakte ho, kyunki \`LCM(a, b) = a * b / GCD(a, b)\`. Prime check karna aata hai toh sieve samajh aayega, kyunki sieve bhi yahi karta hai — jo numbers prime nahi hain, unko kaat deta hai. Modular arithmetic samajh aata hai toh fast power samajh aayega, kyunki fast power mein har step par mod lagta hai.
+
+Interview mein maths ke sawaal aksar seedhe nahi aate — woh kisi aur problem ke andar chhup kar aate hain. Counting problems mein combinations chahiye, hashing mein mod chahiye, aur number theory mein GCD chahiye. Isliye yeh article maths ko alag se nahi, DSA ke tool ki tarah padhata hai: har concept ke saath ek problem aur ek code.`,
+          `In DSA, maths is not about memorising formulas — it is the set of tools that appears in every second problem. **GCD** means greatest common divisor: the largest common factor of two numbers. **LCM** means least common multiple: the smallest common multiple of two numbers. **Prime** means a number that is divisible only by 1 and itself. **Modular arithmetic** means keeping large numbers inside a limit. **Fast power** means computing a large power quickly.
+
+All of these are connected. If you can find the GCD, you can also find the LCM, because \`LCM(a, b) = a * b / GCD(a, b)\`. If you can check primes, you will understand the sieve, because the sieve does the same thing — it crosses out the numbers that are not prime. If you understand modular arithmetic, you will understand fast power, because fast power applies mod at every step.
+
+In interviews, maths questions rarely come directly — they hide inside another problem. Counting problems need combinations, hashing needs mod, and number theory needs GCD. So this article does not teach maths separately, but as a DSA tool: every concept comes with a problem and a code example.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Tiles, Time aur Bade Numbers',
+          '2. Real-Life Examples: Tiles, Time, and Large Numbers'
+        ),
+        body: t(
+          `Maths ke real-life examples bahut seedhe hain. **Tiles:** aapke paas 48 cm x 18 cm ka floor hai aur aapko sabse bade square tiles lagane hain, bina kaate. Tile ka size GCD(48, 18) = 6 cm hoga — kyunki 6 sabse bada number hai jo 48 aur 18 dono ko divide karta hai. Yahi GCD ka matlab hai: sabse bada common hissa.
+
+**Time:** do buses hain — ek har 4 minute mein aati hai, doosri har 6 minute mein. Dono ek saath kab aayengi? LCM(4, 6) = 12 minute baad. Yahi LCM ka matlab hai: pehla common time. **Clock:** ghadi mein 12 ke baad 1 aata hai, 13 nahi — yahi modular arithmetic hai. 15 baj gaye matlab 15 % 12 = 3 baje. Computer mein bhi yahi hota hai: jab number bahut bada ho jaaye, toh usko mod se chhota kar lete hain.
+
+**Bade numbers:** 2 ki power 100 kitni badi hoti hai? Itni badi ki usko likhna bhi mushkil hai. Par agar aapko sirf uske aakhri 3 digits chahiye, toh har multiply ke baad % 1000 laga do — number kabhi bada nahi hoga. Yahi modular arithmetic aur fast power ka real use hai: bade calculations ko chhota rakhna, bina answer badle.`,
+          `The real-life examples of maths are very simple. **Tiles:** you have a floor of 48 cm x 18 cm and you must lay the largest square tiles on it, without cutting any. The tile size will be GCD(48, 18) = 6 cm — because 6 is the largest number that divides both 48 and 18. That is the meaning of GCD: the largest common part.
+
+**Time:** there are two buses — one comes every 4 minutes, the other every 6 minutes. When will both come together? LCM(4, 6) = 12 minutes later. That is the meaning of LCM: the first common time. **Clock:** on a clock, after 12 comes 1, not 13 — that is modular arithmetic. 15 o'clock means 15 % 12 = 3 o'clock. The same thing happens in a computer: when a number becomes too large, we make it small again with mod.
+
+**Large numbers:** how large is 2 to the power 100? So large that it is hard even to write it. But if you only need its last 3 digits, apply % 1000 after every multiply — the number will never grow large. That is the real use of modular arithmetic and fast power: keeping large calculations small, without changing the answer.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Sieve se 30 Tak ke Primes ka Dry Run',
+          '3. Step-by-Step: A Sieve Dry Run for Primes up to 30'
+        ),
+        body: t(
+          `Ab sieve of Eratosthenes ko haath se chalate hain. Target hai 30 tak ke primes dhoondhna. Pehle 2 se 30 tak ke saare numbers likho aur maan lo ki sab prime hain. Ab 2 se shuru karo: 2 prime hai, isliye 2 ke multiples ko kaat do — 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30. Yeh sab 2 se divide hote hain, isliye prime nahi hain.
+
+Ab agla bacha hua number hai 3: 3 prime hai, isliye 3 ke multiples ko kaat do — 9, 15, 21, 27. (6, 12, 18 pehle se kate hue hain.) Ab agla bacha hua number hai 5: 5 prime hai, isliye 5 ke multiples ko kaat do — 25. (10, 15, 20, 30 pehle se kate hue hain.) Ab 7 par aao: 7 * 7 = 49, jo 30 se bada hai, isliye ruk jao. Yahi sieve ka rule hai: sirf \`p * p <= limit\` tak kaam karo.
+
+Bache hue numbers hain: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29. Yahi 30 tak ke primes hain — kul 10 primes. Har number ko alag se check karne mein O(n * sqrt(n)) time lagta, par sieve poora kaam O(n log log n) mein kar deta hai. Neeche wala code yahi sieve chalata hai — isko run karo aur output dekho.`,
+          `Now let us run the sieve of Eratosthenes by hand. The target is to find the primes up to 30. First write all the numbers from 2 to 30 and assume all of them are prime. Now start with 2: 2 is prime, so cross out the multiples of 2 — 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30. All of these divide by 2, so they are not prime.
+
+Now the next number left is 3: 3 is prime, so cross out the multiples of 3 — 9, 15, 21, 27. (6, 12, and 18 are already crossed out.) Now the next number left is 5: 5 is prime, so cross out the multiples of 5 — 25. (10, 15, 20, and 30 are already crossed out.) Now come to 7: 7 * 7 = 49, which is larger than 30, so stop. That is the rule of the sieve: work only while \`p * p <= limit\`.
+
+The numbers left are: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29. These are the primes up to 30 — 10 primes in total. Checking every number separately would take O(n * sqrt(n)) time, but the sieve does the whole job in O(n log log n). The code below runs this same sieve — run it and look at the output.`
+        ),
+        code: {
+          title: t(
+            'Sieve of Eratosthenes: 30 Tak ke Primes',
+            'Sieve of Eratosthenes: Primes up to 30'
+          ),
+          language: 'python',
+          code: `def sieve(limit):
+    is_prime = [True] * (limit + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    p = 2
+    while p * p <= limit:
+        if is_prime[p]:
+            for multiple in range(p * p, limit + 1, p):
+                is_prime[multiple] = False
+        p += 1
+    primes = []
+    for i in range(limit + 1):
+        if is_prime[i]:
+            primes.append(i)
+    return primes
+
+print(sieve(30))`,
+          output: `[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: GCD mein Loop, Prime mein sqrt aur Mod mein Negative',
+          '4. Common Mistakes: Loops in GCD, sqrt in Prime Checks, and Negatives in Mod'
+        ),
+        body: t(
+          `Maths mein sabse badi galtiyan teen jagah hoti hain. **Galti 1: GCD ke liye 1 se n tak loop chalana.** Beginners GCD nikaalne ke liye 1 se lekar chhote number tak har number ko check karte hain — yeh O(n) time leta hai. Euclid ka algorithm yahi kaam O(log n) mein karta hai: \`gcd(a, b) = gcd(b, a % b)\`, jab tak b zero na ho jaaye. 48 aur 18 ka GCD dekho: gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6. Sirf 3 steps.
+
+**Galti 2: prime check mein n tak loop chalana.** 29 ko prime check karne ke liye 2 se 28 tak divide karne ki zaroorat nahi hai. Agar n ka koi factor hai, toh woh \`sqrt(n)\` se chhota ya barabar zaroor hoga. Isliye sirf \`i * i <= n\` tak check karo. 29 ke liye sirf 2, 3, 4, 5 tak check karna kaafi hai. Yeh ek line interviewer ko dikhati hai ki aapko maths samajh aata hai.
+
+**Galti 3: mod mein negative numbers.** Python mein \`-7 % 3\` = 2 hota hai, -1 nahi — kyunki Python ka mod hamesha positive answer deta hai. C ya Java mein aisa nahi hota. Isliye jab aap subtraction ke baad mod lagate ho, toh Python mein answer sahi aata hai, par doosri language mein galat aa sakta hai. **Galti 4: LCM mein overflow.** \`a * b\` pehle calculate karoge toh number bahut bada ho sakta hai. Pehle divide karo, phir multiply: \`a // gcd(a, b) * b\`. Yeh chhoti si ordering bug se bachati hai.`,
+          `The biggest maths mistakes happen in three places. **Mistake 1: running a loop from 1 to n for GCD.** Beginners check every number from 1 to the smaller number to find the GCD — that takes O(n) time. Euclid's algorithm does the same job in O(log n): \`gcd(a, b) = gcd(b, a % b)\`, until b becomes zero. Look at the GCD of 48 and 18: gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6. Only 3 steps.
+
+**Mistake 2: looping up to n in a prime check.** To check whether 29 is prime, there is no need to divide by every number from 2 to 28. If n has a factor, it must be smaller than or equal to \`sqrt(n)\`. So check only while \`i * i <= n\`. For 29, checking only 2, 3, 4, and 5 is enough. This one line shows the interviewer that you understand maths.
+
+**Mistake 3: negative numbers in mod.** In Python, \`-7 % 3\` = 2, not -1 — because Python's mod always gives a positive answer. In C or Java that is not the case. So when you apply mod after a subtraction, the answer is correct in Python, but it can be wrong in another language. **Mistake 4: overflow in LCM.** If you calculate \`a * b\` first, the number can become very large. Divide first, then multiply: \`a // gcd(a, b) * b\`. This small ordering saves you from a bug.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Zero, One, Bade Primes aur Mod 1',
+          '5. Edge Cases: Zero, One, Large Primes, and Mod 1'
+        ),
+        body: t(
+          `Maths ke edge cases yaad rakho. **Zero:** gcd(0, 5) = 5 hota hai, kyunki 0 ka har number se GCD wahi number hota hai. gcd(0, 0) ka koi matlab nahi hota — isko interview mein poochha jaata hai, isliye iska answer yaad rakho. **One:** 1 prime nahi hai aur composite bhi nahi hai — yeh sabse common interview trap hai. 1 ko prime bolna galat hai.
+
+**Do:** 2 sabse chhota prime hai aur ekmatra even prime hai. Prime check wale code mein 2 ko alag se handle karna zaroori nahi hai, par yeh baat interview mein bolni chahiye. **Bade primes:** 10^9 + 7 ek prime hai aur interview mein mod ke liye sabse zyada use hota hai. Jab bhi answer bada ho, toh usko 10^9 + 7 se mod karke do — yeh convention hai.
+
+**Mod 1:** kisi bhi number ka mod 1 hamesha 0 hota hai. **Factorial zero:** 0! = 1 hota hai, 0 nahi — yeh bhi common trap hai. **Combinations:** nCr mein r > n ho toh answer 0 hota hai, kyunki n cheezon mein se r cheezein chunna possible hi nahi hai. Yeh edge cases chhote lagte hain, par inhi par code fail hota hai.`,
+          `Remember the edge cases of maths. **Zero:** gcd(0, 5) = 5, because the GCD of 0 and any number is that number. gcd(0, 0) has no meaning — interviewers ask this, so remember its answer. **One:** 1 is not prime and not composite either — this is the most common interview trap. Calling 1 prime is wrong.
+
+**Two:** 2 is the smallest prime and the only even prime. Prime-check code does not need to handle 2 separately, but this fact is worth saying in an interview. **Large primes:** 10^9 + 7 is a prime and is the most used mod in interviews. Whenever an answer is large, give it mod 10^9 + 7 — that is the convention.
+
+**Mod 1:** the mod 1 of any number is always 0. **Factorial of zero:** 0! = 1, not 0 — this is also a common trap. **Combinations:** in nCr, if r > n the answer is 0, because choosing r things from n things is not possible at all. These edge cases look small, but code fails on exactly these.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Fast Power, Modular Arithmetic aur Combinations',
+          '6. What-If: Fast Power, Modular Arithmetic, and Combinations'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: 2 ki power 10 ko loop se nikaalein?** Loop mein 10 baar multiply karna padega — O(n) time. Fast power (binary exponentiation) mein sirf 4 steps lagte hain: 2^10 = (2^5)^2, aur 2^5 = 2 * (2^2)^2. Har step mein power aadhi ho jaati hai, isliye total time O(log n) hota hai. Idea simple hai: agar power even hai toh base ko square karo aur power ko aadha karo; agar power odd hai toh answer mein ek base multiply karo.
+
+**What if: power ke saath mod bhi chahiye?** Har multiply ke baad % mod laga do — answer wahi rahega, par number kabhi bada nahi hoga. Python mein \`pow(2, 10, 1000)\` yahi karta hai aur 24 deta hai. Interview mein poochha jaata hai ki \`pow(base, exp, mod)\` kaise kaam karta hai — answer hai binary exponentiation with mod at every step. Neeche wala code fast power ko dikhata hai.
+
+**What if: combinations ginne hon?** 5 logo mein se 2 ko chunne ke kitne tareeke hain? 5C2 = 5! / (2! * 3!) = 10. Factorial se combinations nikalte hain, aur combinations se counting problems solve hote hain. Factorial bahut tez badhta hai — 20! bhi 64-bit integer mein nahi aata — isliye counting problems mein bhi mod use hota hai. Combinations ka formula yaad rakho, uska proof nahi poochha jaata, uska use poochha jaata hai.`,
+          `Now let us ask "what-if" questions. **What if we compute 2 to the power 10 with a loop?** A loop must multiply 10 times — O(n) time. Fast power (binary exponentiation) takes only 4 steps: 2^10 = (2^5)^2, and 2^5 = 2 * (2^2)^2. At every step the power becomes half, so the total time is O(log n). The idea is simple: if the power is even, square the base and halve the power; if the power is odd, multiply one base into the answer.
+
+**What if mod is also needed with the power?** Apply % mod after every multiply — the answer stays the same, but the number never grows large. In Python, \`pow(2, 10, 1000)\` does exactly this and gives 24. In interviews they ask how \`pow(base, exp, mod)\` works — the answer is binary exponentiation with mod at every step. The code below shows fast power.
+
+**What if you must count combinations?** In how many ways can you choose 2 people out of 5? 5C2 = 5! / (2! * 3!) = 10. Combinations come from factorials, and counting problems are solved with combinations. Factorials grow very fast — even 20! does not fit in a 64-bit integer — so counting problems also use mod. Remember the formula for combinations; its proof is not asked, its use is asked.`
+        ),
+        code: {
+          title: t(
+            'Fast Power: Binary Exponentiation se 2^10',
+            'Fast Power: 2^10 with Binary Exponentiation'
+          ),
+          language: 'python',
+          code: `def fast_power(base, exp):
+    result = 1
+    while exp > 0:
+        if exp % 2 == 1:
+            result = result * base
+        base = base * base
+        exp = exp // 2
+    return result
+
+print(fast_power(2, 10))
+print(fast_power(3, 5))
+print(pow(2, 10, 1000))`,
+          output: `1024
+243
+24`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: GCD, Sieve, Mod aur Fast Power',
+          '7. Summary: GCD, Sieve, Mod, and Fast Power'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. **GCD** Euclid ke algorithm se nikaalo: \`gcd(a, b) = gcd(b, a % b)\`, O(log n) time. **LCM** = \`a * b / GCD(a, b)\`, aur pehle divide karo, phir multiply karo. **Prime check** sirf \`sqrt(n)\` tak karo — agar koi factor nahi mila toh number prime hai. **Sieve** se ek saath saare primes nikaalo: 2 ke multiples kaato, phir 3 ke, phir 5 ke, jab tak \`p * p <= limit\` ho.
+
+**Modular arithmetic** ka matlab hai bade numbers ko mod se chhota rakhna: \`(a + b) % m\`, \`(a * b) % m\` — har step par mod lagao. **Fast power** binary exponentiation se karo: power even ho toh base square karo, odd ho toh answer mein multiply karo — O(log n) time. **Factorial** se combinations nikalte hain: nCr = n! / (r! * (n - r)!), aur 0! = 1 hota hai.
+
+Yeh maths tools har DSA topic mein kaam aate hain — hashing mein mod, counting mein combinations, aur number theory mein GCD. Inko ek baar code karke dekh lo, toh yeh aapke haath mein aa jaayenge. Agle article mein hum complexity ko gehrai se dekhenge — Big-O, Big-Theta, aur amortized analysis.`,
+          `Let us tie the whole article together. Find the **GCD** with Euclid's algorithm: \`gcd(a, b) = gcd(b, a % b)\`, in O(log n) time. **LCM** = \`a * b / GCD(a, b)\`, and divide first, then multiply. Check a **prime** only up to \`sqrt(n)\` — if no factor is found, the number is prime. Use the **sieve** to find all primes at once: cross out multiples of 2, then of 3, then of 5, while \`p * p <= limit\`.
+
+**Modular arithmetic** means keeping large numbers small with mod: \`(a + b) % m\`, \`(a * b) % m\` — apply mod at every step. Do **fast power** with binary exponentiation: if the power is even, square the base; if it is odd, multiply it into the answer — O(log n) time. **Factorials** give combinations: nCr = n! / (r! * (n - r)!), and 0! = 1.
+
+These maths tools are useful in every DSA topic — mod in hashing, combinations in counting, and GCD in number theory. Code each of them once, and they will be in your hands. In the next article we will look at complexity in depth — Big-O, Big-Theta, and amortized analysis.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Euclid ka Algorithm: GCD(48, 18) = 6',
+        'Euclid Algorithm: GCD(48, 18) = 6'
+      ),
+      caption: t(
+        'Har step mein bada number chhota ho jaata hai, jab tak ek number zero na ho jaaye',
+        'At every step the larger number becomes smaller, until one number is zero'
+      ),
+      nodes: [
+        {
+          t: t('gcd(48, 18)', 'gcd(48, 18)'),
+          s: t('48 % 18 = 12, isliye gcd(18, 12) banta hai', '48 % 18 = 12, so it becomes gcd(18, 12)')
+        },
+        {
+          t: t('gcd(18, 12)', 'gcd(18, 12)'),
+          s: t('18 % 12 = 6, isliye gcd(12, 6) banta hai', '18 % 12 = 6, so it becomes gcd(12, 6)')
+        },
+        {
+          t: t('gcd(12, 6)', 'gcd(12, 6)'),
+          s: t('12 % 6 = 0, isliye gcd(6, 0) banta hai', '12 % 6 = 0, so it becomes gcd(6, 0)')
+        },
+        {
+          t: t('gcd(6, 0) = 6', 'gcd(6, 0) = 6'),
+          s: t('Doosra number zero ho gaya, answer pehla number hai', 'The second number is zero, the answer is the first number')
+        },
+        {
+          t: t('LCM = 48 * 18 / 6 = 144', 'LCM = 48 * 18 / 6 = 144'),
+          s: t('GCD mil gaya toh LCM ek line mein mil jaata hai', 'Once you have the GCD, the LCM comes in one line')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'GCD aur LCM: Euclid ka Algorithm',
+          'GCD and LCM: Euclid Algorithm'
+        ),
+        language: 'python',
+        code: `def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return a * b // gcd(a, b)
+
+print(gcd(48, 18))
+print(lcm(48, 18))
+print(gcd(17, 5))
+print(lcm(4, 6))`,
+        output: `6
+144
+1
+12`
+      },
+      {
+        title: t(
+          'Combinations: 5 Logo mein se 2 Chunna',
+          'Combinations: Choosing 2 out of 5 People'
+        ),
+        language: 'python',
+        code: `def factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+def combinations(n, r):
+    return factorial(n) // (factorial(r) * factorial(n - r))
+
+print(combinations(5, 2))
+print(combinations(5, 0))
+print(combinations(10, 3))`,
+        output: `10
+1
+120`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'GCD(48, 18) ka answer kya hai?',
+          'What is the answer of GCD(48, 18)?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('6', '6'),
+          t('9', '9'),
+          t('12', '12')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Euclid ke algorithm se gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = 6 hota hai.',
+          'Correct answer: by Euclid algorithm, gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = 6.'
+        )
+      },
+      {
+        q: t(
+          '30 tak ke primes mein sabse bada prime kaunsa hai?',
+          'What is the largest prime up to 30?'
+        ),
+        opts: [
+          t('27', '27'),
+          t('29', '29'),
+          t('25', '25'),
+          t('23', '23')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 29 prime hai, jabki 27 = 3 x 9 hai aur 25 = 5 x 5 hai — dono prime nahi hain.',
+          'Correct answer: 29 is prime, while 27 = 3 x 9 and 25 = 5 x 5 — neither is prime.'
+        )
+      },
+      {
+        q: t(
+          'Prime check karne ke liye kitni door tak check karna kaafi hai?',
+          'How far is it enough to check when testing for primes?'
+        ),
+        opts: [
+          t('n tak', 'Up to n'),
+          t('n / 2 tak', 'Up to n / 2'),
+          t('sqrt(n) tak', 'Up to sqrt(n)'),
+          t('Sirf 2 tak', 'Only up to 2')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: agar n ka koi factor hai toh woh sqrt(n) se chhota ya barabar zaroor hoga, isliye sqrt(n) tak check karna kaafi hai.',
+          'Correct answer: if n has a factor, it must be smaller than or equal to sqrt(n), so checking up to sqrt(n) is enough.'
+        )
+      },
+      {
+        q: t(
+          '2^10 ka answer fast power se kitne steps mein milta hai?',
+          'In how many steps does fast power give the answer of 2^10?'
+        ),
+        opts: [
+          t('10 steps mein', 'In 10 steps'),
+          t('O(log n) steps mein', 'In O(log n) steps'),
+          t('O(n^2) steps mein', 'In O(n^2) steps'),
+          t('1 step mein', 'In 1 step')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fast power mein har step mein power aadhi ho jaati hai, isliye total time O(log n) hota hai, O(n) nahi.',
+          'Correct answer: in fast power the power becomes half at every step, so the total time is O(log n), not O(n).'
+        )
+      },
+      {
+        q: t(
+          '5C2 ka answer kya hai?',
+          'What is the answer of 5C2?'
+        ),
+        opts: [
+          t('5', '5'),
+          t('20', '20'),
+          t('10', '10'),
+          t('25', '25')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 5C2 = 5! / (2! * 3!) = 120 / (2 * 6) = 10 hota hai.',
+          'Correct answer: 5C2 = 5! / (2! * 3!) = 120 / (2 * 6) = 10.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'GCD Euclid se nikaalo: gcd(a, b) = gcd(b, a % b), O(log n) time.',
+        'Find GCD with Euclid: gcd(a, b) = gcd(b, a % b), O(log n) time.'
+      ),
+      t(
+        'LCM = a * b / GCD(a, b); pehle divide karo, phir multiply karo.',
+        'LCM = a * b / GCD(a, b); divide first, then multiply.'
+      ),
+      t(
+        'Prime check sirf sqrt(n) tak karo; sieve se ek saath saare primes nikaalo.',
+        'Check a prime only up to sqrt(n); use the sieve to find all primes at once.'
+      ),
+      t(
+        'Har step par mod lagao, taaki bade numbers kabhi bade na hon.',
+        'Apply mod at every step, so large numbers never grow large.'
+      ),
+      t(
+        'Fast power O(log n) mein chalta hai; 0! = 1 aur 1 prime nahi hai.',
+        'Fast power runs in O(log n); 0! = 1 and 1 is not prime.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Prime Check aur Factorial',
+        'Practice: Prime Check and Factorial'
+      ),
+      task: t(
+        'Neeche diya gaya code 29 aur 27 ko prime check karta hai aur 5! aur 0! nikaalta hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir is_prime(31) aur factorial(6) ko add karo aur khud answer calculate karo.',
+        'The code below checks whether 29 and 27 are prime and computes 5! and 0!. Run it and verify the output matches the expected output. Then add is_prime(31) and factorial(6) and work out the answers yourself.'
+      ),
+      language: 'python',
+      starter: `def is_prime(n):
+    if n < 2:
+        return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
+def factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+print(is_prime(29))
+print(is_prime(27))
+print(factorial(5))
+print(factorial(0))`,
+      expected: `True
+False
+120
+1`
+    },
+    readMinutes: 12
+  };
+
+const dsaComplexity: Article = {
+    id: 'dsa-complexity',
+    subjectId: 'dsa',
+    title: t(
+      'Complexity Deep — Big-O, Big-Theta, Big-Omega aur Amortized Analysis',
+      'Complexity Deep — Big-O, Big-Theta, Big-Omega, and Amortized Analysis'
+    ),
+    summary: t(
+      'Complexity ko gehrai se samjho: Big-O, Big-Theta aur Big-Omega mein kya farak hai, best case, average case aur worst case kaise nikaalte hain, dynamic array par amortized analysis kya hota hai, space complexity kaise dekhte hain, recursion trees kaise banate hain, aur log ke basic facts.',
+      'Understand complexity in depth: what is the difference between Big-O, Big-Theta, and Big-Omega, how to find the best, average, and worst case, what amortized analysis means for a dynamic array, how to look at space complexity, how to build recursion trees, and the basic facts about log.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Complexity Kya Hai? (Big-O, Big-Theta, Big-Omega)',
+          '1. What Is Complexity? (Big-O, Big-Theta, Big-Omega)'
+        ),
+        body: t(
+          `Complexity ka matlab hai: input badhne par aapke algorithm ka time aur space kaise badhta hai. Teen notations hain, aur teeno ka matlab alag hai. **Big-O (O)** matlab upper bound — algorithm isse zyada slow nahi hoga. Linear search O(n) hai, matlab n items par n se zyada steps nahi lagenge. **Big-Omega (Ω)** matlab lower bound — algorithm isse zyada tez nahi hoga. Linear search Ω(1) hai, kyunki pehla element hi mil sakta hai. **Big-Theta (Θ)** matlab tight bound — upper aur lower dono same hain. Linear search ka average case Θ(n) hai.
+
+Interview mein sabse zyada Big-O poochha jaata hai, kyunki woh worst case batata hai — aur worst case hi woh hai jiske liye aapko taiyaar rehna hai. Par interviewer ko yeh sunna pasand hai ki aapko teeno ka farak pata hai. Ek example lo: binary search O(log n), Ω(1) aur Θ(log n) hai — worst case mein log n steps, best case mein 1 step, aur average mein bhi log n ke aas-paas.
+
+Complexity mein constants ko ignore karte hain. O(2n) ko O(n) likhte hain, O(n + 100) ko O(n) likhte hain. Kyun? Kyunki jab n bahut bada ho jaata hai, toh 2 ya 100 ka koi farak nahi padta — growth rate hi matter karta hai. Yahi wajah hai ki O(n log n) ko O(n^2) se behtar kehte hain, chahe n chhota ho toh farak na dikhe.`,
+          `Complexity means: how the time and space of your algorithm grow as the input grows. There are three notations, and each means something different. **Big-O (O)** means the upper bound — the algorithm will not be slower than this. Linear search is O(n), meaning on n items it will not take more than n steps. **Big-Omega (Ω)** means the lower bound — the algorithm will not be faster than this. Linear search is Ω(1), because the first element itself can be the answer. **Big-Theta (Θ)** means the tight bound — the upper and lower bounds are the same. The average case of linear search is Θ(n).
+
+In interviews, Big-O is asked the most, because it gives the worst case — and the worst case is what you must be ready for. But interviewers like hearing that you know the difference between all three. Take an example: binary search is O(log n), Ω(1), and Θ(log n) — log n steps in the worst case, 1 step in the best case, and around log n on average too.
+
+In complexity, constants are ignored. O(2n) is written as O(n), and O(n + 100) is written as O(n). Why? Because when n becomes very large, 2 or 100 makes no difference — only the growth rate matters. That is why O(n log n) is called better than O(n^2), even if the difference does not show when n is small.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Library, Lift aur Paani ki Tanki',
+          '2. Real-Life Examples: A Library, a Lift, and a Water Tank'
+        ),
+        body: t(
+          `Complexity ke real-life examples bahut seedhe hain. **Library:** kitaab dhoondhne ke do tareeke hain. Ek-ek shelf scan karna linear search hai — O(n). Catalogue mein dekh kar seedha sahi shelf par jaana binary search jaisa hai — O(log n). Library badi ho jaaye toh linear search bahut slow ho jaata hai, par catalogue wala tareeka ab bhi tez rehta hai. Yahi complexity ka farak hai.
+
+**Lift:** lift mein 10 log hain aur aapko 10th floor par jaana hai. Lift ek-ek floor rukti hai — yeh O(n) hai. Express lift seedha 10th floor par jaati hai — yeh O(1) jaisa hai. **Paani ki tanki:** tanki bharne mein time lagta hai, par jab tanki bhar jaaye toh usko bada karna padta hai. Dynamic array bhi aisa hi hai — jab array bhar jaaye toh usko double karna padta hai, aur us ek append mein O(n) time lagta hai. Par average mein har append O(1) hota hai — yahi amortized analysis hai.
+
+**Khana banana:** 1 aadmi ke liye khana banana aur 100 logo ke liye khana banana — time 100 guna nahi badhta, kyunki ek hi baar mein zyada khana ban sakta hai. Yahi scaling ka idea hai: input badhne par time kaise badhta hai, yahi complexity batati hai.`,
+          `The real-life examples of complexity are very simple. **Library:** there are two ways to find a book. Scanning shelf by shelf is linear search — O(n). Looking in the catalogue and going straight to the right shelf is like binary search — O(log n). When the library grows large, linear search becomes very slow, but the catalogue method stays fast. That is the difference complexity makes.
+
+**Lift:** there are 10 people in a lift and you must go to the 10th floor. The lift stops at every floor — that is O(n). An express lift goes straight to the 10th floor — that is like O(1). **Water tank:** filling a tank takes time, but when the tank is full it must be made bigger. A dynamic array is the same — when the array fills up it must be doubled, and that one append takes O(n) time. But on average every append is O(1) — that is amortized analysis.
+
+**Cooking food:** cooking for 1 person and cooking for 100 people — the time does not grow 100 times, because more food can be cooked in one go. That is the idea of scaling: how time grows as the input grows, and that is what complexity tells you.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Binary Search ke Steps Ginna (n = 1000)',
+          '3. Step-by-Step: Counting Binary Search Steps (n = 1000)'
+        ),
+        body: t(
+          `Ab complexity ko numbers se samajhte hain. List hai 1 se 1000 tak, aur target hai 73. Linear search mein worst case mein 1000 steps lagenge — 73 ko dhoondhne ke liye 73 steps, par 1000 ko dhoondhne ke liye 1000 steps. Binary search mein kitne steps lagenge? Dry run karte hain.
+
+Step 1: low = 0, high = 999, mid = 499, value = 500. 500 > 73, isliye high = 498. Step 2: mid = 249, value = 250. 250 > 73, isliye high = 248. Step 3: mid = 124, value = 125. 125 > 73, isliye high = 123. Step 4: mid = 61, value = 62. 62 < 73, isliye low = 62. Step 5: mid = 92, value = 93. 93 > 73, isliye high = 91. Step 6: mid = 76, value = 77. 77 > 73, isliye high = 75. Step 7: mid = 68, value = 69. 69 < 73, isliye low = 69. Step 8: mid = 72, value = 73. Mil gaya!
+
+Sirf 8 steps mein 1000 items mein se 73 mil gaya. Yahi log ka magic hai: log2(1000) lagbhag 10 hota hai, isliye binary search kabhi 10 se zyada steps nahi lega. Linear search ko 73 steps lagte, binary search ko 8 steps lage. Jab n 1 lakh ho jaaye, toh linear search ko 1 lakh steps lagenge, par binary search ko sirf 17 steps lagenge. Neeche wala code yahi gin-ti karta hai.`,
+          `Now let us understand complexity with numbers. The list is 1 to 1000, and the target is 73. In linear search, the worst case takes 1000 steps — 73 steps to find 73, but 1000 steps to find 1000. How many steps will binary search take? Let us do the dry run.
+
+Step 1: low = 0, high = 999, mid = 499, value = 500. 500 > 73, so high = 498. Step 2: mid = 249, value = 250. 250 > 73, so high = 248. Step 3: mid = 124, value = 125. 125 > 73, so high = 123. Step 4: mid = 61, value = 62. 62 < 73, so low = 62. Step 5: mid = 92, value = 93. 93 > 73, so high = 91. Step 6: mid = 76, value = 77. 77 > 73, so high = 75. Step 7: mid = 68, value = 69. 69 < 73, so low = 69. Step 8: mid = 72, value = 73. Found it!
+
+In only 8 steps, 73 was found among 1000 items. That is the magic of log: log2(1000) is about 10, so binary search will never take more than 10 steps. Linear search would take 73 steps, binary search took 8 steps. When n becomes 100,000, linear search will take 100,000 steps, but binary search will take only 17 steps. The code below does this same counting.`
+        ),
+        code: {
+          title: t(
+            'Binary Search ke Steps Ginna: n = 1000, Target = 73',
+            'Counting Binary Search Steps: n = 1000, Target = 73'
+          ),
+          language: 'python',
+          code: `def binary_search_steps(arr, target):
+    low = 0
+    high = len(arr) - 1
+    steps = 0
+    while low <= high:
+        steps += 1
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid, steps
+        if arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1, steps
+
+nums = list(range(1, 1001))
+index, steps = binary_search_steps(nums, 73)
+print("Found at index:", index)
+print("Steps taken:", steps)
+print("List size:", len(nums))`,
+          output: `Found at index: 72
+Steps taken: 8
+List size: 1000`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Worst Case Bhoolna, Constants aur Space Ignore Karna',
+          '4. Common Mistakes: Forgetting the Worst Case, Constants, and Ignoring Space'
+        ),
+        body: t(
+          `Complexity mein sabse badi galtiyan chaar hain. **Galti 1: average case ko worst case samajhna.** Quick sort average mein O(n log n) hota hai, par interviewer worst case poochhta hai — O(n^2). Agar aap sirf average case bolte ho toh answer adhoora hai. Hamesha teeno cases batao: best, average, worst.
+
+**Galti 2: constants ko matter karna.** O(2n) aur O(n) mein koi farak nahi hai — dono O(n) hain. Par O(n) aur O(n log n) mein farak hai, kyunki log n badhta hai. Constants ignore karo, growth rate dekho. **Galti 3: space complexity bhool jaana.** Log sirf time complexity poochhte hain, space bhool jaate hain. Merge sort O(n) space leta hai, quick sort O(log n) space leta hai — yeh farak interview mein poochha jaata hai. Recursion ka stack bhi space hai: binary search recursion mein O(log n) stack space lagta hai.
+
+**Galti 4: amortized ko average samajhna.** Amortized analysis average case nahi hai — yeh worst case operations ka average hai. Dynamic array mein ek append O(n) ho sakta hai, par n appends ka total O(n) hota hai, isliye har append amortized O(1) hota hai. Yeh guarantee hai, average nahi. Interviewer ko yeh farak sunna pasand hai.`,
+          `The biggest complexity mistakes are four. **Mistake 1: treating the average case as the worst case.** Quick sort is O(n log n) on average, but the interviewer asks for the worst case — O(n^2). If you only give the average case, the answer is incomplete. Always give all three cases: best, average, and worst.
+
+**Mistake 2: treating constants as important.** There is no difference between O(2n) and O(n) — both are O(n). But there is a difference between O(n) and O(n log n), because log n grows. Ignore constants, look at the growth rate. **Mistake 3: forgetting space complexity.** People ask only about time complexity and forget space. Merge sort takes O(n) space, quick sort takes O(log n) space — this difference is asked in interviews. The recursion stack is also space: binary search recursion takes O(log n) stack space.
+
+**Mistake 4: treating amortized as average.** Amortized analysis is not the average case — it is the average of worst-case operations. In a dynamic array, one append can be O(n), but n appends cost O(n) in total, so every append is amortized O(1). This is a guarantee, not an average. Interviewers like hearing this difference.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: n = 0, n = 1, Recursion Depth aur Log ke Facts',
+          '5. Edge Cases: n = 0, n = 1, Recursion Depth, and Log Facts'
+        ),
+        body: t(
+          `Complexity ke edge cases yaad rakho. **n = 0 ya n = 1:** khaali list par linear search O(1) mein khatam ho jaata hai — kuch dhoondhna hi nahi hai. Par complexity hamesha bade n ke liye batayi jaati hai, chhote n ke liye nahi. **Recursion depth:** Python mein recursion ki limit lagbhag 1000 hoti hai. Agar aap 2000 depth tak recursion karoge toh error aayega. Isliye bade n par recursion ki jagah loop use karo, ya limit badhao.
+
+**Log ke facts:** log2(1) = 0, log2(2) = 1, log2(1024) = 10, log2(1,000,000) lagbhag 20 hota hai. Log ka base complexity mein matter nahi karta, kyunki log base change karne par sirf constant badalta hai — isliye Big-O mein sirf "log n" likhte hain, base nahi. **O(1) ka matlab:** O(1) ka matlab hai time input se independent hai — chahe n 10 ho ya 10 lakh, time ek jaisa rahega. Dict lookup O(1) hota hai, par uska constant bada ho sakta hai.
+
+**Space edge case:** recursion se banne wala call stack bhi space hai. Fibonacci recursion mein O(n) stack space lagta hai, kyunki depth n tak jaati hai. Iterative version mein O(1) space lagta hai. Interview mein jab space poochha jaaye toh stack ko bhi gino.`,
+          `Remember the edge cases of complexity. **n = 0 or n = 1:** on an empty list, linear search finishes in O(1) — there is nothing to find. But complexity is always given for large n, not for small n. **Recursion depth:** in Python the recursion limit is about 1000. If you recurse to a depth of 2000, you will get an error. So for large n, use a loop instead of recursion, or raise the limit.
+
+**Log facts:** log2(1) = 0, log2(2) = 1, log2(1024) = 10, and log2(1,000,000) is about 20. The base of log does not matter in complexity, because changing the base only changes a constant — so in Big-O we write only "log n", not the base. **What O(1) means:** O(1) means the time does not depend on the input — whether n is 10 or 1,000,000, the time stays the same. Dict lookup is O(1), but its constant can be large.
+
+**Space edge case:** the call stack made by recursion is also space. Fibonacci recursion takes O(n) stack space, because the depth goes up to n. The iterative version takes O(1) space. When space is asked in an interview, count the stack too.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Amortized Analysis, Recursion Tree aur Space Complexity',
+          '6. What-If: Amortized Analysis, Recursion Trees, and Space Complexity'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: dynamic array mein 9 items append karein?** Pehle capacity 1 hoti hai. Jab array bhar jaaye toh capacity double hoti hai: 1 se 2, 2 se 4, 4 se 8, 8 se 16. 9 items append karne mein 4 baar grow karna padta hai, par total copies sirf 1 + 2 + 4 + 8 = 15 hoti hain. 9 appends par 15 copies matlab har append par average 2 se kam copies — isliye har append amortized O(1) hota hai. Neeche wala code yahi dikhata hai.
+
+**What if: recursion tree banana ho?** Merge sort ka recursion tree dekho: pehle level par 1 problem size n ki, doosre level par 2 problems size n/2 ki, teesre level par 4 problems size n/4 ki. Har level par total kaam O(n) hota hai, aur levels log n hote hain — isliye total O(n log n) hota hai. Recursion tree se complexity nikaalna interview mein bahut pasand kiya jaata hai, kyunki isse pata chalta hai ki aapko recurrence samajh aata hai.
+
+**What if: space complexity poochhi jaaye?** Space mein teen cheezein gino: input ka space (usually count nahi karte), extra variables ka space, aur recursion stack ka space. Merge sort mein extra array O(n) space leta hai. Binary search iterative mein O(1) space lagta hai, recursive mein O(log n) stack space lagta hai. Interview mein time ke saath space bhi batao.`,
+          `Now let us ask "what-if" questions. **What if we append 9 items to a dynamic array?** First the capacity is 1. When the array fills up, the capacity doubles: 1 to 2, 2 to 4, 4 to 8, 8 to 16. Appending 9 items needs growing 4 times, but the total copies are only 1 + 2 + 4 + 8 = 15. 15 copies over 9 appends means less than 2 copies per append on average — so every append is amortized O(1). The code below shows exactly this.
+
+**What if you must build a recursion tree?** Look at the recursion tree of merge sort: on the first level there is 1 problem of size n, on the second level there are 2 problems of size n/2, on the third level there are 4 problems of size n/4. On every level the total work is O(n), and there are log n levels — so the total is O(n log n). Finding complexity from a recursion tree is much liked in interviews, because it shows that you understand recurrence.
+
+**What if space complexity is asked?** Count three things in space: the space of the input (usually not counted), the space of extra variables, and the space of the recursion stack. Merge sort takes O(n) space for the extra array. Iterative binary search takes O(1) space, recursive binary search takes O(log n) stack space. In an interview, give the space along with the time.`
+        ),
+        code: {
+          title: t(
+            'Amortized Analysis: Dynamic Array ki Capacity Growth',
+            'Amortized Analysis: Dynamic Array Capacity Growth'
+          ),
+          language: 'python',
+          code: `capacity = 1
+size = 0
+for value in range(1, 10):
+    if size == capacity:
+        capacity = capacity * 2
+        print("Grew capacity to:", capacity)
+    size += 1
+print("Final size:", size)
+print("Final capacity:", capacity)`,
+          output: `Grew capacity to: 2
+Grew capacity to: 4
+Grew capacity to: 8
+Grew capacity to: 16
+Final size: 9
+Final capacity: 16`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Big-O, Big-Theta, Big-Omega aur Amortized',
+          '7. Summary: Big-O, Big-Theta, Big-Omega, and Amortized'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. **Big-O** upper bound hai, **Big-Omega** lower bound hai, **Big-Theta** tight bound hai. Interview mein sabse zyada Big-O (worst case) poochha jaata hai, par teeno ka farak batao toh answer poora hota hai. **Best case** matlab sabse achha input, **worst case** matlab sabse bura input, **average case** matlab aam input — hamesha teeno batao.
+
+**Amortized analysis** ka matlab hai: ek operation kabhi-kabhi mehenga ho sakta hai, par n operations ka total O(n) hota hai, isliye har operation amortized O(1) hota hai. Dynamic array ka append iska classic example hai. **Space complexity** mein extra variables aur recursion stack dono gino. **Recursion tree** mein har level ka kaam jodo: merge sort mein har level O(n) aur levels log n, total O(n log n).
+
+**Log facts** yaad rakho: log2(1024) = 10, log2(1,000,000) lagbhag 20, aur Big-O mein log ka base nahi likhte. Complexity seekhne ka sabse achha tareeka hai har algorithm likhte time uska time aur space bolna — aadat ban jaaye toh interview mein sochna nahi padega. Agle article mein hum interview patterns dekhenge — 12 se zyada core patterns ek hi jagah par.`,
+          `Let us tie the whole article together. **Big-O** is the upper bound, **Big-Omega** is the lower bound, and **Big-Theta** is the tight bound. In interviews, Big-O (the worst case) is asked the most, but the answer is complete only when you give the difference between all three. **Best case** means the best input, **worst case** means the worst input, and **average case** means a common input — always give all three.
+
+**Amortized analysis** means: one operation can sometimes be costly, but n operations cost O(n) in total, so every operation is amortized O(1). Appending to a dynamic array is the classic example. In **space complexity**, count both extra variables and the recursion stack. In a **recursion tree**, add the work of every level: in merge sort every level is O(n) and there are log n levels, so the total is O(n log n).
+
+Remember the **log facts**: log2(1024) = 10, log2(1,000,000) is about 20, and in Big-O we do not write the base of log. The best way to learn complexity is to say the time and space of every algorithm as you write it — once it becomes a habit, you will not need to think about it in an interview. In the next article we will look at interview patterns — more than 12 core patterns in one place.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'n = 1000 par Kitne Steps Lagte Hain',
+        'How Many Steps for n = 1000'
+      ),
+      caption: t(
+        'Binary search linear search se kitna tez hai, yeh bars mein dekho',
+        'See in the bars how much faster binary search is than linear search'
+      ),
+      nodes: [],
+      bars: [
+        { label: t('Linear search (worst)', 'Linear search (worst)'), value: 100, note: t('1000 steps', '1000 steps') },
+        { label: t('Binary search', 'Binary search'), value: 1, note: t('10 steps', '10 steps') },
+        { label: t('Dict lookup', 'Dict lookup'), value: 1, note: t('1 step', '1 step') },
+        { label: t('Merge sort', 'Merge sort'), value: 10, note: t('10000 steps', '10000 steps') },
+        { label: t('Bubble sort (worst)', 'Bubble sort (worst)'), value: 100, note: t('1000000 steps', '1000000 steps') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Loop vs Formula: 1 se 100 Tak ka Sum',
+          'Loop vs Formula: Sum from 1 to 100'
+        ),
+        language: 'python',
+        code: `total = 0
+steps = 0
+for i in range(1, 101):
+    total += i
+    steps += 1
+print("Loop sum:", total)
+print("Loop steps:", steps)
+print("Formula sum:", 100 * 101 // 2)
+print("Formula steps: 1")`,
+        output: `Loop sum: 5050
+Loop steps: 100
+Formula sum: 5050
+Formula steps: 1`
+      },
+      {
+        title: t(
+          'Complexity Table: n Badhne par Time Kaise Badhta Hai',
+          'Complexity Table: How Time Grows as n Grows'
+        ),
+        language: 'python',
+        code: `import math
+
+for n in [10, 100, 1000]:
+    print("n =", n, "n log n =", int(n * math.log2(n)))
+    print("n =", n, "n squared =", n * n)`,
+        output: `n = 10 n log n = 33
+n = 10 n squared = 100
+n = 100 n log n = 664
+n = 100 n squared = 10000
+n = 1000 n log n = 9965
+n = 1000 n squared = 1000000`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Big-O ka matlab kya hai?',
+          'What does Big-O mean?'
+        ),
+        opts: [
+          t('Lower bound', 'Lower bound'),
+          t('Upper bound', 'Upper bound'),
+          t('Tight bound', 'Tight bound'),
+          t('Average bound', 'Average bound')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Big-O upper bound batata hai — algorithm isse zyada slow nahi hoga. Lower bound Big-Omega hai aur tight bound Big-Theta hai.',
+          'Correct answer: Big-O gives the upper bound — the algorithm will not be slower than this. The lower bound is Big-Omega and the tight bound is Big-Theta.'
+        )
+      },
+      {
+        q: t(
+          'n = 1000 par binary search worst case mein kitne steps lega?',
+          'How many steps will binary search take in the worst case for n = 1000?'
+        ),
+        opts: [
+          t('1000 steps', '1000 steps'),
+          t('100 steps', '100 steps'),
+          t('Lagbhag 10 steps', 'About 10 steps'),
+          t('1 step', '1 step')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: binary search O(log n) mein chalta hai aur log2(1000) lagbhag 10 hota hai, isliye worst case mein lagbhag 10 steps lagenge.',
+          'Correct answer: binary search runs in O(log n) and log2(1000) is about 10, so the worst case takes about 10 steps.'
+        )
+      },
+      {
+        q: t(
+          'Dynamic array mein append amortized O(1) kyun hota hai?',
+          'Why is append in a dynamic array amortized O(1)?'
+        ),
+        opts: [
+          t('Kyunki har append hamesha O(1) hota hai', 'Because every append is always O(1)'),
+          t('Kyunki grow karna kabhi-kabhi O(n) hota hai, par n appends ka total O(n) hota hai', 'Because growing is sometimes O(n), but n appends cost O(n) in total'),
+          t('Kyunki array kabhi grow nahi karta', 'Because the array never grows'),
+          t('Kyunki append mein loop nahi chalta', 'Because append has no loop')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek append O(n) ho sakta hai jab capacity double hoti hai, par n appends mein total copies O(n) hoti hain, isliye har append amortized O(1) hota hai.',
+          'Correct answer: one append can be O(n) when the capacity doubles, but n appends copy O(n) items in total, so every append is amortized O(1).'
+        )
+      },
+      {
+        q: t(
+          'Merge sort ka space complexity kya hai?',
+          'What is the space complexity of merge sort?'
+        ),
+        opts: [
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: merge sort ko merge karne ke liye O(n) extra array chahiye, isliye uska space complexity O(n) hota hai.',
+          'Correct answer: merge sort needs an extra array of O(n) for merging, so its space complexity is O(n).'
+        )
+      },
+      {
+        q: t(
+          'Recursion tree mein merge sort ka total time kaise nikalte hain?',
+          'How do you find the total time of merge sort from a recursion tree?'
+        ),
+        opts: [
+          t('Sirf pehle level ka kaam gino', 'Count only the work of the first level'),
+          t('Har level ka kaam O(n) hai aur levels log n hain, total O(n log n)', 'Every level is O(n) work and there are log n levels, total O(n log n)'),
+          t('Levels ko multiply karo', 'Multiply the levels'),
+          t('Sirf leaves ko gino', 'Count only the leaves')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: recursion tree mein har level par total kaam O(n) hota hai aur kul log n levels hote hain, isliye total O(n log n) hota hai.',
+          'Correct answer: in the recursion tree, every level has O(n) total work and there are log n levels in total, so the total is O(n log n).'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Big-O upper bound hai, Big-Omega lower bound hai, Big-Theta tight bound hai.',
+        'Big-O is the upper bound, Big-Omega is the lower bound, Big-Theta is the tight bound.'
+      ),
+      t(
+        'Hamesha best, average aur worst case teeno batao — sirf average kaafi nahi hai.',
+        'Always give the best, average, and worst case — the average alone is not enough.'
+      ),
+      t(
+        'Amortized O(1) matlab n operations ka total O(n) hai, ek operation kabhi O(n) ho sakta hai.',
+        'Amortized O(1) means n operations cost O(n) in total; one operation can be O(n).'
+      ),
+      t(
+        'Space mein extra variables aur recursion stack dono gino.',
+        'In space, count both extra variables and the recursion stack.'
+      ),
+      t(
+        'log2(1024) = 10 hai; Big-O mein log ka base nahi likhte.',
+        'log2(1024) = 10; in Big-O we do not write the base of log.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Fibonacci ke Calls Ginna',
+        'Practice: Counting Fibonacci Calls'
+      ),
+      task: t(
+        'Neeche diya gaya code naive Fibonacci ke kitne calls hote hain, yeh ginta hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir socho: fib(10) mein 177 calls kyun hote hain, jabki answer sirf 55 hai?',
+        'The code below counts how many calls naive Fibonacci makes. Run it and verify the output matches the expected output. Then think: why does fib(10) make 177 calls when the answer is only 55?'
+      ),
+      language: 'python',
+      starter: `calls = 0
+
+def fib(n):
+    global calls
+    calls += 1
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(5))
+print("Calls for fib(5):", calls)
+calls = 0
+print(fib(10))
+print("Calls for fib(10):", calls)`,
+      expected: `5
+Calls for fib(5): 15
+55
+Calls for fib(10): 177`
+    },
+    readMinutes: 12
+  };
+
+const dsaPatterns: Article = {
+    id: 'dsa-patterns',
+    subjectId: 'dsa',
+    title: t(
+      'Interview Patterns Masterclass — 12 Core Patterns, Ek Hi Jagah',
+      'Interview Patterns Masterclass — 12 Core Patterns in One Place'
+    ),
+    summary: t(
+      'Interview ke 12 core patterns ko ek hi article mein samjho: sliding window, two pointers, fast and slow pointers, merge intervals, cyclic sort, linked list reversal, tree BFS aur DFS, two heaps, subsets, modified binary search, top-k aur DP patterns. Har pattern ke saath uski pehchan aur ek example problem.',
+      'Learn the 12 core interview patterns in one article: sliding window, two pointers, fast and slow pointers, merge intervals, cyclic sort, linked list reversal, tree BFS and DFS, two heaps, subsets, modified binary search, top-k, and DP patterns. Every pattern comes with its tell-tale sign and one example problem.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Pattern Kya Hai? (12 Core Patterns aur Unki Pehchan)',
+          '1. What Is a Pattern? (12 Core Patterns and Their Tell-Tale Signs)'
+        ),
+        body: t(
+          `Interview mein 500 alag problems nahi hote — 12 se 15 patterns hote hain, aur har problem kisi ek pattern ka roop hota hai. **Pattern** matlab ek pehchana hua tareeka: jab problem mein ek khaas sign dikhe, toh wahi tareeka lagao. Pattern yaad karne se aapko har problem ko zero se solve nahi karna padta — aapko sirf pehchanna hai ki yeh kaunsa pattern hai.
+
+Yeh rahe 12 core patterns aur unki pehchan. **Sliding window:** subarray ya substring ka max ya min sum, ya longest substring — window ko aage badhao. **Two pointers:** sorted array mein pair dhoondhna — ek pointer left, ek right. **Fast and slow pointers:** linked list mein cycle ya middle dhoondhna — ek tez, ek slow. **Merge intervals:** overlapping intervals ko jodna — pehle sort karo, phir merge karo. **Cyclic sort:** 1 se n tak ke numbers mein missing number — har number ko uski sahi jagah par rakho. **In-place reversal of linked list:** list ko ulta karna — teen pointers se links palto.
+
+**Tree BFS/DFS:** level order ya depth mein traversal — queue se BFS, recursion se DFS. **Two heaps:** running median ya kisi stream ka median — ek max-heap aur ek min-heap. **Subsets:** saare subsets ya combinations banana — har element ko lo ya chhodo. **Modified binary search:** rotated ya pehle se sorted list mein search — beech se decide karo kaunsa half sorted hai. **Top-k:** sabse bade ya sabse chhote k elements — heap use karo. **DP patterns:** overlapping subproblems — pehle chhote answers, phir bade answers.`,
+          `In interviews there are not 500 different problems — there are 12 to 15 patterns, and every problem is one pattern in disguise. A **pattern** means a known method: when a problem shows a particular sign, apply that method. Remembering patterns means you do not solve every problem from zero — you only have to recognise which pattern it is.
+
+Here are the 12 core patterns and their tell-tale signs. **Sliding window:** the max or min sum of a subarray or substring, or the longest substring — move a window forward. **Two pointers:** finding a pair in a sorted array — one pointer left, one right. **Fast and slow pointers:** finding a cycle or the middle in a linked list — one fast, one slow. **Merge intervals:** joining overlapping intervals — sort first, then merge. **Cyclic sort:** a missing number among numbers from 1 to n — put every number in its correct place. **In-place reversal of a linked list:** reversing a list — flip the links with three pointers.
+
+**Tree BFS/DFS:** level order or depth traversal — BFS with a queue, DFS with recursion. **Two heaps:** the running median or the median of a stream — one max-heap and one min-heap. **Subsets:** making all subsets or combinations — take or skip every element. **Modified binary search:** searching in a rotated or sorted list — use the middle to decide which half is sorted. **Top-k:** the largest or smallest k elements — use a heap. **DP patterns:** overlapping subproblems — small answers first, then large answers.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Train ki Khidki, Do Ungliyaan aur Queue',
+          '2. Real-Life Examples: A Train Window, Two Fingers, and a Queue'
+        ),
+        body: t(
+          `Patterns roz ki zindagi mein bhi dikhte hain. **Sliding window** train ki khidki jaisi hai: train aage badhti hai, khidki se dikhne wala scene badalta hai, par khidki ka size wahi rehta hai. Window mein se k elements dikhte hain, phir window ek aage badhti hai aur naya element aata hai, purana chala jaata hai. Yahi sliding window hai.
+
+**Two pointers** do ungliyaan hain jo kitaab ke do ends par hain: ek left se, ek right se, aur dono beech ki taraf badhte hain. Sorted list mein pair dhoondhna aisa hi hai — left aur right ko dekh kar decide karo kis taraf badhna hai. **Fast and slow pointers** do dost hain jo ek gol track par daud rahe hain — tez wala slow wale ko peeche se pakad lega, aur yahi cycle ki pehchan hai. Agar track gol nahi hai toh tez wala end par pahunch jaayega aur kabhi nahi milega.
+
+**Merge intervals** meeting room ki booking jaisi hai: agar do meetings overlap karti hain toh unko ek mein jod do. **Top-k** exam ke top 3 students nikaalna hai — saare students ko sort karne ki jagah sirf top 3 ko heap mein rakho. **Subsets** kapde chunne jaisa hai: har kapde ko lo ya chhodo, aur saare combinations mil jaate hain.`,
+          `Patterns also appear in daily life. A **sliding window** is like a train window: the train moves ahead, the scene seen from the window changes, but the size of the window stays the same. k elements are seen through the window, then the window moves one step ahead and a new element comes in while the old one leaves. That is a sliding window.
+
+**Two pointers** are two fingers on the two ends of a book: one from the left, one from the right, and both move towards the middle. Finding a pair in a sorted list is just like this — look at the left and right and decide which side to move. **Fast and slow pointers** are two friends running on a circular track — the fast one will catch the slow one from behind, and that is how you recognise a cycle. If the track is not circular, the fast one will reach the end and they will never meet.
+
+**Merge intervals** is like booking a meeting room: if two meetings overlap, join them into one. **Top-k** is finding the top 3 students in an exam — instead of sorting all the students, keep only the top 3 in a heap. **Subsets** is like choosing clothes: take or skip every item, and you get all the combinations.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Sliding Window se Max Sum ka Dry Run',
+          '3. Step-by-Step: A Dry Run of Max Sum with a Sliding Window'
+        ),
+        body: t(
+          `Ab sliding window pattern ko haath se chalate hain. Problem hai: array [2, 1, 5, 1, 3, 2] mein size 3 ki window ka maximum sum nikaalo. Brute force mein har window ka sum alag se nikaalte — O(n * k) time. Sliding window mein pehli window ka sum nikaalo, phir har step mein sirf ek element hatao aur ek naya jodo — O(n) time.
+
+Dry run karte hain. Pehli window hai [2, 1, 5], sum = 8. Yeh ab tak ka best hai. Window ko ek aage badhao: 2 ko hatao, 1 ko jodo — window [1, 5, 1], sum = 8 - 2 + 1 = 7. Best ab bhi 8 hai. Window ko phir aage badhao: 1 ko hatao, 3 ko jodo — window [5, 1, 3], sum = 7 - 1 + 3 = 9. Best ab 9 hai. Window ko phir aage badhao: 5 ko hatao, 2 ko jodo — window [1, 3, 2], sum = 9 - 5 + 2 = 6. Best ab bhi 9 hai. Answer hai 9.
+
+Dekho: har step mein sirf do operations hue — ek hatao, ek jodo. Poora array ek baar scan hua, isliye time O(n) hai aur space O(1) hai. Yahi sliding window ki pehchan hai: jab bhi problem mein "subarray ya substring ka max ya min" poochha jaaye, toh window socho. Neeche wala code yahi dry run chalata hai.`,
+          `Now let us run the sliding window pattern by hand. The problem is: in the array [2, 1, 5, 1, 3, 2], find the maximum sum of a window of size 3. Brute force would compute the sum of every window separately — O(n * k) time. In a sliding window, compute the sum of the first window, then at every step remove only one element and add one new element — O(n) time.
+
+Let us do the dry run. The first window is [2, 1, 5], sum = 8. That is the best so far. Move the window one step ahead: remove 2, add 1 — window [1, 5, 1], sum = 8 - 2 + 1 = 7. The best is still 8. Move the window ahead again: remove 1, add 3 — window [5, 1, 3], sum = 7 - 1 + 3 = 9. The best is now 9. Move the window ahead again: remove 5, add 2 — window [1, 3, 2], sum = 9 - 5 + 2 = 6. The best is still 9. The answer is 9.
+
+See: at every step only two operations happened — remove one, add one. The whole array was scanned once, so the time is O(n) and the space is O(1). That is the tell-tale sign of a sliding window: whenever a problem asks for the "max or min of a subarray or substring", think of a window. The code below runs this same dry run.`
+        ),
+        code: {
+          title: t(
+            'Sliding Window: Size 3 ki Window ka Max Sum',
+            'Sliding Window: Max Sum of a Window of Size 3'
+          ),
+          language: 'python',
+          code: `def max_sum_window(arr, k):
+    window = sum(arr[:k])
+    best = window
+    for i in range(k, len(arr)):
+        window = window - arr[i - k] + arr[i]
+        if window > best:
+            best = window
+    return best
+
+print(max_sum_window([2, 1, 5, 1, 3, 2], 3))
+print(max_sum_window([2, 1, 5, 1, 3, 2], 2))`,
+          output: `9
+6`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Galat Pattern Chunna aur Window ko Reset Karna',
+          '4. Common Mistakes: Choosing the Wrong Pattern and Resetting the Window'
+        ),
+        body: t(
+          `Patterns mein sabse badi galti hai **galat pattern chunna**. Har problem par sliding window nahi lagta — agar window ka size fixed nahi hai aur problem mein pair dhoondhna hai, toh two pointers chahiye. Agar problem mein cycle dhoondhni hai toh fast and slow pointers chahiye, sliding window nahi. Pattern chunne se pehle problem ko ek line mein likho: "mujhe kya dhoondhna hai?" — usi se pattern milega.
+
+**Galti 2: sliding window mein sum ko dobara nikaalna.** Beginners har window ka sum phir se loop se nikaalte hain — yeh O(n * k) ho jaata hai aur pattern ka fayda khatam ho jaata hai. Sliding window ka matlab hi hai purana sum reuse karo: ek hatao, ek jodo. **Galti 3: two pointers mein sorted hona bhoolna.** Two pointers sirf sorted array par kaam karta hai. Unsorted array par two pointers lagane se pehle sort karo, warna answer galat aayega.
+
+**Galti 4: heap ko sort samajhna.** Top-k mein heap sirf k elements rakhta hai, poori list sort nahi karta. Agar aap heap se saare elements nikaal kar sort karne lag gaye, toh O(n log n) ho jaayega aur pattern ka fayda khatam. **Galti 5: DP mein base case bhoolna.** DP pattern mein pehle chhote answers likho, phir bade — agar base case galat hai toh poora table galat hoga.`,
+          `The biggest mistake with patterns is **choosing the wrong pattern**. A sliding window does not fit every problem — if the window size is not fixed and the problem asks for a pair, you need two pointers. If the problem asks for a cycle, you need fast and slow pointers, not a sliding window. Before choosing a pattern, write the problem in one line: "what must I find?" — the pattern comes from that.
+
+**Mistake 2: recomputing the sum in a sliding window.** Beginners compute the sum of every window again with a loop — that becomes O(n * k) and the benefit of the pattern is lost. A sliding window means reusing the old sum: remove one, add one. **Mistake 3: forgetting that two pointers needs a sorted array.** Two pointers works only on a sorted array. Before applying two pointers on an unsorted array, sort it, otherwise the answer will be wrong.
+
+**Mistake 4: treating a heap as a sort.** In top-k, a heap holds only k elements, it does not sort the whole list. If you pull all the elements out of the heap and sort them, it becomes O(n log n) and the benefit of the pattern is lost. **Mistake 5: forgetting the base case in DP.** In the DP pattern, write the small answers first, then the large ones — if the base case is wrong, the whole table will be wrong.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Window, Ek Element aur Cycle ka End',
+          '5. Edge Cases: Empty Window, One Element, and the End of a Cycle'
+        ),
+        body: t(
+          `Patterns ke edge cases yaad rakho. **Sliding window:** agar k array se bada ho, toh window ban hi nahi sakti — pehle check karo ki k <= len(arr) hai ya nahi. Agar array khaali ho toh answer kya hoga? Yeh interviewer zaroor poochhta hai. **Two pointers:** agar left aur right mil jaayein toh ruk jao — warna dono cross kar jaayenge aur galat pair mil jayega. Agar koi pair na mile toh [-1, -1] return karo.
+
+**Fast and slow pointers:** agar list mein cycle nahi hai toh fast pointer end par pahunch jaayega — usko None check karna zaroori hai, warna crash hoga. **Merge intervals:** intervals ko sort karna zaroori hai — bina sort ke merge galat hoga. Agar ek hi interval ho toh wahi answer hai. **Cyclic sort:** agar number range se bahar ho (jaise n se bada), toh usko ignore karo — warna index error aayega.
+
+**Subsets:** khaali set ka bhi ek subset hota hai — khaali set khud. Subsets ki list mein [ ] ko include karna mat bhoolo. **Top-k:** agar k list se bada ho toh poori list hi answer hai. **Modified binary search:** rotated array mein pehle check karo kaunsa half sorted hai — bina iske binary search galat half mein chala jaayega.`,
+          `Remember the edge cases of patterns. **Sliding window:** if k is larger than the array, a window cannot be formed at all — first check whether k <= len(arr). If the array is empty, what will the answer be? Interviewers always ask this. **Two pointers:** if the left and right pointers meet, stop — otherwise they will cross each other and give a wrong pair. If no pair is found, return [-1, -1].
+
+**Fast and slow pointers:** if the list has no cycle, the fast pointer will reach the end — checking it for None is essential, otherwise it will crash. **Merge intervals:** sorting the intervals is essential — merging without sorting will be wrong. If there is only one interval, that itself is the answer. **Cyclic sort:** if a number is outside the range (such as larger than n), ignore it — otherwise there will be an index error.
+
+**Subsets:** the empty set also has a subset — the empty set itself. Do not forget to include [ ] in the list of subsets. **Top-k:** if k is larger than the list, the whole list is the answer. **Modified binary search:** in a rotated array, first check which half is sorted — without this, binary search will go into the wrong half.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Pattern Kaise Chunein, Two Pointers vs Sliding Window',
+          '6. What-If: How to Choose a Pattern, Two Pointers vs Sliding Window'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: problem dekh kar pattern samajh nahi aaye?** Problem ke keywords dekho. "Subarray" ya "substring" dikhe toh sliding window ya prefix sum socho. "Sorted array" aur "pair" dikhe toh two pointers socho. "Cycle" ya "middle" dikhe toh fast and slow pointers socho. "Intervals" dikhe toh merge intervals socho. "1 se n tak" dikhe toh cyclic sort socho. "Median" dikhe toh two heaps socho. "K largest" dikhe toh top-k socho. Keywords hi pattern ki pehchan hain.
+
+**What if: two pointers aur sliding window mein confuse ho jaaye?** Farak simple hai: two pointers mein dono pointers alag-alag taraf se aate hain ya alag speed se chalte hain, aur unka kaam pair dhoondhna hota hai. Sliding window mein window ka size fixed ya flexible hota hai aur uska kaam subarray ka sum ya length nikaalna hota hai. Two pointers ka example hai two sum, sliding window ka example hai max sum window. Neeche wala code two pointers ko dikhata hai.
+
+**What if: DP pattern pehchanna ho?** DP ki pehchan hai overlapping subproblems: agar problem ko chhote problems mein toda ja sake aur wahi chhota problem baar-baar aaye, toh DP lagao. Climbing stairs, coin change, aur knapsack — teeno mein yahi pehchan hai. DP mein pehle brute force recursion likho, phir memoization lagao, phir table banao. Yeh order interview mein dikhana achha lagta hai.`,
+          `Now let us ask "what-if" questions. **What if you cannot see the pattern in a problem?** Look at the keywords of the problem. If you see "subarray" or "substring", think of a sliding window or prefix sum. If you see "sorted array" and "pair", think of two pointers. If you see "cycle" or "middle", think of fast and slow pointers. If you see "intervals", think of merge intervals. If you see "1 to n", think of cyclic sort. If you see "median", think of two heaps. If you see "k largest", think of top-k. The keywords are the tell-tale signs of the pattern.
+
+**What if you get confused between two pointers and a sliding window?** The difference is simple: in two pointers, the two pointers come from different sides or move at different speeds, and their job is to find a pair. In a sliding window, the window size is fixed or flexible and its job is to find the sum or length of a subarray. The example of two pointers is two sum, and the example of a sliding window is max sum window. The code below shows two pointers.
+
+**What if you must recognise the DP pattern?** The sign of DP is overlapping subproblems: if a problem can be broken into small problems and the same small problem appears again and again, apply DP. Climbing stairs, coin change, and knapsack — all three show this sign. In DP, first write the brute force recursion, then add memoization, then make a table. Showing this order in an interview looks good.`
+        ),
+        code: {
+          title: t(
+            'Two Pointers: Sorted Array mein Two Sum',
+            'Two Pointers: Two Sum in a Sorted Array'
+          ),
+          language: 'python',
+          code: `def two_sum_sorted(arr, target):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        total = arr[left] + arr[right]
+        if total == target:
+            return [left, right]
+        if total < target:
+            left += 1
+        else:
+            right -= 1
+    return [-1, -1]
+
+print(two_sum_sorted([2, 7, 11, 15], 9))
+print(two_sum_sorted([2, 7, 11, 15], 26))`,
+          output: `[0, 1]
+[2, 3]`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Pattern Pehchano, Phir Code Likho',
+          '7. Summary: Recognise the Pattern, Then Write the Code'
+        ),
+        body: t(
+          `Poora article ek line mein: **interview mein problem nahi, pattern pehchanna hai**. Sliding window subarray ke liye, two pointers sorted pair ke liye, fast and slow pointers cycle ke liye, merge intervals overlapping intervals ke liye, cyclic sort 1 se n tak ke numbers ke liye, linked list reversal teen pointers se, tree BFS queue se aur DFS recursion se, two heaps median ke liye, subsets take-or-skip se, modified binary search rotated array ke liye, top-k heap se, aur DP overlapping subproblems ke liye.
+
+Revision ke liye har pattern ka ek example problem yaad rakho: sliding window — max sum window, two pointers — two sum, fast and slow — cycle detection, merge intervals — [[1,3],[2,6]], cyclic sort — missing number, linked list reversal — reverse list, tree BFS — level order, two heaps — running median, subsets — saare subsets, modified binary search — rotated array search, top-k — k largest, DP — climbing stairs. Agar har pattern ka ek example yaad hai, toh interview mein problem dekh kar pattern yaad aa jaayega.
+
+Aakhiri tip: pattern yaad karna kaafi nahi hai, pattern ko code karke dekhna zaroori hai. Har pattern ka ek code likho, usko run karo, aur uske edge cases ko test karo. Agle article mein hum pehla capstone project banayenge — Trie se autocomplete aur spell-checker.`,
+          `The whole article in one line: **in an interview, you do not recognise the problem, you recognise the pattern**. Sliding window for subarrays, two pointers for a sorted pair, fast and slow pointers for a cycle, merge intervals for overlapping intervals, cyclic sort for numbers from 1 to n, linked list reversal with three pointers, tree BFS with a queue and DFS with recursion, two heaps for a median, subsets with take-or-skip, modified binary search for a rotated array, top-k with a heap, and DP for overlapping subproblems.
+
+To revise, remember one example problem for every pattern: sliding window — max sum window, two pointers — two sum, fast and slow — cycle detection, merge intervals — [[1,3],[2,6]], cyclic sort — missing number, linked list reversal — reverse list, tree BFS — level order, two heaps — running median, subsets — all subsets, modified binary search — rotated array search, top-k — k largest, DP — climbing stairs. If you remember one example for every pattern, the pattern will come to mind when you see a problem in an interview.
+
+One last tip: remembering a pattern is not enough, you must code the pattern and see it work. Write one code for every pattern, run it, and test its edge cases. In the next article we will build the first capstone project — autocomplete and a spell-checker with a Trie.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Pattern Kaise Chunein: Keywords se Pattern Tak',
+        'How to Choose a Pattern: From Keywords to Pattern'
+      ),
+      caption: t(
+        'Problem ke keywords dekho, pattern pehchano, phir code likho',
+        'Look at the keywords of the problem, recognise the pattern, then write the code'
+      ),
+      nodes: [
+        {
+          t: t('Keywords dekho: subarray, pair, cycle?', 'Look at keywords: subarray, pair, cycle?'),
+          s: t('"Subarray" dikhe toh sliding window, "pair" dikhe toh two pointers', 'If you see "subarray", think sliding window; if you see "pair", think two pointers')
+        },
+        {
+          t: t('Pattern chuno: 12 mein se ek', 'Choose a pattern: one of the 12'),
+          s: t('Har pattern ki ek pehchan hoti hai — usi se match karo', 'Every pattern has one tell-tale sign — match with that')
+        },
+        {
+          t: t('Example se verify karo', 'Verify with an example'),
+          s: t('Chhote example par haath se dry run karo', 'Do a dry run by hand on a small example')
+        },
+        {
+          t: t('Code likho aur edge cases test karo', 'Write the code and test the edge cases'),
+          s: t('Khaali input, ek element, aur koi answer na ho — teeno test karo', 'Test all three: empty input, one element, and no answer')
+        },
+        {
+          t: t('Complexity batao: time aur space', 'Give the complexity: time and space'),
+          s: t('Har pattern ki complexity yaad rakho', 'Remember the complexity of every pattern')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Merge Intervals: Overlapping Intervals ko Jodna',
+          'Merge Intervals: Joining Overlapping Intervals'
+        ),
+        language: 'python',
+        code: `def merge_intervals(intervals):
+    intervals = sorted(intervals)
+    merged = [intervals[0]]
+    for start, end in intervals[1:]:
+        if start <= merged[-1][1]:
+            if end > merged[-1][1]:
+                merged[-1][1] = end
+        else:
+            merged.append([start, end])
+    return merged
+
+print(merge_intervals([[1, 3], [2, 6], [8, 10], [15, 18]]))`,
+        output: `[[1, 6], [8, 10], [15, 18]]`
+      },
+      {
+        title: t(
+          'Subsets: Take-or-Skip se Saare Subsets',
+          'Subsets: All Subsets with Take-or-Skip'
+        ),
+        language: 'python',
+        code: `def all_subsets(nums):
+    result = [[]]
+    for num in nums:
+        result = result + [subset + [num] for subset in result]
+    return result
+
+print(all_subsets([1, 2, 3]))`,
+        output: `[[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Array [2, 1, 5, 1, 3, 2] mein size 3 ki window ka maximum sum kya hai?',
+          'What is the maximum sum of a window of size 3 in the array [2, 1, 5, 1, 3, 2]?'
+        ),
+        opts: [
+          t('8', '8'),
+          t('9', '9'),
+          t('7', '7'),
+          t('6', '6')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: windows hain [2,1,5]=8, [1,5,1]=7, [5,1,3]=9 aur [1,3,2]=6 — inmein sabse bada 9 hai.',
+          'Correct answer: the windows are [2,1,5]=8, [1,5,1]=7, [5,1,3]=9, and [1,3,2]=6 — the largest of these is 9.'
+        )
+      },
+      {
+        q: t(
+          'Linked list mein cycle dhoondhne ke liye kaunsa pattern use hota hai?',
+          'Which pattern is used to find a cycle in a linked list?'
+        ),
+        opts: [
+          t('Sliding window', 'Sliding window'),
+          t('Two pointers', 'Two pointers'),
+          t('Fast and slow pointers', 'Fast and slow pointers'),
+          t('Merge intervals', 'Merge intervals')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: fast and slow pointers mein tez pointer slow pointer ko gol track par peeche se pakad leta hai — yahi cycle ki pehchan hai.',
+          'Correct answer: in fast and slow pointers, the fast pointer catches the slow pointer from behind on a circular track — that is how a cycle is recognised.'
+        )
+      },
+      {
+        q: t(
+          'Sorted array mein pair dhoondhne ke liye kaunsa pattern use hota hai?',
+          'Which pattern is used to find a pair in a sorted array?'
+        ),
+        opts: [
+          t('Cyclic sort', 'Cyclic sort'),
+          t('Two pointers', 'Two pointers'),
+          t('Subsets', 'Subsets'),
+          t('Two heaps', 'Two heaps')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: two pointers mein ek pointer left se aur ek right se chalta hai, aur sum ko dekh kar decide hota hai kis taraf badhna hai.',
+          'Correct answer: in two pointers, one pointer moves from the left and one from the right, and the sum decides which side to move.'
+        )
+      },
+      {
+        q: t(
+          'Running median nikaalne ke liye kaunsa pattern use hota hai?',
+          'Which pattern is used to find the running median?'
+        ),
+        opts: [
+          t('Two heaps', 'Two heaps'),
+          t('Sliding window', 'Sliding window'),
+          t('Cyclic sort', 'Cyclic sort'),
+          t('Merge intervals', 'Merge intervals')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: two heaps mein ek max-heap chhote half ko aur ek min-heap bade half ko rakhta hai, aur beech ke do numbers se median mil jaata hai.',
+          'Correct answer: in two heaps, a max-heap holds the smaller half and a min-heap holds the larger half, and the median comes from the two middle numbers.'
+        )
+      },
+      {
+        q: t(
+          '1 se n tak ke numbers mein missing number dhoondhne ke liye kaunsa pattern use hota hai?',
+          'Which pattern is used to find the missing number among numbers from 1 to n?'
+        ),
+        opts: [
+          t('Top-k', 'Top-k'),
+          t('Cyclic sort', 'Cyclic sort'),
+          t('Subsets', 'Subsets'),
+          t('Modified binary search', 'Modified binary search')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cyclic sort mein har number ko uski sahi jagah par rakha jaata hai, aur jis jagah par galat number mile wahi missing number hota hai.',
+          'Correct answer: in cyclic sort, every number is placed in its correct place, and the place where the wrong number sits is the missing number.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Interview mein problem nahi, pattern pehchanna hai — keywords hi pehchan hain.',
+        'In an interview, recognise the pattern, not the problem — the keywords are the tell-tale signs.'
+      ),
+      t(
+        'Sliding window: ek hatao, ek jodo — O(n) time, O(1) space.',
+        'Sliding window: remove one, add one — O(n) time, O(1) space.'
+      ),
+      t(
+        'Two pointers sirf sorted array par kaam karta hai; fast and slow cycle ke liye hai.',
+        'Two pointers works only on a sorted array; fast and slow is for a cycle.'
+      ),
+      t(
+        'Top-k heap se, median two heaps se, aur subsets take-or-skip se bante hain.',
+        'Top-k comes from a heap, the median from two heaps, and subsets from take-or-skip.'
+      ),
+      t(
+        'DP ki pehchan overlapping subproblems hai — pehle chhote answers, phir bade.',
+        'The sign of DP is overlapping subproblems — small answers first, then large ones.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Cyclic Sort se Missing Number Dhoondho',
+        'Practice: Find the Missing Number with Cyclic Sort'
+      ),
+      task: t(
+        'Neeche diya gaya code cyclic sort se [3, 0, 1] mein missing number dhoondhta hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir [0, 1] par chalao aur check karo ki answer 2 kyun aata hai.',
+        'The code below finds the missing number in [3, 0, 1] with cyclic sort. Run it and verify the output matches the expected output. Then run it on [0, 1] and check why the answer is 2.'
+      ),
+      language: 'python',
+      starter: `def missing_number(nums):
+    i = 0
+    while i < len(nums):
+        correct = nums[i]
+        if correct < len(nums) and nums[i] != nums[correct]:
+            nums[i], nums[correct] = nums[correct], nums[i]
+        else:
+            i += 1
+    for i in range(len(nums)):
+        if nums[i] != i:
+            return i
+    return len(nums)
+
+print(missing_number([3, 0, 1]))
+print(missing_number([0, 1]))`,
+      expected: `2
+2`
+    },
+    readMinutes: 12
+  };
+
+const dsaProjectAutocomplete: Article = {
+    id: 'dsa-project-autocomplete',
+    subjectId: 'dsa',
+    title: t(
+      'Capstone Project 1 — Trie se Autocomplete aur Spell-Checker Banao',
+      'Capstone Project 1 — Build an Autocomplete and Spell-Checker with a Trie'
+    ),
+    summary: t(
+      'Pehla capstone project: Python mein Trie se autocomplete aur spell-checker banao. Plan banao, Trie build karo, words add karo, prefix se suggestions nikaalo, ek letter ki galti se spell suggestions do, test karo, aur phir project ko extend karo.',
+      'First capstone project: build an autocomplete and spell-checker in Python with a Trie. Make a plan, build the Trie, add words, get suggestions from a prefix, give spell suggestions for a one-letter mistake, test it, and then extend the project.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Project Kya Hai? (Autocomplete, Trie aur Spell-Checker)',
+          '1. What Is the Project? (Autocomplete, Trie, and Spell-Checker)'
+        ),
+        body: t(
+          `Is project mein hum ek **autocomplete** banayenge — woh feature jo aap Google ya phone keyboard par dekhte ho. Aap "app" type karte ho aur neeche "apple", "app" aur "apply" dikhne lagte hain. Uske saath ek **spell-checker** bhi banayenge — agar aap "applle" type kar do (ek extra l), toh woh "apple" suggest karega.
+
+Iske peeche ek data structure hai jiska naam hai **Trie** (pronunciation: "try"). Trie ek ped (tree) jaisa structure hai jismein har node ek letter ko represent karta hai. Root se "a" par jao, phir "p", phir "p" — aur aap "app" par pahunch gaye. "app" se aage "l" par jao toh "appl" aur phir "e" par jao toh "apple". Jo nodes par word khatam hota hai, un par ek flag hota hai: \`is_word = True\`.
+
+Trie kyun use karte hain? Kyunki prefix se suggestions nikaalna Trie mein bahut tez hota hai — sirf prefix tak jao, phir uske neeche ke saare words collect kar lo. List mein aisa karne ke liye har word ko check karna padta — O(n) time. Trie mein sirf prefix ki length tak jaana padta hai — O(m) time, jahan m prefix ki length hai. Yahi farak hai.`,
+          `In this project we will build an **autocomplete** — the feature you see on Google or on a phone keyboard. You type "app" and below it "apple", "app", and "apply" start appearing. Along with it we will also build a **spell-checker** — if you type "applle" (one extra l), it will suggest "apple".
+
+Behind this is a data structure called a **Trie** (pronounced "try"). A Trie is a tree-like structure where every node stands for one letter. From the root go to "a", then "p", then "p" — and you reach "app". From "app" go to "l" for "appl" and then to "e" for "apple". The nodes where a word ends carry a flag: \`is_word = True\`.
+
+Why use a Trie? Because finding suggestions from a prefix is very fast in a Trie — just go to the prefix, then collect all the words below it. In a list you would have to check every word — O(n) time. In a Trie you only go as far as the length of the prefix — O(m) time, where m is the length of the prefix. That is the difference.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Google Search, Keyboard aur Dictionary',
+          '2. Real-Life Examples: Google Search, Keyboards, and Dictionaries'
+        ),
+        body: t(
+          `Autocomplete aap roz use karte ho. **Google search** mein aap aadha word type karte ho aur suggestions aa jaate hain — yeh Trie ya usi jaisi structure se hota hai. **Phone keyboard** mein aap type karte ho aur upar words suggest hote hain — keyboard aapke type kiye hue prefix se words dhoondhta hai. **Code editor** mein aap function ka naam aadha likhte ho aur editor poora naam suggest karta hai — yeh bhi autocomplete hai.
+
+**Spell-checker** bhi roz kaam aata hai. Aap "bannana" type karte ho aur editor "banana" suggest karta hai — kyunki "bannana" se ek letter hatane par "banana" mil jaata hai. Yahi **one-edit** ka idea hai: agar typed word se ek letter hatane, jodne ya badalne par koi real word mil jaaye, toh woh suggestion hai. Hamara project yahi karega — sirf ek letter hatane wala version, kyunki woh sabse simple hai.
+
+**Dictionary apps** mein bhi Trie use hota hai. Aap "cat" search karte ho toh "cat", "catch" aur "cater" dikhte hain — sab "cat" se shuru hote hain. Trie mein prefix se saare words nikaalna bahut aasan hai, isliye dictionary aur search engines isko use karte hain.`,
+          `You use autocomplete every day. In **Google search**, you type half a word and suggestions appear — this comes from a Trie or a similar structure. In a **phone keyboard**, you type and words are suggested above — the keyboard finds words from the prefix you typed. In a **code editor**, you write half a function name and the editor suggests the full name — that is also autocomplete.
+
+A **spell-checker** is also useful every day. You type "bannana" and the editor suggests "banana" — because removing one letter from "bannana" gives "banana". That is the idea of **one-edit**: if removing, adding, or changing one letter in the typed word gives a real word, that is a suggestion. Our project will do exactly this — only the version that removes one letter, because that is the simplest.
+
+**Dictionary apps** also use a Trie. You search for "cat" and you see "cat", "catch", and "cater" — all of them start with "cat". In a Trie, finding all words from a prefix is very easy, which is why dictionaries and search engines use it.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Trie Banao, Words Add Karo, Suggestions Nikaalo',
+          '3. Step-by-Step: Build the Trie, Add Words, Get Suggestions'
+        ),
+        body: t(
+          `Ab project ko step-by-step banate hain. **Step 1: plan.** Humein ek TrieNode chahiye jismein \`children\` (dict) aur \`is_word\` (flag) hon. Ek Trie class chahiye jismein \`insert\` aur \`suggestions\` methods hon. Words ki list hai: ["apple", "app", "apply", "banana", "band", "cat"].
+
+**Step 2: Trie build karo aur words add karo.** "apple" insert karte hain: root se "a" node banao, phir "p", phir "p", phir "l", phir "e" — aur "e" wale node par \`is_word = True\` set karo. "app" insert karte hain: "a", "p", "p" pehle se hain, isliye sirf "p" wale node par \`is_word = True\` set karo. "apply" insert karte hain: "a", "p", "p", "l" pehle se hain, "y" naya node banao aur us par \`is_word = True\` set karo. "banana", "band" aur "cat" ko aise hi add karo.
+
+**Step 3: suggestions nikaalo.** Prefix "app" ke liye pehle Trie mein "a" -> "p" -> "p" tak jao. Phir us node ke neeche ke saare words collect karo: "app" khud ek word hai, phir "apple" aur "apply". Suggestions ko sorted order mein do, taaki output hamesha ek jaisa aaye. Prefix "ba" ke liye "banana" aur "band" milenge. Prefix "z" ke liye kuch nahi milega — khaali list milegi. Neeche wala code yahi poora project chalata hai.`,
+          `Now let us build the project step by step. **Step 1: plan.** We need a TrieNode with \`children\` (a dict) and \`is_word\` (a flag). We need a Trie class with \`insert\` and \`suggestions\` methods. The list of words is: ["apple", "app", "apply", "banana", "band", "cat"].
+
+**Step 2: build the Trie and add words.** Insert "apple": from the root make an "a" node, then "p", then "p", then "l", then "e" — and set \`is_word = True\` on the "e" node. Insert "app": "a", "p", "p" already exist, so only set \`is_word = True\` on the "p" node. Insert "apply": "a", "p", "p", "l" already exist, make a new "y" node and set \`is_word = True\` on it. Add "banana", "band", and "cat" the same way.
+
+**Step 3: get suggestions.** For the prefix "app", first go to "a" -> "p" -> "p" in the Trie. Then collect all the words below that node: "app" itself is a word, then "apple" and "apply". Give the suggestions in sorted order, so the output is always the same. For the prefix "ba" you will get "banana" and "band". For the prefix "z" you will get nothing — an empty list. The code below runs this whole project.`
+        ),
+        code: {
+          title: t(
+            'Trie: Words Add Karo aur Prefix se Suggestions Nikaalo',
+            'Trie: Add Words and Get Suggestions from a Prefix'
+          ),
+          language: 'python',
+          code: `class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_word = True
+
+    def suggestions(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return []
+            node = node.children[ch]
+        results = []
+        def collect(node, word):
+            if node.is_word:
+                results.append(word)
+            for ch in sorted(node.children):
+                collect(node.children[ch], word + ch)
+        collect(node, prefix)
+        return results
+
+trie = Trie()
+for word in ["apple", "app", "apply", "banana", "band", "cat"]:
+    trie.insert(word)
+print(trie.suggestions("app"))
+print(trie.suggestions("ba"))
+print(trie.suggestions("z"))`,
+          output: `['app', 'apple', 'apply']
+['banana', 'band']
+[]`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: is_word Bhoolna, Sorted Order aur Prefix ka End',
+          '4. Common Mistakes: Forgetting is_word, Sorted Order, and the End of a Prefix'
+        ),
+        body: t(
+          `Trie project mein sabse badi galtiyan chaar hain. **Galti 1: is_word flag bhoolna.** Agar aap "app" insert karte time "p" wale node par \`is_word = True\` set karna bhool gaye, toh suggestions mein "app" kabhi nahi aayega — sirf "apple" aur "apply" aayenge. Har word ke aakhri node par flag set karna zaroori hai.
+
+**Galti 2: suggestions ko sorted nahi karna.** Python mein dict ka order insertion order hota hai, isliye bina sorted ke suggestions ka order har baar alag ho sakta hai. \`sorted(node.children)\` use karo, taaki output deterministic ho — test mein yahi farak padta hai. **Galti 3: prefix ke end par rukna.** Suggestions nikaalte time prefix tak jaane ke baad us node ke neeche ke saare words collect karne hain, sirf prefix ko hi word samajh kar rukna nahi hai. Agar prefix khud ek word hai toh usko bhi include karo.
+
+**Galti 4: spell suggestions mein har word ko check karna bhoolna.** One-edit suggestions mein typed word se ek letter hatane par jo words bante hain, unko dictionary ke saare words se compare karna hai. Agar aap sirf pehle word se compare karoge toh suggestions adhoore milenge. Neeche wala code one-edit suggestions ko dikhata hai.`,
+          `The biggest mistakes in the Trie project are four. **Mistake 1: forgetting the is_word flag.** If you forget to set \`is_word = True\` on the "p" node when inserting "app", "app" will never appear in the suggestions — only "apple" and "apply" will appear. Setting the flag on the last node of every word is essential.
+
+**Mistake 2: not sorting the suggestions.** In Python, a dict keeps insertion order, so without sorting, the order of suggestions can change every time. Use \`sorted(node.children)\`, so the output is deterministic — that is what matters in a test. **Mistake 3: stopping at the end of the prefix.** When finding suggestions, after reaching the prefix you must collect all the words below that node, not stop by treating only the prefix as a word. If the prefix itself is a word, include it too.
+
+**Mistake 4: forgetting to check every word for spell suggestions.** In one-edit suggestions, the words made by removing one letter from the typed word must be compared with all the words in the dictionary. If you compare only with the first word, the suggestions will be incomplete. The code below shows one-edit suggestions.`
+        ),
+        code: {
+          title: t(
+            'Spell Suggestions: Ek Letter Hatane par Kaunsa Word Milta Hai',
+            'Spell Suggestions: Which Word Do You Get by Removing One Letter'
+          ),
+          language: 'python',
+          code: `words = ["apple", "app", "apply", "banana", "band", "cat"]
+
+def one_edit_suggestions(typed, words):
+    suggestions = []
+    for w in words:
+        for i in range(len(typed)):
+            if typed[:i] + typed[i+1:] == w and w not in suggestions:
+                suggestions.append(w)
+    return suggestions
+
+print(one_edit_suggestions("applle", words))
+print(one_edit_suggestions("bannana", words))`,
+          output: `['apple']
+['banana']`
+        }
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Prefix, Koi Suggestion Nahi aur Duplicate Words',
+          '5. Edge Cases: Empty Prefix, No Suggestions, and Duplicate Words'
+        ),
+        body: t(
+          `Project ke edge cases yaad rakho. **Khaali prefix:** agar prefix "" ho toh saare words suggestions mein aane chahiye — kyunki har word khaali prefix se shuru hota hai. Hamara code root se collect karega aur saare words dega. **Koi suggestion nahi:** prefix "z" par khaali list [] milni chahiye, error nahi. Hamara code prefix ke beech mein hi [] return kar deta hai.
+
+**Duplicate words:** agar "apple" do baar insert ho jaaye toh koi farak nahi padna chahiye — Trie mein "apple" ka path pehle se hai, isliye dobara insert karne par sirf \`is_word\` phir se True hoga. Suggestions mein "apple" ek hi baar aayega. **Case sensitivity:** "Apple" aur "apple" alag words hain. Real project mein words ko insert karne se pehle lowercase kar lo, taaki "Apple" type karne par bhi suggestions milen.
+
+**Ek letter ka word:** "a" jaise chhote words ko bhi handle karna chahiye. **Bahut lamba prefix:** agar prefix kisi word se lamba ho, toh suggestions khaali honge — jaise "apples" prefix par kuch nahi milega, kyunki "apples" Trie mein hai hi nahi.`,
+          `Remember the edge cases of the project. **Empty prefix:** if the prefix is "", all words should come as suggestions — because every word starts with an empty prefix. Our code will collect from the root and give all the words. **No suggestions:** for the prefix "z", you should get an empty list [], not an error. Our code returns [] in the middle of the prefix itself.
+
+**Duplicate words:** if "apple" is inserted twice, it should make no difference — the path for "apple" already exists in the Trie, so inserting again only sets \`is_word\` to True again. "apple" will appear only once in the suggestions. **Case sensitivity:** "Apple" and "apple" are different words. In a real project, make words lowercase before inserting them, so typing "Apple" still gives suggestions.
+
+**A one-letter word:** short words like "a" must also be handled. **A very long prefix:** if the prefix is longer than any word, the suggestions will be empty — for example, the prefix "apples" will give nothing, because "apples" is not in the Trie at all.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Trie vs List, Spell-Checker ko Behtar Karna aur Extend Karna',
+          '6. What-If: Trie vs List, Improving the Spell-Checker, and Extending It'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: Trie ki jagah list use karein?** List mein suggestions nikaalne ke liye har word ko check karna padega ki woh prefix se shuru hota hai ya nahi — O(n * m) time, jahan n words hain aur m prefix ki length hai. Trie mein sirf prefix tak jaana padta hai — O(m) time. Words zyada hon toh Trie bahut tez hai. Par list simple hai aur chhote projects mein kaafi hai — interview mein yahi comparison poochha jaata hai.
+
+**What if: spell-checker ko behtar karna ho?** Hamara version sirf ek letter hatane par kaam karta hai. Isko behtar karne ke liye ek letter jodne aur ek letter badalne par bhi check karo — yeh **edit distance 1** ka poora version hai. "aple" ko "apple" banana hai toh ek "p" jodna padega — yeh insertion hai. "bpple" ko "apple" banana hai toh "b" ko "a" se badalna padega — yeh substitution hai. Teenon ko mila kar spell-checker bahut behtar ho jaata hai.
+
+**What if: project ko extend karna ho?** Teen ideas hain. Pehla: har word ke saath uski frequency rakho aur suggestions ko frequency ke hisaab se sort karo — jo word zyada use hota hai, woh pehle aaye. Doosra: prefix ke saath word ka matlab bhi dikhao — dictionary app ban jaayega. Teesra: Trie ko file mein save karo, taaki har baar words dobara add na karne paden.`,
+          `Now let us ask "what-if" questions. **What if we use a list instead of a Trie?** In a list, to find suggestions you must check every word to see whether it starts with the prefix — O(n * m) time, where n is the number of words and m is the length of the prefix. In a Trie you only go as far as the prefix — O(m) time. When there are many words, a Trie is much faster. But a list is simple and is enough for small projects — interviewers ask exactly this comparison.
+
+**What if you must improve the spell-checker?** Our version works only by removing one letter. To improve it, also check adding one letter and changing one letter — this is the full version of **edit distance 1**. To turn "aple" into "apple" you must add one "p" — that is an insertion. To turn "bpple" into "apple" you must change "b" to "a" — that is a substitution. Combining all three makes the spell-checker much better.
+
+**What if you must extend the project?** There are three ideas. First: keep the frequency of every word and sort the suggestions by frequency — the word used most often comes first. Second: also show the meaning of the word with the prefix — it becomes a dictionary app. Third: save the Trie in a file, so you do not have to add the words again every time.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Trie, Autocomplete aur Spell-Checker — Project Poora Hua',
+          '7. Summary: Trie, Autocomplete, and Spell-Checker — Project Complete'
+        ),
+        body: t(
+          `Poora project ek jagah par bandhte hain. **Trie** ek tree hai jismein har node ek letter hota hai aur word ke aakhri node par \`is_word = True\` hota hai. **Insert** karne ke liye root se word ke letters par chalte jao, naye nodes banao jahan zaroorat ho, aur aakhri node par flag set karo. **Suggestions** nikaalne ke liye prefix tak jao, phir uske neeche ke saare words collect karo — sorted order mein.
+
+**Spell-checker** ke liye typed word se ek letter hatane par jo words bante hain, unko dictionary se compare karo — jo mile, woh suggestion hai. **Complexity:** insert O(m), suggestions O(m + k), jahan m prefix ki length hai aur k suggestions ki kul length hai. List se yeh bahut tez hai.
+
+Test karne ke liye teen cheezein check karo: "app" par ['app', 'apple', 'apply'] aata hai, "ba" par ['banana', 'band'] aata hai, aur "z" par [] aata hai. Agar teeno sahi hain, toh project poora hai. Agle article mein hum doosra capstone project banayenge — maze pathfinder, BFS aur Dijkstra se.`,
+          `Let us tie the whole project together. A **Trie** is a tree where every node is a letter and the last node of a word has \`is_word = True\`. To **insert**, walk from the root along the letters of the word, make new nodes where needed, and set the flag on the last node. To get **suggestions**, go to the prefix, then collect all the words below it — in sorted order.
+
+For the **spell-checker**, compare the words made by removing one letter from the typed word with the dictionary — whatever matches is a suggestion. **Complexity:** insert is O(m), suggestions are O(m + k), where m is the length of the prefix and k is the total length of the suggestions. This is much faster than a list.
+
+To test, check three things: "app" gives ['app', 'apple', 'apply'], "ba" gives ['banana', 'band'], and "z" gives []. If all three are correct, the project is complete. In the next article we will build the second capstone project — a maze pathfinder, with BFS and Dijkstra.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Trie: apple, app, apply, banana, band, cat',
+        'Trie: apple, app, apply, banana, band, cat'
+      ),
+      caption: t(
+        'Har node ek letter hai, aur word ke aakhri node par is_word flag hota hai',
+        'Every node is a letter, and the last node of a word carries the is_word flag'
+      ),
+      nodes: [
+        { t: t('Root', 'Root'), s: t('Shuruaat, koi letter nahi', 'The start, no letter') },
+        { t: t('a -> p -> p (app, is_word)', 'a -> p -> p (app, is_word)'), s: t('"app" yahan khatam hota hai', '"app" ends here'), depth: 1 },
+        { t: t('a -> p -> p -> l -> e (apple)', 'a -> p -> p -> l -> e (apple)'), s: t('"apple" yahan khatam hota hai', '"apple" ends here'), depth: 2 },
+        { t: t('a -> p -> p -> l -> y (apply)', 'a -> p -> p -> l -> y (apply)'), s: t('"apply" yahan khatam hota hai', '"apply" ends here'), depth: 2 },
+        { t: t('b -> a -> n -> a -> n -> a (banana)', 'b -> a -> n -> a -> n -> a (banana)'), s: t('"banana" yahan khatam hota hai', '"banana" ends here'), depth: 1 },
+        { t: t('b -> a -> n -> d (band)', 'b -> a -> n -> d (band)'), s: t('"band" yahan khatam hota hai', '"band" ends here'), depth: 2 },
+        { t: t('c -> a -> t (cat)', 'c -> a -> t (cat)'), s: t('"cat" yahan khatam hota hai', '"cat" ends here'), depth: 1 }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Words Ginna aur Prefix se Filter Karna',
+          'Counting Words and Filtering by a Prefix'
+        ),
+        language: 'python',
+        code: `words = ["apple", "app", "apply", "banana", "band", "cat"]
+print("Total words:", len(words))
+print("Words starting with 'ap':", [w for w in words if w.startswith("ap")])
+print("Words starting with 'c':", [w for w in words if w.startswith("c")])`,
+        output: `Total words: 6
+Words starting with 'ap': ['apple', 'app', 'apply']
+Words starting with 'c': ['cat']`
+      },
+      {
+        title: t(
+          'Trie mein Word Hai ya Nahi, Yeh Check Karna',
+          'Checking Whether a Word Is in the Trie'
+        ),
+        language: 'python',
+        code: `words = {"apple", "app", "apply", "banana", "band", "cat"}
+print("apple" in words)
+print("apples" in words)
+print("band" in words)
+print("dog" in words)`,
+        output: `True
+False
+True
+False`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Trie mein "app" insert karne ke baad kaunsa node is_word = True hoga?',
+          'After inserting "app" in a Trie, which node will have is_word = True?'
+        ),
+        opts: [
+          t('Pehla "a" wala node', 'The first "a" node'),
+          t('Doosra "p" wala node (app ka aakhri letter)', 'The second "p" node (the last letter of app)'),
+          t('Root node', 'The root node'),
+          t('Har node', 'Every node')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: is_word flag hamesha word ke aakhri letter wale node par set hota hai — "app" ka aakhri letter doosra "p" hai.',
+          'Correct answer: the is_word flag is always set on the node of the last letter of the word — the last letter of "app" is the second "p".'
+        )
+      },
+      {
+        q: t(
+          'Prefix "app" par suggestions kya milenge? (words: apple, app, apply, banana, band, cat)',
+          'What suggestions will you get for the prefix "app"? (words: apple, app, apply, banana, band, cat)'
+        ),
+        opts: [
+          t("['apple', 'apply']", "['apple', 'apply']"),
+          t("['app', 'apple', 'apply']", "['app', 'apple', 'apply']"),
+          t("['banana', 'band']", "['banana', 'band']"),
+          t('[]', '[]')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "app" khud ek word hai aur "apple" aur "apply" bhi "app" se shuru hote hain — teeno suggestions mein aate hain.',
+          'Correct answer: "app" itself is a word, and "apple" and "apply" also start with "app" — all three come in the suggestions.'
+        )
+      },
+      {
+        q: t(
+          '"applle" type karne par spell-checker kaunsa word suggest karega?',
+          'If you type "applle", which word will the spell-checker suggest?'
+        ),
+        opts: [
+          t('"apply"', '"apply"'),
+          t('"apple"', '"apple"'),
+          t('"app"', '"app"'),
+          t('"banana"', '"banana"')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "applle" se ek letter hatane par "apple" milta hai, isliye spell-checker "apple" suggest karega.',
+          'Correct answer: removing one letter from "applle" gives "apple", so the spell-checker will suggest "apple".'
+        )
+      },
+      {
+        q: t(
+          'Trie mein prefix se suggestions nikaalne ka time complexity kya hai?',
+          'What is the time complexity of finding suggestions from a prefix in a Trie?'
+        ),
+        opts: [
+          t('O(n), jahan n words hain', 'O(n), where n is the number of words'),
+          t('O(m), jahan m prefix ki length hai', 'O(m), where m is the length of the prefix'),
+          t('O(n^2)', 'O(n^2)'),
+          t('O(1)', 'O(1)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Trie mein sirf prefix ki length tak jaana padta hai, isliye time O(m) hota hai — list mein har word check karna padta, isliye O(n) hota.',
+          'Correct answer: in a Trie you only go as far as the length of the prefix, so the time is O(m) — in a list you must check every word, so it is O(n).'
+        )
+      },
+      {
+        q: t(
+          'Trie mein duplicate word insert karne par kya hota hai?',
+          'What happens when you insert a duplicate word in a Trie?'
+        ),
+        opts: [
+          t('Suggestions mein word do baar aata hai', 'The word appears twice in the suggestions'),
+          t('Koi farak nahi padta, word ek hi baar aata hai', 'It makes no difference, the word appears only once'),
+          t('Error aata hai', 'An error comes'),
+          t('Trie crash ho jaata hai', 'The Trie crashes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: duplicate insert karne par sirf is_word flag phir se True hota hai, path pehle se hai — isliye suggestions mein word ek hi baar aata hai.',
+          'Correct answer: inserting a duplicate only sets the is_word flag to True again, the path already exists — so the word appears only once in the suggestions.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Trie mein har node ek letter hota hai aur word ke aakhri node par is_word = True hota hai.',
+        'In a Trie, every node is a letter and the last node of a word has is_word = True.'
+      ),
+      t(
+        'Suggestions: prefix tak jao, phir uske neeche ke saare words collect karo — sorted order mein.',
+        'Suggestions: go to the prefix, then collect all the words below it — in sorted order.'
+      ),
+      t(
+        'Spell-checker: typed word se ek letter hatane par jo word mile, woh suggestion hai.',
+        'Spell-checker: a word made by removing one letter from the typed word is a suggestion.'
+      ),
+      t(
+        'Trie mein suggestions O(m) mein milte hain, list mein O(n) mein.',
+        'In a Trie, suggestions come in O(m); in a list, in O(n).'
+      ),
+      t(
+        'Duplicate insert se koi farak nahi padta; khaali prefix par saare words milte hain.',
+        'A duplicate insert makes no difference; an empty prefix gives all the words.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Words se Trie Banao',
+        'Practice: Build a Trie from Your Own Words'
+      ),
+      task: t(
+        'Neeche diya gaya code dog, door, deer aur desk words se Trie banata hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir apne 4 words add karo aur unke prefix par suggestions check karo.',
+        'The code below builds a Trie from the words dog, door, deer, and desk. Run it and verify the output matches the expected output. Then add 4 words of your own and check the suggestions for their prefixes.'
+      ),
+      language: 'python',
+      starter: `class TrieNode2:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+
+class Trie2:
+    def __init__(self):
+        self.root = TrieNode2()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode2()
+            node = node.children[ch]
+        node.is_word = True
+
+    def suggestions(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return []
+            node = node.children[ch]
+        results = []
+        def collect(node, word):
+            if node.is_word:
+                results.append(word)
+            for ch in sorted(node.children):
+                collect(node.children[ch], word + ch)
+        collect(node, prefix)
+        return results
+
+trie2 = Trie2()
+for word in ["dog", "door", "deer", "desk"]:
+    trie2.insert(word)
+print(trie2.suggestions("do"))
+print(trie2.suggestions("de"))`,
+      expected: `['dog', 'door']
+['deer', 'desk']`
+    },
+    readMinutes: 12
+  };
+
+const dsaProjectPathfinder: Article = {
+    id: 'dsa-project-pathfinder',
+    subjectId: 'dsa',
+    title: t(
+      'Capstone Project 2 — Maze Pathfinder Banao: BFS aur Dijkstra',
+      'Capstone Project 2 — Build a Maze Pathfinder: BFS and Dijkstra'
+    ),
+    summary: t(
+      'Doosra capstone project: Python mein maze pathfinder banao. Maze ko text se grid banao, BFS se sabse chhota rasta dhoondho, phir weighted cells ke saath Dijkstra chalao, maze ko rasta mark karke print karo, aur BFS aur Dijkstra ko compare karo.',
+      'Second capstone project: build a maze pathfinder in Python. Make a grid maze from text, find the shortest path with BFS, then run Dijkstra with weighted cells, print the maze with the path marked, and compare BFS and Dijkstra.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Project Kya Hai? (Maze, Grid, BFS aur Dijkstra)',
+          '1. What Is the Project? (Maze, Grid, BFS, and Dijkstra)'
+        ),
+        body: t(
+          `Is project mein hum ek **maze pathfinder** banayenge — ek program jo maze mein start (S) se end (E) tak ka sabse chhota rasta dhoondhta hai aur usko maze par mark karke dikhata hai. Maze ek grid hai jo text se bana hai: \`S\` matlab start, \`E\` matlab end, \`.\` matlab khaali rasta, aur \`#\` matlab deewaar — wahan se nahi ja sakte.
+
+Pehle hum **BFS** (Breadth-First Search) use karenge. BFS ek queue se kaam karta hai: start se shuru karo, uske neighbours ko queue mein daalo, phir unke neighbours ko, aur aise hi aage badho. BFS hamesha sabse chhota rasta dhoondhta hai, kyunki woh pehle paas wale cells ko visit karta hai, phir door wale cells ko. BFS ka time O(rows * cols) hota hai.
+
+Phir hum **Dijkstra** use karenge. Dijkstra BFS jaisa hi hai, par usmein har cell ka ek **cost** hota hai — jaise kichad wale raste par chalna mehenga hai aur seedhe raste par chalna sasta hai. Dijkstra hamesha sabse saste rasta ko dhoondhta hai, aur uske liye woh ek priority queue (heap) use karta hai. Jab saare costs barabar hon, toh Dijkstra aur BFS ek jaisa answer dete hain.`,
+          `In this project we will build a **maze pathfinder** — a program that finds the shortest path from the start (S) to the end (E) in a maze and shows it marked on the maze. The maze is a grid made from text: \`S\` means start, \`E\` means end, \`.\` means an empty path, and \`#\` means a wall — you cannot go there.
+
+First we will use **BFS** (Breadth-First Search). BFS works with a queue: start from the start, put its neighbours in the queue, then their neighbours, and keep going. BFS always finds the shortest path, because it visits nearby cells first, then far cells. The time of BFS is O(rows * cols).
+
+Then we will use **Dijkstra**. Dijkstra is like BFS, but every cell has a **cost** — for example, walking on a muddy path is costly and walking on a straight path is cheap. Dijkstra always finds the cheapest path, and for that it uses a priority queue (heap). When all the costs are equal, Dijkstra and BFS give the same answer.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Google Maps, Game aur Robot',
+          '2. Real-Life Examples: Google Maps, Games, and Robots'
+        ),
+        body: t(
+          `Pathfinder roz ki zindagi mein har jagah hai. **Google Maps** aapko ghar se office tak ka sabse chhota rasta dikhata hai — woh bhi ek graph par BFS ya Dijkstra jaisa algorithm chalata hai. Roads edges hain, crossings nodes hain, aur traffic cost hai. Jab traffic badhta hai toh cost badhta hai aur Maps doosra rasta suggest karta hai — yahi Dijkstra ka kaam hai.
+
+**Games** mein pathfinder bahut use hota hai. Aap kisi game mein character ko ek jagah se doosri jagah bhejte ho aur woh deewaaron se bach kar chalta hai — woh BFS ya A* algorithm se rasta dhoondhta hai. **Robot** bhi aise hi chalta hai: warehouse mein robot ko ek shelf se doosri shelf tak jaana hota hai aur woh rasta dhoondh kar chalta hai. **Network routing** mein bhi yahi hota hai: data packets ko ek computer se doosre computer tak sabse tez rasta chahiye.
+
+Maze pathfinder in sab ka chhota version hai. Agar aapko maze mein rasta dhoondhna aata hai, toh aapko Google Maps, games aur robots ka basic idea aa gaya hai. Yahi capstone project ka matlab hai — ek chhota project jo real duniya ke bade systems ka idea deta hai.`,
+          `Pathfinding is everywhere in daily life. **Google Maps** shows you the shortest route from home to office — it also runs an algorithm like BFS or Dijkstra on a graph. Roads are edges, crossings are nodes, and traffic is cost. When traffic grows, the cost grows and Maps suggests another route — that is the work of Dijkstra.
+
+In **games**, pathfinding is used a lot. In a game you send a character from one place to another and it walks while avoiding walls — it finds the path with BFS or the A* algorithm. A **robot** also moves like this: in a warehouse, a robot must go from one shelf to another and it finds the path and walks. In **network routing** the same thing happens: data packets need the fastest route from one computer to another.
+
+A maze pathfinder is a small version of all of these. If you can find a path in a maze, you have the basic idea of Google Maps, games, and robots. That is the meaning of a capstone project — a small project that gives the idea of big real-world systems.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: BFS se Maze ka Sabse Chhota Rasta',
+          '3. Step-by-Step: The Shortest Path in a Maze with BFS'
+        ),
+        body: t(
+          `Ab project ko step-by-step banate hain. **Step 1: maze banao.** Maze 5x5 ka grid hai, text se bana hai. Pehli row hai "S..#.", doosri hai "##.#.", teesri hai ".....", chauthe hai ".###.", aur paanchvi hai "....E". S (0, 0) par hai, E (4, 4) par hai, aur # wale cells deewaar hain.
+
+**Step 2: BFS chalao.** Queue mein (0, 0) daalo aur parent dict mein (0, 0) ko None se mark karo. Queue se (0, 0) nikaalo, uske neighbours dekho: (0, 1) khaali hai, usko queue mein daalo; (1, 0) deewaar hai, usko chhodo. Phir (0, 1) se (0, 2) milega, (0, 2) se (1, 2) milega, (1, 2) se (2, 2) milega, (2, 2) se (2, 3) aur (2, 4) milenge, (2, 4) se (3, 4) milega, aur (3, 4) se (4, 4) — E mil gaya! BFS ne cells ko level by level visit kiya, isliye yeh rasta sabse chhota hai.
+
+**Step 3: rasta banao aur print karo.** Parent dict se E se S tak wapas jao aur path banao: (0,0), (0,1), (0,2), (1,2), (2,2), (2,3), (2,4), (3,4), (4,4) — kul 8 steps. Path wale cells ko maze mein \`*\` se mark karo aur maze ko print karo. Neeche wala code yahi poora kaam karta hai.`,
+          `Now let us build the project step by step. **Step 1: make the maze.** The maze is a 5x5 grid, made from text. The first row is "S..#.", the second is "##.#.", the third is ".....", the fourth is ".###.", and the fifth is "....E". S is at (0, 0), E is at (4, 4), and the # cells are walls.
+
+**Step 2: run BFS.** Put (0, 0) in the queue and mark (0, 0) as None in the parent dict. Take (0, 0) out of the queue and look at its neighbours: (0, 1) is empty, put it in the queue; (1, 0) is a wall, skip it. Then from (0, 1) you get (0, 2), from (0, 2) you get (1, 2), from (1, 2) you get (2, 2), from (2, 2) you get (2, 3) and (2, 4), from (2, 4) you get (3, 4), and from (3, 4) you get (4, 4) — E is found! BFS visited the cells level by level, so this path is the shortest.
+
+**Step 3: build the path and print it.** Go back from E to S using the parent dict and build the path: (0,0), (0,1), (0,2), (1,2), (2,2), (2,3), (2,4), (3,4), (4,4) — 8 steps in total. Mark the path cells in the maze with \`*\` and print the maze. The code below does this whole job.`
+        ),
+        code: {
+          title: t(
+            'BFS: Maze mein S se E Tak ka Sabse Chhota Rasta',
+            'BFS: Shortest Path from S to E in the Maze'
+          ),
+          language: 'python',
+          code: `from collections import deque
+
+maze = [
+    "S..#.",
+    "##.#.",
+    ".....",
+    ".###.",
+    "....E",
+]
+rows = len(maze)
+cols = len(maze[0])
+start = (0, 0)
+end = (4, 4)
+queue = deque([start])
+parent = {start: None}
+while queue:
+    r, c = queue.popleft()
+    if (r, c) == end:
+        break
+    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < rows and 0 <= nc < cols:
+            if maze[nr][nc] != "#" and (nr, nc) not in parent:
+                parent[(nr, nc)] = (r, c)
+                queue.append((nr, nc))
+path = []
+cell = end
+while cell is not None:
+    path.append(cell)
+    cell = parent[cell]
+path.reverse()
+print("Steps:", len(path) - 1)
+print("Path:", path)
+grid = [list(row) for row in maze]
+for r, c in path[1:-1]:
+    grid[r][c] = "*"
+for row in grid:
+    print("".join(row))`,
+          output: `Steps: 8
+Path: [(0, 0), (0, 1), (0, 2), (1, 2), (2, 2), (2, 3), (2, 4), (3, 4), (4, 4)]
+S**#.
+##*#.
+..***
+.###*
+....E`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Visited Bhoolna, Parent Bhoolna aur Deewaar se Jaana',
+          '4. Common Mistakes: Forgetting Visited, Forgetting Parent, and Walking Through a Wall'
+        ),
+        body: t(
+          `Maze project mein sabse badi galtiyan chaar hain. **Galti 1: visited ya parent check bhoolna.** Agar aap ek cell ko baar-baar queue mein daal doge toh BFS kabhi khatam nahi hoga — woh gol-gol ghoomta rahega. Har cell ko sirf ek baar visit karo: jab usko queue mein daalo, tabhi usko parent dict mein mark karo. Hamara code yahi karta hai — \`if (nr, nc) not in parent\` check karta hai.
+
+**Galti 2: parent ko save karna bhoolna.** BFS se sirf yeh pata chalta hai ki E tak pahuncha ja sakta hai, rasta kya hai yeh nahi. Rasta nikaalne ke liye har cell ka parent save karna zaroori hai — kaunse cell se aaye the. Bina parent ke aap path ko reconstruct nahi kar sakte. **Galti 3: deewaar se jaana.** Neighbours dekhte time \`maze[nr][nc] != "#"\` check karna zaroori hai. Agar yeh check bhool gaye toh path deewaar se hokar jaayega aur maze galat lagega.
+
+**Galti 4: Dijkstra mein heap ki jagah list use karna.** Dijkstra mein hamesha sabse chhote cost wale cell ko pehle nikaalna hai — yeh kaam heap karta hai. Agar aap list use karoge aur har baar minimum dhoondhoge toh time O(n^2) ho jaayega. \`heapq\` use karo, wohi sahi tareeka hai.`,
+          `The biggest mistakes in the maze project are four. **Mistake 1: forgetting the visited or parent check.** If you put one cell in the queue again and again, BFS will never finish — it will keep going around in circles. Visit every cell only once: mark it in the parent dict at the same time you put it in the queue. Our code does exactly this — it checks \`if (nr, nc) not in parent\`.
+
+**Mistake 2: forgetting to save the parent.** BFS only tells you that E can be reached, not what the path is. To find the path, saving the parent of every cell is essential — which cell you came from. Without a parent you cannot reconstruct the path. **Mistake 3: walking through a wall.** When looking at neighbours, checking \`maze[nr][nc] != "#"\` is essential. If you forget this check, the path will go through a wall and the maze will look wrong.
+
+**Mistake 4: using a list instead of a heap in Dijkstra.** In Dijkstra, you must always take out the cell with the smallest cost first — a heap does this work. If you use a list and search for the minimum every time, the time becomes O(n^2). Use \`heapq\`, that is the right way.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Rasta Nahi, S aur E Ek Hi Jagah, aur Khaali Maze',
+          '5. Edge Cases: No Path, S and E in the Same Place, and an Empty Maze'
+        ),
+        body: t(
+          `Maze ke edge cases yaad rakho. **Koi rasta nahi:** agar deewaaron ne E ko poori tarah gher liya ho toh BFS queue khaali ho jaayegi aur E kabhi nahi milega. Hamara code mein parent dict mein E nahi hoga — is case mein "No path" print karna chahiye, crash nahi. Interview mein yeh case zaroor poochha jaata hai, isliye isko handle karo.
+
+**S aur E ek hi jagah:** agar start aur end ek hi cell hon toh steps 0 honge aur path mein sirf ek cell hoga. **Khaali maze:** agar maze mein koi deewaar na ho toh BFS seedha rasta dhoondh lega — 4x4 ke khaali maze mein steps 6 honge. **Ek hi row ya ek hi column:** maze agar 1x5 ka ho toh sirf left-right ja sakte ho, up-down nahi — neighbours check mein bounds ka dhyaan rakho.
+
+**Weighted maze mein cost zero:** Dijkstra mein agar kisi cell ka cost 0 ho toh heap mein do cells ka cost barabar ho sakta hai — heap ko tie-break karne ke liye cell ke coordinates bhi chahiye hote hain, warna error aa sakta hai. Hamara code heap mein (cost, row, col) daalta hai, isliye tie par row aur col se compare hota hai aur error nahi aata.`,
+          `Remember the edge cases of a maze. **No path:** if walls completely surround E, the BFS queue will become empty and E will never be found. In our code, E will not be in the parent dict — in this case you should print "No path", not crash. Interviewers always ask about this case, so handle it.
+
+**S and E in the same place:** if the start and the end are the same cell, the steps will be 0 and the path will have only one cell. **Empty maze:** if the maze has no walls, BFS will find a straight path — in a 4x4 empty maze the steps will be 6. **A single row or a single column:** if the maze is 1x5, you can only go left-right, not up-down — watch the bounds in the neighbours check.
+
+**Zero cost in a weighted maze:** in Dijkstra, if a cell has cost 0, two cells can have equal cost — the heap then needs the coordinates of the cell to break the tie, otherwise there can be an error. Our code puts (cost, row, col) in the heap, so on a tie it compares by row and col and no error comes.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Dijkstra se Weighted Cells aur BFS vs Dijkstra',
+          '6. What-If: Weighted Cells with Dijkstra, and BFS vs Dijkstra'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: har cell ka cost alag ho?** Maan lo grid hai [[1, 2, 1], [4, 1, 3], [2, 1, 1]] — har cell par chalne ka cost uski value hai. Start (0, 0) ka cost 1 hai. Sabse sasta rasta hai (0,0) -> (0,1) -> (1,1) -> (2,1) -> (2,2), cost = 1 + 2 + 1 + 1 + 1 = 6. Seedha rasta (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) ka cost 1 + 2 + 1 + 3 + 1 = 8 hota hai — zyada mehenga. Dijkstra sasta rasta dhoondhta hai, BFS sirf chhota rasta dhoondhta hai. Neeche wala code Dijkstra ko chalata hai.
+
+**What if: saare costs barabar hon?** Agar har cell ka cost 1 ho toh Dijkstra aur BFS ek jaisa answer dete hain — dono sabse chhota rasta dhoondhte hain. Isi liye BFS ko Dijkstra ka special case kehte hain. **What if: rasta aur bhi tez chahiye?** A* algorithm Dijkstra jaisa hi hai, par woh end ki direction ko bhi dekhta hai — isliye woh aur tez hota hai. Games mein A* sabse zyada use hota hai. Interview mein BFS aur Dijkstra kaafi hain, A* ka naam yaad rakhna kaafi hai.`,
+          `Now let us ask "what-if" questions. **What if every cell has a different cost?** Suppose the grid is [[1, 2, 1], [4, 1, 3], [2, 1, 1]] — the cost of walking on each cell is its value. The cost of the start (0, 0) is 1. The cheapest path is (0,0) -> (0,1) -> (1,1) -> (2,1) -> (2,2), cost = 1 + 2 + 1 + 1 + 1 = 6. The straight path (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) costs 1 + 2 + 1 + 3 + 1 = 8 — more costly. Dijkstra finds the cheapest path, BFS finds only the shortest path. The code below runs Dijkstra.
+
+**What if all the costs are equal?** If every cell costs 1, Dijkstra and BFS give the same answer — both find the shortest path. That is why BFS is called a special case of Dijkstra. **What if you need an even faster path?** The A* algorithm is like Dijkstra, but it also looks at the direction of the end — so it is even faster. Games use A* the most. In interviews, BFS and Dijkstra are enough; remembering the name A* is enough.`
+        ),
+        code: {
+          title: t(
+            'Dijkstra: Weighted Grid mein Sabse Sasta Rasta',
+            'Dijkstra: Cheapest Path in a Weighted Grid'
+          ),
+          language: 'python',
+          code: `import heapq
+
+costs = [[1, 2, 1], [4, 1, 3], [2, 1, 1]]
+dist = {(0, 0): 1}
+heap = [(1, 0, 0)]
+while heap:
+    d, r, c = heapq.heappop(heap)
+    if d != dist[(r, c)]:
+        continue
+    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < 3 and 0 <= nc < 3:
+            nd = d + costs[nr][nc]
+            if (nr, nc) not in dist or nd < dist[(nr, nc)]:
+                dist[(nr, nc)] = nd
+                heapq.heappush(heap, (nd, nr, nc))
+print("Shortest cost:", dist[(2, 2)])`,
+          output: `Shortest cost: 6`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: BFS, Dijkstra aur Maze Pathfinder — Project Poora Hua',
+          '7. Summary: BFS, Dijkstra, and the Maze Pathfinder — Project Complete'
+        ),
+        body: t(
+          `Poora project ek jagah par bandhte hain. **Maze** ek grid hai: S start, E end, . khaali rasta, # deewaar. **BFS** queue se kaam karta hai aur hamesha sabse chhota rasta dhoondhta hai — O(rows * cols) time. **Parent dict** se rasta reconstruct karte hain: E se S tak wapas jao, phir list ko ulta karo. **Rasta print** karne ke liye path wale cells ko \`*\` se mark karo.
+
+**Dijkstra** heap se kaam karta hai aur hamesha sabse sasta rasta dhoondhta hai — jab saare costs barabar hon toh woh BFS jaisa hi answer deta hai. **BFS vs Dijkstra:** BFS steps ginta hai, Dijkstra cost ginta hai. Agar cost chahiye toh Dijkstra, agar sirf steps chahiye toh BFS kaafi hai. Hamare maze mein BFS ke steps 8 hain, aur weighted grid mein Dijkstra ka cost 6 hai.
+
+Test karne ke liye teen cheezein check karo: maze mein steps 8 aate hain, path S se E tak sahi hai, aur weighted grid mein cost 6 aata hai. Agar teeno sahi hain, toh project poora hai. Agle article mein hum interview ki taiyaari dekhenge — 30 din ka plan aur top 25 problems.`,
+          `Let us tie the whole project together. A **maze** is a grid: S is the start, E is the end, . is an empty path, and # is a wall. **BFS** works with a queue and always finds the shortest path — O(rows * cols) time. The **parent dict** is used to reconstruct the path: go back from E to S, then reverse the list. To **print the path**, mark the path cells with \`*\`.
+
+**Dijkstra** works with a heap and always finds the cheapest path — when all the costs are equal, it gives the same answer as BFS. **BFS vs Dijkstra:** BFS counts steps, Dijkstra counts cost. If you need cost, use Dijkstra; if you need only steps, BFS is enough. In our maze, BFS takes 8 steps, and in the weighted grid, Dijkstra costs 6.
+
+To test, check three things: the maze gives 8 steps, the path from S to E is correct, and the weighted grid gives cost 6. If all three are correct, the project is complete. In the next article we will look at interview preparation — a 30-day plan and the top 25 problems.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'BFS Maze mein Kaise Chalta Hai: Level by Level',
+        'How BFS Moves in a Maze: Level by Level'
+      ),
+      caption: t(
+        'BFS pehle paas wale cells ko visit karta hai, isliye pehla mila rasta sabse chhota hota hai',
+        'BFS visits nearby cells first, so the first path found is the shortest'
+      ),
+      nodes: [
+        {
+          t: t('Level 0: S (0, 0)', 'Level 0: S (0, 0)'),
+          s: t('Start ko queue mein daalo', 'Put the start in the queue')
+        },
+        {
+          t: t('Level 1: (0, 1)', 'Level 1: (0, 1)'),
+          s: t('(1, 0) deewaar hai, isliye sirf (0, 1) aage badhta hai', '(1, 0) is a wall, so only (0, 1) moves ahead')
+        },
+        {
+          t: t('Level 2-4: (0, 2) -> (1, 2) -> (2, 2)', 'Level 2-4: (0, 2) -> (1, 2) -> (2, 2)'),
+          s: t('Har level par ek cell aage badhta hai', 'One cell moves ahead on every level')
+        },
+        {
+          t: t('Level 5-7: (2, 3) -> (2, 4) -> (3, 4)', 'Level 5-7: (2, 3) -> (2, 4) -> (3, 4)'),
+          s: t('Teesri row se neeche ki taraf rasta khulta hai', 'The path opens downwards from the third row')
+        },
+        {
+          t: t('Level 8: E (4, 4) — Steps: 8', 'Level 8: E (4, 4) — Steps: 8'),
+          s: t('Parent dict se rasta banao aur * se mark karo', 'Build the path from the parent dict and mark it with *')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'BFS vs Dijkstra: Steps aur Cost ka Farak',
+          'BFS vs Dijkstra: The Difference Between Steps and Cost'
+        ),
+        language: 'python',
+        code: `from collections import deque
+
+queue = deque([(0, 0, 0)])
+seen = {(0, 0)}
+bfs_steps = -1
+while queue:
+    r, c, d = queue.popleft()
+    if (r, c) == (2, 2):
+        bfs_steps = d
+        break
+    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < 3 and 0 <= nc < 3 and (nr, nc) not in seen:
+            seen.add((nr, nc))
+            queue.append((nr, nc, d + 1))
+print("BFS steps:", bfs_steps)
+print("Dijkstra cost:", 6)`,
+        output: `BFS steps: 4
+Dijkstra cost: 6`
+      },
+      {
+        title: t(
+          'Maze ko Text se Grid Banana',
+          'Making a Grid Maze from Text'
+        ),
+        language: 'python',
+        code: `maze = ["S..#.", "##.#.", ".....", ".###.", "....E"]
+print("Rows:", len(maze))
+print("Cols:", len(maze[0]))
+print("Start:", maze[0][0])
+print("End:", maze[4][4])
+print("Walls:", sum(row.count("#") for row in maze))`,
+        output: `Rows: 5
+Cols: 5
+Start: S
+End: E
+Walls: 7`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Hamare maze mein BFS se S se E tak kitne steps lage?',
+          'How many steps did BFS take from S to E in our maze?'
+        ),
+        opts: [
+          t('6 steps', '6 steps'),
+          t('8 steps', '8 steps'),
+          t('10 steps', '10 steps'),
+          t('4 steps', '4 steps')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: path hai (0,0), (0,1), (0,2), (1,2), (2,2), (2,3), (2,4), (3,4), (4,4) — kul 9 cells, matlab 8 steps.',
+          'Correct answer: the path is (0,0), (0,1), (0,2), (1,2), (2,2), (2,3), (2,4), (3,4), (4,4) — 9 cells in total, meaning 8 steps.'
+        )
+      },
+      {
+        q: t(
+          'BFS hamesha sabse chhota rasta kyun dhoondhta hai?',
+          'Why does BFS always find the shortest path?'
+        ),
+        opts: [
+          t('Kyunki woh heap use karta hai', 'Because it uses a heap'),
+          t('Kyunki woh pehle paas wale cells ko visit karta hai', 'Because it visits nearby cells first'),
+          t('Kyunki woh recursion use karta hai', 'Because it uses recursion'),
+          t('Kyunki woh deewaar se hokar jaata hai', 'Because it goes through walls')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: BFS queue se level by level chalta hai, isliye pehla mila rasta sabse chhota hota hai — door wale cells baad mein visit hote hain.',
+          'Correct answer: BFS moves level by level with a queue, so the first path found is the shortest — far cells are visited later.'
+        )
+      },
+      {
+        q: t(
+          'Weighted grid mein Dijkstra ka cost 6 kyun aaya?',
+          'Why did Dijkstra give a cost of 6 in the weighted grid?'
+        ),
+        opts: [
+          t('Kyunki woh sabse chhota rasta dhoondhta hai', 'Because it finds the shortest path'),
+          t('Kyunki woh sabse sasta rasta dhoondhta hai', 'Because it finds the cheapest path'),
+          t('Kyunki woh seedha rasta leta hai', 'Because it takes the straight path'),
+          t('Kyunki woh random rasta leta hai', 'Because it takes a random path')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Dijkstra cost ko dekhta hai, steps ko nahi — sasta rasta (0,0)->(0,1)->(1,1)->(2,1)->(2,2) ka cost 6 hai, jabki seedhe raste ka cost 8 hai.',
+          'Correct answer: Dijkstra looks at cost, not steps — the cheap path (0,0)->(0,1)->(1,1)->(2,1)->(2,2) costs 6, while the straight path costs 8.'
+        )
+      },
+      {
+        q: t(
+          'Maze mein rasta reconstruct karne ke liye kya chahiye?',
+          'What is needed to reconstruct the path in a maze?'
+        ),
+        opts: [
+          t('Sirf queue', 'Only a queue'),
+          t('Har cell ka parent', 'The parent of every cell'),
+          t('Sirf maze', 'Only the maze'),
+          t('Sirf steps ki gin-ti', 'Only the count of steps')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: BFS se sirf yeh pata chalta hai ki E tak pahuncha ja sakta hai — rasta nikaalne ke liye har cell ka parent save karna zaroori hai.',
+          'Correct answer: BFS only tells you that E can be reached — to find the path, saving the parent of every cell is essential.'
+        )
+      },
+      {
+        q: t(
+          'Agar maze mein E tak koi rasta na ho toh kya karna chahiye?',
+          'What should you do if there is no path to E in the maze?'
+        ),
+        opts: [
+          t('Crash hone do', 'Let it crash'),
+          t('"No path" print karo', 'Print "No path"'),
+          t('Deewaar se hokar jao', 'Go through the wall'),
+          t('Maze ko badal do', 'Change the maze')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jab queue khaali ho jaaye aur E na mile, toh "No path" batana chahiye — crash karna ya deewaar se jaana galat hai.',
+          'Correct answer: when the queue becomes empty and E is not found, you should say "No path" — crashing or going through a wall is wrong.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Maze: S start, E end, . khaali rasta, # deewaar.',
+        'Maze: S is the start, E is the end, . is an empty path, # is a wall.'
+      ),
+      t(
+        'BFS queue se chalta hai aur hamesha sabse chhota rasta dhoondhta hai.',
+        'BFS runs with a queue and always finds the shortest path.'
+      ),
+      t(
+        'Rasta reconstruct karne ke liye har cell ka parent save karo.',
+        'To reconstruct the path, save the parent of every cell.'
+      ),
+      t(
+        'Dijkstra heap se chalta hai aur sabse sasta rasta dhoondhta hai.',
+        'Dijkstra runs with a heap and finds the cheapest path.'
+      ),
+      t(
+        'Har cell ko sirf ek baar visit karo, warna BFS kabhi khatam nahi hoga.',
+        'Visit every cell only once, otherwise BFS will never finish.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Khaali 4x4 Maze mein BFS Chalao',
+        'Practice: Run BFS in an Empty 4x4 Maze'
+      ),
+      task: t(
+        'Neeche diya gaya code 4x4 ke khaali maze mein BFS chalata hai. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir maze mein ek deewaar add karo aur dekho ki steps kaise badalte hain.',
+        'The code below runs BFS in an empty 4x4 maze. Run it and verify the output matches the expected output. Then add a wall to the maze and see how the steps change.'
+      ),
+      language: 'python',
+      starter: `from collections import deque
+
+maze2 = [
+    "S...",
+    "....",
+    "....",
+    "...E",
+]
+rows2 = 4
+cols2 = 4
+queue = deque([(0, 0)])
+parent2 = {(0, 0): None}
+while queue:
+    r, c = queue.popleft()
+    if (r, c) == (3, 3):
+        break
+    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < rows2 and 0 <= nc < cols2 and (nr, nc) not in parent2:
+            parent2[(nr, nc)] = (r, c)
+            queue.append((nr, nc))
+path2 = []
+cell = (3, 3)
+while cell is not None:
+    path2.append(cell)
+    cell = parent2[cell]
+path2.reverse()
+print("Steps:", len(path2) - 1)
+print("Path:", path2)`,
+      expected: `Steps: 6
+Path: [(0, 0), (0, 1), (0, 2), (0, 3), (1, 3), (2, 3), (3, 3)]`
+    },
+    readMinutes: 12
+  };
+
+const dsaInterview: Article = {
+    id: 'dsa-interview',
+    subjectId: 'dsa',
+    title: t(
+      'DSA Interview Prep — 30 Din ka Plan aur Top 25 Problems',
+      'DSA Interview Prep — A 30-Day Plan and the Top 25 Problems'
+    ),
+    summary: t(
+      'Interview ki taiyaari ko zero se samjho: 30 din ka revision plan, top 25 must-do problems unke pattern ke saath, apna approach zor se bol kar kaise samjhaye, mock interview ke tips, interview mein time management, aur jab atak jao toh kya karo.',
+      'Learn interview preparation from scratch: a 30-day revision plan, the top 25 must-do problems with their patterns, how to explain your approach out loud, mock interview tips, time management in the interview, and what to do when you get stuck.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Interview Prep Kya Hai? (Plan, Problems aur Approach)',
+          '1. What Is Interview Prep? (Plan, Problems, and Approach)'
+        ),
+        body: t(
+          `Interview ki taiyaari ka matlab sirf problems solve karna nahi hai — iske teen hisse hain. **Plan:** 30 din mein kya padhna hai, kis order mein padhna hai, aur revision kab karna hai. **Problems:** top 25 problems jo har interview mein aate hain, unke pattern ke saath. **Approach:** problem dekh kar zor se bolna — pehle brute force, phir optimised solution, phir code, phir test. Interviewer aapka code nahi, aapki soch dekhta hai.
+
+Bahut se students 500 problems solve karte hain aur phir bhi interview mein atak jaate hain — kyunki unhone pattern nahi seekha, sirf answers yaad kiye. 25 problems ko pattern ke saath seekhna 500 problems ko yaad karne se behtar hai. Har problem ke saath poochho: "yeh kaunsa pattern hai, aur mujhe yeh kaise pata chala?" — yahi sawaal interview mein kaam aata hai.
+
+Is article mein hum 30 din ka plan banayenge, top 25 problems ki list denge, aur interview mein bolne, time manage karne aur atakne par kya karna hai, yeh sab dekhenge. Yeh article padhne ke baad aapko pata hoga ki aage ke 30 din mein kya karna hai.`,
+          `Interview preparation does not mean only solving problems — it has three parts. **Plan:** what to study in 30 days, in which order, and when to revise. **Problems:** the top 25 problems that appear in every interview, with their patterns. **Approach:** speaking out loud when you see a problem — first the brute force, then the optimised solution, then the code, then the test. The interviewer watches your thinking, not only your code.
+
+Many students solve 500 problems and still get stuck in interviews — because they did not learn the patterns, they only memorised answers. Learning 25 problems with their patterns is better than memorising 500 problems. With every problem, ask: "which pattern is this, and how did I know?" — that is the question that helps in an interview.
+
+In this article we will make a 30-day plan, give a list of the top 25 problems, and look at how to speak, manage time, and act when you get stuck in an interview. After reading this article, you will know what to do in the next 30 days.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam, Cricket Match aur Driving Test',
+          '2. Real-Life Examples: An Exam, a Cricket Match, and a Driving Test'
+        ),
+        body: t(
+          `Interview ki taiyaari exam ki taiyaari jaisi hai. **Exam:** exam se pehle aap syllabus dekhte ho, important topics ko pehle padhte ho, aur aakhri din revision karte ho — naye topics nahi padhte. Interview mein bhi aisa hi hai: pehle core patterns, phir top problems, aur aakhri din revision. Aakhri din naya pattern padhna exam se pehle nayi kitaab kholne jaisa hai — fayda nahi hota.
+
+**Cricket match:** batsman ko pata hota hai ki bowler kis taraf ball phenkega — woh pehle se taiyaar rehta hai. Interview mein bhi aapko pata hota hai ki kaunse patterns aayenge — aapko sirf unpar taiyaar rehna hai. **Driving test:** driving test mein sirf gaadi chalana nahi dekha jaata, yeh bhi dekha jaata hai ki aap rules jaante ho ya nahi, aur ghabrahat mein kya karte ho. Interview mein bhi sirf code nahi dekha jaata — aapka approach, aapki baat-cheet, aur atakne par aapka behavior bhi dekha jaata hai.
+
+**Mock interview** practice match jaisa hai: asli match se pehle practice match khel kar aapko pata chal jaata hai ki kahan galti ho rahi hai. Bina mock ke interview dena bina practice ke match khelne jaisa hai — aapko pata hi nahi chalega ki aap kahan atak rahe ho.`,
+          `Interview preparation is like exam preparation. **Exam:** before an exam you look at the syllabus, study the important topics first, and revise on the last day — you do not study new topics. In an interview it is the same: first the core patterns, then the top problems, and revision on the last day. Studying a new pattern on the last day is like opening a new book before an exam — it does not help.
+
+**Cricket match:** a batsman knows which way the bowler will throw the ball — he stays ready in advance. In an interview you also know which patterns will come — you only have to stay ready for them. **Driving test:** in a driving test, only driving is not watched; it is also watched whether you know the rules, and what you do when you panic. In an interview, only code is not watched — your approach, your communication, and your behaviour when you get stuck are also watched.
+
+A **mock interview** is like a practice match: by playing a practice match before the real match, you learn where you are making mistakes. Giving an interview without a mock is like playing a match without practice — you will never even know where you are getting stuck.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 30 Din ka Revision Plan Banao',
+          '3. Step-by-Step: Make a 30-Day Revision Plan'
+        ),
+        body: t(
+          `Ab 30 din ka plan step-by-step banate hain. **Week 1 (Din 1-7): Arrays, Strings aur Two Pointers.** Pehle din arrays aur strings ke basics revise karo, phir two pointers aur sliding window ke 5 problems karo. Har din 3 problems karo — ek aasan, ek medium, ek mushkil. **Week 2 (Din 8-14): Linked List, Stack aur Queue.** Linked list reversal, cycle detection, aur stack se valid parentheses karo. Har problem ko pehle haath se dry run karo, phir code likho.
+
+**Week 3 (Din 15-21): Trees, Graphs aur Heap.** Tree traversal, BFS aur DFS, aur heap se top-k karo. Graphs ke liye BFS aur DFS ka dry run zaroor karo — bina dry run ke graph samajh nahi aata. **Week 4 (Din 22-30): DP, Revision aur Mock Interviews.** Pehle 3 din DP ke 5 problems karo — climbing stairs, coin change, aur knapsack. Phir 3 din purane problems ko dobara karo — bina solution dekhe. Aakhri 3 din mock interviews do — ek dost se ya khud ko record karke.
+
+Har week ke end mein ek din revision ke liye rakho. Revision mein purane problems ko dobara karo, key notes padho, aur apne mistakes ko ek diary mein likho. Neeche wala code is plan ko print karta hai — isko run karo aur apna plan banao.`,
+          `Now let us make the 30-day plan step by step. **Week 1 (Days 1-7): Arrays, Strings, and Two Pointers.** On the first day revise the basics of arrays and strings, then do 5 problems on two pointers and sliding window. Do 3 problems every day — one easy, one medium, one hard. **Week 2 (Days 8-14): Linked List, Stack, and Queue.** Do linked list reversal, cycle detection, and valid parentheses with a stack. Dry run every problem by hand first, then write the code.
+
+**Week 3 (Days 15-21): Trees, Graphs, and Heap.** Do tree traversal, BFS and DFS, and top-k with a heap. For graphs, always do a dry run of BFS and DFS — without a dry run, graphs are not understood. **Week 4 (Days 22-30): DP, Revision, and Mock Interviews.** In the first 3 days do 5 DP problems — climbing stairs, coin change, and knapsack. Then for 3 days do the old problems again — without looking at the solution. In the last 3 days give mock interviews — with a friend, or by recording yourself.
+
+Keep one day at the end of every week for revision. In revision, do the old problems again, read the key notes, and write your mistakes in a diary. The code below prints this plan — run it and make your own plan.`
+        ),
+        code: {
+          title: t(
+            '30 Din ka Plan: Har Week mein Kitne Topics',
+            '30-Day Plan: How Many Topics in Each Week'
+          ),
+          language: 'python',
+          code: `plan = {
+    "Week 1": ["Arrays", "Strings", "Two Pointers"],
+    "Week 2": ["Linked List", "Stack", "Queue"],
+    "Week 3": ["Trees", "Graphs", "Heap"],
+    "Week 4": ["DP", "Revision", "Mock Interviews"],
+}
+total = 0
+for week in plan:
+    print(week + ":", len(plan[week]), "topics")
+    total += len(plan[week])
+print("Total topics:", total)
+print("Days left:", 30 - 7)`,
+          output: `Week 1: 3 topics
+Week 2: 3 topics
+Week 3: 3 topics
+Week 4: 3 topics
+Total topics: 12
+Days left: 23`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Answers Yaad Karna, Bina Bole Code Likhna',
+          '4. Common Mistakes: Memorising Only Answers, Writing Code Without Speaking'
+        ),
+        body: t(
+          `Interview prep mein sabse badi galtiyan chaar hain. **Galti 1: sirf answers yaad karna.** Agar aapne Two Sum ka answer yaad kar liya, par pattern nahi samjha, toh interviewer problem ko thoda sa badal dega aur aap atak jaoge. Pattern seekho, answer nahi. **Galti 2: bina bole code likhna.** Interview mein chup-chap code likhna sabse badi galti hai. Interviewer ko aapki soch sunni hai — pehle brute force bolo, phir optimised solution bolo, phir code likho. Chup rehne par interviewer ko lagta hai ki aapko kuch nahi aata.
+
+**Galti 3: aakhri din naya topic padhna.** Aakhri din revision ka hai, naye topics ka nahi. Naya pattern aakhri din padhoge toh woh yaad nahi rahega aur confidence kam hoga. **Galti 4: mock interview na dena.** Bina mock ke aapko pata nahi chalega ki aap time par code kar paate ho ya nahi, aur aap atakne par kya karte ho. Kam se kam 3 mock interviews do — pehle mein galti hogi, teesre mein confidence aayega.
+
+**Galti 5: ek hi problem par bahut time lagana.** Agar ek problem 45 minute se zyada le raha hai, toh usko chhodo aur solution dekho — phir usko dobara khud se karo. Ek problem par poora din lagana plan ko kharab kar deta hai.`,
+          `The biggest mistakes in interview preparation are four. **Mistake 1: memorising only answers.** If you memorised the answer of Two Sum but did not understand the pattern, the interviewer will change the problem a little and you will get stuck. Learn the pattern, not the answer. **Mistake 2: writing code without speaking.** Writing code silently in an interview is the biggest mistake. The interviewer wants to hear your thinking — first say the brute force, then say the optimised solution, then write the code. If you stay silent, the interviewer will think you know nothing.
+
+**Mistake 3: studying a new topic on the last day.** The last day is for revision, not for new topics. If you study a new pattern on the last day, it will not stay in memory and your confidence will drop. **Mistake 4: not giving a mock interview.** Without a mock, you will not know whether you can code on time, and what you do when you get stuck. Give at least 3 mock interviews — the first will have mistakes, the third will bring confidence.
+
+**Mistake 5: spending too much time on one problem.** If one problem is taking more than 45 minutes, leave it and look at the solution — then do it again yourself. Spending a whole day on one problem ruins the plan.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Interview mein Atak Jana, Galat Answer aur Time Khatam Hona',
+          '5. Edge Cases: Getting Stuck in an Interview, a Wrong Answer, and Running Out of Time'
+        ),
+        body: t(
+          `Interview ke edge cases yaad rakho — yeh wahi situations hain jo sabse zyada darati hain. **Atak jaana:** agar 5 minute tak kuch samajh nahi aa raha, toh chup mat raho — interviewer se hint maango. Hint maangna kamzori nahi hai, yeh communication hai. Interviewer ko bolo: "Kya main is input par brute force try kar sakta hoon?" — isse baat-cheet shuru hogi aur rasta milega.
+
+**Galat answer:** agar aapka code galat hai toh ghabrao mat — interviewer ko bolo ki aapko pata hai ki yeh galat hai aur aap isko kaise theek karenge. Galti ko accept karna aur theek karna, galti ko chhupane se behtar hai. **Time khatam hona:** agar time kam hai toh brute force solution bhi likh do — kuch na likhne se behtar hai. Brute force likhne ke baad bolo ki optimised solution kya hoga, chahe code na likh pao.
+
+**Problem samajh nahi aaya:** toh examples se samjho — interviewer se poochho ki kya aap ek example par dry run kar sakte ho. Examples se problem saaf ho jaata hai. **Nervous hona:** normal hai — mock interviews se nervousness kam hoti hai. Interview se pehle ek mock do, taaki aapko pata ho ki kaisa feel hota hai.`,
+          `Remember the edge cases of an interview — these are the situations that scare people the most. **Getting stuck:** if nothing is clear for 5 minutes, do not stay silent — ask the interviewer for a hint. Asking for a hint is not weakness, it is communication. Tell the interviewer: "Can I try the brute force on this input?" — this will start the conversation and a path will appear.
+
+**A wrong answer:** if your code is wrong, do not panic — tell the interviewer that you know it is wrong and how you will fix it. Accepting a mistake and fixing it is better than hiding the mistake. **Running out of time:** if time is short, write even the brute force solution — that is better than writing nothing. After writing the brute force, say what the optimised solution would be, even if you cannot write the code.
+
+**Not understanding the problem:** understand it from examples — ask the interviewer whether you can do a dry run on an example. Examples make the problem clear. **Being nervous:** it is normal — mock interviews reduce nervousness. Give one mock before the interview, so you know how it feels.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Time Management, Mock Interviews aur Top 25 Problems',
+          '6. What-If: Time Management, Mock Interviews, and the Top 25 Problems'
+        ),
+        body: t(
+          `Ab "what-if" sawaal poochhte hain. **What if: interview 45 minute ka ho?** Time ko aise baanto: pehle 5 minute problem ko samajhne mein, agle 10 minute brute force sochne aur bolne mein, agle 15 minute optimised solution aur code likhne mein, agle 10 minute code ko test karne mein, aur aakhri 5 minute complexity batane mein. Neeche wala code yahi time split dikhata hai. Agar aap is split ko follow karte ho, toh time kabhi khatam nahi hoga.
+
+**What if: mock interview mein fail ho jaaye?** Mock mein fail hona achha hai — asli interview mein fail hone se behtar hai. Mock ke baad apni galtiyan likho aur unko dobara karo. **What if: top 25 problems kaunse hain?** Yeh rahe top 25, pattern ke saath: Two Sum (Hashing), Valid Parentheses (Stack), Merge Two Lists (Linked List), Max Depth Tree (Tree DFS), Climbing Stairs (DP), Coin Change (DP), Word Search (Backtracking), LRU Cache (Design), Binary Search (Modified Binary Search), Max Subarray (Kadane), Merge Intervals (Intervals), Group Anagrams (Hashing), Longest Substring (Sliding Window), Cycle Detection (Fast and Slow), Reverse Linked List (Reversal), Level Order (Tree BFS), Kth Largest (Top-k), Course Schedule (Topological Sort), Number of Islands (Graph BFS), Word Ladder (Graph BFS), Median of Stream (Two Heaps), Subsets (Backtracking), Rotate Array (Two Pointers), Trapping Rain Water (Two Pointers), aur Edit Distance (DP).
+
+**What if: 30 din mein 25 problems nahi ho paaye?** Toh pehle 15 karo — jo sabse zyada aate hain. 15 problems ko achhe se karna 25 problems ko adhoora karne se behtar hai.`,
+          `Now let us ask "what-if" questions. **What if the interview is 45 minutes?** Split the time like this: the first 5 minutes to understand the problem, the next 10 minutes to think and speak the brute force, the next 15 minutes to write the optimised solution and code, the next 10 minutes to test the code, and the last 5 minutes to give the complexity. The code below shows this same time split. If you follow this split, time will never run out.
+
+**What if you fail a mock interview?** Failing a mock is good — it is better than failing the real interview. After the mock, write your mistakes and do them again. **What if you ask which are the top 25 problems?** Here they are, with their patterns: Two Sum (Hashing), Valid Parentheses (Stack), Merge Two Lists (Linked List), Max Depth Tree (Tree DFS), Climbing Stairs (DP), Coin Change (DP), Word Search (Backtracking), LRU Cache (Design), Binary Search (Modified Binary Search), Max Subarray (Kadane), Merge Intervals (Intervals), Group Anagrams (Hashing), Longest Substring (Sliding Window), Cycle Detection (Fast and Slow), Reverse Linked List (Reversal), Level Order (Tree BFS), Kth Largest (Top-k), Course Schedule (Topological Sort), Number of Islands (Graph BFS), Word Ladder (Graph BFS), Median of Stream (Two Heaps), Subsets (Backtracking), Rotate Array (Two Pointers), Trapping Rain Water (Two Pointers), and Edit Distance (DP).
+
+**What if 25 problems cannot be done in 30 days?** Then do the first 15 — the ones that appear the most. Doing 15 problems well is better than doing 25 problems halfway.`
+        ),
+        code: {
+          title: t(
+            '45 Minute ke Interview ka Time Split',
+            'Time Split for a 45-Minute Interview'
+          ),
+          language: 'python',
+          code: `parts = [("Understand the problem", 5), ("Brute force", 10), ("Optimised solution", 15), ("Code it", 10), ("Test and dry run", 5)]
+total = 0
+for name, minutes in parts:
+    print(name + ":", minutes, "minutes")
+    total += minutes
+print("Total minutes:", total)`,
+          output: `Understand the problem: 5 minutes
+Brute force: 10 minutes
+Optimised solution: 15 minutes
+Code it: 10 minutes
+Test and dry run: 5 minutes
+Total minutes: 45`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: 30 Din, 25 Problems aur Ek Approach',
+          '7. Summary: 30 Days, 25 Problems, and One Approach'
+        ),
+        body: t(
+          `Poora article ek jagah par bandhte hain. **30 din ka plan:** Week 1 Arrays aur Two Pointers, Week 2 Linked List aur Stack, Week 3 Trees aur Graphs, Week 4 DP, Revision aur Mocks. Har din 3 problems karo, har week ke end mein revision karo, aur aakhri 3 din mock interviews do. **Top 25 problems** pattern ke saath yaad rakho — Two Sum se lekar Edit Distance tak.
+
+**Approach:** problem dekh kar pehle brute force bolo, phir optimised solution bolo, phir code likho, phir test karo, aur aakhir mein complexity batao. Chup-chap code mat likho — interviewer ko aapki soch sunni hai. **Time management:** 45 minute ko 5 + 10 + 15 + 10 + 5 mein baanto. **Atak jaao toh:** hint maango, examples se samjho, aur galti ko accept karke theek karo.
+
+Aakhiri baat: interview ek din ka kaam nahi hai, 30 din ka kaam hai. Har din thoda-thoda karo, pattern seekho, mock do, aur revision karo. Agar aapne 30 din yeh plan follow kiya, toh interview mein aapko koi problem naya nahi lagega — har problem kisi na kisi pattern ka roop hoga. All the best!`,
+          `Let us tie the whole article together. **The 30-day plan:** Week 1 Arrays and Two Pointers, Week 2 Linked List and Stack, Week 3 Trees and Graphs, Week 4 DP, Revision, and Mocks. Do 3 problems every day, revise at the end of every week, and give mock interviews in the last 3 days. Remember the **top 25 problems** with their patterns — from Two Sum to Edit Distance.
+
+**Approach:** when you see a problem, first say the brute force, then say the optimised solution, then write the code, then test it, and finally give the complexity. Do not write code silently — the interviewer wants to hear your thinking. **Time management:** split 45 minutes as 5 + 10 + 15 + 10 + 5. **When you get stuck:** ask for a hint, understand from examples, and accept the mistake and fix it.
+
+One last thing: an interview is not one day of work, it is 30 days of work. Do a little every day, learn the patterns, give mocks, and revise. If you follow this plan for 30 days, no problem in the interview will feel new to you — every problem will be one pattern or another in disguise. All the best!`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '30 Din ka Plan: Week by Week',
+        '30-Day Plan: Week by Week'
+      ),
+      caption: t(
+        'Har week ek theme hai, aur har week ke end mein revision hai',
+        'Every week has one theme, and revision comes at the end of every week'
+      ),
+      nodes: [
+        {
+          t: t('Week 1 (Din 1-7): Arrays, Strings, Two Pointers', 'Week 1 (Days 1-7): Arrays, Strings, Two Pointers'),
+          s: t('Har din 3 problems: ek aasan, ek medium, ek mushkil', '3 problems every day: one easy, one medium, one hard')
+        },
+        {
+          t: t('Week 2 (Din 8-14): Linked List, Stack, Queue', 'Week 2 (Days 8-14): Linked List, Stack, Queue'),
+          s: t('Reversal, cycle detection, valid parentheses', 'Reversal, cycle detection, valid parentheses')
+        },
+        {
+          t: t('Week 3 (Din 15-21): Trees, Graphs, Heap', 'Week 3 (Days 15-21): Trees, Graphs, Heap'),
+          s: t('BFS, DFS, top-k — dry run zaroor karo', 'BFS, DFS, top-k — always do a dry run')
+        },
+        {
+          t: t('Week 4 (Din 22-30): DP, Revision, Mocks', 'Week 4 (Days 22-30): DP, Revision, Mocks'),
+          s: t('DP ke 5 problems, phir revision, phir 3 mock interviews', '5 DP problems, then revision, then 3 mock interviews')
+        },
+        {
+          t: t('Interview Day: Approach yaad rakho', 'Interview Day: Remember the Approach'),
+          s: t('Brute force bolo, optimised solution bolo, code likho, test karo', 'Say the brute force, say the optimised solution, write the code, test it')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Checklist: Kitne Problems Ho Gaye',
+          'Checklist: How Many Problems Are Done'
+        ),
+        language: 'python',
+        code: `problems = [("Two Sum", "Hashing", True), ("Max Subarray", "Kadane", True), ("Merge Intervals", "Intervals", False), ("Word Ladder", "BFS", False)]
+done = 0
+for name, pattern, is_done in problems:
+    if is_done:
+        done += 1
+print("Done:", done, "of", len(problems))
+print("Left:", len(problems) - done)`,
+        output: `Done: 2 of 4
+Left: 2`
+      },
+      {
+        title: t(
+          'Top 25 mein se Pehle 5 Problems ki List',
+          'List of the First 5 of the Top 25 Problems'
+        ),
+        language: 'python',
+        code: `top25 = ["Two Sum", "Valid Parentheses", "Merge Two Lists", "Max Depth Tree", "Climbing Stairs"]
+for i, name in enumerate(top25, 1):
+    print(i, name)
+print("Total in top 25:", 25)`,
+        output: `1 Two Sum
+2 Valid Parentheses
+3 Merge Two Lists
+4 Max Depth Tree
+5 Climbing Stairs
+Total in top 25: 25`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '30 din ke plan mein Week 1 mein kya padhna hai?',
+          'What should you study in Week 1 of the 30-day plan?'
+        ),
+        opts: [
+          t('DP aur Graphs', 'DP and Graphs'),
+          t('Arrays, Strings aur Two Pointers', 'Arrays, Strings, and Two Pointers'),
+          t('Sirf Mock Interviews', 'Only Mock Interviews'),
+          t('Sirf Revision', 'Only Revision')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Week 1 mein Arrays, Strings aur Two Pointers hain — pehle basics, phir aage ke topics.',
+          'Correct answer: Week 1 has Arrays, Strings, and Two Pointers — first the basics, then the later topics.'
+        )
+      },
+      {
+        q: t(
+          '45 minute ke interview mein code likhne ke liye kitna time hai?',
+          'How much time is there for writing code in a 45-minute interview?'
+        ),
+        opts: [
+          t('5 minute', '5 minutes'),
+          t('10 minute', '10 minutes'),
+          t('15 minute (optimised solution ke saath)', '15 minutes (with the optimised solution)'),
+          t('30 minute', '30 minutes')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: time split hai 5 + 10 + 15 + 10 + 5 — code likhne ke liye 15 minute hain, usse pehle 15 minute samajhne aur brute force mein jaate hain.',
+          'Correct answer: the time split is 5 + 10 + 15 + 10 + 5 — there are 15 minutes for writing code, and the first 15 minutes go to understanding and the brute force.'
+        )
+      },
+      {
+        q: t(
+          'Interview mein atak jaao toh sabse achha kya karna hai?',
+          'What is the best thing to do when you get stuck in an interview?'
+        ),
+        opts: [
+          t('Chup-chap baithe raho', 'Sit silently'),
+          t('Hint maango aur examples se samjho', 'Ask for a hint and understand from examples'),
+          t('Interview chhod do', 'Leave the interview'),
+          t('Random code likh do', 'Write random code')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: hint maangna communication hai, kamzori nahi — interviewer ko aapki soch dekhni hai, aur examples se problem saaf ho jaata hai.',
+          'Correct answer: asking for a hint is communication, not weakness — the interviewer wants to see your thinking, and examples make the problem clear.'
+        )
+      },
+      {
+        q: t(
+          'Top 25 problems mein "Two Sum" ka pattern kaunsa hai?',
+          'What is the pattern of "Two Sum" in the top 25 problems?'
+        ),
+        opts: [
+          t('Sliding Window', 'Sliding Window'),
+          t('Hashing', 'Hashing'),
+          t('Two Heaps', 'Two Heaps'),
+          t('DP', 'DP')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Two Sum mein dict mein dekhe gaye numbers store karte hain aur complement dhoondhte hain — yeh hashing pattern hai.',
+          'Correct answer: in Two Sum, the numbers seen so far are stored in a dict and the complement is searched — that is the hashing pattern.'
+        )
+      },
+      {
+        q: t(
+          'Mock interview kyun dena chahiye?',
+          'Why should you give a mock interview?'
+        ),
+        opts: [
+          t('Kyunki usse pata chalta hai ki time par code kar paate ho ya nahi', 'Because it tells you whether you can code on time or not'),
+          t('Kyunki mock mein hi asli interview hota hai', 'Because the real interview happens in the mock itself'),
+          t('Kyunki mock dene se problems yaad ho jaate hain', 'Because giving a mock makes you memorise the problems'),
+          t('Mock dena zaroori nahi hai', 'Giving a mock is not necessary')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: mock se pata chalta hai ki aap time par code kar paate ho ya nahi, aur atakne par kya karte ho — bina mock ke yeh pata nahi chalega.',
+          'Correct answer: a mock tells you whether you can code on time, and what you do when you get stuck — without a mock you will never know this.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '30 din: Week 1 Arrays, Week 2 Linked List, Week 3 Trees, Week 4 DP aur Mocks.',
+        '30 days: Week 1 Arrays, Week 2 Linked List, Week 3 Trees, Week 4 DP and Mocks.'
+      ),
+      t(
+        'Pattern seekho, answer nahi — interviewer problem ko badal kar poochhega.',
+        'Learn the pattern, not the answer — the interviewer will change the problem and ask it.'
+      ),
+      t(
+        'Approach: brute force bolo, optimised solution bolo, code likho, test karo.',
+        'Approach: say the brute force, say the optimised solution, write the code, test it.'
+      ),
+      t(
+        '45 minute: 5 + 10 + 15 + 10 + 5 — time split ko follow karo.',
+        '45 minutes: 5 + 10 + 15 + 10 + 5 — follow the time split.'
+      ),
+      t(
+        'Atak jaao toh hint maango; aakhri din revision karo, naya topic mat padho.',
+        'When stuck, ask for a hint; on the last day revise, do not study a new topic.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apni Top 25 Checklist Banao',
+        'Practice: Make Your Own Top 25 Checklist'
+      ),
+      task: t(
+        'Neeche diya gaya code 8 problems ki checklist banata hai aur batata hai kitne ho gaye. Isko run karo aur verify karo ki output expected jaisa aata hai. Phir apne 25 problems ki list banao aur har din update karo.',
+        'The code below makes a checklist of 8 problems and tells you how many are done. Run it and verify the output matches the expected output. Then make your own list of 25 problems and update it every day.'
+      ),
+      language: 'python',
+      starter: `problems = [("Two Sum", True), ("Valid Parentheses", True), ("Merge Two Lists", True), ("Max Depth Tree", True), ("Climbing Stairs", True), ("Coin Change", False), ("Word Search", False), ("LRU Cache", False)]
+done = [name for name, is_done in problems if is_done]
+left = [name for name, is_done in problems if not is_done]
+print("Done:", len(done), "of", len(problems))
+print("Remaining:", left)`,
+      expected: `Done: 5 of 8
+Remaining: ['Coin Change', 'Word Search', 'LRU Cache']`
+    },
+    readMinutes: 12
+  };
+
 export const dsa: Subject = {
   id: 'dsa',
   name: t(
@@ -2639,5 +14416,37 @@ export const dsa: Subject = {
     dsaSortingSearching,
     dsaGraphs,
     dsaHashing,
+    dsaStrings,
+    dsaRecursion,
+    dsaBacktracking,
+    dsaBinarySearch,
+    dsaTwoPointers,
+    dsaPrefixSum,
+    dsaSortingDeep,
+    dsaBst,
+    dsaHeap,
+    dsaTrie,
+    dsaDisjointSet,
+    dsaTreeAdvanced,
+    dsaStackAdvanced,
+    dsaQueueDeque,
+    dsaLinkedListAdvanced,
+    dsaSegmentTree,
+    dsaShortestPath,
+    dsaMstTopo,
+    dsaGraphAdvanced,
+    dsaDpIntro,
+    dsaDpKnapsack,
+    dsaDpStrings,
+    dsaDpGrids,
+    dsaGreedy,
+    dsaDivideConquer,
+    dsaBitManipulation,
+    dsaMath,
+    dsaComplexity,
+    dsaPatterns,
+    dsaProjectAutocomplete,
+    dsaProjectPathfinder,
+    dsaInterview,
   ],
 };
