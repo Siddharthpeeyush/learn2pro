@@ -12265,6 +12265,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Percent hamesha kisi base ka hota hai — value = base × percent / 100.',
+          english: 'A percent always belongs to a base — value = base × percent / 100.',
+        },
+        {
+          hinglish: 'Percent nikalna ho to formula hai (hissa / kul) × 100.',
+          english: 'To find a percent, use (part / whole) × 100.',
+        },
+        {
+          hinglish: 'Ek ke baad ek badlav ho to kul badlav = x + y + (x × y) / 100 percent.',
+          english: 'For one change after another, total change = x + y + (x × y) / 100 percent.',
+        },
+        {
+          hinglish: '20 percent badha kar 20 percent ghatao to wapas wahi number nahi milta — 4 percent ki kami aati hai.',
+          english: 'Adding 20 percent and then taking off 20 percent does not bring back the same number — it leaves a 4 percent fall.',
+        },
+        {
+          hinglish: '10 percent = 1/10, 25 percent = 1/4, 50 percent = 1/2 — ye fraction yaad rakhne se hisaab tez hota hai.',
+          english: '10 percent = 1/10, 25 percent = 1/4, 50 percent = 1/2 — knowing these fractions makes the maths faster.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Percent ki practice',
@@ -12282,7 +12304,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [45, 480, 72]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 45\nQ2: abhi sahi answer nahi mila. Sahi answer: 480\nQ3: abhi sahi answer nahi mila. Sahi answer: 72',
       },
       readMinutes: 10,
     },
@@ -12549,6 +12571,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Profit percent hamesha CP par nikalta hai — (SP − CP) / CP × 100.',
+          english: 'Profit percent is always worked out on the cost price — (SP − CP) / CP × 100.',
+        },
+        {
+          hinglish: 'Loss percent bhi CP par nikalta hai — (CP − SP) / CP × 100.',
+          english: 'Loss percent is also worked out on the cost price — (CP − SP) / CP × 100.',
+        },
+        {
+          hinglish: 'Discount hamesha MP par lagta hai, profit percent hamesha CP par.',
+          english: 'Discount is always given on the marked price, while profit percent is always on the cost price.',
+        },
+        {
+          hinglish: 'SP pata ho aur profit percent pata ho to CP = SP × 100 / (100 + profit percent).',
+          english: 'If you know the SP and the profit percent, CP = SP × 100 / (100 + profit percent).',
+        },
+        {
+          hinglish: 'Do cheezein ek hi daam par becho — ek profit par, ek loss par — to kul milakar hamesha loss hota hai: loss percent = x² / 100.',
+          english: 'Selling two things at the same price — one at a profit, one at a loss — always gives an overall loss: loss percent = x² / 100.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Profit-loss ki practice',
@@ -12566,7 +12610,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [20, 1800, 900]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 20\nQ2: abhi sahi answer nahi mila. Sahi answer: 1800\nQ3: abhi sahi answer nahi mila. Sahi answer: 900',
       },
       readMinutes: 10,
     },
@@ -12833,6 +12877,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Speed = distance / time; distance = speed × time; time = distance / speed.',
+          english: 'Speed = distance / time; distance = speed × time; time = distance / speed.',
+        },
+        {
+          hinglish: 'km/h ko m/s mein badalne ke liye 5/18 se guna karo; m/s ko km/h mein badalne ke liye 18/5 se.',
+          english: 'To change km/h into m/s, multiply by 5/18; to change m/s into km/h, multiply by 18/5.',
+        },
+        {
+          hinglish: 'Aamne-saamne aane par relative speed judti hai; ek hi disha mein ho to ghat-ti hai.',
+          english: 'When two things move towards each other, their relative speed adds up; in the same direction, it subtracts.',
+        },
+        {
+          hinglish: 'Barabar doori ke liye average speed = 2ab / (a + b) — seedha average mat lo.',
+          english: 'For equal distances, average speed = 2ab / (a + b) — do not just take the simple average.',
+        },
+        {
+          hinglish: 'Speed double ho to wahi doori aadhe time mein poori hoti hai.',
+          english: 'If the speed doubles, the same distance takes half the time.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Speed-distance ki practice',
@@ -12850,7 +12916,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [60, 240, 15]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 60\nQ2: abhi sahi answer nahi mila. Sahi answer: 240\nQ3: abhi sahi answer nahi mila. Sahi answer: 15',
       },
       readMinutes: 10,
     },
@@ -13117,6 +13183,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Average = kul yog / kitni sankhyaen; kul yog = average × sankhyaen.',
+          english: 'Average = total sum / how many numbers; total sum = average × how many numbers.',
+        },
+        {
+          hinglish: 'Naya number judne par pehle kul yog nikaalo, phir naya average nikaalo.',
+          english: 'When a new number joins, first find the new total sum, then the new average.',
+        },
+        {
+          hinglish: 'Ratio se baantna ho to hisson ka yog nikaalo — har hissa = kul × hissa / hisson ka yog.',
+          english: 'To split by a ratio, find the sum of the parts — each part = total × part / sum of parts.',
+        },
+        {
+          hinglish: 'Do groups ka average nikaalte waqt hisson ki ginti se weight karo — seedha average galat hota hai.',
+          english: 'When you combine two groups, weight each average by its count — a plain average is wrong.',
+        },
+        {
+          hinglish: 'A : B = 3 : 4 ho aur B = 28 ho to A = 28 × 3 / 4 = 21.',
+          english: 'If A : B = 3 : 4 and B = 28, then A = 28 × 3 / 4 = 21.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Average-ratio ki practice',
@@ -13134,7 +13222,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [15, 30, 30]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 15\nQ2: abhi sahi answer nahi mila. Sahi answer: 30\nQ3: abhi sahi answer nahi mila. Sahi answer: 30',
       },
       readMinutes: 10,
     },
@@ -13401,6 +13489,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'LCM matlab dono se divide hone wala sabse chhota number; HCF matlab dono ko divide karne wala sabse bada number.',
+          english: 'LCM is the smallest number that both numbers divide into; HCF is the biggest number that divides both.',
+        },
+        {
+          hinglish: '1 se n tak ka yog = n(n + 1) / 2 — jaise 1 se 20 tak ka yog 210 hota hai.',
+          english: 'The sum from 1 to n is n(n + 1) / 2 — so 1 to 20 adds up to 210.',
+        },
+        {
+          hinglish: '9 se divisibility: ankon ka yog 9 se divide ho to number bhi 9 se divide hota hai.',
+          english: 'Divisibility by 9: if the sum of the digits divides by 9, the number divides by 9 too.',
+        },
+        {
+          hinglish: 'Unit digit ke liye sirf unit digit ka cycle dekho — 3 ki powers ka cycle 3, 9, 7, 1 hai.',
+          english: 'For the unit digit, look only at the cycle of unit digits — powers of 3 cycle through 3, 9, 7, 1.',
+        },
+        {
+          hinglish: 'HCF ke liye dono numbers ke common factors mein sabse bada lo — jaise 24 aur 36 ka HCF 12 hai.',
+          english: 'For the HCF, take the biggest factor common to both numbers — for example, the HCF of 24 and 36 is 12.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Number systems ki practice',
@@ -13418,7 +13528,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [24, 18, 1275]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 24\nQ2: abhi sahi answer nahi mila. Sahi answer: 18\nQ3: abhi sahi answer nahi mila. Sahi answer: 1275',
       },
       readMinutes: 10,
     },
@@ -13685,6 +13795,28 @@ export const quantitativeAptitude: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Ek din ka kaam = 1 / din — ye rate hai, aur saath kaam karne par rate judte hain.',
+          english: 'One day of work = 1 / days — that is the rate, and rates add up when people work together.',
+        },
+        {
+          hinglish: 'A 6 din mein aur B 12 din mein kaam kare to saath mein 1/6 + 1/12 = 1/4, matlab 4 din.',
+          english: 'If A takes 6 days and B takes 12 days, together they do 1/6 + 1/12 = 1/4, so 4 days.',
+        },
+        {
+          hinglish: 'Aadmi badlo to din ulta badalte hain — man-days hamesha barabar rehta hai.',
+          english: 'When the number of workers changes, the days change in the opposite way — man-days always stays the same.',
+        },
+        {
+          hinglish: 'Tank bharne wali pipe aur leak ek saath ho to net rate = bharne ki rate − leak ki rate.',
+          english: 'If a filling pipe and a leak work together, net rate = filling rate − leaking rate.',
+        },
+        {
+          hinglish: 'A, B se do guna tez ho to A ka time aadha hota hai — B 12 din mein kare to A 6 din mein.',
+          english: 'If A is twice as fast as B, A takes half the time — if B takes 12 days, A takes 6 days.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Time-work ki practice',
@@ -13702,7 +13834,7 @@ export const quantitativeAptitude: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [4, 5, 30]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 4\nQ2: abhi sahi answer nahi mila. Sahi answer: 5\nQ3: abhi sahi answer nahi mila. Sahi answer: 30',
       },
       readMinutes: 10,
     },
