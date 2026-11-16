@@ -2,7 +2,10 @@
 // All content written by AI in our own style. The example resume, model
 // answers and company guidance are invented here; company round names are
 // factual and generic — no cut-offs, salaries or guarantees are claimed.
-import type { Subject, LText, ArticleSection } from '../lib/types';
+import type { Subject, Article, LText, ArticleSection } from '../lib/types';
+
+const t = (hinglish: string, english: string): LText => ({ hinglish, english });
+
 
 const H_WHAT: LText = {
   hinglish: 'Ye kya hai',
@@ -43,6 +46,12640 @@ const H_SUMMARY: LText = {
 function s(heading: LText, hinglish: string, english: string, hindi: string): ArticleSection {
   return { heading, body: { hinglish, english, hindi } };
 }
+
+
+const placementAptitudePlan: Article = {
+  id: 'placement-aptitude-plan',
+  subjectId: 'placement',
+  title: t(
+    'Placement Aptitude Prep Plan — 30 Din ka Plan, Quant aur Reasoning',
+    'Placement Aptitude Prep Plan — A 30-Day Plan for Quant and Reasoning'
+  ),
+  summary: t(
+    'Aptitude test placement ka pehla round hota hai. Is article mein 30 din ka simple plan hai: quant basics, reasoning, speed kaise badhayein, mock test kaise dein, aur error log se weak topics kaise pakdein. Koi shortcut nahi, sirf roz ka kaam aur uska hisaab.',
+    'The aptitude test is usually the first round of a placement process. This article gives a simple 30-day plan: quant basics, reasoning, how to build speed, how to take mock tests, and how to use an error log to find weak topics. No shortcuts — just daily work and a record of it.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Aptitude Test Kya Hai? (Quant, Reasoning aur Speed)',
+        '1. What Is an Aptitude Test? (Quant, Reasoning, and Speed)'
+      ),
+      body: t(
+        `Aptitude test ek likha hua test hota hai jo placement process ke shuru mein liya jaata hai. Ismein aam taur par do hisse hote hain: **quantitative aptitude** (numbers, percentages, time-work, speed-distance) aur **logical reasoning** (series, puzzles, seating arrangement, blood relations). Kuch tests mein verbal ability bhi hoti hai. Test ka matlab yeh check karna hota hai ki aap basic maths aur logic ko kitni jaldi aur kitni sahi tareeke se use kar sakte ho.
+
+Is test ki sabse badi khaasiyat hai **time pressure**. Aapko har question ke liye aam taur par ek minute se bhi kam milta hai. Isliye sirf answer aana kaafi nahi hai — answer **jaldi** aana chahiye. Jo student ghar par ek question 5 minute mein solve karta hai, woh test hall mein wahi question 1 minute mein nahi kar paata. Isi liye aptitude ki taiyari mein speed utni hi important hai jitni accuracy.
+
+Aptitude test mein aapke college ke marks ya aapki degree ka subject seedha kaam nahi aata. Yahan basic school-level maths aur clear thinking kaam aati hai. Iska matlab yeh hai ki koi bhi student, chahe woh kisi bhi branch se ho, 30 din ke planned kaam se is test mein achha kar sakta hai. Plan is article mein aage diya gaya hai — pehle yeh samajh lo ki test kya maangta hai, phir plan par chalo.`,
+        `An aptitude test is a written test that usually comes first in a placement process. It normally has two parts: **quantitative aptitude** (numbers, percentages, time and work, speed and distance) and **logical reasoning** (series, puzzles, seating arrangements, blood relations). Some tests also include verbal ability. The test checks how quickly and how correctly you can use basic maths and logic.
+
+The biggest feature of this test is **time pressure**. You usually get less than a minute per question. So just knowing the answer is not enough — you must reach the answer **fast**. A student who solves a question in 5 minutes at home cannot solve the same question in 1 minute in the test hall. That is why speed matters as much as accuracy in aptitude preparation.
+
+Your college marks or your degree subject do not directly help in this test. What helps is school-level maths and clear thinking. That means any student, from any branch, can do well with 30 days of planned work. The plan is given later in this article — first understand what the test asks for, then follow the plan.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Train Ticket, Bill Split aur Seating Puzzle',
+        '2. Real-Life Examples: Train Tickets, Bill Splitting, and Seating Puzzles'
+      ),
+      body: t(
+        `Aptitude ke questions roz ki zindagi se hi aate hain, bas unhe numbers mein badal diya jaata hai. **Time-speed-distance** ka question socho: train 60 km/h ki speed se chal rahi hai, 180 km kitni der mein pahunchegi? Yahi hisaab aap train ticket book karte waqt dimaag mein karte ho. **Percentage** ka question socho: 500 rupay ki shirt par 20% discount hai, kitne dene honge? Yahi hisaab aap sale mein shopping karte waqt karte ho. Quant ke questions naye nahi hain — woh wahi hisaab hain jo aap roz karte ho, bas exam mein unhe jaldi karna hota hai.
+
+**Reasoning** bhi roz ki zindagi mein chhupa hai. Jab aap doston ke saath baithe ho aur sochte ho ki kaun kiske bagal mein baithega taaki sab comfortable rahein, toh woh seating arrangement hi hai. Jab aap kisi puzzle ko solve karte ho — "agle number kya hoga: 2, 6, 12, 20, ?" — toh woh series ka question hai. Answer 30 hai, kyunki farak badh raha hai: +4, +6, +8, phir +10. Aapne yeh pattern pehchan liya, toh question solve ho gaya.
+
+Isliye aptitude ko ek naya subject samajh kar mat daro. Isse apne roz ke hisaab-kitab se jodo. Jab bhi bill split karo, percentage nikaalo; jab bhi train ka time dekho, speed-distance ka hisaab lagao. Jo student roz ke kaam mein numbers use karta hai, uski speed test mein apne aap badh jaati hai.`,
+        `Aptitude questions come from daily life — they are just turned into numbers. Think of a **time-speed-distance** question: a train runs at 60 km/h, how long will it take to cover 180 km? You do this same maths in your head when you book a train ticket. Think of a **percentage** question: a shirt costs 500 rupees with a 20% discount, how much do you pay? You do this same maths while shopping in a sale. Quant questions are not new — they are the same sums you do every day, only faster in the exam.
+
+**Reasoning** is also hidden in daily life. When you sit with friends and work out who should sit next to whom so everyone is comfortable, that is a seating arrangement. When you solve a puzzle — "what is the next number: 2, 6, 12, 20, ?" — that is a series question. The answer is 30, because the gaps grow: +4, +6, +8, then +10. Once you spot the pattern, the question is solved.
+
+So do not fear aptitude as a new subject. Connect it to your daily sums. Whenever you split a bill, work out the percentage; whenever you check a train time, work out speed and distance. A student who uses numbers in daily work builds speed on its own for the test.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: 30 Din ka Plan aur Pehle Mock ka Dry Run',
+        '3. Step-by-Step: The 30-Day Plan and a Dry Run of Your First Mock'
+      ),
+      body: t(
+        `Ab plan ko step-by-step banate hain. 30 din ko 4 hafton mein baanto, har hafte ka ek focus ho. **Hafta 1: Quant basics** — number system, percentages, ratio-proportion. Roz 2 ghante, 30 questions. **Hafta 2: Quant speed** — time-speed-distance, time-work, averages. Yahan formula yaad karne se zyada, unhe questions par lagana seekho. **Hafta 3: Reasoning** — series, puzzles, seating, blood relations. **Hafta 4: Mocks + revision** — 2 full mock test, har mock ke baad error log bharo aur weak topics dobara padho.
+
+Dry run dekhte hain. Maan lo aapne pehla mock diya: 4 sections ke scores aaye 18, 21, 24, 26. Total 89 hai, average 22.25 hai, best 26 hai. Ab sirf number dekh kar khush mat ho — error log kholo. Har galat question ke saamne likho: topic kya tha, galti kyun hui (concept nahi aata tha, ya jaldi mein galat padha, ya time khatam ho gaya). Agle hafte ka plan isi log se banta hai: jis topic mein sabse zyada galti hui, usi par sabse zyada time do.
+
+Roz ka niyam simple hai: **2 ghante, 30 questions, 1 error-log entry**. 30 din mein yeh 900 questions aur 30 error-log entries ban jaate hain. Neeche wala code 4 hafton ka plan print karta hai — isko run karo aur apne hisaab se topics badal kar dobara chalao.`,
+        `Now let us build the plan step by step. Split 30 days into 4 weeks, each with one focus. **Week 1: Quant basics** — number system, percentages, ratio and proportion. Two hours a day, 30 questions. **Week 2: Quant speed** — time-speed-distance, time and work, averages. Here, applying the formulas to questions matters more than memorising them. **Week 3: Reasoning** — series, puzzles, seating, blood relations. **Week 4: Mocks and revision** — 2 full mock tests, and after each mock, fill in your error log and revise weak topics.
+
+Let us do a dry run. Suppose you took your first mock and the four section scores were 18, 21, 24, and 26. The total is 89, the average is 22.25, and the best is 26. Do not just feel happy looking at the numbers — open the error log. For every wrong question, write down the topic, and why the mistake happened (you did not know the concept, you misread it in a hurry, or time ran out). Next week's plan comes from this log: the topic with the most mistakes gets the most time.
+
+The daily rule is simple: **2 hours, 30 questions, 1 error-log entry**. In 30 days that becomes 900 questions and 30 error-log entries. The code below prints the 4-week plan — run it, then change the topics to fit your needs and run it again.`
+      ),
+      code: {
+        title: t(
+          '30 Din ka Plan Printer: 4 Hafte, Har Hafte ka Focus',
+          '30-Day Plan Printer: 4 Weeks, One Focus per Week'
+        ),
+        language: 'python',
+        code: `plan = [
+    ("Week 1", "Quant basics", "Number system, percentages, ratio"),
+    ("Week 2", "Quant speed", "Time-speed-distance, time-work, averages"),
+    ("Week 3", "Reasoning", "Series, puzzles, seating, blood relations"),
+    ("Week 4", "Mocks + revision", "2 full mocks, error log, weak topics"),
+]
+for week, focus, topics in plan:
+    print(week + ": " + focus + " -> " + topics)
+print("Daily target: 2 hours, 30 questions, 1 error-log entry")`,
+        output: `Week 1: Quant basics -> Number system, percentages, ratio
+Week 2: Quant speed -> Time-speed-distance, time-work, averages
+Week 3: Reasoning -> Series, puzzles, seating, blood relations
+Week 4: Mocks + revision -> 2 full mocks, error log, weak topics
+Daily target: 2 hours, 30 questions, 1 error-log entry`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Sirf Theory Padhna, Mock na Dena aur Error Log na Banana',
+        '4. Common Mistakes: Only Reading Theory, Skipping Mocks, and No Error Log'
+      ),
+      body: t(
+        `Aptitude ki taiyari mein teen galtiyan sabse zyada hoti hain. **Galti 1: Sirf theory padhna, questions na karna.** Bahut se students formula ki list yaad kar lete hain par ek bhi question solve nahi karte. Formula yaad hona aur formula ko question mein lagana — dono alag skills hain. Har formula ke baad kam se kam 10 questions solve karo, warna formula exam hall mein yaad nahi aayega.
+
+**Galti 2: Mock test na dena ya mock ka analysis na karna.** Kuch students mock se darte hain kyunki score kam aata hai. Par mock ka kaam score dikhana nahi, kamzori dikhana hai. Mock dekar uska analysis na karna bhi wahi hai — aapne test diya aur kuch seekha nahi. Har mock ke baad kam se kam 30 minute analysis par do: kaun se topic mein galti hui, kaun se question mein time zyada laga.
+
+**Galti 3: Ek hi topic par atke rehna.** Jo topic aapko pasand hai, usi par ghante bitana aasaan hai, par exam mein har topic se questions aate hain. Agar aap percentages mein strong ho par seating arrangement mein weak, toh seating par time do — pasand par nahi, zaroorat par. Error log yahi batata hai ki zaroorat kahan hai, isliye usse roz bharo.`,
+        `Three mistakes are most common in aptitude preparation. **Mistake 1: Only reading theory and never solving questions.** Many students memorise a list of formulas but solve no questions. Knowing a formula and applying it to a question are two different skills. After every formula, solve at least 10 questions — otherwise the formula will not come to mind in the exam hall.
+
+**Mistake 2: Skipping mock tests, or skipping the analysis of a mock.** Some students avoid mocks because the score is low. But the job of a mock is not to show a score — it is to show a weakness. Taking a mock and never analysing it is just as bad: you took the test and learned nothing. After every mock, spend at least 30 minutes on analysis: which topic had mistakes, and which question ate up too much time.
+
+**Mistake 3: Staying stuck on one topic.** It is easy to spend hours on a topic you like, but the exam asks questions from every topic. If you are strong in percentages but weak in seating arrangements, spend time on seating — follow the need, not the liking. The error log tells you where the need is, so fill it in every day.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Time Khatam ho Gaya, Ek Section Mushkil, aur Beech mein Rukna',
+        '5. Edge Cases: Time Runs Out, One Hard Section, and a Break in the Middle'
+      ),
+      body: t(
+        `Plan banate waqt edge cases bhi socho. **Time khatam ho gaya:** agar mock mein time khatam ho jaaye aur 10 questions chhoot jaayein, toh ghabrao mat — yeh signal hai ki aap ek question par zyada der ruk rahe ho. Agle mock mein niyam banao: ek question par 90 second se zyada nahi. Nahi bana toh aage badho aur aakhir mein wapas aao.
+
+**Ek section bahut mushkil laga:** har mock mein ek section mushkil ho sakta hai. Us par atke rehne se poora test kharab hota hai. Mushkil section ko chhodo, aasaan questions pehle karo, aur mushkil wale aakhir mein dekho. Score aasaan questions se banta hai, mushkil se nahi.
+
+**Beech mein 2-3 din chhoot gaye:** bimari ya kisi kaam se plan toot sakta hai. Iska matlab plan fail nahi hua. Chhoote dinon ko dobara karne ki koshish mat karo — wapas aaj se shuru karo. Jo chhoota, woh chhoota; aage ka plan waisa ka waisa chalao. Plan wahi kaam karta hai jo flexible ho.`,
+        `Think about edge cases while planning. **Time runs out:** if time ends in a mock and 10 questions are left, do not panic — it is a signal that you spend too long on one question. In the next mock, make a rule: no more than 90 seconds on one question. If it does not work out, move on and come back at the end.
+
+**One section feels very hard:** every mock can have one hard section. Staying stuck on it spoils the whole test. Skip the hard section, do the easy questions first, and look at the hard ones at the end. Your score comes from easy questions, not hard ones.
+
+**You miss 2-3 days in the middle:** illness or other work can break the plan. That does not mean the plan has failed. Do not try to redo the missed days — restart from today. What is missed is missed; keep the rest of the plan as it is. A plan works only when it is flexible.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Sirf 7 Din Bache Hon, ya Quant Strong ho par Reasoning Weak',
+        '6. What-If: Only 7 Days Left, or Quant Strong but Reasoning Weak'
+      ),
+      body: t(
+        `**What if sirf 7 din bache hon?** 30 din ka plan 7 din mein nahi ho sakta, isliye plan chhota karo: din 1-2 mein quant ke sabse zyada aane wale topics (percentage, ratio, time-work), din 3-4 mein reasoning (series, seating), din 5-6 mein 2 mock test, din 7 mein sirf revision aur error log. Naya topic mat shuru karo — jo aata hai, use pakka karo.
+
+**What if quant strong hai par reasoning weak hai?** Toh time ka hissa badlo: quant par 30% time, reasoning par 70%. Strong topic ko sirf warm-up ke liye rakho — roz 10 questions, bas. Weak topic par concept + questions dono karo. 2 hafte mein farak dikhega, kyunki reasoning mein pattern pehchanne ki practice hi kaam aati hai.
+
+**What if mock score badh hi nahi raha?** Toh mock ki ginti badhane se pehle analysis badhao. Ek hi mock ko do baar analyze karo: pehli baar galat questions, doosri baar slow questions. Aksar score isliye nahi badhta kyunki wahi galti baar-baar ho rahi hai — error log us galti ko pakadta hai.`,
+        `**What if only 7 days are left?** A 30-day plan cannot fit into 7 days, so shrink it: days 1-2 for the most common quant topics (percentage, ratio, time and work), days 3-4 for reasoning (series, seating), days 5-6 for 2 mock tests, and day 7 for revision and the error log only. Do not start a new topic — make what you know solid.
+
+**What if quant is strong but reasoning is weak?** Then change the time split: 30% of time on quant, 70% on reasoning. Keep the strong topic only as a warm-up — 10 questions a day, nothing more. For the weak topic, do both concept and questions. You will see a difference in 2 weeks, because reasoning improves with practice in spotting patterns.
+
+**What if the mock score just does not rise?** Then increase the analysis before increasing the number of mocks. Analyse one mock twice: first the wrong questions, then the slow questions. Often the score does not rise because the same mistake repeats — the error log catches that mistake.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: 30 Din, Roz 2 Ghante, aur Error Log',
+        '7. Summary: 30 Days, 2 Hours a Day, and an Error Log'
+      ),
+      body: t(
+        `Poora plan ek line mein: **30 din, roz 2 ghante, 30 questions, 1 error-log entry**. Hafte 1-2 mein quant, hafte 3 mein reasoning, hafte 4 mein mock aur revision. Speed aur accuracy dono roz ke kaam se banti hain — koi ek din ki mehnat se nahi.
+
+Yaad rakhne wali baatein: ek question par 90 second se zyada mat ruko; har mock ke baad 30 minute analysis karo; weak topic par zyada time do, pasand wale par nahi; aur plan toot jaaye toh wapas aaj se shuru karo, peeche mat jao. Aptitude test aapki degree nahi, aapki soch aur speed check karta hai — aur dono practice se banti hain.
+
+Kal se shuru karo: pehle din number system aur percentages ke 30 questions karo, aur raat ko error log mein pehli entry likho. 30 din baad jab aap peeche dekhoge, toh log mein aapki poori journey hogi — kahan se shuru kiya tha, kahan pahunche.`,
+        `The whole plan in one line: **30 days, 2 hours a day, 30 questions, 1 error-log entry**. Weeks 1-2 for quant, week 3 for reasoning, week 4 for mocks and revision. Speed and accuracy both come from daily work — not from one day of effort.
+
+Remember these points: never spend more than 90 seconds on one question; spend 30 minutes on analysis after every mock; give more time to weak topics, not favourite ones; and if the plan breaks, restart from today instead of going back. The aptitude test does not check your degree — it checks your thinking and your speed, and both come from practice.
+
+Start tomorrow: on day one, solve 30 questions on number system and percentages, and at night write the first entry in your error log. After 30 days, when you look back, the log will hold your whole journey — where you started, and where you reached.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'timeline',
+    title: t(
+      '30 Din ka Plan: 4 Hafte, Har Hafte ka Focus',
+      'The 30-Day Plan: 4 Weeks, One Focus per Week'
+    ),
+    caption: t(
+      'Har hafte ka kaam agle hafte ki neev hai — hafta 4 bina pehle 3 hafton ke kaam nahi karega',
+      'Each week builds on the last — week 4 does not work without the first 3 weeks'
+    ),
+    nodes: [
+      {
+        t: t('Hafta 1: Quant basics', 'Week 1: Quant basics'),
+        s: t('Number system, percentage, ratio — roz 30 questions', 'Number system, percentage, ratio — 30 questions a day')
+      },
+      {
+        t: t('Hafta 2: Quant speed', 'Week 2: Quant speed'),
+        s: t('Time-speed-distance, time-work, averages — formula ko questions par lagao', 'Time-speed-distance, time and work, averages — apply formulas to questions')
+      },
+      {
+        t: t('Hafta 3: Reasoning', 'Week 3: Reasoning'),
+        s: t('Series, puzzles, seating, blood relations — pattern pehchano', 'Series, puzzles, seating, blood relations — learn to spot patterns')
+      },
+      {
+        t: t('Hafta 4: Mocks + revision', 'Week 4: Mocks and revision'),
+        s: t('2 full mock, error log, weak topics dobara', '2 full mocks, error log, revise weak topics')
+      },
+      {
+        t: t('Roz ka niyam', 'The daily rule'),
+        s: t('2 ghante, 30 questions, 1 error-log entry', '2 hours, 30 questions, 1 error-log entry')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Mock Scores ka Hisab: Total, Average aur Best',
+        'Mock Score Maths: Total, Average, and Best'
+      ),
+      language: 'python',
+      code: `scores = [18, 21, 24, 26]
+total = sum(scores)
+print("Mock scores:", scores)
+print("Total:", total)
+print("Average:", total / len(scores))
+print("Best:", max(scores))`,
+      output: `Mock scores: [18, 21, 24, 26]
+Total: 89
+Average: 22.25
+Best: 26`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'Aptitude test mein speed kyun important hai?',
+        'Why is speed important in an aptitude test?'
+      ),
+      opts: [
+        t('Kyunki har question ke liye bahut kam time milta hai', 'Because very little time is given per question'),
+        t('Kyunki speed se marks double ho jaate hain', 'Because speed doubles your marks'),
+        t('Kyunki slow students ko extra time milta hai', 'Because slow students get extra time'),
+        t('Speed ka test se koi lena-dena nahi hai', 'Speed has nothing to do with the test')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: har question ke liye aam taur par ek minute se bhi kam milta hai, isliye sirf answer aana kaafi nahi — answer jaldi aana chahiye.',
+        'Correct answer: you usually get less than a minute per question, so just knowing the answer is not enough — you must reach it quickly.'
+      )
+    },
+    {
+      q: t(
+        'Series 2, 6, 12, 20 ka agla number kya hai?',
+        'What is the next number in the series 2, 6, 12, 20?'
+      ),
+      opts: [
+        t('28', '28'),
+        t('24', '24'),
+        t('30', '30'),
+        t('32', '32')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: farak +4, +6, +8 badh raha hai, isliye agla farak +10 hai aur 20 + 10 = 30.',
+        'Correct answer: the gaps grow as +4, +6, +8, so the next gap is +10, and 20 + 10 = 30.'
+      )
+    },
+    {
+      q: t(
+        'Error log ka sabse bada fayda kya hai?',
+        'What is the biggest benefit of an error log?'
+      ),
+      opts: [
+        t('Woh batata hai ki weak topic kaun sa hai', 'It shows which topic is weak'),
+        t('Woh score ko apne aap badha deta hai', 'It raises your score by itself'),
+        t('Woh mock test ki jagah le leta hai', 'It replaces the mock test'),
+        t('Woh formulas yaad karwa deta hai', 'It memorises formulas for you')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: error log mein har galti ka topic aur wajah likhi hoti hai, isliye agle hafte ka plan usi se banta hai.',
+        'Correct answer: the error log records the topic and the reason for every mistake, so next week’s plan is built from it.'
+      )
+    },
+    {
+      q: t(
+        'Mock test ke baad sabse pehle kya karna chahiye?',
+        'What should you do first after a mock test?'
+      ),
+      opts: [
+        t('Turant agla mock de dena', 'Take the next mock at once'),
+        t('Kam se kam 30 minute analysis karna', 'Spend at least 30 minutes on analysis'),
+        t('Score ko sabko batana', 'Tell everyone your score'),
+        t('Ek hafte tak kuch na karna', 'Do nothing for a week')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: mock ka kaam kamzori dikhana hai — analysis ke bina mock se kuch seekha nahi jaata.',
+        'Correct answer: the job of a mock is to show your weakness — without analysis, a mock teaches you nothing.'
+      )
+    },
+    {
+      q: t(
+        'Agar plan beech mein 2-3 din toot jaaye, toh kya karna chahiye?',
+        'If your plan breaks for 2-3 days in the middle, what should you do?'
+      ),
+      opts: [
+        t('Chhoote din dobara karke plan ko peeche se pakdo', 'Redo the missed days and catch up from behind'),
+        t('Plan ko hamesha ke liye chhod do', 'Give up the plan forever'),
+        t('Aaj se wapas shuru karo, peeche mat jao', 'Restart from today and do not go back'),
+        t('Sirf pasand wale topic par kaam karo', 'Work only on your favourite topic')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: jo din chhoot gaya, woh chhoot gaya — aage ka plan waisa ka waisa chalao, warna plan kabhi aage nahi badhega.',
+        'Correct answer: the missed days are missed — keep the rest of the plan as it is, or the plan will never move forward.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'Aptitude test mein speed utni hi important hai jitni accuracy — har question ke liye ek minute se bhi kam milta hai.',
+      'In an aptitude test, speed matters as much as accuracy — you get less than a minute per question.'
+    ),
+    t(
+      '30 din ka plan: hafta 1-2 quant, hafta 3 reasoning, hafta 4 mock aur revision.',
+      'The 30-day plan: weeks 1-2 quant, week 3 reasoning, week 4 mocks and revision.'
+    ),
+    t(
+      'Roz ka niyam: 2 ghante, 30 questions, 1 error-log entry.',
+      'The daily rule: 2 hours, 30 questions, 1 error-log entry.'
+    ),
+    t(
+      'Ek question par 90 second se zyada mat ruko — nahi bana toh aage badho.',
+      'Never spend more than 90 seconds on one question — if it does not work out, move on.'
+    ),
+    t(
+      'Har mock ke baad 30 minute analysis karo; weak topic par zyada time do, pasand wale par nahi.',
+      'After every mock, spend 30 minutes on analysis; give more time to weak topics, not favourite ones.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Roz ka Checklist Printer Banao',
+      'Practice: Build a Daily Checklist Printer'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 4 tasks hain aur 3 done hain. Done count 3 of 4 aana chahiye. Phir tasks ki list mein apna ek task jodo aur done ki list mein uske liye True ya False likh kar dobara run karo — output mein tumhara task dikhna chahiye.',
+      'Run the starter code below. It has 4 tasks and 3 are done. The done count should read 3 of 4. Then add one task of your own to the tasks list, write True or False for it in the done list, and run it again — your task should appear in the output.'
+    ),
+    language: 'python',
+    starter: `tasks = ["30 quant questions", "20 reasoning questions", "Revise error log", "1 mock section"]
+done = [True, True, False, True]
+for task, is_done in zip(tasks, done):
+    mark = "done" if is_done else "pending"
+    print("[" + mark + "] " + task)
+print("Done:", sum(done), "of", len(tasks))`,
+    expected: `[done] 30 quant questions
+[done] 20 reasoning questions
+[pending] Revise error log
+[done] 1 mock section
+Done: 3 of 4`
+  },
+  readMinutes: 12
+};
+
+const placementGroupDiscussion: Article = {
+  id: 'placement-group-discussion',
+  subjectId: 'placement',
+  title: t(
+    'Group Discussion — Rules, Bolne ka Tareeka aur Teamwork',
+    'Group Discussion — Rules, How to Speak, and Teamwork'
+  ),
+  summary: t(
+    'Group discussion (GD) mein 5-10 log ek topic par baat karte hain aur panel dekhta hai ki kaun sunta hai, kaun bolta hai aur kaun team ko aage le jaata hai. Is article mein GD ke rules, bolne ka sahi tareeka, aur aam galtiyan hain.',
+    'In a group discussion (GD), 5 to 10 people talk about one topic while a panel watches who listens, who speaks, and who moves the team forward. This article covers the rules of a GD, the right way to speak, and the common mistakes.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Group Discussion Kya Hai? (Rules aur Panel Kya Dekhta Hai)',
+        '1. What Is a Group Discussion? (Rules and What the Panel Watches)'
+      ),
+      body: t(
+        `Group discussion ek round hota hai jismein 5 se 10 candidates ko ek topic diya jaata hai aur 10 se 20 minute tak us par baat karni hoti hai. Koi ek sahi answer nahi hota — panel yeh dekhta hai ki aap topic ko kitna samajhte ho, apni baat kitni saaf kehte ho, doosron ko kitna sunte ho, aur group ko aage le jaane mein kitni madad karte ho. GD ek debate nahi hai; ismein jeetna nahi, **team ke saath sochna** hota hai.
+
+GD ke basic rules simple hain: ek waqt par ek hi vyakti bole; beech mein kaatna nahi; topic se bhatakna nahi; aur aakhir mein discussion ko ek nishkarsh tak pahunchana. Jo vyakti sabse zyada bolta hai, woh hamesha best nahi hota. Panel us vyakti ko pasand karta hai jo **kam bole par kaam ki baat bole** — ek achha point, ek achha example, ya ek sawaal jo discussion ko nayi disha de.
+
+GD mein aapki body language bhi dekhi jaati hai: seedha baithna, bolne wale ki taraf dekhna, aur haath ke ishaaron se baat ko support karna. Aawaz saaf aur shaant honi chahiye — cheekh kar bolna ya bahut dheere bolna, dono galat hain. GD ki taiyari ka matlab hai bolne ki practice, sunne ki practice, aur topic par sochne ki practice — teeno ek saath.`,
+        `A group discussion is a round in which 5 to 10 candidates get one topic and talk about it for 10 to 20 minutes. There is no single correct answer — the panel watches how well you understand the topic, how clearly you say your point, how well you listen to others, and how much you help the group move forward. A GD is not a debate; the goal is not to win, but to **think together as a team**.
+
+The basic rules are simple: only one person speaks at a time; do not interrupt; do not drift away from the topic; and bring the discussion to a conclusion at the end. The person who talks the most is not always the best. The panel likes the person who **speaks less but says useful things** — one good point, one good example, or one question that gives the discussion a new direction.
+
+Your body language is also watched: sit straight, look at the person speaking, and support your words with hand gestures. Your voice should be clear and calm — shouting and speaking too softly are both wrong. Preparing for a GD means practising speaking, practising listening, and practising thinking about topics — all three together.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Class Debate, Team Project aur Family Discussion',
+        '2. Real-Life Examples: Class Debates, Team Projects, and Family Discussions'
+      ),
+      body: t(
+        `GD ki practice aap roz kar sakte ho, bina kisi panel ke. **Class debate** socho: teacher ne topic diya "online classes vs offline classes" aur aapko apni rai deni hai. Aapne pehle topic ko define kiya, phir ek point bola, phir ek example diya. Yahi GD ka structure hai — define, point, example. Jo student class mein aise bolta hai, woh GD mein bhi aise hi bolega.
+
+**Team project** mein bhi GD chhupa hai. Jab 4 log mil kar project par kaam karte hain, toh har kisi ki alag rai hoti hai. Koi kehta hai design pehle, koi kehta hai code pehle. Jo vyakti sabki baat sun kar kehta hai, "dono sahi hain, pehle design ka ek draft bana lete hain, phir code shuru karte hain" — woh GD mein wahi karega jo panel chahta hai: **do rai ko jod kar aage badhana**.
+
+**Family discussion** bhi practice hai: ghar par jab chhutti ki jagah par baat hoti hai, toh har koi apni pasand batata hai. Jo vyakti sabki pasand sun kar ek aisa plan batata hai jismein sab khush hon, woh consensus bana raha hai. GD ke aakhir mein yahi karna hota hai — sabke points ko ek nishkarsh mein bandhna.`,
+        `You can practise GD every day, without any panel. Think of a **class debate**: the teacher gives the topic "online classes vs offline classes" and you must give your view. You first define the topic, then make one point, then give one example. That is the structure of a GD — define, point, example. A student who speaks like this in class will speak the same way in a GD.
+
+A **team project** also hides a GD. When 4 people work on a project, everyone has a different view. One says design first, another says code first. The person who listens to all and says, "both are right — let us make a draft of the design first, then start the code" is doing exactly what the panel wants in a GD: **joining two views and moving forward**.
+
+A **family discussion** is practice too: at home, when the family talks about a holiday place, everyone names a favourite. The person who listens to all and suggests a plan that makes everyone happy is building agreement. That is what you must do at the end of a GD — tie everyone's points into one conclusion.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: 15 Minute ki GD ka Time Plan aur Dry Run',
+        '3. Step-by-Step: A Time Plan for a 15-Minute GD, with a Dry Run'
+      ),
+      body: t(
+        `Ek 15 minute ki GD ko 3 hisso mein baanto. **Pehle 2 minute: suno aur socho.** Topic milte hi turant bolne ki jaldi mat karo. Topic ko define karo, apne 2-3 points dimaag mein banao, aur pehla bolne wala kya kehta hai, use suno. **Beech ke 10 minute: bolo aur jodo.** Apne points ek-ek karke bolo, har point ke saath ek chhota example do, aur doosron ke points par jawab do — "Ravi ne sahi kaha, ismein main ek aur angle jodna chahta hoon."
+
+**Aakhri 3 minute: nishkarsh.** Agar koi nishkarsh nahi de raha, toh aap aage aao: "Hum sab ne 3 cheezein kahi hain — pehli, doosri, teesri. Isse yeh nishkarsh nikalta hai ki..." Yeh woh moment hai jo panel ko sabse zyada pasand aata hai, kyunki yeh dikhata hai ki aapne poori discussion suni hai.
+
+Dry run dekhte hain: 15 minute, 5 speakers, har ek ka fair share 3 minute hai. Speaker 1 minute 0 se 3 tak, speaker 2 minute 3 se 6 tak, aur aise hi aage. Asliyat mein aisa bilkul barabar nahi hota — koi 4 minute bolega, koi 1 minute. Isliye apna hisaab rakho: agar aap 3 minute se zyada bol chuke ho, toh ruk kar suno; agar 1 minute bhi nahi bola, toh mauka dhoondh kar bolo. Neeche wala code yeh time plan print karta hai.`,
+        `Split a 15-minute GD into 3 parts. **First 2 minutes: listen and think.** Do not rush to speak the moment you get the topic. Define the topic, prepare 2-3 points in your mind, and listen to what the first speaker says. **Middle 10 minutes: speak and connect.** Give your points one by one, add a small example to each point, and respond to others — "Ravi made a good point, and I would like to add one more angle to it."
+
+**Last 3 minutes: conclusion.** If nobody is concluding, step forward: "We have all said 3 things — first, second, third. From this, the conclusion is..." This is the moment the panel likes most, because it shows you listened to the whole discussion.
+
+Let us do a dry run: 15 minutes, 5 speakers, each with a fair share of 3 minutes. Speaker 1 from minute 0 to 3, speaker 2 from minute 3 to 6, and so on. In reality it is never this equal — someone will speak for 4 minutes, someone for 1. So keep your own count: if you have already spoken for more than 3 minutes, stop and listen; if you have not spoken for even 1 minute, find a chance to speak. The code below prints this time plan.`
+      ),
+      code: {
+        title: t(
+          'GD Timer: 15 Minute, 5 Speakers, Har Ek ka Fair Share',
+          'GD Timer: 15 Minutes, 5 Speakers, Each Fair Share'
+        ),
+        language: 'python',
+        code: `total_minutes = 15
+speakers = 5
+share = total_minutes // speakers
+print("GD time:", total_minutes, "minutes")
+print("Speakers:", speakers)
+print("Fair share each:", share, "minutes")
+for i in range(1, speakers + 1):
+    print("Speaker", i, "speaks in minutes", (i - 1) * share, "to", i * share)`,
+        output: `GD time: 15 minutes
+Speakers: 5
+Fair share each: 3 minutes
+Speaker 1 speaks in minutes 0 to 3
+Speaker 2 speaks in minutes 3 to 6
+Speaker 3 speaks in minutes 6 to 9
+Speaker 4 speaks in minutes 9 to 12
+Speaker 5 speaks in minutes 12 to 15`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Beech mein Kaatna, Sirf Bolna, aur Topic se Bhatakna',
+        '4. Common Mistakes: Interrupting, Only Talking, and Drifting Off Topic'
+      ),
+      body: t(
+        `GD mein teen galtiyan sabse zyada nuksaan karti hain. **Galti 1: Beech mein kaatna.** Kisi ke bolte waqt beech mein bolna panel ko turant bura lagta hai. Agar aapko kuch kehna hai, toh haath utha kar ya "sorry, main is point par kuch jodna chahta hoon" keh kar mauka maango — par tab bhi tabhi bolo jab doosra vyakti apni baat khatam kar le.
+
+**Galti 2: Sirf bolna, sunna nahi.** Kuch log poori GD mein sirf apni baat bolte rehte hain aur doosron ke points ka jawab kabhi nahi dete. Panel isse "poor listening" kehta hai. GD mein sunna bolne jitna hi important hai. Har 2-3 minute mein kisi doosre ke point ka zikr karo — "Meera ne jo kaha, usse main sehmat hoon, kyunki..." Yeh dikhata hai ki aap sun rahe ho.
+
+**Galti 3: Topic se bhatakna.** Topic "work from home" hai aur aap traffic aur pollution par bolne lag gaye — yeh bhatakna hai. Har point se pehle khud se poochho: "yeh baat topic se judi hai ya nahi?" Agar nahi, toh use chhodo. Jo vyakti discussion ko wapas topic par laata hai, use panel hamesha yaad rakhta hai.`,
+        `Three mistakes cause the most damage in a GD. **Mistake 1: Interrupting.** Speaking over someone while they talk looks bad to the panel at once. If you want to say something, ask for a chance — raise a hand or say "sorry, I would like to add to this point" — but speak only after the other person has finished.
+
+**Mistake 2: Only talking, never listening.** Some people keep giving their own points through the whole GD and never respond to others. The panel calls this "poor listening". In a GD, listening matters as much as speaking. Every 2-3 minutes, refer to someone else's point — "I agree with what Meera said, because..." That shows you are listening.
+
+**Mistake 3: Drifting off topic.** The topic is "work from home" and you start talking about traffic and pollution — that is drifting. Before every point, ask yourself: "is this point connected to the topic or not?" If not, drop it. The panel always remembers the person who brings the discussion back to the topic.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Koi Bol hi nahi Raha, Ek Vyakti Sab Bol Raha hai, aur Topic Samajh nahi Aaya',
+        '5. Edge Cases: Nobody Is Speaking, One Person Dominates, and You Do Not Understand the Topic'
+      ),
+      body: t(
+        `**Koi bol hi nahi raha:** kabhi-kabhi GD shuru hote hi sab chup rehte hain. Yeh aapke liye mauka hai. Aage badh kar topic ko define karo aur pehla point do: "Is topic ka matlab hai... main pehla point rakhna chahta hoon." Pehla bolne wala panel ko hamesha yaad rehta hai — par sirf tab, jab pehla point sahi ho.
+
+**Ek vyakti sab bol raha hai:** agar ek speaker ruk hi nahi raha, toh use kaatna mat. Uske rukne ka intezaar karo, phir shaanti se bolo: "Aapne achha point diya, main ismein ek aur angle jodna chahta hoon." Panel dekhta hai ki aapne aggressive hue bina apni jagah banayi.
+
+**Topic samajh nahi aaya:** ghabrao mat. Pehle 1-2 minute doosron ko suno — unki baaton se topic saaf ho jaayega. Phir ek aam point se shuru karo: topic ke dono paksh kya hain, yeh batao. Kabhi bhi bina samjhe bolna mat — galat point bolne se chup rehna behtar hai.`,
+        `**Nobody is speaking:** sometimes everyone stays silent when the GD starts. That is your chance. Step forward, define the topic, and give the first point: "This topic means... I would like to make the first point." The first speaker is always remembered by the panel — but only when the first point is right.
+
+**One person is doing all the talking:** if one speaker just does not stop, do not cut them off. Wait for them to pause, then speak calmly: "You made a good point, and I would like to add one more angle to it." The panel sees that you made your space without being aggressive.
+
+**You do not understand the topic:** do not panic. Listen to others for the first 1-2 minutes — their words will make the topic clear. Then start with a general point: explain the two sides of the topic. Never speak without understanding — staying quiet is better than making a wrong point.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Aapko Beech mein Roka Gaya, ya Aapki Baat se Koi Sehmat nahi',
+        '6. What-If: You Are Stopped Mid-Way, or Nobody Agrees with You'
+      ),
+      body: t(
+        `**What if aapko beech mein roka gaya?** Agar koi aapko beech mein kaat de, toh behes mat karo. Shaanti se kaho, "Theek hai, aap pehle khatam kar lijiye, main uske baad apna point rakhunga." Yeh dikhata hai ki aap shaant aur mature ho — panel ko yahi chahiye. Baad mein jab mauka mile, apna point poora karo.
+
+**What if aapki baat se koi sehmat nahi?** Yeh GD mein normal hai. Apni baat ko zabardasti manwana mat — uske bajay example do ya sawaal poochho: "Agar aisa hai, toh is example mein kya hoga?" Jo vyakti sawaal poochhta hai, woh discussion ko aage le jaata hai, aur panel use note karta hai.
+
+**What if aap galat point bol gaye?** Use sudharo, chhupao mat. "Maine abhi jo kaha, usmein main ek correction karna chahta hoon" — yeh bolna kamzori nahi, imaandaari hai. Panel galti se zyada, galti ko sambhalne ka tareeka dekhta hai.`,
+        `**What if you are stopped mid-way?** If someone cuts you off, do not argue. Say calmly, "Fine, please finish first, and I will make my point after that." This shows you are calm and mature — that is what the panel wants. When you get a chance later, complete your point.
+
+**What if nobody agrees with you?** That is normal in a GD. Do not force your view — instead give an example or ask a question: "If that is so, what would happen in this example?" The person who asks a question moves the discussion forward, and the panel notes it.
+
+**What if you made a wrong point?** Correct it, do not hide it. "I would like to correct what I just said" — saying this is not weakness, it is honesty. The panel watches how you handle a mistake more than the mistake itself.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Suno, Bolo, Jodo, aur Nishkarsh Do',
+        '7. Summary: Listen, Speak, Connect, and Conclude'
+      ),
+      body: t(
+        `GD ka poora kaam 4 shabdon mein hai: **suno, bolo, jodo, nishkarsh do**. Pehle 2 minute suno aur socho, beech ke 10 minute apne points bolo aur doosron se jodo, aakhri 3 minute mein nishkarsh do. Har point ke saath ek chhota example rakho, aur har 2-3 minute mein kisi doosre ke point ka zikr karo.
+
+Yaad rakhne wali baatein: ek waqt par ek hi bole; beech mein kaato mat; topic se bhatko mat; aur aawaz saaf aur shaant rakho. Jo vyakti sabse zyada bolta hai, woh best nahi hota — best woh hota hai jo discussion ko aage le jaata hai.
+
+Practice ka tareeka: hafte mein 2 baar doston ke saath 15 minute ki mock GD karo, aur har baar ek naya topic lo. Har mock ke baad khud se poochho: maine kitni baar bola, kitni baar suna, aur kya maine nishkarsh mein madad ki? In 3 sawaalon ka jawab hi aapki taiyari hai.`,
+        `The whole work of a GD fits in 4 words: **listen, speak, connect, and conclude**. Listen and think for the first 2 minutes, speak your points and connect them with others for the middle 10 minutes, and give the conclusion in the last 3 minutes. Keep a small example with every point, and refer to someone else's point every 2-3 minutes.
+
+Remember these points: only one person speaks at a time; do not interrupt; do not drift from the topic; and keep your voice clear and calm. The person who talks the most is not the best — the best is the one who moves the discussion forward.
+
+How to practise: hold a 15-minute mock GD with friends twice a week, with a new topic each time. After every mock, ask yourself: how many times did I speak, how many times did I listen, and did I help with the conclusion? The answers to these 3 questions are your preparation.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'cycle',
+    title: t(
+      'GD ka Cycle: Suno, Bolo, Jodo, Nishkarsh Do',
+      'The GD Cycle: Listen, Speak, Connect, Conclude'
+    ),
+    caption: t(
+      'Yeh cycle poori GD mein chalti rehti hai — ek point se doosre point tak',
+      'This cycle keeps running through the whole GD — from one point to the next'
+    ),
+    nodes: [
+      {
+        t: t('1. Suno', '1. Listen'),
+        s: t('Pehle 2 minute: topic samjho, doosron ko suno', 'First 2 minutes: understand the topic, listen to others')
+      },
+      {
+        t: t('2. Bolo', '2. Speak'),
+        s: t('Apna point + ek chhota example, saaf aawaz mein', 'Your point plus a small example, in a clear voice')
+      },
+      {
+        t: t('3. Jodo', '3. Connect'),
+        s: t('Doosre ke point se jodo: "Ravi ne sahi kaha, ismein..."', 'Connect with another point: "Ravi was right, and..."')
+      },
+      {
+        t: t('4. Nishkarsh do', '4. Conclude'),
+        s: t('Aakhri 3 minute: sabke points ko ek nishkarsh mein bandho', 'Last 3 minutes: tie all points into one conclusion')
+      },
+      {
+        t: t('Phir se suno', 'Listen again'),
+        s: t('Har naye point ke baad cycle dobara shuru hoti hai', 'After each new point, the cycle starts again')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Turn Tracker: Kaun Kitni Baar Bola',
+        'Turn Tracker: Who Spoke How Many Times'
+      ),
+      language: 'python',
+      code: `turns = {"Asha": 3, "Ravi": 2, "Meera": 4, "Karan": 1}
+for name in turns:
+    word = "time" if turns[name] == 1 else "times"
+    print(name, "spoke", turns[name], word)
+print("Most active:", max(turns, key=turns.get))
+print("Total turns:", sum(turns.values()))`,
+      output: `Asha spoke 3 times
+Ravi spoke 2 times
+Meera spoke 4 times
+Karan spoke 1 time
+Most active: Meera
+Total turns: 10`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'GD mein sabse achha speaker kaun hota hai?',
+        'Who is the best speaker in a GD?'
+      ),
+      opts: [
+        t('Jo sabse zyada bolta hai', 'The one who talks the most'),
+        t('Jo kam bole par kaam ki baat bole aur discussion ko aage le jaaye', 'The one who speaks less but says useful things and moves the discussion forward'),
+        t('Jo sabse pehle bolna shuru karta hai', 'The one who starts speaking first'),
+        t('Jo kabhi nahi bolta', 'The one who never speaks')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: panel zyada bolne ko nahi, kaam ki baat aur team ko aage le jaane ko dekhta hai.',
+        'Correct answer: the panel does not reward talking the most — it rewards useful points and moving the team forward.'
+      )
+    },
+    {
+      q: t(
+        'GD mein beech mein kaatna kyun galat hai?',
+        'Why is interrupting wrong in a GD?'
+      ),
+      opts: [
+        t('Kyunki isse panel ko lagta hai ki aap sunte nahi aur team ka samman nahi karte', 'Because it shows the panel you do not listen and do not respect the team'),
+        t('Kyunki isse time bachta hai', 'Because it saves time'),
+        t('Kyunki isse topic badal jaata hai', 'Because it changes the topic'),
+        t('Beech mein kaatna galat nahi hai', 'Interrupting is not wrong')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: GD mein sunna bolne jitna hi important hai, aur beech mein kaatna yahi dikhata hai ki aap sun nahi rahe.',
+        'Correct answer: listening matters as much as speaking in a GD, and interrupting shows you are not listening.'
+      )
+    },
+    {
+      q: t(
+        '15 minute ki GD mein aakhri 3 minute mein kya karna chahiye?',
+        'What should you do in the last 3 minutes of a 15-minute GD?'
+      ),
+      opts: [
+        t('Naya topic shuru karna', 'Start a new topic'),
+        t('Chup baithna', 'Sit quietly'),
+        t('Sabke points ko ek nishkarsh mein bandhna', 'Tie everyone’s points into one conclusion'),
+        t('Sabse zyada bolna', 'Talk the most')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: nishkarsh dena dikhata hai ki aapne poori discussion suni hai aur use bandh sakte ho.',
+        'Correct answer: giving a conclusion shows you listened to the whole discussion and can tie it together.'
+      )
+    },
+    {
+      q: t(
+        'Agar GD ka topic samajh nahi aaya, toh sabse pehle kya karna chahiye?',
+        'If you do not understand the GD topic, what should you do first?'
+      ),
+      opts: [
+        t('Turant bolna shuru kar do', 'Start speaking at once'),
+        t('Pehle 1-2 minute doosron ko suno, phir aam point se shuru karo', 'Listen to others for the first 1-2 minutes, then start with a general point'),
+        t('Panel se topic badalne ko kaho', 'Ask the panel to change the topic'),
+        t('Poori GD mein chup raho', 'Stay silent for the whole GD')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: doosron ko sunne se topic saaf ho jaata hai, aur bina samjhe bolne se galat point bolne ka risk hota hai.',
+        'Correct answer: listening to others makes the topic clear, and speaking without understanding risks a wrong point.'
+      )
+    },
+    {
+      q: t(
+        'GD mein doosre ke point ka zikr karne se kya fayda hota hai?',
+        'What is the benefit of referring to someone else’s point in a GD?'
+      ),
+      opts: [
+        t('Yeh dikhata hai ki aap sun rahe ho aur team ke saath soch rahe ho', 'It shows you are listening and thinking with the team'),
+        t('Isse aapka time bachta hai', 'It saves your time'),
+        t('Isse topic badal jaata hai', 'It changes the topic'),
+        t('Iska koi fayda nahi hai', 'It has no benefit')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: "Meera ne jo kaha, usse main sehmat hoon" kehna sunne ka saboot hai, aur panel yahi dekhta hai.',
+        'Correct answer: saying "I agree with what Meera said" proves you listened, and that is what the panel watches for.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'GD debate nahi hai — ismein jeetna nahi, team ke saath sochna hota hai.',
+      'A GD is not a debate — the goal is not to win, but to think together as a team.'
+    ),
+    t(
+      '15 minute ki GD: pehle 2 minute suno, beech ke 10 minute bolo aur jodo, aakhri 3 minute nishkarsh do.',
+      'A 15-minute GD: listen for the first 2 minutes, speak and connect for the middle 10, conclude in the last 3.'
+    ),
+    t(
+      'Har point ke saath ek chhota example do, aur har 2-3 minute mein kisi doosre ke point ka zikr karo.',
+      'Give a small example with every point, and refer to someone else’s point every 2-3 minutes.'
+    ),
+    t(
+      'Beech mein kaato mat, topic se bhatko mat, aawaz saaf aur shaant rakho.',
+      'Do not interrupt, do not drift from the topic, and keep your voice clear and calm.'
+    ),
+    t(
+      'Galat point bol gaye toh sudharo — "main ek correction karna chahta hoon" kehna imaandaari hai.',
+      'If you made a wrong point, correct it — saying "I would like to make a correction" is honesty.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: GD Self-Score Calculator',
+      'Practice: GD Self-Score Calculator'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 4 areas mein score diye hain aur total 16 of 20 aana chahiye. Phir apni aakhri mock GD ke baad apne scores badal kar dobara run karo — total aur average khud nikal aayenge.',
+      'Run the starter code below. It has scores in 4 areas and the total should read 16 of 20. Then change the scores to your own after your last mock GD and run it again — the total and average will come out on their own.'
+    ),
+    language: 'python',
+    starter: `scores = {"Content": 4, "Listening": 3, "Clarity": 4, "Teamwork": 5}
+total = sum(scores.values())
+print("GD self-score:")
+for area, score in scores.items():
+    print(area + ":", score, "/ 5")
+print("Total:", total, "/ 20")
+print("Average:", total / len(scores))`,
+    expected: `GD self-score:
+Content: 4 / 5
+Listening: 3 / 5
+Clarity: 4 / 5
+Teamwork: 5 / 5
+Total: 16 / 20
+Average: 4.0`
+  },
+  readMinutes: 12
+};
+
+const placementGdTopics: Article = {
+  id: 'placement-gd-topics',
+  subjectId: 'placement',
+  title: t(
+    'GD Topics Bank — Model Openings ke Saath, Har Category se',
+    'GD Topics Bank — With Model Openings, from Every Category'
+  ),
+  summary: t(
+    'GD mein topic koi bhi ho sakta hai — tech, social, current affairs ya abstract. Is article mein har category se topics hain, har topic par bolne ka tareeka hai, aur model openings hain jinse aap pehla point de sakte ho.',
+    'A GD topic can come from anywhere — tech, social issues, current affairs, or abstract ideas. This article has topics from every category, a way to speak on each one, and model openings you can use to make your first point.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. GD Topics Kya Hote Hain? (Categories aur Topic ka Matlab)',
+        '1. What Are GD Topics? (Categories and What a Topic Means)'
+      ),
+      body: t(
+        `GD topics aam taur par 4 categories mein aate hain. **Tech topics** — jaise "Is AI a job killer or a job maker?" — inmein technology ke fayde aur nuksaan par baat hoti hai. **Social topics** — jaise "Work from home vs office" — inmein society aur roz ki zindagi par baat hoti hai. **Current affairs** — jaise "Cashless India" — inmein desh mein chal rahi cheezon par baat hoti hai. **Abstract topics** — jaise "Red vs Blue" — inmein koi seedha answer nahi hota, sirf aapki soch dekhi jaati hai.
+
+Topic milte hi sabse pehle yeh karo: topic ko apne shabdon mein define karo. "Is AI a job killer or a job maker?" ka matlab hai — kya AI logon ki naukriyan khatam kar raha hai ya nayi naukriyan bana raha hai? Jab tak topic ka matlab saaf nahi hoga, aapke points bhatkenge. Define karne ke baad dono paksh socho: ek paksh ke 2 points, doosre paksh ke 2 points. Phir apni rai banao.
+
+Abstract topic par ghabrao mat. "Red vs Blue" par aap keh sakte ho: red energy aur action ko dikhata hai, blue shaanti aur bharose ko — aur team mein dono chahiye. Panel yahan aapka knowledge nahi, aapki **sochne ki style** dekh raha hai.`,
+        `GD topics usually fall into 4 categories. **Tech topics** — such as "Is AI a job killer or a job maker?" — ask about the benefits and harms of technology. **Social topics** — such as "Work from home vs office" — ask about society and daily life. **Current affairs** — such as "Cashless India" — ask about things happening in the country. **Abstract topics** — such as "Red vs Blue" — have no straight answer; only your way of thinking is watched.
+
+The moment you get a topic, do this first: define it in your own words. "Is AI a job killer or a job maker?" means — is AI ending people's jobs or creating new jobs? Until the meaning is clear, your points will drift. After defining it, think of both sides: 2 points for one side, 2 points for the other. Then form your own view.
+
+Do not panic at an abstract topic. On "Red vs Blue" you can say: red shows energy and action, blue shows calm and trust — and a team needs both. Here the panel is not checking your knowledge, but your **style of thinking**.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: AI, Work from Home aur Online Classes',
+        '2. Real-Life Examples: AI, Work from Home, and Online Classes'
+      ),
+      body: t(
+        `**"Is AI a job killer or a job maker?"** — is par dono paksh strong hain. Ek taraf AI repetitive kaam ko automate karta hai, jaise data entry. Doosri taraf AI naye kaam banata hai — AI ko train karne wale, AI tools banane wale, aur AI se data samajhne wale log chahiye. Achha GD point yeh hai: "AI naukri khatam nahi karta, naukri ka nature badalta hai — jo log naye skills seekhte hain, unke liye naye mauke bante hain."
+
+**"Work from home vs office"** — yahan dono paksh roz ki zindagi se aate hain. Ghar se kaam karne mein time bachta hai aur parivaar ke saath waqt milta hai. Office mein team se milna, jaldi seekhna aur naye ideas aana aasaan hota hai. Achha point yeh hai: "Dono ka mix sabse behtar hai — hafte mein kuch din office, kuch din ghar."
+
+**"Online classes vs offline classes"** — online mein flexibility hai, offline mein focus aur doston se seekhna hai. Yahan ek achha example kaam aata hai: "Online class mein main lecture dobara dekh sakta hoon, par offline class mein jo doubt turant poochh sakta hoon, woh online mein mushkil hai." Har topic par ek personal example rakho — wahi aapki baat ko yaadgar banata hai.`,
+        `**"Is AI a job killer or a job maker?"** — both sides are strong here. On one side, AI automates repetitive work, such as data entry. On the other side, AI creates new work — people are needed to train AI, build AI tools, and make sense of AI data. A good GD point is: "AI does not end jobs, it changes the nature of jobs — people who learn new skills find new chances."
+
+**"Work from home vs office"** — both sides come from daily life. Working from home saves travel time and gives time with family. In the office, meeting the team, learning fast, and getting new ideas is easier. A good point is: "A mix of both is best — some days in the office, some days at home."
+
+**"Online classes vs offline classes"** — online gives flexibility, offline gives focus and learning from friends. A good personal example works here: "In an online class I can watch the lecture again, but in an offline class I can ask my doubt at once, which is hard online." Keep one personal example for every topic — that is what makes your point memorable.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: Topic Bank se Opening Banana aur Dry Run',
+        '3. Step-by-Step: Building an Opening from the Topic Bank, with a Dry Run'
+      ),
+      body: t(
+        `Topic bank ko use karne ka step-by-step tareeka yeh hai. **Step 1: Category pehchano.** Topic tech hai, social hai ya abstract — yeh dekhte hi aapko pata chal jaayega ki kis tarah ke points chahiye. **Step 2: Topic ko define karo.** Ek line mein topic ka matlab batao — yahi aapki opening ki pehli line banegi. **Step 3: Dono paksh ke 2-2 points likho.** Ek paksh ke liye, ek paksh ke khilaaf. **Step 4: Apni rai banao.** Dono paksh dekh kar apna stand lo, aur ek example jodo.
+
+Dry run karte hain. Topic hai "Work from home vs office". Step 1: social topic hai. Step 2: define karo — "Is topic ka matlab hai ki kaam ghar se behtar hai ya office se." Step 3: ghar ke paksh mein — time bachta hai, parivaar ke saath waqt; office ke paksh mein — team se seekhna, jaldi communication. Step 4: stand — "Main manta hoon ki mix sabse behtar hai, kyunki bahut si teams ab office ke din aur ghar ke din mila kar kaam karti hain."
+
+Neeche wala code ek chhota topic bank print karta hai — Tech aur Social, har category mein 2 topics. Is bank mein apne topics jodte jao; 20 topics ka bank GD ki taiyari ke liye kaafi hai.`,
+        `Here is the step-by-step way to use a topic bank. **Step 1: Spot the category.** Is the topic tech, social, or abstract — once you see that, you know what kind of points you need. **Step 2: Define the topic.** Say what the topic means in one line — that becomes the first line of your opening. **Step 3: Write 2 points for each side.** Two points for, two points against. **Step 4: Form your view.** After seeing both sides, take your stand and add one example.
+
+Let us do a dry run. The topic is "Work from home vs office". Step 1: it is a social topic. Step 2: define it — "This topic asks whether work is better from home or from the office." Step 3: for home — time is saved, time with family; for office — learning from the team, faster communication. Step 4: stand — "I believe a mix works best, because many teams now mix office days with home days."
+
+The code below prints a small topic bank — Tech and Social, 2 topics in each category. Keep adding your own topics to this bank; a bank of 20 topics is enough for GD preparation.`
+      ),
+      code: {
+        title: t(
+          'Topic Bank Printer: Category ke Hisaab se Topics',
+          'Topic Bank Printer: Topics by Category'
+        ),
+        language: 'python',
+        code: `topics = {
+    "Tech": ["Is AI a job killer or a job maker?", "Should phones be banned in classrooms?"],
+    "Social": ["Work from home vs office", "Is social media good for students?"],
+}
+for group in topics:
+    print(group + ":")
+    for topic in topics[group]:
+        print(" - " + topic)
+print("Total topics:", sum(len(v) for v in topics.values()))`,
+        output: `Tech:
+ - Is AI a job killer or a job maker?
+ - Should phones be banned in classrooms?
+Social:
+ - Work from home vs office
+ - Is social media good for students?
+Total topics: 4`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Sirf Ek Paksh Bolna, Facts Galat Bolna aur Rata Hua Opening',
+        '4. Common Mistakes: Arguing One Side Only, Wrong Facts, and a Memorised Opening'
+      ),
+      body: t(
+        `**Galti 1: Sirf ek paksh bolna.** Jo vyakti sirf ek paksh bolta hai, woh debate kar raha hai, GD nahi. GD mein dono paksh dikhao, phir apni rai do. "AI ke fayde hain, par nuksaan bhi hain — isliye main manta hoon ki..." — yeh structure panel ko pasand aata hai.
+
+**Galti 2: Galat facts bolna.** "AI ne 90% naukriyan khatam kar di" — aise numbers bina source ke mat bolo. Agar number yaad nahi, toh number mat bolo; general baat bolo: "bahut si companies AI tools use kar rahi hain." Galat fact pakda gaya toh panel ka bharosa toot jaata hai.
+
+**Galti 3: Rata hua opening bolna.** Kuch log har topic par ek hi rata hua opening bol dete hain — "Good morning everyone, today I am going to talk about..." Panel ko turant pata chal jaata hai ki yeh ratta hai. Opening topic se judi honi chahiye: topic ko define karo, phir apna pehla point do. Rata hua opening se behtar hai ek simple, topic se judi opening.`,
+        `**Mistake 1: Arguing one side only.** A person who speaks for one side only is debating, not doing a GD. In a GD, show both sides, then give your view. "AI has benefits, but it also has harms — so I believe..." — the panel likes this structure.
+
+**Mistake 2: Stating wrong facts.** "AI has ended 90% of jobs" — never say numbers like this without a source. If you do not remember a number, do not say one; speak in general terms: "many companies use AI tools." If a wrong fact is caught, the panel loses trust in you.
+
+**Mistake 3: Giving a memorised opening.** Some people give the same memorised opening for every topic — "Good morning everyone, today I am going to talk about..." The panel spots at once that it is memorised. The opening must connect to the topic: define the topic, then give your first point. A simple opening tied to the topic is better than a memorised one.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Controversial Topic, Abstract Topic aur Topic par Kuch nahi Pata',
+        '5. Edge Cases: Controversial Topics, Abstract Topics, and Knowing Nothing About the Topic'
+      ),
+      body: t(
+        `**Controversial topic:** topic par logon ki rai bahut alag ho sakti hai, jaise kisi policy par. Yahan shaant raho aur personal attack mat karo. "Main is policy ke is hisse se sehmat hoon, is hisse se nahi, kyunki..." — aisi balanced baat panel ko pasand aati hai. Jazbaati hona GD mein nuksaan karta hai.
+
+**Abstract topic:** "Red vs Blue" jaise topic par knowledge kaam nahi aata, creativity kaam aati hai. Topic ko kisi concept se jodo: red action hai, blue trust hai — aur ek team mein dono chahiye. Abstract topic mein galat answer nahi hota, bas sochne ka tareeka dekha jaata hai.
+
+**Topic par kuch nahi pata:** pehle 2 minute suno. Doosron ke points se topic ka matlab saaf ho jaayega. Phir ek aam point bolo: "Is topic ke dono paksh hain — ek taraf..., doosri taraf..." Bina samjhe bolne se behtar hai 2 minute sun kar bolna.`,
+        `**Controversial topic:** people can hold very different views on a topic, such as a policy. Stay calm here and never attack anyone personally. "I agree with this part of the policy and not with this part, because..." — a balanced line like this is what the panel likes. Getting emotional hurts you in a GD.
+
+**Abstract topic:** on a topic like "Red vs Blue", knowledge does not help — creativity does. Connect the topic to a concept: red is action, blue is trust — and a team needs both. In an abstract topic there is no wrong answer; only your way of thinking is watched.
+
+**You know nothing about the topic:** listen for the first 2 minutes. The others' points will make the topic clear. Then give a general point: "This topic has two sides — on one side..., on the other side..." Listening for 2 minutes and then speaking is better than speaking without understanding.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Topic Bahut Aasaan hai, ya Sab Ne Wahi Point Bol Diya',
+        '6. What-If: The Topic Is Very Easy, or Everyone Already Made Your Point'
+      ),
+      body: t(
+        `**What if topic bahut aasaan hai?** Aasaan topic par sab bolege, isliye alag dikhna mushkil hai. Alag dikhne ka tareeka hai ek naya angle ya ek personal example dena. Sab "work from home mein time bachta hai" bol rahe hain, toh aap bolo: "Mere dost ne ghar se kaam karke ek online course poora kiya — bacha hua travel time usne seekhne mein lagaya." Personal example aapko bheed se alag karta hai.
+
+**What if sab ne wahi point bol diya jo aap soch rahe the?** Toh wahi point dobara mat bolo. Us point ko aage badhao: "Ravi ne sahi kaha, aur iska ek aur pehlu hai..." Ya ek naya point socho — topic ke doosre paksh se. Jo vyakti doosron ke point ko aage badhata hai, use panel note karta hai.
+
+**What if aapko topic par bolne ka mauka hi nahi mil raha?** Mauka banao: kisi ke rukne par shaanti se bolo, "Main is point par kuch jodna chahta hoon." Agar aap 5 minute tak chup rahe, toh panel aapko note hi nahi karega — bolna zaroori hai.`,
+        `**What if the topic is very easy?** Everyone will speak on an easy topic, so standing out is hard. The way to stand out is to give a new angle or a personal example. Everyone is saying "work from home saves time", so you say: "My friend finished an online course while working from home — he used the saved travel time to learn." A personal example sets you apart from the crowd.
+
+**What if everyone already made the point you were thinking of?** Then do not repeat the same point. Take that point further: "Ravi was right, and there is one more side to it..." Or think of a new point — from the other side of the topic. The panel notes the person who takes another's point further.
+
+**What if you are not getting a chance to speak at all?** Make a chance: when someone pauses, say calmly, "I would like to add something to this point." If you stay silent for 5 minutes, the panel will not even notice you — speaking is essential.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Define Karo, Dono Paksh Dikhao, Example Do, Nishkarsh Do',
+        '7. Summary: Define, Show Both Sides, Give an Example, Conclude'
+      ),
+      body: t(
+        `Har GD topic par yahi 4-step formula kaam karta hai: **define karo, dono paksh dikhao, ek example do, nishkarsh do**. Topic milte hi define karo, dono taraf ke 2-2 points socho, apni rai ke saath ek personal example jodo, aur aakhir mein nishkarsh do. Yeh formula tech topic par bhi kaam karta hai aur abstract topic par bhi.
+
+Topic bank banate raho: har hafte 5 naye topics jodo, har topic par 2 minute bolne ki practice karo. 4 hafte mein 20 topics ka bank ban jaayega — aur GD mein topic chahe koi bhi aaye, aapko uski category pehchanne aur us par bolne ki aadat hogi.
+
+Aakhri baat: GD mein knowledge se zyada **sochne ka tareeka** dekha jaata hai. Jo vyakti shaanti se, dono paksh dekh kar, example ke saath bolta hai, wahi yaad rehta hai.`,
+        `The same 4-step formula works for every GD topic: **define, show both sides, give an example, and conclude**. The moment you get the topic, define it, think of 2 points for each side, add a personal example to your view, and give a conclusion at the end. This formula works for a tech topic and for an abstract topic alike.
+
+Keep building your topic bank: add 5 new topics every week and practise speaking for 2 minutes on each one. In 4 weeks you will have a bank of 20 topics — and whatever topic comes in the GD, you will be used to spotting its category and speaking on it.
+
+One last point: in a GD, your **way of thinking** is watched more than your knowledge. The person who speaks calmly, sees both sides, and gives an example is the one who is remembered.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'boxes',
+    title: t(
+      'GD Topics ki 4 Categories',
+      'The 4 Categories of GD Topics'
+    ),
+    caption: t(
+      'Topic ki category pehchante hi aapko pata chal jaata hai ki kis tarah ke points chahiye',
+      'Once you spot a topic’s category, you know what kind of points it needs'
+    ),
+    nodes: [
+      {
+        t: t('Tech', 'Tech'),
+        s: t('AI, phones, online tools — fayde aur nuksaan dono', 'AI, phones, online tools — both benefits and harms')
+      },
+      {
+        t: t('Social', 'Social'),
+        s: t('Work from home, social media — roz ki zindagi se jude', 'Work from home, social media — tied to daily life')
+      },
+      {
+        t: t('Current affairs', 'Current affairs'),
+        s: t('Desh mein chal rahi cheezein — cashless, electric vehicles', 'Things happening in the country — cashless, electric vehicles')
+      },
+      {
+        t: t('Abstract', 'Abstract'),
+        s: t('Red vs Blue — koi seedha answer nahi, sirf soch dekhi jaati hai', 'Red vs Blue — no straight answer, only your thinking is watched')
+      },
+      {
+        t: t('Har topic par formula', 'One formula for every topic'),
+        s: t('Define karo, dono paksh dikhao, example do, nishkarsh do', 'Define, show both sides, give an example, conclude')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Opening Builder: Topic, Fact aur Stand',
+        'Opening Builder: Topic, Fact, and Stand'
+      ),
+      language: 'python',
+      code: `topic = "Work from home vs office"
+print("Topic:", topic)
+print("Opening: Let me start by defining both sides of this topic.")
+print("Fact: Many teams now mix office days with home days.")
+print("Stand: I believe a mix works best, and here is why.")`,
+      output: `Topic: Work from home vs office
+Opening: Let me start by defining both sides of this topic.
+Fact: Many teams now mix office days with home days.
+Stand: I believe a mix works best, and here is why.`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'GD topic milte hi sabse pehle kya karna chahiye?',
+        'What should you do first when you get a GD topic?'
+      ),
+      opts: [
+        t('Turant bolna shuru kar do', 'Start speaking at once'),
+        t('Topic ko apne shabdon mein define karo', 'Define the topic in your own words'),
+        t('Apni rai pehle se tay karke bolo', 'Give your fixed view first'),
+        t('Doosron ka intezaar karo', 'Wait for others')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: jab tak topic ka matlab saaf nahi hoga, aapke points bhatkenge — define karna opening ki pehli line bhi banta hai.',
+        'Correct answer: until the meaning of the topic is clear, your points will drift — defining it also becomes the first line of your opening.'
+      )
+    },
+    {
+      q: t(
+        'GD mein sirf ek paksh bolna kyun galat hai?',
+        'Why is it wrong to argue only one side in a GD?'
+      ),
+      opts: [
+        t('Kyunki GD debate nahi hai — dono paksh dikha kar apni rai deni hoti hai', 'Because a GD is not a debate — you must show both sides and then give your view'),
+        t('Kyunki ek paksh bolne se time bachta hai', 'Because arguing one side saves time'),
+        t('Kyunki panel ek paksh ko pasand nahi karta', 'Because the panel dislikes one side'),
+        t('Ek paksh bolna galat nahi hai', 'Arguing one side is not wrong')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: dono paksh dikhana dikhata hai ki aapne poori tarah socha hai, aur phir apni rai dena balanced lagta hai.',
+        'Correct answer: showing both sides proves you thought the topic through, and then your view sounds balanced.'
+      )
+    },
+    {
+      q: t(
+        '"Is AI a job killer or a job maker?" par achha balanced point kaun sa hai?',
+        'Which is a good balanced point on "Is AI a job killer or a job maker?"?'
+      ),
+      opts: [
+        t('AI naukri ka nature badalta hai — naye skills seekhne walon ke liye naye mauke bante hain', 'AI changes the nature of jobs — people who learn new skills find new chances'),
+        t('AI ne sab naukriyan khatam kar di hain', 'AI has ended all jobs'),
+        t('AI ka koi fayda nahi hai', 'AI has no benefit'),
+        t('AI ke baare mein kuch kehna mushkil hai', 'It is hard to say anything about AI')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: yeh point dono paksh ko manta hai aur ek clear stand deta hai — bina kisi bina-source number ke.',
+        'Correct answer: this point accepts both sides and gives a clear stand — without any number that has no source.'
+      )
+    },
+    {
+      q: t(
+        'Abstract topic jaise "Red vs Blue" par panel kya dekhta hai?',
+        'What does the panel watch for on an abstract topic like "Red vs Blue"?'
+      ),
+      opts: [
+        t('Aapka knowledge', 'Your knowledge'),
+        t('Aapki sochne ki style aur creativity', 'Your style of thinking and creativity'),
+        t('Aapki yaad rakhne ki taakat', 'Your memory power'),
+        t('Aapki bolne ki speed', 'Your speaking speed')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: abstract topic ka koi seedha answer nahi hota, isliye panel yeh dekhta hai ki aap topic ko kisi concept se kaise jodte ho.',
+        'Correct answer: an abstract topic has no straight answer, so the panel watches how you connect it to a concept.'
+      )
+    },
+    {
+      q: t(
+        'Agar sab ne wahi point bol diya jo aap soch rahe the, toh kya karna chahiye?',
+        'If everyone already made the point you were thinking of, what should you do?'
+      ),
+      opts: [
+        t('Wahi point dobara bolo', 'Repeat the same point'),
+        t('Chup baith jao', 'Sit quietly'),
+        t('Us point ko aage badhao ya doosre paksh se naya point socho', 'Take that point further or think of a new point from the other side'),
+        t('Topic badalne ko kaho', 'Ask to change the topic')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: "Ravi ne sahi kaha, aur iska ek aur pehlu hai" kehna dikhata hai ki aap sun rahe ho aur soch ko aage le ja rahe ho.',
+        'Correct answer: saying "Ravi was right, and there is one more side to it" shows you listened and took the thinking further.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'GD topics 4 categories mein aate hain: tech, social, current affairs aur abstract.',
+      'GD topics fall into 4 categories: tech, social, current affairs, and abstract.'
+    ),
+    t(
+      'Har topic par formula: define karo, dono paksh dikhao, ek example do, nishkarsh do.',
+      'One formula for every topic: define, show both sides, give an example, conclude.'
+    ),
+    t(
+      'Bina source ke numbers mat bolo — galat fact pakda gaya toh panel ka bharosa toot jaata hai.',
+      'Never state numbers without a source — if a wrong fact is caught, the panel loses trust in you.'
+    ),
+    t(
+      'Rata hua opening mat bolo — opening topic se judi honi chahiye.',
+      'Do not give a memorised opening — the opening must connect to the topic.'
+    ),
+    t(
+      'Har hafte 5 naye topics jodo aur har topic par 2 minute bolne ki practice karo.',
+      'Add 5 new topics every week and practise speaking for 2 minutes on each one.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Apna Topic Bank Printer Banao',
+      'Practice: Build Your Own Topic Bank Printer'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 3 topics hain aur aakhri line mein "Pick one topic and speak for 2 minutes" aana chahiye. Phir bank mein apne 2 topics jodo aur dobara run karo — tumhare topics list mein dikhne chahiye.',
+      'Run the starter code below. It has 3 topics and the last line should read "Pick one topic and speak for 2 minutes". Then add 2 topics of your own to the bank and run it again — your topics should appear in the list.'
+    ),
+    language: 'python',
+    starter: `bank = ["Online classes vs offline classes", "Cashless India", "Electric vehicles in India"]
+for i, topic in enumerate(bank, 1):
+    print(str(i) + ". " + topic)
+print("Pick one topic and speak for 2 minutes.")`,
+    expected: `1. Online classes vs offline classes
+2. Cashless India
+3. Electric vehicles in India
+Pick one topic and speak for 2 minutes.`
+  },
+  readMinutes: 12
+};
+
+const placementHrAdvanced: Article = {
+  id: 'placement-hr-advanced',
+  subjectId: 'placement',
+  title: t(
+    'HR Round Deep — Strengths, Weaknesses aur Salary Talk',
+    'HR Round Deep — Strengths, Weaknesses, and Salary Talk'
+  ),
+  summary: t(
+    'HR round mein aapki soch aur imaandaari dekhi jaati hai, sirf answer nahi. Is article mein strengths aur weaknesses ke jawab ka structure hai, "tell me about yourself" ka tareeka hai, aur salary par baat karne ka shaant aur imaandaar tareeka hai — bina kisi number ya guarantee ke.',
+    'In the HR round, the interviewer watches your thinking and your honesty, not just your answers. This article gives a structure for strengths and weaknesses answers, a way to answer "tell me about yourself", and a calm, honest way to talk about salary — without any numbers or guarantees.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. HR Round Kya Hai? (Panel Kya Dekhta Hai)',
+        '1. What Is the HR Round? (What the Panel Watches)'
+      ),
+      body: t(
+        `HR round aam taur par placement ka aakhri round hota hai. Ismein technical sawaal kam aur personal sawaal zyada hote hain: "Tell me about yourself", "Apni strength aur weakness batao", "5 saal mein khud ko kahan dekhte ho", "Hamari company kyun join karna chahte ho". Panel yeh dekh raha hai ki aap kaise sochte ho, kitne imaandaar ho, aur kya aap team mein kaam kar paoge.
+
+Technical round mein sahi-galat ka answer hota hai, HR round mein nahi. Yahan har answer ka ek structure hota hai: pehle point, phir example, phir nishkarsh. "Meri strength hai follow-through" kehna kaafi nahi — uske saath ek example chahiye: "Mere final-year project mein maine aakhri 12 bugs ek hafte mein fix kiye." Example ke bina strength sirf ek shabd hai, example ke saath woh saboot hai.
+
+HR round ki taiyari ka matlab hai apne baare mein sochna. Apne 3 strengths, 2 weaknesses, aur 2-3 real examples pehle se taiyaar rakho. Jo vyakti apne baare mein pehle se soch kar aata hai, uske jawab saaf aur shaant hote hain.`,
+        `The HR round is usually the last round of a placement process. It has fewer technical questions and more personal ones: "Tell me about yourself", "Tell me your strengths and weaknesses", "Where do you see yourself in 5 years", "Why do you want to join our company". The panel is watching how you think, how honest you are, and whether you can work in a team.
+
+In a technical round, answers are right or wrong; in the HR round they are not. Here every answer has a structure: first the point, then an example, then a conclusion. Saying "my strength is follow-through" is not enough — it needs an example: "In my final-year project I fixed the last 12 bugs in one week." Without an example, a strength is just a word; with an example, it is proof.
+
+Preparing for the HR round means thinking about yourself. Keep 3 strengths, 2 weaknesses, and 2-3 real examples ready in advance. The person who has thought about himself beforehand gives clear and calm answers.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Project, Part-Time Kaam aur Team Kaam',
+        '2. Real-Life Examples: Projects, Part-Time Work, and Teamwork'
+      ),
+      body: t(
+        `Strengths ke examples aapki zindagi mein hi hain. **Project example:** aapne final-year project mein aakhri hafte mein 12 bugs fix kiye — yeh follow-through aur pressure mein kaam karne ka saboot hai. **Part-time kaam:** agar aapne kabhi part-time kaam kiya hai, toh woh time management ka saboot hai — padhai ke saath kaam sambhalna aasaan nahi hota. **Team kaam:** agar aapne kisi fest ya event mein team ke saath kaam kiya hai, toh woh teamwork aur communication ka saboot hai.
+
+Weakness ke examples bhi real hone chahiye, par unke saath **fix** bhi hona chahiye. "Main kaam ko zyada baar check karta tha" — yeh ek real weakness hai. Iska fix: "Ab main ek chhoti checklist rakhta hoon aur har check ke liye time limit rakhta hoon." Panel ko weakness se zyada yeh dekhna hai ki aap us par kaam kar rahe ho ya nahi.
+
+"Tell me about yourself" ka answer bhi isi tarah banta hai: present, past, future. "Main final-year ka student hoon (present), maine apne project mein web development par kaam kiya (past), aur main ek aisi team mein kaam karna chahta hoon jahan main seekh sakoon (future)." 60-90 second ka answer kaafi hai — zyada lamba answer panel ko bore karta hai.`,
+        `Examples for strengths are already in your life. **Project example:** you fixed 12 bugs in the last week of your final-year project — that is proof of follow-through and working under pressure. **Part-time work:** if you ever did part-time work, that is proof of time management — handling work with studies is not easy. **Teamwork:** if you worked with a team for a fest or an event, that is proof of teamwork and communication.
+
+Weakness examples must also be real, but they must come with a **fix**. "I used to check my work too many times" — that is a real weakness. The fix: "Now I keep a short checklist and a time limit for each check." The panel cares less about the weakness and more about whether you are working on it.
+
+The answer to "Tell me about yourself" is built the same way: present, past, future. "I am a final-year student (present), I worked on web development in my project (past), and I want to work in a team where I can learn (future)." An answer of 60-90 seconds is enough — a longer answer bores the panel.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: Strength ka Answer Banana aur Dry Run',
+        '3. Step-by-Step: Building a Strength Answer, with a Dry Run'
+      ),
+      body: t(
+        `Strength ka answer banane ke 3 steps hain. **Step 1: Strength chuno.** Ek shabd mein: follow-through, ya time management, ya calm under pressure. **Step 2: Proof jodo.** Ek real example jismein woh strength dikhi ho — project, kaam, ya team kaam. **Step 3: Answer ko bandho.** "Meri ek strength hai... For example... Isliye main wahi follow-through apne kaam mein laata hoon."
+
+Dry run karte hain. Strength hai "I finish what I start". Proof hai "In my final-year project I fixed the last 12 bugs in one week". Answer banta hai: "One strength of mine is that I finish what I start. For example, in my final-year project I fixed the last 12 bugs in one week. So I bring the same follow-through to my work." Yeh answer 3 lines ka hai, par ismein point, proof aur nishkarsh — teeno hain.
+
+Weakness ka answer bhi isi structure se banta hai, bas ek cheez aur jod do: **fix**. "Meri ek weakness hai ki main kaam ko zyada baar check karta tha. Ab main ek chhoti checklist rakhta hoon aur har check ke liye time limit rakhta hoon. Isse mera kaam time par hota hai." Neeche wala code strength ka answer print karta hai — apni strength aur proof badal kar dobara chalao.`,
+        `There are 3 steps to building a strength answer. **Step 1: Pick a strength.** In one word: follow-through, or time management, or calm under pressure. **Step 2: Add proof.** One real example where that strength showed — a project, a job, or teamwork. **Step 3: Tie the answer together.** "One strength of mine is... For example... So I bring the same follow-through to my work."
+
+Let us do a dry run. The strength is "I finish what I start". The proof is "In my final-year project I fixed the last 12 bugs in one week". The answer becomes: "One strength of mine is that I finish what I start. For example, in my final-year project I fixed the last 12 bugs in one week. So I bring the same follow-through to my work." This answer is 3 lines long, but it has the point, the proof, and the conclusion — all three.
+
+A weakness answer is built with the same structure, plus one more thing: the **fix**. "One weakness of mine is that I used to check my work too many times. Now I keep a short checklist and a time limit for each check. So my work is on time." The code below prints a strength answer — change the strength and the proof to your own and run it again.`
+      ),
+      code: {
+        title: t(
+          'Strength Answer Builder: Point, Proof aur Nishkarsh',
+          'Strength Answer Builder: Point, Proof, and Conclusion'
+        ),
+        language: 'python',
+        code: `strength = "I finish what I start"
+proof = "In my final-year project I fixed the last 12 bugs in one week"
+print("Strength:", strength)
+print("Proof:", proof)
+print("Answer: One strength of mine is that I finish what I start.")
+print("For example, " + proof[0].lower() + proof[1:] + ".")
+print("So I bring the same follow-through to my work.")`,
+        output: `Strength: I finish what I start
+Proof: In my final-year project I fixed the last 12 bugs in one week
+Answer: One strength of mine is that I finish what I start.
+For example, in my final-year project I fixed the last 12 bugs in one week.
+So I bring the same follow-through to my work.`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Fake Strength, Weakness ko Strength Banana aur Lamba Answer',
+        '4. Common Mistakes: Fake Strengths, Dressing a Weakness as a Strength, and Long Answers'
+      ),
+      body: t(
+        `**Galti 1: Fake strength bolna.** "Meri strength hai ki main perfect hoon" — aisa jawab panel ko turant fake lagta hai. Strength real aur specific honi chahiye, aur uske saath example hona chahiye. Bina example ke strength sirf ek daava hai.
+
+**Galti 2: Weakness ko strength bana dena.** "Meri weakness hai ki main bahut mehnat karta hoon" — yeh weakness nahi, chhupa hua strength hai, aur panel isse bahut baar sun chuka hai. Real weakness bolo, aur uska fix batao. Imaandaari HR round mein sabse zyada value rakhti hai.
+
+**Galti 3: Bahut lamba answer dena.** "Tell me about yourself" ka 3 minute ka answer galat hai. Panel ko aapki poori life story nahi chahiye — use present, past, future chahiye, 60-90 second mein. Lamba answer dikhata hai ki aapne taiyari nahi ki. Har answer ko pehle se 90 second mein bol kar dekho.`,
+        `**Mistake 1: Giving a fake strength.** "My strength is that I am perfect" — an answer like this sounds fake to the panel at once. A strength must be real and specific, and it must come with an example. Without an example, a strength is only a claim.
+
+**Mistake 2: Dressing a weakness as a strength.** "My weakness is that I work too hard" — that is not a weakness, it is a hidden strength, and the panel has heard it many times. Give a real weakness and tell them the fix. Honesty carries the most value in the HR round.
+
+**Mistake 3: Giving a very long answer.** A 3-minute answer to "Tell me about yourself" is wrong. The panel does not want your whole life story — it wants present, past, future, in 60-90 seconds. A long answer shows you did not prepare. Practise every answer aloud within 90 seconds first.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Gap Year, Low Marks aur "Kyun Join Karna Chahte Ho"',
+        '5. Edge Cases: A Gap Year, Low Marks, and "Why Do You Want to Join Us"'
+      ),
+      body: t(
+        `**Gap year:** agar aapke education mein gap hai, toh use chhupao mat. Sach batao aur us dauraan kya kiya, woh batao: "Us saal maine ek online course kiya aur ek project banaya." Gap se zyada, gap mein kya kiya — yeh dekha jaata hai. Jhooth bolna yahan sabse badi galti hai.
+
+**Low marks:** agar kisi semester mein marks kam hain, toh bahana mat banao. "Us semester mein mere marks kam the, kyunki main ek project mein zyada time de raha tha — par uske baad se mere marks sudhre hain." Imaandaari + sudhaar ka saboot, yahi jawab hai.
+
+**"Hamari company kyun join karna chahte ho":** iska jawab company ke baare mein research se aata hai. Company kya karti hai, uski team kis par kaam karti hai — yeh pehle se padh kar jao. "Mujhe aapki team ke kaam mein interest hai, kyunki..." — aisa jawab dikhata hai ki aapne mehnat ki hai.`,
+        `**Gap year:** if there is a gap in your education, do not hide it. Tell the truth and say what you did during that time: "In that year I did an online course and built a project." What matters is not the gap, but what you did in the gap. Lying here is the biggest mistake.
+
+**Low marks:** if your marks were low in some semester, do not make excuses. "My marks were low that semester because I was spending more time on a project — but my marks improved after that." Honesty plus proof of improvement is the answer.
+
+**"Why do you want to join our company":** this answer comes from research about the company. Read in advance what the company does and what its teams work on. "I am interested in your team's work, because..." — an answer like this shows you put in the effort.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Salary par Sawaal Aaya, ya Aapko Offer ke Baare mein Poochha Gaya',
+        '6. What-If: A Salary Question Comes Up, or You Are Asked About the Offer'
+      ),
+      body: t(
+        `**What if salary par sawaal aaya?** Pehle yeh samajh lo: salary par baat karna normal hai, isse daro mat. Shaant tareeka yeh hai: pehle role aur kaam ke baare mein poochho, phir kaho ki aap company ke structure ke hisaab se baat karne ke liye taiyaar ho. Koi number ya demand pehle se tay karke mat jao — aap abhi seekhne ke stage par ho, aur panel yeh jaanta hai. Agar panel poochhe ki aapki expectation kya hai, toh imaandaari se kaho ki aap role aur seekhne ke mauke ko pehle dekh rahe ho, aur baaki baat company ke norms ke hisaab se hogi.
+
+**What if aapko offer ke baare mein poochha gaya?** Agar aapke paas pehle se koi offer hai, toh uska zikr tabhi karo jab poochha jaaye — aur bina details ke. "Mere paas ek aur process chal raha hai" kehna kaafi hai. Offer ko bargaining ka hathiyaar banana HR round mein galat lagta hai.
+
+**What if aapko "koi sawaal hai?" poochha gaya?** Hamesha ek sawaal rakho. "Is role mein pehle 6 mahine mein sabse important kaam kya hoga?" — yeh sawaal dikhata hai ki aap kaam ke baare mein soch rahe ho. "Koi sawaal nahi hai" kehna dikhata hai ki aapko interest nahi hai.`,
+        `**What if a salary question comes up?** First understand this: talking about salary is normal, so do not fear it. The calm way is this: first ask about the role and the work, then say you are ready to discuss it as per the company's structure. Do not go in with a fixed number or demand — you are at a learning stage, and the panel knows that. If the panel asks about your expectation, say honestly that you are looking at the role and the learning chance first, and the rest will follow the company's norms.
+
+**What if you are asked about an offer?** If you already have an offer, mention it only when asked — and without details. Saying "I have another process going on" is enough. Using an offer as a bargaining tool looks wrong in the HR round.
+
+**What if you are asked "do you have any questions?"** Always keep one question ready. "What will be the most important work in the first 6 months of this role?" — a question like this shows you are thinking about the work. Saying "I have no questions" shows you are not interested.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Point, Example, Nishkarsh — aur Imaandaari',
+        '7. Summary: Point, Example, Conclusion — and Honesty'
+      ),
+      body: t(
+        `HR round ka poora formula ek line mein hai: **point, example, nishkarsh**. Har jawab mein pehle point, phir ek real example, phir nishkarsh. Strength ho ya weakness, "tell me about yourself" ho ya "kyun join karna chahte ho" — yahi structure kaam karta hai.
+
+Yaad rakhne wali baatein: apne 3 strengths, 2 weaknesses aur 2-3 examples pehle se taiyaar rakho; har answer ko 90 second mein bol kar dekho; gap ya low marks ko chhupao mat, sach batao aur sudhaar dikhao; salary par shaanti se baat karo, koi number pehle se tay mat karo; aur aakhir mein hamesha ek sawaal poochho.
+
+HR round mein panel aapki degree nahi, aapki soch dekh raha hai. Jo vyakti imaandaar, shaant aur taiyaar hota hai, wahi yaad rehta hai.`,
+        `The whole formula of the HR round fits in one line: **point, example, conclusion**. In every answer, first the point, then a real example, then a conclusion. Whether it is a strength or a weakness, "tell me about yourself" or "why do you want to join us" — the same structure works.
+
+Remember these points: keep 3 strengths, 2 weaknesses, and 2-3 examples ready in advance; practise every answer aloud within 90 seconds; do not hide a gap or low marks — tell the truth and show improvement; talk about salary calmly, without fixing any number in advance; and always ask one question at the end.
+
+In the HR round, the panel is not checking your degree — it is checking your thinking. The person who is honest, calm, and prepared is the one who is remembered.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'flow',
+    title: t(
+      'HR Answer ka Flow: Point, Example, Nishkarsh',
+      'The Flow of an HR Answer: Point, Example, Conclusion'
+    ),
+    caption: t(
+      'Har HR jawab isi flow se banta hai — strength ho, weakness ho, ya "tell me about yourself"',
+      'Every HR answer is built with this flow — strength, weakness, or "tell me about yourself"'
+    ),
+    nodes: [
+      {
+        t: t('1. Point', '1. Point'),
+        s: t('Ek line mein jawab: "Meri strength hai follow-through"', 'One line: "My strength is follow-through"')
+      },
+      {
+        t: t('2. Example', '2. Example'),
+        s: t('Real saboot: project mein aakhri 12 bugs ek hafte mein fix kiye', 'Real proof: fixed the last 12 bugs in one week in my project')
+      },
+      {
+        t: t('3. Fix (weakness ke liye)', '3. Fix (for a weakness)'),
+        s: t('Weakness par kya kar rahe ho: checklist aur time limit', 'What you do about the weakness: a checklist and a time limit')
+      },
+      {
+        t: t('4. Nishkarsh', '4. Conclusion'),
+        s: t('"Isliye main wahi follow-through apne kaam mein laata hoon"', '"So I bring the same follow-through to my work"')
+      },
+      {
+        t: t('90 second ka niyam', 'The 90-second rule'),
+        s: t('Har answer ko 90 second mein bol kar dekho', 'Practise every answer aloud within 90 seconds')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Weakness Reframer: Weakness, Fix aur Result',
+        'Weakness Reframer: Weakness, Fix, and Result'
+      ),
+      language: 'python',
+      code: `weakness = "I used to over-check my work"
+fix = "Now I keep a short checklist and a time limit for each check"
+print("Weakness:", weakness + ".")
+print("What I do about it:", fix + ".")
+print("Result: My work is on time and the checklist catches real errors.")`,
+      output: `Weakness: I used to over-check my work.
+What I do about it: Now I keep a short checklist and a time limit for each check.
+Result: My work is on time and the checklist catches real errors.`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'HR round mein strength ka jawab kaise dena chahiye?',
+        'How should you answer a strength question in the HR round?'
+      ),
+      opts: [
+        t('Sirf strength ka naam batao', 'Just name the strength'),
+        t('Point + real example + nishkarsh', 'Point plus a real example plus a conclusion'),
+        t('Lambi list suna do', 'Give a long list'),
+        t('Kuch mat bolo', 'Say nothing')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: example ke bina strength sirf ek daava hai — example ke saath woh saboot ban jaata hai.',
+        'Correct answer: without an example, a strength is only a claim — with an example, it becomes proof.'
+      )
+    },
+    {
+      q: t(
+        '"Meri weakness hai ki main bahut mehnat karta hoon" — yeh jawab kyun galat hai?',
+        'Why is "My weakness is that I work too hard" a wrong answer?'
+      ),
+      opts: [
+        t('Kyunki yeh weakness nahi, chhupa hua strength hai aur panel isse bahut baar sun chuka hai', 'Because it is not a weakness, it is a hidden strength, and the panel has heard it many times'),
+        t('Kyunki mehnat karna bura hai', 'Because working hard is bad'),
+        t('Kyunki yeh bahut lamba jawab hai', 'Because it is a very long answer'),
+        t('Yeh jawab galat nahi hai', 'This answer is not wrong')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: HR round mein real weakness aur uska fix chahiye — imaandaari sabse zyada value rakhti hai.',
+        'Correct answer: the HR round needs a real weakness and its fix — honesty carries the most value.'
+      )
+    },
+    {
+      q: t(
+        '"Tell me about yourself" ka answer kitne time ka hona chahiye?',
+        'How long should the answer to "Tell me about yourself" be?'
+      ),
+      opts: [
+        t('3 minute', '3 minutes'),
+        t('60-90 second', '60-90 seconds'),
+        t('10 second', '10 seconds'),
+        t('5 minute', '5 minutes')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: present, past, future — 60-90 second mein. Lamba answer dikhata hai ki taiyari nahi ki.',
+        'Correct answer: present, past, future — in 60-90 seconds. A long answer shows you did not prepare.'
+      )
+    },
+    {
+      q: t(
+        'Salary par sawaal aaye toh sabse shaant tareeka kya hai?',
+        'What is the calmest way to handle a salary question?'
+      ),
+      opts: [
+        t('Pehle role aur kaam ke baare mein poochho, phir company ke structure ke hisaab se baat karne ko taiyaar raho', 'First ask about the role and the work, then be ready to discuss as per the company’s structure'),
+        t('Turant ek number maang lo', 'Demand a number at once'),
+        t('Salary par baat karne se mana kar do', 'Refuse to talk about salary'),
+        t('Koi jawab mat do', 'Give no answer')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: salary par baat karna normal hai — pehle role aur seekhne ke mauke ko dekho, koi number pehle se tay mat karo.',
+        'Correct answer: talking about salary is normal — look at the role and the learning chance first, and do not fix any number in advance.'
+      )
+    },
+    {
+      q: t(
+        'Interview ke aakhir mein "koi sawaal hai?" poochha jaaye toh kya karna chahiye?',
+        'What should you do when asked "do you have any questions?" at the end of the interview?'
+      ),
+      opts: [
+        t('"Koi sawaal nahi hai" keh do', 'Say "I have no questions"'),
+        t('Role ke pehle 6 mahine ke kaam ke baare mein ek sawaal poochho', 'Ask one question about the work in the first 6 months of the role'),
+        t('Salary ke baare mein turant poochho', 'Ask about salary at once'),
+        t('Chup baitho', 'Sit quietly')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: ek achha sawaal dikhata hai ki aap kaam ke baare mein soch rahe ho aur aapko interest hai.',
+        'Correct answer: a good question shows you are thinking about the work and that you are interested.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'HR round ka formula: point, example, nishkarsh — har jawab isi structure se banta hai.',
+      'The HR round formula: point, example, conclusion — every answer is built with this structure.'
+    ),
+    t(
+      'Strength ke saath real example do; weakness ke saath fix batao.',
+      'Give a real example with a strength; give the fix with a weakness.'
+    ),
+    t(
+      '"Tell me about yourself" — present, past, future, 60-90 second mein.',
+      '"Tell me about yourself" — present, past, future, in 60-90 seconds.'
+    ),
+    t(
+      'Gap ya low marks ko chhupao mat — sach batao aur sudhaar ka saboot dikhao.',
+      'Do not hide a gap or low marks — tell the truth and show proof of improvement.'
+    ),
+    t(
+      'Salary par shaanti se baat karo, koi number pehle se tay mat karo; aakhir mein hamesha ek sawaal poochho.',
+      'Talk about salary calmly, without fixing any number in advance; always ask one question at the end.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: HR Readiness Checklist',
+      'Practice: HR Readiness Checklist'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 4 checks hain aur 3 ready hain, isliye "Ready: 3 of 4" aana chahiye. Phir apni taiyari ke hisaab se True/False badal kar dobara run karo — jo check "no" hai, use interview se pehle poora karo.',
+      'Run the starter code below. It has 4 checks and 3 are ready, so it should read "Ready: 3 of 4". Then change the True/False values to match your own preparation and run it again — finish any check that reads "no" before the interview.'
+    ),
+    language: 'python',
+    starter: `checks = {"Resume ready": True, "Company researched": True, "Questions for them": False, "Salary range thought through": True}
+done = sum(checks.values())
+for item, ok in checks.items():
+    print(item + ":", "yes" if ok else "no")
+print("Ready:", done, "of", len(checks))`,
+    expected: `Resume ready: yes
+Company researched: yes
+Questions for them: no
+Salary range thought through: yes
+Ready: 3 of 4`
+  },
+  readMinutes: 12
+};
+
+const placementTechnicalCs: Article = {
+  id: 'placement-technical-cs',
+  subjectId: 'placement',
+  title: t(
+    'Technical CS Round — OS, DBMS aur CN ki Quick Revision',
+    'Technical CS Round — Quick Revision of OS, DBMS, and CN'
+  ),
+  summary: t(
+    'Technical CS round mein OS, DBMS aur CN ke basic concepts poochhe jaate hain — deadlock, ACID, TCP vs UDP jaise topics. Is article mein har subject ke sabse zyada poochhe jaane wale concepts, unke ek-line answer, aur revision ka plan hai.',
+    'In the technical CS round, basic concepts from OS, DBMS, and CN are asked — topics like deadlock, ACID, and TCP vs UDP. This article has the most asked concepts from each subject, their one-line answers, and a revision plan.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Technical CS Round Kya Hai? (OS, DBMS, CN Kya Maangta Hai)',
+        '1. What Is the Technical CS Round? (What OS, DBMS, and CN Ask)'
+      ),
+      body: t(
+        `Technical CS round mein interviewer aapke core subjects ke basics check karta hai. Teen subjects sabse zyada poochhe jaate hain: **Operating Systems (OS)** — process, deadlock, paging; **DBMS** — keys, normalization, ACID, SQL; aur **Computer Networks (CN)** — OSI model, TCP vs UDP, IP address. Interviewer aapko poora syllabus nahi poochhta — woh 10-15 basic concepts poochhta hai, par unhe gehrai se poochhta hai.
+
+Is round mein answer ka style important hai. Pehle ek line mein definition do, phir ek example do, phir agar poochha jaaye toh detail mein jao. Jaise deadlock par: "Deadlock tab hota hai jab do processes ek doosre ke resource ka intezaar karte hain aur koi aage nahi badh paata." Phir example: "Process A ke paas printer hai aur use scanner chahiye, Process B ke paas scanner hai aur use printer chahiye — dono ruk gaye."
+
+Is round ki taiyari ka matlab hai concepts ko samajhna, ratna nahi. Jo student concept samajh kar aata hai, woh follow-up sawaal ka jawab bhi de sakta hai. Jo sirf definition rat kar aata hai, woh pehle follow-up par atak jaata hai.`,
+        `In the technical CS round, the interviewer checks the basics of your core subjects. Three subjects are asked most: **Operating Systems (OS)** — process, deadlock, paging; **DBMS** — keys, normalization, ACID, SQL; and **Computer Networks (CN)** — OSI model, TCP vs UDP, IP address. The interviewer does not ask the whole syllabus — he asks 10-15 basic concepts, but asks them in depth.
+
+The style of answering matters in this round. First give the definition in one line, then give an example, and then go into detail only if asked. For deadlock: "Deadlock happens when two processes wait for each other's resource and neither can move forward." Then the example: "Process A holds the printer and needs the scanner, Process B holds the scanner and needs the printer — both are stuck."
+
+Preparing for this round means understanding concepts, not memorising them. A student who understands a concept can also answer the follow-up question. A student who only memorised the definition gets stuck at the first follow-up.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Traffic Jam, Library Card aur Post Office',
+        '2. Real-Life Examples: Traffic Jams, Library Cards, and the Post Office'
+      ),
+      body: t(
+        `**Deadlock = traffic jam.** Chaar gaadiyan ek chauraha par aa gayi hain aur har gaadi doosri ka rasta rok rahi hai — koi aage nahi badh sakti. Yahi deadlock hai. Iska solution bhi wahi hai jo traffic mein hota hai: ek gaadi ko peeche hatna hoga (preemption), ya rasta pehle se plan karna hoga (prevention).
+
+**Primary key = library card number.** Library mein har student ka ek alag card number hota hai — usi se student ko pehchana jaata hai. DBMS mein **primary key** bhi wahi kaam karti hai: table ki har row ko alag se pehchanna. Do students ka card number kabhi ek jaisa nahi hota, waise hi do rows ki primary key kabhi ek jaisi nahi hoti.
+
+**TCP vs UDP = registered post vs normal post.** Registered post (TCP) mein receipt milti hai, delivery confirm hoti hai, aur kho jaaye toh dobara bheja jaata hai. Normal post (UDP) tez hai par confirm nahi hota ki pahuncha ya nahi. Video call mein UDP use hota hai kyunki speed chahiye; file download mein TCP, kyunki har byte sahi chahiye.`,
+        `**Deadlock is a traffic jam.** Four cars reach a crossing and each car blocks the other's way — none can move forward. That is deadlock. The fix is the same as in traffic: one car must move back (preemption), or the route must be planned in advance (prevention).
+
+**A primary key is a library card number.** In a library, every student has a different card number — that number identifies the student. In a DBMS, a **primary key** does the same job: it identifies each row of a table separately. Two students never share a card number, just as two rows never share a primary key.
+
+**TCP vs UDP is registered post vs normal post.** With registered post (TCP), you get a receipt, delivery is confirmed, and if it is lost it is sent again. Normal post (UDP) is fast, but there is no confirmation that it arrived. Video calls use UDP because speed matters; file downloads use TCP because every byte must be correct.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: 8 Ghante ki Revision aur Deadlock ka Dry Run',
+        '3. Step-by-Step: An 8-Hour Revision and a Deadlock Dry Run'
+      ),
+      body: t(
+        `Revision ka step-by-step plan yeh hai. **Step 1: Topics chuno.** Har subject se 5 core topics: OS mein process, deadlock, paging, scheduling, semaphore; DBMS mein keys, normalization, ACID, joins, indexing; CN mein OSI, TCP vs UDP, IP, DNS, HTTP. **Step 2: Time baanto.** OS 3 ghante, DBMS 3 ghante, CN 2 ghante — total 8 ghante. **Step 3: Har topic par 3 cheezein karo** — ek line definition, ek example, ek follow-up sawaal ka jawab.
+
+Deadlock ka dry run karte hain. 4 conditions hain jo deadlock ke liye zaroori hain: **mutual exclusion** (resource ek waqt par ek hi process use kar sakta hai), **hold and wait** (process ek resource pakad kar doosre ka intezaar karta hai), **no preemption** (resource zabardasti nahi chheena ja sakta), **circular wait** (processes ek circle mein ek doosre ka intezaar karte hain). Chaaro conditions ek saath hon, tabhi deadlock hota hai. Koi ek condition tod do, deadlock khatam.
+
+Neeche wala code revision ka time plan print karta hai — OS 3, DBMS 3, CN 2, total 8 ghante. Apne weak subject ko zyada time do, is plan ko apne hisaab se badlo.`,
+        `Here is the step-by-step revision plan. **Step 1: Pick the topics.** Five core topics per subject: in OS — process, deadlock, paging, scheduling, semaphore; in DBMS — keys, normalization, ACID, joins, indexing; in CN — OSI, TCP vs UDP, IP, DNS, HTTP. **Step 2: Split the time.** OS 3 hours, DBMS 3 hours, CN 2 hours — 8 hours in total. **Step 3: For every topic, do 3 things** — a one-line definition, an example, and an answer to one follow-up question.
+
+Let us do a dry run of deadlock. Four conditions are needed for a deadlock: **mutual exclusion** (one resource can be used by one process at a time), **hold and wait** (a process holds one resource and waits for another), **no preemption** (a resource cannot be taken by force), and **circular wait** (processes wait for each other in a circle). Deadlock happens only when all four conditions hold together. Break any one condition and the deadlock ends.
+
+The code below prints the revision time plan — OS 3, DBMS 3, CN 2, 8 hours in total. Give more time to your weak subject and change this plan to fit your needs.`
+      ),
+      code: {
+        title: t(
+          'Revision Planner: OS, DBMS, CN ke Ghante',
+          'Revision Planner: Hours for OS, DBMS, and CN'
+        ),
+        language: 'python',
+        code: `topics = [("OS", 3), ("DBMS", 3), ("CN", 2)]
+total = sum(hours for _, hours in topics)
+for name, hours in topics:
+    print(name + ": " + str(hours) + " hours")
+print("Total revision time:", total, "hours")`,
+        output: `OS: 3 hours
+DBMS: 3 hours
+CN: 2 hours
+Total revision time: 8 hours`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Sirf Definition Ratna, Example na Dena aur Subject Mix Karna',
+        '4. Common Mistakes: Memorising Only Definitions, Giving No Example, and Mixing Subjects'
+      ),
+      body: t(
+        `**Galti 1: Sirf definition ratna.** "Deadlock is a situation where..." — yeh ratna kaafi nahi hai. Interviewer turant follow-up poochhega: "Deadlock ki 4 conditions kya hain?" Ya "Deadlock ko kaise roka jaata hai?" Jo student concept samajhta hai, woh inka jawab de sakta hai; ratne wala nahi.
+
+**Galti 2: Example na dena.** Definition ke baad example dena zaroori hai — traffic jam, library card, post office. Example dikhata hai ki aapne concept ko real life se joda hai. Bina example ke answer kitaabi lagta hai.
+
+**Galti 3: Subjects ko mix karna.** OS ka sawaal hai toh OS ka jawab do, DBMS ka example mat lao. "Paging" OS ka topic hai, "indexing" DBMS ka — dono alag hain. Interview se pehle har subject ke 5 core topics ki list banao aur unhe alag-alag revise karo, taaki jawab mein confusion na ho.`,
+        `**Mistake 1: Memorising only the definition.** "Deadlock is a situation where..." — memorising this is not enough. The interviewer will at once ask a follow-up: "What are the 4 conditions of deadlock?" Or "How is deadlock prevented?" A student who understands the concept can answer these; one who memorised cannot.
+
+**Mistake 2: Giving no example.** An example after the definition is essential — a traffic jam, a library card, the post office. An example shows you connected the concept to real life. An answer without an example sounds bookish.
+
+**Mistake 3: Mixing subjects.** If the question is from OS, give an OS answer — do not bring in a DBMS example. "Paging" is an OS topic, "indexing" is a DBMS topic — they are different. Before the interview, make a list of 5 core topics per subject and revise them separately, so your answers stay clear.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Answer nahi Aata, Follow-up par Atak Gaye, ya Galat Answer De Diya',
+        '5. Edge Cases: You Do Not Know the Answer, You Get Stuck on a Follow-Up, or You Gave a Wrong Answer'
+      ),
+      body: t(
+        `**Answer nahi aata:** imaandaari se kaho, "Sir, iska exact answer mujhe yaad nahi hai, par main isse is tarah samajhta hoon..." Phir jo pata hai, woh batao. Interviewer ko jhooth se zyada, imaandaari pasand hai. Aur "mujhe nahi pata" kehna bhi theek hai — par uske baad yeh bhi kaho ki aap use kaise seekhoge.
+
+**Follow-up par atak gaye:** agar follow-up ka jawab nahi aata, toh pehle wale point par wapas jao: "Jaise maine pehle kaha, deadlock mein circular wait hota hai — iska matlab hai..." Apne jaane hue point se jawab ko jodna, chup rehne se behtar hai.
+
+**Galat answer de diya:** sudharo. "Sorry, maine abhi jo kaha woh theek nahi tha — sahi answer yeh hai..." Interviewer galti se zyada, galti ko sambhalne ka tareeka dekhta hai. Jo student apni galti sudhar leta hai, use panel imaandaar manta hai.`,
+        `**You do not know the answer:** say honestly, "Sir, I do not remember the exact answer, but I understand it like this..." Then tell them what you do know. The interviewer prefers honesty to a bluff. And saying "I do not know" is also fine — but add how you would learn it.
+
+**You get stuck on a follow-up:** if you cannot answer the follow-up, go back to your earlier point: "As I said before, deadlock has a circular wait — which means..." Connecting your answer to a point you know is better than staying silent.
+
+**You gave a wrong answer:** correct it. "Sorry, what I just said was not right — the correct answer is..." The interviewer watches how you handle a mistake more than the mistake itself. A student who corrects his own mistake is seen as honest by the panel.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Interviewer ne Code Likne ko Kaha, ya Sirf Ek Subject par Sawaal Poochhe',
+        '6. What-If: The Interviewer Asks You to Write Code, or Asks Only About One Subject'
+      ),
+      body: t(
+        `**What if interviewer ne code likhne ko kaha?** Technical CS round mein kabhi-kabhi SQL query ya chhota sa code likhne ko kaha jaata hai. Jaise "students table se sabse zyada marks wala student nikaalo." Iske liye SQL basics aane chahiye: \`SELECT\`, \`WHERE\`, \`ORDER BY\`, \`LIMIT\`. Code likhte waqt zor se socho — interviewer aapki soch dekh raha hai, sirf answer nahi.
+
+**What if sirf ek subject par sawaal poochhe gaye?** Agar interviewer sirf DBMS par sawaal poochh raha hai, toh samjho use DBMS mein aapki gehrai dekhni hai. Ghabrao mat — yeh achha sign hai, kyunki woh aapko ek subject mein aage le ja raha hai. Jo aata hai, use detail mein batao; jo nahi aata, use imaandaari se kaho.
+
+**What if interviewer ne aapke project par sawaal poochhe?** Project par sawaal aana normal hai. Apne project ke har hisse ko jaano: kis technology ka use kiya, kyun kiya, aur kya problem aayi. Project par jhooth mat bolo — interviewer 2-3 sawaal mein pakad lega.`,
+        `**What if the interviewer asks you to write code?** In the technical CS round, you may sometimes be asked to write an SQL query or a small piece of code. For example, "find the student with the highest marks from the students table." For this you need SQL basics: \`SELECT\`, \`WHERE\`, \`ORDER BY\`, \`LIMIT\`. While writing code, think out loud — the interviewer is watching your thinking, not just the answer.
+
+**What if questions come from only one subject?** If the interviewer asks only about DBMS, understand that he wants to see your depth in DBMS. Do not panic — this is a good sign, because he is taking you deeper into one subject. Tell in detail what you know; say honestly what you do not know.
+
+**What if the interviewer asks about your project?** Questions about your project are normal. Know every part of your project: which technology you used, why you used it, and what problem came up. Never lie about your project — the interviewer will catch it in 2-3 questions.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Definition, Example, Follow-up — Har Topic par Teeno',
+        '7. Summary: Definition, Example, Follow-Up — All Three for Every Topic'
+      ),
+      body: t(
+        `Technical CS round ki taiyari ka formula simple hai: **har topic par 3 cheezein — ek line definition, ek example, ek follow-up ka jawab**. 15 core topics (har subject se 5) is tarah taiyaar karo, toh interview mein koi bhi basic sawaal aapko hila nahi sakta.
+
+Yaad rakhne wali baatein: concept samjho, rato mat; har definition ke saath ek real-life example rakho; subjects ko alag-alag revise karo; jawab nahi aata toh imaandaari se kaho; aur galat answer diya toh sudharo. Interviewer aapki degree nahi, aapki soch check kar raha hai.
+
+Aakhri din ka plan: 8 ghante ki revision — OS 3, DBMS 3, CN 2. Har topic ko zor se bol kar revise karo, kyunki interview mein bolna hai, likhna nahi.`,
+        `The formula for technical CS round preparation is simple: **for every topic, 3 things — a one-line definition, an example, and an answer to one follow-up**. Prepare 15 core topics this way (5 per subject), and no basic question in the interview will shake you.
+
+Remember these points: understand concepts, do not memorise them; keep a real-life example with every definition; revise subjects separately; if you do not know an answer, say so honestly; and if you gave a wrong answer, correct it. The interviewer is checking your thinking, not your degree.
+
+The plan for the last day: 8 hours of revision — OS 3, DBMS 3, CN 2. Revise every topic by speaking it aloud, because in the interview you must speak, not write.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'table',
+    title: t(
+      'Teen Subjects, Har Ek ke 5 Core Topics',
+      'Three Subjects, 5 Core Topics Each'
+    ),
+    caption: t(
+      'In 15 topics ko definition + example + follow-up ke saath taiyaar karo',
+      'Prepare these 15 topics with a definition, an example, and a follow-up answer'
+    ),
+    nodes: [],
+    headers: [
+      t('Subject', 'Subject'),
+      t('Core Topics', 'Core Topics'),
+      t('Ek Example', 'One Example')
+    ],
+    rows: [
+      [
+        t('OS', 'OS'),
+        t('Process, deadlock, paging, scheduling, semaphore', 'Process, deadlock, paging, scheduling, semaphore'),
+        t('Deadlock = traffic jam', 'Deadlock is a traffic jam')
+      ],
+      [
+        t('DBMS', 'DBMS'),
+        t('Keys, normalization, ACID, joins, indexing', 'Keys, normalization, ACID, joins, indexing'),
+        t('Primary key = library card number', 'A primary key is a library card number')
+      ],
+      [
+        t('CN', 'CN'),
+        t('OSI, TCP vs UDP, IP, DNS, HTTP', 'OSI, TCP vs UDP, IP, DNS, HTTP'),
+        t('TCP = registered post, UDP = normal post', 'TCP is registered post, UDP is normal post')
+      ]
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'ACID ke 4 Words: Atomicity se Durability Tak',
+        'The 4 Words of ACID: From Atomicity to Durability'
+      ),
+      language: 'python',
+      code: `acid = ["Atomicity", "Consistency", "Isolation", "Durability"]
+for word in acid:
+    print(word + ": one part of ACID")
+print("ACID has", len(acid), "properties")`,
+      output: `Atomicity: one part of ACID
+Consistency: one part of ACID
+Isolation: one part of ACID
+Durability: one part of ACID
+ACID has 4 properties`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'Deadlock kab hota hai?',
+        'When does a deadlock happen?'
+      ),
+      opts: [
+        t('Jab ek process bahut slow ho', 'When one process is very slow'),
+        t('Jab do processes ek doosre ke resource ka intezaar karein aur koi aage na badh paaye', 'When two processes wait for each other’s resource and neither can move forward'),
+        t('Jab computer band ho jaaye', 'When the computer switches off'),
+        t('Jab memory full ho jaaye', 'When the memory is full')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: deadlock ke liye 4 conditions chahiye — mutual exclusion, hold and wait, no preemption, circular wait — aur tabhi dono processes ruk jaate hain.',
+        'Correct answer: deadlock needs 4 conditions — mutual exclusion, hold and wait, no preemption, circular wait — and then both processes get stuck.'
+      )
+    },
+    {
+      q: t(
+        'DBMS mein primary key ka kaam kya hai?',
+        'What is the job of a primary key in a DBMS?'
+      ),
+      opts: [
+        t('Table ki har row ko alag se pehchanna', 'To identify each row of a table separately'),
+        t('Table ko sort karna', 'To sort the table'),
+        t('Table ko delete karna', 'To delete the table'),
+        t('Table ka size badhana', 'To increase the table size')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: jaise library card number har student ko alag pehchanta hai, waise hi primary key har row ko alag pehchanti hai.',
+        'Correct answer: just as a library card number identifies each student separately, a primary key identifies each row separately.'
+      )
+    },
+    {
+      q: t(
+        'Video call mein TCP ki jagah UDP kyun use hota hai?',
+        'Why is UDP used instead of TCP in a video call?'
+      ),
+      opts: [
+        t('Kyunki UDP tez hai aur speed chahiye', 'Because UDP is fast and speed matters'),
+        t('Kyunki UDP zyada safe hai', 'Because UDP is safer'),
+        t('Kyunki TCP video mein kaam nahi karta', 'Because TCP does not work for video'),
+        t('Kyunki UDP free hai', 'Because UDP is free')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: video call mein speed chahiye — ek do frame chhoot jaayein toh chalega, par delay nahi chalega. File download mein TCP chahiye kyunki har byte sahi chahiye.',
+        'Correct answer: a video call needs speed — missing one or two frames is fine, but delay is not. A file download needs TCP because every byte must be correct.'
+      )
+    },
+    {
+      q: t(
+        'ACID mein "A" ka matlab kya hai?',
+        'What does the "A" in ACID stand for?'
+      ),
+      opts: [
+        t('Atomicity', 'Atomicity'),
+        t('Accuracy', 'Accuracy'),
+        t('Availability', 'Availability'),
+        t('Access', 'Access')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: ACID hai Atomicity, Consistency, Isolation, Durability — transaction ke 4 properties.',
+        'Correct answer: ACID is Atomicity, Consistency, Isolation, Durability — the 4 properties of a transaction.'
+      )
+    },
+    {
+      q: t(
+        'Technical round mein jawab nahi aata toh sabse achha tareeka kya hai?',
+        'What is the best way to handle a question you cannot answer in the technical round?'
+      ),
+      opts: [
+        t('Jhooth bol kar kuch bhi keh do', 'Say anything, even if it is false'),
+        t('Imaandaari se kaho ki yaad nahi hai, phir jo pata hai woh batao', 'Say honestly that you do not remember, then tell them what you do know'),
+        t('Chup baitho', 'Sit quietly'),
+        t('Topic badalne ko kaho', 'Ask to change the topic')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: interviewer ko jhooth se zyada imaandaari pasand hai, aur jo pata hai woh batana aapki soch dikhata hai.',
+        'Correct answer: the interviewer prefers honesty to a bluff, and telling what you do know shows your thinking.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'Har topic par 3 cheezein: ek line definition, ek example, ek follow-up ka jawab.',
+      'For every topic, 3 things: a one-line definition, an example, and an answer to one follow-up.'
+    ),
+    t(
+      'Deadlock ke 4 conditions: mutual exclusion, hold and wait, no preemption, circular wait.',
+      'The 4 conditions of deadlock: mutual exclusion, hold and wait, no preemption, circular wait.'
+    ),
+    t(
+      'Primary key har row ko alag pehchanti hai, jaise library card number har student ko.',
+      'A primary key identifies each row separately, like a library card number identifies each student.'
+    ),
+    t(
+      'TCP = registered post (confirm, safe), UDP = normal post (tez, par confirm nahi).',
+      'TCP is registered post (confirmed, safe), UDP is normal post (fast, but not confirmed).'
+    ),
+    t(
+      'Concept samjho, rato mat — follow-up sawaal sirf samajhne wale ka jawab de sakta hai.',
+      'Understand concepts, do not memorise them — only the person who understands can answer a follow-up.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Flashcard Printer — OS, DBMS, CN',
+      'Practice: Flashcard Printer — OS, DBMS, CN'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 3 flashcards hain — OS, DBMS aur CN se ek-ek sawaal. Output mein teeno sawaal aur aakhri line "Revise one card, then say the answer aloud" aani chahiye. Phir apne 3 sawaal jod kar dobara run karo.',
+      'Run the starter code below. It has 3 flashcards — one question each from OS, DBMS, and CN. The output should show all three questions and the last line "Revise one card, then say the answer aloud". Then add 3 questions of your own and run it again.'
+    ),
+    language: 'python',
+    starter: `cards = [("OS", "What is a deadlock?"), ("DBMS", "What is a primary key?"), ("CN", "What is TCP?")]
+for subject, question in cards:
+    print(subject + " - " + question)
+print("Revise one card, then say the answer aloud.")`,
+    expected: `OS - What is a deadlock?
+DBMS - What is a primary key?
+CN - What is TCP?
+Revise one card, then say the answer aloud.`
+  },
+  readMinutes: 12
+};
+
+const placementTechnicalDsa: Article = {
+  id: 'placement-technical-dsa',
+  subjectId: 'placement',
+  title: t(
+    'Technical DSA Round — Patterns Jo Interview mein Baar-Baar Aate Hain',
+    'Technical DSA Round — Patterns That Appear Again and Again in Interviews'
+  ),
+  summary: t(
+    'DSA round mein alag-alag questions nahi, wahi patterns baar-baar aate hain: two pointers, sliding window, hash map, binary search, stack. Is article mein har pattern ki pehchan, uska ek worked example, aur revision ka plan hai.',
+    'In the DSA round, the same patterns appear again and again — not different questions: two pointers, sliding window, hash map, binary search, stack. This article has how to spot each pattern, one worked example for each, and a revision plan.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. DSA Round Kya Hai? (Patterns, Na ki Questions)',
+        '1. What Is the DSA Round? (Patterns, Not Questions)'
+      ),
+      body: t(
+        `DSA round mein interviewer aapko ek problem deta hai aur dekhta hai ki aap use kaise solve karte ho. Problem alag-alag lag sakte hain, par unke peeche wahi 5-6 patterns hote hain: **two pointers** (sorted array mein do taraf se), **sliding window** (array ka ek hissa aage badhana), **hash map** (pehle dekha hai ya nahi), **binary search** (sorted data mein aadha karna), aur **stack** (aakhri aaya, pehle gaya).
+
+Is round mein sabse important cheez hai **pattern pehchanna**. Jaise hi aap problem padho, khud se poochho: "Yeh problem kis pattern ki lagti hai?" Agar problem mein "do numbers jinka sum target ho" likha hai, toh woh hash map pattern hai — Two Sum. Agar "sorted array mein pair dhoondho" likha hai, toh woh two pointers hai. Pattern pehchan liya, toh solution aadha ban gaya.
+
+DSA round mein code likhne se pehle **soch ko zor se bolna** hota hai. Interviewer aapka code nahi, aapki soch dekh raha hai. Pehle brute force batao, phir uski problem batao (slow hai), phir better pattern batao. Yeh 3-step baat-cheet hi interview hai.`,
+        `In the DSA round, the interviewer gives you a problem and watches how you solve it. The problems may look different, but behind them are the same 5-6 patterns: **two pointers** (from both ends of a sorted array), **sliding window** (moving a part of the array forward), **hash map** (have you seen this before), **binary search** (halving sorted data), and **stack** (last in, first out).
+
+The most important skill in this round is **spotting the pattern**. The moment you read a problem, ask yourself: "Which pattern does this problem look like?" If the problem says "two numbers whose sum is the target", that is the hash map pattern — Two Sum. If it says "find a pair in a sorted array", that is two pointers. Once you spot the pattern, half the solution is done.
+
+In the DSA round, you must **think out loud** before writing code. The interviewer is watching your thinking, not just your code. First give the brute force idea, then say its problem (it is slow), then give the better pattern. This 3-step conversation is the interview.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Dictionary, Train ki Khidki aur Do Ungliyan',
+        '2. Real-Life Examples: A Dictionary, a Train Window, and Two Fingers'
+      ),
+      body: t(
+        `**Hash map = dictionary.** Dictionary mein word dhoondhna O(1) hota hai — aap seedha sahi page par jaate ho, poori dictionary nahi padhte. Hash map bhi wahi karta hai: key se seedha value. Two Sum mein hum yahi karte hain — "target minus number" pehle dikha hai ya nahi, yeh dictionary mein dekhte hain.
+
+**Sliding window = train ki khidki.** Train chal rahi hai aur aap khidki se bahar dekh rahe ho — khidki ek hi size ki hai, par scene badal raha hai. Sliding window mein bhi window ka size fixed hota hai, par woh array par aage badhti hai. Har step par ek naya element andar aata hai, ek purana bahar jaata hai.
+
+**Two pointers = do ungliyan.** Sorted list ke do chhoron par do ungliyan rakho — ek shuru mein, ek aakhir mein. Dono ko beech ki taraf badhao. Agar sum target se zyada hai, toh aakhri ungli ko peeche karo; agar kam hai, toh pehli ungli ko aage badhao. Yahi two pointers hai — simple, par bahut powerful.`,
+        `**A hash map is a dictionary.** Finding a word in a dictionary is O(1) — you jump straight to the right page, you do not read the whole dictionary. A hash map does the same: from a key straight to a value. In Two Sum we do exactly this — we check in the dictionary whether "target minus number" appeared before.
+
+**A sliding window is a train window.** The train is moving and you look out of the window — the window stays the same size, but the scene changes. In a sliding window, the window size is also fixed, but it moves forward over the array. At each step, one new element comes in and one old element goes out.
+
+**Two pointers are two fingers.** Put two fingers on the two ends of a sorted list — one at the start, one at the end. Move both toward the middle. If the sum is more than the target, move the last finger back; if it is less, move the first finger forward. That is two pointers — simple, but very powerful.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: Problem se Pattern Tak aur Two Sum ka Dry Run',
+        '3. Step-by-Step: From Problem to Pattern, and a Two Sum Dry Run'
+      ),
+      body: t(
+        `Problem se pattern tak jaane ke steps yeh hain. **Step 1: Problem ko apne shabdon mein bolo.** "Mujhe do numbers chahiye jinka sum 9 ho." **Step 2: Keywords dhoondho.** "Do numbers", "sum", "target" — yeh hash map ke keywords hain. **Step 3: Pattern chuno.** Hash map — kyunki humein har number ke liye yeh check karna hai ki uska complement pehle dikha hai ya nahi. **Step 4: Dry run karo.** Bina code likhe, haath se trace karo.
+
+Two Sum ka dry run: nums = [2, 7, 11, 15], target = 9. **i = 0, num = 2:** need = 9 - 2 = 7. \`seen\` khaali hai, 7 nahi hai. 2 ko store karo: \`seen = {2: 0}\`. **i = 1, num = 7:** need = 9 - 7 = 2. \`seen\` mein 2 hai, index 0 par. Mil gaya! Answer hai (0, 1), kyunki 2 + 7 = 9. Loop yahin ruk gaya — 11 aur 15 ko dekhne ki zaroorat nahi padi. Har step O(1) hai, isliye poora solution **O(n)** hai.
+
+Neeche wala code problem ko pattern se jodta hai — Two Sum hash map hai, sliding window maximum deque hai, linked list cycle two pointers hai. Apne 3 problems is list mein jodo.`,
+        `Here are the steps from a problem to its pattern. **Step 1: Say the problem in your own words.** "I need two numbers whose sum is 9." **Step 2: Find the keywords.** "Two numbers", "sum", "target" — these are hash map keywords. **Step 3: Pick the pattern.** Hash map — because for every number we must check whether its complement appeared before. **Step 4: Do a dry run.** Trace it by hand, without writing code.
+
+A dry run of Two Sum: nums = [2, 7, 11, 15], target = 9. **i = 0, num = 2:** need = 9 - 2 = 7. \`seen\` is empty, so 7 is not there. Store 2: \`seen = {2: 0}\`. **i = 1, num = 7:** need = 9 - 7 = 2. \`seen\` has 2, at index 0. Found it! The answer is (0, 1), because 2 + 7 = 9. The loop stops right here — 11 and 15 never need to be looked at. Every step is O(1), so the whole solution is **O(n)**.
+
+The code below maps problems to patterns — Two Sum is a hash map, sliding window maximum is a deque, a linked list cycle is two pointers. Add 3 problems of your own to this list.`
+      ),
+      code: {
+        title: t(
+          'Problem se Pattern: 3 Problems, 3 Patterns',
+          'From Problem to Pattern: 3 Problems, 3 Patterns'
+        ),
+        language: 'python',
+        code: `problems = {
+    "Two Sum": "Hash map",
+    "Sliding window maximum": "Deque + sliding window",
+    "Cycle in a linked list": "Two pointers",
+}
+for problem, pattern in problems.items():
+    print(problem + " -> " + pattern)
+print("Patterns to revise:", len(problems))`,
+        output: `Two Sum -> Hash map
+Sliding window maximum -> Deque + sliding window
+Cycle in a linked list -> Two pointers
+Patterns to revise: 3`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Turant Code Likhna, Brute Force par Rukna aur Dry Run na Karna',
+        '4. Common Mistakes: Writing Code at Once, Stopping at Brute Force, and Skipping the Dry Run'
+      ),
+      body: t(
+        `**Galti 1: Turant code likhna.** Problem padhte hi code likhna shuru kar dena sabse badi galti hai. Pehle 2 minute socho, pattern pehchano, aur apni approach zor se bolo. Interviewer ko aapki soch dekhni hai — code toh baad mein bhi likha ja sakta hai.
+
+**Galti 2: Brute force par rukna.** Brute force bata kar ruk jaana galat hai. Brute force sirf shuruat hai — uske baad uski problem batao ("yeh O(n^2) hai, slow hai") aur phir better pattern batao. Interviewer yahi dekhna chahta hai ki aap slow solution ko fast kaise banate ho.
+
+**Galti 3: Dry run na karna.** Code likh kar turant "ho gaya" kehna galat hai. Ek chhota example le kar haath se trace karo: nums = [2, 7, 11, 15], target = 9. Agar dry run mein answer sahi aaya, tabhi code sahi hai. Bina dry run ke code mein bug chhupa rehta hai.`,
+        `**Mistake 1: Writing code at once.** Starting to write code the moment you read the problem is the biggest mistake. Think for 2 minutes first, spot the pattern, and say your approach out loud. The interviewer wants to see your thinking — the code can be written later.
+
+**Mistake 2: Stopping at brute force.** Giving the brute force idea and stopping there is wrong. Brute force is only the start — after it, say its problem ("this is O(n^2), it is slow") and then give the better pattern. The interviewer wants to see how you turn a slow solution into a fast one.
+
+**Mistake 3: Skipping the dry run.** Writing code and saying "done" at once is wrong. Take a small example and trace it by hand: nums = [2, 7, 11, 15], target = 9. Only if the dry run gives the right answer is the code right. Without a dry run, a bug stays hidden in the code.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Khaali Array, Ek Element aur Duplicate Values',
+        '5. Edge Cases: Empty Array, One Element, and Duplicate Values'
+      ),
+      body: t(
+        `**Khaali array:** nums = [] ho toh kya hoga? Two Sum mein loop chalega hi nahi, aur answer nahi milega. Interview mein pehle hi poochho: "Array khaali ho sakta hai?" Yeh sawaal dikhata hai ki aap edge cases sochte ho. Code mein khaali array ko handle karo — ya toh pehle check karo, ya loop ke baad "not found" return karo.
+
+**Ek element:** nums = [5] aur target = 10 ho toh kya hoga? Sirf ek number hai, pair ban hi nahi sakta. Aapka code is case mein galat answer na de — isliye loop mein yeh check karo ki complement ka index current index se alag ho.
+
+**Duplicate values:** nums = [3, 3] aur target = 6 ho toh answer (0, 1) hai — dono 3 alag index par hain. Hash map mein pehle wale 3 ko store karo, phir doosre 3 ke liye complement check karo — complement 3 hai aur woh \`seen\` mein hai, isliye answer mil jaayega. Duplicate values par hash map ka order samajhna zaroori hai: pehle check karo, phir store karo.`,
+        `**Empty array:** what happens if nums = []? In Two Sum the loop will not run at all, and no answer will be found. In the interview, ask first: "Can the array be empty?" This question shows you think about edge cases. Handle the empty array in code — either check first, or return "not found" after the loop.
+
+**One element:** what if nums = [5] and target = 10? There is only one number, so no pair can be made. Your code must not give a wrong answer in this case — so check in the loop that the complement's index is different from the current index.
+
+**Duplicate values:** if nums = [3, 3] and target = 6, the answer is (0, 1) — both 3s are at different indexes. In the hash map, store the first 3, then check the complement for the second 3 — the complement is 3 and it is in \`seen\`, so the answer is found. With duplicate values, the order in a hash map matters: check first, then store.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Pattern Pehchan mein nahi Aaya, ya Interviewer ne Complexity Poochh Li',
+        '6. What-If: You Cannot Spot the Pattern, or the Interviewer Asks About Complexity'
+      ),
+      body: t(
+        `**What if pattern pehchan mein nahi aaya?** Ghabrao mat. Brute force se shuru karo aur zor se bolo: "Pehle main brute force karta hoon — har pair check karta hoon, yeh O(n^2) hai." Brute force bolte-bolte aksar pattern dikh jaata hai — "har pair check karne ki jagah, main complement ko dict mein dekh sakta hoon." Interviewer ko yeh journey dekhni hai, seedha perfect answer nahi.
+
+**What if interviewer ne complexity poochh li?** Har pattern ki complexity yaad rakho: two pointers O(n), binary search O(log n), sorting + two pointers O(n log n), hash map O(n) time aur O(n) space. Complexity batate waqt wajah bhi batao: "O(n) hai kyunki array ko ek baar scan karte hain, aur har lookup O(1) hai."
+
+**What if interviewer ne problem badal di?** "Ab array sorted nahi hai, toh kya karoge?" — yeh follow-up normal hai. Sorted nahi hai toh two pointers nahi chalega, hash map chalega. Pattern ko problem ke hisaab se badalna hi DSA round hai.`,
+        `**What if you cannot spot the pattern?** Do not panic. Start with brute force and say it out loud: "First I will do brute force — check every pair, this is O(n^2)." While speaking the brute force out loud, the pattern often appears — "instead of checking every pair, I can look up the complement in a dict." The interviewer wants to see this journey, not a perfect answer at once.
+
+**What if the interviewer asks about complexity?** Remember the complexity of every pattern: two pointers O(n), binary search O(log n), sorting plus two pointers O(n log n), hash map O(n) time and O(n) space. When you state a complexity, also give the reason: "It is O(n) because we scan the array once, and every lookup is O(1)."
+
+**What if the interviewer changes the problem?** "Now the array is not sorted, what will you do?" — this follow-up is normal. If it is not sorted, two pointers will not work, but a hash map will. Changing the pattern to fit the problem is what the DSA round is.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Pattern Pehchano, Zor se Socho, Dry Run Karo',
+        '7. Summary: Spot the Pattern, Think Out Loud, Dry Run'
+      ),
+      body: t(
+        `DSA round ka poora kaam 3 steps mein hai: **pattern pehchano, zor se socho, dry run karo**. Problem padho, keywords se pattern pehchano, approach zor se bolo (brute force, phir better), code likho, aur ek chhote example par dry run karo. Yahi 3 steps har problem par kaam karte hain.
+
+Yaad rakhne wali baatein: 5 patterns yaad rakho — two pointers, sliding window, hash map, binary search, stack; har pattern ki complexity aur ek example yaad rakho; edge cases (khaali array, ek element, duplicates) pehle hi socho; aur code likhne se pehle 2 minute socho.
+
+Revision ka plan: roz 5 problems karo — har problem par pehle pattern likho, phir solution. 2 hafte mein 70 problems ho jaayenge, aur pattern pehchanne ki aadat ban jaayegi.`,
+        `The whole work of the DSA round fits in 3 steps: **spot the pattern, think out loud, and dry run**. Read the problem, spot the pattern from its keywords, say your approach out loud (brute force, then better), write the code, and dry run it on a small example. These same 3 steps work for every problem.
+
+Remember these points: know 5 patterns — two pointers, sliding window, hash map, binary search, stack; know the complexity and one example for each pattern; think about edge cases (empty array, one element, duplicates) in advance; and think for 2 minutes before writing code.
+
+The revision plan: solve 5 problems a day — for each problem, first write the pattern, then the solution. In 2 weeks that is 70 problems, and spotting patterns will become a habit.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'tree',
+    title: t(
+      'Problem se Pattern Tak: Kaun sa Pattern Kab',
+      'From Problem to Pattern: Which Pattern, When'
+    ),
+    caption: t(
+      'Keywords sunte hi pattern pehchan lo — yahi DSA round ki sabse badi skill hai',
+      'Spot the pattern the moment you hear the keywords — that is the biggest skill in the DSA round'
+    ),
+    nodes: [
+      {
+        t: t('Problem padho', 'Read the problem'),
+        s: t('Keywords dhoondho: "do numbers", "sum", "sorted", "pair"', 'Find the keywords: "two numbers", "sum", "sorted", "pair"')
+      },
+      {
+        t: t('"Do numbers, sum, target" → Hash map', '"Two numbers, sum, target" — Hash map'),
+        s: t('Two Sum: complement pehle dikha hai ya nahi', 'Two Sum: has the complement appeared before'),
+        depth: 1
+      },
+      {
+        t: t('"Sorted array, pair" → Two pointers', '"Sorted array, pair" — Two pointers'),
+        s: t('Do ungliyan, do chhoron se beech ki taraf', 'Two fingers, from both ends toward the middle'),
+        depth: 1
+      },
+      {
+        t: t('"Array ka hissa, max/min" → Sliding window', '"Part of an array, max/min" — Sliding window'),
+        s: t('Fixed size window, aage badhti hai', 'A fixed-size window that moves forward'),
+        depth: 1
+      },
+      {
+        t: t('"Sorted data, dhoondho" → Binary search', '"Sorted data, find" — Binary search'),
+        s: t('Aadha karo, O(log n)', 'Halve it, O(log n)'),
+        depth: 1
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Patterns ki Complexity: O(n) se O(n log n) Tak',
+        'Pattern Complexities: From O(n) to O(n log n)'
+      ),
+      language: 'python',
+      code: `patterns = [("Two pointers", "O(n)"), ("Binary search", "O(log n)"), ("Sorting + two pointers", "O(n log n)")]
+for name, cost in patterns:
+    print(name + ": " + cost)`,
+      output: `Two pointers: O(n)
+Binary search: O(log n)
+Sorting + two pointers: O(n log n)`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        '"Do numbers jinka sum target ho" — yeh kis pattern ki problem hai?',
+        'Which pattern does the problem "two numbers whose sum is the target" belong to?'
+      ),
+      opts: [
+        t('Binary search', 'Binary search'),
+        t('Hash map', 'Hash map'),
+        t('Stack', 'Stack'),
+        t('Sliding window', 'Sliding window')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: har number ke liye check karte hain ki target minus number pehle dikha hai kya — yeh hash map (dict) ka kaam hai.',
+        'Correct answer: for each number we check whether target minus that number appeared before — that is the job of a hash map (dict).'
+      )
+    },
+    {
+      q: t(
+        'Two Sum mein nums = [2, 7, 11, 15] aur target = 9 ho toh answer kya hai?',
+        'In Two Sum, if nums = [2, 7, 11, 15] and target = 9, what is the answer?'
+      ),
+      opts: [
+        t('(0, 2)', '(0, 2)'),
+        t('(1, 2)', '(1, 2)'),
+        t('(0, 1)', '(0, 1)'),
+        t('(2, 3)', '(2, 3)')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: 2 + 7 = 9, isliye indices (0, 1) hain. Dry run mein i = 1 par complement 2 seen mein mil jaata hai.',
+        'Correct answer: 2 + 7 = 9, so the indices are (0, 1). In the dry run, at i = 1 the complement 2 is found in seen.'
+      )
+    },
+    {
+      q: t(
+        'DSA round mein code likhne se pehle sabse pehle kya karna chahiye?',
+        'What should you do first in the DSA round, before writing code?'
+      ),
+      opts: [
+        t('Turant code likhna shuru kar do', 'Start writing code at once'),
+        t('2 minute socho, pattern pehchano, approach zor se bolo', 'Think for 2 minutes, spot the pattern, and say your approach out loud'),
+        t('Chup baitho', 'Sit quietly'),
+        t('Interviewer se answer poochho', 'Ask the interviewer for the answer')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: interviewer aapki soch dekh raha hai — pehle brute force, phir uski problem, phir better pattern batao.',
+        'Correct answer: the interviewer is watching your thinking — first the brute force, then its problem, then the better pattern.'
+      )
+    },
+    {
+      q: t(
+        'Sorted array mein pair dhoondhne ke liye kaun sa pattern best hai?',
+        'Which pattern is best for finding a pair in a sorted array?'
+      ),
+      opts: [
+        t('Hash map', 'Hash map'),
+        t('Two pointers', 'Two pointers'),
+        t('Stack', 'Stack'),
+        t('Sliding window', 'Sliding window')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: sorted array mein do ungliyan do chhoron se beech ki taraf badhti hain — sum zyada ho toh aakhri peeche, kam ho toh pehli aage.',
+        'Correct answer: in a sorted array, two fingers move from both ends toward the middle — if the sum is too big, move the last one back; if too small, move the first one forward.'
+      )
+    },
+    {
+      q: t(
+        'Hash map mein duplicate values par kya order follow karna chahiye?',
+        'What order should you follow in a hash map when there are duplicate values?'
+      ),
+      opts: [
+        t('Pehle store karo, phir check karo', 'Store first, then check'),
+        t('Pehle check karo, phir store karo', 'Check first, then store'),
+        t('Sirf store karo, check mat karo', 'Only store, never check'),
+        t('Koi order nahi hota', 'There is no order')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: nums = [3, 3], target = 6 mein pehle 3 ko store karo, phir doosre 3 ke liye complement check karo — tabhi answer (0, 1) milega.',
+        'Correct answer: with nums = [3, 3] and target = 6, store the first 3, then check the complement for the second 3 — only then do you get the answer (0, 1).'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'DSA round mein questions nahi, patterns aate hain — two pointers, sliding window, hash map, binary search, stack.',
+      'In the DSA round, patterns appear, not questions — two pointers, sliding window, hash map, binary search, stack.'
+    ),
+    t(
+      'Problem padhte hi keywords se pattern pehchano: "do numbers, sum, target" matlab hash map.',
+      'The moment you read a problem, spot the pattern from its keywords: "two numbers, sum, target" means hash map.'
+    ),
+    t(
+      'Pehle brute force batao, phir uski problem, phir better pattern — yahi interview hai.',
+      'First give the brute force, then its problem, then the better pattern — that is the interview.'
+    ),
+    t(
+      'Code likhne ke baad ek chhote example par dry run karo — bina dry run ke bug chhupa rehta hai.',
+      'After writing code, dry run it on a small example — without a dry run, a bug stays hidden.'
+    ),
+    t(
+      'Edge cases pehle socho: khaali array, ek element, duplicate values.',
+      'Think about edge cases first: empty array, one element, duplicate values.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: 5 Patterns ki Revision Checklist',
+      'Practice: Revision Checklist for 5 Patterns'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 5 patterns hain aur aakhri line mein "Total patterns: 5" aana chahiye. Phir har pattern ke saamne ek problem ka naam likh kar dobara run karo — jaise "Two pointers — Pair Sum".',
+      'Run the starter code below. It has 5 patterns and the last line should read "Total patterns: 5". Then write one problem name next to each pattern and run it again — for example "Two pointers — Pair Sum".'
+    ),
+    language: 'python',
+    starter: `patterns = ["Two pointers", "Sliding window", "Hash map", "Binary search", "Stack"]
+for i, p in enumerate(patterns, 1):
+    print(str(i) + ". Revise: " + p)
+print("Total patterns:", len(patterns))`,
+    expected: `1. Revise: Two pointers
+2. Revise: Sliding window
+3. Revise: Hash map
+4. Revise: Binary search
+5. Revise: Stack
+Total patterns: 5`
+  },
+  readMinutes: 12
+};
+
+const placementCodingRound: Article = {
+  id: 'placement-coding-round',
+  subjectId: 'placement',
+  title: t(
+    'Coding Round — Approach, Time Management aur Testing',
+    'Coding Round — Approach, Time Management, and Testing'
+  ),
+  summary: t(
+    'Coding round mein aapko 60-90 minute mein 2-3 problems solve karni hoti hain. Is article mein approach hai: problem padho, plan banao, code likho, test karo — aur har step ke liye time ka hisaab hai.',
+    'In a coding round, you must solve 2-3 problems in 60-90 minutes. This article gives the approach: read the problem, make a plan, write the code, test it — with a time budget for every step.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Coding Round Kya Hai? (2-3 Problems, 60-90 Minute)',
+        '1. What Is a Coding Round? (2-3 Problems, 60-90 Minutes)'
+      ),
+      body: t(
+        `Coding round mein aapko ek online platform par 2-3 problems milti hain aur unhe 60 se 90 minute mein solve karna hota hai. Har problem ke saath sample input-output diye hote hain, aur aapka code hidden test cases par chalaya jaata hai. Sirf sample pass karna kaafi nahi — hidden tests mein edge cases bhi hote hain.
+
+Is round mein sabse badi galti hai **time ka hisaab na rakhna**. Bahut se students pehli problem par 60 minute laga dete hain aur baaki problems ko chhoo bhi nahi paate. Coding round mein har problem ka ek time budget hota hai: 90 minute mein 3 problems hon toh har problem ko lagbhag 25-30 minute do. Ek problem par atak gaye toh aage badho — baad mein wapas aana hamesha mumkin hai.
+
+Coding round ki taiyari ka matlab hai **practice with timer**. Bina timer ke practice karna aur timer ke saath karna — dono alag hain. Hafte mein 2 baar timer laga kar mock coding round do, taaki time pressure ki aadat ban jaaye.`,
+        `In a coding round, you get 2-3 problems on an online platform and must solve them in 60 to 90 minutes. Every problem comes with sample input and output, and your code is run on hidden test cases. Passing only the samples is not enough — the hidden tests also include edge cases.
+
+The biggest mistake in this round is **not tracking time**. Many students spend 60 minutes on the first problem and never even touch the rest. In a coding round, every problem has a time budget: with 3 problems in 90 minutes, give each problem about 25-30 minutes. If you get stuck on one problem, move on — you can always come back later.
+
+Preparing for the coding round means **practising with a timer**. Practising without a timer and practising with one are two different things. Twice a week, take a mock coding round with a timer, so time pressure becomes familiar.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Exam Hall, Cricket Match aur Cooking',
+        '2. Real-Life Examples: Exam Halls, Cricket Matches, and Cooking'
+      ),
+      body: t(
+        `**Exam hall:** coding round ek exam ki tarah hai — har question ke liye time fixed hai. Exam mein bhi aap pehle aasaan questions karte ho, phir mushkil. Coding round mein bhi wahi karo: pehle woh problem karo jo samajh mein aayi, phir mushkil wali. Aasaan problem se score banta hai, mushkil se nahi.
+
+**Cricket match:** ek batsman har ball par chhakka maarne ki koshish nahi karta — woh pehle singles leta hai, phir jab ball samajh mein aaye toh bada shot maarta hai. Coding round mein bhi pehle simple solution likho (brute force), use submit karo, phir use fast banao. Pehle run karne wala solution, perfect solution se behtar hai.
+
+**Cooking:** khana banate waqt pehle saari cheezein taiyaar karte ho, phir pakana shuru karte ho. Coding mein bhi pehle plan banao — input kya hai, output kya hai, edge cases kya hain — phir code likho. Bina plan ke code likhna, bina taiyaari ke khana banane jaisa hai.`,
+        `**Exam hall:** a coding round is like an exam — the time for each question is fixed. In an exam you also do the easy questions first, then the hard ones. Do the same in a coding round: first the problem you understood, then the hard one. Your score comes from easy problems, not hard ones.
+
+**Cricket match:** a batsman does not try to hit a six on every ball — he takes singles first, and plays the big shot only when he reads the ball. In a coding round, also write the simple solution first (brute force), submit it, and then make it fast. A solution that runs is better than a perfect solution.
+
+**Cooking:** when you cook, you first prepare all the ingredients, then start cooking. In coding, also make a plan first — what is the input, what is the output, what are the edge cases — then write the code. Writing code without a plan is like cooking without preparation.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: 90 Minute ka Time Plan aur Dry Run',
+        '3. Step-by-Step: A 90-Minute Time Plan, with a Dry Run'
+      ),
+      body: t(
+        `90 minute ka plan 4 steps mein baanto. **Step 1: Read + plan (10 minute).** Problem ko 2 baar padho, sample input-output ko haath se trace karo, aur approach likho. **Step 2: Code first solution (40 minute).** Pehle simple solution likho — brute force bhi chalega. **Step 3: Test with samples (20 minute).** Sample input par chalao, phir apne test cases banao — khaali input, ek element, bada input. **Step 4: Edge cases + clean up (15 minute).** Edge cases handle karo, code ko saaf karo, aur submit karo.
+
+Dry run dekhte hain: total 90 minute hai. Read + plan 10, code 40, test 20, edge cases 15 — total 85 minute. **Buffer 5 minute** bachta hai. Yeh buffer isliye zaroori hai kyunki hamesha kuch na kuch unexpected hota hai — ek bug, ek galat samajh, ya ek slow test. Buffer ke bina plan toot jaata hai.
+
+Har problem par yahi plan lagao, bas time ko problems ke hisaab se baanto. 2 problems hon toh har problem ko 45 minute do. Neeche wala code yeh plan print karta hai.`,
+        `Split the 90 minutes into 4 steps. **Step 1: Read and plan (10 minutes).** Read the problem twice, trace the sample input and output by hand, and write down your approach. **Step 2: Code the first solution (40 minutes).** Write the simple solution first — even brute force works. **Step 3: Test with samples (20 minutes).** Run it on the sample input, then make your own test cases — empty input, one element, large input. **Step 4: Edge cases and clean up (15 minutes).** Handle the edge cases, clean the code, and submit.
+
+Let us do a dry run: the total is 90 minutes. Read and plan 10, code 40, test 20, edge cases 15 — a total of 85 minutes. A **buffer of 5 minutes** is left. This buffer matters because something unexpected always happens — a bug, a wrong understanding, or a slow test. Without a buffer, the plan breaks.
+
+Apply this same plan to every problem, just split the time by the number of problems. With 2 problems, give each one 45 minutes. The code below prints this plan.`
+      ),
+      code: {
+        title: t(
+          'Time Budget: 90 Minute ka Plan, 5 Minute Buffer',
+          'Time Budget: A 90-Minute Plan with a 5-Minute Buffer'
+        ),
+        language: 'python',
+        code: `total = 90
+plan = [("Read + plan", 10), ("Code first solution", 40), ("Test with samples", 20), ("Edge cases + clean up", 15)]
+used = 0
+for step, minutes in plan:
+    used += minutes
+    print(step + ": " + str(minutes) + " min")
+print("Total planned:", used, "of", total, "minutes")
+print("Buffer left:", total - used, "minutes")`,
+        output: `Read + plan: 10 min
+Code first solution: 40 min
+Test with samples: 20 min
+Edge cases + clean up: 15 min
+Total planned: 85 of 90 minutes
+Buffer left: 5 minutes`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Ek Problem par Atakna, Test na Karna aur Perfect Code ka Intezaar',
+        '4. Common Mistakes: Getting Stuck on One Problem, Not Testing, and Waiting for Perfect Code'
+      ),
+      body: t(
+        `**Galti 1: Ek problem par atakna.** Pehli problem par 60 minute laga dena aur baaki ko chhoo bhi na paana — yeh sabse badi galti hai. Niyam banao: ek problem par 30 minute se zyada nahi. Nahi bani toh aage badho, aakhir mein wapas aao. 2 problems ka half score, 1 problem ke full score se behtar hota hai.
+
+**Galti 2: Test na karna.** Code likh kar turant submit kar dena galat hai. Sample input par chalao, phir apne test cases banao: khaali input, ek element, bada input, duplicate values. Hidden tests mein yahi edge cases hote hain. Bina test ke submit karna, bina check kiye exam dene jaisa hai.
+
+**Galti 3: Perfect code ka intezaar karna.** Pehle perfect solution sochne mein 20 minute barbaad mat karo. Pehle simple solution likho aur submit karo — brute force bhi chalega, kyunki woh kuch test cases pass karega. Phir use fast banao. "Pehle chalao, phir fast banao" — yahi coding round ka niyam hai.`,
+        `**Mistake 1: Getting stuck on one problem.** Spending 60 minutes on the first problem and never touching the rest is the biggest mistake. Make a rule: no more than 30 minutes on one problem. If it does not work out, move on and come back at the end. Half marks on 2 problems is better than full marks on 1 problem.
+
+**Mistake 2: Not testing.** Writing code and submitting it at once is wrong. Run it on the sample input, then make your own test cases: empty input, one element, large input, duplicate values. The hidden tests contain these same edge cases. Submitting without testing is like taking an exam without checking it.
+
+**Mistake 3: Waiting for perfect code.** Do not waste 20 minutes thinking of the perfect solution first. Write the simple solution and submit it — even brute force works, because it will pass some test cases. Then make it fast. "First make it run, then make it fast" — that is the rule of the coding round.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Sample Pass par Hidden Fail, Time Khatam aur Code Crash',
+        '5. Edge Cases: Samples Pass but Hidden Tests Fail, Time Runs Out, and Code Crashes'
+      ),
+      body: t(
+        `**Sample pass, hidden fail:** sample pass ho gaya par hidden test fail ho gaya — iska matlab edge case chhoota hai. Aam edge cases: khaali input, ek element, duplicate values, bahut bada input, negative numbers. Har problem par yeh 5 cases khud test karo, submit karne se pehle.
+
+**Time khatam ho gaya:** agar time khatam hone wala hai aur code adhoora hai, toh jo hai use submit karo — adhoora code bhi kuch test cases pass kar sakta hai. Submit na karna, galat submit karne se bura hai. Aakhri 5 minute mein naya code mat likho, purane ko saaf karo aur submit karo.
+
+**Code crash:** code crash ho raha hai toh panic mat karo. Error message padho — woh batata hai ki problem kahan hai. Aam crash: index out of range, khaali list par kaam, ya galat type. Error ko line-by-line padho, print laga kar dekho ki values kya hain.`,
+        `**Samples pass, hidden tests fail:** the sample passes but a hidden test fails — that means an edge case was missed. Common edge cases: empty input, one element, duplicate values, very large input, negative numbers. Test these 5 cases yourself for every problem, before submitting.
+
+**Time runs out:** if time is almost over and the code is incomplete, submit what you have — incomplete code can still pass some test cases. Not submitting is worse than submitting something wrong. In the last 5 minutes, do not write new code — clean the old code and submit it.
+
+**Code crashes:** if the code crashes, do not panic. Read the error message — it tells you where the problem is. Common crashes: index out of range, work on an empty list, or a wrong type. Read the error line by line, add a print, and see what the values are.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Problem Samajh nahi Aayi, ya Do Problems mein se Ek Aasaan hai',
+        '6. What-If: You Do Not Understand the Problem, or One of Two Problems Is Easy'
+      ),
+      body: t(
+        `**What if problem samajh nahi aayi?** Problem ko 2 baar padho, phir sample input-output ko haath se trace karo. Sample se aksar problem ka matlab saaf ho jaata hai. Phir bhi na samajh aaye toh us problem ko chhodo aur doosri problem karo — wapas aane par dimaag fresh hota hai aur problem samajh mein aa jaati hai.
+
+**What if do problems mein se ek aasaan hai?** Pehle aasaan wali karo. Aasaan problem se confidence banta hai aur score bhi. Mushkil problem par pehle time lagane se confidence toot jaata hai aur time bhi khatam ho jaata hai. Order yeh hai: aasaan pehle, mushkil baad mein.
+
+**What if code likhte waqt approach galat nikli?** Toh code ko delete karke dobara likhne se daro mat. Galat approach par aage badhne se behtar hai 5 minute mein naya plan banana. Approach badalne ka faisla jaldi lo — 20 minute baad badalna bahut der ho jaati hai.`,
+        `**What if you do not understand the problem?** Read the problem twice, then trace the sample input and output by hand. The sample often makes the meaning clear. If it still does not make sense, skip that problem and do the other one — when you come back, your mind is fresh and the problem makes sense.
+
+**What if one of two problems is easy?** Do the easy one first. The easy problem builds confidence and score. Spending time on the hard problem first breaks confidence and eats up time. The order is: easy first, hard later.
+
+**What if your approach turns out wrong while coding?** Do not fear deleting the code and writing it again. It is better to make a new plan in 5 minutes than to keep going with a wrong approach. Decide to change the approach early — changing it after 20 minutes is too late.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Pehle Chalao, Phir Fast Banao — aur Time ka Hisab Rakho',
+        '7. Summary: First Make It Run, Then Make It Fast — and Track Your Time'
+      ),
+      body: t(
+        `Coding round ka poora kaam ek line mein hai: **pehle chalao, phir fast banao**. Problem padho, plan banao, simple solution likho, test karo, phir use fast banao. Aur har step par time ka hisaab rakho — 90 minute mein 10 plan, 40 code, 20 test, 15 edge cases, 5 buffer.
+
+Yaad rakhne wali baatein: ek problem par 30 minute se zyada mat ruko; pehle aasaan problem karo; sample ke saath apne 5 edge cases test karo; aakhri 5 minute mein naya code mat likho; aur hafte mein 2 baar timer ke saath mock coding round do.
+
+Coding round mein perfect code nahi, **kaam karne wala code** chahiye — aur woh sirf practice se aata hai. Roz ek problem timer ke saath karo, toh 30 din mein 30 problems ho jaayenge.`,
+        `The whole work of a coding round fits in one line: **first make it run, then make it fast**. Read the problem, make a plan, write the simple solution, test it, and then make it fast. And track time at every step — in 90 minutes: 10 for plan, 40 for code, 20 for test, 15 for edge cases, 5 for buffer.
+
+Remember these points: never spend more than 30 minutes on one problem; do the easy problem first; test your own 5 edge cases along with the sample; do not write new code in the last 5 minutes; and take a mock coding round with a timer twice a week.
+
+In a coding round, you do not need perfect code — you need **working code**, and that comes only from practice. Solve one problem a day with a timer, and in 30 days you will have done 30 problems.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'flow',
+    title: t(
+      'Coding Round ka Flow: Padho, Plan Banao, Code Likho, Test Karo',
+      'The Coding Round Flow: Read, Plan, Code, Test'
+    ),
+    caption: t(
+      'Har problem par yahi flow — aur har step ke liye time budget',
+      'The same flow for every problem — with a time budget for each step'
+    ),
+    nodes: [
+      {
+        t: t('1. Read + plan: 10 min', '1. Read and plan: 10 min'),
+        s: t('Problem 2 baar padho, sample trace karo, approach likho', 'Read the problem twice, trace the sample, write the approach')
+      },
+      {
+        t: t('2. Code first solution: 40 min', '2. Code the first solution: 40 min'),
+        s: t('Pehle simple solution — brute force bhi chalega', 'The simple solution first — even brute force works')
+      },
+      {
+        t: t('3. Test with samples: 20 min', '3. Test with samples: 20 min'),
+        s: t('Sample + apne 5 edge cases: khaali, ek element, bada input', 'Sample plus your own 5 edge cases: empty, one element, large input')
+      },
+      {
+        t: t('4. Edge cases + clean up: 15 min', '4. Edge cases and clean up: 15 min'),
+        s: t('Edge cases handle karo, code saaf karo, submit karo', 'Handle edge cases, clean the code, submit')
+      },
+      {
+        t: t('Buffer: 5 min', 'Buffer: 5 min'),
+        s: t('Kuch unexpected hua toh buffer kaam aayega', 'If something unexpected happens, the buffer saves you')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Test Checklist: Har Problem par 4 Test Cases',
+        'Test Checklist: 4 Test Cases for Every Problem'
+      ),
+      language: 'python',
+      code: `cases = ["Sample input", "Empty input", "Single element", "Large input"]
+for case in cases:
+    print("Test: " + case)
+print("Tests to run:", len(cases))`,
+      output: `Test: Sample input
+Test: Empty input
+Test: Single element
+Test: Large input
+Tests to run: 4`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        '90 minute mein 3 problems hon toh har problem ko kitna time dena chahiye?',
+        'With 3 problems in 90 minutes, how much time should each problem get?'
+      ),
+      opts: [
+        t('60 minute', '60 minutes'),
+        t('Lagbhag 25-30 minute', 'About 25-30 minutes'),
+        t('5 minute', '5 minutes'),
+        t('Poora 90 minute ek problem ko', 'The full 90 minutes to one problem')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: har problem ka time budget hona chahiye — ek problem par atakne se baaki problems chhoot jaati hain.',
+        'Correct answer: every problem needs a time budget — getting stuck on one problem costs you the rest.'
+      )
+    },
+    {
+      q: t(
+        'Coding round mein pehle kya karna chahiye — perfect solution ya simple solution?',
+        'In a coding round, what should come first — the perfect solution or the simple solution?'
+      ),
+      opts: [
+        t('Perfect solution, chahe 20 minute lag jaayein', 'The perfect solution, even if it takes 20 minutes'),
+        t('Simple solution pehle, phir use fast banao', 'The simple solution first, then make it fast'),
+        t('Kuch mat likho', 'Write nothing'),
+        t('Seedha submit kar do', 'Submit at once')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: pehle chalao, phir fast banao — simple solution bhi kuch test cases pass karta hai, perfect ka intezaar time khata hai.',
+        'Correct answer: first make it run, then make it fast — a simple solution still passes some test cases, while waiting for perfect wastes time.'
+      )
+    },
+    {
+      q: t(
+        'Sample pass ho gaya par hidden test fail ho gaya — iska matlab kya hai?',
+        'The sample passes but a hidden test fails — what does that mean?'
+      ),
+      opts: [
+        t('Koi edge case chhoota hai', 'An edge case was missed'),
+        t('Code bilkul galat hai', 'The code is fully wrong'),
+        t('Sample galat tha', 'The sample was wrong'),
+        t('Kuch nahi, submit kar do', 'Nothing, just submit')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: hidden tests mein edge cases hote hain — khaali input, ek element, bada input, duplicates — inhe khud test karo.',
+        'Correct answer: hidden tests contain edge cases — empty input, one element, large input, duplicates — test them yourself.'
+      )
+    },
+    {
+      q: t(
+        'Coding round mein ek problem par kitni der se zyada nahi rukna chahiye?',
+        'How long should you never exceed on one problem in a coding round?'
+      ),
+      opts: [
+        t('30 minute', '30 minutes'),
+        t('60 minute', '60 minutes'),
+        t('5 minute', '5 minutes'),
+        t('90 minute', '90 minutes')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: 30 minute se zyada rukne par baaki problems chhoot jaati hain — aage badho, aakhir mein wapas aao.',
+        'Correct answer: spending more than 30 minutes costs you the other problems — move on and come back at the end.'
+      )
+    },
+    {
+      q: t(
+        'Aakhri 5 minute mein kya karna chahiye?',
+        'What should you do in the last 5 minutes?'
+      ),
+      opts: [
+        t('Naya code likhna shuru karo', 'Start writing new code'),
+        t('Purane code ko saaf karo aur submit karo', 'Clean the old code and submit it'),
+        t('Kuch mat karo', 'Do nothing'),
+        t('Nayi problem shuru karo', 'Start a new problem')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: jo code hai use submit karo — adhoora code bhi kuch test cases pass kar sakta hai, aur submit na karna sabse bura hai.',
+        'Correct answer: submit the code you have — even incomplete code can pass some test cases, and not submitting is the worst option.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      '90 minute ka plan: 10 plan, 40 code, 20 test, 15 edge cases, 5 buffer.',
+      'The 90-minute plan: 10 plan, 40 code, 20 test, 15 edge cases, 5 buffer.'
+    ),
+    t(
+      'Pehle chalao, phir fast banao — simple solution bhi kuch test cases pass karta hai.',
+      'First make it run, then make it fast — a simple solution still passes some test cases.'
+    ),
+    t(
+      'Ek problem par 30 minute se zyada mat ruko; pehle aasaan problem karo.',
+      'Never spend more than 30 minutes on one problem; do the easy problem first.'
+    ),
+    t(
+      'Sample ke saath apne 5 edge cases test karo: khaali, ek element, bada input, duplicates, negative.',
+      'Test your own 5 edge cases with the sample: empty, one element, large input, duplicates, negative.'
+    ),
+    t(
+      'Hafte mein 2 baar timer ke saath mock coding round do.',
+      'Take a mock coding round with a timer twice a week.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: 60 Minute ka Time Split Calculator',
+      'Practice: 60-Minute Time Split Calculator'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein 60 minute ko 3 hisso mein baanta hai aur "Total: 60 minutes" aana chahiye. Phir apne hisaab se minute badal kar dobara run karo — total hamesha 60 aana chahiye.',
+      'Run the starter code below. It splits 60 minutes into 3 parts and should read "Total: 60 minutes". Then change the minutes to your own split and run it again — the total should always be 60.'
+    ),
+    language: 'python',
+    starter: `total = 60
+parts = {"Understand": 10, "Code": 30, "Test": 20}
+for part, minutes in parts.items():
+    print(part + ": " + str(minutes) + " min (" + str(minutes * 100 // total) + "%)")
+print("Total:", sum(parts.values()), "minutes")`,
+    expected: `Understand: 10 min (16%)
+Code: 30 min (50%)
+Test: 20 min (33%)
+Total: 60 minutes`
+  },
+  readMinutes: 12
+};
+
+const placementPuzzlesInterview: Article = {
+  id: 'placement-puzzles-interview',
+  subjectId: 'placement',
+  title: t(
+    'Interview Puzzles — 100 Doors, Handshake aur Missing Number (Solutions ke Saath)',
+    'Interview Puzzles — 100 Doors, Handshakes, and the Missing Number (with Solutions)'
+  ),
+  summary: t(
+    'Interview mein puzzles isliye poochhe jaate hain ki aapki soch dekhi ja sake — answer se zyada, approach dekhi jaati hai. Is article mein 3 classic puzzles hain, har ek ka step-by-step solution aur dry run hai.',
+    'Puzzles are asked in interviews to see how you think — the approach matters more than the answer. This article has 3 classic puzzles, each with a step-by-step solution and a dry run.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Interview Puzzles Kya Hain? (Answer nahi, Approach Dekhi Jaati Hai)',
+        '1. What Are Interview Puzzles? (The Approach Is Watched, Not the Answer)'
+      ),
+      body: t(
+        `Interview puzzles aise sawaal hote hain jinka answer seedha nahi hota — jaise "100 doors ka puzzle", "10 logon mein kitne handshakes honge", ya "1 se 6 mein kaun sa number missing hai". Interviewer ko aapka answer nahi, aapki **sochne ka tareeka** dekhna hai. Aap problem ko kaise todte ho, chhota example le kar kaise test karte ho, aur pattern kaise dhoondhte ho — yahi dekha jaata hai.
+
+Puzzles solve karne ka sabse achha tareeka hai **chhota example lena**. 100 doors samajh nahi aa raha? Pehle 5 doors se shuru karo. Handshake samajh nahi aa raha? Pehle 3 logon se shuru karo. Chhote example mein pattern dikh jaata hai, phir use bade number par lagao. Yahi approach interviewer dekhna chahta hai.
+
+Puzzles ki taiyari ka matlab hai 10-15 classic puzzles ko samajhna, ratna nahi. Jo student puzzle ko samajhta hai, woh naya puzzle bhi solve kar sakta hai — kyunki use approach aata hai. Jo sirf answer rat kar aata hai, woh naya puzzle dekhte hi atak jaata hai.`,
+        `Interview puzzles are questions with no straight answer — such as "the 100 doors puzzle", "how many handshakes among 10 people", or "which number is missing from 1 to 6". The interviewer does not want your answer, but your **way of thinking**. How you break the problem apart, how you test it with a small example, and how you find the pattern — that is what is watched.
+
+The best way to solve a puzzle is to **take a small example**. The 100 doors puzzle makes no sense? Start with 5 doors. The handshake puzzle makes no sense? Start with 3 people. The pattern shows up in the small example, and then you apply it to the big number. That is the approach the interviewer wants to see.
+
+Preparing for puzzles means understanding 10-15 classic puzzles, not memorising them. A student who understands a puzzle can also solve a new puzzle — because he knows the approach. A student who only memorised the answer gets stuck the moment he sees a new puzzle.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Light Switch, Party mein Handshake aur Attendance List',
+        '2. Real-Life Examples: Light Switches, Handshakes at a Party, and Attendance Lists'
+      ),
+      body: t(
+        `**100 doors = light switch.** Socho aapke ghar mein 100 lights hain aur aap unhe ek-ek karke on-off kar rahe ho. Pehli baar mein sab on, doosri baar mein har doosri off, teesri baar mein har teesri badlo. Aakhir mein kaun si lights on rahengi? Yahi 100 doors puzzle hai — sirf lights ki jagah doors hain.
+
+**Handshake = party.** Party mein 10 log hain aur har vyakti har doosre se haath milata hai. Kitne handshakes honge? Har vyakti 9 logon se haath milata hai, total 10 x 9 = 90 — par har handshake 2 baar gina gaya hai (A-B aur B-A ek hi hai), isliye answer 45 hai. Yahi formula hai: n x (n-1) / 2.
+
+**Missing number = attendance list.** Class mein roll numbers 1 se 6 tak hain, par list mein sirf 1, 2, 4, 5, 6 hain — kaun sa missing hai? Total 1 se 6 tak ka sum 21 hai, list ka sum 18 hai, isliye missing number 3 hai. Yahi trick interview mein kaam aati hai — sum ka farak nikaalo.`,
+        `**100 doors is a light switch.** Imagine your house has 100 lights and you switch them on and off one by one. In the first round, turn all on; in the second, switch every second one off; in the third, change every third one. Which lights stay on at the end? That is the 100 doors puzzle — only with doors instead of lights.
+
+**Handshakes are a party.** There are 10 people at a party and every person shakes hands with every other person. How many handshakes are there? Each person shakes hands with 9 people, so 10 x 9 = 90 — but every handshake was counted twice (A-B and B-A are the same), so the answer is 45. That is the formula: n x (n-1) / 2.
+
+**The missing number is an attendance list.** A class has roll numbers 1 to 6, but the list shows only 1, 2, 4, 5, 6 — which one is missing? The sum of 1 to 6 is 21, the sum of the list is 18, so the missing number is 3. This same trick works in interviews — find the difference of the sums.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: 100 Doors Puzzle ka Dry Run',
+        '3. Step-by-Step: A Dry Run of the 100 Doors Puzzle'
+      ),
+      body: t(
+        `100 doors puzzle ko step-by-step solve karte hain. **Problem:** 100 doors band hain. Pehle round mein har door ko toggle karo (band se khula). Doosre round mein har doosre door ko toggle karo. Teesre round mein har teesre door ko, aur aise hi 100 round tak. Aakhir mein kaun se doors khule honge?
+
+**Chhota example lo:** pehle 5 doors se shuru karo. Round 1: sab khul jaate hain — [1, 2, 3, 4, 5]. Round 2: har doosra toggle — 2 aur 4 band ho jaate hain, khule hain [1, 3, 5]. Round 3: har teesra toggle — 3 band ho jaata hai, khule hain [1, 5]. Round 4: har chautha toggle — 4 khul jaata hai, khule hain [1, 4, 5]. Round 5: har paanchwa toggle — 5 band ho jaata hai, khule hain [1, 4]. Pattern dikh raha hai? Khule doors hain 1 aur 4 — dono **perfect squares** hain!
+
+**Wajah:** ek door utni baar toggle hota hai jitne uske divisors hain. Door 6 ke divisors hain 1, 2, 3, 6 — 4 baar toggle, aakhir mein band. Door 9 ke divisors hain 1, 3, 9 — 3 baar toggle, aakhir mein khula. Sirf perfect squares ke divisors odd hote hain, isliye sirf wahi khule rehte hain. 100 tak ke perfect squares hain 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 — total 10 doors. Neeche wala code yahi simulation chalata hai.`,
+        `Let us solve the 100 doors puzzle step by step. **Problem:** 100 doors are closed. In the first round, toggle every door (closed to open). In the second round, toggle every second door. In the third round, toggle every third door, and so on for 100 rounds. Which doors stay open at the end?
+
+**Take a small example:** start with 5 doors. Round 1: all open — [1, 2, 3, 4, 5]. Round 2: toggle every second one — 2 and 4 close, open are [1, 3, 5]. Round 3: toggle every third one — 3 closes, open are [1, 5]. Round 4: toggle every fourth one — 4 opens, open are [1, 4, 5]. Round 5: toggle every fifth one — 5 closes, open are [1, 4]. Can you see the pattern? The open doors are 1 and 4 — both **perfect squares**!
+
+**Why:** a door is toggled as many times as it has divisors. Door 6 has divisors 1, 2, 3, 6 — toggled 4 times, ends closed. Door 9 has divisors 1, 3, 9 — toggled 3 times, ends open. Only perfect squares have an odd number of divisors, so only they stay open. The perfect squares up to 100 are 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 — 10 doors in total. The code below runs this same simulation.`
+      ),
+      code: {
+        title: t(
+          '100 Doors Simulation: Kaun se Doors Khule Rahenge',
+          '100 Doors Simulation: Which Doors Stay Open'
+        ),
+        language: 'python',
+        code: `doors = [False] * 101
+for step in range(1, 101):
+    for door in range(step, 101, step):
+        doors[door] = not doors[door]
+open_doors = [d for d in range(1, 101) if doors[d]]
+print("Open doors:", open_doors)
+print("Count:", len(open_doors))`,
+        output: `Open doors: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+Count: 10`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Seedha Answer Bolna, Chhota Example na Lena aur Approach na Batana',
+        '4. Common Mistakes: Giving the Answer at Once, Skipping the Small Example, and Not Explaining the Approach'
+      ),
+      body: t(
+        `**Galti 1: Seedha answer bolna.** Agar aapko 100 doors ka answer pehle se pata hai aur aap turant "10 doors, perfect squares" bol dete ho, toh interviewer ko aapki soch nahi dikhegi. Woh poochhega "kyun?" aur aap atak jaoge. Pehle chhota example lo, pattern dhoondho, phir answer do — yahi approach interviewer dekhna chahta hai.
+
+**Galti 2: Chhota example na lena.** Bade number se shuru karna galti hai. 100 doors ko seedha solve karne ki koshish mat karo — pehle 5 doors lo. Chhote example mein pattern saaf dikhta hai, bade mein nahi. Jo student chhota example leta hai, woh puzzle ko samajhta hai.
+
+**Galti 3: Approach na batana.** Chup-chap sochna aur phir answer bolna galat hai. Zor se bolo: "Main pehle 5 doors se shuru karta hoon... Round 1 mein... Round 2 mein..." Interviewer aapki soch sunna chahta hai, sirf answer nahi. Chup rehna dikhata hai ki aap soch nahi rahe.`,
+        `**Mistake 1: Giving the answer at once.** If you already know the answer to 100 doors and say "10 doors, perfect squares" at once, the interviewer will not see your thinking. He will ask "why?" and you will get stuck. First take a small example, find the pattern, then give the answer — that is the approach the interviewer wants to see.
+
+**Mistake 2: Skipping the small example.** Starting with the big number is a mistake. Do not try to solve 100 doors directly — start with 5 doors. The pattern is clear in the small example, not in the big one. The student who takes a small example understands the puzzle.
+
+**Mistake 3: Not explaining the approach.** Thinking in silence and then giving the answer is wrong. Speak out loud: "I will start with 5 doors... In round 1... In round 2..." The interviewer wants to hear your thinking, not just the answer. Staying silent shows you are not thinking.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Puzzle Bilkul Naya hai, ya Answer Galat Nikla',
+        '5. Edge Cases: The Puzzle Is Completely New, or Your Answer Turns Out Wrong'
+      ),
+      body: t(
+        `**Puzzle bilkul naya hai:** kabhi aisa puzzle aayega jo aapne kabhi nahi dekha. Ghabrao mat — approach wahi hai: problem ko apne shabdon mein bolo, chhota example lo, pattern dhoondho. Naya puzzle dekh kar ghabrana normal hai, par approach se aap use bhi solve kar sakte ho. Interviewer ko yahi dekhna hai ki naya puzzle dekh kar aap kya karte ho.
+
+**Answer galat nikla:** agar aapne answer diya aur interviewer ne kaha "galat hai", toh ghabrao mat. Poochho: "Kya main dobara try kar sakta hoon?" Phir apni approach ko dobara check karo — kahan galti hui? Aksar galti chhote example mein hi pakdi jaati hai. Galat answer se zyada, use sudharne ka tareeka dekha jaata hai.
+
+**Puzzle mein time zyada lag raha hai:** agar 5 minute ho gaye aur pattern nahi mila, toh interviewer ko batao ki aap kahan atke ho: "Maine 5 doors tak try kiya, pattern dikh raha hai par main use bade number par nahi laga pa raha." Yeh imaandaari hai, aur interviewer aksar hint de deta hai.`,
+        `**The puzzle is completely new:** sometimes a puzzle will come that you have never seen. Do not panic — the approach is the same: say the problem in your own words, take a small example, find the pattern. Feeling nervous at a new puzzle is normal, but the approach can solve that too. The interviewer wants to see what you do when you face a new puzzle.
+
+**Your answer turns out wrong:** if you gave an answer and the interviewer says "wrong", do not panic. Ask: "Can I try again?" Then check your approach again — where did the mistake happen? Often the mistake is caught in the small example itself. How you fix a wrong answer matters more than the wrong answer.
+
+**The puzzle is taking too long:** if 5 minutes have passed and you have not found the pattern, tell the interviewer where you are stuck: "I tried up to 5 doors, I can see a pattern but I cannot apply it to the big number." That is honesty, and the interviewer often gives a hint.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Interviewer ne Hint Diya, ya Puzzle ka Answer Pehle se Pata hai',
+        '6. What-If: The Interviewer Gives a Hint, or You Already Know the Answer'
+      ),
+      body: t(
+        `**What if interviewer ne hint diya?** Hint milte hi turant answer mat bolo — hint ko apni approach mein jodo. "Aapne kaha perfect squares — main check karta hoon: door 9 ke divisors 1, 3, 9 hain, 3 baar toggle, isliye khula rahega." Hint ko use karna achha hai, par hint se seedha answer bolna dikhata hai ki aapne socha nahi.
+
+**What if puzzle ka answer pehle se pata hai?** Tab bhi approach se solve karo. Interviewer ko mat batao ki answer pehle se pata hai — bas chhote example se shuru karo aur pattern dhoondho. "Maine yeh puzzle pehle dekha hai" kehna bhi theek hai, par uske baad bhi approach dikhana zaroori hai.
+
+**What if puzzle maths ka hai aur aap maths mein weak ho?** Puzzles mein bhaari maths nahi hoti — basic sum, pattern aur logic hoti hai. Handshake mein formula n x (n-1) / 2 hai, missing number mein sum ka farak hai. Dono basic maths hain. Maths se daro mat, pattern par dhyaan do.`,
+        `**What if the interviewer gives a hint?** Do not blurt out the answer the moment you get a hint — weave the hint into your approach. "You said perfect squares — let me check: door 9 has divisors 1, 3, 9, toggled 3 times, so it stays open." Using a hint is good, but jumping from a hint straight to the answer shows you did not think.
+
+**What if you already know the answer to the puzzle?** Even then, solve it through the approach. Do not tell the interviewer you knew the answer — just start with the small example and find the pattern. Saying "I have seen this puzzle before" is also fine, but you must still show the approach.
+
+**What if the puzzle is maths and you are weak in maths?** Puzzles do not need heavy maths — they need basic sums, patterns, and logic. The handshake puzzle uses the formula n x (n-1) / 2, the missing number uses the difference of sums. Both are basic maths. Do not fear maths; focus on the pattern.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Chhota Example, Pattern, Phir Answer',
+        '7. Summary: Small Example, Pattern, Then Answer'
+      ),
+      body: t(
+        `Puzzles ka poora formula ek line mein hai: **chhota example lo, pattern dhoondho, phir answer do**. 100 doors mein 5 doors se shuru karo, handshake mein 3 logon se, missing number mein 1 se 6 tak ke sum se. Chhota example hi pattern dikhata hai.
+
+Yaad rakhne wali baatein: zor se socho — interviewer ko aapki soch sunni hai; seedha answer mat bolo, approach dikhao; 10-15 classic puzzles samajh kar jao, rat kar nahi; aur naya puzzle aaye toh ghabrao mat, approach wahi hai.
+
+3 puzzles jo aapko aane chahiye: 100 doors (perfect squares, 10 doors), handshake (n x (n-1) / 2, 10 logon mein 45), missing number (sum ka farak, 1-6 mein 3 missing). In teeno ko chhote example se samajh lo, toh baaki puzzles bhi aasaan lagenge.`,
+        `The whole formula for puzzles fits in one line: **take a small example, find the pattern, then give the answer**. In 100 doors, start with 5 doors; in handshakes, start with 3 people; in the missing number, use the sum from 1 to 6. The small example is what shows the pattern.
+
+Remember these points: think out loud — the interviewer wants to hear your thinking; do not give the answer at once, show the approach; understand 10-15 classic puzzles, do not memorise them; and if a new puzzle comes, do not panic — the approach is the same.
+
+Three puzzles you should know: 100 doors (perfect squares, 10 doors), handshakes (n x (n-1) / 2, 45 for 10 people), missing number (difference of sums, 3 missing from 1-6). Understand these three from small examples, and the rest of the puzzles will feel easy.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'bars',
+    title: t(
+      '3 Puzzles: Kitne Steps, Kitna Time',
+      '3 Puzzles: How Many Steps, How Much Time'
+    ),
+    caption: t(
+      'Har puzzle mein chhota example hi asli kaam karta hai — bada number baad mein aata hai',
+      'In every puzzle, the small example does the real work — the big number comes later'
+    ),
+    nodes: [],
+    bars: [
+      {
+        label: t('100 doors: chhota example (5 doors)', '100 doors: small example (5 doors)'),
+        value: 90,
+        note: t('Pattern yahin dikhta hai: 1 aur 4 khule', 'The pattern shows here: 1 and 4 stay open')
+      },
+      {
+        label: t('Handshake: 3 logon se shuru', 'Handshake: start with 3 people'),
+        value: 70,
+        note: t('3 logon mein 3 handshakes, formula n(n-1)/2', '3 people give 3 handshakes, formula n(n-1)/2')
+      },
+      {
+        label: t('Missing number: sum ka farak', 'Missing number: difference of sums'),
+        value: 50,
+        note: t('21 - 18 = 3, isliye missing number 3 hai', '21 - 18 = 3, so the missing number is 3')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'Handshake Puzzle: 10 Logon mein Kitne Handshakes',
+        'Handshake Puzzle: How Many Handshakes Among 10 People'
+      ),
+      language: 'python',
+      code: `people = 10
+handshakes = people * (people - 1) // 2
+print("People:", people)
+print("Handshakes:", handshakes)
+print("Each person shakes hands with", people - 1, "others.")`,
+      output: `People: 10
+Handshakes: 45
+Each person shakes hands with 9 others.`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        '100 doors puzzle mein aakhir mein kaun se doors khule rehte hain?',
+        'In the 100 doors puzzle, which doors stay open at the end?'
+      ),
+      opts: [
+        t('Sirf odd number wale doors', 'Only the odd-numbered doors'),
+        t('Sirf perfect squares: 1, 4, 9, 16, ... 100', 'Only the perfect squares: 1, 4, 9, 16, ... 100'),
+        t('Sab doors khule rehte hain', 'All doors stay open'),
+        t('Sirf even number wale doors', 'Only the even-numbered doors')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: ek door utni baar toggle hota hai jitne uske divisors hain — sirf perfect squares ke divisors odd hote hain, isliye sirf wahi khule rehte hain.',
+        'Correct answer: a door is toggled as many times as it has divisors — only perfect squares have an odd number of divisors, so only they stay open.'
+      )
+    },
+    {
+      q: t(
+        '10 logon mein har vyakti har doosre se haath milaye toh kitne handshakes honge?',
+        'If 10 people each shake hands with every other person, how many handshakes are there?'
+      ),
+      opts: [
+        t('90', '90'),
+        t('100', '100'),
+        t('45', '45'),
+        t('20', '20')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: formula n x (n-1) / 2 hai — 10 x 9 / 2 = 45. Har handshake 2 baar gina jaata hai, isliye 2 se divide karte hain.',
+        'Correct answer: the formula is n x (n-1) / 2 — 10 x 9 / 2 = 45. Every handshake is counted twice, so we divide by 2.'
+      )
+    },
+    {
+      q: t(
+        'Numbers 1, 2, 4, 5, 6 mein kaun sa number missing hai?',
+        'Which number is missing from 1, 2, 4, 5, 6?'
+      ),
+      opts: [
+        t('7', '7'),
+        t('0', '0'),
+        t('3', '3'),
+        t('Koi nahi', 'None')
+      ],
+      ans: 2,
+      expl: t(
+        'Sahi jawab: 1 se 6 tak ka sum 21 hai, list ka sum 18 hai, farak 3 hai — isliye missing number 3 hai.',
+        'Correct answer: the sum of 1 to 6 is 21, the sum of the list is 18, the difference is 3 — so the missing number is 3.'
+      )
+    },
+    {
+      q: t(
+        'Puzzle solve karte waqt sabse pehle kya karna chahiye?',
+        'What should you do first when solving a puzzle?'
+      ),
+      opts: [
+        t('Seedha answer bol do', 'Give the answer at once'),
+        t('Chhota example lo aur pattern dhoondho', 'Take a small example and find the pattern'),
+        t('Chup baitho', 'Sit quietly'),
+        t('Answer rat lo', 'Memorise the answer')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: chhote example mein pattern dikh jaata hai — 100 doors mein 5 doors se, handshake mein 3 logon se shuru karo.',
+        'Correct answer: the pattern shows up in the small example — start with 5 doors for 100 doors, and with 3 people for handshakes.'
+      )
+    },
+    {
+      q: t(
+        'Interviewer puzzles mein answer se zyada kya dekhta hai?',
+        'In puzzles, what does the interviewer watch more than the answer?'
+      ),
+      opts: [
+        t('Aapki yaad rakhne ki taakat', 'Your memory power'),
+        t('Aapki sochne ka tareeka — problem ko todna, chhota example, pattern', 'Your way of thinking — breaking the problem apart, small examples, patterns'),
+        t('Aapki bolne ki speed', 'Your speaking speed'),
+        t('Aapke marks', 'Your marks')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: puzzles mein approach dekhi jaati hai — jo student approach jaanta hai, woh naya puzzle bhi solve kar sakta hai.',
+        'Correct answer: puzzles test the approach — a student who knows the approach can also solve a new puzzle.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'Puzzles mein answer nahi, approach dekhi jaati hai — zor se socho.',
+      'In puzzles, the approach is watched, not the answer — think out loud.'
+    ),
+    t(
+      'Chhota example lo: 100 doors mein 5 doors se, handshake mein 3 logon se shuru karo.',
+      'Take a small example: start with 5 doors for 100 doors, and with 3 people for handshakes.'
+    ),
+    t(
+      '100 doors: sirf perfect squares khule rehte hain — 1, 4, 9, ... 100, total 10 doors.',
+      '100 doors: only perfect squares stay open — 1, 4, 9, ... 100, 10 doors in total.'
+    ),
+    t(
+      'Handshake formula: n x (n-1) / 2 — 10 logon mein 45 handshakes.',
+      'Handshake formula: n x (n-1) / 2 — 45 handshakes among 10 people.'
+    ),
+    t(
+      'Missing number: poora sum minus list ka sum — 21 - 18 = 3.',
+      'Missing number: full sum minus list sum — 21 - 18 = 3.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Missing Number Finder',
+      'Practice: Missing Number Finder'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein numbers 1, 2, 4, 5, 6 hain aur "Missing number: 3" aana chahiye. Phir list badal kar dobara run karo — jaise [1, 2, 3, 5] mein missing number 4 aana chahiye.',
+      'Run the starter code below. It has the numbers 1, 2, 4, 5, 6 and should read "Missing number: 3". Then change the list and run it again — for example, [1, 2, 3, 5] should give the missing number 4.'
+    ),
+    language: 'python',
+    starter: `nums = [1, 2, 4, 5, 6]
+total = 6 * 7 // 2
+missing = total - sum(nums)
+print("Numbers:", nums)
+print("Missing number:", missing)`,
+    expected: `Numbers: [1, 2, 4, 5, 6]
+Missing number: 3`
+  },
+  readMinutes: 12
+};
+
+const placementBehavioural: Article = {
+  id: 'placement-behavioural',
+  subjectId: 'placement',
+  title: t(
+    'Behavioural Questions — STAR Method se Jawab Dena',
+    'Behavioural Questions — Answering with the STAR Method'
+  ),
+  summary: t(
+    '"Ek baar jab aapne team mein kaam kiya..." jaise sawaal behavioural questions hote hain. Is article mein STAR method hai — Situation, Task, Action, Result — aur usse jawab banane ka step-by-step tareeka hai.',
+    'Questions like "Tell me about a time you worked in a team..." are behavioural questions. This article has the STAR method — Situation, Task, Action, Result — and a step-by-step way to build answers with it.'
+  ),
+  sections: [
+    {
+      heading: t(
+        '1. Behavioural Questions Kya Hain? (STAR Method ka Matlab)',
+        '1. What Are Behavioural Questions? (What the STAR Method Means)'
+      ),
+      body: t(
+        `Behavioural questions woh sawaal hote hain jo aapke past experience ke baare mein poochhe jaate hain: "Ek baar jab aapne team mein kaam kiya, toh kya hua?", "Ek baar jab aapko mushkil problem mili, toh aapne kya kiya?", "Ek baar jab aapne deadline miss ki, toh kya hua?" Interviewer ko aapka past behaviour dekhna hai, kyunki past behaviour future ka sabse achha hint hota hai.
+
+In sawaalon ka jawab **STAR method** se diya jaata hai. STAR ke 4 hisse hain: **Situation** (kya hua tha), **Task** (aapki zimmedari kya thi), **Action** (aapne kya kiya), **Result** (nateeja kya nikla). Har hisse mein 1-2 lines honi chahiye, poora jawab 90 second se zyada lamba nahi hona chahiye.
+
+STAR ka sabse bada fayda hai structure. Bina structure ke jawab bhatak jaata hai — aap kahani sunane lagte ho aur interviewer bhool jaata hai ki sawaal kya tha. STAR se jawab saaf rehta hai: pehle situation, phir task, phir action, phir result. Interviewer ko yahi chahiye.`,
+        `Behavioural questions are questions about your past experience: "Tell me about a time you worked in a team", "Tell me about a time you faced a hard problem", "Tell me about a time you missed a deadline". The interviewer wants to see your past behaviour, because past behaviour is the best hint about the future.
+
+These questions are answered with the **STAR method**. STAR has 4 parts: **Situation** (what happened), **Task** (what your responsibility was), **Action** (what you did), and **Result** (what the outcome was). Each part should be 1-2 lines, and the whole answer should not be longer than 90 seconds.
+
+The biggest benefit of STAR is structure. Without structure, an answer drifts — you start telling a story and the interviewer forgets what the question was. With STAR, the answer stays clear: first the situation, then the task, then the action, then the result. That is what the interviewer wants.`
+      )
+    },
+    {
+      heading: t(
+        '2. Real-Life Examples: Fest Website Crash, Team Project aur Deadline',
+        '2. Real-Life Examples: A Fest Website Crash, a Team Project, and a Deadline'
+      ),
+      body: t(
+        `**Fest website crash:** college fest se ek din pehle website crash ho gayi. Situation hai crash, task hai registration page ko dobara chalana, action hai broken database link ko dhoondhna aur fix karna, result hai 2 ghante mein registrations dobara khul gayi aur 300 students ne sign up kiya. Yeh poora STAR answer hai — 4 lines mein.
+
+**Team project:** 4 logon ki team mein ek member ne kaam nahi kiya. Situation hai team ka kaam rukna, task hai kaam ko dobara baantna, action hai daily check-in shuru karna aur ek low-value feature hatana, result hai nayi date par delivery ho gayi aur saare core features kaam kar rahe the. Yahan action mein aapki leadership dikhti hai.
+
+**Deadline miss:** aapne ek deadline miss ki. Situation hai deadline miss hona, task hai mentor ko batana aur naya plan banana, action hai kaam ko chhote hisso mein baantna aur roz progress batana, result hai agle hafte kaam poora ho gaya. Yahan imaandaari aur sudhaar dikhta hai — interviewer ko yahi chahiye.`,
+        `**Fest website crash:** the college fest website crashed a day before the event. The situation is the crash, the task is getting the registration page working again, the action is finding and fixing the broken database link, and the result is that registrations reopened in 2 hours and 300 students signed up. That is a full STAR answer — in 4 lines.
+
+**Team project:** in a team of 4, one member did no work. The situation is the team work stopping, the task is splitting the work again, the action is starting daily check-ins and removing one low-value feature, and the result is delivery on the new date with all core features working. Here the action shows your leadership.
+
+**Missed deadline:** you missed a deadline. The situation is the missed deadline, the task is telling your mentor and making a new plan, the action is splitting the work into small parts and reporting progress daily, and the result is that the work finished the next week. Here honesty and improvement show — that is what the interviewer wants.`
+      )
+    },
+    {
+      heading: t(
+        '3. Step-by-Step: STAR Answer Banana aur Dry Run',
+        '3. Step-by-Step: Building a STAR Answer, with a Dry Run'
+      ),
+      body: t(
+        `STAR answer banane ke 4 steps hain. **Step 1: Situation likho.** Ek line mein — kya hua tha, kab hua tha. "Our college fest website crashed a day before the event." **Step 2: Task likho.** Aapki zimmedari kya thi — "I had to get the registration page working again." **Step 3: Action likho.** Aapne kya kiya — "I found the broken database link, fixed it, and tested every form." Yeh sabse important hissa hai, ismein 2 lines bhi chalegi. **Step 4: Result likho.** Nateeja kya nikla — "Registrations reopened in 2 hours and 300 students signed up."
+
+Dry run karte hain. Poora answer banta hai: Situation — website crash ho gayi. Task — registration page dobara chalana tha. Action — broken link dhoondha, fix kiya, har form test kiya. Result — 2 ghante mein registrations khul gayi, 300 students ne sign up kiya. Yeh answer 4 lines ka hai, 90 second se kam mein bola ja sakta hai, aur ismein sab kuch hai — problem, aapki zimmedari, aapka kaam, aur nateeja.
+
+Neeche wala code yeh STAR answer print karta hai. Apni situation, task, action aur result badal kar dobara chalao — aapka apna STAR answer ban jaayega.`,
+        `There are 4 steps to building a STAR answer. **Step 1: Write the situation.** In one line — what happened, and when. "Our college fest website crashed a day before the event." **Step 2: Write the task.** What your responsibility was — "I had to get the registration page working again." **Step 3: Write the action.** What you did — "I found the broken database link, fixed it, and tested every form." This is the most important part; even 2 lines work here. **Step 4: Write the result.** What the outcome was — "Registrations reopened in 2 hours and 300 students signed up."
+
+Let us do a dry run. The full answer is: Situation — the website crashed. Task — the registration page had to work again. Action — found the broken link, fixed it, tested every form. Result — registrations reopened in 2 hours, 300 students signed up. This answer is 4 lines long, can be spoken in under 90 seconds, and has everything — the problem, your responsibility, your work, and the outcome.
+
+The code below prints this STAR answer. Change the situation, task, action, and result to your own and run it again — you will have your own STAR answer.`
+      ),
+      code: {
+        title: t(
+          'STAR Answer Builder: Situation, Task, Action, Result',
+          'STAR Answer Builder: Situation, Task, Action, Result'
+        ),
+        language: 'python',
+        code: `situation = "Our college fest website crashed a day before the event"
+task = "I had to get the registration page working again"
+action = "I found the broken database link, fixed it, and tested every form"
+result = "Registrations reopened in 2 hours and 300 students signed up"
+print("Situation: " + situation + ".")
+print("Task: " + task + ".")
+print("Action: " + action + ".")
+print("Result: " + result + ".")`,
+        output: `Situation: Our college fest website crashed a day before the event.
+Task: I had to get the registration page working again.
+Action: I found the broken database link, fixed it, and tested every form.
+Result: Registrations reopened in 2 hours and 300 students signed up.`
+      }
+    },
+    {
+      heading: t(
+        '4. Common Mistakes: Sirf Situation Bolna, "Hum" Bolna aur Result na Batana',
+        '4. Common Mistakes: Only Giving the Situation, Saying "We", and Skipping the Result'
+      ),
+      body: t(
+        `**Galti 1: Sirf situation bolna.** Bahut se log poora answer situation mein hi bita dete hain — "website crash ho gayi, sab pareshaan the, fest ek din mein tha..." Aur action aur result ke liye time hi nahi bachta. STAR mein situation sirf 1 line ki hai — zyada time action par do, kyunki wahi aapka kaam dikhata hai.
+
+**Galti 2: "Hum" bolna.** "Humne fix kiya, humne test kiya" — interviewer ko yeh nahi sunna. Use yeh sunna hai ki **aapne** kya kiya. "Maine broken link dhoondha, maine fix kiya" — "I" bolo, "we" nahi. Team mein kaam kiya toh bhi apna hissa batao.
+
+**Galti 3: Result na batana.** Answer action par khatam kar dena galat hai. Result batana zaroori hai — "2 ghante mein registrations khul gayi aur 300 students ne sign up kiya." Result ke bina interviewer ko nahi pata chalega ki aapka kaam kaam aaya ya nahi. Har STAR answer result par khatam hona chahiye.`,
+        `**Mistake 1: Only giving the situation.** Many people spend the whole answer on the situation — "the website crashed, everyone was worried, the fest was in a day..." And no time is left for the action and the result. In STAR, the situation is only 1 line — spend more time on the action, because that shows your work.
+
+**Mistake 2: Saying "we".** "We fixed it, we tested it" — the interviewer does not want to hear this. He wants to hear what **you** did. "I found the broken link, I fixed it" — say "I", not "we". Even if you worked in a team, tell them your part.
+
+**Mistake 3: Skipping the result.** Ending the answer at the action is wrong. The result is essential — "registrations reopened in 2 hours and 300 students signed up." Without the result, the interviewer cannot tell whether your work helped or not. Every STAR answer must end with the result.`
+      )
+    },
+    {
+      heading: t(
+        '5. Edge Cases: Aisa Experience hi nahi hai, ya Experience Negative hai',
+        '5. Edge Cases: You Have No Such Experience, or the Experience Is Negative'
+      ),
+      body: t(
+        `**Aisa experience hi nahi hai:** agar interviewer poochhe "ek baar jab aapne team lead kiya" aur aapne kabhi lead nahi kiya, toh jhooth mat bolo. Chhota experience bhi chalega: "Maine kabhi official lead nahi kiya, par ek project mein maine 2 doston ke kaam ko coordinate kiya tha." College project, fest, ya group assignment — sab experience hain.
+
+**Experience negative hai:** agar sawaal hai "ek baar jab aap fail hue" toh use chhupao mat. STAR se batao: situation (kya hua), task (kya karna tha), action (aapne kya kiya), result (kya seekha). Negative experience ka result "seekh" bhi ho sakta hai: "Uske baad se main har kaam ko chhote hisso mein baant kar karta hoon."
+
+**Experience purana hai:** agar experience 2 saal purana hai, toh bhi chalega — bas use detail mein yaad rakho. STAR ke 4 hisse likh kar taiyaar rakho, taaki interview mein bhoolo nahi.`,
+        `**You have no such experience:** if the interviewer asks "tell me about a time you led a team" and you never led one, do not lie. A small experience also works: "I never led officially, but in one project I coordinated the work of 2 friends." A college project, a fest, or a group assignment — all of these are experience.
+
+**The experience is negative:** if the question is "tell me about a time you failed", do not hide it. Tell it with STAR: situation (what happened), task (what had to be done), action (what you did), result (what you learned). The result of a negative experience can also be a lesson: "Since then, I split every task into small parts."
+
+**The experience is old:** if the experience is 2 years old, it still works — just remember it in detail. Write down the 4 parts of STAR in advance, so you do not forget them in the interview.`
+      )
+    },
+    {
+      heading: t(
+        '6. What-If: Interviewer ne Follow-up Poochha, ya Aapka Answer Bahut Lamba ho Gaya',
+        '6. What-If: The Interviewer Asks a Follow-Up, or Your Answer Gets Too Long'
+      ),
+      body: t(
+        `**What if interviewer ne follow-up poochha?** "Uske baad kya hua?" ya "Aapne aisa kyun kiya?" — yeh follow-up normal hai. Follow-up ka jawab bhi STAR se do: action par detail do, ya result par detail do. "Maine broken link ko isliye pehle check kiya, kyunki wahi sabse aam wajah hoti hai." Follow-up se ghabrao mat — iska matlab interviewer ko aapki kahani mein interest hai.
+
+**What if aapka answer bahut lamba ho gaya?** Agar aap 2 minute se zyada bol rahe ho, toh ruk kar result par aao: "Aur aakhir mein, result yeh nikla ki..." Lamba answer dikhata hai ki aapne taiyari nahi ki. Har STAR answer ko pehle se 90 second mein bol kar dekho.
+
+**What if interviewer ne "weakness" wala behavioural sawaal poochha?** "Ek baar jab aapne galti ki" — iska jawab bhi STAR se do, aur result mein seekh batao. "Uske baad se main har kaam ke liye checklist rakhta hoon." Galti + seekh, yahi jawab hai.`,
+        `**What if the interviewer asks a follow-up?** "What happened after that?" or "Why did you do that?" — these follow-ups are normal. Answer the follow-up with STAR too: give detail on the action, or detail on the result. "I checked the broken link first because that is the most common cause." Do not fear a follow-up — it means the interviewer is interested in your story.
+
+**What if your answer gets too long?** If you have been speaking for more than 2 minutes, stop and come to the result: "And in the end, the result was..." A long answer shows you did not prepare. Practise every STAR answer aloud within 90 seconds first.
+
+**What if the interviewer asks a "weakness" behavioural question?** "Tell me about a time you made a mistake" — answer this with STAR too, and give the lesson in the result. "Since then, I keep a checklist for every task." Mistake plus lesson is the answer.`
+      )
+    },
+    {
+      heading: t(
+        '7. Summary: Situation, Task, Action, Result — 90 Second mein',
+        '7. Summary: Situation, Task, Action, Result — in 90 Seconds'
+      ),
+      body: t(
+        `Behavioural questions ka poora formula ek line mein hai: **Situation, Task, Action, Result — 90 second mein**. Situation 1 line, task 1 line, action 2 lines, result 1 line. "I" bolo, "we" nahi. Har answer result par khatam karo.
+
+Yaad rakhne wali baatein: apne 3-4 experiences pehle se STAR mein likh kar rakho — team kaam, mushkil problem, deadline, galti; har answer ko 90 second mein bol kar dekho; action par sabse zyada time do, kyunki wahi aapka kaam dikhata hai; aur negative experience ko bhi STAR se batao, result mein seekh likho.
+
+STAR method sirf interview ke liye nahi hai — yeh apne kaam ko saaf tareeke se batane ka tareeka hai. Jo vyakti apna kaam STAR mein bata sakta hai, woh team mein bhi saaf communicate kar sakta hai.`,
+        `The whole formula for behavioural questions fits in one line: **Situation, Task, Action, Result — in 90 seconds**. Situation 1 line, task 1 line, action 2 lines, result 1 line. Say "I", not "we". End every answer with the result.
+
+Remember these points: write down 3-4 experiences in STAR in advance — teamwork, a hard problem, a deadline, a mistake; practise every answer aloud within 90 seconds; spend the most time on the action, because that shows your work; and tell negative experiences with STAR too, putting the lesson in the result.
+
+The STAR method is not only for interviews — it is a way to explain your work clearly. A person who can explain his work in STAR can also communicate clearly in a team.`
+      )
+    }
+  ],
+  diagram: {
+    kind: 'layers',
+    title: t(
+      'STAR ki 4 Layers: Situation se Result Tak',
+      'The 4 Layers of STAR: From Situation to Result'
+    ),
+    caption: t(
+      'Har layer 1-2 lines ki hai — poora jawab 90 second mein',
+      'Each layer is 1-2 lines — the whole answer fits in 90 seconds'
+    ),
+    nodes: [
+      {
+        t: t('S — Situation (1 line)', 'S — Situation (1 line)'),
+        s: t('Kya hua tha: fest se ek din pehle website crash ho gayi', 'What happened: the fest website crashed a day before the event')
+      },
+      {
+        t: t('T — Task (1 line)', 'T — Task (1 line)'),
+        s: t('Aapki zimmedari: registration page dobara chalana tha', 'Your responsibility: the registration page had to work again')
+      },
+      {
+        t: t('A — Action (2 lines)', 'A — Action (2 lines)'),
+        s: t('Aapne kya kiya: broken link dhoondha, fix kiya, har form test kiya', 'What you did: found the broken link, fixed it, tested every form')
+      },
+      {
+        t: t('R — Result (1 line)', 'R — Result (1 line)'),
+        s: t('Nateeja: 2 ghante mein registrations khul gayi, 300 students ne sign up kiya', 'Outcome: registrations reopened in 2 hours, 300 students signed up')
+      },
+      {
+        t: t('90 second ka niyam', 'The 90-second rule'),
+        s: t('Har STAR answer ko pehle se 90 second mein bol kar dekho', 'Practise every STAR answer aloud within 90 seconds')
+      }
+    ]
+  },
+  codeExamples: [
+    {
+      title: t(
+        'STAR Length Checker: Har Hisse ke Words aur Total',
+        'STAR Length Checker: Words per Part and Total'
+      ),
+      language: 'python',
+      code: `answer = {"Situation": 18, "Task": 12, "Action": 25, "Result": 15}
+total = sum(answer.values())
+for part, words in answer.items():
+    print(part + ": " + str(words) + " words")
+print("Total words:", total)
+print("Good length: under 150 words" if total < 150 else "Too long: trim it")`,
+      output: `Situation: 18 words
+Task: 12 words
+Action: 25 words
+Result: 15 words
+Total words: 70
+Good length: under 150 words`
+    }
+  ],
+  mcqs: [
+    {
+      q: t(
+        'STAR mein "A" ka matlab kya hai?',
+        'What does the "A" in STAR stand for?'
+      ),
+      opts: [
+        t('Answer', 'Answer'),
+        t('Action — aapne kya kiya', 'Action — what you did'),
+        t('Attitude', 'Attitude'),
+        t('Ability', 'Ability')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: STAR hai Situation, Task, Action, Result — Action sabse important hissa hai, kyunki wahi aapka kaam dikhata hai.',
+        'Correct answer: STAR is Situation, Task, Action, Result — the action is the most important part, because it shows your work.'
+      )
+    },
+    {
+      q: t(
+        'STAR answer kitne time ka hona chahiye?',
+        'How long should a STAR answer be?'
+      ),
+      opts: [
+        t('90 second se zyada nahi', 'Not more than 90 seconds'),
+        t('5 minute', '5 minutes'),
+        t('10 second', '10 seconds'),
+        t('3 minute', '3 minutes')
+      ],
+      ans: 0,
+      expl: t(
+        'Sahi jawab: Situation 1 line, Task 1 line, Action 2 lines, Result 1 line — poora jawab 90 second mein bolna chahiye.',
+        'Correct answer: situation 1 line, task 1 line, action 2 lines, result 1 line — the whole answer should be spoken within 90 seconds.'
+      )
+    },
+    {
+      q: t(
+        'STAR answer mein "hum" ki jagah kya bolna chahiye?',
+        'What should you say in a STAR answer instead of "we"?'
+      ),
+      opts: [
+        t('"Hum" hi theek hai', '"We" is fine'),
+        t('"Main" — aapne kya kiya, woh batao', '"I" — tell them what you did'),
+        t('Kuch mat bolo', 'Say nothing'),
+        t('"Team" bolo', 'Say "team"')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: interviewer ko aapka hissa sunna hai — "Maine broken link dhoondha, maine fix kiya" — team mein kaam kiya toh bhi apna hissa batao.',
+        'Correct answer: the interviewer wants to hear your part — "I found the broken link, I fixed it" — even in team work, tell them your part.'
+      )
+    },
+    {
+      q: t(
+        'Negative experience jaise galti ya fail hona — uska jawab kaise dena chahiye?',
+        'How should you answer about a negative experience, like a mistake or a failure?'
+      ),
+      opts: [
+        t('Use chhupao', 'Hide it'),
+        t('STAR se batao aur result mein seekh likho', 'Tell it with STAR and put the lesson in the result'),
+        t('Kisi aur ko dosh do', 'Blame someone else'),
+        t('Jhooth bolo', 'Lie about it')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: galti + seekh, yahi jawab hai — "Uske baad se main har kaam ko chhote hisso mein baant kar karta hoon."',
+        'Correct answer: mistake plus lesson is the answer — "Since then, I split every task into small parts."'
+      )
+    },
+    {
+      q: t(
+        'STAR answer mein sabse zyada time kis hisse par dena chahiye?',
+        'Which part of a STAR answer deserves the most time?'
+      ),
+      opts: [
+        t('Situation', 'Situation'),
+        t('Action', 'Action'),
+        t('Task', 'Task'),
+        t('Result', 'Result')
+      ],
+      ans: 1,
+      expl: t(
+        'Sahi jawab: Action aapka kaam dikhata hai — ismein 2 lines bhi chalegi, jabki Situation sirf 1 line ki hai.',
+        'Correct answer: the action shows your work — even 2 lines work here, while the situation is only 1 line.'
+      )
+    }
+  ],
+  keyNotes: [
+    t(
+      'STAR hai Situation, Task, Action, Result — har hisse mein 1-2 lines.',
+      'STAR is Situation, Task, Action, Result — 1-2 lines per part.'
+    ),
+    t(
+      'Poora STAR answer 90 second mein bolna chahiye.',
+      'A full STAR answer should be spoken within 90 seconds.'
+    ),
+    t(
+      '"I" bolo, "we" nahi — interviewer ko aapka hissa sunna hai.',
+      'Say "I", not "we" — the interviewer wants to hear your part.'
+    ),
+    t(
+      'Action par sabse zyada time do — wahi aapka kaam dikhata hai.',
+      'Spend the most time on the action — that is what shows your work.'
+    ),
+    t(
+      'Har STAR answer result par khatam karo — negative experience mein result seekh bhi ho sakta hai.',
+      'End every STAR answer with the result — for a negative experience, the result can also be a lesson.'
+    )
+  ],
+  practice: {
+    title: t(
+      'Practice: Apna STAR Answer Builder',
+      'Practice: Your Own STAR Answer Builder'
+    ),
+    task: t(
+      'Neeche wala starter code run karo. Ismein ek team project ka STAR answer hai aur aakhri line mein "Now retell it in your own words in under 90 seconds" aana chahiye. Phir apni situation, task, action aur result badal kar dobara run karo.',
+      'Run the starter code below. It has a STAR answer for a team project, and the last line should read "Now retell it in your own words in under 90 seconds". Then change the situation, task, action, and result to your own and run it again.'
+    ),
+    language: 'python',
+    starter: `parts = ["Situation: My team missed a project deadline.", "Task: I had to replan the last week.", "Action: I split the work, set daily check-ins, and removed one low-value feature.", "Result: We delivered on the new date with all core features working."]
+for line in parts:
+    print(line)
+print("Now retell it in your own words in under 90 seconds.")`,
+    expected: `Situation: My team missed a project deadline.
+Task: I had to replan the last week.
+Action: I split the work, set daily check-ins, and removed one low-value feature.
+Result: We delivered on the new date with all core features working.
+Now retell it in your own words in under 90 seconds.`
+  },
+  readMinutes: 12
+};
+
+const placementWhyHire: Article = {
+    id: 'placement-why-hire',
+    subjectId: 'placement',
+    title: t(
+      'Why Should We Hire You? — aur Tell Me About Yourself ka Poora Jawab',
+      'Why Should We Hire You? — and the Full Answer to Tell Me About Yourself'
+    ),
+    summary: t(
+      'HR interview ke do sabse common sawaal — "Tell me about yourself" aur "Why should we hire you?" — ka matlab, ek 60-second intro ka structure, STAR se apne projects ko jawab mein badalna, aur ek dry run ke saath poora worked example. Model answers invented examples hain, copy karne ke liye nahi, apna version banane ke liye hain.',
+      'The meaning of the two most common HR interview questions — "Tell me about yourself" and "Why should we hire you?" — the structure of a 60-second intro, how to turn your projects into answers with STAR, and a full worked example with a dry run. The model answers are invented examples, not to be copied, but to help you build your own version.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Ye Sawaal Kya Hai? (Intro aur Hire Karne ki Wajah)',
+          '1. What Is This Question? (Your Intro and Why You Should Be Hired)'
+        ),
+        body: t(
+          `Interviewer jab kehta hai **"Tell me about yourself"**, toh woh tumhari poori life story nahi sunna chahta. Woh sirf ye jaanna chahta hai: tum kaun ho, tum kya kar sakte ho, aur ye role tumhare liye sahi kyun hai. Ye sawaal interview ki shuruaat mein aata hai, isliye iska jawab tumhara **first impression** banata hai. Achha intro chhota hota hai — lagbhag 60 second, 5-6 lines — aur usmein teen cheezein hoti hain: tum kaun ho, tumhari sabse strong skill kya hai, aur tumne us skill se kya banaya hai.
+
+**"Why should we hire you?"** iska doosra roop hai. Ismein interviewer poochh raha hai: tum dusre candidates se alag kaise ho? Iska jawab "main mehnati hoon" nahi hai, kyunki ye har koi kehta hai. Sahi jawab mein ek **proof** hota hai — ek project, ek result, ya ek skill jo role se match karti hai. Jaise, "maine Python mein ek library app banaya jisse registration ka time ek din se do ghante ho gaya" — ye ek proof hai, sirf ek claim nahi.
+
+Dono sawaalon ka ek hi formula hai: **present + past proof + future fit**. Present matlab tum abhi kya ho — final-year student, kis field mein. Past proof matlab tumne kya banaya ya kya seekha. Future fit matlab ye role tumhare liye sahi kyun hai aur tum company ke liye kya kar sakte ho. Agar tumhara jawab in teenon ko cover karta hai, toh interviewer ko aage ke sawaal poochhne ka reason mil jaata hai.`,
+          `When the interviewer says **"Tell me about yourself"**, they do not want your whole life story. They only want to know: who you are, what you can do, and why this role fits you. This question comes at the start of the interview, so your answer creates your **first impression**. A good intro is short — about 60 seconds, 5 to 6 lines — and it holds three things: who you are, what your strongest skill is, and what you built with that skill.
+
+**"Why should we hire you?"** is the same question in another form. The interviewer is asking: how are you different from other candidates? The answer is not "I am hardworking", because everyone says that. A good answer has a **proof** — a project, a result, or a skill that matches the role. For example, "I built a library app in Python that cut registration time from one day to two hours" — that is a proof, not just a claim.
+
+Both questions share one formula: **present + past proof + future fit**. Present means what you are now — a final-year student, in which field. Past proof means what you built or learned. Future fit means why this role is right for you and what you can do for the company. If your answer covers all three, the interviewer has a reason to ask the next questions.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka Intro aur Rohan ka Hire Wala Jawab',
+          '2. Real-Life Examples: Asha Intro and Rohan Hiring Answer'
+        ),
+        body: t(
+          `**Asha** ek final-year BTech student hai. Uska intro aisa hai: "Hello, I am Asha. I am a final-year student applying for the Software Trainee role. My strongest skill is Python. In my project Library App, I used it to solve a real problem. That is why I am excited about this role." Ye intro sirf 5 lines ka hai, par ismein teenon cheezein hain — kaun hai, skill kya hai, aur proof kya hai. Interviewer ko turant samajh aata hai ki Asha se aage kya poochhna hai: "Library App mein kya banaya tha?"
+
+**Rohan** se poochha gaya: "Why should we hire you?" Usne kaha: "Maine apne college ke liye ek notes app banaya, jise 200 students use karte hain. Maine SQL seekha aur data ko sahi tarike se store karna seekha. Is role mein mujhe wahi kaam karna hai, isliye main jaldi se team mein kaam kar paunga." Rohan ne apne baare mein badi-badi baatein nahi ki. Usne ek number diya — 200 students — aur ek skill ko role se joda. Yehi farak hai claim aur proof mein.
+
+Ek aur example dekho: ek candidate ne kaha, "Main team player hoon." Interviewer ne poochha, "Example do." Candidate ke paas koi example nahi tha. Doosre candidate ne kaha, "Maine apne project mein 3 logon ki team mein kaam kiya. Maine apna kaam time par khatam kiya aur doosron ki help ki." Doosra jawab jeetta hai, kyunki usmein **example** hai. Isliye har quality ke saath ek chhota sa example taiyaar rakho — team work, learning, problem solving, har ek ke liye ek story.`,
+          `**Asha** is a final-year BTech student. Her intro goes like this: "Hello, I am Asha. I am a final-year student applying for the Software Trainee role. My strongest skill is Python. In my project Library App, I used it to solve a real problem. That is why I am excited about this role." This intro is only 5 lines, but it holds all three things — who she is, what her skill is, and what her proof is. The interviewer at once knows what to ask next: "What did you build in the Library App?"
+
+**Rohan** was asked: "Why should we hire you?" He said: "I built a notes app for my college, which 200 students use. I learned SQL and learned how to store data in the right way. This role needs the same work, so I can start working with the team fast." Rohan did not praise himself with big words. He gave one number — 200 students — and linked one skill to the role. That is the difference between a claim and a proof.
+
+Look at one more example: one candidate said, "I am a team player." The interviewer asked, "Give an example." The candidate had no example. Another candidate said, "I worked in a team of 3 people on my project. I finished my work on time and helped the others." The second answer wins, because it has an **example**. So keep a small example ready for every quality — team work, learning, problem solving, one story for each.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 60-Second Intro Banana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building a 60-Second Intro (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apna intro banane ke 5 steps hain. **Step 1:** Apna naam aur current status bolo — "I am Asha, a final-year BTech student." **Step 2:** Role ka naam lo — "applying for the Software Trainee role." **Step 3:** Apni sabse strong skill bolo — "My strongest skill is Python." **Step 4:** Ek project ka naam aur uska result bolo — "In my project Library App, I used it to solve a real problem." **Step 5:** Role se jodkar khatam karo — "That is why I am excited about this role." Bas, intro taiyaar hai.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **intro builder** hai: woh 5 lines ko jodkar ek poora intro banata hai, phir lines aur words ginta hai. Output dekho: 5 lines aur 42 words. 42 words bolne mein lagbhag 30-40 second lagte hain — perfect length. Agar tumhara intro 100 words se zyada ho jaaye, toh woh lamba hai; agar 20 words se kam ho, toh usmein proof ki kami hai. Code ko run karke apna naam, role, skill aur project badal kar dekho — naya intro turant ban jaayega.
+
+Ab **STAR** se jawab banana seekho. STAR matlab **Situation, Task, Action, Result**. Jaise, "Why should we hire you?" ke liye: Situation — "My college fest needed a registration system." Task — "Build a simple online form." Action — "I built it in Python and tested it with 50 students." Result — "Registration time fell from one day to two hours." Ye chaaro lines milkar ek poora proof banati hain. Interviewer ko ye pasand hai kyunki usmein koi guesswork nahi hai — kaam, action aur result sab saaf hai.`,
+          `There are 5 steps to build your intro. **Step 1:** Say your name and your current status — "I am Asha, a final-year BTech student." **Step 2:** Name the role — "applying for the Software Trainee role." **Step 3:** Say your strongest skill — "My strongest skill is Python." **Step 4:** Name one project and its result — "In my project Library App, I used it to solve a real problem." **Step 5:** End by linking it to the role — "That is why I am excited about this role." That is it, the intro is ready.
+
+Now let us do a dry run with the code below. The code is an **intro builder**: it joins the 5 lines into a full intro, then counts the lines and words. Look at the output: 5 lines and 42 words. Speaking 42 words takes about 30 to 40 seconds — a perfect length. If your intro goes above 100 words, it is too long; if it is below 20 words, it lacks proof. Run the code and change the name, role, skill, and project — a new intro is built at once.
+
+Now learn to build answers with **STAR**. STAR means **Situation, Task, Action, Result**. For example, for "Why should we hire you?": Situation — "My college fest needed a registration system." Task — "Build a simple online form." Action — "I built it in Python and tested it with 50 students." Result — "Registration time fell from one day to two hours." These four lines together make a full proof. Interviewers like this because there is no guesswork in it — the work, the action, and the result are all clear.`
+        ),
+        code: {
+          title: t(
+            'Intro Builder: 5 Lines se 60-Second Intro Banana',
+            'Intro Builder: Building a 60-Second Intro from 5 Lines'
+          ),
+          language: 'python',
+          code: `def build_intro(name, role, skill, project):
+    lines = [
+        "Hello, I am " + name + ".",
+        "I am a final-year student applying for the " + role + " role.",
+        "My strongest skill is " + skill + ".",
+        "In my project " + project + ", I used it to solve a real problem.",
+        "That is why I am excited about this role.",
+    ]
+    return lines
+
+intro = build_intro("Asha", "Software Trainee", "Python", "Library App")
+for line in intro:
+    print(line)
+print("Lines:", len(intro))
+print("Words:", sum(len(line.split()) for line in intro))`,
+          output: `Hello, I am Asha.
+I am a final-year student applying for the Software Trainee role.
+My strongest skill is Python.
+In my project Library App, I used it to solve a real problem.
+That is why I am excited about this role.
+Lines: 5
+Words: 42`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Lamba Intro, Sirf Claims aur Ratta Jawab',
+          '4. Common Mistakes: Long Intro, Only Claims, and Memorised Answers'
+        ),
+        body: t(
+          `**Galti 1: Bahut lamba intro.** Kuch log 3-4 minute tak bolte rehte hain — school se lekar college tak ki poori kahani. Interviewer 30 second ke baad sunna band kar deta hai. Intro ko 60 second ke andar rakho. Agar tumhe lage ki kuch chhoot gaya, toh woh aage ke sawaalon mein aa jaayega — interviewer poochhega hi.
+
+**Galti 2: Sirf claims, koi proof nahi.** "Main hardworking hoon, main fast learner hoon, main team player hoon" — ye sab claims hain. Interviewer inhe sun-sun kar thak chuka hai. Har claim ke saath ek example chahiye. "Main fast learner hoon" ki jagah kaho: "Maine 2 hafte mein SQL seekha aur apne project mein use kiya." Ab ye ek proof hai.
+
+**Galti 3: Ratta hua jawab.** Internet se ek model answer yaad karke bolna sabse badi galti hai. Interviewer turant pehchan leta hai, kyunki jawab tumhare resume se match nahi karta. Agar resume mein Python likha hai aur jawab mein tum Java ki baat kar rahe ho, toh pakde jaoge. Apna jawab apne resume aur apne projects se banao — wahi tumhara hai, wahi yaad rahega.
+
+**Galti 4: Negative baatein.** Intro mein ye mat kaho: "Mujhe kuch nahi aata" ya "Mera college achha nahi hai." Intro tumhe bechne ka time hai, apni kamiyan ginane ka nahi. Kamiyon par alag sawaal aayega, wahan unhe handle karna — is article mein nahi.`,
+          `**Mistake 1: A very long intro.** Some people keep talking for 3 to 4 minutes — the whole story from school to college. The interviewer stops listening after 30 seconds. Keep your intro under 60 seconds. If you feel something was left out, it will come up in the later questions — the interviewer will ask.
+
+**Mistake 2: Only claims, no proof.** "I am hardworking, I am a fast learner, I am a team player" — these are all claims. The interviewer is tired of hearing them. Every claim needs an example. Instead of "I am a fast learner", say: "I learned SQL in 2 weeks and used it in my project." Now that is a proof.
+
+**Mistake 3: A memorised answer.** Learning a model answer from the internet and repeating it is the biggest mistake. The interviewer spots it at once, because the answer does not match your resume. If your resume says Python and your answer talks about Java, you will be caught. Build your answer from your resume and your projects — that is yours, and that is what you will remember.
+
+**Mistake 4: Negative talk.** Do not say in your intro: "I know nothing" or "My college is not good." The intro is the time to present yourself, not to list your weak points. Weak points will get their own question, and you handle them there — not in this article.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Project Nahi, Career Change aur Nervousness',
+          '5. Edge Cases: No Project, Career Change, and Nervousness'
+        ),
+        body: t(
+          `**Edge case 1: Mere paas koi bada project nahi hai.** Toh chhota project use karo. Ek simple to-do app, ek calculator, ek college website ka ek page — ye bhi project hai. Interviewer ko bada project nahi chahiye, use ye dekhna hai ki tumne kuch banaya aur usse kya seekha. Chhote project ko STAR mein batao: kya problem thi, tumne kya kiya, kya result mila.
+
+**Edge case 2: Interviewer ne beech mein rok diya.** Ye normal hai — iska matlab ye nahi ki tum fail ho gaye. Interviewer ke paas kam time hota hai, woh seedha point par aana chahta hai. Ruk jao, uska sawaal suno, aur uska jawab do. Beech mein roke jaane par ghabrana nahi hai.
+
+**Edge case 3: Nervousness ki wajah se intro bhool gaye.** Ye har kisi ke saath hota hai. Ek simple trick hai: intro ke 5 points ko ungliyon par gin lo — naam, role, skill, project, fit. Agar ek point bhool bhi jao, toh agle point se shuru kar do. Interviewer ko ye nahi pata ki tumne kya bhoola hai, use sirf ye dikhta hai ki tum aage bol rahe ho.
+
+**Edge case 4: "Tell me about yourself" ke baad turant mushkil sawaal.** Kabhi-kabhi interviewer intro ke baad seedha technical sawaal poochh leta hai. Iske liye taiyaar raho — intro ke baad apne project ke baare mein 2-3 detail lines taiyaar rakho, taaki tum turant jawab de sako.`,
+          `**Edge case 1: I have no big project.** Then use a small project. A simple to-do app, a calculator, one page of a college website — these are projects too. The interviewer does not need a big project; they want to see that you built something and what you learned from it. Tell the small project in STAR form: what the problem was, what you did, and what the result was.
+
+**Edge case 2: The interviewer stopped you in the middle.** This is normal — it does not mean you failed. The interviewer has little time and wants to reach the point fast. Stop, listen to their question, and answer it. Do not panic when you are stopped in the middle.
+
+**Edge case 3: You forgot your intro because of nervousness.** This happens to everyone. There is a simple trick: count the 5 points of your intro on your fingers — name, role, skill, project, fit. If you forget one point, start from the next one. The interviewer does not know what you forgot; they only see that you keep speaking.
+
+**Edge case 4: A hard question comes right after "Tell me about yourself".** Sometimes the interviewer asks a technical question right after the intro. Be ready for this — keep 2 to 3 detail lines about your project ready after your intro, so you can answer at once.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Intro Lamba Ho, Skill Role se Match Na Kare, ya Do Baar Wahi Sawaal Aaye?',
+          '6. What If: The Intro Is Too Long, the Skill Does Not Match the Role, or the Same Question Comes Twice?'
+        ),
+        body: t(
+          `**What if intro bahut lamba ho gaya?** Toh use kaato, badhao mat. Har line ko poochho: "Ye line interviewer ko mere baare mein kya naya batati hai?" Agar jawab "kuch nahi" hai, toh line hata do. 5 lines ka intro 8 lines se behtar hai. Neeche wala code tumhare intro ke words ginta hai — 15 se 90 words ke beech mein raho.
+
+**What if meri skill role se match nahi karti?** Toh skill ko role se jodne ka tareeka dhoondho. Jaise, tumhe Python aata hai aur role data ka hai — kaho "Python se maine data ko clean karna aur simple reports banana seekha." Skill wahi hai, par uska use role ke hisaab se bataya gaya hai. Kabhi bhi jhoothi skill mat bolo — interviewer ek sawaal mein pakad lega.
+
+**What if "Why should we hire you?" do baar poochha jaaye — pehle HR mein, phir manager round mein?** Toh jawab badal do. HR round mein apni learning aur attitude par focus karo. Manager round mein apne project aur technical skill par focus karo. Ek hi jawab do baar bolna boring lagta hai, aur interviewer ko lagta hai ki tumne sirf ek jawab yaad kiya hai.`,
+          `**What if the intro became too long?** Then cut it, do not add to it. Ask each line: "What new thing does this line tell the interviewer about me?" If the answer is "nothing", remove the line. A 5-line intro is better than an 8-line intro. The code below counts the words in your intro — stay between 15 and 90 words.
+
+**What if my skill does not match the role?** Then find a way to link the skill to the role. For example, you know Python and the role is about data — say "With Python I learned to clean data and make simple reports." The skill is the same, but its use is shown as per the role. Never claim a skill you do not have — the interviewer will catch it in one question.
+
+**What if "Why should we hire you?" is asked twice — first in the HR round, then in the manager round?** Then change the answer. In the HR round, focus on your learning and attitude. In the manager round, focus on your project and technical skill. Saying the same answer twice sounds boring, and the interviewer feels you only learned one answer.`
+        ),
+        code: {
+          title: t(
+            'Intro Length Check: Words Ginna aur Status Dekhna',
+            'Intro Length Check: Counting Words and Checking the Status'
+          ),
+          language: 'python',
+          code: `intro = "Hello I am Asha a final year student I like Python and I built a library app for my college"
+words = intro.split()
+print("Words:", len(words))
+print("Status:", "Good length" if 15 <= len(words) <= 90 else "Too short or too long")
+print("Has skill word:", "Python" in words)`,
+          output: `Words: 20
+Status: Good length
+Has skill word: True`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Intro ka Formula aur STAR yaad Rakho',
+          '7. Summary: Remember the Intro Formula and STAR'
+        ),
+        body: t(
+          `Poora article ek line mein: **intro = kaun ho + skill + proof + role se fit**. "Tell me about yourself" mein apni kahani nahi, apna short intro do — 5 lines, 60 second. "Why should we hire you?" mein claim nahi, proof do — ek project, ek number, ek result. Dono ke liye **STAR** use karo: Situation, Task, Action, Result.
+
+Revision ke liye ye karo: apna intro kagaz par likho, phir use zor se 3 baar bolo aur time dekho. Agar 60 second se zyada lag raha hai, toh ek line hatao. Phir apne 2 projects ke liye STAR ki 4 lines likho. Bas, tumhare paas HR round ke 2 sabse bade sawaalon ke jawab taiyaar hain. Agle article mein hum weakness aur gap wale sawaalon ko dekhenge — wahan bhi yahi STAR kaam aayega, bas jawab ka angle badal jaayega.`,
+          `The whole article in one line: **intro = who you are + skill + proof + fit with the role**. In "Tell me about yourself", give your short intro, not your story — 5 lines, 60 seconds. In "Why should we hire you?", give proof, not a claim — one project, one number, one result. Use **STAR** for both: Situation, Task, Action, Result.
+
+To revise, do this: write your intro on paper, then say it out loud 3 times and check the time. If it takes more than 60 seconds, remove one line. Then write the 4 STAR lines for your 2 projects. That is it, you have answers ready for the 2 biggest HR round questions. In the next article we will look at weakness and gap questions — the same STAR will work there too, only the angle of the answer will change.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        '60-Second Intro ka Flow: 5 Lines, Ek Kahani',
+        'Flow of a 60-Second Intro: 5 Lines, One Story'
+      ),
+      caption: t(
+        'Har line ek kaam karti hai — naam, role, skill, proof, fit',
+        'Each line does one job — name, role, skill, proof, fit'
+      ),
+      nodes: [
+        {
+          t: t('1. Kaun ho: naam + student', '1. Who you are: name + student'),
+          s: t('Hello, I am Asha, a final-year student', 'Hello, I am Asha, a final-year student')
+        },
+        {
+          t: t('2. Role: kis role ke liye', '2. Role: which role you want'),
+          s: t('Applying for the Software Trainee role', 'Applying for the Software Trainee role')
+        },
+        {
+          t: t('3. Skill: sabse strong skill', '3. Skill: your strongest skill'),
+          s: t('My strongest skill is Python', 'My strongest skill is Python')
+        },
+        {
+          t: t('4. Proof: project + result', '4. Proof: project + result'),
+          s: t('Library App se registration time kam hua', 'Library App cut registration time')
+        },
+        {
+          t: t('5. Fit: role se jodkar khatam', '5. Fit: end by linking to the role'),
+          s: t('That is why I am excited about this role', 'That is why I am excited about this role')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'STAR Answer Builder: Fest Registration ka Example',
+          'STAR Answer Builder: The Fest Registration Example'
+        ),
+        language: 'python',
+        code: `situation = "My college fest needed a registration system"
+task = "Build a simple online form"
+action = "I built it in Python and tested it with 50 students"
+result = "Registration time fell from one day to two hours"
+print("Situation: " + situation)
+print("Task: " + task)
+print("Action: " + action)
+print("Result: " + result)`,
+        output: `Situation: My college fest needed a registration system
+Task: Build a simple online form
+Action: I built it in Python and tested it with 50 students
+Result: Registration time fell from one day to two hours`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '"Tell me about yourself" ka sabse achha intro kitna lamba hona chahiye?',
+          'How long should the best intro for "Tell me about yourself" be?'
+        ),
+        opts: [
+          t('3-4 minute, poori life story', '3 to 4 minutes, the full life story'),
+          t('Lagbhag 60 second, 5-6 lines', 'About 60 seconds, 5 to 6 lines'),
+          t('Sirf naam, 5 second', 'Only your name, 5 seconds'),
+          t('10 minute, har course ka naam', '10 minutes, the name of every course')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: lagbhag 60 second ka intro interviewer ka dhyaan banaye rakhta hai aur usmein naam, skill, proof aur fit — chaaro aa jaate hain.',
+          'Correct answer: an intro of about 60 seconds holds the interviewer attention and fits in the name, the skill, the proof, and the fit — all four.'
+        )
+      },
+      {
+        q: t(
+          'STAR mein "R" ka matlab kya hai?',
+          'What does the "R" in STAR stand for?'
+        ),
+        opts: [
+          t('Reason', 'Reason'),
+          t('Result', 'Result'),
+          t('Resume', 'Resume'),
+          t('Role', 'Role')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: STAR matlab Situation, Task, Action, Result — Result woh badlaav hai jo tumhare action se aaya.',
+          'Correct answer: STAR means Situation, Task, Action, Result — the Result is the change your action brought.'
+        )
+      },
+      {
+        q: t(
+          '"Why should we hire you?" ke jawab mein sabse strong cheez kya hoti hai?',
+          'What is the strongest thing in an answer to "Why should we hire you?"?'
+        ),
+        opts: [
+          t('Sirf claim: "main mehnati hoon"', 'Only a claim: "I am hardworking"'),
+          t('Ek proof: project + number + result', 'A proof: project + number + result'),
+          t('Doosre candidates ki burai', 'Criticising other candidates'),
+          t('Company ki tareef', 'Praising the company')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: proof interviewer ko dikhata hai ki tumne kaam kiya hai — claim toh har candidate bolta hai.',
+          'Correct answer: proof shows the interviewer that you did the work — every candidate says the claim.'
+        )
+      },
+      {
+        q: t(
+          'Intro mein ye kaunsi galti hai: "Mera college achha nahi hai"?',
+          'Which mistake is this in an intro: "My college is not good"?'
+        ),
+        opts: [
+          t('Negative baat intro mein kehna', 'Saying a negative thing in the intro'),
+          t('Intro ka bahut chhota hona', 'The intro being too short'),
+          t('Skill ka naam lena', 'Naming a skill'),
+          t('Project ka naam lena', 'Naming a project')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: intro tumhe present karne ka time hai, apni kamiyan ginane ka nahi — negative baatein wahan nahi aati.',
+          'Correct answer: the intro is the time to present yourself, not to list your weak points — negative talk does not belong there.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer ne tumhe beech mein rok diya. Tumhe kya karna chahiye?',
+          'The interviewer stopped you in the middle. What should you do?'
+        ),
+        opts: [
+          t('Ghabra kar chup ho jao', 'Panic and go silent'),
+          t('Ruk jao, sawaal suno, uska jawab do', 'Stop, listen to the question, and answer it'),
+          t('Wahin se phir se shuru kar do', 'Start again from the same place'),
+          t('Interview chhod do', 'Leave the interview')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: beech mein rokna normal hai — interviewer ke paas kam time hota hai, isliye ruk kar uska sawaal sunna sahi tareeka hai.',
+          'Correct answer: being stopped in the middle is normal — the interviewer has little time, so stopping and listening to their question is the right way.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Intro ka formula: kaun ho + skill + proof + role se fit — 5 lines, lagbhag 60 second.',
+        'Intro formula: who you are + skill + proof + fit with the role — 5 lines, about 60 seconds.'
+      ),
+      t(
+        'STAR matlab Situation, Task, Action, Result — har jawab mein ek proof hona chahiye.',
+        'STAR means Situation, Task, Action, Result — every answer must hold a proof.'
+      ),
+      t(
+        '"Main mehnati hoon" ek claim hai; project + number + result ek proof hai.',
+        '"I am hardworking" is a claim; project + number + result is a proof.'
+      ),
+      t(
+        'Internet se ratta jawab mat bolo — jawab apne resume aur projects se banao.',
+        'Do not repeat a memorised answer from the internet — build your answer from your resume and projects.'
+      ),
+      t(
+        'Intro mein negative baatein mat kaho; kamiyon ke liye alag sawaal aayega.',
+        'Do not say negative things in your intro; weak points will get their own question.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna STAR Jawab Banao (Fest Registration)',
+        'Practice: Build Your STAR Answer (Fest Registration)'
+      ),
+      task: t(
+        'Neeche wala code ek STAR jawab banata hai. Isko run karo aur check karo ki output mein chaaro lines — Situation, Task, Action, Result — sahi order mein aati hain. Phir apne project ke liye chaaro lines badal kar apna STAR jawab banao.',
+        'The code below builds a STAR answer. Run it and check that the output shows all four lines — Situation, Task, Action, Result — in the right order. Then change the four lines for your own project and build your own STAR answer.'
+      ),
+      language: 'python',
+      starter: `situation = "My college fest needed a registration system"
+task = "Build a simple online form"
+action = "I built it in Python and tested it with 50 students"
+result = "Registration time fell from one day to two hours"
+print("Situation: " + situation)
+print("Task: " + task)
+print("Action: " + action)
+print("Result: " + result)`,
+      expected: `Situation: My college fest needed a registration system
+Task: Build a simple online form
+Action: I built it in Python and tested it with 50 students
+Result: Registration time fell from one day to two hours`
+    },
+    readMinutes: 12
+  };
+
+const placementWeakness: Article = {
+    id: 'placement-weakness',
+    subjectId: 'placement',
+    title: t(
+      'Weakness aur Gap Questions — Kamzori ko Imandari se, Fix ke Saath Batana',
+      'Weakness and Gap Questions — Telling Your Weakness Honestly, with a Fix'
+    ),
+    summary: t(
+      '"What is your greatest weakness?" aur gap year wale sawaalon ka matlab, ek kamzori ko STAR se jawab mein badalna, gap ko skill se jodna, aur ek dry run ke saath poora worked example. Saare examples invented hain.',
+      'The meaning of "What is your greatest weakness?" and gap-year questions, how to turn a weakness into an answer with STAR, how to link a gap to a skill, and a full worked example with a dry run. All examples are invented.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Weakness Sawaal Kya Hai? (Interviewer Kya Check Karta Hai)',
+          '1. What Is the Weakness Question? (What the Interviewer Checks)'
+        ),
+        body: t(
+          `Jab interviewer poochhta hai **"What is your greatest weakness?"**, toh woh tumhari kamzori ki list nahi banana chahta. Woh ye check kar raha hai: kya tum apne baare mein **imandaar** ho, aur kya tum apni kamzori par **kaam kar rahe ho**. Is sawaal ka galat jawab hai "meri koi kamzori nahi hai" — ye jhooth lagta hai, kyunki har insaan mein koi na koi kamzori hoti hai. Galat jawab ye bhi hai: "main perfectionist hoon" — ye ek chhupi hui tareef hai, aur interviewer isse pehchan leta hai.
+
+Sahi jawab ke teen hisse hote hain: **kamzori + us par kaam + result**. Jaise: "I get nervous while speaking in front of a group. I joined the college speaking club and practised every week. I now present my project in front of 40 students." Ismein kamzori sachhi hai, us par kaam dikh raha hai, aur result bhi hai. Interviewer ko ye pasand hai kyunki isse pata chalta hai ki tum seekhne wale insaan ho.
+
+**Gap** ka sawaal bhi aisa hi hai: "Tumne 6 mahine kya kiya?" ya "Tumhara ek saal ka gap kyun hai?" Iska matlab ye nahi ki gap galat hai. Interviewer sirf ye jaanna chahta hai ki us time mein tumne kuch seekha ya nahi. Agar tumne us time mein Python seekha, koi course kiya, ya kisi project par kaam kiya, toh gap ek problem nahi, ek story ban jaata hai.`,
+          `When the interviewer asks **"What is your greatest weakness?"**, they do not want a list of your weak points. They are checking: are you **honest** about yourself, and are you **working** on your weakness. The wrong answer is "I have no weakness" — that sounds false, because every person has some weakness. Another wrong answer is: "I am a perfectionist" — that is praise in disguise, and the interviewer sees through it.
+
+A good answer has three parts: **weakness + work on it + result**. For example: "I get nervous while speaking in front of a group. I joined the college speaking club and practised every week. I now present my project in front of 40 students." Here the weakness is real, the work on it is clear, and there is a result too. The interviewer likes this because it shows you are a person who learns.
+
+The **gap** question is the same: "What did you do in those 6 months?" or "Why is there a one-year gap?" That does not mean a gap is wrong. The interviewer only wants to know whether you learned something in that time. If you learned Python in that time, did a course, or worked on a project, the gap stops being a problem and becomes a story.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ki Nervousness aur Rohan ka 6-Mahine ka Gap',
+          '2. Real-Life Examples: Asha Nervousness and Rohan Six-Month Gap'
+        ),
+        body: t(
+          `**Asha** ko group ke saamne bolne mein nervousness hoti thi. Usne jawab aise banaya: "I get nervous while speaking in front of a group. I joined the college speaking club and practised every week. I now present my project in front of 40 students." Interviewer ne aage poochha: "Speaking club mein tumne kya seekha?" Asha ke paas jawab tha, kyunki usne sach mein club join kiya tha. Yehi asli aur nakli jawab ka farak hai — asli jawab ke peeche ek sachhi kahani hoti hai.
+
+**Rohan** ka 6 mahine ka gap tha — usne exams ki taiyari ki aur Python seekha. Uska jawab tha: "I took six months to prepare for exams and learn Python. I built two small projects in that time. Now I am ready to work." Interviewer ne gap par aur sawaal nahi poochhe, kyunki Rohan ne gap ko chhupaya nahi, uska use bataya. Agar Rohan kehta "kuch khaas nahi kiya", toh interviewer ko shak hota.
+
+Ek aur example: ek candidate ne kaha, "Meri kamzori ye hai ki main jaldi gussa ho jaata hoon." Ye ek sachhi kamzori hai, par iska koi fix nahi bataya gaya. Interviewer ko ye sun kar lagega ki ye candidate team mein mushkil karega. Isi kamzori ko aise bolo: "Pehle main jaldi gussa ho jaata tha. Ab main pehle sunta hoon, phir jawab deta hoon. Mere project team mein isse jhagde kam ho gaye." Ab wahi kamzori ek **growth story** ban gayi.`,
+          `**Asha** felt nervous while speaking in front of a group. She built her answer like this: "I get nervous while speaking in front of a group. I joined the college speaking club and practised every week. I now present my project in front of 40 students." The interviewer asked next: "What did you learn in the speaking club?" Asha had an answer, because she had really joined the club. That is the difference between a real and a fake answer — a real answer has a true story behind it.
+
+**Rohan** had a 6-month gap — he prepared for exams and learned Python. His answer was: "I took six months to prepare for exams and learn Python. I built two small projects in that time. Now I am ready to work." The interviewer asked no more questions about the gap, because Rohan did not hide the gap, he told them how he used it. If Rohan had said "I did nothing special", the interviewer would have doubted him.
+
+One more example: a candidate said, "My weakness is that I get angry fast." That is a real weakness, but no fix was given. Hearing this, the interviewer would feel this candidate will be hard to work with in a team. Say the same weakness like this: "Earlier I used to get angry fast. Now I listen first, then I answer. Fights in my project team became fewer." Now the same weakness has become a **growth story**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Kamzori ko STAR Jawab mein Badalna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Turning a Weakness into a STAR Answer (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apna weakness jawab banane ke 4 steps hain. **Step 1:** Ek sachhi kamzori chuno — aisi jo role ke main kaam ko na rokti ho. Jaise, group ke saamne bolna, ya extra kaam ko na keh paana. **Step 2:** Us par kya kaam kiya, woh bolo — club join kiya, list banana shuru kiya, practice ki. **Step 3:** Result bolo — ab kya badla hai. **Step 4:** Ye check karo ki jawab mein koi jhooth toh nahi hai — interviewer ek follow-up sawaal mein sach pakad lega.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **weakness reframer** hai: woh kamzori, us par kaam, aur result ko print karta hai, aur do checks bhi karta hai — kya jawab imandaar hai, aur kya usmein fix hai. Output dekho: "Honest: True" aur "Has a fix: True" — dono checks pass hain. Agar tumhara jawab sirf kamzori batata hai aur fix nahi batata, toh doosra check fail hoga, aur tumhe samajh aa jaayega ki jawab adhoora hai.
+
+Gap ke liye bhi yahi steps hain: **gap kya tha + us time mein kya seekha + ab kya kar sakte ho**. Jaise: "I took six months to prepare for exams and learn Python." Ismein gap hai, skill hai, aur ready-to-work hai. Code ke extra example mein yehi pattern hai — use run karke dekho.`,
+          `There are 4 steps to build your weakness answer. **Step 1:** Pick a real weakness — one that does not block the main work of the role. For example, speaking in front of a group, or finding it hard to say no to extra work. **Step 2:** Say what work you did on it — joined a club, started making a list, practised. **Step 3:** Say the result — what has changed now. **Step 4:** Check that there is no lie in the answer — the interviewer will catch the truth in one follow-up question.
+
+Now let us do a dry run with the code below. The code is a **weakness reframer**: it prints the weakness, the work on it, and the result, and it also runs two checks — is the answer honest, and does it have a fix. Look at the output: "Honest: True" and "Has a fix: True" — both checks pass. If your answer only states the weakness and gives no fix, the second check will fail, and you will know the answer is incomplete.
+
+The same steps work for a gap: **what the gap was + what you learned in that time + what you can do now**. For example: "I took six months to prepare for exams and learn Python." It has the gap, the skill, and the ready-to-work part. The extra example in the code follows the same pattern — run it and see.`
+        ),
+        code: {
+          title: t(
+            'Weakness Reframer: Kamzori + Fix + Result',
+            'Weakness Reframer: Weakness + Fix + Result'
+          ),
+          language: 'python',
+          code: `weakness = "I get nervous while speaking in front of a group"
+action = "I joined the college speaking club and practised every week"
+result = "I now present my project in front of 40 students"
+print("Weakness: " + weakness)
+print("What I did: " + action)
+print("Result: " + result)
+print("Honest:", True)
+print("Has a fix:", len(action) > 10)`,
+          output: `Weakness: I get nervous while speaking in front of a group
+What I did: I joined the college speaking club and practised every week
+Result: I now present my project in front of 40 students
+Honest: True
+Has a fix: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: "Koi Kamzori Nahi", Fake Weakness aur Gap Chhupana',
+          '4. Common Mistakes: "No Weakness", Fake Weakness, and Hiding a Gap'
+        ),
+        body: t(
+          `**Galti 1: "Meri koi kamzori nahi hai."** Ye jawab interviewer ko jhooth lagta hai. Har insaan mein kamzori hoti hai. Ye jawab bolne ka matlab hai: tum apne baare mein sochte hi nahi ho, ya tum sach nahi bol rahe ho. Dono hi interviewer ko pasand nahi.
+
+**Galti 2: Fake weakness — "main perfectionist hoon" ya "main bahut mehnat karta hoon."** Ye tareef ko kamzori ki tarah pehnana hai. Interviewer ye jawab roz sunta hai. Isse behtar hai ek sachhi chhoti kamzori bolo jiska fix tumhare paas ho.
+
+**Galti 3: Role ki main skill ko kamzori batana.** Agar role coding ka hai, toh ye mat kaho "mujhe coding nahi aati." Ye kamzori nahi, ye role ke liye disqualification hai. Kamzori aisi chuno jo role ke main kaam se door ho — jaise public speaking, ya time par na keh paana.
+
+**Galti 4: Gap chhupana ya jhooth bolna.** Resume mein gap dikh raha hai aur tum kehte ho "kuch nahi, bas aise hi" — interviewer ko shak hota hai. Gap ko chhupao mat, uska sachha use batao. Agar us time mein tumne kuch nahi seekha, toh ye bhi imandari se kaho ki tumne kya seekha hai ab, aur aage kya karoge — par jhoothi kahani mat banao.`,
+          `**Mistake 1: "I have no weakness."** This answer sounds false to the interviewer. Every person has a weakness. Saying this means: you never think about yourself, or you are not telling the truth. The interviewer likes neither.
+
+**Mistake 2: Fake weakness — "I am a perfectionist" or "I work too hard."** This is praise dressed up as a weakness. The interviewer hears this answer every day. It is better to say a real small weakness for which you have a fix.
+
+**Mistake 3: Naming the main skill of the role as your weakness.** If the role is about coding, do not say "I do not know coding." That is not a weakness, that is a disqualification for the role. Pick a weakness that is far from the main work of the role — like public speaking, or finding it hard to say no on time.
+
+**Mistake 4: Hiding a gap or lying about it.** The gap shows on your resume and you say "nothing, just like that" — the interviewer doubts you. Do not hide the gap, tell them its true use. If you learned nothing in that time, say honestly what you have learned now and what you will do next — but do not make up a false story.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Bada Gap, Backlog aur Emotional Kamzori',
+          '5. Edge Cases: Big Gap, Backlog, and Emotional Weakness'
+        ),
+        body: t(
+          `**Edge case 1: Bada gap — 1 saal ya zyada.** Toh jawab mein do cheezein honi chahiye: gap ki wajah aur us time ka use. Jaise: "Maine ek saal apni family ki help ki aur saath mein online Python seekha." Wajah sachhi honi chahiye aur use bhi sachha hona chahiye. Interviewer wajah par zyada sawaal nahi poochhega, use ye dekhna hai ki tum wapas kaam karne ke liye taiyaar ho ya nahi.
+
+**Edge case 2: Backlog ya kam marks.** Agar interviewer poochhe "tumhare marks kam kyun hain?", toh bahana mat banao. Kaho: "Pehle saal mein maine time manage nahi kiya. Uske baad maine apna schedule banaya aur agle saal ke marks behtar hue." Ye ek growth story hai — galti, fix, result.
+
+**Edge case 3: Emotional kamzori — gussa, shyness, overthinking.** Inhe aise bolo jismein fix dikhe: "Pehle main jaldi gussa ho jaata tha. Ab main pehle sunta hoon, phir jawab deta hoon." Agar fix nahi hai, toh woh kamzori mat chuno — koi aur kamzori chuno jiska fix tumhare paas ho.
+
+**Edge case 4: Interviewer ne follow-up poochha — "Aur kya kamzori hai?"** Toh ek hi kamzori par atke mat raho. Ek doosri chhoti kamzori bhi taiyaar rakho, usi pattern mein: kamzori + fix + result. Do kamzoriyan taiyaar rakhna kaafi hai, paanch nahi chahiye.`,
+          `**Edge case 1: A big gap — 1 year or more.** Then the answer must hold two things: the reason for the gap and how you used that time. For example: "I spent a year helping my family and learned Python online at the same time." The reason must be true and the use must be true too. The interviewer will not ask much about the reason; they want to see whether you are ready to work again or not.
+
+**Edge case 2: Backlog or low marks.** If the interviewer asks "Why are your marks low?", do not make excuses. Say: "In the first year I did not manage my time. After that I made my own schedule and my marks in the next year became better." This is a growth story — mistake, fix, result.
+
+**Edge case 3: Emotional weakness — anger, shyness, overthinking.** Say them in a way that shows a fix: "Earlier I used to get angry fast. Now I listen first, then I answer." If you have no fix, do not pick that weakness — pick another one for which you have a fix.
+
+**Edge case 4: The interviewer asked a follow-up — "What other weakness do you have?"** Then do not stay stuck on one weakness. Keep a second small weakness ready too, in the same pattern: weakness + fix + result. Two weaknesses ready is enough, five are not needed.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Kamzori ka Fix Nahi Hai, ya Interviewer ne Kamzori par Technical Sawaal Poochh Liya?',
+          '6. What If: There Is No Fix for the Weakness, or the Interviewer Asked a Technical Question on the Weakness?'
+        ),
+        body: t(
+          `**What if tumhari kamzori ka koi fix nahi hai?** Toh woh kamzori interview mein mat bolo. Koi aur kamzori chuno jiska fix tumhare paas ho. Interview mein sirf wahi kamzori bolo jiske saath tum ek fix aur ek result bata sakte ho. Ye jhooth nahi hai — ye sahi kamzori chunna hai.
+
+**What if interviewer ne kamzori par technical sawaal poochh liya?** Jaise, tumne kaha "mujhe SQL mein dikkat hoti thi" aur interviewer ne SQL ka sawaal poochh liya. Isse bachne ka tareeka hai: kamzori aisi chuno jo technical na ho — jaise speaking, time management, ya na keh paana. Agar technical kamzori bolni hi hai, toh uska fix poora hona chahiye: "SQL mein dikkat thi, maine 20 queries likh kar practice ki, ab basic queries aati hain."
+
+**What if gap ke baare mein baar-baar poochha jaaye?** Toh har baar wahi sachha jawab do, aur usmein skill jod do. "Us time mein maine Python seekha" — har baar yehi line. Agar tum har baar alag kahani bologe, toh interviewer ko lagega ki tum jhooth bol rahe ho. Ek sachhi kahani, har baar wahi.`,
+          `**What if there is no fix for your weakness?** Then do not say that weakness in the interview. Pick another weakness for which you have a fix. In the interview, say only the weakness with which you can give a fix and a result. This is not a lie — this is picking the right weakness.
+
+**What if the interviewer asked a technical question on the weakness?** For example, you said "I had trouble with SQL" and the interviewer asked an SQL question. The way to avoid this is: pick a weakness that is not technical — like speaking, time management, or finding it hard to say no. If you must state a technical weakness, its fix must be complete: "I had trouble with SQL, I practised by writing 20 queries, now I know basic queries."
+
+**What if you are asked about the gap again and again?** Then give the same true answer every time, and add the skill to it. "In that time I learned Python" — the same line every time. If you tell a different story each time, the interviewer will feel you are lying. One true story, the same every time.`
+        ),
+        code: {
+          title: t(
+            'Gap Explainer: Gap + Skill + Ready to Work',
+            'Gap Explainer: Gap + Skill + Ready to Work'
+          ),
+          language: 'python',
+          code: `gap = "I took six months to prepare for exams and learn Python"
+skill = "Python"
+print("Gap: " + gap)
+print("Skill learned: " + skill)
+print("Ready to work: True")`,
+          output: `Gap: I took six months to prepare for exams and learn Python
+Skill learned: Python
+Ready to work: True`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Kamzori = Sach + Fix + Result',
+          '7. Summary: Weakness = Truth + Fix + Result'
+        ),
+        body: t(
+          `Poora article ek line mein: **kamzori ka jawab = sachhi kamzori + us par kaam + result**. "Koi kamzori nahi" aur "main perfectionist hoon" — dono galat jawab hain. Gap ka jawab bhi wahi hai: **gap + us time mein kya seekha + ab kya kar sakte ho**. Kamzori aisi chuno jo role ke main kaam ko na rokti ho, aur jiska fix tumhare paas ho.
+
+Revision ke liye ye karo: apni 2 kamzoriyan likho, har ek ke saath fix aur result likho. Phir apne gap (agar hai) ke liye 3 lines likho: gap kya tha, kya seekha, ab kya kar sakte ho. Dono ko zor se 2 baar bolo. Agle article mein hum salary wale sawaal ko dekhenge — wahan bhi imandari aur research kaam aayegi, par jawab ka tareeka alag hoga.`,
+          `The whole article in one line: **weakness answer = true weakness + work on it + result**. "No weakness" and "I am a perfectionist" — both are wrong answers. The gap answer is the same: **gap + what you learned in that time + what you can do now**. Pick a weakness that does not block the main work of the role, and for which you have a fix.
+
+To revise, do this: write your 2 weaknesses, with a fix and a result for each. Then write 3 lines for your gap (if you have one): what the gap was, what you learned, what you can do now. Say both out loud 2 times. In the next article we will look at the salary question — honesty and research will help there too, but the way to answer will be different.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Weakness Jawab ke 3 Boxes: Kamzori, Fix, Result',
+        '3 Boxes of a Weakness Answer: Weakness, Fix, Result'
+      ),
+      caption: t(
+        'Teeno boxes bharne par hi jawab poora hota hai',
+        'The answer is complete only when all three boxes are filled'
+      ),
+      nodes: [
+        {
+          t: t('Box 1: Sachhi kamzori', 'Box 1: A true weakness'),
+          s: t('Group ke saamne bolne mein nervousness', 'Nervousness while speaking in front of a group')
+        },
+        {
+          t: t('Box 2: Us par kaam', 'Box 2: Work on it'),
+          s: t('Speaking club join kiya, har hafte practice ki', 'Joined the speaking club, practised every week')
+        },
+        {
+          t: t('Box 3: Result', 'Box 3: Result'),
+          s: t('Ab 40 students ke saamne project present karti hoon', 'Now I present my project in front of 40 students')
+        },
+        {
+          t: t('Galat: "Koi kamzori nahi"', 'Wrong: "No weakness"'),
+          s: t('Ye jhooth lagta hai, interviewer ko pasand nahi', 'This sounds false, the interviewer does not like it')
+        },
+        {
+          t: t('Galat: "Main perfectionist hoon"', 'Wrong: "I am a perfectionist"'),
+          s: t('Ye tareef hai, kamzori nahi — interviewer pehchan leta hai', 'This is praise, not a weakness — the interviewer sees through it')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Weakness Builder: "Na Keh Paana" ka Example',
+          'Weakness Builder: The "Cannot Say No" Example'
+        ),
+        language: 'python',
+        code: `weakness = "I find it hard to say no to extra work"
+action = "I started writing my tasks in a list and sharing it with my team"
+result = "I now finish my main work on time and help others after that"
+print("Weakness: " + weakness)
+print("What I did: " + action)
+print("Result: " + result)
+print("Honest:", True)`,
+        output: `Weakness: I find it hard to say no to extra work
+What I did: I started writing my tasks in a list and sharing it with my team
+Result: I now finish my main work on time and help others after that
+Honest: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '"What is your greatest weakness?" ka sabse achha jawab kaisa hota hai?',
+          'What is the best kind of answer to "What is your greatest weakness?"?'
+        ),
+        opts: [
+          t('Kamzori + us par kaam + result', 'Weakness + work on it + result'),
+          t('"Meri koi kamzori nahi hai"', '"I have no weakness"'),
+          t('"Main perfectionist hoon"', '"I am a perfectionist"'),
+          t('Role ki main skill ko kamzori batana', 'Naming the main skill of the role as your weakness')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: kamzori + fix + result interviewer ko dikhata hai ki tum imandaar ho aur seekhne wale ho.',
+          'Correct answer: weakness + fix + result shows the interviewer that you are honest and willing to learn.'
+        )
+      },
+      {
+        q: t(
+          'Gap ke sawaal ka sabse achha jawab kya hai?',
+          'What is the best answer to a gap question?'
+        ),
+        opts: [
+          t('Gap chhupana', 'Hiding the gap'),
+          t('"Kuch nahi kiya" kehna', 'Saying "I did nothing"'),
+          t('Gap + us time mein kya seekha + ab kya kar sakte ho', 'Gap + what you learned in that time + what you can do now'),
+          t('Jhoothi kahani banana', 'Making up a false story')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: gap ko chhupane se shak hota hai; us time ka sachha use batane se gap ek story ban jaata hai.',
+          'Correct answer: hiding the gap creates doubt; telling the true use of that time turns the gap into a story.'
+        )
+      },
+      {
+        q: t(
+          'Role coding ka hai. Kaunsi kamzori bolna galat hai?',
+          'The role is about coding. Which weakness is wrong to state?'
+        ),
+        opts: [
+          t('"Group ke saamne bolne mein nervousness"', '"Nervousness while speaking in front of a group"'),
+          t('"Mujhe coding nahi aati"', '"I do not know coding"'),
+          t('"Main na kehne mein mushkil hoti hai"', '"I find it hard to say no"'),
+          t('"Time manage karna seekh rahi hoon"', '"I am learning to manage time"')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: role ki main skill ko kamzori batana disqualification hai, kamzori nahi.',
+          'Correct answer: naming the main skill of the role as your weakness is a disqualification, not a weakness.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer ne follow-up poochha: "Aur kya kamzori hai?" Tumhe kya karna chahiye?',
+          'The interviewer asked a follow-up: "What other weakness do you have?" What should you do?'
+        ),
+        opts: [
+          t('Ek hi kamzori baar-baar bolo', 'Repeat the same weakness again and again'),
+          t('Doosri chhoti kamzori taiyaar rakho: kamzori + fix + result', 'Keep a second small weakness ready: weakness + fix + result'),
+          t('Kaho "bas ek hi hai"', 'Say "there is only one"'),
+          t('Chup ho jao', 'Go silent')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: do kamzoriyan taiyaar rakhna kaafi hai — har ek ke saath fix aur result hona chahiye.',
+          'Correct answer: keeping two weaknesses ready is enough — each one must have a fix and a result.'
+        )
+      },
+      {
+        q: t(
+          'Kamzori ka koi fix nahi hai. Tumhe kya karna chahiye?',
+          'There is no fix for a weakness. What should you do?'
+        ),
+        opts: [
+          t('Wahi kamzori bolo, fix ke bina', 'Say that weakness, without a fix'),
+          t('Koi aur kamzori chuno jiska fix tumhare paas ho', 'Pick another weakness for which you have a fix'),
+          t('Jhootha fix bana lo', 'Make up a false fix'),
+          t('Kamzori ka sawaal hi mat suno', 'Do not listen to the weakness question at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: interview mein sirf wahi kamzori bolo jiske saath fix aur result bata sakte ho.',
+          'Correct answer: in the interview, say only the weakness with which you can give a fix and a result.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Weakness jawab = sachhi kamzori + us par kaam + result.',
+        'Weakness answer = true weakness + work on it + result.'
+      ),
+      t(
+        '"Koi kamzori nahi" aur "main perfectionist hoon" — dono galat jawab hain.',
+        '"No weakness" and "I am a perfectionist" — both are wrong answers.'
+      ),
+      t(
+        'Role ki main skill ko kamzori mat bolo — woh disqualification hai.',
+        'Do not name the main skill of the role as your weakness — that is a disqualification.'
+      ),
+      t(
+        'Gap ka jawab: gap + us time mein kya seekha + ab kya kar sakte ho.',
+        'Gap answer: gap + what you learned in that time + what you can do now.'
+      ),
+      t(
+        'Gap chhupao mat, jhoothi kahani mat banao — ek sachhi kahani, har baar wahi.',
+        'Do not hide a gap, do not make up a false story — one true story, the same every time.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apni Kamzori ka STAR Jawab Banao',
+        'Practice: Build Your STAR Answer for Your Weakness'
+      ),
+      task: t(
+        'Neeche wala code ek weakness jawab banata hai. Isko run karo aur check karo ki output mein Weakness, What I did, Result aur Honest — chaaro lines aati hain. Phir apni kamzori ke liye chaaro lines badal kar apna jawab banao.',
+        'The code below builds a weakness answer. Run it and check that the output shows all four lines — Weakness, What I did, Result, and Honest. Then change the four lines for your own weakness and build your answer.'
+      ),
+      language: 'python',
+      starter: `weakness = "I find it hard to say no to extra work"
+action = "I started writing my tasks in a list and sharing it with my team"
+result = "I now finish my main work on time and help others after that"
+print("Weakness: " + weakness)
+print("What I did: " + action)
+print("Result: " + result)
+print("Honest:", True)`,
+      expected: `Weakness: I find it hard to say no to extra work
+What I did: I started writing my tasks in a list and sharing it with my team
+Result: I now finish my main work on time and help others after that
+Honest: True`
+    },
+    readMinutes: 12
+  };
+
+const placementSalary: Article = {
+    id: 'placement-salary',
+    subjectId: 'placement',
+    title: t(
+      'Salary Negotiation for Freshers — Range Research aur Sawaal ka Jawab',
+      'Salary Negotiation for Freshers — Researching Ranges and Answering the Question'
+    ),
+    summary: t(
+      '"What are your salary expectations?" ka matlab, research kaise karein bina kisi fixed number par atke, jawab ko kaise deflect karein, aur kab kya kehna hai. Is article mein koi package ya cut-off nahi bataya gaya hai — sirf research aur jawab ka tareeka hai.',
+      'The meaning of "What are your salary expectations?", how to research without fixing on one number, how to deflect the question, and when to say what. This article states no package or cut-off — only the method of research and answering.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Salary Sawaal Kya Hai? (Expectations aur Research)',
+          '1. What Is the Salary Question? (Expectations and Research)'
+        ),
+        body: t(
+          `Jab interviewer poochhta hai **"What are your salary expectations?"**, toh woh tumhari kimat nahi poochh raha. Woh ye check kar raha hai: kya tumne **research** ki hai, aur kya tum apne baare mein **realistic** sochte ho. Fresher ke liye ye sawaal mushkil lagta hai, kyunki tumhe nahi pata ki sahi jawab kya hai. Isiliye is sawaal ka jawab ek number nahi hai — ye ek **tareeka** hai.
+
+Pehli baat: fresher ko pehle interview mein salary par zyada focus nahi karna chahiye. Pehle role, kaam, aur learning ko samjho. Salary par baat aage bhi ho sakti hai — jab company tumhe lena chahti hai, tab tumhari position strong hoti hai. Isliye shuruaat mein jawab ko **deflect** karna — matlab seedha number na bolna — ek smart tareeka hai.
+
+Doosri baat: research karo. Job portals par usi role ke liye kya range dikhti hai, seniors se poochho ki unke role mein kya range hoti hai, aur apne sheher mein rehne ka kharcha kya hai — ye teen cheezein note karo. Research ka matlab ye nahi hai ki tum ek fixed number yaad kar lo. Research ka matlab hai: tumhe pata ho ki range kya hoti hai, aur tum apna jawab us range ke hisaab se de sakte ho.`,
+          `When the interviewer asks **"What are your salary expectations?"**, they are not asking your price. They are checking: have you done **research**, and do you think about yourself in a **realistic** way. This question feels hard for a fresher, because you do not know the right answer. That is why the answer to this question is not a number — it is a **method**.
+
+First: a fresher should not focus too much on salary in the first interview. First understand the role, the work, and the learning. Salary can be talked about later too — when the company wants to hire you, your position is strong. So in the beginning, **deflecting** the answer — meaning not saying a fixed number straight away — is a smart way.
+
+Second: do research. Note three things: what range shows on job portals for the same role, what range seniors say for their role, and what the cost of living is in your city. Research does not mean learning one fixed number by heart. Research means: you know what the range is, and you can give your answer as per that range.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka Deflect Jawab aur Rohan ki Research',
+          '2. Real-Life Examples: Asha Deflect Answer and Rohan Research'
+        ),
+        body: t(
+          `**Asha** se poochha gaya: "What are your salary expectations?" Usne kaha: "I am open to the standard range for this role. I would like to learn more about the role first." Ye jawab achha hai kyunki ismein koi fixed number nahi hai, aur ismein ye bhi hai ki Asha role ko samajhna chahti hai. Interviewer ne aage salary par sawaal nahi poochha, usne role ke baare mein batana shuru kar diya.
+
+**Rohan** ne pehle research ki. Usne job portals par apne role ki range dekhi, ek senior se baat ki, aur apne sheher ka kharcha note kiya. Jab usse salary poochhi gayi, toh usne kaha: "I have checked the standard range for this role, and I am open to it. My focus is on learning and doing good work." Rohan ne bhi koi fixed number nahi bola, par uske jawab mein research dikh rahi thi. Interviewer ko ye pasand aaya.
+
+Ek aur example: ek candidate ne pehle hi interview mein ek bada number bol diya. Interviewer ne poochha, "Ye number kyun?" Candidate ke paas koi jawab nahi tha — usne bas ek number sun kar bol diya tha. Interviewer ko laga ki candidate ne research nahi ki hai. Isliye number bolne se pehle hamesha ye taiyaar rakho: "Maine ye range kyun chuni?"`,
+          `**Asha** was asked: "What are your salary expectations?" She said: "I am open to the standard range for this role. I would like to learn more about the role first." This answer is good because it has no fixed number, and it also says that Asha wants to understand the role. The interviewer asked no more questions on salary; they started telling her about the role.
+
+**Rohan** did research first. He looked at the range for his role on job portals, talked to a senior, and noted the cost of living in his city. When he was asked about salary, he said: "I have checked the standard range for this role, and I am open to it. My focus is on learning and doing good work." Rohan also said no fixed number, but his answer showed research. The interviewer liked that.
+
+One more example: a candidate said a big number in the very first interview. The interviewer asked, "Why this number?" The candidate had no answer — they had only heard a number and said it. The interviewer felt the candidate had done no research. So before you say a number, always keep this ready: "Why did I pick this range?"`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Research Checklist Banana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building a Research Checklist (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Salary ki taiyari ke 5 steps hain. **Step 1:** Job portals par apne role ki range dekho — ek hi jagah se nahi, 2-3 jagah se. **Step 2:** Seniors se poochho ki unke role mein kya range hoti hai. **Step 3:** Apne sheher mein rehne ka kharcha note karo — rent, khana, travel. **Step 4:** Apne skills aur projects ki list banao — ye tumhari value hai. **Step 5:** Salary wale jawab ko zor se practice karo, taaki interview mein tum atak na jao.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **research checklist scorer** hai: woh 5 research steps ki list leta hai, aur batata hai ki kitne steps poore hue aur kaunse baaki hain. Output dekho: "Research steps done: 3 of 5" — 3 steps poore hain, 2 baaki hain: cost of living note karna aur jawab practice karna. Aakhri line mein check hai: "Ready to answer: True" — kyunki 3 ya zyada steps poore hain, isliye jawab dene ke liye taiyaar ho. Agar sirf 1-2 steps poore hain, toh pehle research poori karo, phir jawab do.
+
+Ye code tumhari research ko track karne ka tareeka hai. Apne steps ko \`True\` ya \`False\` se mark karo, aur dekho ki tum kitne taiyaar ho. Research poori hone par hi salary par baat karna behtar hai.`,
+          `There are 5 steps to prepare for salary. **Step 1:** Look at the range for your role on job portals — not from one place, from 2 to 3 places. **Step 2:** Ask seniors what range is common in their role. **Step 3:** Note the cost of living in your city — rent, food, travel. **Step 4:** Make a list of your skills and projects — that is your value. **Step 5:** Practise the salary answer out loud, so you do not get stuck in the interview.
+
+Now let us do a dry run with the code below. The code is a **research checklist scorer**: it takes a list of 5 research steps and tells you how many steps are done and which ones are left. Look at the output: "Research steps done: 3 of 5" — 3 steps are done, 2 are left: noting the cost of living and practising the answer. The last line has a check: "Ready to answer: True" — because 3 or more steps are done, you are ready to answer. If only 1 to 2 steps are done, finish the research first, then answer.
+
+This code is a way to track your research. Mark your steps as \`True\` or \`False\`, and see how ready you are. It is better to talk about salary only when the research is done.`
+        ),
+        code: {
+          title: t(
+            'Research Checklist Scorer: Kitne Steps Poore Hue?',
+            'Research Checklist Scorer: How Many Steps Are Done?'
+          ),
+          language: 'python',
+          code: `checks = ["Checked ranges on job portals", "Asked seniors about the role", "Noted the cost of living in the city", "Listed my skills and projects", "Practised the salary answer"]
+done = [True, True, False, True, False]
+score = sum(done)
+print("Research steps done:", score, "of", len(checks))
+for item, ok in zip(checks, done):
+    print(("Done: " if ok else "Todo: ") + item)
+print("Ready to answer:", score >= 3)`,
+          output: `Research steps done: 3 of 5
+Done: Checked ranges on job portals
+Done: Asked seniors about the role
+Todo: Noted the cost of living in the city
+Done: Listed my skills and projects
+Todo: Practised the salary answer
+Ready to answer: True`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Bina Research ke Number, Bahut Zyada ya Bahut Kam Bolna',
+          '4. Common Mistakes: A Number Without Research, Asking Too Much or Too Little'
+        ),
+        body: t(
+          `**Galti 1: Bina research ke number bolna.** Interviewer poochhega "ye number kyun?" aur tumhare paas jawab nahi hoga. Number bolne se pehle hamesha research honi chahiye — range kya hai, role kya hai, sheher kya hai. Bina research ke number ek guess hai, aur guess interviewer ko pasand nahi.
+
+**Galti 2: Pehle interview mein hi salary par zid karna.** Agar tum pehle hi interview mein salary par atke rahe, toh interviewer ko lagega ki tumhe sirf paisa chahiye, kaam nahi. Pehle role aur kaam ko samjho, phir salary par baat karo. Jab company tumhe lena chahti hai, tab tumhari baat sunne ki position strong hoti hai.
+
+**Galti 3: "Kuch bhi chalega" kehna.** Ye jawab bhi galat hai. Isse lagta hai ki tumne research nahi ki aur tum apni value nahi jaante. "Kuch bhi chalega" ki jagah kaho: "I am open to the standard range for this role." Ye jawab research bhi dikhata hai aur flexibility bhi.
+
+**Galti 4: Doosron ke number ko apna number banana.** Tumhare dost ko jo range mili, woh tumhari range nahi hai. Har role, har company, har sheher alag hai. Apni research apne role ke liye karo, dost ke number ko copy mat karo.`,
+          `**Mistake 1: Saying a number without research.** The interviewer will ask "why this number?" and you will have no answer. Before you say a number, there must be research — what the range is, what the role is, which city it is in. A number without research is a guess, and the interviewer does not like guesses.
+
+**Mistake 2: Standing firm on salary in the very first interview.** If you stay stuck on salary in the first interview itself, the interviewer will feel you only want money, not work. First understand the role and the work, then talk about salary. When the company wants to hire you, your position to be heard is strong.
+
+**Mistake 3: Saying "Anything is fine."** This answer is also wrong. It sounds like you did no research and you do not know your value. Instead of "Anything is fine", say: "I am open to the standard range for this role." This answer shows research and flexibility both.
+
+**Mistake 4: Making someone else number your number.** The range your friend got is not your range. Every role, every company, every city is different. Do your own research for your own role, do not copy your friend number.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: HR ne Number Maanga, Offer Letter mein Range Alag, ya Salary par Baat Hi Nahi Hui',
+          '5. Edge Cases: HR Asked for a Number, the Offer Letter Range Differs, or Salary Was Never Discussed'
+        ),
+        body: t(
+          `**Edge case 1: HR ne seedha number maanga — "Ek number batao."** Toh deflect mat karo, ek range do. Range ka matlab hai: "Maine standard range check ki hai, main us range mein open hoon." Ek fixed number ki jagah range bolna behtar hai, kyunki range mein baat-cheet ki jagah rehti hai. Aur range bolne se pehle ye kaho: "Maine research ki hai."
+
+**Edge case 2: Offer letter mein range tumhari research se alag hai.** Toh ghabrao mat. Offer ko dhyaan se padho — sirf ek number mat dekho. Role, kaam, learning, location, aur growth — sab dekho. Agar kuch samajh nahi aata, toh HR se poochho: "Is role mein growth kaise hoti hai?" Ye sawaal poochhna normal hai.
+
+**Edge case 3: Salary par baat hi nahi hui, aur offer aa gaya.** Ye normal hai — bahut si companies pehle offer bhejti hain, phir baat karti hain. Offer aane par turant haan ya na mat kaho. Offer ko padho, apni research se compare karo, aur phir HR se baat karo. Turant jawab dena zaroori nahi hai.
+
+**Edge case 4: Tumhe lagta hai tumhari value zyada hai.** Toh value ko proof se dikhao — projects, skills, aur results. "Meri value zyada hai" kehna kaafi nahi hai. Apne projects aur unke results ko dikhao, aur phir range ki baat karo.`,
+          `**Edge case 1: HR asked straight for a number — "Give one number."** Then do not deflect, give a range. A range means: "I have checked the standard range, I am open in that range." Saying a range is better than a fixed number, because a range leaves room to talk. And before you say the range, say: "I have done research."
+
+**Edge case 2: The range in the offer letter differs from your research.** Then do not panic. Read the offer with care — do not look at only one number. Look at the role, the work, the learning, the location, and the growth — all of it. If something is not clear, ask HR: "How does growth work in this role?" Asking this question is normal.
+
+**Edge case 3: Salary was never discussed, and the offer came.** This is normal — many companies send the offer first, then talk. When the offer comes, do not say yes or no at once. Read the offer, compare it with your research, and then talk to HR. An instant answer is not needed.
+
+**Edge case 4: You feel your value is higher.** Then show the value with proof — projects, skills, and results. Saying "My value is higher" is not enough. Show your projects and their results, and then talk about the range.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Interviewer ne Range Poochhi, ya Tumne Galat Number Bol Diya?',
+          '6. What If: The Interviewer Asked for a Range, or You Said a Wrong Number?'
+        ),
+        body: t(
+          `**What if interviewer ne range poochhi — "Tumhari expected range kya hai?"** Toh wahi jawab do jo tumne research se taiyaar kiya hai: "Maine standard range check ki hai, main us range mein open hoon." Range bolne ke baad ye bhi kaho: "Mera focus learning aur achha kaam karne par hai." Ye line interviewer ko batati hai ki tum sirf number ke liye nahi aaye ho.
+
+**What if tumne galat number bol diya?** Jaise, tumne ek number bol diya aur baad mein laga ki woh sahi nahi tha. Toh ghabrao mat — agle round mein ya HR se baat karte time kaho: "Maine pehle ek number bola tha, par maine phir research ki aur ab mujhe standard range samajh aayi hai." Ye imandari hai, aur interviewer isse samajhta hai. Galti ko chhupana usse bada galti hai.
+
+**What if interviewer ne kaha "Hum isse zyada nahi de sakte"?** Toh ye ek normal baat-cheet hai. Tum kah sakte ho: "Main role aur learning ko bhi dekh raha hoon. Kya aap bata sakte hain ki is role mein growth kaise hoti hai?" Isse baat-cheet number se aage badh jaati hai, aur tumhe role ke baare mein aur jaankari milti hai.`,
+          `**What if the interviewer asked for a range — "What is your expected range?"** Then give the answer you prepared from research: "I have checked the standard range, I am open in that range." After saying the range, also say: "My focus is on learning and doing good work." This line tells the interviewer that you did not come only for a number.
+
+**What if you said a wrong number?** For example, you said a number and later felt it was not right. Then do not panic — in the next round or while talking to HR, say: "I said a number earlier, but I did more research after that and now I understand the standard range." This is honesty, and the interviewer understands it. Hiding a mistake is a bigger mistake.
+
+**What if the interviewer said "We cannot give more than this"?** Then this is a normal talk. You can say: "I am also looking at the role and the learning. Can you tell me how growth works in this role?" This moves the talk beyond the number, and you get more information about the role.`
+        ),
+        code: {
+          title: t(
+            'Salary Answer Builder: Deflect Jawab Banana',
+            'Salary Answer Builder: Building a Deflect Answer'
+          ),
+          language: 'python',
+          code: `answer = "I am open to the standard range for this role. I would like to learn more about the role first."
+print(answer)
+print("Words:", len(answer.split()))
+print("States a fixed number:", False)`,
+          output: `I am open to the standard range for this role. I would like to learn more about the role first.
+Words: 20
+States a fixed number: False`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Research Pehle, Number Baad Mein',
+          '7. Summary: Research First, Number Later'
+        ),
+        body: t(
+          `Poora article ek line mein: **pehle research, phir jawab — aur jawab mein fixed number nahi, range aur flexibility**. "What are your salary expectations?" ka jawab ek number nahi hai, ye ek tareeka hai: portals par range dekho, seniors se poochho, sheher ka kharcha note karo, apne skills ki list banao, aur jawab ko practice karo. Shuruaat mein deflect karo — "I am open to the standard range for this role" — aur jab company tumhe lena chahti hai, tab range par baat karo.
+
+Revision ke liye ye karo: apni research checklist ke 5 steps ko \`True\` ya \`False\` se mark karo. Agar 3 ya zyada steps poore hain, toh tum jawab dene ke liye taiyaar ho. Phir apna deflect jawab zor se 3 baar bolo. Agle article mein hum LinkedIn profile ko dekhenge — wahan bhi yahi research kaam aayegi, par platform alag hoga.`,
+          `The whole article in one line: **research first, then the answer — and in the answer, no fixed number, only range and flexibility**. The answer to "What are your salary expectations?" is not a number, it is a method: look at the range on portals, ask seniors, note the cost of living in your city, make a list of your skills, and practise the answer. In the beginning, deflect — "I am open to the standard range for this role" — and when the company wants to hire you, then talk about the range.
+
+To revise, do this: mark the 5 steps of your research checklist as \`True\` or \`False\`. If 3 or more steps are done, you are ready to answer. Then say your deflect answer out loud 3 times. In the next article we will look at the LinkedIn profile — the same research will help there too, but the platform will be different.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Salary Taiyari ki Table: Research Steps aur Status',
+        'Table of Salary Preparation: Research Steps and Status'
+      ),
+      caption: t(
+        'Har step ko poora karo, phir jawab do — number pehle nahi',
+        'Finish each step, then answer — not the number first'
+      ),
+      nodes: [],
+      headers: [
+        t('Step', 'Step'),
+        t('Kya karna hai', 'What to do'),
+        t('Status', 'Status')
+      ],
+      rows: [
+        [t('1', '1'), t('Job portals par range dekho', 'Look at the range on job portals'), t('Done', 'Done')],
+        [t('2', '2'), t('Seniors se role ki range poochho', 'Ask seniors about the range for the role'), t('Done', 'Done')],
+        [t('3', '3'), t('Sheher ka kharcha note karo', 'Note the cost of living in your city'), t('Todo', 'Todo')],
+        [t('4', '4'), t('Apne skills aur projects ki list banao', 'Make a list of your skills and projects'), t('Done', 'Done')],
+        [t('5', '5'), t('Jawab ko zor se practice karo', 'Practise the answer out loud'), t('Todo', 'Todo')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Research Scorer: Chhoti Checklist ka Example',
+          'Research Scorer: A Small Checklist Example'
+        ),
+        language: 'python',
+        code: `checks = ["Checked the role on job portals", "Asked a senior about the role", "Listed my projects", "Practised the answer out loud"]
+done = [True, False, True, True]
+score = sum(done)
+print("Research steps done:", score, "of", len(checks))
+for item, ok in zip(checks, done):
+    print(("Done: " if ok else "Todo: ") + item)
+print("Ready to answer:", score >= 3)`,
+        output: `Research steps done: 3 of 4
+Done: Checked the role on job portals
+Todo: Asked a senior about the role
+Done: Listed my projects
+Done: Practised the answer out loud
+Ready to answer: True`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '"What are your salary expectations?" ka sabse achha pehla jawab kya hai?',
+          'What is the best first answer to "What are your salary expectations?"?'
+        ),
+        opts: [
+          t('Ek bada fixed number bolna', 'Saying a big fixed number'),
+          t('"Kuch bhi chalega" kehna', 'Saying "Anything is fine"'),
+          t('"I am open to the standard range for this role"', '"I am open to the standard range for this role"'),
+          t('Salary par baat karne se mana karna', 'Refusing to talk about salary')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: deflect jawab mein koi fixed number nahi hai, aur woh research aur flexibility dono dikhata hai.',
+          'Correct answer: the deflect answer has no fixed number, and it shows research and flexibility both.'
+        )
+      },
+      {
+        q: t(
+          'Salary research mein kya shamil hona chahiye?',
+          'What should salary research include?'
+        ),
+        opts: [
+          t('Sirf dost ka number copy karna', 'Only copying your friend number'),
+          t('Portals par range, seniors se baat, sheher ka kharcha', 'Range on portals, talking to seniors, cost of living in your city'),
+          t('Sirf ek number yaad karna', 'Only learning one number by heart'),
+          t('Kuch nahi — pehle interview mein number bol do', 'Nothing — just say a number in the first interview')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: research ka matlab hai range, seniors ki baat aur kharcha — teeno ko dekhna, ek number yaad karna nahi.',
+          'Correct answer: research means looking at the range, talking to seniors, and the cost of living — all three, not learning one number by heart.'
+        )
+      },
+      {
+        q: t(
+          'Tumne galat number bol diya. Tumhe kya karna chahiye?',
+          'You said a wrong number. What should you do?'
+        ),
+        opts: [
+          t('Galti chhupao aur wahi number pakdo', 'Hide the mistake and stick to that number'),
+          t('Agle round mein imandari se kaho ki tumne phir research ki', 'In the next round, say honestly that you did more research'),
+          t('Interview chhod do', 'Leave the interview'),
+          t('Doosra galat number bol do', 'Say another wrong number')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: galti ko imandari se sudharna behtar hai — galti chhupana usse badi galti hai.',
+          'Correct answer: correcting a mistake with honesty is better — hiding a mistake is a bigger mistake.'
+        )
+      },
+      {
+        q: t(
+          'Fresher ko pehle interview mein salary par kya karna chahiye?',
+          'What should a fresher do about salary in the first interview?'
+        ),
+        opts: [
+          t('Salary par zid karo', 'Stand firm on salary'),
+          t('Pehle role aur kaam ko samjho, phir salary par baat karo', 'First understand the role and the work, then talk about salary'),
+          t('Salary ke baare mein kuch mat poochho kabhi', 'Never ask anything about salary'),
+          t('Sirf salary ke baare mein baat karo', 'Talk only about salary')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle role aur learning ko samjho — jab company tumhe lena chahti hai, tab tumhari position strong hoti hai.',
+          'Correct answer: first understand the role and the learning — when the company wants to hire you, your position is strong.'
+        )
+      },
+      {
+        q: t(
+          'Research checklist mein 5 mein se 3 steps poore hain. Kya tum jawab dene ke liye taiyaar ho?',
+          'In the research checklist, 3 of 5 steps are done. Are you ready to answer?'
+        ),
+        opts: [
+          t('Nahi, saare 5 steps poore hone chahiye', 'No, all 5 steps must be done'),
+          t('Haan, 3 ya zyada steps ka matlab hai taiyaar ho', 'Yes, 3 or more steps means you are ready'),
+          t('Nahi, research ki zaroorat hi nahi hai', 'No, research is not needed at all'),
+          t('Haan, bina kisi step ke bhi taiyaar ho', 'Yes, you are ready without any step')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: code mein check hai — score 3 ya zyada ho toh "Ready to answer: True" aata hai.',
+          'Correct answer: the code has a check — if the score is 3 or more, "Ready to answer: True" comes.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Salary ka jawab ek number nahi, ek tareeka hai: pehle research, phir jawab.',
+        'The salary answer is not a number, it is a method: research first, then the answer.'
+      ),
+      t(
+        'Shuruaat mein deflect karo: "I am open to the standard range for this role."',
+        'In the beginning, deflect: "I am open to the standard range for this role."'
+      ),
+      t(
+        'Research mein range, seniors ki baat aur sheher ka kharcha — teeno shamil hain.',
+        'Research includes the range, talking to seniors, and the cost of living in your city — all three.'
+      ),
+      t(
+        '"Kuch bhi chalega" galat hai — isse lagta hai tumne research nahi ki.',
+        '"Anything is fine" is wrong — it sounds like you did no research.'
+      ),
+      t(
+        'Dost ka number copy mat karo — har role, company aur sheher alag hai.',
+        'Do not copy your friend number — every role, company, and city is different.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apni Research Checklist Banao',
+        'Practice: Build Your Research Checklist'
+      ),
+      task: t(
+        'Neeche wala code ek chhoti research checklist banata hai. Isko run karo aur check karo ki output mein "Research steps done: 3 of 4" aur "Ready to answer: True" aata hai. Phir apne steps ke liye list badal kar apni checklist banao.',
+        'The code below builds a small research checklist. Run it and check that the output shows "Research steps done: 3 of 4" and "Ready to answer: True". Then change the list for your own steps and build your checklist.'
+      ),
+      language: 'python',
+      starter: `checks = ["Checked the role on job portals", "Asked a senior about the role", "Listed my projects", "Practised the answer out loud"]
+done = [True, False, True, True]
+score = sum(done)
+print("Research steps done:", score, "of", len(checks))
+for item, ok in zip(checks, done):
+    print(("Done: " if ok else "Todo: ") + item)
+print("Ready to answer:", score >= 3)`,
+      expected: `Research steps done: 3 of 4
+Done: Checked the role on job portals
+Todo: Asked a senior about the role
+Done: Listed my projects
+Done: Practised the answer out loud
+Ready to answer: True`
+    },
+    readMinutes: 12
+  };
+
+const placementLinkedin: Article = {
+    id: 'placement-linkedin',
+    subjectId: 'placement',
+    title: t(
+      'LinkedIn Profile for Placements — Headline, About aur Projects',
+      'LinkedIn Profile for Placements — Headline, About, and Projects'
+    ),
+    summary: t(
+      'Placement ke liye LinkedIn profile kaise banayein: headline ka formula, About mein kya likhein, projects aur skills kaise dikhayein, aur ek headline checker ke saath worked example. Saare profile examples invented hain.',
+      'How to build a LinkedIn profile for placements: the headline formula, what to write in About, how to show projects and skills, and a worked example with a headline checker. All profile examples are invented.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. LinkedIn Profile Kya Hai? (Headline, About aur Projects)',
+          '1. What Is a LinkedIn Profile? (Headline, About, and Projects)'
+        ),
+        body: t(
+          `**LinkedIn** ek professional network hai — jahan log apna kaam, skills aur projects dikhate hain. Placement ke time par recruiter tumhara naam search kar sakta hai, aur tumhara LinkedIn profile tumhara **online resume** ban jaata hai. Isliye profile ko resume jaisa hi saaf aur sachha hona chahiye. Profile ke 5 main hisse hain: photo, **headline**, **About**, skills, aur projects.
+
+**Headline** woh ek line hai jo tumhare naam ke neeche dikhti hai. Ye sabse important hai, kyunki recruiter sabse pehle yahi padhta hai. Achhi headline mein teen cheezein hoti hain: tum kaun ho, tumhari skill kya hai, aur tum kya dhoondh rahe ho. Jaise: "BTech Student | Python | Web Projects | Open to Internships" — ismein chaaro cheezein hain, aur ye ek hi line mein padhi ja sakti hai.
+
+**About** mein 3-4 lines mein tum kaun ho, kya seekha hai, aur kya karna chahte ho — ye likho. About mein apni poori kahani mat likho. Skills mein sirf wahi skills likho jo tum sach mein use kar sakte ho. Projects mein 2-3 projects likho, har ek mein kya banaya aur kis tool se — yehi tumhara proof hai.`,
+          `**LinkedIn** is a professional network — where people show their work, skills, and projects. At placement time, a recruiter can search your name, and your LinkedIn profile becomes your **online resume**. So the profile must be as clean and true as a resume. The profile has 5 main parts: photo, **headline**, **About**, skills, and projects.
+
+The **headline** is the one line that shows below your name. It is the most important part, because the recruiter reads this first. A good headline holds three things: who you are, what your skill is, and what you are looking for. For example: "BTech Student | Python | Web Projects | Open to Internships" — it holds all four things, and it can be read in one line.
+
+In **About**, write in 3 to 4 lines who you are, what you learned, and what you want to do. Do not write your whole story in About. In skills, write only the skills you can really use. In projects, write 2 to 3 projects, each saying what you built and with which tool — that is your proof.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ki Headline aur Rohan ka About',
+          '2. Real-Life Examples: Asha Headline and Rohan About'
+        ),
+        body: t(
+          `**Asha** ki headline hai: "BTech Student | Python | Web Projects | Open to Internships". Ismein 4 parts hain, jo \`|\` se alag hain. Pehla part batata hai woh kaun hai, doosra skill batata hai, teesra proof batata hai, chauthe mein woh batata hai ki woh kya dhoondh rahi hai. Recruiter ko ek second mein samajh aata hai ki Asha kaun hai aur usse kya chahiye.
+
+**Rohan** ka About aisa hai: "I am a final-year BTech student. I learned SQL and built a notes app that 200 students use. I am looking for a Data Trainee role where I can learn and do good work." Ye sirf 3 lines ka hai, par ismein kaun hai, kya seekha, kya banaya, aur kya chahiye — sab hai. About mein badi-badi baatein nahi hain, sirf sach hai.
+
+Ek aur example: ek student ne headline mein likha tha: "Student at XYZ College". Ismein skill nahi hai, proof nahi hai, aur kya dhoondh raha hai, woh bhi nahi hai. Recruiter ko isse kuch pata nahi chalta. Doosre student ne likha: "BTech Student | Java | Android Projects | Open to Internships" — ismein sab kuch hai. Doosri headline jeetti hai, kyunki woh ek second mein poori kahani batati hai.`,
+          `**Asha** headline is: "BTech Student | Python | Web Projects | Open to Internships". It has 4 parts, split by \`|\`. The first part says who she is, the second says her skill, the third says her proof, and the fourth says what she is looking for. In one second, the recruiter understands who Asha is and what she wants.
+
+**Rohan** About goes like this: "I am a final-year BTech student. I learned SQL and built a notes app that 200 students use. I am looking for a Data Trainee role where I can learn and do good work." It is only 3 lines, but it holds who he is, what he learned, what he built, and what he wants. There are no big claims in About, only truth.
+
+One more example: a student wrote in the headline: "Student at XYZ College". It has no skill, no proof, and it does not say what they are looking for. The recruiter learns nothing from it. Another student wrote: "BTech Student | Java | Android Projects | Open to Internships" — it holds everything. The second headline wins, because it tells the whole story in one second.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Headline Banana aur Check Karna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building and Checking a Headline (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apni headline banane ke 4 steps hain. **Step 1:** Apna status likho — "BTech Student". **Step 2:** Apni sabse strong skill likho — "Python". **Step 3:** Apna proof likho — "Web Projects". **Step 4:** Tum kya dhoondh rahe ho, woh likho — "Open to Internships". In chaaro ko \`|\` se jodo, aur headline taiyaar hai. Headline ko 220 characters se chhota rakho — lambi headline padhi nahi jaati.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **headline checker** hai: woh headline ko \`|\` se todta hai, parts ginta hai, har part ko print karta hai, aur check karta hai ki headline mein "Python" hai ya nahi, aur headline kitne characters ki hai. Output dekho: "Parts: 4", "Has Python: True", "Length: 59 characters" — ye ek achhi headline hai, kyunki ismein 4 parts hain aur length chhoti hai.
+
+Agar tumhari headline mein sirf 1 part hai, toh woh adhoori hai. Agar length 100 characters se zyada hai, toh use chhota karo. Code ko run karke apni headline badal kar dekho — naya result turant milega.`,
+          `There are 4 steps to build your headline. **Step 1:** Write your status — "BTech Student". **Step 2:** Write your strongest skill — "Python". **Step 3:** Write your proof — "Web Projects". **Step 4:** Write what you are looking for — "Open to Internships". Join all four with \`|\`, and the headline is ready. Keep the headline shorter than 220 characters — a long headline is never read.
+
+Now let us do a dry run with the code below. The code is a **headline checker**: it splits the headline by \`|\`, counts the parts, prints each part, and checks whether the headline has "Python" in it and how many characters it has. Look at the output: "Parts: 4", "Has Python: True", "Length: 59 characters" — this is a good headline, because it has 4 parts and a short length.
+
+If your headline has only 1 part, it is incomplete. If the length is more than 100 characters, make it shorter. Run the code and change your headline — you will get the new result at once.`
+        ),
+        code: {
+          title: t(
+            'Headline Checker: Parts Ginna aur Length Check Karna',
+            'Headline Checker: Counting Parts and Checking Length'
+          ),
+          language: 'python',
+          code: `headline = "BTech Student | Python | Web Projects | Open to Internships"
+parts = headline.split("|")
+print("Headline:", headline)
+print("Parts:", len(parts))
+for part in parts:
+    print("-", part.strip())
+print("Has Python:", "Python" in headline)
+print("Length:", len(headline), "characters")`,
+          output: `Headline: BTech Student | Python | Web Projects | Open to Internships
+Parts: 4
+- BTech Student
+- Python
+- Web Projects
+- Open to Internships
+Has Python: True
+Length: 59 characters`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf College ka Naam, Jhoothi Skills aur Khaali Profile',
+          '4. Common Mistakes: Only the College Name, False Skills, and an Empty Profile'
+        ),
+        body: t(
+          `**Galti 1: Headline mein sirf college ka naam.** "Student at XYZ College" se recruiter ko kuch pata nahi chalta. Headline mein skill aur proof bhi honi chahiye. College ka naam About mein likh sakte ho, headline mein nahi.
+
+**Galti 2: Jhoothi skills likhna.** Skills mein 20 skills likh di, par tumhe sirf 2 aati hain. Recruiter ek skill par sawaal poochhega, aur tum pakde jaoge. Skills mein sirf wahi likho jo tum sach mein use kar sakte ho — 4-5 sachhi skills, 20 jhoothi skills se behtar hain.
+
+**Galti 3: Khaali profile — photo nahi, About nahi, projects nahi.** Khaali profile se lagta hai ki tum serious nahi ho. Profile ke 5 hisse — photo, headline, About, skills, projects — sab bharo. Agar ek hissa khaali hai, toh profile adhoora lagta hai. Neeche wale code mein profile completeness checker hai — use run karke dekho ki tumhara profile kitna poora hai.
+
+**Galti 4: Har din post karna ya sirf like karna.** LinkedIn par roz post karne ki zaroorat nahi hai. Hafte mein ek baar apne project ya learning ke baare mein post karna kaafi hai. Aur sirf like karne se kuch nahi hota — apne project ke baare mein likho, taaki log tumhara kaam dekhein.`,
+          `**Mistake 1: Only the college name in the headline.** "Student at XYZ College" tells the recruiter nothing. The headline must also hold a skill and a proof. You can write the college name in About, not in the headline.
+
+**Mistake 2: Writing false skills.** You wrote 20 skills, but you only know 2. The recruiter will ask a question on one skill, and you will be caught. In skills, write only what you can really use — 4 to 5 true skills are better than 20 false skills.
+
+**Mistake 3: An empty profile — no photo, no About, no projects.** An empty profile makes it look like you are not serious. Fill all 5 parts of the profile — photo, headline, About, skills, projects. If one part is empty, the profile looks incomplete. The code below has a profile completeness checker — run it and see how complete your profile is.
+
+**Mistake 4: Posting every day or only liking posts.** There is no need to post on LinkedIn every day. Posting once a week about your project or learning is enough. And only liking posts does nothing — write about your project, so people see your work.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Photo Nahi, Koi Project Nahi, ya Naya Account',
+          '5. Edge Cases: No Photo, No Project, or a New Account'
+        ),
+        body: t(
+          `**Edge case 1: Achhi photo nahi hai.** Toh ek simple photo lo — saaf background, achhi roshni, seedha chehra. Photo mein sunglasses, group photo, ya party photo mat lagao. Professional photo ka matlab hai saaf aur simple photo, studio photo nahi.
+
+**Edge case 2: Koi project nahi hai.** Toh chhota project banao aur use profile mein likho. Ek simple to-do app bhi project hai. Project ke saath ye likho: kya banaya, kis tool se, aur kya seekha. Project ke bina profile mein proof nahi hota.
+
+**Edge case 3: Naya account, koi connection nahi.** Toh pehle apne college ke doston aur seniors ko connect karo. Unke posts par comment karo — sirf like mat karo, ek line likho: "Ye project achha hai, maine bhi aisa kuch banaya hai." Isse log tumhe pehchanne lagte hain. Connection badhane ke liye roz 5 logon ko connect karna kaafi hai.
+
+**Edge case 4: Recruiter ne message bheja.** Toh turant jawab do — 1-2 din ke andar. Jawab mein apna resume aur apne projects ka link bhejo. Message ko ignore mat karo, aur "seen" karke chhodna bhi galat hai.`,
+          `**Edge case 1: No good photo.** Then take a simple photo — a clean background, good light, a straight face. Do not use a photo with sunglasses, a group photo, or a party photo. A professional photo means a clean and simple photo, not a studio photo.
+
+**Edge case 2: No project.** Then build a small project and write it on your profile. A simple to-do app is also a project. With the project, write: what you built, with which tool, and what you learned. Without a project, the profile has no proof.
+
+**Edge case 3: A new account, no connections.** Then first connect with your college friends and seniors. Comment on their posts — do not only like them, write one line: "This project is good, I built something like this too." This way people start to know you. Connecting with 5 people a day is enough to grow connections.
+
+**Edge case 4: A recruiter sent a message.** Then answer fast — within 1 to 2 days. In your answer, send your resume and the link to your projects. Do not ignore the message, and leaving it on "seen" is also wrong.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Headline Badalni Ho, ya Profile ko Resume se Alag Rakhna Ho?',
+          '6. What If: You Need to Change the Headline, or Keep the Profile Different from the Resume?'
+        ),
+        body: t(
+          `**What if tumhari skill badal gayi?** Jaise, pehle tum Python seekh rahe the, ab tum Java seekh rahe ho. Toh headline badal do — "BTech Student | Java | Android Projects | Open to Internships". Headline ko har 2-3 mahine mein update karo, taaki woh tumhari current skill dikhaye. Purani headline ko chhodna mat — woh tumhari purani kahani batati hai.
+
+**What if profile aur resume alag ho?** Toh ye galat hai. Profile aur resume mein wahi skills aur wahi projects hone chahiye. Agar resume mein Python likha hai aur profile mein Java, toh recruiter ko shak hoga. Dono ko ek saath update karo — resume badla, toh profile bhi badlo.
+
+**What if tumhe LinkedIn par koi job dikhi?** Toh seedha apply mat karo — pehle company ke baare mein padho, phir apna resume aur profile check karo ki woh role se match karta hai ya nahi. Agar match karta hai, toh apply karo aur us company mein kaam karne wale kisi senior ko ek chhota sa message bhejo. Yehi job search strategy hai, jo agle article mein detail mein aayegi.`,
+          `**What if your skill changed?** For example, earlier you were learning Python, now you are learning Java. Then change the headline — "BTech Student | Java | Android Projects | Open to Internships". Update the headline every 2 to 3 months, so it shows your current skill. Do not leave the old headline — it tells your old story.
+
+**What if the profile and the resume are different?** Then that is wrong. The profile and the resume must have the same skills and the same projects. If the resume says Python and the profile says Java, the recruiter will doubt you. Update both together — if the resume changed, change the profile too.
+
+**What if you saw a job on LinkedIn?** Then do not apply straight away — first read about the company, then check whether your resume and profile match the role or not. If they match, apply and send a small message to a senior working in that company. This is the job search strategy, which will come in detail in the next article.`
+        ),
+        code: {
+          title: t(
+            'Profile Completeness Checker: 5 Hisse Poore Hain?',
+            'Profile Completeness Checker: Are All 5 Parts Done?'
+          ),
+          language: 'python',
+          code: `parts = {"Photo": True, "Headline": True, "About": False, "Projects": True, "Skills": True}
+done = sum(parts.values())
+print("Profile complete:", done, "of", len(parts))
+for name, ok in parts.items():
+    print(name + ":", "Yes" if ok else "Missing")`,
+          output: `Profile complete: 4 of 5
+Photo: Yes
+Headline: Yes
+About: Missing
+Projects: Yes
+Skills: Yes`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Headline, About, Projects — Teeno Sachhe Hone Chahiye',
+          '7. Summary: Headline, About, Projects — All Three Must Be True'
+        ),
+        body: t(
+          `Poora article ek line mein: **headline mein kaun ho + skill + proof + kya dhoondh rahe ho, About mein 3-4 sachhi lines, aur projects mein 2-3 kaam**. Profile tumhara online resume hai — isliye usmein jhoothi skills mat likho, khaali hisse mat chhodo, aur headline ko har 2-3 mahine mein update karo.
+
+Revision ke liye ye karo: apni headline likho, phir code se check karo ki usmein 4 parts hain ya nahi. Phir apna About 3 lines mein likho. Phir profile completeness checker se dekho ki 5 mein se kitne hisse poore hain. Agar 5 mein se 5 poore hain, toh tumhara profile taiyaar hai. Agle article mein hum job search strategy dekhenge — portals, referrals, aur company sites kaise use karein.`,
+          `The whole article in one line: **in the headline, who you are + skill + proof + what you are looking for; in About, 3 to 4 true lines; and in projects, 2 to 3 pieces of work**. Your profile is your online resume — so do not write false skills in it, do not leave parts empty, and update the headline every 2 to 3 months.
+
+To revise, do this: write your headline, then check with the code whether it has 4 parts or not. Then write your About in 3 lines. Then check with the profile completeness checker how many of the 5 parts are done. If 5 of 5 are done, your profile is ready. In the next article we will look at the job search strategy — how to use portals, referrals, and company sites.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'LinkedIn Profile ki Layers: Upar se Neeche',
+        'Layers of a LinkedIn Profile: Top to Bottom'
+      ),
+      caption: t(
+        'Har layer ek kaam karti hai — photo pehchan, headline kahani, About detail',
+        'Each layer does one job — photo for identity, headline for story, About for detail'
+      ),
+      nodes: [
+        {
+          t: t('Layer 1: Photo', 'Layer 1: Photo'),
+          s: t('Saaf, simple photo — pehchan ke liye', 'A clean, simple photo — for identity')
+        },
+        {
+          t: t('Layer 2: Headline', 'Layer 2: Headline'),
+          s: t('Kaun ho + skill + proof + kya dhoondh rahe ho', 'Who you are + skill + proof + what you are looking for')
+        },
+        {
+          t: t('Layer 3: About', 'Layer 3: About'),
+          s: t('3-4 lines: kaun ho, kya seekha, kya chahiye', '3 to 4 lines: who you are, what you learned, what you want')
+        },
+        {
+          t: t('Layer 4: Skills', 'Layer 4: Skills'),
+          s: t('Sirf sachhi skills — 4-5 kaafi hain', 'Only true skills — 4 to 5 are enough')
+        },
+        {
+          t: t('Layer 5: Projects', 'Layer 5: Projects'),
+          s: t('2-3 projects: kya banaya, kis tool se, kya seekha', '2 to 3 projects: what you built, with which tool, what you learned')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Headline Checker: Java Headline ka Example',
+          'Headline Checker: A Java Headline Example'
+        ),
+        language: 'python',
+        code: `headline = "BTech Student | Java | Android Projects | Open to Internships"
+parts = headline.split("|")
+print("Headline:", headline)
+print("Parts:", len(parts))
+for part in parts:
+    print("-", part.strip())
+print("Has Java:", "Java" in headline)
+print("Length:", len(headline), "characters")`,
+        output: `Headline: BTech Student | Java | Android Projects | Open to Internships
+Parts: 4
+- BTech Student
+- Java
+- Android Projects
+- Open to Internships
+Has Java: True
+Length: 61 characters`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Achhi LinkedIn headline mein kya hona chahiye?',
+          'What should a good LinkedIn headline hold?'
+        ),
+        opts: [
+          t('Sirf college ka naam', 'Only the college name'),
+          t('Kaun ho + skill + proof + kya dhoondh rahe ho', 'Who you are + skill + proof + what you are looking for'),
+          t('Sirf apna naam', 'Only your name'),
+          t('20 skills ki list', 'A list of 20 skills')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: headline ek second mein poori kahani batati hai — kaun ho, skill, proof aur kya chahiye.',
+          'Correct answer: the headline tells the whole story in one second — who you are, the skill, the proof, and what you want.'
+        )
+      },
+      {
+        q: t(
+          'Skills mein kya likhna chahiye?',
+          'What should you write in skills?'
+        ),
+        opts: [
+          t('20 skills, chahe aati hon ya nahi', '20 skills, whether you know them or not'),
+          t('Sirf wahi skills jo tum sach mein use kar sakte ho', 'Only the skills you can really use'),
+          t('Kuch nahi likhna', 'Write nothing'),
+          t('Dost ki skills copy karna', 'Copying your friend skills')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: recruiter ek skill par sawaal poochhega — jhoothi skill par pakde jaoge, isliye sirf sachhi skills likho.',
+          'Correct answer: the recruiter will ask a question on one skill — you will be caught on a false skill, so write only true skills.'
+        )
+      },
+      {
+        q: t(
+          'Profile completeness checker mein 5 mein se 4 hisse poore hain. Kaunsa hissa missing hai?',
+          'In the profile completeness checker, 4 of 5 parts are done. Which part is missing?'
+        ),
+        opts: [
+          t('Photo', 'Photo'),
+          t('Headline', 'Headline'),
+          t('About', 'About'),
+          t('Skills', 'Skills')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: output mein "About: Missing" aata hai, baaki chaaro hisse "Yes" hain.',
+          'Correct answer: the output shows "About: Missing", the other four parts show "Yes".'
+        )
+      },
+      {
+        q: t(
+          'Naya LinkedIn account hai, koi connection nahi. Pehle kya karna chahiye?',
+          'It is a new LinkedIn account, no connections. What should you do first?'
+        ),
+        opts: [
+          t('Roz 5 logon ko connect karo aur posts par comment karo', 'Connect with 5 people a day and comment on posts'),
+          t('Khaali profile chhod do', 'Leave the profile empty'),
+          t('Sirf like karo, kuch mat likho', 'Only like posts, write nothing'),
+          t('Har din 10 posts karo', 'Post 10 times every day')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: college ke doston aur seniors ko connect karo, aur posts par ek line likh kar comment karo — isse log tumhe pehchanne lagte hain.',
+          'Correct answer: connect with college friends and seniors, and comment on posts with one line — this way people start to know you.'
+        )
+      },
+      {
+        q: t(
+          'Recruiter ne LinkedIn par message bheja. Tumhe kya karna chahiye?',
+          'A recruiter sent a message on LinkedIn. What should you do?'
+        ),
+        opts: [
+          t('Message ko ignore karo', 'Ignore the message'),
+          t('1-2 din ke andar jawab do, resume aur projects ka link bhejo', 'Answer within 1 to 2 days, send your resume and the link to your projects'),
+          t('Sirf "seen" karke chhod do', 'Only leave it on "seen"'),
+          t('Message ko delete kar do', 'Delete the message')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: recruiter ke message ka jaldi jawab dena professional hai, aur resume aur projects ka link bhejna sahi tareeka hai.',
+          'Correct answer: answering a recruiter message fast is professional, and sending your resume and the link to your projects is the right way.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Headline ka formula: kaun ho + skill + proof + kya dhoondh rahe ho.',
+        'Headline formula: who you are + skill + proof + what you are looking for.'
+      ),
+      t(
+        'About mein 3-4 sachhi lines likho — poori kahani nahi.',
+        'In About, write 3 to 4 true lines — not the whole story.'
+      ),
+      t(
+        'Skills mein sirf sachhi skills likho — 4-5 kaafi hain, 20 jhoothi nahi.',
+        'In skills, write only true skills — 4 to 5 are enough, not 20 false ones.'
+      ),
+      t(
+        'Profile ke 5 hisse bharo: photo, headline, About, skills, projects.',
+        'Fill all 5 parts of the profile: photo, headline, About, skills, projects.'
+      ),
+      t(
+        'Profile aur resume ek jaise hone chahiye — dono ko ek saath update karo.',
+        'The profile and the resume must match — update both together.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apni Headline Check Karo (Java Example)',
+        'Practice: Check Your Headline (Java Example)'
+      ),
+      task: t(
+        'Neeche wala code ek Java headline ko check karta hai. Isko run karo aur check karo ki output mein "Parts: 4" aur "Length: 61 characters" aata hai. Phir apni headline ke liye code badal kar apni headline check karo.',
+        'The code below checks a Java headline. Run it and check that the output shows "Parts: 4" and "Length: 61 characters". Then change the code for your own headline and check your headline.'
+      ),
+      language: 'python',
+      starter: `headline = "BTech Student | Java | Android Projects | Open to Internships"
+parts = headline.split("|")
+print("Headline:", headline)
+print("Parts:", len(parts))
+for part in parts:
+    print("-", part.strip())
+print("Has Java:", "Java" in headline)
+print("Length:", len(headline), "characters")`,
+      expected: `Headline: BTech Student | Java | Android Projects | Open to Internships
+Parts: 4
+- BTech Student
+- Java
+- Android Projects
+- Open to Internships
+Has Java: True
+Length: 61 characters`
+    },
+    readMinutes: 12
+  };
+
+const placementJobSearch: Article = {
+    id: 'placement-job-search',
+    subjectId: 'placement',
+    title: t(
+      'Job Search Strategy — Portals, Referrals aur Company Sites',
+      'Job Search Strategy — Portals, Referrals, and Company Sites'
+    ),
+    summary: t(
+      'Job search ka plan: portals, referrals aur company sites kaise use karein, har hafte kitne apply karein, referral message kaise likhein, aur ek weekly tracker ke saath worked example. Saare examples invented hain.',
+      'A plan for job search: how to use portals, referrals, and company sites, how many to apply to each week, how to write a referral message, and a worked example with a weekly tracker. All examples are invented.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Job Search Strategy Kya Hai? (Portals, Referrals aur Sites)',
+          '1. What Is a Job Search Strategy? (Portals, Referrals, and Sites)'
+        ),
+        body: t(
+          `**Job search strategy** ka matlab hai: bina plan ke 100 jagah apply karna nahi, ek plan ke saath sahi jagah apply karna. Job search ke 4 main channels hain: **portals** (job websites), **referrals** (kisi ke through apply karna), **company sites** (company ki apni website par apply karna), aur **campus** (college ke through aane wali companies). Har channel ka apna kaam hai, aur sabko ek saath use karna behtar hai.
+
+**Portals** par bahut si jobs ek jagah milti hain. Wahan tum apna resume upload kar sakte ho aur filters se apne role ki jobs dhoondh sakte ho. **Referrals** ka matlab hai: kisi senior ya dost ke through company mein apna resume pahunchana. Referral se tumhara resume seedha sahi insaan tak pahunchta hai. **Company sites** par woh jobs milti hain jo portals par nahi hoti — isliye apni pasand ki companies ki websites ko bhi check karo. **Campus** mein college ke through companies aati hain — unke liye alag se taiyaari karo.
+
+Ek achhi strategy mein har hafte ek **target** hota hai: kitne apply karne hain, kis channel se kitne, aur kin companies mein. Bina target ke job search mein ya toh tum bahut zyada apply karte ho aur thak jaate ho, ya bahut kam apply karte ho aur mauke chhoot jaate hain.`,
+          `A **job search strategy** means: not applying to 100 places without a plan, but applying to the right places with a plan. Job search has 4 main channels: **portals** (job websites), **referrals** (applying through someone), **company sites** (applying on the company own website), and **campus** (companies that come through the college). Each channel has its own job, and using all of them together is better.
+
+On **portals**, many jobs are found in one place. There you can upload your resume and use filters to find jobs for your role. A **referral** means: getting your resume to the company through a senior or a friend. With a referral, your resume reaches the right person directly. On **company sites**, you find jobs that are not on portals — so also check the websites of the companies you like. In **campus**, companies come through the college — prepare separately for them.
+
+A good strategy has a **target** each week: how many to apply to, how many from each channel, and to which companies. Without a target, in job search you either apply too much and get tired, or apply too little and miss chances.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka Weekly Plan aur Rohan ka Referral Message',
+          '2. Real-Life Examples: Asha Weekly Plan and Rohan Referral Message'
+        ),
+        body: t(
+          `**Asha** ne har hafte ka plan banaya: Portals se 5, Referrals se 2, Company sites se 3, Campus se 1 — kul 11 apply. Usne ek simple tracker banaya aur har hafte likha ki kis channel se kitne apply kiye. Ek mahine baad usne dekha ki referrals se usse sabse zyada interview calls aaye, isliye usne referrals par zyada time dena shuru kar diya. Yehi strategy ka matlab hai — data dekh kar plan badalna.
+
+**Rohan** ne ek senior ko referral message bheja: "Hi Rahul, I am applying for the Software Trainee role at your company. I have attached my resume. Thank you for your time." Ye message chhota hai, polite hai, aur usmein role ka naam hai. Senior ne uska resume aage bhej diya. Agar Rohan ne lamba message likha hota — apni poori kahani, 10 lines — toh senior use padhta hi nahi.
+
+Ek aur example: ek student ne sirf portals par apply kiya — roz 20 apply, ek mahine mein 400 apply. Use ek bhi call nahi aaya. Doosre student ne 4 channels use kiye — portals, referrals, company sites, campus — aur har hafte 10-11 apply kiye. Use 3 interview calls aaye. Farak number mein nahi tha, farak **strategy** mein tha.`,
+          `**Asha** made a plan for each week: 5 from Portals, 2 from Referrals, 3 from Company sites, 1 from Campus — 11 applies in total. She made a simple tracker and wrote each week how many she applied to from each channel. After one month she saw that referrals gave her the most interview calls, so she started giving more time to referrals. That is what strategy means — changing the plan by looking at data.
+
+**Rohan** sent a referral message to a senior: "Hi Rahul, I am applying for the Software Trainee role at your company. I have attached my resume. Thank you for your time." This message is short, polite, and it has the name of the role. The senior sent his resume ahead. If Rohan had written a long message — his whole story, 10 lines — the senior would never have read it.
+
+One more example: a student applied only on portals — 20 applies a day, 400 applies in a month. He got not even one call. Another student used 4 channels — portals, referrals, company sites, campus — and applied to 10 to 11 places each week. He got 3 interview calls. The difference was not in the number, the difference was in the **strategy**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Weekly Tracker Banana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building a Weekly Tracker (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apna weekly plan banane ke 4 steps hain. **Step 1:** 4 channels ki list banao — Portals, Referrals, Company sites, Campus. **Step 2:** Har channel ke liye ek number tay karo — jaise Portals 5, Referrals 2, Company sites 3, Campus 1. **Step 3:** Har hafte ke end mein likho ki kitne apply kiye aur kitne calls aaye. **Step 4:** Ek mahine baad dekho ki kis channel se sabse zyada calls aaye, aur agle mahine us channel par zyada time do.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **weekly tracker** hai: woh 4 channels aur unke numbers ko leta hai, kul apply ginta hai, har channel ko print karta hai, aur batata hai ki sabse zyada use hone wala channel kaunsa hai. Output dekho: "Applications this week: 11" — Portals 5, Referrals 2, Company sites 3, Campus 1. "Most used: Portals" — kyunki Portals ka number sabse zyada hai.
+
+Ye tracker tumhe ye dikhata hai ki tumhara time kahan ja raha hai. Agar tum sirf ek channel use kar rahe ho, toh tracker mein woh saaf dikh jaayega. Apne numbers ko badal kar code ko run karo — naya total turant milega.`,
+          `There are 4 steps to build your weekly plan. **Step 1:** Make a list of 4 channels — Portals, Referrals, Company sites, Campus. **Step 2:** Fix a number for each channel — like Portals 5, Referrals 2, Company sites 3, Campus 1. **Step 3:** At the end of each week, write how many you applied to and how many calls came. **Step 4:** After one month, see which channel gave the most calls, and give more time to that channel next month.
+
+Now let us do a dry run with the code below. The code is a **weekly tracker**: it takes the 4 channels and their numbers, counts the total applies, prints each channel, and tells you which channel was used the most. Look at the output: "Applications this week: 11" — Portals 5, Referrals 2, Company sites 3, Campus 1. "Most used: Portals" — because the Portals number is the highest.
+
+This tracker shows you where your time is going. If you are using only one channel, the tracker will show it clearly. Change your numbers and run the code — you will get the new total at once.`
+        ),
+        code: {
+          title: t(
+            'Weekly Tracker: 4 Channels se Kitne Apply?',
+            'Weekly Tracker: How Many Applies from 4 Channels?'
+          ),
+          language: 'python',
+          code: `channels = {"Portals": 5, "Referrals": 2, "Company sites": 3, "Campus": 1}
+total = sum(channels.values())
+print("Applications this week:", total)
+for name, count in channels.items():
+    print(name + ":", count)
+print("Most used:", max(channels, key=channels.get))`,
+          output: `Applications this week: 11
+Portals: 5
+Referrals: 2
+Company sites: 3
+Campus: 1
+Most used: Portals`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Ek Channel, Bina Resume ke Apply aur Lamba Referral Message',
+          '4. Common Mistakes: Only One Channel, Applying Without a Resume, and a Long Referral Message'
+        ),
+        body: t(
+          `**Galti 1: Sirf ek channel use karna.** Sirf portals par apply karna ya sirf campus par bharosa karna — dono galat hain. Har channel se kuch mauke aate hain. 4 channels ko ek saath use karo, taaki koi mauka na chhoote.
+
+**Galti 2: Bina resume ke ya purana resume bhej kar apply karna.** Har apply se pehle check karo ki tumhara resume latest hai ya nahi. Agar tumne naya project banaya hai aur resume mein woh nahi hai, toh pehle resume update karo, phir apply karo. Purana resume bhej kar apply karna mauka barbaad karna hai.
+
+**Galti 3: Lamba referral message.** Referral message mein apni poori kahani mat likho. Message 2-3 lines ka hona chahiye: naam, role, aur resume attach hai. Senior ke paas time kam hota hai — woh lamba message padhega hi nahi. Neeche wale code mein ek chhota referral message hai — use run karke dekho.
+
+**Galti 4: Apply karke bhool jaana.** Apply karne ke baad ek list banao: kis company mein apply kiya, kab kiya, aur kya status hai. Agar 2 hafte mein koi jawab nahi aaya, toh ek polite follow-up bhej sakte ho. Bina list ke tumhe yaad hi nahi rahega ki tumne kahan apply kiya tha.`,
+          `**Mistake 1: Using only one channel.** Applying only on portals or only trusting campus — both are wrong. Each channel brings some chances. Use all 4 channels together, so no chance is missed.
+
+**Mistake 2: Applying without a resume or with an old resume.** Before each apply, check whether your resume is the latest one or not. If you built a new project and it is not on your resume, first update the resume, then apply. Applying with an old resume wastes a chance.
+
+**Mistake 3: A long referral message.** Do not write your whole story in a referral message. The message must be 2 to 3 lines: name, role, and that the resume is attached. A senior has little time — they will never read a long message. The code below has a short referral message — run it and see.
+
+**Mistake 4: Applying and then forgetting.** After you apply, make a list: which company you applied to, when, and what the status is. If no answer comes in 2 weeks, you can send a polite follow-up. Without a list, you will not even remember where you applied.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Referral Nahi, Koi Call Nahi, ya Bahut Zyada Calls',
+          '5. Edge Cases: No Referral, No Calls, or Too Many Calls'
+        ),
+        body: t(
+          `**Edge case 1: Koi referral nahi hai — kisi senior ko nahi jaante.** Toh pehle LinkedIn par seniors se connect karo. Unke posts par comment karo, unse ek chhota sa sawaal poochho. Referral ek din mein nahi milta — pehle connection banao, phir referral maango. Aur referral maangte time hamesha apna resume taiyaar rakho.
+
+**Edge case 2: Ek mahine mein koi call nahi aaya.** Toh ghabrao mat — pehle apna resume aur profile check karo. Kya resume mein keywords hain? Kya projects dikh rahe hain? Kya tum sahi role ke liye apply kar rahe ho? Agar resume mein kami hai, toh use theek karo. Agar role galat hai, toh role badlo. Call na aana hamesha tumhari galti nahi hoti — kabhi-kabhi company ki taraf se der hoti hai.
+
+**Edge case 3: Bahut zyada calls aa gaye, time manage nahi ho raha.** Toh pehle un companies ko priority do jinmein tum sabse zyada interested ho. Har call ko haan mat kaho — apna time un interviews par lagao jo tumhare liye sabse important hain. Baaki ko politely mana kar do ya baad ka time maango.
+
+**Edge case 4: Campus aur off-campus dono chal rahe hain.** Toh dono ke liye alag plan banao. Campus ke liye college ke schedule ke hisaab se taiyaari karo. Off-campus ke liye apna weekly tracker use karo. Dono ko ek saath mat milao — alag list, alag plan.`,
+          `**Edge case 1: No referral — you do not know any senior.** Then first connect with seniors on LinkedIn. Comment on their posts, ask them one small question. A referral does not come in one day — first build the connection, then ask for a referral. And when you ask for a referral, always keep your resume ready.
+
+**Edge case 2: No call came in one month.** Then do not panic — first check your resume and profile. Does the resume have keywords? Are the projects visible? Are you applying for the right role? If the resume has a gap, fix it. If the role is wrong, change the role. No call does not always mean your mistake — sometimes the company is slow.
+
+**Edge case 3: Too many calls came, time is hard to manage.** Then first give priority to the companies you are most interested in. Do not say yes to every call — spend your time on the interviews that matter most to you. Politely say no to the rest or ask for a later time.
+
+**Edge case 4: Campus and off-campus are both going on.** Then make a separate plan for both. For campus, prepare as per the college schedule. For off-campus, use your weekly tracker. Do not mix both together — separate list, separate plan.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Referral ne Mana Kar Diya, ya Company ne Reject Kar Diya?',
+          '6. What If: The Referral Said No, or the Company Rejected You?'
+        ),
+        body: t(
+          `**What if senior ne referral dene se mana kar diya?** Toh bura mat mano. Senior ke apne reasons ho sakte hain — shayad woh tumhe nahi jaanta, ya company mein referral ka rule alag hai. Uska dhanyavaad karo aur doosre senior se baat karo. Ek mana karne se referral ka rasta band nahi hota.
+
+**What if company ne reject kar diya?** Toh uska matlab ye nahi hai ki tum bure ho. Har company ko alag cheez chahiye hoti hai. Reject hone par ye poochho (agar mauka mile): "Main aage kya behtar kar sakta hoon?" Isse tumhe feedback milta hai. Aur reject hone ke baad bhi apna tracker update karo — kis round mein reject hue, kyun hue — taaki agli baar wahi galti na ho.
+
+**What if tumhe ek company se offer mil gaya, par tum doosri company ka wait kar rahe ho?** Toh offer ko turant mana mat karo. HR se poochho ki jawab dene ke liye kitna time hai. Us time mein doosri company ka result dekh lo. Aur offer ko hold karne ke liye polite tareeke se time maango — "Mujhe offer par sochne ke liye kuch din chahiye." Ye normal hai.`,
+          `**What if the senior said no to giving a referral?** Then do not feel bad. The senior may have their own reasons — maybe they do not know you, or the company referral rule is different. Thank them and talk to another senior. One no does not close the referral path.
+
+**What if the company rejected you?** Then that does not mean you are bad. Every company wants a different thing. When you are rejected, ask (if you get the chance): "What can I do better next time?" This gives you feedback. And even after a rejection, update your tracker — in which round you were rejected, why — so the same mistake does not happen next time.
+
+**What if you got an offer from one company, but you are waiting for another company?** Then do not say no to the offer at once. Ask HR how much time you have to answer. In that time, see the result of the other company. And to hold the offer, ask for time in a polite way — "I need a few days to think about the offer." This is normal.`
+        ),
+        code: {
+          title: t(
+            'Referral Message Builder: Chhota aur Polite Message',
+            'Referral Message Builder: A Short and Polite Message'
+          ),
+          language: 'python',
+          code: `name = "Rahul"
+role = "Software Trainee"
+print("Hi " + name + ", I am applying for the " + role + " role at your company.")
+print("I have attached my resume. Thank you for your time.")
+print("Message is short:", True)`,
+          output: `Hi Rahul, I am applying for the Software Trainee role at your company.
+I have attached my resume. Thank you for your time.
+Message is short: True`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: 4 Channels, Weekly Target aur Tracker',
+          '7. Summary: 4 Channels, Weekly Target, and Tracker'
+        ),
+        body: t(
+          `Poora article ek line mein: **4 channels use karo, har hafte ek target rakho, aur tracker se dekho ki kya kaam kar raha hai**. Portals, referrals, company sites, campus — sabko ek saath use karo. Referral message chhota aur polite rakho. Apply karne ke baad list banao, aur reject hone par feedback lo.
+
+Revision ke liye ye karo: apna weekly tracker banao — 4 channels aur unke numbers likho. Phir apna referral message 2-3 lines mein likho. Phir ek list banao: kin companies mein apply karna hai, aur kab. Agle article mein hum ATS-proof resume dekhenge — wahan tumhara resume hi tumhara sabse bada hathiyaar hoga.`,
+          `The whole article in one line: **use 4 channels, keep a target each week, and see with a tracker what is working**. Use portals, referrals, company sites, and campus — all together. Keep the referral message short and polite. After you apply, make a list, and when you are rejected, take feedback.
+
+To revise, do this: build your weekly tracker — write the 4 channels and their numbers. Then write your referral message in 2 to 3 lines. Then make a list: which companies to apply to, and when. In the next article we will look at the ATS-proof resume — there your resume itself will be your biggest tool.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        'Job Search ka Timeline: 4 Hafte ka Plan',
+        'Timeline of Job Search: A 4-Week Plan'
+      ),
+      caption: t(
+        'Har hafte apply karo, har hafte seekho, har mahine plan badlo',
+        'Apply each week, learn each week, change the plan each month'
+      ),
+      nodes: [
+        {
+          t: t('Hafta 1: Plan banao', 'Week 1: Make the plan'),
+          s: t('4 channels, weekly target, tracker taiyaar karo', 'Fix 4 channels, a weekly target, and a tracker')
+        },
+        {
+          t: t('Hafta 2: Apply karo', 'Week 2: Apply'),
+          s: t('Portals, referrals, company sites, campus — sab par apply karo', 'Apply on portals, referrals, company sites, campus — all of them')
+        },
+        {
+          t: t('Hafta 3: Track karo', 'Week 3: Track'),
+          s: t('Kitne apply, kitne calls — list update karo', 'How many applies, how many calls — update the list')
+        },
+        {
+          t: t('Hafta 4: Plan badlo', 'Week 4: Change the plan'),
+          s: t('Jis channel se calls aaye, us par zyada time do', 'Give more time to the channel that gave calls')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Weekly Tracker: Doosra Example (10 Apply)',
+          'Weekly Tracker: Another Example (10 Applies)'
+        ),
+        language: 'python',
+        code: `channels = {"Portals": 4, "Referrals": 3, "Company sites": 2, "Campus": 1}
+total = sum(channels.values())
+print("Applications this week:", total)
+for name, count in channels.items():
+    print(name + ":", count)
+print("Most used:", max(channels, key=channels.get))`,
+        output: `Applications this week: 10
+Portals: 4
+Referrals: 3
+Company sites: 2
+Campus: 1
+Most used: Portals`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Job search ke 4 main channels kaunse hain?',
+          'What are the 4 main channels of job search?'
+        ),
+        opts: [
+          t('Sirf portals', 'Only portals'),
+          t('Portals, referrals, company sites, campus', 'Portals, referrals, company sites, campus'),
+          t('Sirf campus', 'Only campus'),
+          t('Sirf dost', 'Only friends')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 4 channels ko ek saath use karna behtar hai — har channel se kuch mauke aate hain.',
+          'Correct answer: using all 4 channels together is better — each channel brings some chances.'
+        )
+      },
+      {
+        q: t(
+          'Asha ne ek hafte mein kul kitne apply kiye?',
+          'How many applies did Asha make in one week in total?'
+        ),
+        opts: [
+          t('5', '5'),
+          t('10', '10'),
+          t('11', '11'),
+          t('20', '20')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Portals 5 + Referrals 2 + Company sites 3 + Campus 1 = 11 apply.',
+          'Correct answer: Portals 5 + Referrals 2 + Company sites 3 + Campus 1 = 11 applies.'
+        )
+      },
+      {
+        q: t(
+          'Referral message kaisa hona chahiye?',
+          'How should a referral message be?'
+        ),
+        opts: [
+          t('10 lines, poori kahani', '10 lines, the whole story'),
+          t('2-3 lines, naam + role + resume attach', '2 to 3 lines, name + role + resume attached'),
+          t('Sirf "Hi" likhna', 'Only writing "Hi"'),
+          t('Koi message nahi bhejna', 'Sending no message at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: senior ke paas time kam hota hai — chhota aur polite message padha jaata hai, lamba nahi.',
+          'Correct answer: a senior has little time — a short and polite message is read, a long one is not.'
+        )
+      },
+      {
+        q: t(
+          'Ek mahine mein koi call nahi aaya. Pehle kya karna chahiye?',
+          'No call came in one month. What should you do first?'
+        ),
+        opts: [
+          t('Job search chhod do', 'Stop the job search'),
+          t('Resume aur profile check karo, phir role check karo', 'Check your resume and profile, then check the role'),
+          t('Roz 100 apply karo', 'Apply 100 times a day'),
+          t('Kisi se baat mat karo', 'Talk to no one')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: call na aana hamesha tumhari galti nahi hoti — pehle resume, profile aur role ko check karo.',
+          'Correct answer: no call does not always mean your mistake — first check the resume, the profile, and the role.'
+        )
+      },
+      {
+        q: t(
+          'Company ne reject kar diya. Tumhe kya karna chahiye?',
+          'The company rejected you. What should you do?'
+        ),
+        opts: [
+          t('Tracker update karo aur feedback lo', 'Update the tracker and take feedback'),
+          t('Kabhi apply mat karo', 'Never apply again'),
+          t('Resume delete kar do', 'Delete your resume'),
+          t('Kisi ko mat batao', 'Tell no one')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: reject hone par ye likho ki kis round mein reject hue aur kyun — taaki agali baar wahi galti na ho.',
+          'Correct answer: when rejected, write in which round you were rejected and why — so the same mistake does not happen next time.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Job search ke 4 channels: portals, referrals, company sites, campus.',
+        '4 channels of job search: portals, referrals, company sites, campus.'
+      ),
+      t(
+        'Har hafte ek target rakho aur tracker se dekho ki kya kaam kar raha hai.',
+        'Keep a target each week and see with a tracker what is working.'
+      ),
+      t(
+        'Referral message 2-3 lines ka hona chahiye: naam + role + resume attach.',
+        'A referral message must be 2 to 3 lines: name + role + resume attached.'
+      ),
+      t(
+        'Apply karne se pehle resume latest hai ya nahi, ye check karo.',
+        'Before you apply, check whether your resume is the latest one or not.'
+      ),
+      t(
+        'Reject hone par feedback lo aur tracker update karo.',
+        'When rejected, take feedback and update the tracker.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Weekly Tracker Banao (10 Apply)',
+        'Practice: Build Your Weekly Tracker (10 Applies)'
+      ),
+      task: t(
+        'Neeche wala code ek weekly tracker banata hai. Isko run karo aur check karo ki output mein "Applications this week: 10" aur "Most used: Portals" aata hai. Phir apne numbers ke liye code badal kar apna tracker banao.',
+        'The code below builds a weekly tracker. Run it and check that the output shows "Applications this week: 10" and "Most used: Portals". Then change the code for your own numbers and build your tracker.'
+      ),
+      language: 'python',
+      starter: `channels = {"Portals": 4, "Referrals": 3, "Company sites": 2, "Campus": 1}
+total = sum(channels.values())
+print("Applications this week:", total)
+for name, count in channels.items():
+    print(name + ":", count)
+print("Most used:", max(channels, key=channels.get))`,
+      expected: `Applications this week: 10
+Portals: 4
+Referrals: 3
+Company sites: 2
+Campus: 1
+Most used: Portals`
+    },
+    readMinutes: 12
+  };
+
+const placementResumeAts: Article = {
+    id: 'placement-resume-ats',
+    subjectId: 'placement',
+    title: t(
+      'ATS-Proof Resume — Keywords aur Formatting',
+      'ATS-Proof Resume — Keywords and Formatting'
+    ),
+    summary: t(
+      'ATS kya hai, resume usmein kaise pass hota hai, job description se keywords kaise nikaalein, aur ek keyword checker ke saath worked example. Saare resume examples invented hain.',
+      'What ATS is, how a resume passes it, how to take keywords from a job description, and a worked example with a keyword checker. All resume examples are invented.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. ATS Kya Hai? (Keywords aur Formatting)',
+          '1. What Is ATS? (Keywords and Formatting)'
+        ),
+        body: t(
+          `**ATS** matlab Applicant Tracking System — ek software jo companies use karti hain resume ko sort karne ke liye. Jab tum apna resume upload karte ho, toh pehle ATS use padhta hai, insan nahi. ATS resume mein **keywords** dhoondhta hai — jaise "Python", "SQL", "Git" — aur unke hisaab se resume ko score deta hai. Agar tumhare resume mein job ke keywords nahi hain, toh ATS tumhara resume aage nahi bhejta, chahe tum kitne bhi achhe ho.
+
+Isliye resume banate time do cheezein dhyaan mein rakho: **keywords** aur **formatting**. Keywords ka matlab hai: job description mein jo skills likhi hain, woh tumhare resume mein bhi honi chahiye — agar tumhe woh skills sach mein aati hain. Formatting ka matlab hai: resume simple hona chahiye — ek page, saaf headings, simple font. ATS ko fancy design, tables, aur images samajh nahi aate.
+
+Ek achhe resume mein 5 hisse hote hain: contact, education, skills, projects, aur ek chhota summary. Har hisse mein keywords hone chahiye. Jaise, projects mein "Python" aur "SQL" likha hai, toh ATS ko pata chalta hai ki tumhe ye skills aati hain.`,
+          `**ATS** means Applicant Tracking System — a software that companies use to sort resumes. When you upload your resume, first ATS reads it, not a person. ATS looks for **keywords** in the resume — like "Python", "SQL", "Git" — and gives the resume a score as per them. If your resume does not have the keywords of the job, ATS does not send your resume ahead, no matter how good you are.
+
+So while you make a resume, keep two things in mind: **keywords** and **formatting**. Keywords mean: the skills written in the job description must also be in your resume — if you really know those skills. Formatting means: the resume must be simple — one page, clean headings, a simple font. ATS does not understand fancy design, tables, or images.
+
+A good resume has 5 parts: contact, education, skills, projects, and a short summary. Each part must have keywords. For example, if projects say "Python" and "SQL", ATS knows that you know these skills.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka Keyword Match aur Rohan ka Simple Format',
+          '2. Real-Life Examples: Asha Keyword Match and Rohan Simple Format'
+        ),
+        body: t(
+          `**Asha** ne ek job description padhi jismein likha tha: python, sql, git, testing, teamwork. Usne apna resume check kiya: uske resume mein "python sql git teamwork projects" likha tha. Matlab 5 mein se 4 keywords match hue — 80% match. Sirf "testing" missing tha. Asha ne apne project mein testing ka kaam joda aur resume mein "testing" likh diya. Ab uska match 100% ho gaya.
+
+**Rohan** ka resume pehle fancy tha — tables, colours, aur ek photo. ATS use padh nahi paaya. Rohan ne resume ko simple banaya: ek page, saaf headings, simple font, koi table nahi, koi photo nahi. Uske baad uska resume ATS se pass hone laga. Rohan ne seekha: resume insan ke liye nahi, pehle ATS ke liye banta hai, phir insan ke liye.
+
+Ek aur example: ek student ne resume mein likha tha "I know many languages". ATS ko isse kuch pata nahi chala — kaunsi languages? Doosre student ne likha: "Python, SQL, Git". ATS ko turant samajh aaya. Isliye resume mein **specific** words likho, general words nahi.`,
+          `**Asha** read a job description that said: python, sql, git, testing, teamwork. She checked her resume: her resume said "python sql git teamwork projects". That means 4 of 5 keywords matched — 80% match. Only "testing" was missing. Asha added testing work to her project and wrote "testing" on her resume. Now her match became 100%.
+
+**Rohan** resume was fancy at first — tables, colours, and a photo. ATS could not read it. Rohan made the resume simple: one page, clean headings, a simple font, no table, no photo. After that, his resume started passing ATS. Rohan learned: a resume is made first for ATS, then for a person.
+
+One more example: a student wrote on the resume "I know many languages". ATS learned nothing from this — which languages? Another student wrote: "Python, SQL, Git". ATS understood at once. So write **specific** words on the resume, not general words.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Keyword Checker Banana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building a Keyword Checker (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apna resume ATS-proof banane ke 4 steps hain. **Step 1:** Job description ko padho aur usmein se 5-6 keywords nikaalo — skills, tools, aur kaam ke words. **Step 2:** Apna resume check karo — kaunse keywords tumhare resume mein hain, kaunse nahi. **Step 3:** Jo keywords missing hain, agar tumhe woh skills sach mein aati hain, toh unhe resume mein jodo — projects ya skills mein. **Step 4:** Resume ko simple format mein rakho — ek page, saaf headings, simple font.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **ATS keyword checker** hai: woh job ke 5 keywords aur tumhare resume ka text leta hai, aur batata hai ki kitne keywords match hue, kaunse mile, kaunse missing hain, aur match kitne percent hai. Output dekho: "Matched: 4 of 5", "Found: ['python', 'sql', 'git', 'teamwork']", "Missing: ['testing']", "Match %: 80". Matlab tumhara resume 80% match karta hai — achha hai, par "testing" jodne par 100% ho jaayega.
+
+Ye checker tumhe ye dikhata hai ki tumhara resume job se kitna match karta hai. Har job ke liye keywords badal kar code ko run karo — naya match turant milega.`,
+          `There are 4 steps to make your resume ATS-proof. **Step 1:** Read the job description and take 5 to 6 keywords from it — skills, tools, and work words. **Step 2:** Check your resume — which keywords are in your resume, which ones are not. **Step 3:** For the keywords that are missing, if you really know those skills, add them to your resume — in projects or skills. **Step 4:** Keep the resume in a simple format — one page, clean headings, a simple font.
+
+Now let us do a dry run with the code below. The code is an **ATS keyword checker**: it takes the 5 keywords of the job and the text of your resume, and tells you how many keywords matched, which ones were found, which ones are missing, and what the match percent is. Look at the output: "Matched: 4 of 5", "Found: ['python', 'sql', 'git', 'teamwork']", "Missing: ['testing']", "Match %: 80". That means your resume matches 80% — good, but adding "testing" will make it 100%.
+
+This checker shows you how much your resume matches the job. Change the keywords for each job and run the code — you will get the new match at once.`
+        ),
+        code: {
+          title: t(
+            'ATS Keyword Checker: Resume Kitna Match Karta Hai?',
+            'ATS Keyword Checker: How Much Does the Resume Match?'
+          ),
+          language: 'python',
+          code: `job_words = ["python", "sql", "git", "testing", "teamwork"]
+resume = "python sql git teamwork projects"
+found = [w for w in job_words if w in resume]
+missing = [w for w in job_words if w not in resume]
+print("Matched:", len(found), "of", len(job_words))
+print("Found:", found)
+print("Missing:", missing)
+print("Match %:", len(found) * 100 // len(job_words))`,
+          output: `Matched: 4 of 5
+Found: ['python', 'sql', 'git', 'teamwork']
+Missing: ['testing']
+Match %: 80`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Fancy Design, Jhoothe Keywords aur 2-Page Resume',
+          '4. Common Mistakes: Fancy Design, False Keywords, and a 2-Page Resume'
+        ),
+        body: t(
+          `**Galti 1: Fancy design — tables, colours, images.** ATS ko tables aur images samajh nahi aate. Resume simple hona chahiye: ek page, saaf headings, simple font. Fancy resume insan ko achha lag sakta hai, par ATS use padh nahi paata.
+
+**Galti 2: Jhoothe keywords.** Job mein "testing" likha hai aur tumhe testing nahi aati, phir bhi tumne resume mein "testing" likh diya. ATS se pass ho jaoge, par interviewer ek sawaal mein pakad lega. Keywords sirf wahi likho jo tumhe sach mein aate hain.
+
+**Galti 3: 2-page resume.** Fresher ka resume ek page ka hona chahiye. Recruiter ke paas bahut se resume hote hain — 2-page resume woh padhta hi nahi. Ek page mein apni kahani likho: contact, education, skills, projects, summary — sab ek page mein.
+
+**Galti 4: Spelling mistakes aur galat dates.** Resume mein ek bhi spelling mistake nahi honi chahiye. Dates bhi sahi honi chahiye — college ka saal, project ka saal. Ek galti se lagta hai ki tum careful nahi ho. Resume bhejne se pehle use 2 baar padho, aur ek dost se bhi padhwa lo.`,
+          `**Mistake 1: Fancy design — tables, colours, images.** ATS does not understand tables or images. The resume must be simple: one page, clean headings, a simple font. A fancy resume may look good to a person, but ATS cannot read it.
+
+**Mistake 2: False keywords.** The job says "testing" and you do not know testing, but you still wrote "testing" on your resume. You will pass ATS, but the interviewer will catch you in one question. Write only the keywords you really know.
+
+**Mistake 3: A 2-page resume.** A fresher resume must be one page. A recruiter has many resumes — a 2-page resume is never read. Write your story in one page: contact, education, skills, projects, summary — all in one page.
+
+**Mistake 4: Spelling mistakes and wrong dates.** There must not be even one spelling mistake on the resume. Dates must also be right — the college year, the project year. One mistake makes it look like you are not careful. Read the resume 2 times before you send it, and get a friend to read it too.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Experience Nahi, Career Change, ya Gap ke Saath Resume',
+          '5. Edge Cases: No Experience, Career Change, or a Resume with a Gap'
+        ),
+        body: t(
+          `**Edge case 1: Koi experience nahi hai.** Toh projects ko experience ki tarah likho. Har project mein likho: kya banaya, kis tool se, aur kya result mila. Projects hi tumhara experience hain — unhe resume mein sabse zyada jagah do.
+
+**Edge case 2: Career change — jaise, pehle ek field mein the, ab doosri mein jaana hai.** Toh resume mein wahi skills dikhao jo naye role se match karti hain. Purane kaam ko chhota rakho, naye skills aur projects ko bada rakho. Resume mein ye mat likho ki tumne career kyun badla — woh interview mein batana.
+
+**Edge case 3: Gap ke saath resume.** Gap ko resume mein chhupao mat — dates sahi likho. Agar gap mein tumne kuch seekha, toh use skills ya projects mein likho. Gap ke baare mein interview mein poochha jaayega, wahan uska jawab do — resume mein gap ko explain karne ki zaroorat nahi hai.
+
+**Edge case 4: Resume mein photo lagani hai ya nahi?** ATS ke liye photo mat lagao — ATS photo ko padh nahi paata, aur photo se resume ka format bigad sakta hai. Photo LinkedIn profile ke liye hai, resume ke liye nahi.`,
+          `**Edge case 1: No experience.** Then write projects like experience. In each project, write: what you built, with which tool, and what the result was. Projects are your experience — give them the most space on the resume.
+
+**Edge case 2: Career change — for example, you were in one field before, now you want to go to another.** Then show on the resume only the skills that match the new role. Keep the old work small, and keep the new skills and projects big. Do not write on the resume why you changed your career — tell that in the interview.
+
+**Edge case 3: A resume with a gap.** Do not hide the gap on the resume — write the dates right. If you learned something in the gap, write it in skills or projects. You will be asked about the gap in the interview, answer it there — there is no need to explain the gap on the resume.
+
+**Edge case 4: Should you put a photo on the resume or not?** For ATS, do not put a photo — ATS cannot read a photo, and a photo can break the format of the resume. A photo is for the LinkedIn profile, not for the resume.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Har Job ke Liye Resume Badalna Ho, ya ATS se Pass Na Ho?',
+          '6. What If: You Need to Change the Resume for Each Job, or It Does Not Pass ATS?'
+        ),
+        body: t(
+          `**What if har job ke liye resume badalna ho?** Toh ye sahi hai — har job ke liye resume ko thoda badlo. Job description ke keywords ke hisaab se skills aur projects ko aage-peeche karo. Jaise, ek job mein Python chahiye, doosri mein Java — toh pehli job ke resume mein Python ko upar rakho, doosri mein Java ko. Resume ka base wahi rahega, sirf keywords badlenge.
+
+**What if resume ATS se pass nahi ho raha?** Toh pehle keyword checker se match dekho. Agar match 50% se kam hai, toh keywords jodo. Agar match achha hai phir bhi pass nahi ho raha, toh format check karo — kya resume mein table hai? Kya font simple hai? Kya resume ek page ka hai? Format theek karne par ATS pass hone lagega.
+
+**What if tumhe nahi pata ki keywords kaunse hain?** Toh job description ko 2 baar padho. Jo words baar-baar aaye hain — skills, tools, kaam — wahi keywords hain. Unhe ek list mein likho, phir apne resume se compare karo. Yehi keyword checker ka kaam hai.`,
+          `**What if you need to change the resume for each job?** Then that is right — change the resume a little for each job. Move the skills and projects up and down as per the keywords of the job description. For example, one job needs Python, another needs Java — so in the first job resume, keep Python on top, in the second, keep Java on top. The base of the resume will stay the same, only the keywords will change.
+
+**What if the resume is not passing ATS?** Then first see the match with the keyword checker. If the match is below 50%, add keywords. If the match is good and still it does not pass, check the format — does the resume have a table? Is the font simple? Is the resume one page? After you fix the format, ATS will start passing it.
+
+**What if you do not know which words are keywords?** Then read the job description 2 times. The words that come again and again — skills, tools, work — those are the keywords. Write them in a list, then compare them with your resume. That is the work of the keyword checker.`
+        ),
+        code: {
+          title: t(
+            'Resume Checklist Scorer: 5 Hisse Poore Hain?',
+            'Resume Checklist Scorer: Are All 5 Parts Done?'
+          ),
+          language: 'python',
+          code: `sections = {"Contact": True, "Education": True, "Skills": True, "Projects": True, "One page": False}
+done = sum(sections.values())
+print("Resume sections done:", done, "of", len(sections))
+for name, ok in sections.items():
+    print(name + ":", "Yes" if ok else "Missing")
+print("Ready to send:", done >= 4)`,
+          output: `Resume sections done: 4 of 5
+Contact: Yes
+Education: Yes
+Skills: Yes
+Projects: Yes
+One page: Missing
+Ready to send: True`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Keywords + Simple Format = ATS Pass',
+          '7. Summary: Keywords + Simple Format = ATS Pass'
+        ),
+        body: t(
+          `Poora article ek line mein: **resume mein job ke keywords hone chahiye, aur format simple hona chahiye — ek page, saaf headings, simple font**. Keywords sirf wahi likho jo tumhe sach mein aate hain. Har job ke liye resume ko thoda badlo, aur bhejne se pehle spelling aur dates check karo.
+
+Revision ke liye ye karo: ek job description se 5 keywords nikaalo, phir keyword checker se apna match dekho. Agar match 80% ya zyada hai, toh tumhara resume taiyaar hai. Phir resume checklist scorer se dekho ki 5 mein se kitne hisse poore hain. Agle article mein hum cover letters dekhenge — wahan resume ki kahani ko ek letter mein badalna hai.`,
+          `The whole article in one line: **the resume must have the keywords of the job, and the format must be simple — one page, clean headings, a simple font**. Write only the keywords you really know. Change the resume a little for each job, and check the spelling and dates before you send it.
+
+To revise, do this: take 5 keywords from a job description, then see your match with the keyword checker. If the match is 80% or more, your resume is ready. Then see with the resume checklist scorer how many of the 5 parts are done. In the next article we will look at cover letters — there you must turn the story of the resume into a letter.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'ATS Match ke Bars: Keywords ka Match Percent',
+        'Bars of ATS Match: Keyword Match Percent'
+      ),
+      caption: t(
+        'Match 80% ya zyada ho toh resume taiyaar hai',
+        'If the match is 80% or more, the resume is ready'
+      ),
+      nodes: [],
+      bars: [
+        {
+          label: t('Python', 'Python'),
+          value: 100,
+          note: t('Resume mein hai', 'It is on the resume')
+        },
+        {
+          label: t('SQL', 'SQL'),
+          value: 100,
+          note: t('Resume mein hai', 'It is on the resume')
+        },
+        {
+          label: t('Git', 'Git'),
+          value: 100,
+          note: t('Resume mein hai', 'It is on the resume')
+        },
+        {
+          label: t('Testing', 'Testing'),
+          value: 0,
+          note: t('Resume mein nahi hai — jodna hai', 'Not on the resume — must be added')
+        },
+        {
+          label: t('Teamwork', 'Teamwork'),
+          value: 100,
+          note: t('Resume mein hai', 'It is on the resume')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Keyword Checker: Java Job ka Example',
+          'Keyword Checker: A Java Job Example'
+        ),
+        language: 'python',
+        code: `job_words = ["java", "sql", "git", "testing"]
+resume = "java git testing android projects"
+found = [w for w in job_words if w in resume]
+missing = [w for w in job_words if w not in resume]
+print("Matched:", len(found), "of", len(job_words))
+print("Found:", found)
+print("Missing:", missing)
+print("Match %:", len(found) * 100 // len(job_words))`,
+        output: `Matched: 3 of 4
+Found: ['java', 'git', 'testing']
+Missing: ['sql']
+Match %: 75`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'ATS kya karta hai?',
+          'What does ATS do?'
+        ),
+        opts: [
+          t('Resume ko fancy banata hai', 'Makes the resume fancy'),
+          t('Resume mein keywords dhoondhta hai aur score deta hai', 'Looks for keywords in the resume and gives a score'),
+          t('Interview leta hai', 'Takes the interview'),
+          t('Salary tay karta hai', 'Fixes the salary')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ATS pehle resume ko padhta hai aur keywords ke hisaab se score deta hai — keywords nahi hain toh resume aage nahi jaata.',
+          'Correct answer: ATS reads the resume first and gives a score as per keywords — if there are no keywords, the resume does not go ahead.'
+        )
+      },
+      {
+        q: t(
+          'Asha ka resume 5 mein se 4 keywords match karta hai. Match kitne percent hai?',
+          'Asha resume matches 4 of 5 keywords. What is the match percent?'
+        ),
+        opts: [
+          t('40%', '40%'),
+          t('60%', '60%'),
+          t('80%', '80%'),
+          t('100%', '100%')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 4 / 5 = 80% — output mein "Match %: 80" aata hai, aur sirf "testing" missing hai.',
+          'Correct answer: 4 / 5 = 80% — the output shows "Match %: 80", and only "testing" is missing.'
+        )
+      },
+      {
+        q: t(
+          'Resume ka format kaisa hona chahiye?',
+          'How should the format of a resume be?'
+        ),
+        opts: [
+          t('Tables, colours aur photo ke saath fancy', 'Fancy, with tables, colours, and a photo'),
+          t('Ek page, saaf headings, simple font', 'One page, clean headings, a simple font'),
+          t('2 page, chhota font', '2 pages, a small font'),
+          t('Sirf images', 'Only images')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ATS ko tables aur images samajh nahi aate — simple format hi ATS se pass hota hai.',
+          'Correct answer: ATS does not understand tables or images — only a simple format passes ATS.'
+        )
+      },
+      {
+        q: t(
+          'Resume mein jhoothe keywords likhna kyun galat hai?',
+          'Why is it wrong to write false keywords on a resume?'
+        ),
+        opts: [
+          t('ATS se pass nahi hoga', 'It will not pass ATS'),
+          t('Interviewer ek sawaal mein pakad lega', 'The interviewer will catch you in one question'),
+          t('Resume lamba ho jaayega', 'The resume will become long'),
+          t('Font kharab ho jaayega', 'The font will become bad')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jhoothe keywords se ATS pass ho sakta hai, par interviewer ko sach pata chal jaayega.',
+          'Correct answer: false keywords may pass ATS, but the interviewer will learn the truth.'
+        )
+      },
+      {
+        q: t(
+          'Fresher ka resume kitne page ka hona chahiye?',
+          'How many pages should a fresher resume be?'
+        ),
+        opts: [
+          t('1 page', '1 page'),
+          t('2 page', '2 pages'),
+          t('5 page', '5 pages'),
+          t('10 page', '10 pages')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: fresher ka resume ek page ka hona chahiye — recruiter 2-page resume padhta hi nahi.',
+          'Correct answer: a fresher resume must be one page — a recruiter never reads a 2-page resume.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'ATS resume mein keywords dhoondhta hai aur score deta hai.',
+        'ATS looks for keywords in the resume and gives a score.'
+      ),
+      t(
+        'Resume simple hona chahiye: ek page, saaf headings, simple font.',
+        'The resume must be simple: one page, clean headings, a simple font.'
+      ),
+      t(
+        'Keywords sirf wahi likho jo tumhe sach mein aate hain.',
+        'Write only the keywords you really know.'
+      ),
+      t(
+        'Har job ke liye resume ko thoda badlo — keywords job ke hisaab se.',
+        'Change the resume a little for each job — keywords as per the job.'
+      ),
+      t(
+        'Bhejne se pehle spelling aur dates 2 baar check karo.',
+        'Before you send it, check the spelling and dates 2 times.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Keyword Match Check Karo (Java Job)',
+        'Practice: Check Your Keyword Match (Java Job)'
+      ),
+      task: t(
+        'Neeche wala code ek Java job ke liye keyword match check karta hai. Isko run karo aur check karo ki output mein "Matched: 3 of 4" aur "Match %: 75" aata hai. Phir apne job ke keywords ke liye code badal kar apna match dekho.',
+        'The code below checks the keyword match for a Java job. Run it and check that the output shows "Matched: 3 of 4" and "Match %: 75". Then change the code for your own job keywords and see your match.'
+      ),
+      language: 'python',
+      starter: `job_words = ["java", "sql", "git", "testing"]
+resume = "java git testing android projects"
+found = [w for w in job_words if w in resume]
+missing = [w for w in job_words if w not in resume]
+print("Matched:", len(found), "of", len(job_words))
+print("Found:", found)
+print("Missing:", missing)
+print("Match %:", len(found) * 100 // len(job_words))`,
+      expected: `Matched: 3 of 4
+Found: ['java', 'git', 'testing']
+Missing: ['sql']
+Match %: 75`
+    },
+    readMinutes: 12
+  };
+
+const placementCoverLetter: Article = {
+    id: 'placement-cover-letter',
+    subjectId: 'placement',
+    title: t(
+      'Cover Letters — Chhota Letter, Bada Asar',
+      'Cover Letters — A Short Letter, a Big Effect'
+    ),
+    summary: t(
+      'Cover letter kya hai, kab likhna hai, uske 4 hisse kya hain, aur ek letter builder ke saath worked example. Saare letters aur company names invented examples hain.',
+      'What a cover letter is, when to write one, what its 4 parts are, and a worked example with a letter builder. All letters and company names are invented examples.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Cover Letter Kya Hai? (Resume se Alag Kya Hai)',
+          '1. What Is a Cover Letter? (How Is It Different from a Resume)'
+        ),
+        body: t(
+          `**Cover letter** ek chhota sa letter hai jo tum resume ke saath bhejte ho. Resume mein tumhare skills aur projects ki list hoti hai, par cover letter mein tum batate ho: **tum is role ke liye sahi kyun ho**. Resume ek list hai, cover letter ek kahani hai — chhoti si kahani, 3-4 paragraphs ki.
+
+Cover letter har jagah zaroori nahi hai. Kuch companies maangti hain, kuch nahi maangti. Agar job mein likha hai "cover letter bhejiye", toh bhejna hi hai. Agar nahi likha hai, toh bhi ek chhota cover letter bhejna achha hota hai — isse recruiter ko lagta hai ki tumne is job ke liye mehnat ki hai. Par cover letter kabhi bhi resume ki copy nahi hona chahiye — woh resume mein jo hai, use dobara mat likho.
+
+Ek achhe cover letter ke 4 hisse hote hain: **greeting** (Dear Hiring Manager), **intro** (main kaun hoon aur kis role ke liye apply kar raha hoon), **body** (meri skill aur project kya hai, aur woh role se kaise match karta hai), aur **closing** (dhanyavaad aur Regards). Har hissa 2-3 lines ka hona chahiye — poora letter ek page se chhota hona chahiye.`,
+          `A **cover letter** is a short letter that you send with your resume. A resume holds a list of your skills and projects, but in a cover letter you tell them: **why you are right for this role**. A resume is a list, a cover letter is a story — a small story, 3 to 4 paragraphs long.
+
+A cover letter is not needed everywhere. Some companies ask for it, some do not. If the job says "please send a cover letter", then you must send one. If it does not say so, sending a short cover letter is still good — it makes the recruiter feel you worked hard for this job. But a cover letter must never be a copy of the resume — do not write again what is already on the resume.
+
+A good cover letter has 4 parts: **greeting** (Dear Hiring Manager), **intro** (who I am and which role I am applying for), **body** (what my skill and project are, and how they match the role), and **closing** (thanks and Regards). Each part must be 2 to 3 lines — the whole letter must be shorter than one page.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka BrightTech Letter aur Rohan ka DataWorks Letter',
+          '2. Real-Life Examples: Asha BrightTech Letter and Rohan DataWorks Letter'
+        ),
+        body: t(
+          `**Asha** ne BrightTech company mein Software Trainee role ke liye letter likha: "Dear Hiring Manager, I am Asha, and I am applying for the Software Trainee role at BrightTech. My strongest skill is Python, and I used it in my college projects. Thank you for your time. Regards, Asha." Ye letter chhota hai, par ismein 4 hisse hain — greeting, intro, body, closing. Recruiter ko ek minute mein samajh aata hai ki Asha kaun hai aur woh kya chahti hai.
+
+**Rohan** ne DataWorks mein Data Trainee role ke liye letter likha: "Dear Hiring Manager, I am Rohan, and I am applying for the Data Trainee role at DataWorks. My strongest skill is SQL, and I used it in my college projects. Thank you for your time. Regards, Rohan." Rohan ne Asha ka letter copy nahi kiya — usne apna naam, apna role, apni company aur apni skill badal di. Yehi sahi tareeka hai — har letter ko us company ke liye badlo.
+
+Ek aur example: ek student ne cover letter mein apna resume dobara likh diya — skills ki list, projects ki list, sab kuch. Recruiter ne letter ko padha hi nahi, kyunki woh resume mein pehle se tha. Doosre student ne letter mein sirf ek kahani likhi: "Maine apne college ke liye ek notes app banaya, jise 200 students use karte hain." Doosra letter jeeta, kyunki usmein **kahani** thi, list nahi.`,
+          `**Asha** wrote a letter for the Software Trainee role at BrightTech company: "Dear Hiring Manager, I am Asha, and I am applying for the Software Trainee role at BrightTech. My strongest skill is Python, and I used it in my college projects. Thank you for your time. Regards, Asha." This letter is short, but it has 4 parts — greeting, intro, body, closing. In one minute, the recruiter understands who Asha is and what she wants.
+
+**Rohan** wrote a letter for the Data Trainee role at DataWorks: "Dear Hiring Manager, I am Rohan, and I am applying for the Data Trainee role at DataWorks. My strongest skill is SQL, and I used it in my college projects. Thank you for your time. Regards, Rohan." Rohan did not copy Asha letter — he changed his name, his role, his company, and his skill. That is the right way — change each letter for that company.
+
+One more example: a student wrote their resume again in the cover letter — a list of skills, a list of projects, everything. The recruiter never read the letter, because it was already on the resume. Another student wrote only one story in the letter: "I built a notes app for my college, which 200 students use." The second letter won, because it had a **story**, not a list.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Cover Letter Banana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Building a Cover Letter (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apna cover letter banane ke 4 steps hain. **Step 1:** Greeting likho — "Dear Hiring Manager,". Agar tumhe hiring manager ka naam pata hai, toh naam likho, warna "Hiring Manager" likho. **Step 2:** Intro likho — "I am Asha, and I am applying for the Software Trainee role at BrightTech." Ismein naam, role aur company — teeno hone chahiye. **Step 3:** Body likho — "My strongest skill is Python, and I used it in my college projects." Ismein skill aur proof hona chahiye. **Step 4:** Closing likho — "Thank you for your time. Regards, Asha."
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **cover letter builder** hai: woh naam, role, company aur skill ko leta hai, aur 5 lines ka letter banata hai. Output dekho: "Dear Hiring Manager," phir intro line, phir body line, phir "Thank you for your time." aur "Regards, Asha". Ye ek poora letter hai — chhota, saaf, aur har company ke liye badla ja sakta hai.
+
+Code ko run karke apna naam, role, company aur skill badal kar dekho — naya letter turant ban jaayega. Har company ke liye letter ko badlo — ek hi letter har jagah mat bhejo.`,
+          `There are 4 steps to build your cover letter. **Step 1:** Write the greeting — "Dear Hiring Manager,". If you know the name of the hiring manager, write the name, or else write "Hiring Manager". **Step 2:** Write the intro — "I am Asha, and I am applying for the Software Trainee role at BrightTech." It must hold the name, the role, and the company — all three. **Step 3:** Write the body — "My strongest skill is Python, and I used it in my college projects." It must hold the skill and the proof. **Step 4:** Write the closing — "Thank you for your time. Regards, Asha."
+
+Now let us do a dry run with the code below. The code is a **cover letter builder**: it takes the name, role, company, and skill, and builds a 5-line letter. Look at the output: "Dear Hiring Manager," then the intro line, then the body line, then "Thank you for your time." and "Regards, Asha". This is a full letter — short, clean, and it can be changed for each company.
+
+Run the code and change your name, role, company, and skill — a new letter will be built at once. Change the letter for each company — do not send the same letter everywhere.`
+        ),
+        code: {
+          title: t(
+            'Cover Letter Builder: Naam, Role, Company, Skill se Letter',
+            'Cover Letter Builder: A Letter from Name, Role, Company, Skill'
+          ),
+          language: 'python',
+          code: `name = "Asha"
+role = "Software Trainee"
+company = "BrightTech"
+skill = "Python"
+print("Dear Hiring Manager,")
+print("I am " + name + ", and I am applying for the " + role + " role at " + company + ".")
+print("My strongest skill is " + skill + ", and I used it in my college projects.")
+print("Thank you for your time.")
+print("Regards, " + name)`,
+          output: `Dear Hiring Manager,
+I am Asha, and I am applying for the Software Trainee role at BrightTech.
+My strongest skill is Python, and I used it in my college projects.
+Thank you for your time.
+Regards, Asha`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Resume ki Copy, Bahut Lamba Letter aur Galat Company ka Naam',
+          '4. Common Mistakes: A Copy of the Resume, a Very Long Letter, and the Wrong Company Name'
+        ),
+        body: t(
+          `**Galti 1: Resume ki copy.** Cover letter mein resume ki list dobara mat likho. Letter mein ek kahani likho — ek project, ek skill, ek result. Resume mein list hai, letter mein kahani honi chahiye.
+
+**Galti 2: Bahut lamba letter.** Cover letter ek page se chhota hona chahiye — 3-4 paragraphs, har paragraph 2-3 lines. Agar letter 2 page ka hai, toh recruiter use padhega hi nahi. Lamba letter likhne se behtar hai chhota aur saaf letter likhna.
+
+**Galti 3: Galat company ka naam.** Ek company ke liye likha letter doosri company ko bhej diya, aur company ka naam badalna bhool gaye. Ye sabse badi galti hai — recruiter ko turant pata chal jaata hai ki tumne letter copy kiya hai. Har letter bhejne se pehle company ka naam 2 baar check karo.
+
+**Galti 4: Spelling mistakes.** Cover letter mein ek bhi spelling mistake nahi honi chahiye. Letter bhejne se pehle use 2 baar padho, aur ek dost se bhi padhwa lo. Spelling mistake se lagta hai ki tum careful nahi ho.`,
+          `**Mistake 1: A copy of the resume.** Do not write the list of the resume again in the cover letter. Write one story in the letter — one project, one skill, one result. The resume has the list, the letter must have the story.
+
+**Mistake 2: A very long letter.** A cover letter must be shorter than one page — 3 to 4 paragraphs, each paragraph 2 to 3 lines. If the letter is 2 pages long, the recruiter will never read it. It is better to write a short and clean letter than a long letter.
+
+**Mistake 3: The wrong company name.** You sent a letter written for one company to another company, and forgot to change the company name. This is the biggest mistake — the recruiter at once knows you copied the letter. Before you send each letter, check the company name 2 times.
+
+**Mistake 4: Spelling mistakes.** There must not be even one spelling mistake in a cover letter. Read the letter 2 times before you send it, and get a friend to read it too. A spelling mistake makes it look like you are not careful.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Cover Letter Nahi Maanga, Company ka Naam Nahi Pata, ya Pehla Letter',
+          '5. Edge Cases: No Cover Letter Asked, Company Name Not Known, or Your First Letter'
+        ),
+        body: t(
+          `**Edge case 1: Job mein cover letter nahi maanga gaya.** Toh bhi ek chhota cover letter bhejna achha hota hai. Isse recruiter ko lagta hai ki tumne is job ke liye mehnat ki hai. Par agar job mein saaf likha hai "cover letter mat bhejo", toh mat bhejo — rule ko follow karo.
+
+**Edge case 2: Company ka naam nahi pata.** Toh letter mein company ka naam mat likho — sirf role likho: "I am applying for the Software Trainee role." Ya "Dear Hiring Manager" likh kar role par focus karo. Galat naam likhne se behtar hai naam na likhna.
+
+**Edge case 3: Pehla cover letter likh rahe ho.** Toh pehle Asha wale example ko dekho, phir apna letter banao. Pehla letter perfect nahi hoga — use 2-3 baar likho, har baar behtar banao. Apne dost ko dikhao aur usse feedback lo.
+
+**Edge case 4: Letter mein salary likhni hai ya nahi?** Cover letter mein salary mat likho. Salary ki baat interview mein hoti hai, letter mein nahi. Letter mein sirf ye likho: tum kaun ho, tumhari skill kya hai, aur tum is role ke liye sahi kyun ho.`,
+          `**Edge case 1: The job did not ask for a cover letter.** Then sending a short cover letter is still good. It makes the recruiter feel you worked hard for this job. But if the job clearly says "do not send a cover letter", then do not send one — follow the rule.
+
+**Edge case 2: The company name is not known.** Then do not write the company name in the letter — write only the role: "I am applying for the Software Trainee role." Or write "Dear Hiring Manager" and focus on the role. It is better to write no name than a wrong name.
+
+**Edge case 3: You are writing your first cover letter.** Then first look at the Asha example, then build your letter. The first letter will not be perfect — write it 2 to 3 times, make it better each time. Show it to your friend and take feedback.
+
+**Edge case 4: Should you write salary in the letter or not?** Do not write salary in a cover letter. Salary is talked about in the interview, not in the letter. In the letter, write only: who you are, what your skill is, and why you are right for this role.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Letter Bahut Chhota Ho, ya Har Company ke Liye Alag Letter Banana Ho?',
+          '6. What If: The Letter Is Too Short, or You Need a Different Letter for Each Company?'
+        ),
+        body: t(
+          `**What if letter bahut chhota ho gaya?** Jaise, sirf 2 lines ka letter. Toh usmein ek project ki line jodo: "In my project Library App, I used Python to solve a real problem." Ek project ki line se letter poora ho jaata hai. Letter mein kam se kam 5 lines honi chahiye — greeting, intro, body, closing, aur naam.
+
+**What if har company ke liye alag letter banana ho?** Toh ye sahi hai — har company ke liye letter badlo. Sirf 3 cheezein badalni hain: company ka naam, role ka naam, aur skill jo us role se match karti hai. Baaki letter wahi rahega. Iske liye letter builder code use karo — naam, role, company aur skill badlo, naya letter ban jaayega.
+
+**What if letter mein koi project nahi hai?** Toh skill par focus karo: "My strongest skill is Python, and I learned it by building small projects." Project ka naam nahi hai, par skill aur learning hai. Ye bhi ek achha letter hai.`,
+          `**What if the letter became too short?** For example, a letter of only 2 lines. Then add one project line to it: "In my project Library App, I used Python to solve a real problem." One project line makes the letter complete. A letter must have at least 5 lines — greeting, intro, body, closing, and name.
+
+**What if you need a different letter for each company?** Then that is right — change the letter for each company. Only 3 things need to change: the company name, the role name, and the skill that matches that role. The rest of the letter will stay the same. Use the letter builder code for this — change the name, role, company, and skill, and a new letter will be built.
+
+**What if there is no project in the letter?** Then focus on the skill: "My strongest skill is Python, and I learned it by building small projects." There is no project name, but there is skill and learning. This is also a good letter.`
+        ),
+        code: {
+          title: t(
+            'Letter Length Checker: Words Ginna aur Status Dekhna',
+            'Letter Length Checker: Counting Words and Checking the Status'
+          ),
+          language: 'python',
+          code: `letter = "Dear Hiring Manager I am Asha and I am applying for the Software Trainee role at BrightTech My strongest skill is Python and I used it in my college projects Thank you for your time Regards Asha"
+words = letter.split()
+print("Words:", len(words))
+print("Status:", "Good length" if 30 <= len(words) <= 250 else "Too short or too long")
+print("Has company name:", "BrightTech" in words)`,
+          output: `Words: 37
+Status: Good length
+Has company name: True`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Letter = Kahani, Resume = List',
+          '7. Summary: Letter = Story, Resume = List'
+        ),
+        body: t(
+          `Poora article ek line mein: **cover letter mein ek kahani likho — kaun ho, skill kya hai, project kya hai, aur role se fit kyun ho**. Letter chhota hona chahiye — 3-4 paragraphs, ek page se chhota. Har company ke liye letter badlo, company ka naam 2 baar check karo, aur spelling mistakes se bacho.
+
+Revision ke liye ye karo: letter builder se apna letter banao, phir length checker se dekho ki words 30 se 250 ke beech mein hain ya nahi. Phir letter ko zor se 2 baar padho. Agle article mein hum portfolio aur GitHub dekhenge — wahan tumhara kaam hi tumhari kahani hoga.`,
+          `The whole article in one line: **in a cover letter, write one story — who you are, what your skill is, what your project is, and why you fit the role**. The letter must be short — 3 to 4 paragraphs, shorter than one page. Change the letter for each company, check the company name 2 times, and avoid spelling mistakes.
+
+To revise, do this: build your letter with the letter builder, then check with the length checker whether the words are between 30 and 250 or not. Then read the letter out loud 2 times. In the next article we will look at portfolio and GitHub — there your work itself will be your story.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Cover Letter ka Flow: 4 Hisse, Ek Kahani',
+        'Flow of a Cover Letter: 4 Parts, One Story'
+      ),
+      caption: t(
+        'Har hissa 2-3 lines ka — poora letter ek page se chhota',
+        'Each part is 2 to 3 lines — the whole letter is shorter than one page'
+      ),
+      nodes: [
+        {
+          t: t('1. Greeting: Dear Hiring Manager', '1. Greeting: Dear Hiring Manager'),
+          s: t('Naam pata ho toh naam likho', 'If you know the name, write the name')
+        },
+        {
+          t: t('2. Intro: kaun ho + role + company', '2. Intro: who you are + role + company'),
+          s: t('I am Asha, applying for the Software Trainee role at BrightTech', 'I am Asha, applying for the Software Trainee role at BrightTech')
+        },
+        {
+          t: t('3. Body: skill + proof', '3. Body: skill + proof'),
+          s: t('My strongest skill is Python, used in my college projects', 'My strongest skill is Python, used in my college projects')
+        },
+        {
+          t: t('4. Closing: dhanyavaad + Regards', '4. Closing: thanks + Regards'),
+          s: t('Thank you for your time. Regards, Asha', 'Thank you for your time. Regards, Asha')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Cover Letter Builder: Rohan ka DataWorks Letter',
+          'Cover Letter Builder: Rohan DataWorks Letter'
+        ),
+        language: 'python',
+        code: `name = "Rohan"
+role = "Data Trainee"
+company = "DataWorks"
+skill = "SQL"
+print("Dear Hiring Manager,")
+print("I am " + name + ", and I am applying for the " + role + " role at " + company + ".")
+print("My strongest skill is " + skill + ", and I used it in my college projects.")
+print("Thank you for your time.")
+print("Regards, " + name)`,
+        output: `Dear Hiring Manager,
+I am Rohan, and I am applying for the Data Trainee role at DataWorks.
+My strongest skill is SQL, and I used it in my college projects.
+Thank you for your time.
+Regards, Rohan`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Cover letter aur resume mein kya farak hai?',
+          'What is the difference between a cover letter and a resume?'
+        ),
+        opts: [
+          t('Dono ek jaise hain', 'Both are the same'),
+          t('Resume list hai, cover letter kahani hai', 'A resume is a list, a cover letter is a story'),
+          t('Cover letter list hai, resume kahani hai', 'A cover letter is a list, a resume is a story'),
+          t('Cover letter mein sirf naam hota hai', 'A cover letter holds only a name')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: resume mein skills aur projects ki list hoti hai, cover letter mein tum batate ho ki tum is role ke liye sahi kyun ho.',
+          'Correct answer: a resume holds a list of skills and projects, a cover letter tells why you are right for this role.'
+        )
+      },
+      {
+        q: t(
+          'Cover letter ke 4 hisse kaunse hain?',
+          'What are the 4 parts of a cover letter?'
+        ),
+        opts: [
+          t('Greeting, intro, body, closing', 'Greeting, intro, body, closing'),
+          t('Sirf greeting', 'Only greeting'),
+          t('Sirf naam aur date', 'Only name and date'),
+          t('Resume ki copy', 'A copy of the resume')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: greeting, intro, body aur closing — har hissa 2-3 lines ka hona chahiye.',
+          'Correct answer: greeting, intro, body, and closing — each part must be 2 to 3 lines.'
+        )
+      },
+      {
+        q: t(
+          'Cover letter kitna lamba hona chahiye?',
+          'How long should a cover letter be?'
+        ),
+        opts: [
+          t('2 page', '2 pages'),
+          t('Ek page se chhota, 3-4 paragraphs', 'Shorter than one page, 3 to 4 paragraphs'),
+          t('10 page', '10 pages'),
+          t('Sirf 1 line', 'Only 1 line')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cover letter chhota hona chahiye — lamba letter recruiter padhta hi nahi.',
+          'Correct answer: a cover letter must be short — a recruiter never reads a long letter.'
+        )
+      },
+      {
+        q: t(
+          'Letter mein galat company ka naam likh diya. Ye kyun badi galti hai?',
+          'You wrote the wrong company name in the letter. Why is this a big mistake?'
+        ),
+        opts: [
+          t('Recruiter ko pata chal jaata hai ki letter copy kiya hai', 'The recruiter at once knows the letter was copied'),
+          t('Letter chhota ho jaata hai', 'The letter becomes short'),
+          t('Font kharab ho jaata hai', 'The font becomes bad'),
+          t('Kuch nahi hota', 'Nothing happens')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: galat company ka naam dekh kar recruiter ko lagta hai ki tumne is job ke liye mehnat nahi ki.',
+          'Correct answer: seeing the wrong company name, the recruiter feels you did not work hard for this job.'
+        )
+      },
+      {
+        q: t(
+          'Cover letter mein salary likhni chahiye ya nahi?',
+          'Should you write salary in a cover letter or not?'
+        ),
+        opts: [
+          t('Haan, salary likhni chahiye', 'Yes, you should write salary'),
+          t('Nahi, salary ki baat interview mein hoti hai', 'No, salary is talked about in the interview'),
+          t('Sirf salary likhni chahiye', 'You should write only salary'),
+          t('Salary aur kuch nahi', 'Salary and nothing else')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cover letter mein sirf ye likho — kaun ho, skill kya hai, aur role ke liye sahi kyun ho.',
+          'Correct answer: in a cover letter, write only — who you are, what your skill is, and why you are right for the role.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Resume list hai, cover letter kahani hai — dono ko ek jaise mat likho.',
+        'A resume is a list, a cover letter is a story — do not write both the same way.'
+      ),
+      t(
+        'Cover letter ke 4 hisse: greeting, intro, body, closing.',
+        '4 parts of a cover letter: greeting, intro, body, closing.'
+      ),
+      t(
+        'Letter ek page se chhota hona chahiye — 3-4 paragraphs.',
+        'The letter must be shorter than one page — 3 to 4 paragraphs.'
+      ),
+      t(
+        'Har company ke liye letter badlo — company ka naam 2 baar check karo.',
+        'Change the letter for each company — check the company name 2 times.'
+      ),
+      t(
+        'Letter mein salary mat likho — woh baat interview mein hoti hai.',
+        'Do not write salary in the letter — that talk happens in the interview.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Cover Letter Banao (DataWorks)',
+        'Practice: Build Your Cover Letter (DataWorks)'
+      ),
+      task: t(
+        'Neeche wala code ek cover letter banata hai. Isko run karo aur check karo ki output mein 5 lines aati hain — greeting, intro, body, closing aur naam. Phir apne naam, role, company aur skill ke liye code badal kar apna letter banao.',
+        'The code below builds a cover letter. Run it and check that the output shows 5 lines — greeting, intro, body, closing, and name. Then change the code for your own name, role, company, and skill and build your letter.'
+      ),
+      language: 'python',
+      starter: `name = "Rohan"
+role = "Data Trainee"
+company = "DataWorks"
+skill = "SQL"
+print("Dear Hiring Manager,")
+print("I am " + name + ", and I am applying for the " + role + " role at " + company + ".")
+print("My strongest skill is " + skill + ", and I used it in my college projects.")
+print("Thank you for your time.")
+print("Regards, " + name)`,
+      expected: `Dear Hiring Manager,
+I am Rohan, and I am applying for the Data Trainee role at DataWorks.
+My strongest skill is SQL, and I used it in my college projects.
+Thank you for your time.
+Regards, Rohan`
+    },
+    readMinutes: 12
+  };
+
+const placementPortfolio: Article = {
+    id: 'placement-portfolio',
+    subjectId: 'placement',
+    title: t(
+      'Portfolio aur GitHub for Placements — Apna Kaam Dikhana',
+      'Portfolio and GitHub for Placements — Showing Your Work'
+    ),
+    summary: t(
+      'Portfolio aur GitHub kya hain, kaunse projects dikhane hain, README mein kya likhna hai, aur ek project scorer ke saath worked example. Saare projects invented examples hain.',
+      'What a portfolio and GitHub are, which projects to show, what to write in a README, and a worked example with a project scorer. All projects are invented examples.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Portfolio aur GitHub Kya Hai? (Kaam Dikhana)',
+          '1. What Are a Portfolio and GitHub? (Showing Your Work)'
+        ),
+        body: t(
+          `**Portfolio** ek jagah hai jahan tum apna kaam dikhate ho — ek website ya ek page, jismein tumhare projects, skills aur contact hain. **GitHub** ek jagah hai jahan tum apna code rakhte ho — har project ka code, uska README, aur uska history. Placement ke time par recruiter tumhara GitHub dekh sakta hai, aur tumhara kaam khud dekh sakta hai. Isliye GitHub tumhara **proof** hai — resume mein tumne jo likha hai, woh GitHub par dikhna chahiye.
+
+Portfolio mein 3 cheezein honi chahiye: **projects** (2-3 achhe projects), **skills** (jo tumhe aati hain), aur **contact** (email aur LinkedIn). Portfolio ko simple rakho — ek page, saaf design, har project mein ek photo ya link. Recruiter ke paas time kam hota hai, isliye portfolio ko 1 minute mein samajh aana chahiye.
+
+GitHub mein har project ke liye ek **README** hona chahiye. README mein likho: project kya hai, kaise chalana hai, kis tool se banaya hai, aur ek screenshot. README ke bina project adhoora lagta hai — recruiter ko samajh nahi aata ki project kya karta hai.`,
+          `A **portfolio** is a place where you show your work — a website or a page, with your projects, skills, and contact. **GitHub** is a place where you keep your code — the code of each project, its README, and its history. At placement time, a recruiter can see your GitHub and see your work with their own eyes. So GitHub is your **proof** — what you wrote on your resume must show on GitHub.
+
+A portfolio must hold 3 things: **projects** (2 to 3 good projects), **skills** (the ones you know), and **contact** (email and LinkedIn). Keep the portfolio simple — one page, a clean design, a photo or a link for each project. A recruiter has little time, so the portfolio must be clear in 1 minute.
+
+On GitHub, each project must have a **README**. In the README, write: what the project is, how to run it, with which tool you built it, and a screenshot. Without a README, a project looks incomplete — the recruiter does not understand what the project does.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ke 3 Projects aur Rohan ka README',
+          '2. Real-Life Examples: Asha 3 Projects and Rohan README'
+        ),
+        body: t(
+          `**Asha** ke portfolio mein 3 projects hain: Library App (8/10), Chat App (6/10), aur Portfolio Site (9/10). Kul score 23/30 hai, average 7/10 hai, aur sabse achha project Portfolio Site hai. Asha ne apne sabse achhe project ko portfolio mein sabse upar rakha hai, taaki recruiter use pehle dekhe. Har project mein ek link hai — recruiter click karke project ko dekh sakta hai.
+
+**Rohan** ka README aisa hai: Title hai, "How to run" hai, "Tech used" hai, par "Screenshot" missing hai. Matlab uska README 4 mein se 3 poora hai. Rohan ne screenshot joda aur uska README poora ho gaya. Screenshot se recruiter ko turant samajh aata hai ki project kaisa dikhta hai — bina code padhe.
+
+Ek aur example: ek student ke GitHub par 20 projects the, par kisi mein README nahi tha. Recruiter ko samajh nahi aaya ki kaunsa project kya karta hai. Doosre student ke GitHub par sirf 3 projects the, par har ek mein README tha. Doosra student jeeta, kyunki uska kaam **saaf** tha. Projects ki ginti se zyada, projects ki quality aur README matter karta hai.`,
+          `**Asha** portfolio has 3 projects: Library App (8/10), Chat App (6/10), and Portfolio Site (9/10). The total score is 23/30, the average is 7/10, and the best project is Portfolio Site. Asha kept her best project on top of her portfolio, so the recruiter sees it first. Each project has a link — the recruiter can click and see the project.
+
+**Rohan** README goes like this: it has a Title, "How to run", and "Tech used", but "Screenshot" is missing. That means his README is 3 of 4 done. Rohan added a screenshot and his README became complete. A screenshot makes the recruiter understand at once how the project looks — without reading the code.
+
+One more example: a student had 20 projects on GitHub, but none had a README. The recruiter could not understand what each project did. Another student had only 3 projects on GitHub, but each one had a README. The second student won, because their work was **clean**. More than the count of projects, the quality of projects and the README matter.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Projects ko Score Karna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Scoring Projects (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Apne portfolio ko taiyaar karne ke 4 steps hain. **Step 1:** Apne 2-3 sabse achhe projects chuno — woh projects jo tumne khud banaye hain aur jinke baare mein tum bata sakte ho. **Step 2:** Har project ko 10 mein se score do — kitna complete hai, kitna kaam karta hai, kitna saaf hai. **Step 3:** Har project ke liye README likho — title, how to run, tech used, screenshot. **Step 4:** Apne sabse achhe project ko portfolio mein sabse upar rakho.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **project scorer** hai: woh 3 projects aur unke scores ko leta hai, kul score ginta hai, average nikaalta hai, aur sabse achha project batata hai. Output dekho: "Projects: 3", "Library App: 8/10", "Chat App: 6/10", "Portfolio Site: 9/10", "Total score: 23 of 30", "Average: 7 of 10", "Best project: Portfolio Site". Ye scorer tumhe batata hai ki tumhara portfolio kitna strong hai.
+
+Apne projects ke scores badal kar code ko run karo — naya total aur average turant milega. Agar kisi project ka score 5 se kam hai, toh use portfolio se hata do ya use behtar banao.`,
+          `There are 4 steps to prepare your portfolio. **Step 1:** Pick your 2 to 3 best projects — the projects you built yourself and can talk about. **Step 2:** Give each project a score out of 10 — how complete it is, how well it works, how clean it is. **Step 3:** Write a README for each project — title, how to run, tech used, screenshot. **Step 4:** Keep your best project on top of your portfolio.
+
+Now let us do a dry run with the code below. The code is a **project scorer**: it takes 3 projects and their scores, counts the total score, finds the average, and tells you the best project. Look at the output: "Projects: 3", "Library App: 8/10", "Chat App: 6/10", "Portfolio Site: 9/10", "Total score: 23 of 30", "Average: 7 of 10", "Best project: Portfolio Site". This scorer tells you how strong your portfolio is.
+
+Change the scores of your projects and run the code — you will get the new total and average at once. If a project score is below 5, remove it from the portfolio or make it better.`
+        ),
+        code: {
+          title: t(
+            'Project Scorer: 3 Projects ka Score aur Average',
+            'Project Scorer: Score and Average of 3 Projects'
+          ),
+          language: 'python',
+          code: `projects = {"Library App": 8, "Chat App": 6, "Portfolio Site": 9}
+total = sum(projects.values())
+print("Projects:", len(projects))
+for name, score in projects.items():
+    print(name + ":", str(score) + "/10")
+print("Total score:", total, "of", len(projects) * 10)
+print("Average:", total // len(projects), "of 10")
+print("Best project:", max(projects, key=projects.get))`,
+          output: `Projects: 3
+Library App: 8/10
+Chat App: 6/10
+Portfolio Site: 9/10
+Total score: 23 of 30
+Average: 7 of 10
+Best project: Portfolio Site`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: 20 Adhoore Projects, Bina README ke Code aur Doosron ka Code',
+          '4. Common Mistakes: 20 Incomplete Projects, Code Without a README, and Someone Else Code'
+        ),
+        body: t(
+          `**Galti 1: 20 adhoore projects.** GitHub par 20 projects hain, par koi bhi poora nahi hai. Recruiter ko ye pasand nahi — use 2-3 poore projects chahiye, 20 adhoore nahi. Apne sabse achhe 3 projects ko poora karo, baaki ko hata do ya private kar do.
+
+**Galti 2: Bina README ke code.** Code toh hai, par README nahi hai. Recruiter ko samajh nahi aata ki project kya karta hai aur kaise chalana hai. Har project mein README likho — title, how to run, tech used, screenshot. Neeche wale code mein README checker hai — use run karke dekho ki tumhara README kitna poora hai.
+
+**Galti 3: Doosron ka code apna batana.** Internet se code copy karke GitHub par daal diya, aur interview mein uske baare mein kuch nahi bata paaye. Interviewer ek sawaal mein pakad lega. Sirf wahi projects dikhao jo tumne khud banaye hain aur jinke baare mein tum bata sakte ho.
+
+**Galti 4: Portfolio mein sirf links, koi description nahi.** Har project ke saath 2-3 lines likho: kya banaya, kis tool se, aur kya seekha. Sirf link se recruiter ko kuch pata nahi chalta.`,
+          `**Mistake 1: 20 incomplete projects.** There are 20 projects on GitHub, but none is complete. The recruiter does not like this — they want 2 to 3 complete projects, not 20 incomplete ones. Finish your best 3 projects, remove the rest or make them private.
+
+**Mistake 2: Code without a README.** The code is there, but there is no README. The recruiter does not understand what the project does or how to run it. Write a README for each project — title, how to run, tech used, screenshot. The code below has a README checker — run it and see how complete your README is.
+
+**Mistake 3: Showing someone else code as your own.** You copied code from the internet, put it on GitHub, and in the interview you could not say anything about it. The interviewer will catch you in one question. Show only the projects you built yourself and can talk about.
+
+**Mistake 4: Only links on the portfolio, no description.** With each project, write 2 to 3 lines: what you built, with which tool, and what you learned. A link alone tells the recruiter nothing.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Project Nahi, Koi GitHub Nahi, ya Portfolio Website Nahi',
+          '5. Edge Cases: No Project, No GitHub, or No Portfolio Website'
+        ),
+        body: t(
+          `**Edge case 1: Koi project nahi hai.** Toh ek chhota project banao — to-do app, notes app, ya calculator. Ek chhota poora project, bade adhoore project se behtar hai. Project banane ke baad use GitHub par daalo aur README likho.
+
+**Edge case 2: GitHub account nahi hai.** Toh aaj hi account banao — ye free hai. Apne pehle project ko upload karo aur README likho. GitHub account banane mein 10 minute lagte hain, par ye tumhara sabse bada proof ban jaata hai.
+
+**Edge case 3: Portfolio website nahi hai.** Toh GitHub hi tumhara portfolio hai. GitHub profile mein apne 3 best projects ko pin karo, aur profile mein apna naam, skills aur LinkedIn link likho. Portfolio website baad mein bana sakte ho — pehle GitHub ko saaf karo.
+
+**Edge case 4: Project purana ho gaya hai.** Toh use update karo ya hata do. Purana project jo ab kaam nahi karta, woh portfolio mein mat rakho. Har 2-3 mahine mein apne portfolio ko check karo aur purane projects ko update karo.`,
+          `**Edge case 1: No project.** Then build a small project — a to-do app, a notes app, or a calculator. One small complete project is better than a big incomplete project. After you build the project, put it on GitHub and write a README.
+
+**Edge case 2: No GitHub account.** Then make an account today — it is free. Upload your first project and write a README. Making a GitHub account takes 10 minutes, but it becomes your biggest proof.
+
+**Edge case 3: No portfolio website.** Then GitHub itself is your portfolio. Pin your 3 best projects on your GitHub profile, and write your name, skills, and LinkedIn link on your profile. You can build a portfolio website later — first clean your GitHub.
+
+**Edge case 4: A project became old.** Then update it or remove it. Do not keep an old project that no longer works on your portfolio. Check your portfolio every 2 to 3 months and update the old projects.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Interviewer ne Project ke Baare mein Gehra Sawaal Poochha, ya Project Kaam Nahi Kar Raha?',
+          '6. What If: The Interviewer Asked a Deep Question About the Project, or the Project Is Not Working?'
+        ),
+        body: t(
+          `**What if interviewer ne project ke baare mein gehra sawaal poochha?** Jaise, "Library App mein data kaise store hota hai?" Toh tumhe jawab dena chahiye, kyunki tumne project khud banaya hai. Isiliye sirf wahi projects dikhao jinke baare mein tum bata sakte ho. Har project ke liye 3 lines taiyaar rakho: kya banaya, kaise banaya, aur kya problem aayi aur use kaise theek kiya.
+
+**What if interview ke time par project kaam nahi kar raha?** Toh ghabrao mat. Interviewer ko batao ki project mein kya problem hai aur tum use kaise theek karoge. Ye bhi ek achha jawab hai — isse pata chalta hai ki tum problem ko samajhte ho. Par interview se pehle apne projects ko ek baar chala kar dekh lo, taaki ye situation na aaye.
+
+**What if tumhare paas sirf ek project hai?** Toh woh ek project hi dikhao, par use poora dikhao — README, screenshot, aur live link. Ek achha poora project, 3 adhoore projects se behtar hai.`,
+          `**What if the interviewer asked a deep question about the project?** For example, "How is data stored in the Library App?" Then you must answer, because you built the project yourself. That is why you should show only the projects you can talk about. Keep 3 lines ready for each project: what you built, how you built it, and what problem came and how you fixed it.
+
+**What if the project is not working at the time of the interview?** Then do not panic. Tell the interviewer what the problem is in the project and how you will fix it. This is also a good answer — it shows you understand the problem. But before the interview, run your projects once and see, so this situation does not come.
+
+**What if you have only one project?** Then show that one project, but show it fully — README, screenshot, and live link. One good complete project is better than 3 incomplete projects.`
+        ),
+        code: {
+          title: t(
+            'README Checker: 4 Cheezein Poori Hain?',
+            'README Checker: Are All 4 Things Done?'
+          ),
+          language: 'python',
+          code: `items = {"Title": True, "How to run": True, "Screenshot": False, "Tech used": True}
+done = sum(items.values())
+print("README done:", done, "of", len(items))
+for name, ok in items.items():
+    print(name + ":", "Yes" if ok else "Missing")`,
+          output: `README done: 3 of 4
+Title: Yes
+How to run: Yes
+Screenshot: Missing
+Tech used: Yes`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: 3 Poore Projects + README = Strong Portfolio',
+          '7. Summary: 3 Complete Projects + README = Strong Portfolio'
+        ),
+        body: t(
+          `Poora article ek line mein: **2-3 poore projects dikhao, har ek mein README likho, aur sabse achhe project ko sabse upar rakho**. Projects ki ginti se zyada, quality matter karti hai. Sirf wahi projects dikhao jo tumne khud banaye hain aur jinke baare mein tum bata sakte ho.
+
+Revision ke liye ye karo: apne 3 projects ko score do, phir README checker se dekho ki har README mein 4 cheezein hain ya nahi. Agar kisi project ka score 5 se kam hai, toh use behtar banao ya hata do. Agle article mein hum mock HR interview dekhenge — wahan tumhare projects par hi sabse zyada sawaal poochhe jaayenge.`,
+          `The whole article in one line: **show 2 to 3 complete projects, write a README for each one, and keep the best project on top**. More than the count of projects, quality matters. Show only the projects you built yourself and can talk about.
+
+To revise, do this: give scores to your 3 projects, then check with the README checker whether each README has all 4 things or not. If a project score is below 5, make it better or remove it. In the next article we will look at the mock HR interview — there the most questions will be asked on your projects.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Portfolio ka Tree: Portfolio se Projects tak',
+        'Tree of a Portfolio: From Portfolio to Projects'
+      ),
+      caption: t(
+        'Portfolio ke neeche 3 projects, har project ke neeche README',
+        'Under the portfolio are 3 projects, under each project is a README'
+      ),
+      nodes: [
+        {
+          t: t('Portfolio: Asha', 'Portfolio: Asha'),
+          s: t('Ek page, saaf design, contact ke saath', 'One page, clean design, with contact')
+        },
+        {
+          t: t('Project 1: Portfolio Site (9/10)', 'Project 1: Portfolio Site (9/10)'),
+          s: t('Sabse achha project — sabse upar', 'Best project — on top'),
+          depth: 1
+        },
+        {
+          t: t('Project 2: Library App (8/10)', 'Project 2: Library App (8/10)'),
+          s: t('Python se banaya, registration time kam hua', 'Built in Python, registration time fell'),
+          depth: 1
+        },
+        {
+          t: t('Project 3: Chat App (6/10)', 'Project 3: Chat App (6/10)'),
+          s: t('Chhota project, behtar banana hai', 'Small project, needs to be made better'),
+          depth: 1
+        },
+        {
+          t: t('Har project ka README', 'README of each project'),
+          s: t('Title + How to run + Tech used + Screenshot', 'Title + How to run + Tech used + Screenshot'),
+          depth: 2
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Project Scorer: Doosra Example (Notes, Quiz, Portfolio)',
+          'Project Scorer: Another Example (Notes, Quiz, Portfolio)'
+        ),
+        language: 'python',
+        code: `projects = {"Notes App": 7, "Quiz App": 8, "Portfolio Site": 9}
+total = sum(projects.values())
+print("Projects:", len(projects))
+for name, score in projects.items():
+    print(name + ":", str(score) + "/10")
+print("Total score:", total, "of", len(projects) * 10)
+print("Average:", total // len(projects), "of 10")
+print("Best project:", max(projects, key=projects.get))`,
+        output: `Projects: 3
+Notes App: 7/10
+Quiz App: 8/10
+Portfolio Site: 9/10
+Total score: 24 of 30
+Average: 8 of 10
+Best project: Portfolio Site`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Portfolio mein kitne projects dikhane chahiye?',
+          'How many projects should you show on a portfolio?'
+        ),
+        opts: [
+          t('20 adhoore projects', '20 incomplete projects'),
+          t('2-3 poore projects', '2 to 3 complete projects'),
+          t('0 projects', '0 projects'),
+          t('100 projects', '100 projects')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 2-3 poore projects 20 adhoore projects se behtar hain — quality ginti se zyada matter karti hai.',
+          'Correct answer: 2 to 3 complete projects are better than 20 incomplete projects — quality matters more than count.'
+        )
+      },
+      {
+        q: t(
+          'README mein kya hona chahiye?',
+          'What should a README hold?'
+        ),
+        opts: [
+          t('Sirf project ka naam', 'Only the name of the project'),
+          t('Title + How to run + Tech used + Screenshot', 'Title + How to run + Tech used + Screenshot'),
+          t('Kuch nahi', 'Nothing'),
+          t('Sirf code', 'Only code')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: README mein 4 cheezein honi chahiye — bina README ke recruiter ko samajh nahi aata ki project kya karta hai.',
+          'Correct answer: a README must hold 4 things — without a README, the recruiter does not understand what the project does.'
+        )
+      },
+      {
+        q: t(
+          'Asha ke 3 projects ka kul score kitna hai?',
+          'What is the total score of Asha 3 projects?'
+        ),
+        opts: [
+          t('20 of 30', '20 of 30'),
+          t('23 of 30', '23 of 30'),
+          t('30 of 30', '30 of 30'),
+          t('15 of 30', '15 of 30')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 8 + 6 + 9 = 23, isliye "Total score: 23 of 30" aata hai.',
+          'Correct answer: 8 + 6 + 9 = 23, so "Total score: 23 of 30" comes.'
+        )
+      },
+      {
+        q: t(
+          'Doosron ka code apna batana kyun galat hai?',
+          'Why is it wrong to show someone else code as your own?'
+        ),
+        opts: [
+          t('Interviewer ek sawaal mein pakad lega', 'The interviewer will catch you in one question'),
+          t('Code lamba ho jaata hai', 'The code becomes long'),
+          t('GitHub slow ho jaata hai', 'GitHub becomes slow'),
+          t('Kuch nahi hota', 'Nothing happens')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: sirf wahi projects dikhao jo tumne khud banaye hain aur jinke baare mein tum bata sakte ho.',
+          'Correct answer: show only the projects you built yourself and can talk about.'
+        )
+      },
+      {
+        q: t(
+          'Kisi project ka score 5 se kam hai. Tumhe kya karna chahiye?',
+          'A project score is below 5. What should you do?'
+        ),
+        opts: [
+          t('Use portfolio mein sabse upar rakho', 'Keep it on top of the portfolio'),
+          t('Use behtar banao ya portfolio se hata do', 'Make it better or remove it from the portfolio'),
+          t('Use chhupao mat, sabko dikhao', 'Do not hide it, show it to everyone'),
+          t('Kuch mat karo', 'Do nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: kam score wala project portfolio ko kamzor banata hai — use behtar banao ya hata do.',
+          'Correct answer: a low-score project makes the portfolio weak — make it better or remove it.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Portfolio mein 2-3 poore projects dikhao — quality ginti se zyada matter karti hai.',
+        'Show 2 to 3 complete projects on a portfolio — quality matters more than count.'
+      ),
+      t(
+        'Har project mein README likho: title + how to run + tech used + screenshot.',
+        'Write a README for each project: title + how to run + tech used + screenshot.'
+      ),
+      t(
+        'Sabse achhe project ko portfolio mein sabse upar rakho.',
+        'Keep the best project on top of your portfolio.'
+      ),
+      t(
+        'Sirf wahi projects dikhao jo tumne khud banaye hain.',
+        'Show only the projects you built yourself.'
+      ),
+      t(
+        'Har project ke liye 3 lines taiyaar rakho: kya banaya, kaise banaya, kya problem aayi.',
+        'Keep 3 lines ready for each project: what you built, how you built it, what problem came.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Projects ko Score Karo',
+        'Practice: Score Your Projects'
+      ),
+      task: t(
+        'Neeche wala code 3 projects ko score karta hai. Isko run karo aur check karo ki output mein "Total score: 24 of 30" aur "Average: 8 of 10" aata hai. Phir apne projects ke liye code badal kar apna score dekho.',
+        'The code below scores 3 projects. Run it and check that the output shows "Total score: 24 of 30" and "Average: 8 of 10". Then change the code for your own projects and see your score.'
+      ),
+      language: 'python',
+      starter: `projects = {"Notes App": 7, "Quiz App": 8, "Portfolio Site": 9}
+total = sum(projects.values())
+print("Projects:", len(projects))
+for name, score in projects.items():
+    print(name + ":", str(score) + "/10")
+print("Total score:", total, "of", len(projects) * 10)
+print("Average:", total // len(projects), "of 10")
+print("Best project:", max(projects, key=projects.get))`,
+      expected: `Projects: 3
+Notes App: 7/10
+Quiz App: 8/10
+Portfolio Site: 9/10
+Total score: 24 of 30
+Average: 8 of 10
+Best project: Portfolio Site`
+    },
+    readMinutes: 12
+  };
+
+const placementMockHr: Article = {
+    id: 'placement-mock-hr',
+    subjectId: 'placement',
+    title: t(
+      'Mock HR Interview — Poora Script, Practice aur Self-Score',
+      'Mock HR Interview — Full Script, Practice, and Self-Score'
+    ),
+    summary: t(
+      'Mock HR interview ka poora script: 4 main sawaal, har jawab ka tareeka, self-score kaise karein, aur ek mock script ke saath worked example. Saare sawaal aur jawab invented examples hain.',
+      'The full script of a mock HR interview: 4 main questions, how to answer each one, how to self-score, and a worked example with a mock script. All questions and answers are invented examples.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock HR Interview Kya Hai? (Script aur Self-Score)',
+          '1. What Is a Mock HR Interview? (Script and Self-Score)'
+        ),
+        body: t(
+          `**Mock HR interview** ek practice interview hai — asli interview se pehle, apne dost ya akele mein, poora interview karke dekhna. Ismein tum interviewer bhi bante ho aur candidate bhi. Mock interview ka matlab hai: asli interview mein jo sawaal aayenge, unhe pehle se bol kar dekhna, taaki asli interview mein tum atak na jao.
+
+Mock interview ke 4 main sawaal hain: **"Tell me about yourself"**, **"Why should we hire you?"**, **"What is your weakness?"**, aur **"Where do you see yourself in five years?"** Ye chaaro sawaal har HR interview mein aate hain. In chaaro ke jawab tumhe pehle se taiyaar rakhne chahiye — is batch ke pehle do articles mein inke jawab ka tareeka diya gaya hai.
+
+Mock interview ke baad **self-score** karo: clarity, confidence, examples, aur body language — har ek ko 5 mein se score do. Kul score 20 mein se aayega. Agar score 14 ya zyada hai, toh tum taiyaar ho. Agar kam hai, toh kamzor hisse par kaam karo.`,
+          `A **mock HR interview** is a practice interview — before the real interview, doing a full interview with your friend or alone. In it, you become both the interviewer and the candidate. A mock interview means: saying out loud beforehand the questions that will come in the real interview, so you do not get stuck in the real interview.
+
+The mock interview has 4 main questions: **"Tell me about yourself"**, **"Why should we hire you?"**, **"What is your weakness?"**, and **"Where do you see yourself in five years?"** These four questions come in every HR interview. You must keep the answers to all four ready beforehand — the method for these answers is given in the first two articles of this batch.
+
+After the mock interview, do a **self-score**: clarity, confidence, examples, and body language — give each one a score out of 5. The total score will be out of 20. If the score is 14 or more, you are ready. If it is less, work on the weak part.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha ka Mock aur Rohan ka Self-Score',
+          '2. Real-Life Examples: Asha Mock and Rohan Self-Score'
+        ),
+        body: t(
+          `**Asha** ne apne dost ke saath mock interview kiya. Dost ne 4 sawaal poochhe, Asha ne har ek ka jawab 2 minute mein diya. Mock ke baad Asha ne self-score kiya: Clarity 4/5, Confidence 3/5, Examples 4/5, Body language 3/5 — kul 14/20, average 3/5. Asha ko pata chala ki uski confidence aur body language kamzor hai. Usne agle hafte har roz aaine ke saamne bol kar practice ki, aur agle mock mein uska score 17/20 ho gaya.
+
+**Rohan** ne akele mock interview kiya — usne apne phone par timer lagaya aur har sawaal ka jawab zor se bola. Usne apne jawab ko record kiya aur phir suna. Usne dekha ki woh "umm" aur "ahh" bahut bolta hai. Usne har jawab ko 3 baar bol kar practice ki, aur "umm" bolna kam ho gaya. Rohan ne seekha: mock interview mein apne aap ko sunna sabse bada feedback hai.
+
+Ek aur example: ek student ne mock interview mein sirf ek sawaal ki practice ki — "Tell me about yourself". Asli interview mein doosre sawaal aaye aur woh atak gaya. Doosre student ne 4 sawaalon ki practice ki — asli interview mein woh kisi sawaal par nahi atka. Farak practice ki **range** mein tha.`,
+          `**Asha** did a mock interview with her friend. Her friend asked 4 questions, Asha answered each one in 2 minutes. After the mock, Asha did a self-score: Clarity 4/5, Confidence 3/5, Examples 4/5, Body language 3/5 — total 14/20, average 3/5. Asha learned that her confidence and body language were weak. She practised every day for the next week by speaking in front of a mirror, and in the next mock her score became 17/20.
+
+**Rohan** did a mock interview alone — he set a timer on his phone and said each answer out loud. He recorded his answers and then listened to them. He saw that he said "umm" and "ahh" a lot. He practised each answer 3 times, and saying "umm" became less. Rohan learned: listening to yourself in a mock interview is the biggest feedback.
+
+One more example: a student practised only one question in the mock interview — "Tell me about yourself". In the real interview, other questions came and he got stuck. Another student practised 4 questions — in the real interview, he did not get stuck on any question. The difference was in the **range** of practice.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Mock Script Chalana (Worked Example with Dry Run)',
+          '3. Step-by-Step: Running the Mock Script (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Mock interview karne ke 4 steps hain. **Step 1:** 4 sawaalon ki list banao — Tell me about yourself, Why should we hire you, What is your weakness, Where do you see yourself in five years. **Step 2:** Har sawaal ke liye 2 minute ka timer lagao aur jawab zor se bolo. **Step 3:** Har jawab ke baad ek line likho — kya achha tha, kya kamzor tha. **Step 4:** Mock ke baad self-score karo — clarity, confidence, examples, body language, har ek ko 5 mein se score do.
+
+Ab dry run karte hain neeche wale code ke saath. Code ek **mock script** hai: woh 4 sawaalon ko number ke saath print karta hai, kul sawaal batata hai, aur har jawab ke liye time batata hai. Output dekho: "1. Tell me about yourself", "2. Why should we hire you?", "3. What is your weakness?", "4. Where do you see yourself in five years?", "Total questions: 4", "Time per answer: 2 minutes". Yehi tumhara mock script hai — is list ko le kar apne dost ke saath mock interview karo.
+
+Har sawaal ka jawab 2 minute mein dena hai — zyada lamba nahi, zyada chhota nahi. Agar jawab 2 minute se zyada ho jaaye, toh use chhota karo. Agar 1 minute se kam ho, toh usmein ek example jodo.`,
+          `There are 4 steps to do a mock interview. **Step 1:** Make a list of 4 questions — Tell me about yourself, Why should we hire you, What is your weakness, Where do you see yourself in five years. **Step 2:** Set a 2-minute timer for each question and say the answer out loud. **Step 3:** After each answer, write one line — what was good, what was weak. **Step 4:** After the mock, do a self-score — clarity, confidence, examples, body language, give each one a score out of 5.
+
+Now let us do a dry run with the code below. The code is a **mock script**: it prints the 4 questions with numbers, tells the total questions, and tells the time for each answer. Look at the output: "1. Tell me about yourself", "2. Why should we hire you?", "3. What is your weakness?", "4. Where do you see yourself in five years?", "Total questions: 4", "Time per answer: 2 minutes". This is your mock script — take this list and do a mock interview with your friend.
+
+Each answer must be given in 2 minutes — not too long, not too short. If the answer goes over 2 minutes, make it shorter. If it is under 1 minute, add one example to it.`
+        ),
+        code: {
+          title: t(
+            'Mock Script: 4 Sawaal, Har Jawab 2 Minute',
+            'Mock Script: 4 Questions, Each Answer 2 Minutes'
+          ),
+          language: 'python',
+          code: `questions = ["Tell me about yourself", "Why should we hire you?", "What is your weakness?", "Where do you see yourself in five years?"]
+for i, q in enumerate(questions, 1):
+    print(str(i) + ". " + q)
+print("Total questions:", len(questions))
+print("Time per answer: 2 minutes")`,
+          output: `1. Tell me about yourself
+2. Why should we hire you?
+3. What is your weakness?
+4. Where do you see yourself in five years?
+Total questions: 4
+Time per answer: 2 minutes`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Ek Sawaal ki Practice, Bina Timer ke Mock aur Bina Feedback ke Mock',
+          '4. Common Mistakes: Practising Only One Question, a Mock Without a Timer, and a Mock Without Feedback'
+        ),
+        body: t(
+          `**Galti 1: Sirf ek sawaal ki practice.** Sirf "Tell me about yourself" ki practice karna kaafi nahi hai. 4 sawaalon ki practice karo — har sawaal ka jawab alag hota hai, aur har sawaal par atak sakte ho. Mock mein 4 sawaal hone chahiye.
+
+**Galti 2: Bina timer ke mock.** Bina timer ke tum 5 minute tak bolte rahoge aur tumhe pata hi nahi chalega. Har jawab ke liye 2 minute ka timer lagao. Timer se tumhe pata chalta hai ki tumhara jawab lamba hai ya chhota.
+
+**Galti 3: Bina feedback ke mock.** Mock karke bhool jaana galat hai. Mock ke baad self-score karo — clarity, confidence, examples, body language. Agar tumhe nahi pata ki tum kahan kamzor ho, toh tum behtar kaise hoge? Neeche wale code mein self-score calculator hai — use run karke dekho ki tumhara score kitna hai.
+
+**Galti 4: Mock mein sirf padhna, bolna nahi.** Jawab ko kagaz par padhna aur zor se bolna — dono alag hain. Zor se bolne par hi pata chalta hai ki tum atak rahe ho ya nahi. Mock mein hamesha zor se bolo, mann mein mat padho.`,
+          `**Mistake 1: Practising only one question.** Practising only "Tell me about yourself" is not enough. Practise 4 questions — each question has a different answer, and you can get stuck on each one. A mock must have 4 questions.
+
+**Mistake 2: A mock without a timer.** Without a timer, you will keep talking for 5 minutes and you will not even know. Set a 2-minute timer for each answer. A timer tells you whether your answer is long or short.
+
+**Mistake 3: A mock without feedback.** Doing a mock and then forgetting it is wrong. After the mock, do a self-score — clarity, confidence, examples, body language. If you do not know where you are weak, how will you become better? The code below has a self-score calculator — run it and see what your score is.
+
+**Mistake 4: Only reading in the mock, not speaking.** Reading an answer on paper and saying it out loud — both are different. Only by saying it out loud do you learn whether you are getting stuck or not. In a mock, always speak out loud, do not read in your mind.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Dost Nahi, Nervousness, ya Asli Interview Kal Hai',
+          '5. Edge Cases: No Friend, Nervousness, or the Real Interview Is Tomorrow'
+        ),
+        body: t(
+          `**Edge case 1: Koi dost nahi hai mock ke liye.** Toh akele mock karo — phone par timer lagao, har sawaal ka jawab zor se bolo, aur apne jawab ko record karo. Phir use suno aur self-score karo. Akele mock bhi kaam karta hai, bas tumhe imandaar hona chahiye.
+
+**Edge case 2: Mock mein nervousness ho rahi hai.** Toh ye achha hai — mock mein nervous hona normal hai, aur asli interview mein nervousness kam ho jaayegi. Mock mein jitni baar nervous hoge, asli interview mein utni hi kam nervousness hogi. Isliye mock ko asliyat ki tarah karo — seedha baitho, timer lagao, aur zor se bolo.
+
+**Edge case 3: Asli interview kal hai, aur tumne kabhi mock nahi kiya.** Toh aaj hi ek mock karo — sirf 4 sawaal, har ek 2 minute, kul 8 minute. 8 minute ki practice bhi bahut hai. Mock ke baad self-score karo aur kamzor hisse par ek baar aur practice karo. Kal interview se pehle apne 4 jawab ek baar aur zor se bolo.
+
+**Edge case 4: Mock mein score bahut kam aaya.** Toh ghabrao mat — mock ka matlab hi ye hai ki kamzori pata chale. Kam score ka matlab hai ki tumhe pata chal gaya ki kahan kaam karna hai. Agle mock mein score behtar hoga.`,
+          `**Edge case 1: No friend for the mock.** Then do the mock alone — set a timer on your phone, say each answer out loud, and record your answers. Then listen to them and do a self-score. A mock alone also works, you only need to be honest.
+
+**Edge case 2: You feel nervous in the mock.** Then that is good — feeling nervous in a mock is normal, and nervousness will become less in the real interview. The more times you feel nervous in a mock, the less nervousness there will be in the real interview. So do the mock like the real thing — sit straight, set a timer, and speak out loud.
+
+**Edge case 3: The real interview is tomorrow, and you never did a mock.** Then do one mock today — only 4 questions, each 2 minutes, 8 minutes in total. Even 8 minutes of practice is a lot. After the mock, do a self-score and practise the weak part once more. Before the interview tomorrow, say your 4 answers out loud once more.
+
+**Edge case 4: The mock score came very low.** Then do not panic — the point of a mock is to find the weakness. A low score means you learned where to work. In the next mock, the score will be better.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Mock mein Atak Gaye, ya Dost ne Galat Feedback Diya?',
+          '6. What If: You Got Stuck in the Mock, or Your Friend Gave Wrong Feedback?'
+        ),
+        body: t(
+          `**What if mock mein beech mein atak gaye?** Toh ruk jao, ek saans lo, aur agle point se shuru kar do. Interviewer ko ye nahi pata ki tumne kya bhoola hai — use sirf ye dikhta hai ki tum aage bol rahe ho. Atakne par chup mat raho — ek line bolo, chahe woh simple hi kyun na ho.
+
+**What if dost ne galat feedback diya?** Jaise, dost ne kaha "tumhara jawab bahut achha hai" jabki tumhe pata hai ki woh achha nahi tha. Toh dost par poora bharosa mat karo — apne jawab ko record karke khud suno. Khud ko sunna sabse achha feedback hai. Aur agar ho sake, toh ek senior se feedback lo — woh behtar bata sakta hai.
+
+**What if mock mein har baar wahi galti ho rahi hai?** Jaise, har baar "umm" bolna, ya har baar time zyada lagna. Toh us ek galti par focus karo — sirf usi ko theek karo. Ek baar mein sab kuch theek karne ki koshish mat karo. Ek galti theek karo, phir agle mock mein doosri galti par kaam karo.`,
+          `**What if you got stuck in the middle of the mock?** Then stop, take a breath, and start from the next point. The interviewer does not know what you forgot — they only see that you keep speaking. When you get stuck, do not stay silent — say one line, even if it is simple.
+
+**What if your friend gave wrong feedback?** For example, your friend said "your answer is very good" when you know it was not good. Then do not fully trust your friend — record your answer and listen to it yourself. Listening to yourself is the best feedback. And if you can, take feedback from a senior — they can tell you better.
+
+**What if the same mistake keeps happening in every mock?** For example, saying "umm" every time, or taking too much time every time. Then focus on that one mistake — fix only that one. Do not try to fix everything at once. Fix one mistake, then work on the next mistake in the next mock.`
+        ),
+        code: {
+          title: t(
+            'Self-Score Calculator: 4 Hisse, Kul Score 20 mein se',
+            'Self-Score Calculator: 4 Parts, Total Score out of 20'
+          ),
+          language: 'python',
+          code: `scores = {"Clarity": 4, "Confidence": 3, "Examples": 4, "Body language": 3}
+total = sum(scores.values())
+print("Mock score:", total, "of", len(scores) * 5)
+for name, score in scores.items():
+    print(name + ":", str(score) + "/5")
+print("Average:", total // len(scores), "of 5")`,
+          output: `Mock score: 14 of 20
+Clarity: 4/5
+Confidence: 3/5
+Examples: 4/5
+Body language: 3/5
+Average: 3 of 5`
+        }
+      },
+      {
+        heading: t(
+          '7. Summary: Mock Karo, Score Karo, Behtar Bano',
+          '7. Summary: Mock, Score, Become Better'
+        ),
+        body: t(
+          `Poora article ek line mein: **mock interview karo — 4 sawaal, har jawab 2 minute, phir self-score karo aur kamzor hisse par kaam karo**. Mock ka matlab hai practice, aur practice ka matlab hai asli interview mein atakna nahi. Har mock ke baad tum behtar hoge — bas mock karna band mat karo.
+
+Revision ke liye ye karo: aaj hi ek mock karo — 4 sawaal, har ek 2 minute. Phir self-score calculator se apna score dekho. Agar score 14 ya zyada hai, toh tum taiyaar ho. Agar kam hai, toh kamzor hisse par ek baar aur practice karo. Ye batch yahin khatam hota hai — tumhare paas ab HR interview ke 9 articles hain, intro se lekar mock tak. Ab practice karo aur interview mein jao.`,
+          `The whole article in one line: **do a mock interview — 4 questions, each answer 2 minutes, then do a self-score and work on the weak part**. A mock means practice, and practice means not getting stuck in the real interview. After each mock, you will be better — just do not stop doing mocks.
+
+To revise, do this: do one mock today — 4 questions, each 2 minutes. Then see your score with the self-score calculator. If the score is 14 or more, you are ready. If it is less, practise the weak part once more. This batch ends here — you now have 9 articles on the HR interview, from intro to mock. Now practise and go to the interview.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Mock Interview ka Cycle: Practice se Behtar',
+        'Cycle of a Mock Interview: Better Through Practice'
+      ),
+      caption: t(
+        'Har cycle mein score behtar hota hai — mock karna band mat karo',
+        'In each cycle the score becomes better — do not stop doing mocks'
+      ),
+      nodes: [
+        {
+          t: t('1. Mock karo: 4 sawaal, 2 minute har jawab', '1. Do the mock: 4 questions, 2 minutes per answer'),
+          s: t('Dost ke saath ya akele, timer ke saath', 'With a friend or alone, with a timer')
+        },
+        {
+          t: t('2. Self-score karo: 4 hisse, 20 mein se', '2. Self-score: 4 parts, out of 20'),
+          s: t('Clarity, Confidence, Examples, Body language', 'Clarity, Confidence, Examples, Body language')
+        },
+        {
+          t: t('3. Kamzor hissa dhoondho', '3. Find the weak part'),
+          s: t('Kis hisse mein score kam hai, woh dekho', 'See in which part the score is low')
+        },
+        {
+          t: t('4. Us hisse par practice karo', '4. Practise that part'),
+          s: t('Ek galti theek karo, phir agla mock karo', 'Fix one mistake, then do the next mock')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Self-Score Calculator: Behtar Score ka Example (17/20)',
+          'Self-Score Calculator: A Better Score Example (17/20)'
+        ),
+        language: 'python',
+        code: `scores = {"Clarity": 5, "Confidence": 4, "Examples": 4, "Body language": 4}
+total = sum(scores.values())
+print("Mock score:", total, "of", len(scores) * 5)
+for name, score in scores.items():
+    print(name + ":", str(score) + "/5")
+print("Average:", total // len(scores), "of 5")`,
+        output: `Mock score: 17 of 20
+Clarity: 5/5
+Confidence: 4/5
+Examples: 4/5
+Body language: 4/5
+Average: 4 of 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Mock HR interview ke 4 main sawaal kaunse hain?',
+          'What are the 4 main questions of a mock HR interview?'
+        ),
+        opts: [
+          t('Sirf "Tell me about yourself"', 'Only "Tell me about yourself"'),
+          t('Tell me about yourself, Why should we hire you, What is your weakness, Where do you see yourself in five years', 'Tell me about yourself, Why should we hire you, What is your weakness, Where do you see yourself in five years'),
+          t('Sirf technical sawaal', 'Only technical questions'),
+          t('Sirf salary ke sawaal', 'Only salary questions')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ye chaaro sawaal har HR interview mein aate hain, isliye in chaaro ki practice karni chahiye.',
+          'Correct answer: these four questions come in every HR interview, so all four must be practised.'
+        )
+      },
+      {
+        q: t(
+          'Har jawab ke liye kitna time hona chahiye?',
+          'How much time should each answer take?'
+        ),
+        opts: [
+          t('5 minute', '5 minutes'),
+          t('2 minute', '2 minutes'),
+          t('10 second', '10 seconds'),
+          t('30 minute', '30 minutes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har jawab 2 minute mein dena hai — zyada lamba nahi, zyada chhota nahi.',
+          'Correct answer: each answer must be given in 2 minutes — not too long, not too short.'
+        )
+      },
+      {
+        q: t(
+          'Asha ka mock score kitna hai?',
+          'What is Asha mock score?'
+        ),
+        opts: [
+          t('10 of 20', '10 of 20'),
+          t('14 of 20', '14 of 20'),
+          t('20 of 20', '20 of 20'),
+          t('5 of 20', '5 of 20')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Clarity 4 + Confidence 3 + Examples 4 + Body language 3 = 14, isliye "Mock score: 14 of 20" aata hai.',
+          'Correct answer: Clarity 4 + Confidence 3 + Examples 4 + Body language 3 = 14, so "Mock score: 14 of 20" comes.'
+        )
+      },
+      {
+        q: t(
+          'Mock mein atak gaye. Tumhe kya karna chahiye?',
+          'You got stuck in the mock. What should you do?'
+        ),
+        opts: [
+          t('Chup ho jao aur kuch mat bolo', 'Go silent and say nothing'),
+          t('Ruk jao, saans lo, agle point se shuru kar do', 'Stop, take a breath, and start from the next point'),
+          t('Mock chhod do', 'Leave the mock'),
+          t('Wahin se phir se shuru kar do', 'Start again from the same place')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: interviewer ko ye nahi pata ki tumne kya bhoola hai — aage bolna hi sahi tareeka hai.',
+          'Correct answer: the interviewer does not know what you forgot — keeping on speaking is the right way.'
+        )
+      },
+      {
+        q: t(
+          'Mock ke baad sabse achha feedback kya hai?',
+          'What is the best feedback after a mock?'
+        ),
+        opts: [
+          t('Apne jawab ko record karke khud sunna', 'Recording your answer and listening to it yourself'),
+          t('Kuch mat karo', 'Do nothing'),
+          t('Sirf dost ki baat sunna', 'Only listening to your friend'),
+          t('Mock ko bhool jaana', 'Forgetting the mock')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: khud ko sunne par hi pata chalta hai ki tum atak rahe ho, "umm" bol rahe ho, ya time zyada lag raha hai.',
+          'Correct answer: only by listening to yourself do you learn whether you are getting stuck, saying "umm", or taking too much time.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock ke 4 main sawaal: intro, hire, weakness, five years.',
+        '4 main questions of a mock: intro, hire, weakness, five years.'
+      ),
+      t(
+        'Har jawab 2 minute mein do — timer lagao.',
+        'Give each answer in 2 minutes — set a timer.'
+      ),
+      t(
+        'Mock ke baad self-score karo: clarity, confidence, examples, body language.',
+        'After the mock, do a self-score: clarity, confidence, examples, body language.'
+      ),
+      t(
+        'Score 14 ya zyada ho toh taiyaar ho; kam ho toh kamzor hisse par kaam karo.',
+        'If the score is 14 or more, you are ready; if less, work on the weak part.'
+      ),
+      t(
+        'Apne jawab ko record karke khud sunna sabse achha feedback hai.',
+        'Recording your answer and listening to it yourself is the best feedback.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Mock Score Nikalo (17/20)',
+        'Practice: Find Your Mock Score (17/20)'
+      ),
+      task: t(
+        'Neeche wala code ek self-score calculator hai. Isko run karo aur check karo ki output mein "Mock score: 17 of 20" aur "Average: 4 of 5" aata hai. Phir apne scores ke liye code badal kar apna mock score nikalo.',
+        'The code below is a self-score calculator. Run it and check that the output shows "Mock score: 17 of 20" and "Average: 4 of 5". Then change the code for your own scores and find your mock score.'
+      ),
+      language: 'python',
+      starter: `scores = {"Clarity": 5, "Confidence": 4, "Examples": 4, "Body language": 4}
+total = sum(scores.values())
+print("Mock score:", total, "of", len(scores) * 5)
+for name, score in scores.items():
+    print(name + ":", str(score) + "/5")
+print("Average:", total // len(scores), "of 5")`,
+      expected: `Mock score: 17 of 20
+Clarity: 5/5
+Confidence: 4/5
+Examples: 4/5
+Body language: 4/5
+Average: 4 of 5`
+    },
+    readMinutes: 12
+  };
+
+const placementMockTechnical: Article = {
+    id: 'placement-mock-technical',
+    subjectId: 'placement',
+    title: t(
+      'Mock Technical Interview — Poora Script, Score Tracker aur Feedback Loop',
+      'Mock Technical Interview — Full Script, Score Tracker, and Feedback Loop'
+    ),
+    summary: t(
+      'Mock interview sirf practice nahi hai, woh asli interview ka rehearsal hai: ek poora script jisme intro, DSA, project aur HR round hain, har round ko 10 mein score karna, kamzor area dhoondhna, aur agle mock mein wahi galti dobara na karna.',
+      'A mock interview is not just practice, it is a rehearsal for the real interview: a full script with an intro, DSA, project, and HR round, scoring every round out of 10, finding the weakest area, and not repeating the same mistake in the next mock.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock Technical Interview Kya Hai?',
+          '1. What Is a Mock Technical Interview?'
+        ),
+        body: t(
+          `Mock technical interview ek **practice interview** hai jo asli interview jaisa feel deta hai. Aapka dost, senior ya mentor interviewer banta hai, timer lagata hai, aur aapse wahi sawaal poochhta hai jo ek real interviewer poochh sakta hai. Farak sirf itna hai ki yahan galti karna safe hai — yahan ki galti asli interview mein repeat nahi hoti, agar aap usse seekho.
+
+Ek achha mock interview chaar hisson mein bat-ta hai: **intro**, **DSA ya coding**, **project discussion**, aur **HR questions**. Har hissa 10 se 15 minute ka hota hai, aur poora mock 45 se 60 minute ka hota hai. Intro mein aap apne baare mein 60 second mein batate ho. Coding mein aap ek easy ya medium problem solve karte ho aur apni soch zor se bolte ho. Project mein interviewer aapke project ke baare mein gehrai se poochhta hai. HR mein aap apni strength, weakness aur future plan batate ho.
+
+Mock ka sabse bada fayda hai **nervousness kam hona**. Pehli baar camera ke saamne bolna sabko mushkil lagta hai. Teesre ya chauthe mock tak aapki awaaz stable ho jaati hai, aap ruk kar sochna seekh jaate ho, aur "pata nahi" kehne se darna band ho jaata hai. Mock interview aapko yeh bhi batata hai ki aap kahan slow ho — kya aap coding mein atak jaate ho, ya project explain karte waqt confuse ho jaate ho.`,
+          `A mock technical interview is a **practice interview** that feels like a real interview. A friend, a senior, or a mentor plays the interviewer, sets a timer, and asks the same kind of questions a real interviewer could ask. The only difference is that making a mistake here is safe — a mistake made here does not repeat in the real interview, if you learn from it.
+
+A good mock interview splits into four parts: **intro**, **DSA or coding**, **project discussion**, and **HR questions**. Each part lasts 10 to 15 minutes, and the whole mock lasts 45 to 60 minutes. In the intro you talk about yourself in 60 seconds. In coding you solve one easy or medium problem and speak your thinking out loud. In the project part the interviewer asks deep questions about your project. In HR you talk about your strengths, your weakness, and your future plan.
+
+The biggest benefit of a mock is that **nervousness goes down**. Speaking in front of a camera feels hard for everyone the first time. By the third or fourth mock your voice becomes steady, you learn to pause and think, and you stop fearing the words "I do not know". A mock also shows you where you are slow — whether you get stuck in coding, or get confused while explaining a project.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Pehla Mock, Dusra Mock aur Asli Interview',
+          '2. Real-Life Examples: First Mock, Second Mock, and the Real Interview'
+        ),
+        body: t(
+          `Rahul ne apna pehla mock diya. Intro mein woh 3 minute bol gaya, coding mein 10 minute chup raha, aur project ke baare mein sirf "maine ek app banaya" bola. Uska score tha: Intro 5, DSA 4, Project 5, HR 6. Feedback mein likha tha — intro chhota karo, soch zor se bolo, project mein kya banaya aur kyun banaya, yeh batao. Rahul ne ek hafte mein 3 mock aur diye, aur har mock mein ek hi cheez sudhari.
+
+Priya ka example alag hai. Woh coding mein strong thi, par HR mein atak jaati thi. "Apni weakness kya hai?" par woh 30 second chup rehti thi. Mock mein usne ek taiyaar jawab banaya: ek real weakness, uspar kya kaam kar rahi hai, aur kya result mila. Agle mock mein wahi sawaal aaya aur usne bina ruke jawab diya. Asli interview mein bhi wahi sawaal aaya — aur woh taiyaar thi.
+
+Teesra example hai group mock. Chaar dost har Sunday ek mock karte hain — ek interviewer banta hai, ek candidate, aur do observers notes likhte hain. Observers woh cheezein pakadte hain jo candidate ko khud nahi dikhti: "tum baar-baar 'umm' bolte ho", "tum screen ki taraf dekh kar bolte ho, camera ki taraf nahi". Yeh chhoti feedback hi asli interview mein farak banati hai.`,
+          `Rahul gave his first mock. In the intro he spoke for 3 minutes, in coding he stayed silent for 10 minutes, and about his project he only said "I made an app". His scores were: Intro 5, DSA 4, Project 5, HR 6. The feedback said — shorten the intro, speak your thinking out loud, and explain what you built in the project and why you built it. Rahul gave 3 more mocks in one week, and fixed one thing in each mock.
+
+Priya's example is different. She was strong in coding, but she got stuck in HR. On "What is your weakness?" she stayed silent for 30 seconds. In a mock she prepared one ready answer: one real weakness, what she is doing about it, and what result she got. The same question came in the next mock and she answered without a pause. The same question also came in the real interview — and she was ready.
+
+The third example is a group mock. Four friends run one mock every Sunday — one plays the interviewer, one is the candidate, and two observers write notes. The observers catch things the candidate cannot see: "you say 'umm' again and again", "you look at the screen while speaking, not at the camera". That small feedback is what makes the difference in the real interview.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Poora Mock Script (Worked Example with Dry Run)',
+          '3. Step-by-Step: One Full Mock Script (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek poora mock interview step by step karte hain. Candidate hai Rahul, interviewer hai uski senior Priya. Timer 60 minute ka hai. Pehla step hai **intro (10 minute)**. Priya poochhti hai: "Apne baare mein batao." Rahul ka taiyaar jawab hai: "Main final year ka student hoon, mujhe web apps banana pasand hai, maine ek notes app banaya jise 40 classmates use karte hain, aur main DSA mein arrays aur trees par kaam kar raha hoon." Yeh 60 second mein khatam hota hai. Score: 8/10.
+
+Doosra step hai **coding (20 minute)**. Problem hai: ek list mein sabse bada number dhoondho. Rahul pehle approach bolta hai — "Main ek variable mein pehla number rakhunga, phir har number se compare karunga." Phir woh code likhta hai aur test karta hai: \`[3, 9, 2]\` par answer 9 aata hai. Priya poochhti hai: "Time complexity kya hai?" Rahul bolta hai: "O(n), kyunki har number ek baar dekhna padta hai." Score: 6/10, kyunki woh beech mein 2 minute chup raha.
+
+Teesra step hai **project (15 minute)**. Priya poochhti hai: "Notes app mein data kahan store hota hai?" Rahul bolta hai: "Pehle \`localStorage\` mein, phir maine ek simple database add kiya." Priya poochhti hai: "Agar 1000 users ek saath aayein to kya hoga?" Rahul bolta hai: "Mujhe nahi pata, par main caching ke baare mein padh raha hoon." Yeh imaandaar jawab hai — jhooth bolne se behtar hai. Score: 7/10.
+
+Chauthe step mein **HR (10 minute)** aata hai: strength, weakness, aur "5 saal baad khud ko kahan dekhte ho?" Rahul ke jawab short aur clear hain. Score: 9/10. Aakhir mein **feedback (5 minute)**: Priya notes deti hai aur Rahul score likhta hai. Neeche wala code uske scores ka total, average aur sabse kamzor area nikaalta hai — dry run mein total 30/40, average 7.5, aur weakest area OS hai, kyunki OS ka score 6 sabse kam hai.`,
+          `Now let us run one full mock interview step by step. The candidate is Rahul, and the interviewer is his senior Priya. The timer is 60 minutes. The first step is the **intro (10 minutes)**. Priya asks: "Tell me about yourself." Rahul's prepared answer is: "I am a final year student, I like building web apps, I made a notes app that 40 classmates use, and I am working on arrays and trees in DSA." It ends in 60 seconds. Score: 8/10.
+
+The second step is **coding (20 minutes)**. The problem is: find the largest number in a list. Rahul first says his approach — "I will keep the first number in a variable, then compare it with every number." Then he writes the code and tests it: on \`[3, 9, 2]\` the answer is 9. Priya asks: "What is the time complexity?" Rahul says: "O(n), because every number must be looked at once." Score: 6/10, because he stayed silent for 2 minutes in the middle.
+
+The third step is the **project (15 minutes)**. Priya asks: "Where is the data stored in the notes app?" Rahul says: "First in \`localStorage\`, then I added a simple database." Priya asks: "What happens if 1000 users come at once?" Rahul says: "I do not know, but I am reading about caching." That is an honest answer — better than a lie. Score: 7/10.
+
+The fourth step is **HR (10 minutes)**: strengths, weakness, and "Where do you see yourself in 5 years?" Rahul's answers are short and clear. Score: 9/10. At the end comes **feedback (5 minutes)**: Priya gives notes and Rahul writes down the scores. The code below finds the total, the average, and the weakest area from his scores — in the dry run the total is 30/40, the average is 7.5, and the weakest area is OS, because the OS score of 6 is the lowest.`
+        ),
+        code: {
+          title: t(
+            'Mock Score Tracker: Total, Average aur Weakest Area',
+            'Mock Score Tracker: Total, Average, and Weakest Area'
+          ),
+          language: 'python',
+          code: `topics = [("DSA", 7), ("OS", 6), ("DBMS", 8), ("HR", 9)]
+total = 0
+for name, score in topics:
+    total += score
+    print(name, "->", score, "/ 10")
+print("Total:", total, "/ 40")
+print("Average:", total / len(topics), "/ 10")
+weakest = topics[0]
+for item in topics:
+    if item[1] < weakest[1]:
+        weakest = item
+print("Weakest area:", weakest[0])`,
+          output: `DSA -> 7 / 10
+OS -> 6 / 10
+DBMS -> 8 / 10
+HR -> 9 / 10
+Total: 30 / 40
+Average: 7.5 / 10
+Weakest area: OS`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Chup Rehna, Ratna aur Feedback Ignore Karna',
+          '4. Common Mistakes: Staying Silent, Memorising, and Ignoring Feedback'
+        ),
+        body: t(
+          `Mock mein sabse badi galti hai **chup rehna**. Candidate sochta hai, par bolta nahi. Interviewer ko nahi pata chalta ki aap soch rahe ho ya atak gaye ho. Rule simple hai: jo soch rahe ho, woh zor se bolo. "Main pehle brute force try karunga, phir fast tareeka sochunga" — yeh ek line bhi interviewer ko aapki soch dikha deti hai. Chup rehne se score zero hota hai, galat approach bolne se bhi kuch score milta hai.
+
+Doosri galti hai **ratna**. Kuch students HR answers ko word-by-word yaad kar lete hain. Jaise hi interviewer sawaal thoda badal kar poochhta hai, ratta hua jawab kaam nahi aata aur candidate ghabra jaata hai. Jawab ke points yaad rakho, poori lines nahi. Points se aap har version ka jawab bana sakte ho, ratte hue lines se nahi.
+
+Teesri galti hai **feedback ko ignore karna**. Mock ke baad interviewer kehta hai "intro lamba tha", aur candidate agle mock mein phir wahi 3 minute ka intro deta hai. Mock ka fayda sirf tab hai jab feedback agle mock mein dikhe. Har mock ke baad ek line likho: "Agle mock mein main kya sudharunga?" Aur agle mock ki shuruaat mein wahi line padho.
+
+Chauthi galti hai **sirf easy questions ka mock dena**. Dost easy sawaal poochhta hai, candidate khush ho jaata hai, aur asli interview mein medium sawaal aate hi ghabrahat hoti hai. Mock mein hamesha ek aisa sawaal rakho jo aapko mushkil lage — wahi sawaal aapko taiyaar karta hai.`,
+          `The biggest mistake in a mock is **staying silent**. The candidate thinks, but does not speak. The interviewer cannot tell whether you are thinking or stuck. The rule is simple: say out loud what you are thinking. "I will first try brute force, then think of a faster way" — even one line like this shows the interviewer how you think. Silence scores zero, but even a wrong approach spoken out loud earns some marks.
+
+The second mistake is **memorising**. Some students learn HR answers word by word. As soon as the interviewer asks the question in a slightly different way, the memorised answer fails and the candidate panics. Remember the points of your answer, not the full lines. From points you can build an answer to every version of the question; from memorised lines you cannot.
+
+The third mistake is **ignoring feedback**. After a mock the interviewer says "the intro was too long", and the candidate gives the same 3-minute intro in the next mock. A mock only helps when the feedback shows up in the next mock. After every mock, write one line: "What will I improve in the next mock?" And read that line at the start of the next mock.
+
+The fourth mistake is **mocking only easy questions**. A friend asks easy questions, the candidate feels happy, and then a medium question in the real interview causes panic. Always keep one question in the mock that feels hard to you — that question is what prepares you.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Interviewer Chup Hai, Internet Gaya, Ya Sawaal Samajh Nahi Aaya',
+          '5. Edge Cases: Silent Interviewer, Internet Down, or Question Not Understood'
+        ),
+        body: t(
+          `Mock mein kuch ajeeb situations bhi aati hain, aur wahi asli interview mein bhi aati hain. Pehla edge case: **interviewer chup hai**. Aapne jawab diya, interviewer kuch nahi bol raha. Ghabrao mat — woh soch raha hai ya notes likh raha hai. Aap ek line add karo: "Kya main isko ek example se samjhaoon?" Yeh interviewer ko bolne ka mauka deta hai.
+
+Doosra edge case: **online mock mein internet chala gaya**. Pehle se plan rakho — phone ka data on rakho, aur interviewer ka number pehle se le lo. Agar call cut jaaye, to 2 minute mein wapas join karo aur politely bolo: "Connection cut gaya tha, kya aap sawaal dobara poochh sakte hain?" Yeh professional lagta hai, ghabrahat nahi dikhata.
+
+Teesra edge case: **sawaal samajh nahi aaya**. Yeh sabse common hai. Ghalat jawab dene se behtar hai sawaal dobara poochhna: "Kya aap isko ek example ke saath samjha sakte hain?" Ya "Kya aapka matlab yeh hai ki...?" Interviewer ko yeh pasand aata hai — isse pata chalta hai ki aap bina samjhe code nahi likhte.
+
+Chauthe edge case mein **aapko answer bilkul nahi aata**. Tab imaandaari se bolo: "Iska answer mujhe abhi nahi pata, par main aise approach karunga..." Aur approach bolo. Interviewer approach ko marks deta hai, khaali "pata nahi" ko nahi.`,
+          `Some strange situations also come up in mocks, and the same ones come up in real interviews. The first edge case: **the interviewer is silent**. You gave your answer, and the interviewer says nothing. Do not panic — they are thinking or writing notes. Add one line: "Shall I explain this with an example?" That gives the interviewer a chance to speak.
+
+The second edge case: **the internet goes down in an online mock**. Keep a plan ready — keep your phone data on, and take the interviewer's number in advance. If the call drops, rejoin within 2 minutes and say politely: "The connection dropped, could you please repeat the question?" That looks professional and does not show panic.
+
+The third edge case: **you did not understand the question**. This is the most common one. Asking again is better than giving a wrong answer: "Could you explain this with an example?" Or "Do you mean that...?" Interviewers like this — it shows you do not write code without understanding.
+
+In the fourth edge case **you do not know the answer at all**. Then say honestly: "I do not know the answer right now, but I would approach it like this..." And then explain the approach. The interviewer gives marks for the approach, not for an empty "I do not know".`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Mock Akela Doon, Ya Sirf Ek Baar Doon?',
+          '6. What If: I Mock Alone, or Only Once?'
+        ),
+        body: t(
+          `What if aapke paas mock ke liye koi partner nahi hai? Tab bhi mock ho sakta hai — **khud se mock** do. Phone par timer lagao, sawaal ki list kholo, aur camera on karke jawab record karo. Baad mein recording dekho: kya aap "umm" bol rahe ho? Kya aapki awaaz clear hai? Khud ki recording dekhna ajeeb lagta hai, par yeh sabse fast feedback hai. Ek hafte mein 3 self-mock bhi kaafi farak laate hain.
+
+What if aap sirf **ek hi mock** de paate ho? Tab us ek mock ko poora karo — 60 minute, chaaro rounds, aur feedback. Ek poora mock, aadhe-adhoore 5 mock se behtar hai. Us ek mock ke baad 3 cheezein likho: ek strength, ek weakness, aur ek agla step. Phir us ek weakness par 3 din kaam karo. Yeh ek mock bhi aapko asli interview ke liye taiyaar kar deta hai.
+
+What if mock mein score **kam aaye**? Score kam aana buri khabar nahi hai — woh mock ka kaam hai. Mock ka score asli interview ka score nahi hai, woh ek map hai jo batata hai ki kahan kaam karna hai. Agar DSA mein 6 aaya, to agle 3 din DSA par zyada time do. Score ko result mat samjho, use direction samjho.
+
+What if aap **har mock mein wahi galti** kar rahe ho? Tab mock ka format badlo — interviewer badlo, sawaal badlo, ya time kam kar do. Wahi partner, wahi sawaal, wahi galti — yeh loop todna zaroori hai. Naya interviewer nayi galtiyaan pakadta hai.`,
+          `What if you have no partner for a mock? You can still mock — give a **mock to yourself**. Set a timer on your phone, open a list of questions, and record your answers with the camera on. Watch the recording later: are you saying "umm"? Is your voice clear? Watching your own recording feels strange, but it is the fastest feedback. Even 3 self-mocks in a week make a big difference.
+
+What if you can give only **one mock**? Then complete that one mock fully — 60 minutes, all four rounds, and feedback. One full mock is better than 5 half-done mocks. After that one mock, write 3 things: one strength, one weakness, and one next step. Then work on that one weakness for 3 days. Even that one mock prepares you for the real interview.
+
+What if your mock **score is low**? A low score is not bad news — that is the job of a mock. A mock score is not your real interview score, it is a map that shows where to work. If DSA scores 6, give DSA more time for the next 3 days. Do not treat the score as a result, treat it as a direction.
+
+What if you make the **same mistake in every mock**? Then change the mock format — change the interviewer, change the questions, or reduce the time. Same partner, same questions, same mistake — that loop must be broken. A new interviewer catches new mistakes.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Mock Se Asli Interview Tak',
+          '7. Summary: From Mock to Real Interview'
+        ),
+        body: t(
+          `Poora article ek line mein: **mock interview asli interview ka rehearsal hai** — jitne zyada rehearsal, utna kam dar. Mock ke chaar hisse yaad rakho: intro (60 second), coding (soch zor se bolo), project (kya aur kyun), aur HR (short, honest jawab). Har mock ke baad scores likho, weakest area dhoondho, aur agle mock mein ek cheez sudharo.
+
+Mock mein chup mat raho, ratta hua jawab mat do, aur feedback ko ignore mat karo. Sawaal samajh na aaye to dobara poochho, answer na aaye to approach bolo, aur internet jaaye to calmly wapas join karo. Yeh sab chhoti cheezein hain, par interviewer inhi se judge karta hai ki aap pressure mein kaise kaam karte ho.
+
+Revision ke liye: is hafte 2 mock do — ek dost ke saath, ek khud camera par. Dono ke scores neeche wale tracker se nikaalo aur compare karo. Agar dusre mock ka weakest area pehle se alag hai, to aap sudhar rahe ho. Agle article mein hum service companies ke pattern dekhenge — wahan mock ka focus thoda alag hota hai.`,
+          `The whole article in one line: **a mock interview is a rehearsal for the real interview** — the more rehearsals, the less fear. Remember the four parts of a mock: intro (60 seconds), coding (speak your thinking out loud), project (what and why), and HR (short, honest answers). After every mock, write the scores, find the weakest area, and fix one thing in the next mock.
+
+Do not stay silent in a mock, do not give memorised answers, and do not ignore feedback. If you do not understand a question, ask again; if you do not know the answer, explain your approach; and if the internet drops, rejoin calmly. These are all small things, but the interviewer judges from them how you work under pressure.
+
+For revision: give 2 mocks this week — one with a friend, one alone on camera. Find the scores of both with the tracker below and compare them. If the weakest area of the second mock is different from the first, you are improving. In the next article we will look at service company patterns — the mock focus there is a little different.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Mock Interview ka Flow: Intro se Feedback Tak',
+        'Mock Interview Flow: From Intro to Feedback'
+      ),
+      caption: t(
+        '60 minute ka mock, 5 steps mein — har step ka score likhna mat bhoolo',
+        'A 60-minute mock in 5 steps — do not forget to write the score of each step'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Intro (10 min)', 'Step 1: Intro (10 min)'),
+          s: t('60 second mein apne baare mein batao', 'Talk about yourself in 60 seconds')
+        },
+        {
+          t: t('Step 2: Coding (20 min)', 'Step 2: Coding (20 min)'),
+          s: t('Soch zor se bolo, phir code likho', 'Speak your thinking out loud, then write code')
+        },
+        {
+          t: t('Step 3: Project (15 min)', 'Step 3: Project (15 min)'),
+          s: t('Kya banaya, kyun banaya, kya seekha', 'What you built, why you built it, what you learned')
+        },
+        {
+          t: t('Step 4: HR (10 min)', 'Step 4: HR (10 min)'),
+          s: t('Strength, weakness aur future plan', 'Strength, weakness, and future plan')
+        },
+        {
+          t: t('Step 5: Feedback (5 min)', 'Step 5: Feedback (5 min)'),
+          s: t('Scores likho, ek sudhaar chuno', 'Write the scores, pick one improvement')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Mock Checklist: Har Mock se Pehle 4 Checks',
+          'Mock Checklist: 4 Checks Before Every Mock'
+        ),
+        language: 'python',
+        code: `checks = ["Introduce yourself in 60 seconds", "Explain one project end to end", "Solve one easy DSA question", "Ask one question at the end"]
+for i, item in enumerate(checks, 1):
+    print(i, ".", item, sep="")
+print("Checks:", len(checks))`,
+        output: `1.Introduce yourself in 60 seconds
+2.Explain one project end to end
+3.Solve one easy DSA question
+4.Ask one question at the end
+Checks: 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Mock interview mein coding karte waqt sabse achhi aadat kaunsi hai?',
+          'What is the best habit while coding in a mock interview?'
+        ),
+        opts: [
+          t('Poora time chup rehna', 'Staying silent the whole time'),
+          t('Apni soch zor se bolna', 'Speaking your thinking out loud'),
+          t('Pehle answer yaad karna', 'Memorising the answer first'),
+          t('Jaldi-jaldi code likhna', 'Writing code very fast')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: soch zor se bolne se interviewer aapki approach dekh pata hai, aur chup rehne par use pata hi nahi chalta ki aap atak gaye ho ya soch rahe ho.',
+          'Correct answer: speaking your thinking out loud lets the interviewer see your approach, while silence tells them nothing about whether you are stuck or thinking.'
+        )
+      },
+      {
+        q: t(
+          'Rahul ke scores hain: DSA 7, OS 6, DBMS 8, HR 9. Uska weakest area kaunsa hai?',
+          'Rahul scores are: DSA 7, OS 6, DBMS 8, HR 9. What is his weakest area?'
+        ),
+        opts: [
+          t('DSA', 'DSA'),
+          t('OS', 'OS'),
+          t('DBMS', 'DBMS'),
+          t('HR', 'HR')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: OS ka score 6 sabse kam hai, isliye OS weakest area hai aur usi par sabse zyada kaam karna chahiye.',
+          'Correct answer: the OS score of 6 is the lowest, so OS is the weakest area and needs the most work.'
+        )
+      },
+      {
+        q: t(
+          'Intro kitne time mein khatam hona chahiye?',
+          'How long should the intro take?'
+        ),
+        opts: [
+          t('60 second', '60 seconds'),
+          t('5 minute', '5 minutes'),
+          t('10 minute', '10 minutes'),
+          t('30 second se kam', 'Less than 30 seconds')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: intro 60 second mein khatam hona chahiye — lamba intro interviewer ko bore karta hai aur baaki rounds ka time khata hai.',
+          'Correct answer: the intro should end in 60 seconds — a long intro bores the interviewer and eats the time of the other rounds.'
+        )
+      },
+      {
+        q: t(
+          'Agar interview mein sawaal samajh nahi aaya, to sabse behtar kya hai?',
+          'If you do not understand a question in the interview, what is best?'
+        ),
+        opts: [
+          t('Kuch bhi jawab de dena', 'Giving any answer at all'),
+          t('Chup rehna', 'Staying silent'),
+          t('Sawaal dobara poochhna ya example maangna', 'Asking the question again or asking for an example'),
+          t('Topic badal dena', 'Changing the topic')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: sawaal dobara poochhne se pata chalta hai ki aap bina samjhe code nahi likhte, aur interviewer ko yeh pasand aata hai.',
+          'Correct answer: asking again shows that you do not write code without understanding, and interviewers like that.'
+        )
+      },
+      {
+        q: t(
+          'Mock ke baad feedback ka sabse sahi use kya hai?',
+          'What is the best use of feedback after a mock?'
+        ),
+        opts: [
+          t('Feedback ko bhool jaana', 'Forgetting the feedback'),
+          t('Sirf score dekhna', 'Only looking at the score'),
+          t('Ek sudhaar chunna aur agle mock mein use karna', 'Picking one improvement and using it in the next mock'),
+          t('Dusre ko blame karna', 'Blaming someone else')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: mock ka fayda tabhi hai jab feedback agle mock mein dikhe — ek sudhaar chuno aur use agle mock mein karke dikhao.',
+          'Correct answer: a mock only helps when the feedback shows up in the next mock — pick one improvement and show it in the next mock.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock ke 4 hisse hain: intro (60 second), coding, project aur HR — poora mock 45 se 60 minute ka hota hai.',
+        'A mock has 4 parts: intro (60 seconds), coding, project, and HR — a full mock lasts 45 to 60 minutes.'
+      ),
+      t(
+        'Coding mein soch zor se bolo — chup rehna zero score deta hai.',
+        'In coding, speak your thinking out loud — silence scores zero.'
+      ),
+      t(
+        'Har mock ke baad scores likho aur weakest area par kaam karo.',
+        'After every mock, write the scores and work on the weakest area.'
+      ),
+      t(
+        'Jawab ke points yaad rakho, poori lines ratto mat.',
+        'Remember the points of your answer, do not memorise full lines.'
+      ),
+      t(
+        'Sawaal samajh na aaye to dobara poochho, answer na aaye to approach bolo.',
+        'If you do not understand a question, ask again; if you do not know the answer, explain your approach.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Mock ke Scores ka Tracker Banao',
+        'Practice: Build a Tracker for Your Mock Scores'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur apne 4 rounds ke scores (Intro, DSA, Project, HR) daal kar total aur average nikalo. Done tab hoga jab output mein total 30 / 40 aur average 7.5 / 10 dikhe, aur aap apna weakest round bata sako.',
+        'Run the starter code below and find the total and average from your 4 round scores (Intro, DSA, Project, HR). You are done when the output shows total 30 / 40 and average 7.5 / 10, and you can name your weakest round.'
+      ),
+      language: 'python',
+      starter: `rounds = [("Intro", 8), ("DSA", 6), ("Project", 7), ("HR", 9)]
+total = 0
+for name, score in rounds:
+    total += score
+    print(name, "->", score, "/ 10")
+print("Total:", total, "/ 40")
+print("Average:", total / len(rounds), "/ 10")`,
+      expected: `Intro -> 8 / 10
+DSA -> 6 / 10
+Project -> 7 / 10
+HR -> 9 / 10
+Total: 30 / 40
+Average: 7.5 / 10`
+    },
+    readMinutes: 12
+  };
+
+const placementCompanyTcs: Article = {
+    id: 'placement-company-tcs',
+    subjectId: 'placement',
+    title: t(
+      'Company Deep-Dive: TCS, Infosys, Wipro ke Patterns (Generic Only)',
+      'Company Deep-Dive: TCS, Infosys, and Wipro Patterns (Generic Only)'
+    ),
+    summary: t(
+      'Service companies ke interview ka pattern samjho — aptitude test, coding round, technical interview aur HR — aur har round ki taiyari kaise karein. Koi cut-off, salary ya guarantee claim nahi ki gayi hai; yeh sirf aam pattern ki samajh hai.',
+      'Understand the interview pattern of service companies — aptitude test, coding round, technical interview, and HR — and how to prepare for each round. No cut-off, salary, or guarantee is claimed here; this is only an understanding of the common pattern.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Service Companies ka Pattern Kya Hai?',
+          '1. What Is the Service Company Pattern?'
+        ),
+        body: t(
+          `Service companies jaise TCS, Infosys aur Wipro bade scale par hire karti hain. Inka process aam taur par chaar steps mein hota hai: **aptitude test**, **coding round**, **technical interview**, aur **HR interview**. Har step ek filter ki tarah kaam karta hai — jo step clear karta hai, woh agle step mein jaata hai. Is pattern ko samajhna isliye zaroori hai kyunki har step ki taiyari alag hoti hai.
+
+Aptitude test mein maths, logic aur English ke basic sawaal hote hain. Yeh test speed aur accuracy check karta hai, gehri maths nahi. Coding round mein ek ya do easy problems hote hain — array, string ya basic logic par. Technical interview mein aapke favourite subject, project aur ek coding language ke basics poochhe jaate hain. HR mein aapki communication, attitude aur company ke baare mein basic samajh dekhi jaati hai.
+
+Yeh pattern har saal thoda badal sakta hai — kabhi coding round pehle aata hai, kabhi aptitude ke saath jud jaata hai. Isliye kisi ek saal ke pattern par bharosa mat karo. Jo cheez nahi badalti, woh hai basics: aptitude ki speed, ek language ki pakad, aur ek project jo aap achhe se explain kar sako.`,
+          `Service companies like TCS, Infosys, and Wipro hire at a large scale. Their process usually has four steps: **aptitude test**, **coding round**, **technical interview**, and **HR interview**. Each step works like a filter — whoever clears a step moves to the next one. Understanding this pattern matters because each step needs different preparation.
+
+The aptitude test has basic questions on maths, logic, and English. It checks speed and accuracy, not deep maths. The coding round has one or two easy problems — on arrays, strings, or basic logic. The technical interview asks about your favourite subject, your project, and the basics of one coding language. HR checks your communication, your attitude, and a basic understanding of the company.
+
+This pattern can change a little every year — sometimes the coding round comes first, sometimes it joins the aptitude test. So do not trust one year's pattern alone. What does not change is the basics: speed in aptitude, a good grip on one language, and one project you can explain well.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Teen Dost, Teen Alag Taiyari',
+          '2. Real-Life Examples: Three Friends, Three Different Preparations'
+        ),
+        body: t(
+          `Amit ne sirf aptitude ki taiyari ki. Usne 100 mock test diye, par coding ko bilkul time nahi diya. Aptitude clear ho gaya, par coding round mein woh ek easy array problem bhi poora nahi kar paaya. Uska lesson simple tha: aptitude clear karna kaafi nahi hai, coding round bhi clear karna padta hai. Agli baar usne roz 1 ghanta coding ko diya.
+
+Neha ne ulta kiya — usne sirf coding ki, aptitude ko halka liya. Coding round mein woh achhi thi, par aptitude test mein time manage nahi kar paayi. 20 sawaal mein se usne sirf 12 attempt kiye. Usne seekha ki aptitude mein **speed** bhi ek skill hai — roz 30 minute timed practice se speed badhti hai.
+
+Rohan ne teeno par barabar time diya: subah aptitude, dopahar coding, shaam ko project aur HR answers. Usne ek hi project ko gehrai se taiyaar kiya — usme kya banaya, kaise banaya, aur kya problem aayi. Technical interview mein interviewer ne usi project par 10 minute sawaal poochhe, aur Rohan ne har jawab diya. Uska pattern simple tha: har round ko thoda-thoda, roz.`,
+          `Amit prepared only for aptitude. He gave 100 mock tests, but gave no time to coding. He cleared aptitude, but in the coding round he could not even finish one easy array problem. His lesson was simple: clearing aptitude is not enough, the coding round must also be cleared. Next time he gave 1 hour daily to coding.
+
+Neha did the opposite — she did only coding and took aptitude lightly. She was good in the coding round, but she could not manage time in the aptitude test. Out of 20 questions she attempted only 12. She learned that **speed** in aptitude is also a skill — daily 30-minute timed practice builds speed.
+
+Rohan gave equal time to all three: aptitude in the morning, coding in the afternoon, and project and HR answers in the evening. He prepared one project deeply — what he built, how he built it, and what problem came up. In the technical interview the interviewer asked questions on that same project for 10 minutes, and Rohan answered every one. His pattern was simple: a little of every round, every day.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Hafte ka Prep Plan (Worked Example with Dry Run)',
+          '3. Step-by-Step: One Week Prep Plan (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek hafte ka plan banate hain, jo har round ko cover karta hai. Plan ka total time hai **21 ghante** — roz 3 ghante. Pehla hissa hai **aptitude practice (6 ghante)**: roz 1 ghanta, jisme 20 sawaal timed karte ho. Doosra hissa hai **coding practice (7 ghante)**: roz 1 ghanta, ek easy problem aur uska dry run. Teesra hissa hai **technical revision (5 ghante)**: DBMS, OS aur ek language ke basics. Chautha hissa hai **HR preparation (3 ghante)**: intro, strength, weakness aur 5 common HR sawaal.
+
+Plan ko follow karne ka tareeka simple hai: har din ke end mein tick karo ki kya hua. Agar ek din coding chhoot gaya, to agle din uska time double mat karo — plan ko aage badhao. Ek chhoota hua din plan ko kharab nahi karta, par 3 chhoote hue din kar dete hain. Isliye consistency hi plan hai.
+
+Dry run mein neeche wala code plan ka total aur daily average nikaalta hai: aptitude 6, coding 7, technical 5, HR 3 — total 21 ghante, aur 7 din mein daily average 3.0 ghante. Yeh number aapko batata hai ki plan heavy nahi hai — roz 3 ghante, jo college ke saath possible hai. Agar aapke paas roz 2 ghante hi hain, to plan ko 14 ghante ka banao, par chaaro hisse rakho — koi hissa zero mat karo.`,
+          `Now let us build a one-week plan that covers every round. The total time of the plan is **21 hours** — 3 hours daily. The first part is **aptitude practice (6 hours)**: 1 hour daily, with 20 timed questions. The second part is **coding practice (7 hours)**: 1 hour daily, one easy problem and its dry run. The third part is **technical revision (5 hours)**: DBMS, OS, and the basics of one language. The fourth part is **HR preparation (3 hours)**: intro, strength, weakness, and 5 common HR questions.
+
+The way to follow the plan is simple: tick off at the end of each day what you did. If coding is missed one day, do not double its time the next day — move the plan forward. One missed day does not spoil the plan, but 3 missed days do. So consistency itself is the plan.
+
+In the dry run the code below finds the total and the daily average of the plan: aptitude 6, coding 7, technical 5, HR 3 — a total of 21 hours, and a daily average of 3.0 hours over 7 days. This number tells you the plan is not heavy — 3 hours daily, which is possible along with college. If you have only 2 hours daily, make the plan 14 hours, but keep all four parts — do not make any part zero.`
+        ),
+        code: {
+          title: t(
+            'Ek Hafte ka Prep Plan: Total aur Daily Average',
+            'One Week Prep Plan: Total and Daily Average'
+          ),
+          language: 'python',
+          code: `rounds = [("Aptitude practice", 6), ("Coding practice", 7), ("Technical revision", 5), ("HR preparation", 3)]
+total = 0
+for name, hours in rounds:
+    total += hours
+    print(name, "->", hours, "hours")
+print("Total prep time:", total, "hours")
+print("Daily average (7 days):", total / 7, "hours")`,
+          output: `Aptitude practice -> 6 hours
+Coding practice -> 7 hours
+Technical revision -> 5 hours
+HR preparation -> 3 hours
+Total prep time: 21 hours
+Daily average (7 days): 3.0 hours`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Ek Round ki Taiyari aur Ratna',
+          '4. Common Mistakes: Preparing Only One Round and Memorising'
+        ),
+        body: t(
+          `Sabse badi galti hai **sirf ek round ki taiyari**. Aptitude ke 100 mock de diye, par coding ko haath nahi lagaya. Ya coding mein expert ho gaye, par HR mein "tell me about yourself" par atak gaye. Har round ek filter hai — ek bhi filter fail hua to process wahin ruk jaata hai. Isliye har round ko thoda time do, kisi ko zero mat do.
+
+Doosri galti hai **10 languages seekhna**. Technical interview mein interviewer ek language ke basics poochhta hai — \`Python\` mein list aur dict, ya \`Java\` mein class aur object. Jo log 4 languages ke naam resume mein likhte hain, unse har language ka ek sawaal poochha jaata hai aur woh kisi ka bhi jawab nahi de paate. Ek language chuno, use gehrai se seekho, aur resume mein wahi likho jo aap sach mein jaante ho.
+
+Teesri galti hai **project ko halka lena**. "Maine ek app banaya" — yeh jawab kaafi nahi hai. Interviewer poochhega: kya problem thi, aapne kya banaya, kaunsi technology use ki, kya problem aayi, aur aapne use kaise solve kiya. Agar aapne project khud banaya hai, to yeh sawaal easy hain. Agar project kisi aur ka hai, to pehle sawaal par hi pakde jaoge.
+
+Chauthi galti hai **company ke baare mein kuch na jaanna**. HR mein aksar poochha jaata hai: "Aap humari company ke baare mein kya jaante hain?" Iska jawab 2 line mein taiyaar rakho — company kya karti hai, aur aap wahan kyun kaam karna chahte ho. Yeh 2 lines aapki interest dikhati hain.`,
+          `The biggest mistake is **preparing for only one round**. You gave 100 aptitude mocks, but never touched coding. Or you became expert in coding, but got stuck in HR on "tell me about yourself". Every round is a filter — if even one filter fails, the process stops there. So give some time to every round, and give zero to none.
+
+The second mistake is **learning 10 languages**. In the technical interview the interviewer asks the basics of one language — lists and dicts in \`Python\`, or classes and objects in \`Java\`. People who write 4 languages on their resume get one question from each language and cannot answer any of them. Pick one language, learn it deeply, and write on your resume only what you truly know.
+
+The third mistake is **taking the project lightly**. "I made an app" — that answer is not enough. The interviewer will ask: what was the problem, what did you build, which technology did you use, what problem came up, and how did you solve it. If you built the project yourself, these questions are easy. If the project is someone else's, you will be caught on the first question.
+
+The fourth mistake is **knowing nothing about the company**. HR often asks: "What do you know about our company?" Keep a 2-line answer ready — what the company does, and why you want to work there. Those 2 lines show your interest.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Aptitude Clear, Coding Fail — Ya Ulta',
+          '5. Edge Cases: Aptitude Clear, Coding Fail — or the Reverse'
+        ),
+        body: t(
+          `Pehla edge case: **aptitude clear, coding fail**. Yeh sabse common hai. Iska matlab aapki speed achhi hai, par coding practice kam hai. Solution hai roz ek easy problem — 30 din mein 30 problems. Problem hard nahi honi chahiye, regular honi chahiye. Easy problems se confidence banta hai, aur confidence se medium problems solve hote hain.
+
+Doosra edge case: **coding clear, aptitude fail**. Iska matlab aapki logic achhi hai, par speed kam hai. Solution hai timed practice — 20 sawaal, 30 minute, roz. Pehle accuracy par dhyaan do, phir speed par. Galat jawab jaldi dena bhi fail hai, sahi jawab slow dena bhi fail hai — dono ka balance chahiye.
+
+Teesra edge case: **technical clear, HR fail**. Aapko sab aata hai, par aap bol nahi paate. Iska solution hai mock HR — dost se 5 HR sawaal poochhwao aur jawab record karo. HR mein knowledge nahi, communication check hoti hai. Short, clear aur honest jawab hi kaafi hain.
+
+Chautha edge case: **sab clear, par result nahi aaya**. Yeh bhi hota hai — kai candidates clear karte hain aur company apni need ke hisaab se chun-ti hai. Iska matlab yeh nahi ki aapki taiyari kharab thi. Isi liye ek company par bharosa mat karo — 4-5 companies ke liye apply karo aur har process se seekho.`,
+          `The first edge case: **aptitude clear, coding fail**. This is the most common one. It means your speed is good, but your coding practice is low. The fix is one easy problem daily — 30 problems in 30 days. The problem need not be hard, it must be regular. Easy problems build confidence, and confidence solves medium problems.
+
+The second edge case: **coding clear, aptitude fail**. It means your logic is good, but your speed is low. The fix is timed practice — 20 questions, 30 minutes, daily. First focus on accuracy, then on speed. A wrong answer given fast also fails, and a right answer given slowly also fails — you need a balance of both.
+
+The third edge case: **technical clear, HR fail**. You know everything, but you cannot speak it. The fix is a mock HR — ask a friend to ask 5 HR questions and record your answers. HR does not check knowledge, it checks communication. Short, clear, and honest answers are enough.
+
+The fourth edge case: **everything clear, but no result came**. This also happens — many candidates clear the rounds and the company picks as per its own need. That does not mean your preparation was bad. That is why you should not depend on one company — apply to 4-5 companies and learn from every process.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Aptitude Mein Time Kam Pad Jaaye?',
+          '6. What If: Time Runs Short in Aptitude?'
+        ),
+        body: t(
+          `What if aptitude test mein time kam pad jaaye? Pehla rule hai — **ek sawaal par atakna band karo**. Agar ek sawaal 2 minute se zyada le raha hai, to use chhodo aur aage badho. End mein time bacha to wapas aao. Jo students ek mushkil sawaal par 5 minute lagate hain, woh 3 easy sawaal chhod dete hain — aur easy sawaal hi marks dete hain.
+
+What if aapko **coding problem ka approach** nahi mil raha? Tab brute force se shuru karo. Brute force likhna, use test karna, aur phir sochna ki use fast kaise karein — yeh bhi ek approach hai. Interviewer brute force ko bhi marks deta hai, khaali screen ko nahi. Pehle kuch likho, phir sudharo.
+
+What if technical interview mein **aapke favourite subject se sawaal** nahi aaya? Tab ghabrao mat — interviewer aapke resume se sawaal poochhega. Resume mein jo likha hai, use achhe se taiyaar karo. Agar aapne DBMS likha hai, to DBMS ke basics aane chahiye. Resume hi interview ka syllabus hai.
+
+What if aap **ek saal peeche** ho aur sab dost aage nikal gaye? Tab bhi pattern wahi hai — basics, ek language, ek project, roz practice. Der se shuru karna, na shuru karne se behtar hai. 3 mahine ki focused taiyari bhi kaafi hoti hai, agar har din ka plan clear ho.`,
+          `What if time runs short in the aptitude test? The first rule is — **stop getting stuck on one question**. If one question takes more than 2 minutes, leave it and move ahead. If time is left at the end, come back to it. Students who spend 5 minutes on one hard question leave 3 easy questions — and easy questions are what give marks.
+
+What if you cannot find an **approach for the coding problem**? Then start with brute force. Writing brute force, testing it, and then thinking how to make it faster — that is also an approach. The interviewer gives marks for brute force too, not for an empty screen. First write something, then improve it.
+
+What if the technical interview asks **nothing from your favourite subject**? Do not panic — the interviewer will ask from your resume. Prepare well whatever is written on your resume. If you wrote DBMS, you should know the basics of DBMS. Your resume itself is the syllabus of the interview.
+
+What if you are **a year behind** and all your friends have moved ahead? The pattern is still the same — basics, one language, one project, daily practice. Starting late is better than never starting. Even 3 months of focused preparation is enough, if every day's plan is clear.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Service Companies ke Liye Taiyari ka Formula',
+          '7. Summary: The Preparation Formula for Service Companies'
+        ),
+        body: t(
+          `Poora article ek formula mein: **aptitude ki speed + ek language ki pakad + ek project ki gehrai + HR ki clarity**. Chaaro round filter hain, kisi ko bhi zero mat do. Hafte ka plan simple hai — roz 3 ghante, chaaro hisse, 7 din. Yeh plan aapko har round ke liye taiyaar karta hai.
+
+Yaad rakhne wali baatein: ek language chuno, ek project ko gehrai se taiyaar karo, aptitude mein timed practice karo, aur HR ke 5 common sawaal taiyaar rakho. Company ke baare mein 2 lines jaan lo. Aur sabse zaroori — kisi ek company par bharosa mat karo, kai companies mein apply karo.
+
+Revision ke liye: apna ek hafte ka plan neeche wale code se banao aur total nikalo. Agar total 21 ghante ke aas-paas hai aur chaaro hisse hain, to plan sahi hai. Agle article mein hum product companies dekhenge — wahan pattern badal jaata hai aur DSA ki gehrai badh jaati hai.`,
+          `The whole article in one formula: **speed in aptitude + grip on one language + depth in one project + clarity in HR**. All four rounds are filters, so give zero to none. The weekly plan is simple — 3 hours daily, all four parts, 7 days. This plan prepares you for every round.
+
+Things to remember: pick one language, prepare one project deeply, do timed practice for aptitude, and keep 5 common HR questions ready. Learn 2 lines about the company. And most important — do not depend on one company, apply to many companies.
+
+For revision: build your one-week plan with the code below and find the total. If the total is around 21 hours and all four parts are there, the plan is right. In the next article we will look at product companies — the pattern changes there and the depth of DSA grows.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Service Company Process: 4 Filters, Ek ke Baad Ek',
+        'Service Company Process: 4 Filters, One After Another'
+      ),
+      caption: t(
+        'Har step ek filter hai — ek bhi fail hua to process wahin ruk jaata hai',
+        'Every step is a filter — if even one fails, the process stops there'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Aptitude Test', 'Step 1: Aptitude Test'),
+          s: t('Maths, logic, English — speed aur accuracy', 'Maths, logic, English — speed and accuracy')
+        },
+        {
+          t: t('Step 2: Coding Round', 'Step 2: Coding Round'),
+          s: t('1-2 easy problems: array, string, logic', '1-2 easy problems: array, string, logic')
+        },
+        {
+          t: t('Step 3: Technical Interview', 'Step 3: Technical Interview'),
+          s: t('Ek language, project aur favourite subject', 'One language, project, and favourite subject')
+        },
+        {
+          t: t('Step 4: HR Interview', 'Step 4: HR Interview'),
+          s: t('Communication, attitude aur company ki samajh', 'Communication, attitude, and understanding of the company')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Service Prep Checklist: 5 Topics',
+          'Service Prep Checklist: 5 Topics'
+        ),
+        language: 'python',
+        code: `topics = ["Aptitude basics", "One coding language", "DBMS and OS basics", "One project story", "HR answers"]
+for i, item in enumerate(topics, 1):
+    print(i, ".", item, sep="")
+print("Topics:", len(topics))`,
+        output: `1.Aptitude basics
+2.One coding language
+3.DBMS and OS basics
+4.One project story
+5.HR answers
+Topics: 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Service companies ke process mein pehla filter aam taur par kaunsa hota hai?',
+          'What is usually the first filter in the service company process?'
+        ),
+        opts: [
+          t('HR interview', 'HR interview'),
+          t('Aptitude test', 'Aptitude test'),
+          t('Technical interview', 'Technical interview'),
+          t('Group discussion', 'Group discussion')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: aptitude test aam taur par pehla step hota hai — isme speed aur accuracy check hoti hai, aur jo clear karta hai woh agle step mein jaata hai.',
+          'Correct answer: the aptitude test is usually the first step — it checks speed and accuracy, and whoever clears it moves to the next step.'
+        )
+      },
+      {
+        q: t(
+          'Resume mein languages ke baare mein sabse sahi rule kya hai?',
+          'What is the best rule about languages on a resume?'
+        ),
+        opts: [
+          t('Jitni zyada languages, utna behtar', 'The more languages, the better'),
+          t('Sirf wahi likho jo sach mein aata hai', 'Write only what you truly know'),
+          t('Sab languages likh do', 'Write all languages'),
+          t('Koi language mat likho', 'Write no language at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: resume mein sirf wahi likho jo aap sach mein jaante ho, kyunki interviewer har likhi hui language se sawaal poochh sakta hai.',
+          'Correct answer: write on your resume only what you truly know, because the interviewer can ask questions from every language you list.'
+        )
+      },
+      {
+        q: t(
+          'Aptitude test mein ek sawaal 2 minute se zyada le raha hai. Kya karna chahiye?',
+          'One question in the aptitude test is taking more than 2 minutes. What should you do?'
+        ),
+        opts: [
+          t('Us par 5 minute aur lagao', 'Spend 5 more minutes on it'),
+          t('Use chhodo aur aage badho', 'Leave it and move ahead'),
+          t('Test chhod do', 'Leave the test'),
+          t('Random guess karo', 'Make a random guess')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek mushkil sawaal par atakne se 3 easy sawaal chhoot jaate hain — use chhodo, aage badho, aur end mein time bacha to wapas aao.',
+          'Correct answer: getting stuck on one hard question loses 3 easy questions — leave it, move ahead, and come back at the end if time is left.'
+        )
+      },
+      {
+        q: t(
+          'Technical interview mein project ke baare mein kya poochha jaata hai?',
+          'What is asked about the project in the technical interview?'
+        ),
+        opts: [
+          t('Sirf project ka naam', 'Only the project name'),
+          t('Kya problem thi, kya banaya, kaise banaya', 'What the problem was, what you built, how you built it'),
+          t('Sirf team ka size', 'Only the team size'),
+          t('Kuch nahi poochha jaata', 'Nothing is asked')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: interviewer project ki gehrai poochhta hai — kya problem thi, aapne kya banaya, kaunsi technology use ki, aur kya problem aayi.',
+          'Correct answer: the interviewer asks about the depth of the project — what the problem was, what you built, which technology you used, and what problem came up.'
+        )
+      },
+      {
+        q: t(
+          '21 ghante ke hafte ke plan mein daily average kitna hota hai?',
+          'What is the daily average in a 21-hour weekly plan?'
+        ),
+        opts: [
+          t('2.0 ghante', '2.0 hours'),
+          t('3.0 ghante', '3.0 hours'),
+          t('4.0 ghante', '4.0 hours'),
+          t('5.0 ghante', '5.0 hours')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 21 ghante ko 7 din se bhaag do to 3.0 ghante roz aata hai — yeh college ke saath possible hai.',
+          'Correct answer: 21 hours divided by 7 days is 3.0 hours daily — this is possible along with college.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Service process ke 4 steps hain: aptitude, coding, technical aur HR — har step ek filter hai.',
+        'The service process has 4 steps: aptitude, coding, technical, and HR — every step is a filter.'
+      ),
+      t(
+        'Har round ko thoda time do — kisi ek round ko zero mat do.',
+        'Give some time to every round — give zero to no round.'
+      ),
+      t(
+        'Ek language chuno aur use gehrai se seekho; resume mein sirf wahi likho jo aata hai.',
+        'Pick one language and learn it deeply; write on your resume only what you know.'
+      ),
+      t(
+        'Aptitude mein ek sawaal par 2 minute se zyada mat atko.',
+        'In aptitude, do not get stuck on one question for more than 2 minutes.'
+      ),
+      t(
+        'Ek company par bharosa mat karo — kai companies mein apply karo.',
+        'Do not depend on one company — apply to many companies.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne 3 Mock Tests ka Average Nikaalo',
+        'Practice: Find the Average of Your 3 Mock Tests'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur 3 mock tests ke scores ka total aur average nikalo. Done tab hoga jab output mein total 48 / 60 aur average 16.0 / 20 dikhe.',
+        'Run the starter code below and find the total and average of 3 mock test scores. You are done when the output shows total 48 / 60 and average 16.0 / 20.'
+      ),
+      language: 'python',
+      starter: `scores = [("Aptitude mock", 18), ("Coding mock", 15), ("Technical mock", 15)]
+total = 0
+for name, score in scores:
+    total += score
+    print(name, "->", score, "/ 20")
+print("Total:", total, "/ 60")
+print("Average:", total / len(scores), "/ 20")`,
+      expected: `Aptitude mock -> 18 / 20
+Coding mock -> 15 / 20
+Technical mock -> 15 / 20
+Total: 48 / 60
+Average: 16.0 / 20`
+    },
+    readMinutes: 12
+  };
+
+const placementCompanyProduct: Article = {
+    id: 'placement-company-product',
+    subjectId: 'placement',
+    title: t(
+      'Product Companies: Taiyari Mein Kya Badal Jaata Hai',
+      'Product Companies: What Changes in Preparation'
+    ),
+    summary: t(
+      'Product companies mein DSA ki gehrai badh jaati hai, system design basics aate hain, aur project ki quality matter karti hai. Yahan aptitude kam aur problem solving zyada check hota hai — isliye taiyari ka focus badalna padta hai.',
+      'In product companies the depth of DSA grows, system design basics appear, and the quality of the project matters. Here aptitude matters less and problem solving matters more — so the focus of preparation has to change.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Product Companies Mein Kya Alag Hai?',
+          '1. What Is Different in Product Companies?'
+        ),
+        body: t(
+          `Product companies woh hain jo apna khud ka product banati hain — ek app, ek website ya ek tool. Inka interview service companies se alag hota hai kyunki yahan **problem solving** sabse zyada matter karta hai. Aptitude test ya to hota hi nahi, ya bahut halka hota hai. Asli test hota hai DSA rounds mein — 2 se 3 rounds, har round mein 1-2 medium problems.
+
+Doosra farak hai **system design basics**. Bade product mein aapko yeh samajhna padta hai ki ek system kaise kaam karta hai — data kahan store hota hai, 1000 users aayein to kya hoga, aur ek feature ko kaise design karoge. Fresher se poora system design nahi poochha jaata, par basics poochhe jaate hain: "Ek notes app ko kaise design karoge?" — iska jawab aapko pata hona chahiye.
+
+Teesra farak hai **project ki quality**. Service interview mein project ek topic hota hai, product interview mein project ek proof hota hai — aapne sach mein kuch banaya hai ya nahi. Ek achha project, jisme real users hon ya real problem solve hui ho, aapko bahut aage le jaata hai. Resume mein 5 chhote projects se behtar hai 1 solid project.`,
+          `Product companies are those that build their own product — an app, a website, or a tool. Their interview differs from service companies because here **problem solving** matters the most. The aptitude test either does not exist, or is very light. The real test is in the DSA rounds — 2 to 3 rounds, with 1-2 medium problems in each round.
+
+The second difference is **system design basics**. In a large product you must understand how a system works — where data is stored, what happens if 1000 users come, and how you would design a feature. A fresher is not asked full system design, but basics are asked: "How would you design a notes app?" — you should know the answer.
+
+The third difference is **the quality of the project**. In a service interview the project is a topic; in a product interview the project is proof — whether you truly built something or not. One good project, with real users or a real problem solved, takes you far ahead. One solid project is better than 5 small projects on a resume.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Do Taiyari, Do Result',
+          '2. Real-Life Examples: Two Preparations, Two Results'
+        ),
+        body: t(
+          `Karan ne service pattern se taiyari ki — aptitude, easy coding, aur HR. Product company ke pehle DSA round mein use ek medium tree problem mila. Usne brute force likha, par time khatam ho gaya. Doosre round mein graph problem aaya aur woh phir atak gaya. Karan ko samajh aaya ki product interview mein **medium problems ki speed** chahiye, sirf easy nahi.
+
+Sana ne alag tareeka apnaya. Usne 3 mahine sirf DSA par diye — roz 2 medium problems, har problem ka dry run, aur har hafte revision. Usne ek project bhi banaya: ek notes app jise uske college ke 40 students use karte the. Interview mein jab usse tree problem mila, to usne pehle approach bola, phir code likha, phir test kiya. Project round mein usne real users ki baat ki — "40 students use karte hain, aur unhone yeh feedback diya." Interviewer ko yeh pasand aaya.
+
+Teesra example hai Vikram ka. Woh DSA mein achha tha, par system design basics mein atak gaya. "Ek chat app kaise design karoge?" par usne sirf "database use karenge" bola. Usne seekha ki system design ka jawab structure mein dena hota hai: pehle requirement, phir data, phir scale. Usne 5 common design sawaal taiyaar kiye aur agle interview mein wahi structure use kiya.`,
+          `Karan prepared with the service pattern — aptitude, easy coding, and HR. In the first DSA round of a product company he got a medium tree problem. He wrote brute force, but time ran out. In the second round a graph problem came and he got stuck again. Karan understood that a product interview needs **speed on medium problems**, not just easy ones.
+
+Sana took a different path. She gave 3 months only to DSA — 2 medium problems daily, a dry run of every problem, and revision every week. She also built a project: a notes app used by 40 students in her college. In the interview, when she got a tree problem, she first said the approach, then wrote the code, then tested it. In the project round she talked about real users — "40 students use it, and they gave this feedback." The interviewer liked that.
+
+The third example is Vikram. He was good in DSA, but he got stuck on system design basics. On "How would you design a chat app?" he only said "we will use a database". He learned that a system design answer must be given in a structure: first the requirement, then the data, then the scale. He prepared 5 common design questions and used the same structure in the next interview.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Product Prep ka 16 Ghante ka Plan (Worked Example with Dry Run)',
+          '3. Step-by-Step: 16-Hour Product Prep Plan (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek hafte ka product prep plan banate hain. Total time hai **16 ghante**. Pehla hissa hai **arrays (5 ghante)**: two pointers, sliding window aur prefix sum — yeh teeno patterns product interviews mein baar-baar aate hain. Doosra hissa hai **trees (5 ghante)**: traversal, height, aur binary search tree ke basics. Teesra hissa hai **graphs (4 ghante)**: BFS, DFS aur shortest path ki samajh. Chautha hissa hai **system design basics (2 ghante)**: 5 common design sawaal aur unka structure.
+
+Plan ko follow karne ka tareeka hai: har din 2 medium problems solve karo, aur har problem ke baad 3 sawaal khud se poochho — approach kya tha, time complexity kya hai, aur edge case kya hai. Agar approach nahi mila, to solution padho, samjho, aur agle din bina dekhe dobara solve karo. Bina dekhe dobara solve karna hi asli seekh hai.
+
+Dry run mein neeche wala code plan ka total nikaalta hai: arrays 5, trees 5, graphs 4, system design basics 2 — total 16 ghante, aur DSA ka hissa 14 ghante hai. Yeh number batata hai ki product prep mein DSA hi king hai — 16 mein se 14 ghante DSA par hain. System design basics sirf 2 ghante hain, par woh 2 ghante bhi zaroori hain, kyunki wahi aapko doosre candidates se alag karte hain.`,
+          `Now let us build a one-week product prep plan. The total time is **16 hours**. The first part is **arrays (5 hours)**: two pointers, sliding window, and prefix sum — these three patterns appear again and again in product interviews. The second part is **trees (5 hours)**: traversal, height, and the basics of a binary search tree. The third part is **graphs (4 hours)**: understanding BFS, DFS, and shortest path. The fourth part is **system design basics (2 hours)**: 5 common design questions and their structure.
+
+The way to follow the plan is: solve 2 medium problems every day, and after every problem ask yourself 3 questions — what was the approach, what is the time complexity, and what is the edge case. If you cannot find the approach, read the solution, understand it, and solve it again the next day without looking. Solving again without looking is the real learning.
+
+In the dry run the code below finds the total of the plan: arrays 5, trees 5, graphs 4, system design basics 2 — a total of 16 hours, and the DSA share is 14 hours. This number shows that in product prep DSA is king — 14 of 16 hours are on DSA. System design basics are only 2 hours, but those 2 hours are also needed, because they set you apart from other candidates.`
+        ),
+        code: {
+          title: t(
+            'Product Prep Plan: 16 Ghante, DSA ka Hissa Kitna?',
+            'Product Prep Plan: 16 Hours, How Much Is DSA?'
+          ),
+          language: 'python',
+          code: `topics = [("Arrays", 5), ("Trees", 5), ("Graphs", 4), ("System design basics", 2)]
+total = 0
+for name, hours in topics:
+    total += hours
+    print(name, "->", hours, "hours")
+print("Total hours:", total)
+print("DSA share:", 14, "of", total, "hours")`,
+          output: `Arrays -> 5 hours
+Trees -> 5 hours
+Graphs -> 4 hours
+System design basics -> 2 hours
+Total hours: 16
+DSA share: 14 of 16 hours`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Easy Problems aur Bina Project ke Resume',
+          '4. Common Mistakes: Only Easy Problems and a Resume Without a Project'
+        ),
+        body: t(
+          `Sabse badi galti hai **sirf easy problems** solve karna. Easy problems se confidence milta hai, par product interview mein medium problems aate hain. Agar aapne kabhi medium problem solve nahi ki, to interview mein pehli baar mein time khatam ho jaayega. Hafte mein kam se kam 10 medium problems solve karo — easy se shuru karo, par medium par ruko mat.
+
+Doosri galti hai **bina project ke resume**. "Maine tutorial follow karke ek app banaya" — yeh project nahi hai. Project woh hai jisme aapne khud socha ho: kya problem hai, kya feature chahiye, aur kya problem aayi. Ek project jisme aapne ek real problem solve ki ho, 5 tutorial projects se behtar hai. Interviewer project mein aapki soch dekhta hai, code nahi.
+
+Teesri galti hai **time complexity bhool jaana**. Product interview mein har problem ke baad poochha jaata hai: "Time complexity kya hai? Space complexity kya hai? Ise fast kaise kar sakte ho?" Agar aap code likh kar ruk jaate ho, to aadha score milta hai. Har problem ke baad complexity bolo — yeh aadat banao.
+
+Chauthi galti hai **system design ko ignore karna**. "Main fresher hoon, mujhse system design nahi poochhenge" — yeh galat hai. Poora system design nahi poochha jaata, par basics poochhe jaate hain. 5 common design sawaal taiyaar rakho: notes app, chat app, URL shortener, aur unka structure — requirement, data, scale.`,
+          `The biggest mistake is solving **only easy problems**. Easy problems give confidence, but product interviews have medium problems. If you have never solved a medium problem, time will run out on your first try in the interview. Solve at least 10 medium problems a week — start with easy, but do not stop at medium.
+
+The second mistake is a **resume without a project**. "I made an app by following a tutorial" — that is not a project. A project is one where you thought yourself: what is the problem, what feature is needed, and what problem came up. One project where you solved a real problem is better than 5 tutorial projects. The interviewer looks at your thinking in the project, not the code.
+
+The third mistake is **forgetting time complexity**. In a product interview, after every problem they ask: "What is the time complexity? What is the space complexity? How can you make it faster?" If you write the code and stop, you get half the marks. Say the complexity after every problem — make it a habit.
+
+The fourth mistake is **ignoring system design**. "I am a fresher, they will not ask me system design" — that is wrong. Full system design is not asked, but basics are asked. Keep 5 common design questions ready: notes app, chat app, URL shortener, and their structure — requirement, data, scale.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Brute Force Mil Gaya, Optimal Nahi Mila',
+          '5. Edge Cases: Brute Force Found, Optimal Not Found'
+        ),
+        body: t(
+          `Pehla edge case: **brute force mil gaya, optimal nahi mila**. Yeh sabse common hai. Interview mein brute force likhna buri baat nahi hai — woh pehla step hai. Brute force likho, use test karo, phir bolo: "Ise fast karne ke liye main hash map use kar sakta hoon." Interviewer ko yeh sunna pasand hai — isse pata chalta hai ki aapko optimal solution ki direction pata hai, bas time kam tha.
+
+Doosra edge case: **approach pata hai, code nahi likh pa rahe**. Yeh tab hota hai jab aapne solution padha hai, par khud code nahi likha. Solution padhna seekhna nahi hai — code likhna seekhna hai. Har problem ko khud code karo, chahe pehli baar mein galti ho. Galti karke seekhna, solution padh kar seekhne se zyada strong hai.
+
+Teesra edge case: **do round clear, teesra fail**. Product process mein 2-3 DSA rounds hote hain. Ek round fail hona matlab taiyari kharab nahi hai — matlab uss din ka problem aapke weak topic se tha. Har round ke baad likho ki kaunsa topic aaya aur kahan atke. Agle hafte usi topic par kaam karo.
+
+Chauthe edge case mein **aapko problem ka naam yaad hai, par solution nahi**. Yeh ratne ka sign hai. Problem ka naam bhool jao, pattern yaad rakho — two pointers, sliding window, BFS. Pattern yaad rakhne se naya problem bhi solve hota hai, naam yaad rakhne se nahi.`,
+          `The first edge case: **brute force found, optimal not found**. This is the most common one. Writing brute force in an interview is not bad — it is the first step. Write brute force, test it, then say: "To make it faster I can use a hash map." The interviewer likes hearing this — it shows you know the direction of the optimal solution, you just had less time.
+
+The second edge case: **you know the approach, but cannot write the code**. This happens when you read a solution but never wrote the code yourself. Reading a solution is not learning — writing code is learning. Code every problem yourself, even if you make a mistake the first time. Learning by making a mistake is stronger than learning by reading a solution.
+
+The third edge case: **two rounds clear, third fails**. The product process has 2-3 DSA rounds. Failing one round does not mean your preparation is bad — it means that day's problem was from your weak topic. After every round, write which topic came and where you got stuck. Work on that same topic next week.
+
+In the fourth edge case **you remember the name of the problem, but not the solution**. That is a sign of memorising. Forget the name of the problem, remember the pattern — two pointers, sliding window, BFS. Remembering a pattern solves even a new problem; remembering a name does not.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: DSA Strong Hai, Par Project Kamzor Hai?',
+          '6. What If: DSA Is Strong, but the Project Is Weak?'
+        ),
+        body: t(
+          `What if aapki DSA strong hai, par project kamzor hai? Tab agle 2 hafte project par do. Ek chhota par real project banao — ek notes app, ek expense tracker, ya ek quiz app. Use 10 real users ko do aur unka feedback lo. Interview mein aap yeh bol sakte ho: "10 users ne use kiya aur unhone yeh feedback diya, maine yeh sudhara." Yeh ek line aapke project ko real bana deti hai.
+
+What if **project strong hai, DSA kamzor** hai? Tab project ko side mein rakho aur 1 mahina sirf DSA par do. Roz 2 medium problems, har problem ka dry run, aur hafte mein revision. Project interview mein 15 minute ka hota hai, DSA 45 minute ka — time ka hisaab bata raha hai ki focus kahan hona chahiye.
+
+What if aapko **system design ka sawaal** aa jaaye aur aapko kuch nahi aata? Tab structure se jawab do: "Pehle main requirement samjhunga — kitne users, kya features. Phir data kahan store hoga. Phir scale kaise karenge." Yeh structure hi aadha jawab hai. Interviewer ko perfect design nahi chahiye, sochne ka tareeka chahiye.
+
+What if aap **ek hi company ke liye** taiyari kar rahe ho? Tab bhi pattern wahi hai — DSA, project, system design basics. Ek company ka pattern badal sakta hai, par basics nahi badalte. Basics strong rakho, to har company ka interview de sakte ho.`,
+          `What if your DSA is strong, but your project is weak? Then give the next 2 weeks to the project. Build one small but real project — a notes app, an expense tracker, or a quiz app. Give it to 10 real users and take their feedback. In the interview you can say: "10 users used it and gave this feedback, and I fixed this." That one line makes your project real.
+
+What if the **project is strong, but DSA is weak**? Then put the project aside and give 1 month only to DSA. Two medium problems daily, a dry run of every problem, and revision every week. The project is 15 minutes in the interview, DSA is 45 minutes — the time itself tells you where the focus should be.
+
+What if a **system design question** comes and you know nothing? Then answer with a structure: "First I will understand the requirement — how many users, what features. Then where the data will be stored. Then how we will scale." That structure itself is half the answer. The interviewer does not want a perfect design, they want a way of thinking.
+
+What if you are preparing for **only one company**? The pattern is still the same — DSA, project, system design basics. One company's pattern can change, but basics do not change. Keep the basics strong, and you can give any company's interview.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Product Prep ka Focus',
+          '7. Summary: The Focus of Product Prep'
+        ),
+        body: t(
+          `Poora article ek line mein: **product prep mein DSA king hai, project proof hai, aur system design basics bonus hain**. Aptitude kam, problem solving zyada. Hafte ka plan yaad rakho: arrays 5, trees 5, graphs 4, system design basics 2 — total 16 ghante, jisme DSA 14 ghante hai.
+
+Yaad rakhne wali baatein: roz 2 medium problems, har problem ke baad complexity bolo, pattern yaad rakho naam nahi, aur ek solid project banao jisme real users hon. Brute force se shuru karna theek hai, par optimal ki direction bolna zaroori hai.
+
+Revision ke liye: apna plan neeche wale code se banao aur check karo ki DSA ka hissa sabse bada hai ya nahi. Agar nahi hai, to plan ko badlo. Agle article mein hum off-campus drives dekhenge — wahan taiyari ke saath-saath apply karne ki strategy bhi matter karti hai.`,
+          `The whole article in one line: **in product prep DSA is king, the project is proof, and system design basics are a bonus**. Less aptitude, more problem solving. Remember the weekly plan: arrays 5, trees 5, graphs 4, system design basics 2 — a total of 16 hours, of which DSA is 14 hours.
+
+Things to remember: 2 medium problems daily, say the complexity after every problem, remember the pattern not the name, and build one solid project with real users. Starting with brute force is fine, but saying the direction of the optimal solution is needed.
+
+For revision: build your plan with the code below and check whether the DSA share is the biggest or not. If it is not, change the plan. In the next article we will look at off-campus drives — there, along with preparation, the strategy of applying also matters.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'Product Prep ki Layers: DSA Neeche, Project Upar',
+        'Layers of Product Prep: DSA at the Bottom, Project on Top'
+      ),
+      caption: t(
+        'Neeche ki layer sabse badi hai — DSA par sabse zyada time lagta hai',
+        'The bottom layer is the biggest — DSA takes the most time'
+      ),
+      nodes: [
+        {
+          t: t('Layer 1: DSA — Arrays, Trees, Graphs (14 ghante)', 'Layer 1: DSA — Arrays, Trees, Graphs (14 hours)'),
+          s: t('Roz 2 medium problems, har problem ka dry run', '2 medium problems daily, dry run of every problem')
+        },
+        {
+          t: t('Layer 2: System Design Basics (2 ghante)', 'Layer 2: System Design Basics (2 hours)'),
+          s: t('5 common design sawaal: requirement, data, scale', '5 common design questions: requirement, data, scale')
+        },
+        {
+          t: t('Layer 3: Project (real users ke saath)', 'Layer 3: Project (with real users)'),
+          s: t('Ek solid project, 10 real users, unka feedback', 'One solid project, 10 real users, their feedback')
+        },
+        {
+          t: t('Layer 4: HR aur Communication', 'Layer 4: HR and Communication'),
+          s: t('Short, clear aur honest jawab', 'Short, clear, and honest answers')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Resume ke Liye 3 Strong Bullets',
+          '3 Strong Bullets for a Resume'
+        ),
+        language: 'python',
+        code: `bullets = ["Built a notes app used by 40 classmates", "Cut page load time from 4 seconds to 2 seconds", "Led a team of 3 in a hackathon"]
+for bullet in bullets:
+    print("-", bullet)
+print("Bullets:", len(bullets))`,
+        output: `- Built a notes app used by 40 classmates
+- Cut page load time from 4 seconds to 2 seconds
+- Led a team of 3 in a hackathon
+Bullets: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Product companies mein sabse zyada kya matter karta hai?',
+          'What matters the most in product companies?'
+        ),
+        opts: [
+          t('Aptitude test', 'Aptitude test'),
+          t('Problem solving (DSA)', 'Problem solving (DSA)'),
+          t('Spelling', 'Spelling'),
+          t('Typing speed', 'Typing speed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: product interview mein 2-3 DSA rounds hote hain aur problem solving sabse zyada check hoti hai, aptitude bahut halka hota hai.',
+          'Correct answer: a product interview has 2-3 DSA rounds and problem solving is checked the most, while aptitude is very light.'
+        )
+      },
+      {
+        q: t(
+          '16 ghante ke plan mein DSA ka hissa kitna hai?',
+          'How much is the DSA share in the 16-hour plan?'
+        ),
+        opts: [
+          t('2 ghante', '2 hours'),
+          t('5 ghante', '5 hours'),
+          t('14 ghante', '14 hours'),
+          t('16 ghante', '16 hours')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: arrays 5 + trees 5 + graphs 4 = 14 ghante DSA par hain, aur sirf 2 ghante system design basics par.',
+          'Correct answer: arrays 5 + trees 5 + graphs 4 = 14 hours on DSA, and only 2 hours on system design basics.'
+        )
+      },
+      {
+        q: t(
+          'Resume mein 5 chhote projects ki jagah kya behtar hai?',
+          'What is better than 5 small projects on a resume?'
+        ),
+        opts: [
+          t('Koi project nahi', 'No project at all'),
+          t('1 solid project jisme real users hon', '1 solid project with real users'),
+          t('5 tutorial projects', '5 tutorial projects'),
+          t('Sirf certificate', 'Only a certificate')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek solid project jisme real users hon, woh proof hai ki aapne sach mein kuch banaya hai — interviewer wahi dekhna chahta hai.',
+          'Correct answer: one solid project with real users is proof that you truly built something — that is what the interviewer wants to see.'
+        )
+      },
+      {
+        q: t(
+          'Brute force mil gaya, par optimal nahi mila. Kya karna chahiye?',
+          'You found brute force, but not the optimal solution. What should you do?'
+        ),
+        opts: [
+          t('Chup rehna', 'Staying silent'),
+          t('Brute force likhna aur optimal ki direction bolna', 'Writing brute force and saying the direction of the optimal solution'),
+          t('Code delete kar dena', 'Deleting the code'),
+          t('Sawaal badal dena', 'Changing the question')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: brute force likhna pehla step hai, aur optimal ki direction bolne se interviewer ko pata chalta hai ki aapko sahi raasta pata hai.',
+          'Correct answer: writing brute force is the first step, and saying the direction of the optimal solution shows the interviewer that you know the right path.'
+        )
+      },
+      {
+        q: t(
+          'System design basics mein jawab kis structure mein dena chahiye?',
+          'In what structure should a system design basics answer be given?'
+        ),
+        opts: [
+          t('Sirf database ka naam', 'Only the database name'),
+          t('Requirement, data, scale', 'Requirement, data, scale'),
+          t('Sirf code likhna', 'Only writing code'),
+          t('Kuch nahi bolna', 'Saying nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: requirement, data aur scale — yeh structure hi aadha jawab hai, interviewer ko perfect design nahi, sochne ka tareeka chahiye.',
+          'Correct answer: requirement, data, and scale — this structure itself is half the answer; the interviewer wants a way of thinking, not a perfect design.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Product interview mein DSA king hai — 2-3 rounds, medium problems, har problem ke baad complexity.',
+        'In a product interview DSA is king — 2-3 rounds, medium problems, complexity after every problem.'
+      ),
+      t(
+        'Pattern yaad rakho, problem ka naam nahi — two pointers, sliding window, BFS.',
+        'Remember the pattern, not the problem name — two pointers, sliding window, BFS.'
+      ),
+      t(
+        'Ek solid project real users ke saath, 5 tutorial projects se behtar hai.',
+        'One solid project with real users is better than 5 tutorial projects.'
+      ),
+      t(
+        'System design basics ka structure hai: requirement, data, scale.',
+        'The structure of system design basics is: requirement, data, scale.'
+      ),
+      t(
+        'Brute force se shuru karo, par optimal ki direction zaroor bolo.',
+        'Start with brute force, but always say the direction of the optimal solution.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: STAR Answer ka Time Plan Banao',
+        'Practice: Build a Time Plan for a STAR Answer'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur STAR answer ke 4 hisson ka total time nikalo. Done tab hoga jab output mein total 150 seconds dikhe aur aap bata sako ki sabse bada hissa kaunsa hai.',
+        'Run the starter code below and find the total time of the 4 parts of a STAR answer. You are done when the output shows total 150 seconds and you can name the biggest part.'
+      ),
+      language: 'python',
+      starter: `parts = [("Situation", 30), ("Task", 30), ("Action", 60), ("Result", 30)]
+total = 0
+for name, seconds in parts:
+    total += seconds
+    print(name, "->", seconds, "seconds")
+print("Total answer time:", total, "seconds")`,
+      expected: `Situation -> 30 seconds
+Task -> 30 seconds
+Action -> 60 seconds
+Result -> 30 seconds
+Total answer time: 150 seconds`
+    },
+    readMinutes: 12
+  };
+
+const placementOffCampus: Article = {
+    id: 'placement-off-campus',
+    subjectId: 'placement',
+    title: t(
+      'Off-Campus Drives Strategy — Apply Karna, Track Karna aur Follow Up',
+      'Off-Campus Drives Strategy — Applying, Tracking, and Following Up'
+    ),
+    summary: t(
+      'Off-campus mein aapko khud apply karna padta hai — college ki placement cell nahi hoti. Is article mein seekho ki kahan apply karein, kitne apply karein, har application ko track kaise karein, aur follow up kab aur kaise karein.',
+      'In off-campus you have to apply yourself — there is no college placement cell. In this article learn where to apply, how many to apply to, how to track every application, and when and how to follow up.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Off-Campus Drive Kya Hai?',
+          '1. What Is an Off-Campus Drive?'
+        ),
+        body: t(
+          `Off-campus drive woh hiring hai jo college ke through nahi hoti. Aap khud company ki website, job portal ya referral se apply karte ho. On-campus mein company aapke college aati hai, off-campus mein aapko company tak jaana padta hai. Yeh farak hi strategy badal deta hai — yahan **aapko khud initiative lena padta hai**.
+
+Off-campus mein 3 tareeke hote hain: **direct apply** (company ki careers page par), **job portals** (jahan kai companies ki openings ek jagah hoti hain), aur **referral** (koi employee aapka resume andar bhejta hai). Teenon tareeke kaam karte hain, par referral mein aapka resume jaldi dekha jaata hai kyunki koi andar se bhej raha hai. Isliye apne seniors aur doston se baat karna bhi taiyari ka hissa hai.
+
+Off-campus ka sabse bada sach hai: **rejection normal hai**. 10 apply karoge to 2-3 se reply aayega, 1 se interview hoga. Yeh numbers aapko demotivate karne ke liye nahi hain — yeh batane ke liye hain ki zyada apply karna hi strategy hai. Jo sirf 2 companies mein apply karta hai, woh 2 rejections par ruk jaata hai. Jo 20 mein apply karta hai, woh 18 rejections ke baad bhi 2 interviews tak pahunchta hai.`,
+          `An off-campus drive is hiring that does not happen through college. You apply yourself through the company website, a job portal, or a referral. In on-campus the company comes to your college; in off-campus you have to reach the company. That difference itself changes the strategy — here **you have to take the initiative yourself**.
+
+Off-campus has 3 ways: **direct apply** (on the company careers page), **job portals** (where openings of many companies are in one place), and **referral** (an employee sends your resume inside). All three ways work, but with a referral your resume is seen faster because someone inside sends it. So talking to your seniors and friends is also part of preparation.
+
+The biggest truth of off-campus is: **rejection is normal**. If you apply to 10, replies come from 2-3, and an interview comes from 1. These numbers are not here to demotivate you — they are here to show that applying to more places is itself the strategy. Someone who applies to only 2 companies stops after 2 rejections. Someone who applies to 20 reaches 2 interviews even after 18 rejections.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Tracker Wala aur Bina Tracker Wala',
+          '2. Real-Life Examples: With a Tracker and Without a Tracker'
+        ),
+        body: t(
+          `Arjun ne 15 companies mein apply kiya, par koi tracker nahi rakha. Ek company ne test ka mail bheja, par Arjun ne mail dekha hi nahi — woh spam mein chala gaya. Doosri company ne interview ke liye bulaya, par Arjun ko yaad nahi tha ki usne kab apply kiya tha aur kis role ke liye. Usne interview mein galat role ki taiyari ki thi. Arjun ka lesson tha: apply karna kaafi nahi hai, **track karna bhi zaroori hai**.
+
+Meera ne ek simple tracker banaya — ek sheet mein company ka naam, role, apply ki date, aur status. Har subah woh 5 minute tracker dekhti thi: kis company se reply aaya, kis ka test hai, kis ko follow up karna hai. Ek company ne 10 din se reply nahi diya, to Meera ne polite follow up mail bheja. 2 din baad test ka link aaya. Meera kehti hai: "Follow up ne mera test dilaya, taiyari ne test clear karaya."
+
+Teesra example hai Kabir ka. Usne referral ke liye apne 5 seniors ko message bheja — short, polite, aur resume ke saath. 2 seniors ne reply diya, 1 ne resume andar bheja. Us company se use test ka link 3 din mein mil gaya. Kabir ne seekha ki referral maangna koi sharam ki baat nahi hai — seniors bhi kabhi fresher the, aur woh madad karna chahte hain, bas aapko poochhna padta hai.`,
+          `Arjun applied to 15 companies, but kept no tracker. One company sent a test mail, but Arjun never saw it — it went to spam. Another company called him for an interview, but Arjun did not remember when he applied or for which role. He had prepared for the wrong role in the interview. Arjun's lesson was: applying is not enough, **tracking is also needed**.
+
+Meera made a simple tracker — a sheet with the company name, the role, the date of applying, and the status. Every morning she looked at the tracker for 5 minutes: which company replied, whose test is due, whom to follow up with. One company had not replied for 10 days, so Meera sent a polite follow-up mail. Two days later the test link came. Meera says: "The follow-up got me the test, the preparation cleared the test."
+
+The third example is Kabir. He messaged 5 seniors for a referral — short, polite, and with his resume. Two seniors replied, and 1 sent the resume inside. He got the test link from that company in 3 days. Kabir learned that asking for a referral is nothing to be shy about — seniors were also freshers once, and they want to help, you just have to ask.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Hafte mein 10 Applications (Worked Example with Dry Run)',
+          '3. Step-by-Step: 10 Applications in One Week (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek hafte ka off-campus plan banate hain. Target hai **10 applications** — roz 2, Monday se Friday. Pehla step hai **list banana (Sunday)**: 10 companies chuno jo aapke skills se match karti hon. Har company ke liye role, link aur last date likho. Doosra step hai **resume taiyaar karna**: ek master resume rakho, aur har company ke liye sirf 2-3 lines badlo — skills aur project ko role se match karo.
+
+Teesra step hai **roz 2 apply karna**: subah 1, shaam ko 1. Apply karte hi tracker mein likho — company, role, date, status "Applied". Chauthe step mein **follow up**: agar 7 din mein reply nahi aaya, to ek polite mail bhejo — "Maine is role ke liye apply kiya tha, kya meri application review hui?" Paanchva step hai **test aur interview ki taiyari**: jis company ka test aaye, usi din uska pattern padho.
+
+Dry run mein neeche wala code 4 companies ka status dikhata hai: Company A Applied, Company B Test done, Company C Applied, Company D Interview. Total 4 companies hain, aur 2 abhi bhi Applied stage par hain. Yeh tracker aapko batata hai ki kahan follow up karna hai — jo 2 Applied par hain, unhe 7 din baad follow up karo. Tracker bina plan adhura hai.`,
+          `Now let us build a one-week off-campus plan. The target is **10 applications** — 2 daily, Monday to Friday. The first step is **making a list (Sunday)**: pick 10 companies that match your skills. For each company write the role, the link, and the last date. The second step is **preparing the resume**: keep one master resume, and change only 2-3 lines for each company — match the skills and the project to the role.
+
+The third step is **applying to 2 daily**: 1 in the morning, 1 in the evening. As soon as you apply, write it in the tracker — company, role, date, status "Applied". The fourth step is **follow-up**: if no reply comes in 7 days, send one polite mail — "I applied for this role, has my application been reviewed?" The fifth step is **preparing for the test and interview**: the day a company's test comes, read its pattern the same day.
+
+In the dry run the code below shows the status of 4 companies: Company A Applied, Company B Test done, Company C Applied, Company D Interview. There are 4 companies in total, and 2 are still at the Applied stage. This tracker tells you where to follow up — follow up with the 2 at Applied after 7 days. A plan without a tracker is incomplete.`
+        ),
+        code: {
+          title: t(
+            'Application Tracker: 4 Companies ka Status',
+            'Application Tracker: Status of 4 Companies'
+          ),
+          language: 'python',
+          code: `companies = [("Company A", "Applied"), ("Company B", "Test done"), ("Company C", "Applied"), ("Company D", "Interview")]
+applied = 0
+for name, status in companies:
+    print(name, "->", status)
+    if status == "Applied":
+        applied += 1
+print("Total companies:", len(companies))
+print("Still at Applied stage:", applied)`,
+          output: `Company A -> Applied
+Company B -> Test done
+Company C -> Applied
+Company D -> Interview
+Total companies: 4
+Still at Applied stage: 2`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sab Jagah Apply Karna aur Follow Up na Karna',
+          '4. Common Mistakes: Applying Everywhere and Never Following Up'
+        ),
+        body: t(
+          `Sabse badi galti hai **sab jagah apply karna**. 50 companies mein wahi resume bhej diya, bina dekhe ki role kya hai. Aapka resume har role se match nahi karta — ek data wale role mein aapka web project kaam nahi aata. Har apply se pehle 5 minute lo: role padho, skills match karo, aur resume ki 2 lines badlo. 10 targeted apply, 50 random apply se behtar hain.
+
+Doosri galti hai **follow up na karna**. Log sochte hain ki follow up karna "pareshaan karna" hai. Sach yeh hai ki ek polite follow up professional lagta hai. Recruiter ke paas 100s applications aati hain — aapka follow up aapko yaad dilata hai. Ek follow up karo, 7 din wait karo, phir ek aur. 2 follow up ke baad reply nahi aaya, to aage badho.
+
+Teesri galti hai **spam folder na dekhna**. Test ke mail aksar spam mein jaate hain. Har din subah spam folder bhi check karo — 2 minute ka kaam hai, par ek miss hua mail ek miss hua chance hai. Apne phone mein us company ka naam search karke bhi mail dhoondh sakte ho.
+
+Chauthi galti hai **interview ki taiyari test ke baad shuru karna**. Test clear hone ke baad interview 2-3 din mein aa sakta hai. Taiyari pehle se rakho — intro, project aur HR answers hamesha ready rakho. Test ke din hi interview ki taiyari shuru kar do.`,
+          `The biggest mistake is **applying everywhere**. You sent the same resume to 50 companies without looking at the role. Your resume does not match every role — a web project does not help for a data role. Take 5 minutes before every apply: read the role, match the skills, and change 2 lines of the resume. Ten targeted applies are better than 50 random applies.
+
+The second mistake is **never following up**. People think following up is "bothering" someone. The truth is that one polite follow-up looks professional. A recruiter gets 100s of applications — your follow-up reminds them of you. Send one follow-up, wait 7 days, then send one more. If no reply comes after 2 follow-ups, move on.
+
+The third mistake is **not checking the spam folder**. Test mails often go to spam. Check the spam folder every morning too — it is 2 minutes of work, but one missed mail is one missed chance. You can also search your mail by the company name on your phone.
+
+The fourth mistake is **starting interview preparation after the test**. The interview can come 2-3 days after you clear the test. Keep the preparation ready in advance — intro, project, and HR answers should always be ready. Start interview preparation on the test day itself.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Test ka Mail Spam Mein, Ya Do Interview Ek Din Mein',
+          '5. Edge Cases: Test Mail in Spam, or Two Interviews in One Day'
+        ),
+        body: t(
+          `Pehla edge case: **test ka mail spam mein mila, aur test ki date nikal gayi**. Aise mein turant recruiter ko mail karo — polite, short, aur sach: "Mujhe mail spam mein mila, kya test dobara de sakta hoon?" Kai baar dobara link mil jaata hai. Agar nahi mila, to lesson likho: roz spam check karo. Ek miss hua test aapki galti nahi hai, par dobara miss hona aapki galti hai.
+
+Doosra edge case: **do interview ek hi din mein**. Dono ko haan mat kaho bina time dekhe. Pehle wale ko confirm karo, doosre ko politely time badalne ke liye poochho: "Kya interview ko agle din shift kar sakte hain?" Interviewer samajhte hain — unhe bhi kai candidates handle karne hote hain. Ek interview mein poora dhyaan do, do mein aadha-aadha nahi.
+
+Teesra edge case: **company ne reply diya, par role alag hai**. Aapne web role ke liye apply kiya tha, company ne testing role diya. Tab socho: kya yeh role aapko seekhne ko milega? Agar haan, to try karo. Agar nahi, to politely mana karo aur aage badho. Galat role lena, koi role na lene se bura hota hai — 1 saal baad aap phir wahi se shuru karte ho.
+
+Chauthe edge case mein **koi reply hi nahi aata**. 20 apply, 0 reply. Tab resume check karo — kya resume mein skills clear hain? Kya project hai? Kya aap sahi roles mein apply kar rahe ho? Kabhi-kabhi problem taiyari mein nahi, targeting mein hoti hai. Ek senior se resume review karwao aur phir apply karo.`,
+          `The first edge case: **the test mail was found in spam, and the test date has passed**. In that case mail the recruiter at once — polite, short, and true: "I found the mail in spam, can I take the test again?" Many times the link is given again. If it is not given, write the lesson: check spam daily. One missed test is not your fault, but missing it again is your fault.
+
+The second edge case: **two interviews on the same day**. Do not say yes to both without checking the time. Confirm the first one, and politely ask the second one to change the time: "Can the interview be shifted to the next day?" Interviewers understand — they also handle many candidates. Give full attention to one interview, not half attention to two.
+
+The third edge case: **the company replied, but the role is different**. You applied for a web role, the company gave a testing role. Then think: will this role teach you something? If yes, try it. If no, politely decline and move on. Taking a wrong role is worse than taking no role — after 1 year you start again from the same place.
+
+In the fourth edge case **no reply comes at all**. Twenty applies, zero replies. Then check your resume — are the skills clear in the resume? Is there a project? Are you applying to the right roles? Sometimes the problem is not in preparation, it is in targeting. Get your resume reviewed by a senior and then apply again.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Mere Paas Referral Nahi Hai?',
+          '6. What If: I Have No Referral?'
+        ),
+        body: t(
+          `What if aapke paas koi referral nahi hai? Tab bhi off-campus kaam karta hai — **direct apply** se. Company ki careers page par apply karo, aur saath mein ek short cover note likho: "Maine yeh project banaya hai, yeh skills hain, aur main is role mein interested hoon." Cover note aapko bheed se alag karta hai. Referral fast hai, par direct apply bhi kaam karta hai — bas thoda slow.
+
+What if aap **college ke bahar** ho aur placement cell nahi hai? Tab off-campus hi aapka raasta hai. Roz 2 apply, hafte mein 10, mahine mein 40. Yeh numbers darane ke liye nahi hain — yeh batane ke liye hain ki consistency hi off-campus ki taakat hai. Har apply ek lottery ticket nahi hai, har apply ek chance hai.
+
+What if aapko **ek company se rejection** mila? Tab us rejection se seekho — kahan atke, kya poochha gaya, kya sudharna hai. Rejection ka matlab yeh nahi ki aap kharab ho, matlab yeh hai ki uss role ke liye uss din koi aur better fit tha. Agli company mein wahi galti mat dohrao.
+
+What if aap **thak gaye** ho apply kar kar ke? Tab 2 din ka break lo, par tracker ko band mat karo. Break ke baad wapas aao aur list ko refresh karo — nayi companies, naye roles. Off-campus ek marathon hai, sprint nahi. Jo rukta nahi, woh pahunchta hai.`,
+          `What if you have no referral? Off-campus still works — through **direct apply**. Apply on the company careers page, and add a short cover note: "I built this project, these are my skills, and I am interested in this role." A cover note sets you apart from the crowd. A referral is fast, but direct apply also works — just a little slower.
+
+What if you are **outside college** and there is no placement cell? Then off-campus is your path. Two applies daily, 10 in a week, 40 in a month. These numbers are not here to scare you — they are here to show that consistency is the strength of off-campus. Every apply is not a lottery ticket, every apply is a chance.
+
+What if you get a **rejection from one company**? Then learn from that rejection — where you got stuck, what was asked, what to improve. A rejection does not mean you are bad, it means that for that role on that day someone else was a better fit. Do not repeat the same mistake in the next company.
+
+What if you are **tired** of applying? Then take a 2-day break, but do not close the tracker. After the break, come back and refresh the list — new companies, new roles. Off-campus is a marathon, not a sprint. Whoever does not stop, reaches.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Off-Campus ka Formula',
+          '7. Summary: The Off-Campus Formula'
+        ),
+        body: t(
+          `Poora article ek formula mein: **targeted apply + tracker + polite follow up + ready taiyari**. Roz 2 apply, hafte mein 10, har apply tracker mein, 7 din mein follow up, aur spam folder roz check karo. Rejection normal hai — zyada apply karna hi strategy hai.
+
+Yaad rakhne wali baatein: role padh kar apply karo, resume ki 2 lines role se match karo, referral maangne mein sharam mat karo, aur interview ki taiyari test se pehle rakho. Tracker aapka sabse achha dost hai — woh batata hai ki kahan follow up karna hai aur kahan aage badhna hai.
+
+Revision ke liye: apna tracker neeche wale code se banao aur 5 companies ka status likho. Agar Applied wale 7 din se zyada purane hain, to aaj hi follow up bhejo. Agle article mein hum internships dekhenge — wahan apply karne se zyada, convert karna matter karta hai.`,
+          `The whole article in one formula: **targeted apply + tracker + polite follow-up + ready preparation**. Two applies daily, 10 in a week, every apply in the tracker, follow-up in 7 days, and check the spam folder daily. Rejection is normal — applying to more places is itself the strategy.
+
+Things to remember: read the role before applying, match 2 lines of the resume to the role, do not feel shy about asking for a referral, and keep interview preparation ready before the test. The tracker is your best friend — it tells you where to follow up and where to move on.
+
+For revision: build your tracker with the code below and write the status of 5 companies. If the Applied ones are more than 7 days old, send the follow-up today itself. In the next article we will look at internships — there, converting matters more than applying.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        'Off-Campus Hafte ki Timeline: Sunday se Friday',
+        'Off-Campus Week Timeline: Sunday to Friday'
+      ),
+      caption: t(
+        'Har din ka kaam likha hua hai — Sunday list, Friday follow up',
+        'Every day has its work written — Sunday is the list, Friday is follow-up'
+      ),
+      nodes: [
+        {
+          t: t('Sunday: 10 companies ki list', 'Sunday: List of 10 companies'),
+          s: t('Role, link aur last date likho', 'Write the role, the link, and the last date')
+        },
+        {
+          t: t('Monday: 2 apply + tracker', 'Monday: 2 applies + tracker'),
+          s: t('Subah 1, shaam ko 1 — tracker mein likho', '1 in the morning, 1 in the evening — write in the tracker')
+        },
+        {
+          t: t('Tuesday: 2 apply + taiyari', 'Tuesday: 2 applies + preparation'),
+          s: t('Intro aur project revision', 'Intro and project revision')
+        },
+        {
+          t: t('Wednesday: 2 apply + mock', 'Wednesday: 2 applies + mock'),
+          s: t('Ek mock interview do', 'Give one mock interview')
+        },
+        {
+          t: t('Thursday: 2 apply + spam check', 'Thursday: 2 applies + spam check'),
+          s: t('Har mail aur spam folder dekho', 'Look at every mail and the spam folder')
+        },
+        {
+          t: t('Friday: 2 apply + follow up', 'Friday: 2 applies + follow-up'),
+          s: t('7 din purane Applied ko follow up bhejo', 'Send follow-up to Applied ones older than 7 days')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Weekly Target: Roz 2 Applications',
+          'Weekly Target: 2 Applications Daily'
+        ),
+        language: 'python',
+        code: `days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+for day in days:
+    print(day, "-> 2 applications")
+print("Weekly target: 10 applications")`,
+        output: `Monday -> 2 applications
+Tuesday -> 2 applications
+Wednesday -> 2 applications
+Thursday -> 2 applications
+Friday -> 2 applications
+Weekly target: 10 applications`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Off-campus mein sabse pehla step kya hona chahiye?',
+          'What should be the first step in off-campus?'
+        ),
+        opts: [
+          t('Bina dekhe sab jagah apply karna', 'Applying everywhere without looking'),
+          t('10 companies ki targeted list banana', 'Making a targeted list of 10 companies'),
+          t('Interview ki taiyari chhod dena', 'Leaving interview preparation'),
+          t('Resume banana hi nahi', 'Not making a resume at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle 10 companies ki targeted list banao — role, link aur last date ke saath — phir roz 2 apply karo.',
+          'Correct answer: first make a targeted list of 10 companies — with the role, the link, and the last date — then apply to 2 daily.'
+        )
+      },
+      {
+        q: t(
+          'Tracker mein kya likhna chahiye?',
+          'What should be written in the tracker?'
+        ),
+        opts: [
+          t('Sirf company ka naam', 'Only the company name'),
+          t('Company, role, date aur status', 'Company, role, date, and status'),
+          t('Kuch nahi', 'Nothing'),
+          t('Sirf salary', 'Only the salary')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: tracker mein company, role, apply ki date aur status likho — isse pata chalta hai ki kahan follow up karna hai.',
+          'Correct answer: write the company, the role, the date of applying, and the status in the tracker — this shows where to follow up.'
+        )
+      },
+      {
+        q: t(
+          'Follow up kab bhejna chahiye?',
+          'When should a follow-up be sent?'
+        ),
+        opts: [
+          t('Apply karte hi', 'Right after applying'),
+          t('7 din mein reply nahi aaya to', 'If no reply comes in 7 days'),
+          t('Kabhi nahi', 'Never'),
+          t('1 saal baad', 'After 1 year')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: agar 7 din mein reply nahi aaya, to ek polite follow up bhejo — yeh professional lagta hai aur aapko yaad dilata hai.',
+          'Correct answer: if no reply comes in 7 days, send one polite follow-up — it looks professional and reminds them of you.'
+        )
+      },
+      {
+        q: t(
+          'Test ka mail aksar kahan chala jaata hai?',
+          'Where does the test mail often go?'
+        ),
+        opts: [
+          t('Inbox mein', 'In the inbox'),
+          t('Spam folder mein', 'In the spam folder'),
+          t('Delete ho jaata hai', 'It gets deleted'),
+          t('Kabhi aata hi nahi', 'It never comes at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: test ke mail aksar spam mein jaate hain, isliye har din subah spam folder bhi check karo.',
+          'Correct answer: test mails often go to spam, so check the spam folder every morning too.'
+        )
+      },
+      {
+        q: t(
+          '4 companies mein se 2 abhi bhi Applied stage par hain. Kitne ko follow up chahiye?',
+          'Out of 4 companies, 2 are still at the Applied stage. How many need a follow-up?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('1', '1'),
+          t('2', '2'),
+          t('4', '4')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: jo 2 companies abhi bhi Applied stage par hain, unhe 7 din baad follow up chahiye — baaki do aage badh chuki hain.',
+          'Correct answer: the 2 companies still at the Applied stage need a follow-up after 7 days — the other two have moved ahead.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Off-campus mein aapko khud apply karna padta hai — roz 2, hafte mein 10.',
+        'In off-campus you have to apply yourself — 2 daily, 10 in a week.'
+      ),
+      t(
+        'Har apply tracker mein likho: company, role, date aur status.',
+        'Write every apply in the tracker: company, role, date, and status.'
+      ),
+      t(
+        '7 din mein reply nahi aaya to ek polite follow up bhejo.',
+        'If no reply comes in 7 days, send one polite follow-up.'
+      ),
+      t(
+        'Spam folder roz check karo — test ke mail wahan jaate hain.',
+        'Check the spam folder daily — test mails go there.'
+      ),
+      t(
+        'Rejection normal hai — zyada targeted apply karna hi strategy hai.',
+        'Rejection is normal — applying to more targeted places is itself the strategy.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Applications ka Status Count Karo',
+        'Practice: Count the Status of Your Applications'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur 5 applications ka status count nikalo. Done tab hoga jab output mein Applied -> 3, Test done -> 1, Rejected -> 1 aur Total: 5 dikhe.',
+        'Run the starter code below and count the status of 5 applications. You are done when the output shows Applied -> 3, Test done -> 1, Rejected -> 1, and Total: 5.'
+      ),
+      language: 'python',
+      starter: `statuses = ["Applied", "Applied", "Test done", "Rejected", "Applied"]
+count = {}
+for status in statuses:
+    count[status] = count.get(status, 0) + 1
+for status in count:
+    print(status, "->", count[status])
+print("Total:", len(statuses))`,
+      expected: `Applied -> 3
+Test done -> 1
+Rejected -> 1
+Total: 5`
+    },
+    readMinutes: 12
+  };
+
+const placementInternships: Article = {
+    id: 'placement-internships',
+    subjectId: 'placement',
+    title: t(
+      'Internships: Dhoondhna, Kaam Karna aur PPO mein Convert Karna',
+      'Internships: Finding, Working, and Converting to a PPO'
+    ),
+    summary: t(
+      'Internship sirf certificate nahi hai — woh aapka pehla real kaam hai. Seekho ki internship kahan dhoondhein, wahan kaise kaam karein, aur use PPO (pre-placement offer) mein kaise convert karein.',
+      'An internship is not just a certificate — it is your first real work. Learn where to find internships, how to work there, and how to convert one into a PPO (pre-placement offer).'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Internship Kya Hai aur Kyun Zaroori Hai?',
+          '1. What Is an Internship and Why Does It Matter?'
+        ),
+        body: t(
+          `Internship ek chhoti si job hai jo aap college ke saath ya chhuttiyon mein karte ho. Aap ek real team ke saath real kaam karte ho — code likhte ho, bugs fix karte ho, aur meetings mein baithte ho. Yeh college ke project se alag hai kyunki yahan aapka kaam **real users** tak jaata hai. Isi liye interviewer internship ko bahut value deta hai.
+
+Internship ke 3 fayde hain. Pehla: **experience** — aap seekhte ho ki real team mein kaam kaise hota hai, code review kya hota hai, aur deadline kaise manage hoti hai. Doosra: **network** — aapke mentor aur team aapko jaante hain, aur wahi log aage referral de sakte hain. Teesra: **PPO** — agar aapne achha kaam kiya, to company aapko full-time offer de sakti hai, bina alag interview ke. Ise **pre-placement offer (PPO)** kehte hain.
+
+Internship paid bhi hoti hai aur unpaid bhi. Paid internship mein aapko kaam ke paise milte hain, unpaid mein sirf experience milta hai. Dono mein seekhne ko milta hai, par paid internship mein company aapko zyada seriously leti hai kyunki woh aap par invest kar rahi hai. Isliye paid internship ke liye apply karna behtar hai, par unpaid se bhi shuruaat kar sakte ho.`,
+          `An internship is a small job you do along with college or in holidays. You work with a real team on real work — you write code, fix bugs, and sit in meetings. It differs from a college project because here your work reaches **real users**. That is why the interviewer values an internship a lot.
+
+An internship has 3 benefits. First: **experience** — you learn how work happens in a real team, what a code review is, and how deadlines are managed. Second: **network** — your mentor and team know you, and those same people can give referrals later. Third: **PPO** — if you did good work, the company can give you a full-time offer without a separate interview. This is called a **pre-placement offer (PPO)**.
+
+Internships can be paid or unpaid. In a paid internship you get money for the work, in an unpaid one you only get experience. You learn in both, but in a paid internship the company takes you more seriously because it is investing in you. So applying for a paid internship is better, but you can also start with an unpaid one.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: PPO Mila, PPO Nahi Mila, aur Beech ka Raasta',
+          '2. Real-Life Examples: PPO Got, PPO Not Got, and the Middle Path'
+        ),
+        body: t(
+          `Ananya ko ek startup mein 3 mahine ki internship mili. Pehle hafte mein usne mentor se poochha: "Mera clear goal kya hai?" Mentor ne bola: "Ek chhota feature banao jo users use kar sakein." Ananya ne har hafte feedback liya, apna kaam document kiya, aur end mein team ko demo diya. Last day par use PPO mila. Ananya kehti hai: "PPO mere code se nahi, mere feedback lene aur demo dene se mila."
+
+Rohan ko bhi internship mili, par use PPO nahi mila. Usne kaam to kiya, par kabhi feedback nahi liya, kabhi apna kaam kisi ko dikhaya nahi. Mentor ko pata hi nahi chala ki Rohan ne kya kiya. Rohan ne seekha ki **kaam dikhana bhi kaam hai** — agar aapne achha kaam kiya aur kisi ko pata nahi chala, to woh kaam count nahi hota.
+
+Teesra example hai Sneha ka. Use PPO nahi mila, par internship se use ek strong project aur ek referral mila. Usne internship ke kaam ko apne resume mein likha — "Ek feature banaya jise 200 users ne use kiya" — aur mentor se referral liya. Agli company ke interview mein usi internship ki baat hui aur use offer mila. Sneha kehti hai: "PPO nahi mila, par internship ne mujhe job dilayi."`,
+          `Ananya got a 3-month internship in a startup. In the first week she asked her mentor: "What is my clear goal?" The mentor said: "Build one small feature that users can use." Ananya took feedback every week, documented her work, and gave a demo to the team at the end. On the last day she got a PPO. Ananya says: "The PPO came not from my code, but from taking feedback and giving a demo."
+
+Rohan also got an internship, but he did not get a PPO. He did the work, but he never took feedback and never showed his work to anyone. The mentor never even knew what Rohan did. Rohan learned that **showing the work is also work** — if you did good work and nobody knew, that work does not count.
+
+The third example is Sneha. She did not get a PPO, but the internship gave her a strong project and a referral. She wrote the internship work on her resume — "Built a feature used by 200 users" — and took a referral from her mentor. In the next company's interview they talked about that same internship and she got an offer. Sneha says: "I did not get a PPO, but the internship got me the job."`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Internship ko PPO mein Convert Karna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Converting an Internship to a PPO (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum PPO ka checklist banate hain — 5 tasks, jinme se 4 poore hone chahiye. Pehla task hai **clear goal maangna**: pehle hafte mein mentor se poochho ki aapko kya banana hai aur kaise pata chalega ki kaam achha hua. Doosra task hai **ek chhota feature ship karna**: chhota, par real — jo users use kar sakein. Teesra task hai **har hafte feedback lena**: "Mera kaam kaisa chal raha hai, kya sudharna hai?" Chauthe task mein **apna kaam document karna** hai: kya banaya, kaise banaya, kya problem aayi.
+
+Paanchva task hai **end mein apna kaam present karna**: team ko demo do, kya banaya aur kya seekha, yeh batao. Demo hi woh moment hai jab team ko pata chalta hai ki aapne kya kiya. Jo intern demo nahi deta, uska kaam team ko dikhta hi nahi.
+
+Dry run mein neeche wala code 5 tasks ka status dikhata hai: pehle 3 Done, chauthe Pending, paanchva Done. Total Done hai 4 of 5. Yeh number batata hai ki PPO ke liye kaam kaafi hai, par document karna abhi baaki hai. Document karna chhota kaam lagta hai, par wahi aapke kaam ka proof hai — agle interview mein bhi wahi document kaam aata hai.`,
+          `Now let us build the PPO checklist — 5 tasks, of which 4 must be done. The first task is **asking for a clear goal**: in the first week ask your mentor what you must build and how you will know the work is good. The second task is **shipping one small feature**: small, but real — something users can use. The third task is **taking feedback every week**: "How is my work going, what should I improve?" The fourth task is **documenting your work**: what you built, how you built it, what problem came up.
+
+The fifth task is **presenting your work at the end**: give a demo to the team, and tell them what you built and what you learned. The demo is the moment when the team learns what you did. An intern who gives no demo has work the team never sees.
+
+In the dry run the code below shows the status of 5 tasks: the first 3 Done, the fourth Pending, the fifth Done. The total Done is 4 of 5. This number shows the work is enough for a PPO, but documenting is still left. Documenting looks like a small job, but it is the proof of your work — that same document helps in the next interview too.`
+        ),
+        code: {
+          title: t(
+            'PPO Checklist: 5 Tasks mein se Kitne Done?',
+            'PPO Checklist: How Many of 5 Tasks Are Done?'
+          ),
+          language: 'python',
+          code: `tasks = [("Ask for a clear goal", True), ("Ship one small feature", True), ("Ask for feedback weekly", True), ("Document your work", False), ("Present your work at the end", True)]
+done = 0
+for name, finished in tasks:
+    print(name, "->", "Done" if finished else "Pending")
+    if finished:
+        done += 1
+print("Done:", done, "of", len(tasks))`,
+          output: `Ask for a clear goal -> Done
+Ship one small feature -> Done
+Ask for feedback weekly -> Done
+Document your work -> Pending
+Present your work at the end -> Done
+Done: 4 of 5`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Sirf Certificate ke Liye Internship aur Chup Rehna',
+          '4. Common Mistakes: Internship Only for a Certificate and Staying Silent'
+        ),
+        body: t(
+          `Sabse badi galti hai **sirf certificate ke liye internship** karna. Aapne 2 mahine kaam kiya, par kuch seekha nahi, kuch banaya nahi. Interviewer poochhega: "Internship mein kya kiya?" Aur aapke paas jawab nahi hoga. Certificate resume mein ek line hai, kaam resume mein ek kahani hai. Kahani banao, certificate apne aap milega.
+
+Doosri galti hai **chup rehna**. Intern ko lagta hai ki sawaal poochhna "bewakoofi" hai. Sach yeh hai ki sawaal poochhna hi intern ka kaam hai. Mentor ko pasand hai jab intern poochhta hai: "Yeh kaise kaam karta hai? Main ise kaise sudhar sakta hoon?" Jo intern nahi poochhta, woh seekhta bhi nahi aur dikhta bhi nahi.
+
+Teesri galti hai **feedback na lena**. Kai intern end mein poochhte hain: "Mera kaam kaisa tha?" Tab tak der ho chuki hoti hai. Feedback har hafte lo — chhota, specific, aur likha hua. "Mera code kaisa tha?" se behtar hai "Mere is feature mein kya sudhar sakta hai?" Specific feedback se aap sudharte ho, general feedback se nahi.
+
+Chauthi galti hai **kaam ko document na karna**. Internship khatam hote hi aap bhool jaate ho ki kya kiya tha. Har hafte 10 lines likho: kya kiya, kya seekha, kya problem aayi. Yeh notes aapke resume aur agle interview mein kaam aate hain.`,
+          `The biggest mistake is doing an **internship only for a certificate**. You worked for 2 months, but learned nothing and built nothing. The interviewer will ask: "What did you do in the internship?" And you will have no answer. A certificate is one line on a resume, work is a story on a resume. Build the story, the certificate will come by itself.
+
+The second mistake is **staying silent**. An intern thinks asking a question is "foolish". The truth is that asking questions is the intern's job. Mentors like it when an intern asks: "How does this work? How can I improve it?" An intern who does not ask, neither learns nor is seen.
+
+The third mistake is **not taking feedback**. Many interns ask at the end: "How was my work?" By then it is too late. Take feedback every week — small, specific, and written down. "What can I improve in this feature of mine?" is better than "How was my code?" Specific feedback improves you, general feedback does not.
+
+The fourth mistake is **not documenting the work**. As soon as the internship ends, you forget what you did. Write 10 lines every week: what you did, what you learned, what problem came up. These notes help in your resume and in the next interview.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Mentor Busy Hai, Ya Kaam Hi Nahi Mila',
+          '5. Edge Cases: Mentor Is Busy, or No Work Was Given'
+        ),
+        body: t(
+          `Pehla edge case: **mentor busy hai**. Aapne 3 baar message kiya, koi reply nahi. Tab wait mat karo — team ke kisi aur se poochho, ya khud ek chhota kaam chuno: "Main is bug ko fix karne ki koshish karoon?" Initiative lene wale intern ko mentor pasand karta hai. Busy mentor ka matlab yeh nahi ki aapko kaam nahi milega, matlab yeh hai ki aapko khud kaam dhoondhna hai.
+
+Doosra edge case: **kaam hi nahi mila**. Pehle 2 hafte kuch nahi diya gaya. Tab codebase padho — kaise likha gaya hai, kya structure hai. Ek chhota bug dhoondho aur use fix karke mentor ko dikhao. "Maine yeh bug fix kiya hai, kya aap review karenge?" — yeh ek line aapko kaam dilati hai.
+
+Teesra edge case: **internship remote hai**. Remote mein aapko koi nahi dekhta, isliye aapko khud dikhna padta hai. Har din ek short update bhejo: "Aaj maine yeh kiya, kal yeh karunga." Yeh update aapko team ke saamne rakhta hai. Remote mein communication hi aapki presence hai.
+
+Chauthe edge case mein **PPO nahi mila**. Tab bhi internship waste nahi hui — aapke paas ek project hai, ek referral hai, aur ek kahani hai. Mentor se referral lo, kaam ko resume mein likho, aur agle interview mein usi kaam ki baat karo. PPO ek raasta hai, akela raasta nahi.`,
+          `The first edge case: **the mentor is busy**. You messaged 3 times, no reply. Then do not wait — ask someone else in the team, or pick a small task yourself: "Shall I try to fix this bug?" A mentor likes an intern who takes initiative. A busy mentor does not mean you will get no work, it means you must find work yourself.
+
+The second edge case: **no work was given at all**. Nothing was given in the first 2 weeks. Then read the codebase — how it is written, what the structure is. Find a small bug and fix it and show it to the mentor. "I fixed this bug, will you review it?" — that one line gets you work.
+
+The third edge case: **the internship is remote**. In remote work nobody sees you, so you must show yourself. Send one short update every day: "Today I did this, tomorrow I will do this." This update keeps you in front of the team. In remote work, communication itself is your presence.
+
+In the fourth edge case **no PPO came**. Even then the internship was not wasted — you have a project, a referral, and a story. Take a referral from the mentor, write the work on your resume, and talk about that same work in the next interview. A PPO is one path, not the only path.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Internship Nahi Mil Rahi?',
+          '6. What If: I Am Not Getting an Internship?'
+        ),
+        body: t(
+          `What if aapko internship nahi mil rahi? Tab pehle apna resume check karo — kya usme ek project hai? Kya skills clear hain? Kai baar problem skills mein nahi, resume mein hoti hai. Ek senior se resume review karwao, ek project add karo, aur phir apply karo.
+
+What if aap **chhote startup** mein apply karne se darte ho? Chhota startup intern ke liye behtar hota hai — wahan aapko zyada kaam milta hai, zyada seekhne ko milta hai, aur aapka kaam real users tak jaata hai. Badi company mein intern ko chhota kaam milta hai, chhoti company mein bada kaam. Seekhne ke liye chhoti company behtar hai.
+
+What if aapko **unpaid internship** mili hai? Tab socho: kya wahan seekhne ko milega? Kya mentor achha hai? Agar haan, to 1-2 mahine ke liye karo — experience hi aapki currency hai. Agar wahan sirf certificate milega aur kaam nahi, to mana karo. Unpaid ka matlab free kaam nahi hai, matlab hai seekhne ka chance.
+
+What if aap **college ke saath internship** karna chahte ho? Tab part-time ya remote internship chuno, aur roz 2 ghante ka time rakho. College aur internship dono ek saath karna mushkil hai, par possible hai — bas time plan clear hona chahiye. Exam ke time internship ko pause karne ke liye pehle se baat kar lo.`,
+          `What if you are not getting an internship? Then first check your resume — does it have a project? Are the skills clear? Many times the problem is not in skills, it is in the resume. Get your resume reviewed by a senior, add one project, and then apply.
+
+What if you are **afraid to apply to a small startup**? A small startup is better for an intern — there you get more work, more to learn, and your work reaches real users. In a large company an intern gets small work, in a small company big work. For learning, a small company is better.
+
+What if you got an **unpaid internship**? Then think: will you learn there? Is the mentor good? If yes, do it for 1-2 months — experience is your currency. If you will only get a certificate there and no work, decline it. Unpaid does not mean free work, it means a chance to learn.
+
+What if you want to do an **internship along with college**? Then pick a part-time or remote internship, and keep 2 hours daily. Doing college and an internship together is hard, but possible — the time plan just has to be clear. Talk in advance about pausing the internship at exam time.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Internship se PPO Tak',
+          '7. Summary: From Internship to PPO'
+        ),
+        body: t(
+          `Poora article ek line mein: **internship mein kaam karo, feedback lo, kaam dikhao, aur end mein demo do — PPO usi ka result hai**. PPO ka checklist yaad rakho: clear goal, ek chhota feature, har hafte feedback, kaam document karna, aur end mein presentation. 5 mein se 4 poore hon to aap PPO ke kareeb ho.
+
+Yaad rakhne wali baatein: sawaal poochhna intern ka kaam hai, kaam dikhana bhi kaam hai, aur har hafte 10 lines likhna aapke resume ko strong banata hai. PPO nahi mila to bhi internship waste nahi — project, referral aur kahani aapke saath rehti hai.
+
+Revision ke liye: apna PPO checklist neeche wale code se banao aur dekho ki kitne tasks Done hain. Jo Pending hai, use is hafte poora karo. Agle article mein hum communication skills dekhenge — internship mein aur interview mein, dono jagah communication hi aapko dikhati hai.`,
+          `The whole article in one line: **in an internship, do the work, take feedback, show the work, and give a demo at the end — the PPO is the result of that**. Remember the PPO checklist: a clear goal, one small feature, feedback every week, documenting the work, and a presentation at the end. If 4 of 5 are done, you are close to a PPO.
+
+Things to remember: asking questions is the intern's job, showing the work is also work, and writing 10 lines every week makes your resume strong. Even if no PPO comes, the internship is not wasted — the project, the referral, and the story stay with you.
+
+For revision: build your PPO checklist with the code below and see how many tasks are Done. Complete the Pending one this week. In the next article we will look at communication skills — in an internship and in an interview, communication is what shows you.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Internship ka Flow: Pehle Din se PPO Tak',
+        'Internship Flow: From Day One to PPO'
+      ),
+      caption: t(
+        'Har hafte ek step — feedback aur demo beech mein kabhi mat chhodo',
+        'One step every week — never skip feedback and demo in between'
+      ),
+      nodes: [
+        {
+          t: t('Week 1: Clear goal maango', 'Week 1: Ask for a clear goal'),
+          s: t('Mentor se poochho: kya banana hai, kaise pata chalega', 'Ask the mentor: what to build, how you will know it is good')
+        },
+        {
+          t: t('Week 2-3: Chhota feature banao', 'Week 2-3: Build a small feature'),
+          s: t('Chhota, par real — users use kar sakein', 'Small, but real — users can use it')
+        },
+        {
+          t: t('Har hafte: Feedback lo', 'Every week: Take feedback'),
+          s: t('Kya sudharna hai, yeh poochho aur likho', 'Ask what to improve and write it down')
+        },
+        {
+          t: t('End: Kaam document karo aur demo do', 'End: Document the work and give a demo'),
+          s: t('Kya banaya, kya seekha — team ko dikhao', 'What you built, what you learned — show the team')
+        },
+        {
+          t: t('Result: PPO ya referral + project', 'Result: PPO or referral + project'),
+          s: t('PPO nahi mila to bhi project aur referral saath rehte hain', 'Even without a PPO, the project and referral stay with you')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '4 Hafte ka Internship Plan',
+          '4-Week Internship Plan'
+        ),
+        language: 'python',
+        code: `weeks = [("Week 1", "Learn the codebase"), ("Week 2", "Fix a small bug"), ("Week 3", "Build a small feature"), ("Week 4", "Share a demo")]
+for week, goal in weeks:
+    print(week, "->", goal)
+print("Weeks:", len(weeks))`,
+        output: `Week 1 -> Learn the codebase
+Week 2 -> Fix a small bug
+Week 3 -> Build a small feature
+Week 4 -> Share a demo
+Weeks: 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'PPO ka full form kya hai?',
+          'What is the full form of PPO?'
+        ),
+        opts: [
+          t('Pre-placement offer', 'Pre-placement offer'),
+          t('Post-placement offer', 'Post-placement offer'),
+          t('Pre-project offer', 'Pre-project offer'),
+          t('Paid placement offer', 'Paid placement offer')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: PPO ka matlab hai pre-placement offer — internship mein achha kaam karne par company bina alag interview ke full-time offer deti hai.',
+          'Correct answer: PPO means pre-placement offer — for good work in an internship, the company gives a full-time offer without a separate interview.'
+        )
+      },
+      {
+        q: t(
+          'Internship mein feedback kab lena chahiye?',
+          'When should feedback be taken in an internship?'
+        ),
+        opts: [
+          t('Sirf end mein', 'Only at the end'),
+          t('Har hafte', 'Every week'),
+          t('Kabhi nahi', 'Never'),
+          t('Sirf pehle din', 'Only on the first day')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: feedback har hafte lo — end mein poochhne par der ho chuki hoti hai, har hafte ka feedback aapko sudharne ka mauka deta hai.',
+          'Correct answer: take feedback every week — asking at the end is too late, while weekly feedback gives you a chance to improve.'
+        )
+      },
+      {
+        q: t(
+          'PPO checklist mein 5 tasks mein se 4 Done hain. Kitne Done hain?',
+          'In the PPO checklist, 4 of 5 tasks are Done. How many are Done?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('4', '4'),
+          t('5', '5'),
+          t('2', '2')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 4 tasks Done hain aur sirf Document your work Pending hai — isliye PPO ke liye kaam kaafi hai, bas document karna baaki hai.',
+          'Correct answer: 4 tasks are Done and only Document your work is Pending — so the work is enough for a PPO, only documenting is left.'
+        )
+      },
+      {
+        q: t(
+          'Intern ke liye sabse achhi aadat kaunsi hai?',
+          'What is the best habit for an intern?'
+        ),
+        opts: [
+          t('Chup rehna', 'Staying silent'),
+          t('Sawaal poochhna aur kaam dikhana', 'Asking questions and showing the work'),
+          t('Sirf certificate lena', 'Only taking the certificate'),
+          t('Kaam se bhaagna', 'Running away from work')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sawaal poochhna intern ka kaam hai aur kaam dikhana bhi kaam hai — jo intern nahi poochhta, woh seekhta bhi nahi aur dikhta bhi nahi.',
+          'Correct answer: asking questions is the intern job and showing the work is also work — an intern who does not ask, neither learns nor is seen.'
+        )
+      },
+      {
+        q: t(
+          'PPO nahi mila to internship waste ho gayi?',
+          'If no PPO came, was the internship wasted?'
+        ),
+        opts: [
+          t('Haan, poori waste', 'Yes, fully wasted'),
+          t('Nahi — project, referral aur kahani saath rehti hai', 'No — the project, referral, and story stay with you'),
+          t('Haan, certificate bhi bekaar hai', 'Yes, even the certificate is useless'),
+          t('Nahi, par kuch nahi mila', 'No, but nothing was gained')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: PPO nahi mila to bhi internship se project, referral aur ek kahani milti hai — jo agle interview mein kaam aati hai.',
+          'Correct answer: even without a PPO, the internship gives a project, a referral, and a story — which help in the next interview.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Internship aapka pehla real kaam hai — real team, real users, real deadline.',
+        'An internship is your first real work — real team, real users, real deadline.'
+      ),
+      t(
+        'PPO checklist: clear goal, ek feature, har hafte feedback, document, demo.',
+        'PPO checklist: clear goal, one feature, feedback every week, document, demo.'
+      ),
+      t(
+        'Sawaal poochhna intern ka kaam hai — chup rehna seekhne ko rokta hai.',
+        'Asking questions is the intern job — staying silent stops learning.'
+      ),
+      t(
+        'Har hafte 10 lines likho: kya kiya, kya seekha, kya problem aayi.',
+        'Write 10 lines every week: what you did, what you learned, what problem came up.'
+      ),
+      t(
+        'PPO nahi mila to bhi project aur referral aapke saath rehte hain.',
+        'Even without a PPO, the project and referral stay with you.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Internship Applications ka Tracker Banao',
+        'Practice: Build a Tracker for Your Internship Applications'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur 3 startups mein apne applications ka status dekho. Done tab hoga jab output mein Total applications: 3 dikhe aur aap bata sako ki kis startup mein Interview stage hai.',
+        'Run the starter code below and see the status of your applications to 3 startups. You are done when the output shows Total applications: 3 and you can name which startup is at the Interview stage.'
+      ),
+      language: 'python',
+      starter: `applied = [("Startup A", "Applied"), ("Startup B", "Interview"), ("Startup C", "Applied")]
+for name, status in applied:
+    print(name, "->", status)
+print("Total applications:", len(applied))`,
+      expected: `Startup A -> Applied
+Startup B -> Interview
+Startup C -> Applied
+Total applications: 3`
+    },
+    readMinutes: 12
+  };
+
+const placementCommunication: Article = {
+    id: 'placement-communication',
+    subjectId: 'placement',
+    title: t(
+      'Communication Skills for Interviews — STAR, Short Answers aur Listening',
+      'Communication Skills for Interviews — STAR, Short Answers, and Listening'
+    ),
+    summary: t(
+      'Interview mein knowledge se zyada communication check hoti hai — aap apni baat kitni clear, short aur structured bol sakte ho. STAR method, filler words hatana, aur sawaal ko dhyaan se sunna — yahi teen skills interview jeet ti hain.',
+      'In an interview, communication is checked more than knowledge — how clearly, briefly, and in a structured way you can say your point. The STAR method, removing filler words, and listening carefully to the question — these three skills win interviews.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Interview mein Communication Kya Hai?',
+          '1. What Is Communication in an Interview?'
+        ),
+        body: t(
+          `Interview mein communication ka matlab hai **apni baat clear aur short bolna**. Interviewer aapki English ki grammar nahi check karta, woh yeh check karta hai ki aap apni soch ko samjha sakte ho ya nahi. Aapko sab kuch aata ho, par aap bol na paao, to interviewer ko pata hi nahi chalega ki aapko aata hai. Isi liye communication ek skill hai, talent nahi — ise practice se seekha ja sakta hai.
+
+Communication ke 3 hisse hain: **bolna, sunna, aur structure**. Bolna matlab clear awaaz mein, slow speed mein, aur filler words ke bina bolna. Sunna matlab sawaal ko poora sunna, beech mein na bolna, aur sawaal samajh kar jawab dena. Structure matlab jawab ko ek order mein dena — pehle point, phir example, phir result. Bina structure ke jawab lamba ho jaata hai aur interviewer confuse ho jaata hai.
+
+Sabse famous structure hai **STAR**: Situation, Task, Action, Result. Yeh HR aur project sawaal ke liye best hai. Situation mein batayo ki haalat kya thi, Task mein batayo ki aapka kaam kya tha, Action mein batayo ki aapne kya kiya, aur Result mein batayo ki kya hua. STAR se jawab 2 minute mein khatam ho jaata hai aur interviewer ko sab kuch mil jaata hai.`,
+          `Communication in an interview means **saying your point clearly and briefly**. The interviewer does not check your English grammar, they check whether you can explain your thinking or not. You may know everything, but if you cannot speak it, the interviewer will never know that you know it. That is why communication is a skill, not a talent — it can be learned with practice.
+
+Communication has 3 parts: **speaking, listening, and structure**. Speaking means speaking in a clear voice, at a slow speed, and without filler words. Listening means hearing the full question, not speaking in between, and answering after understanding the question. Structure means giving the answer in an order — first the point, then the example, then the result. Without structure the answer becomes long and the interviewer gets confused.
+
+The most famous structure is **STAR**: Situation, Task, Action, Result. It is best for HR and project questions. In Situation tell what the condition was, in Task tell what your work was, in Action tell what you did, and in Result tell what happened. With STAR the answer ends in 2 minutes and the interviewer gets everything.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Lamba Jawab, Chhota Jawab aur STAR Jawab',
+          '2. Real-Life Examples: Long Answer, Short Answer, and STAR Answer'
+        ),
+        body: t(
+          `Vikram se poochha gaya: "Apne project ke baare mein batao." Usne 5 minute bola — pehle college ki baat, phir doston ki baat, phir technology ki baat, aur end mein project ki baat. Interviewer ne beech mein roka: "Project par aao." Vikram ka jawab lamba tha, par structure nahi tha. Usne seekha ki lamba jawab achha jawab nahi hota — **clear jawab achha jawab hota hai**.
+
+Neha ka jawab chhota tha: "Maine ek notes app banaya." Interviewer ne poochha: "Aur?" Neha ne bola: "Bas." Yeh jawab bahut chhota tha — isme kya, kyun aur kaise, kuch nahi tha. Neha ne seekha ki chhota jawab bhi tabhi achha hai jab usme point ho. "Maine ek notes app banaya jise 40 students use karte hain" — yeh ek line, pehle wale jawab se behtar hai.
+
+Sana ne STAR use kiya. Situation: "Mere college mein notes share karna mushkil tha." Task: "Mujhe ek app banana tha jo notes ko ek jagah rakhe." Action: "Maine ek app banaya, 10 students ko test karwaya, aur unke feedback se search add kiya." Result: "40 students use karne lage aur notes dhoondhna easy ho gaya." Yeh jawab 2 minute mein khatam hua aur interviewer ko sab kuch mil gaya. STAR hi farak hai.`,
+          `Vikram was asked: "Tell me about your project." He spoke for 5 minutes — first about college, then about friends, then about technology, and at the end about the project. The interviewer stopped him in the middle: "Come to the project." Vikram's answer was long, but it had no structure. He learned that a long answer is not a good answer — a **clear answer is a good answer**.
+
+Neha's answer was short: "I made a notes app." The interviewer asked: "And?" Neha said: "That is all." This answer was too short — it had no what, why, or how. Neha learned that a short answer is good only when it has a point. "I made a notes app that 40 students use" — this one line is better than the earlier answer.
+
+Sana used STAR. Situation: "Sharing notes in my college was hard." Task: "I had to build an app that keeps notes in one place." Action: "I built an app, got 10 students to test it, and added search from their feedback." Result: "40 students started using it and finding notes became easy." This answer ended in 2 minutes and the interviewer got everything. STAR is the difference.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: STAR Answer ko 120 Second mein Bolna (Worked Example with Dry Run)',
+          '3. Step-by-Step: Speaking a STAR Answer in 120 Seconds (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek STAR answer ko time ke saath banate hain. Total time hai **120 second**. Pehla hissa hai **Situation (30 second)**: "Mere college mein notes share karna mushkil tha, har koi alag group mein notes bhejta tha." Doosra hissa hai **Task (20 second)**: "Mujhe ek app banana tha jo saare notes ko ek jagah rakhe." Teesra hissa hai **Action (50 second)**: "Maine ek notes app banaya, 10 students ko test karwaya, aur unke feedback se search aur tags add kiye." Chauthe hissa hai **Result (20 second)**: "40 students use karne lage aur notes dhoondhna easy ho gaya."
+
+Action sabse bada hissa hai kyunki wahi aapka kaam hai — aapne kya kiya, yeh interviewer sabse zyada sunna chahta hai. Situation aur Result chhote hain kyunki woh sirf context aur proof hain. Agar aap Situation mein 1 minute laga doge, to Action ke liye time nahi bachega aur jawab adhura lagega.
+
+Dry run mein neeche wala code 4 hisson ka time nikaalta hai: Situation 30, Task 20, Action 50, Result 20 — total 120 second, jo target ke barabar hai. Yeh time plan aapko batata hai ki jawab kab khatam hona chahiye. Practice karte waqt timer lagao aur dekho ki aapka jawab 120 second mein khatam hota hai ya nahi. Agar nahi hota, to Situation ko chhota karo, Action ko nahi.`,
+          `Now let us build a STAR answer with time. The total time is **120 seconds**. The first part is **Situation (30 seconds)**: "Sharing notes in my college was hard, everyone sent notes in different groups." The second part is **Task (20 seconds)**: "I had to build an app that keeps all notes in one place." The third part is **Action (50 seconds)**: "I built a notes app, got 10 students to test it, and added search and tags from their feedback." The fourth part is **Result (20 seconds)**: "40 students started using it and finding notes became easy."
+
+Action is the biggest part because that is your work — what you did is what the interviewer most wants to hear. Situation and Result are small because they are only context and proof. If you spend 1 minute on Situation, no time will be left for Action and the answer will feel incomplete.
+
+In the dry run the code below finds the time of the 4 parts: Situation 30, Task 20, Action 50, Result 20 — a total of 120 seconds, which equals the target. This time plan tells you when the answer should end. While practising, set a timer and see whether your answer ends in 120 seconds or not. If it does not, shorten Situation, not Action.`
+        ),
+        code: {
+          title: t(
+            'STAR Answer ka Time Plan: Total 120 Second',
+            'STAR Answer Time Plan: Total 120 Seconds'
+          ),
+          language: 'python',
+          code: `parts = [("Situation", 30), ("Task", 20), ("Action", 50), ("Result", 20)]
+total = 0
+for name, seconds in parts:
+    total += seconds
+    print(name, "->", seconds, "seconds")
+print("Total:", total, "seconds")
+print("Target: 120 seconds")`,
+          output: `Situation -> 30 seconds
+Task -> 20 seconds
+Action -> 50 seconds
+Result -> 20 seconds
+Total: 120 seconds
+Target: 120 seconds`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Filler Words, Beech mein Bolna aur Ratna',
+          '4. Common Mistakes: Filler Words, Interrupting, and Memorising'
+        ),
+        body: t(
+          `Sabse common galti hai **filler words** — "umm", "like", "actually", "basically". Har sentence ke pehle "umm" bolna aapko nervous dikhata hai. Filler words ko hatane ka tareeka hai: bolne se pehle 1 second ruko. Woh 1 second ka pause filler word se behtar hai. Apni recording suno aur gino ki aapne kitni baar "umm" bola — pehle mock mein 20 baar, teesre mock mein 5 baar, yeh progress hai.
+
+Doosri galti hai **beech mein bolna**. Interviewer sawaal poochh raha hai aur aap beech mein jawab dena shuru kar dete ho. Yeh rude lagta hai aur sawaal bhi galat samajh mein aata hai. Rule hai: sawaal poora suno, 1 second ruko, phir jawab do. Woh 1 second aapko sawaal samajhne ka time deta hai.
+
+Teesri galti hai **ratna**. HR answers ko word-by-word yaad karne se jawab robotic lagta hai. Interviewer ko lagta hai ki aap bol nahi rahe, suna rahe ho. Points yaad rakho, lines nahi. Points se aap natural bolte ho, lines se aap robotic bolte ho.
+
+Chauthi galti hai **bahut tez bolna**. Nervousness mein log tez bolne lagte hain aur interviewer ko kuch samajh nahi aata. Slow bolo — itna slow ki aap khud ko sun sako. Slow bolna confidence dikhata hai, tez bolna nervousness dikhata hai.`,
+          `The most common mistake is **filler words** — "umm", "like", "actually", "basically". Saying "umm" before every sentence makes you look nervous. The way to remove filler words is: pause for 1 second before speaking. That 1-second pause is better than a filler word. Listen to your recording and count how many times you said "umm" — 20 times in the first mock, 5 times in the third mock, that is progress.
+
+The second mistake is **interrupting**. The interviewer is asking a question and you start answering in the middle. That looks rude and you also understand the question wrongly. The rule is: hear the full question, pause for 1 second, then answer. That 1 second gives you time to understand the question.
+
+The third mistake is **memorising**. Learning HR answers word by word makes the answer sound robotic. The interviewer feels you are not speaking, you are reciting. Remember the points, not the lines. From points you speak naturally, from lines you speak robotically.
+
+The fourth mistake is **speaking too fast**. In nervousness people start speaking fast and the interviewer understands nothing. Speak slowly — so slow that you can hear yourself. Speaking slowly shows confidence, speaking fast shows nervousness.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Accent, English Kamzor, Ya Sawaal Bahut Mushkil',
+          '5. Edge Cases: Accent, Weak English, or a Very Hard Question'
+        ),
+        body: t(
+          `Pehla edge case: **accent**. Kai students ko lagta hai ki unka accent kharab hai. Sach yeh hai ki interviewer accent nahi, clarity check karta hai. Slow bolo, har word clear bolo, aur accent ki chinta mat karo. Aapka accent aapki pehchan hai, kamzori nahi. Clear aur slow bolne se har accent samajh mein aata hai.
+
+Doosra edge case: **English kamzor hai**. Tab bhi interview de sakte ho — simple English mein jawab do. Bade-bade words use karne ki zaroorat nahi hai. "I built a notes app" simple hai aur sahi hai. "I architected a cutting-edge solution" mushkil hai aur galat bhi ho sakta hai. Simple English, clear English hoti hai.
+
+Teesra edge case: **sawaal bahut mushkil hai**. Tab "I do not know" bolna theek hai, par uske baad approach bolo: "Mujhe exact answer nahi pata, par main aise sochunga..." Interviewer ko aapki soch chahiye, perfect answer nahi. Mushkil sawaal par imaandaari, galat jawab se behtar hai.
+
+Chauthe edge case mein **aap bhool gaye ki kya bolna tha**. Tab ruko, saans lo, aur pehle point se dobara shuru karo: "Jaise main keh raha tha..." Yeh natural lagta hai. Ghabra kar chup rehna ya topic badalna, dono galat hain. Pause lena normal hai — interviewer bhi pause leta hai.`,
+          `The first edge case: **accent**. Many students think their accent is bad. The truth is that the interviewer checks clarity, not accent. Speak slowly, say every word clearly, and do not worry about accent. Your accent is your identity, not a weakness. Clear and slow speaking makes every accent understood.
+
+The second edge case: **English is weak**. Even then you can give the interview — answer in simple English. There is no need to use big words. "I built a notes app" is simple and correct. "I architected a cutting-edge solution" is hard and can also be wrong. Simple English is clear English.
+
+The third edge case: **the question is very hard**. Then saying "I do not know" is fine, but after that say your approach: "I do not know the exact answer, but I would think like this..." The interviewer wants your thinking, not a perfect answer. Honesty on a hard question is better than a wrong answer.
+
+In the fourth edge case **you forgot what you were going to say**. Then pause, breathe, and start again from the first point: "As I was saying..." That looks natural. Staying silent in panic or changing the topic are both wrong. Taking a pause is normal — the interviewer also takes pauses.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Main Introvert Hoon, Ya Mujhe Bolna Pasand Nahi?',
+          '6. What If: I Am an Introvert, or I Do Not Like Speaking?'
+        ),
+        body: t(
+          `What if aap **introvert** ho? Tab bhi communication seekhi ja sakti hai. Introvert hona matlab yeh nahi ki aap bol nahi sakte — matlab yeh hai ki aap soch kar bolte ho. Interview mein soch kar bolna achhi baat hai. Aapko loud nahi banna hai, aapko clear banna hai. Slow, clear aur structured bolna hi introvert ki taakat hai.
+
+What if aapko **bolna pasand nahi**? Tab bolne ko ek skill ki tarah practice karo, hobby ki tarah nahi. Roz 10 minute mirror ke saamne bolna, ya phone par record karke sunna — yeh practice hai, pasand nahi. 2 hafte mein farak dikhega: aapki awaaz stable hogi aur filler words kam honge. Pasand aane se pehle, aadat banti hai.
+
+What if aap **camera par nervous** ho jate ho? Tab pehle camera ke bina practice karo — sirf awaaz record karo. Phir camera on karke practice karo, par recording mat dekho. Phir recording dekho. Yeh 3 steps nervousness ko kam karte hain. Camera par bolna ek alag skill hai, aur woh bhi practice se aati hai.
+
+What if aapka **ek mock kharab** gaya? Tab us mock ki recording dekho aur ek galti chuno — sirf ek. Agle mock mein sirf woh ek galti sudharo. Har mock mein ek galti sudharna, 10 galti ek saath sudharne se behtar hai. Communication ek din mein nahi banti, har mock mein thodi-thodi banti hai.`,
+          `What if you are an **introvert**? Communication can still be learned. Being an introvert does not mean you cannot speak — it means you speak after thinking. Speaking after thinking is a good thing in an interview. You do not have to become loud, you have to become clear. Speaking slowly, clearly, and in a structured way is the introvert's strength.
+
+What if you **do not like speaking**? Then practise speaking like a skill, not like a hobby. Speaking for 10 minutes daily in front of a mirror, or recording on your phone and listening — this is practice, not liking. In 2 weeks the difference will show: your voice will be steady and filler words will be fewer. Before you start liking it, a habit forms.
+
+What if you get **nervous on camera**? Then first practise without a camera — record only your voice. Then practise with the camera on, but do not watch the recording. Then watch the recording. These 3 steps reduce nervousness. Speaking on camera is a separate skill, and it also comes with practice.
+
+What if **one mock went badly**? Then watch the recording of that mock and pick one mistake — only one. In the next mock, fix only that one mistake. Fixing one mistake in every mock is better than fixing 10 mistakes at once. Communication is not built in one day, it is built a little in every mock.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Communication ka Formula',
+          '7. Summary: The Communication Formula'
+        ),
+        body: t(
+          `Poora article ek formula mein: **STAR structure + slow aur clear bolna + poora sawaal sunna**. Jawab 120 second mein khatam karo, Action sabse bada hissa rakho, filler words ko pause se badlo, aur points yaad rakho lines nahi. Communication talent nahi hai, skill hai — practice se banti hai.
+
+Yaad rakhne wali baatein: sawaal poora suno, 1 second ruko, phir jawab do. Simple English mein jawab do, bade words mat use karo. Apni recording suno aur "umm" gino — har mock mein kam hona chahiye. Aur introvert hona kamzori nahi hai, slow aur clear bolna hi aapki taakat hai.
+
+Revision ke liye: apna ek STAR answer likho aur use timer ke saath bolo. Agar woh 120 second mein khatam hota hai, to aap taiyaar ho. Agle article mein hum body language dekhenge — jo aap bolte ho, usse zyada aapka body bolta hai.`,
+          `The whole article in one formula: **STAR structure + speaking slowly and clearly + hearing the full question**. End the answer in 120 seconds, keep Action the biggest part, replace filler words with a pause, and remember points not lines. Communication is not a talent, it is a skill — it is built with practice.
+
+Things to remember: hear the full question, pause for 1 second, then answer. Answer in simple English, do not use big words. Listen to your recording and count "umm" — it should be fewer in every mock. And being an introvert is not a weakness, speaking slowly and clearly is your strength.
+
+For revision: write one STAR answer and speak it with a timer. If it ends in 120 seconds, you are ready. In the next article we will look at body language — your body speaks more than what you say.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'STAR Method: 4 Hissse, 120 Second',
+        'STAR Method: 4 Parts, 120 Seconds'
+      ),
+      caption: t(
+        'Action sabse bada hissa hai — wahi aapka kaam hai',
+        'Action is the biggest part — that is your work'
+      ),
+      nodes: [
+        {
+          t: t('S — Situation (30 sec)', 'S — Situation (30 sec)'),
+          s: t('Haalat kya thi?', 'What was the condition?')
+        },
+        {
+          t: t('T — Task (20 sec)', 'T — Task (20 sec)'),
+          s: t('Aapka kaam kya tha?', 'What was your work?')
+        },
+        {
+          t: t('A — Action (50 sec)', 'A — Action (50 sec)'),
+          s: t('Aapne kya kiya? Sabse bada hissa', 'What did you do? The biggest part')
+        },
+        {
+          t: t('R — Result (20 sec)', 'R — Result (20 sec)'),
+          s: t('Kya hua? Kya result mila?', 'What happened? What result came?')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Filler Words Gino: Ek Jawab mein Kitne "um"?',
+          'Count Filler Words: How Many "um" in One Answer?'
+        ),
+        language: 'python',
+        code: `answer = "um I think um the project was um about notes"
+print("Filler 'um' count:", answer.count("um"))
+print("Words:", len(answer.split()))`,
+        output: `Filler 'um' count: 3
+Words: 10`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'STAR ka full form kya hai?',
+          'What is the full form of STAR?'
+        ),
+        opts: [
+          t('Situation, Task, Action, Result', 'Situation, Task, Action, Result'),
+          t('Start, Talk, Answer, Repeat', 'Start, Talk, Answer, Repeat'),
+          t('Situation, Talk, Action, Review', 'Situation, Talk, Action, Review'),
+          t('Speak, Think, Answer, Result', 'Speak, Think, Answer, Result')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: STAR ka matlab hai Situation, Task, Action, Result — yeh HR aur project sawaal ke liye best structure hai.',
+          'Correct answer: STAR means Situation, Task, Action, Result — this is the best structure for HR and project questions.'
+        )
+      },
+      {
+        q: t(
+          'STAR answer mein sabse bada hissa kaunsa hona chahiye?',
+          'Which part should be the biggest in a STAR answer?'
+        ),
+        opts: [
+          t('Situation', 'Situation'),
+          t('Task', 'Task'),
+          t('Action', 'Action'),
+          t('Result', 'Result')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Action sabse bada hissa hai (50 second), kyunki wahi aapka kaam hai aur interviewer wahi sabse zyada sunna chahta hai.',
+          'Correct answer: Action is the biggest part (50 seconds), because that is your work and the interviewer most wants to hear it.'
+        )
+      },
+      {
+        q: t(
+          'Filler word "um" ko hatane ka sabse achha tareeka kya hai?',
+          'What is the best way to remove the filler word "um"?'
+        ),
+        opts: [
+          t('Tez bolna', 'Speaking fast'),
+          t('Bolne se pehle 1 second rukna', 'Pausing for 1 second before speaking'),
+          t('Chup rehna', 'Staying silent'),
+          t('Aur filler words bolna', 'Saying more filler words')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bolne se pehle 1 second ka pause filler word se behtar hai — woh pause aapko sochne ka time deta hai aur confident dikhata hai.',
+          'Correct answer: a 1-second pause before speaking is better than a filler word — the pause gives you time to think and looks confident.'
+        )
+      },
+      {
+        q: t(
+          'Jawab mein "um" 3 baar aur total words 10 hain. Filler count kitna hai?',
+          'An answer has "um" 3 times and 10 total words. What is the filler count?'
+        ),
+        opts: [
+          t('1', '1'),
+          t('2', '2'),
+          t('3', '3'),
+          t('10', '10')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: filler count 3 hai — apni recording mein "um" ginna hi pehla step hai, use kam karna doosra step hai.',
+          'Correct answer: the filler count is 3 — counting "um" in your recording is the first step, reducing it is the second step.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer sawaal poochh raha hai. Sabse sahi kya hai?',
+          'The interviewer is asking a question. What is best?'
+        ),
+        opts: [
+          t('Beech mein jawab dena', 'Answering in the middle'),
+          t('Sawaal poora sunna, 1 second rukna, phir jawab dena', 'Hearing the full question, pausing 1 second, then answering'),
+          t('Sawaal ko ignore karna', 'Ignoring the question'),
+          t('Topic badal dena', 'Changing the topic')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sawaal poora suno, 1 second ruko, phir jawab do — isse sawaal sahi samajh mein aata hai aur aap rude nahi lagte.',
+          'Correct answer: hear the full question, pause for 1 second, then answer — this way you understand the question correctly and do not look rude.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'STAR ka matlab hai Situation, Task, Action, Result — jawab 120 second mein khatam karo.',
+        'STAR means Situation, Task, Action, Result — end the answer in 120 seconds.'
+      ),
+      t(
+        'Action sabse bada hissa hai (50 second) — wahi aapka kaam hai.',
+        'Action is the biggest part (50 seconds) — that is your work.'
+      ),
+      t(
+        'Filler words ko pause se badlo — bolne se pehle 1 second ruko.',
+        'Replace filler words with a pause — pause for 1 second before speaking.'
+      ),
+      t(
+        'Sawaal poora suno, beech mein mat bolo.',
+        'Hear the full question, do not speak in between.'
+      ),
+      t(
+        'Simple English mein jawab do — clear English hi achhi English hai.',
+        'Answer in simple English — clear English is good English.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Intro ke Words Gino',
+        'Practice: Count the Words of Your Intro'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur apne intro answer ke words gino. Done tab hoga jab output mein Words: 18 aur In range: True dikhe — matlab aapka intro 15 se 25 words ke beech mein hai.',
+        'Run the starter code below and count the words of your intro answer. You are done when the output shows Words: 18 and In range: True — meaning your intro is between 15 and 25 words.'
+      ),
+      language: 'python',
+      starter: `answer = "I built a notes app for my class in three months and forty students used it every week"
+words = answer.split()
+print("Words:", len(words))
+print("Target: 15 to 25 words")
+print("In range:", 15 <= len(words) <= 25)`,
+      expected: `Words: 18
+Target: 15 to 25 words
+In range: True`
+    },
+    readMinutes: 12
+  };
+
+const placementBodyLanguage: Article = {
+    id: 'placement-body-language',
+    subjectId: 'placement',
+    title: t(
+      'Body Language aur Confidence — Posture, Eye Contact aur Smile',
+      'Body Language and Confidence — Posture, Eye Contact, and Smile'
+    ),
+    summary: t(
+      'Interview mein aap jo bolte ho, usse zyada aapka body bolta hai. Seedha baithna, eye contact, smile aur calm haath — yeh chhoti cheezein interviewer ko batati hain ki aap confident ho.',
+      'In an interview, your body speaks more than what you say. Sitting straight, eye contact, a smile, and calm hands — these small things tell the interviewer that you are confident.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Body Language Kya Hai?',
+          '1. What Is Body Language?'
+        ),
+        body: t(
+          `Body language ka matlab hai **aapka body kya keh raha hai, bina bole**. Aap kaise baithe ho, kahan dekh rahe ho, haath kya kar rahe hain, aur chehre par kya expression hai — yeh sab interviewer dekh raha hai, chahe woh sawaal poochh raha ho ya nahi. Aapka jawab achha ho, par body nervous dikhe, to interviewer ko doubt hota hai.
+
+Body language ke 4 main hisse hain: **posture** (kaise baithe ho), **eye contact** (kahan dekh rahe ho), **face** (smile aur expression), aur **hands** (haath kya kar rahe hain). Posture seedha hona chahiye — jhuk kar baithna thaka hua dikhata hai. Eye contact camera ya interviewer ki taraf hona chahiye — neeche dekhna nervous dikhata hai. Smile halki honi chahiye — shuruaat mein smile, confidence dikhati hai. Haath calm hone chahiye — table par ya god mein, hilte hue nahi.
+
+Confidence ka matlab hai loud hona nahi hai. Confidence ka matlab hai **calm hona** — slow bolna, seedha baithna, aur sawaal sun kar jawab dena. Jo candidate calm dikhta hai, interviewer use confident samajhta hai. Calm hona practice se aata hai — mock interview mein hi aap calm hona seekhte ho.`,
+          `Body language means **what your body is saying, without speaking**. How you are sitting, where you are looking, what your hands are doing, and what expression is on your face — the interviewer sees all of this, whether they are asking a question or not. Your answer may be good, but if your body looks nervous, the interviewer gets doubt.
+
+Body language has 4 main parts: **posture** (how you are sitting), **eye contact** (where you are looking), **face** (smile and expression), and **hands** (what your hands are doing). Posture should be straight — sitting bent shows tiredness. Eye contact should be towards the camera or the interviewer — looking down shows nervousness. A smile should be light — a smile at the start shows confidence. Hands should be calm — on the table or in your lap, not moving.
+
+Confidence does not mean being loud. Confidence means **being calm** — speaking slowly, sitting straight, and answering after hearing the question. A candidate who looks calm is seen as confident by the interviewer. Being calm comes with practice — you learn to be calm in mock interviews themselves.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Jhuka Hua, Camera se Door, aur Calm Candidate',
+          '2. Real-Life Examples: Bent Over, Away from Camera, and the Calm Candidate'
+        ),
+        body: t(
+          `Rahul ne online interview diya. Woh laptop par jhuk kar baitha tha, camera mein sirf uska aadha chehra dikh raha tha, aur woh screen ki taraf dekh kar bol raha tha. Interviewer ko lag raha tha ki Rahul interested nahi hai. Rahul ko pata hi nahi chala — usne socha ki uske jawab achhe the. Feedback mein likha tha: "Camera ki taraf dekho, seedha baitho." Agle mock mein Rahul ne laptop ko books par rakha, seedha baitha, aur camera ki taraf dekha. Farak turant dikha.
+
+Priya ka example alag hai. Woh har sawaal ke baad haath hila kar bolti thi, aur jab sawaal mushkil hota to woh pen ko ghumane lagti thi. Interviewer ko lagta tha ki Priya nervous hai. Priya ne ek simple trick apnayi: haath table par rakho, aur jab bolna ho to ek haath se point karo. Pen ko side mein rakh diya. Agle mock mein uska body calm dikha.
+
+Sana ka example best hai. Woh interview se 5 minute pehle ek routine karti hai: seedha khadi hoti hai 2 minute, slow breathing 3 minute, aur smile karke greet karti hai 1 minute. Total 6 minute. Woh kehti hai: "Yeh routine mujhe calm karti hai. Interview shuru hote hi main seedha baithti hoon, camera ki taraf dekhti hoon, aur slow bolti hoon." Sana ka body hi uska confidence hai.`,
+          `Rahul gave an online interview. He sat bent over the laptop, only half his face was visible in the camera, and he spoke while looking at the screen. The interviewer felt Rahul was not interested. Rahul never knew — he thought his answers were good. The feedback said: "Look at the camera, sit straight." In the next mock Rahul put the laptop on books, sat straight, and looked at the camera. The difference showed at once.
+
+Priya's example is different. She moved her hands while speaking after every question, and when a question was hard she started spinning the pen. The interviewer felt Priya was nervous. Priya used a simple trick: keep hands on the table, and when speaking, point with one hand. She kept the pen aside. In the next mock her body looked calm.
+
+Sana's example is the best. Five minutes before the interview she does a routine: she stands straight for 2 minutes, slow breathing for 3 minutes, and smiles and greets for 1 minute. A total of 6 minutes. She says: "This routine calms me. As soon as the interview starts I sit straight, look at the camera, and speak slowly." Sana's body itself is her confidence.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Interview se Pehle ka 6 Minute Routine (Worked Example with Dry Run)',
+          '3. Step-by-Step: 6-Minute Routine Before the Interview (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum interview se pehle ka routine banate hain. Total time hai **6 minute**. Pehla step hai **seedha khade hona (2 minute)**: seedha khade ho, kandhe peeche, aur gehri saans lo. Yeh posture aapke body ko batata hai ki aap taiyaar ho. Doosra step hai **slow breathing (3 minute)**: saans lo 4 second, roko 4 second, chhodo 4 second. Yeh nervousness ko kam karta hai. Teesra step hai **smile aur greet (1 minute)**: mirror mein smile karo aur bolo "Hello, I am ready." Yeh ajeeb lagta hai, par kaam karta hai.
+
+Routine ke baad interview shuru hota hai. Interview mein 5 checks hain: seedha baithna, eye contact, shuruaat mein smile, haath calm, aur slow bolna. Har check par Yes ya No likho. Agar 4 ya 5 Yes hain, to aapka body language achha hai. Agar 3 se kam hain, to ek check chuno aur agle mock mein use sudharo.
+
+Dry run mein neeche wala code 5 checks ka score dikhata hai: seedha baithna Yes, eye contact Yes, smile No, haath calm Yes, slow bolna Yes — total Yes 4 of 5. Yeh batata hai ki sirf smile par kaam karna hai. Smile chhota kaam lagta hai, par interview ki shuruaat mein smile hi pehla impression hai. Agle mock mein sirf smile par dhyaan do.`,
+          `Now let us build the routine before the interview. The total time is **6 minutes**. The first step is **standing straight (2 minutes)**: stand straight, shoulders back, and take a deep breath. This posture tells your body that you are ready. The second step is **slow breathing (3 minutes)**: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds. This reduces nervousness. The third step is **smile and greet (1 minute)**: smile in the mirror and say "Hello, I am ready." It feels strange, but it works.
+
+After the routine the interview starts. In the interview there are 5 checks: sitting straight, eye contact, a smile at the start, calm hands, and speaking slowly. Write Yes or No for each check. If there are 4 or 5 Yes, your body language is good. If there are fewer than 3, pick one check and fix it in the next mock.
+
+In the dry run the code below shows the score of 5 checks: sitting straight Yes, eye contact Yes, smile No, calm hands Yes, speaking slowly Yes — a total Yes of 4 of 5. This shows only the smile needs work. A smile looks like a small thing, but at the start of the interview the smile itself is the first impression. In the next mock, focus only on the smile.`
+        ),
+        code: {
+          title: t(
+            'Body Language Checklist: 5 Checks mein se Kitne Yes?',
+            'Body Language Checklist: How Many Yes out of 5 Checks?'
+          ),
+          language: 'python',
+          code: `checks = [("Sit straight", True), ("Eye contact", True), ("Smile at the start", False), ("Hands calm", True), ("Speak slowly", True)]
+yes = 0
+for name, ok in checks:
+    print(name, "->", "Yes" if ok else "No")
+    if ok:
+        yes += 1
+print("Yes:", yes, "of", len(checks))`,
+          output: `Sit straight -> Yes
+Eye contact -> Yes
+Smile at the start -> No
+Hands calm -> Yes
+Speak slowly -> Yes
+Yes: 4 of 5`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Jhukna, Neeche Dekhna aur Haath Hilana',
+          '4. Common Mistakes: Bending, Looking Down, and Moving Hands'
+        ),
+        body: t(
+          `Sabse common galti hai **jhuk kar baithna**. Laptop par jhuk kar baithne se aap thake hue aur uninterested dikhte ho. Solution simple hai: laptop ko books par rakho taaki camera aapki aankhon ke level par aaye, aur kursi par seedha baitho. Seedha baithna aapki awaaz ko bhi clear karta hai — jhuk kar bolne se awaaz dab jaati hai.
+
+Doosri galti hai **neeche dekhna**. Online interview mein log screen ki taraf dekhte hain, camera ki taraf nahi. Interviewer ko lagta hai ki aap neeche dekh rahe ho. Solution hai: bolte waqt camera ki taraf dekho, sunte waqt screen ki taraf dekho. Yeh aadat mock mein banao — pehle mock mein ajeeb lagega, teesre mock mein natural lagega.
+
+Teesri galti hai **haath hilana**. Haath hilana, pen ghumana, ya baal chhoona — yeh sab nervousness dikhata hai. Solution hai: haath table par rakho ya god mein rakho. Jab point karna ho to ek haath uthao, phir wapas rakh do. Haath ko kaam do, to woh hilega nahi.
+
+Chauthi galti hai **smile na karna**. Kai log interview mein serious rehte hain kyunki unhe lagta hai ki smile karna professional nahi hai. Sach yeh hai ki halki smile friendly aur confident dikhati hai. Shuruaat mein smile karo, beech mein normal raho, aur end mein phir smile karo. Yeh 3 smile kaafi hain.`,
+          `The most common mistake is **sitting bent over**. Sitting bent over a laptop makes you look tired and uninterested. The fix is simple: put the laptop on books so the camera comes to the level of your eyes, and sit straight on the chair. Sitting straight also makes your voice clear — speaking while bent suppresses the voice.
+
+The second mistake is **looking down**. In an online interview people look at the screen, not at the camera. The interviewer feels you are looking down. The fix is: look at the camera while speaking, look at the screen while listening. Build this habit in mocks — it will feel strange in the first mock, natural in the third mock.
+
+The third mistake is **moving hands**. Moving hands, spinning a pen, or touching hair — all of this shows nervousness. The fix is: keep hands on the table or in your lap. When you must point, raise one hand, then put it back. Give the hands work, and they will not move.
+
+The fourth mistake is **not smiling**. Many people stay serious in an interview because they think smiling is not professional. The truth is that a light smile looks friendly and confident. Smile at the start, stay normal in between, and smile again at the end. These 3 smiles are enough.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Online Interview, Offline Interview, Ya Camera Kharab',
+          '5. Edge Cases: Online Interview, Offline Interview, or Camera Not Working'
+        ),
+        body: t(
+          `Pehla edge case: **online interview**. Yahan camera hi aapka body hai. Camera ko aankhon ke level par rakho, light chehre par aani chahiye (peeche se nahi), aur background clean rakho. Bolte waqt camera dekho. Online mein eye contact ka matlab hai camera dekhna, screen dekhna nahi.
+
+Doosra edge case: **offline interview**. Yahan aap poora dikhte ho — baithne ka tareeka, haath milana, aur chalna bhi. Room mein jaate waqt seedha chalo, smile karo, aur haath milao (agar interviewer haath badhaye). Kursi par baithne se pehle poochho: "May I sit?" Yeh chhoti politeness achha impression deti hai.
+
+Teesra edge case: **camera kharab hai ya video off hai**. Tab aapki awaaz hi aapka body hai. Slow bolo, clear bolo, aur har jawab ke baad 1 second ruko. Video off ho to bhi seedha baitho — aapka posture aapki awaaz mein dikhta hai. Jhuk kar bolne se awaaz dabti hai, seedha baith kar bolne se awaaz clear hoti hai.
+
+Chauthe edge case mein **aap bahut nervous ho**. Tab routine yaad karo: 4 second saans lo, 4 second roko, 4 second chhodo. Yeh 12 second ka pause interviewer ko bura nahi lagega — use lagega ki aap soch rahe ho. Nervousness chhupane ki koshish mat karo, use calm karne ki koshish karo.`,
+          `The first edge case: **online interview**. Here the camera itself is your body. Keep the camera at eye level, light should fall on your face (not from behind), and keep the background clean. Look at the camera while speaking. In online interviews, eye contact means looking at the camera, not at the screen.
+
+The second edge case: **offline interview**. Here you are fully visible — the way you sit, shake hands, and walk too. Walk straight into the room, smile, and shake hands (if the interviewer offers a hand). Before sitting on the chair, ask: "May I sit?" This small politeness gives a good impression.
+
+The third edge case: **the camera is not working or video is off**. Then your voice itself is your body. Speak slowly, speak clearly, and pause for 1 second after every answer. Even if video is off, sit straight — your posture shows in your voice. Speaking while bent suppresses the voice, speaking while sitting straight makes the voice clear.
+
+In the fourth edge case **you are very nervous**. Then remember the routine: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds. The interviewer will not mind this 12-second pause — they will think you are thinking. Do not try to hide nervousness, try to calm it.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Mera Confidence Low Hai?',
+          '6. What If: My Confidence Is Low?'
+        ),
+        body: t(
+          `What if aapka **confidence low** hai? Tab confidence ko ek skill ki tarah banao, feeling ki tarah nahi. Confidence feeling se nahi aata, preparation se aata hai. Jab aapne 3 mock diye hon, project taiyaar ho, aur intro 60 second mein bol sakte ho, to confidence apne aap aata hai. Preparation hi confidence ka source hai.
+
+What if aap **pehli baar interview** de rahe ho? Tab pehli baar nervous hona normal hai. Har koi pehli baar nervous hota hai. Pehle mock mein nervous hona, teesre mock mein kam nervous hona — yahi progress hai. Pehli baar ko perfect banane ki koshish mat karo, pehli baar ko complete karne ki koshish karo.
+
+What if aapko **lagta hai ki aap achhe nahi dikhte**? Interviewer aapke looks nahi, aapke kaam aur communication ko judge karta hai. Clean kapde, seedha baithna, aur smile — yeh kaafi hai. Looks par time waste mat karo, preparation par time lagao.
+
+What if aap **har mock mein nervous** ho jate ho? Tab mock ki frequency badhao — hafte mein 1 ki jagah 3 mock do. Nervousness repeat se kam hoti hai, avoid karne se nahi. Jitni baar aap camera ke saamne bologe, utni baar nervousness kam hogi. Yeh ek hi tareeka hai.`,
+          `What if your **confidence is low**? Then build confidence like a skill, not like a feeling. Confidence does not come from feeling, it comes from preparation. When you have given 3 mocks, the project is ready, and you can speak the intro in 60 seconds, confidence comes by itself. Preparation itself is the source of confidence.
+
+What if you are giving an **interview for the first time**? Then being nervous the first time is normal. Everyone is nervous the first time. Being nervous in the first mock, less nervous in the third mock — that itself is progress. Do not try to make the first time perfect, try to complete the first time.
+
+What if you **feel you do not look good**? The interviewer judges not your looks, but your work and communication. Clean clothes, sitting straight, and a smile — that is enough. Do not waste time on looks, spend time on preparation.
+
+What if you get **nervous in every mock**? Then increase the frequency of mocks — 3 mocks a week instead of 1. Nervousness reduces with repetition, not with avoiding. The more times you speak in front of a camera, the less the nervousness becomes. That is the only way.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Body Language ka Formula',
+          '7. Summary: The Body Language Formula'
+        ),
+        body: t(
+          `Poora article ek formula mein: **seedha baitho + camera ki taraf dekho + halki smile + calm haath + slow bolo**. Interview se pehle 6 minute ka routine karo: 2 minute seedha khade raho, 3 minute slow breathing, 1 minute smile aur greet. Yeh routine aapko calm karta hai.
+
+Yaad rakhne wali baatein: laptop ko books par rakho taaki camera aankhon ke level par aaye, bolte waqt camera dekho, haath table par rakho, aur smile karna mat bhoolo. Confidence loud hona nahi hai, calm hona hai — aur calm hona preparation se aata hai.
+
+Revision ke liye: apna body language checklist neeche wale code se banao aur dekho ki 5 mein se kitne Yes hain. Jo No hai, use agle mock mein sudharo. Agle article mein hum time management dekhenge — test mein time hi sabse bada resource hai.`,
+          `The whole article in one formula: **sit straight + look at the camera + light smile + calm hands + speak slowly**. Do the 6-minute routine before the interview: stand straight for 2 minutes, slow breathing for 3 minutes, smile and greet for 1 minute. This routine calms you.
+
+Things to remember: put the laptop on books so the camera comes to eye level, look at the camera while speaking, keep hands on the table, and do not forget to smile. Confidence is not being loud, it is being calm — and being calm comes from preparation.
+
+For revision: build your body language checklist with the code below and see how many Yes there are out of 5. Fix the No in the next mock. In the next article we will look at time management — in a test, time itself is the biggest resource.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Confidence ka Cycle: Prep se Calm Tak',
+        'Confidence Cycle: From Prep to Calm'
+      ),
+      caption: t(
+        'Yeh cycle har mock mein repeat hota hai — har baar confidence thoda badhta hai',
+        'This cycle repeats in every mock — confidence grows a little every time'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Preparation', 'Step 1: Preparation'),
+          s: t('Mock, project aur intro taiyaar karo', 'Prepare the mock, project, and intro')
+        },
+        {
+          t: t('Step 2: 6 minute routine', 'Step 2: 6-minute routine'),
+          s: t('Seedha khade raho, slow breathing, smile', 'Stand straight, slow breathing, smile')
+        },
+        {
+          t: t('Step 3: Calm body language', 'Step 3: Calm body language'),
+          s: t('Seedha baitho, camera dekho, slow bolo', 'Sit straight, look at the camera, speak slowly')
+        },
+        {
+          t: t('Step 4: Achha interview', 'Step 4: Good interview'),
+          s: t('Clear jawab, confident impression', 'Clear answers, confident impression')
+        },
+        {
+          t: t('Step 5: Feedback aur next mock', 'Step 5: Feedback and next mock'),
+          s: t('Ek galti chuno, agle mock mein sudharo', 'Pick one mistake, fix it in the next mock')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Interview se Pehle ka 6 Minute Routine',
+          '6-Minute Routine Before the Interview'
+        ),
+        language: 'python',
+        code: `routine = [("Stand tall for 2 minutes", 2), ("Slow breathing", 3), ("Smile and greet", 1)]
+total = 0
+for name, minutes in routine:
+    total += minutes
+    print(name, "->", minutes, "minutes")
+print("Total:", total, "minutes")`,
+        output: `Stand tall for 2 minutes -> 2 minutes
+Slow breathing -> 3 minutes
+Smile and greet -> 1 minutes
+Total: 6 minutes`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Online interview mein eye contact ka matlab kya hai?',
+          'What does eye contact mean in an online interview?'
+        ),
+        opts: [
+          t('Screen ki taraf dekhna', 'Looking at the screen'),
+          t('Camera ki taraf dekhna', 'Looking at the camera'),
+          t('Neeche dekhna', 'Looking down'),
+          t('Kahin nahi dekhna', 'Looking nowhere')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: online mein eye contact ka matlab hai camera ki taraf dekhna — bolte waqt camera dekho, sunte waqt screen dekho.',
+          'Correct answer: in online interviews eye contact means looking at the camera — look at the camera while speaking, look at the screen while listening.'
+        )
+      },
+      {
+        q: t(
+          'Body language checklist mein 5 checks mein se 4 Yes hain. Score kya hai?',
+          'In the body language checklist, 4 of 5 checks are Yes. What is the score?'
+        ),
+        opts: [
+          t('3 of 5', '3 of 5'),
+          t('4 of 5', '4 of 5'),
+          t('5 of 5', '5 of 5'),
+          t('2 of 5', '2 of 5')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 4 checks Yes hain aur sirf Smile at the start No hai, isliye score 4 of 5 hai — sirf smile par kaam karna hai.',
+          'Correct answer: 4 checks are Yes and only Smile at the start is No, so the score is 4 of 5 — only the smile needs work.'
+        )
+      },
+      {
+        q: t(
+          'Confidence ka matlab kya hai?',
+          'What does confidence mean?'
+        ),
+        opts: [
+          t('Loud hona', 'Being loud'),
+          t('Calm hona', 'Being calm'),
+          t('Tez bolna', 'Speaking fast'),
+          t('Zyada bolna', 'Speaking a lot')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: confidence ka matlab hai calm hona — slow bolna, seedha baithna, aur sawaal sun kar jawab dena.',
+          'Correct answer: confidence means being calm — speaking slowly, sitting straight, and answering after hearing the question.'
+        )
+      },
+      {
+        q: t(
+          'Interview se pehle ka routine kitne minute ka hai?',
+          'How many minutes is the routine before the interview?'
+        ),
+        opts: [
+          t('2 minute', '2 minutes'),
+          t('3 minute', '3 minutes'),
+          t('6 minute', '6 minutes'),
+          t('10 minute', '10 minutes')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: routine 6 minute ka hai — 2 minute seedha khade raho, 3 minute slow breathing, 1 minute smile aur greet.',
+          'Correct answer: the routine is 6 minutes — stand straight for 2 minutes, slow breathing for 3 minutes, smile and greet for 1 minute.'
+        )
+      },
+      {
+        q: t(
+          'Camera ko kis level par rakhna chahiye?',
+          'At what level should the camera be kept?'
+        ),
+        opts: [
+          t('Neeche, table par', 'Low, on the table'),
+          t('Aankhon ke level par', 'At eye level'),
+          t('Upar, ceiling par', 'High, on the ceiling'),
+          t('Peeche', 'Behind')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: camera aankhon ke level par hona chahiye — laptop ko books par rakho taaki aapko jhukna na pade aur interviewer ko aap seedha dikho.',
+          'Correct answer: the camera should be at eye level — put the laptop on books so you do not have to bend and the interviewer sees you straight.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Body language ke 4 hisse hain: posture, eye contact, face aur hands.',
+        'Body language has 4 parts: posture, eye contact, face, and hands.'
+      ),
+      t(
+        'Online mein eye contact ka matlab hai camera dekhna, screen nahi.',
+        'In online interviews, eye contact means looking at the camera, not the screen.'
+      ),
+      t(
+        'Interview se pehle 6 minute ka routine karo: 2 + 3 + 1.',
+        'Do the 6-minute routine before the interview: 2 + 3 + 1.'
+      ),
+      t(
+        'Confidence ka matlab hai calm hona, loud hona nahi.',
+        'Confidence means being calm, not being loud.'
+      ),
+      t(
+        'Haath table par rakho — hilte haath nervousness dikhate hain.',
+        'Keep hands on the table — moving hands show nervousness.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Ek Hafte ka Confidence Score Track Karo',
+        'Practice: Track Your Confidence Score for One Week'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur 7 din ke confidence scores ka weekly average nikalo. Done tab hoga jab output mein Weekly average: 8.0 / 10 dikhe.',
+        'Run the starter code below and find the weekly average of 7 days of confidence scores. You are done when the output shows Weekly average: 8.0 / 10.'
+      ),
+      language: 'python',
+      starter: `days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+scores = [7, 8, 7, 8, 9, 8, 9]
+total = 0
+for day, score in zip(days, scores):
+    total += score
+    print(day, "->", score, "/ 10")
+print("Weekly average:", total / len(scores), "/ 10")`,
+      expected: `Mon -> 7 / 10
+Tue -> 8 / 10
+Wed -> 7 / 10
+Thu -> 8 / 10
+Fri -> 9 / 10
+Sat -> 8 / 10
+Sun -> 9 / 10
+Weekly average: 8.0 / 10`
+    },
+    readMinutes: 12
+  };
+
+const placementTimeManagement: Article = {
+    id: 'placement-time-management',
+    subjectId: 'placement',
+    title: t(
+      'Time Management in Tests — 90 Minute ka Plan aur Per-Question Time',
+      'Time Management in Tests — 90-Minute Plan and Per-Question Time'
+    ),
+    summary: t(
+      'Test mein knowledge se zyada time management matter karta hai — 90 minute mein 60 sawaal, har sawaal ko kitna time dena hai, kab chhodna hai, aur end mein review kaise karna hai. Yeh article ek poora time plan deta hai.',
+      'In a test, time management matters more than knowledge — 60 questions in 90 minutes, how much time to give each question, when to leave one, and how to review at the end. This article gives a full time plan.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Test mein Time Management Kya Hai?',
+          '1. What Is Time Management in Tests?'
+        ),
+        body: t(
+          `Time management ka matlab hai **test ke time ko pehle se plan karna**. Test mein total time fixed hota hai — jaise 90 minute mein 60 sawaal. Agar aap bina plan ke test denge, to pehle 10 sawaal mein 30 minute laga doge aur baaki 50 sawaal ke liye sirf 60 minute bachenge. Plan se aap har sawaal ko barabar time dete ho.
+
+Time plan ke 3 hisse hain: **easy, medium aur hard**. Pehle easy sawaal karo — woh jaldi solve hote hain aur confidence dete hain. Phir medium sawaal karo — woh zyada time lete hain, par marks dete hain. Hard sawaal end mein karo — agar time bacha to, nahi to chhod do. Yeh order hi time management hai.
+
+Per-question time bhi plan ka hissa hai. Agar ek section mein 30 minute aur 20 sawaal hain, to har sawaal ko **1.5 minute** milta hai. Yeh number aapko batata hai ki kab rukna hai — agar ek sawaal 2 minute se zyada le raha hai, to use chhodo aur aage badho. End mein time bacha to wapas aao. Yeh rule hi test jeet ta hai.`,
+          `Time management means **planning the test time in advance**. The total time in a test is fixed — for example, 60 questions in 90 minutes. If you give the test without a plan, you will spend 30 minutes on the first 10 questions and have only 60 minutes left for the remaining 50 questions. With a plan you give equal time to every question.
+
+A time plan has 3 parts: **easy, medium, and hard**. First do the easy questions — they solve fast and give confidence. Then do the medium questions — they take more time, but give marks. Do the hard questions at the end — if time is left, else leave them. This order itself is time management.
+
+Per-question time is also part of the plan. If one section has 30 minutes and 20 questions, every question gets **1.5 minutes**. This number tells you when to stop — if one question takes more than 2 minutes, leave it and move ahead. If time is left at the end, come back to it. This rule itself wins the test.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bina Plan Wala aur Plan Wala Test',
+          '2. Real-Life Examples: Test Without a Plan and Test With a Plan'
+        ),
+        body: t(
+          `Amit ne bina plan ke test diya. Pehla section Quant tha. Pehle 5 sawaal mushkil the, Amit unpar 20 minute laga baitha. Jab usne ghadi dekhi, to Quant ke liye sirf 10 minute bache the aur 15 sawaal baaki the. Usne jaldi-jaldi mein galat jawab diye. Baaki sections mein bhi time kam pada. Amit ka score kam aaya — knowledge ki kami se nahi, time ki kami se.
+
+Neha ne plan ke saath test diya. Uska plan tha: Quant 30 minute, Reasoning 30 minute, Verbal 30 minute. Har section mein pehle easy sawaal, phir medium, hard end mein. Quant mein ek sawaal 2 minute se zyada le raha tha, to usne use chhod diya aur aage badh gayi. End mein 5 minute bache, to usne wapas aakar woh sawaal solve kiya. Neha ka score Amit se zyada aaya — uski knowledge same thi, par uska time plan behtar tha.
+
+Teesra example hai Rohan ka. Usne test se pehle 3 mock test timed diye — har mock mein usne apna time track kiya: kis section mein zyada time laga, kis sawaal par atka. Teesre mock tak uska per-question time 1.5 minute ho gaya. Asli test mein use ghadi dekhne ki zaroorat hi nahi padi — uska body hi time ko feel karne laga tha. Mock se hi time sense banta hai.`,
+          `Amit gave the test without a plan. The first section was Quant. The first 5 questions were hard, and Amit spent 20 minutes on them. When he looked at the clock, only 10 minutes were left for Quant and 15 questions were still left. He gave wrong answers in a hurry. Time was also short in the other sections. Amit's score was low — not from lack of knowledge, but from lack of time.
+
+Neha gave the test with a plan. Her plan was: Quant 30 minutes, Reasoning 30 minutes, Verbal 30 minutes. In every section, first the easy questions, then medium, hard at the end. In Quant one question took more than 2 minutes, so she left it and moved ahead. Five minutes were left at the end, so she came back and solved that question. Neha's score was higher than Amit's — her knowledge was the same, but her time plan was better.
+
+The third example is Rohan. Before the test he gave 3 timed mock tests — in every mock he tracked his time: which section took more time, which question he got stuck on. By the third mock his per-question time became 1.5 minutes. In the real test he did not even need to look at the clock — his body itself started feeling the time. Time sense is built only through mocks.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 90 Minute ka Test Plan (Worked Example with Dry Run)',
+          '3. Step-by-Step: 90-Minute Test Plan (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek 90 minute ke test ka plan banate hain. Test mein 3 sections hain: **Quant, Reasoning aur Verbal** — har section mein 20 sawaal aur 30 minute. Har section mein per-question time hai **1.5 minute** (30 minute / 20 sawaal). Yeh number aapko batata hai ki har sawaal par kitna time dena hai.
+
+Plan ka order hai: pehle easy sawaal (20 minute), phir medium (40 minute), phir hard (20 minute), aur end mein review (10 minute). Total 90 minute. Easy sawaal pehle karne se aapko marks bhi milte hain aur confidence bhi. Medium sawaal beech mein karne se aapka focus sabse zyada hota hai. Hard sawaal end mein karne se aapka time waste nahi hota. Review ke 10 minute mein aap marked sawaal wapas dekhte ho.
+
+Dry run mein neeche wala code 3 sections ka time nikaalta hai: Quant 30 minute, 20 sawaal, 1.5 minute per question; Reasoning 30 minute, 20 sawaal, 1.5 minute per question; Verbal 30 minute, 20 sawaal, 1.5 minute per question — total time 90 minute. Yeh plan aapko batata hai ki test mein kab kya karna hai. Plan ko test se pehle likh lo aur test mein ghadi ke saath follow karo.`,
+          `Now let us build a plan for a 90-minute test. The test has 3 sections: **Quant, Reasoning, and Verbal** — each section has 20 questions and 30 minutes. In each section the per-question time is **1.5 minutes** (30 minutes / 20 questions). This number tells you how much time to give each question.
+
+The order of the plan is: first easy questions (20 minutes), then medium (40 minutes), then hard (20 minutes), and review at the end (10 minutes). A total of 90 minutes. Doing easy questions first gives you marks and confidence. Doing medium questions in the middle means your focus is highest. Doing hard questions at the end means your time is not wasted. In the 10 minutes of review you look again at the marked questions.
+
+In the dry run the code below finds the time of the 3 sections: Quant 30 minutes, 20 questions, 1.5 minutes per question; Reasoning 30 minutes, 20 questions, 1.5 minutes per question; Verbal 30 minutes, 20 questions, 1.5 minutes per question — a total time of 90 minutes. This plan tells you what to do when in the test. Write the plan before the test and follow it with a clock in the test.`
+        ),
+        code: {
+          title: t(
+            '90 Minute ka Test Plan: Har Section ka Per-Question Time',
+            '90-Minute Test Plan: Per-Question Time of Each Section'
+          ),
+          language: 'python',
+          code: `sections = [("Quant", 30, 20), ("Reasoning", 30, 20), ("Verbal", 30, 20)]
+total_minutes = 0
+for name, minutes, questions in sections:
+    total_minutes += minutes
+    print(name, "->", minutes, "minutes,", questions, "questions,", minutes / questions, "min per question")
+print("Total time:", total_minutes, "minutes")`,
+          output: `Quant -> 30 minutes, 20 questions, 1.5 min per question
+Reasoning -> 30 minutes, 20 questions, 1.5 min per question
+Verbal -> 30 minutes, 20 questions, 1.5 min per question
+Total time: 90 minutes`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Pehle Sawaal par Atakna aur Review na Karna',
+          '4. Common Mistakes: Getting Stuck on the First Question and Not Reviewing'
+        ),
+        body: t(
+          `Sabse badi galti hai **pehle sawaal par atakna**. Pehla sawaal mushkil ho to log uspar 5 minute laga dete hain. Pehla sawaal sirf 1 mark ka hai, aur aapne uspar 5 minute laga diye — matlab aapne 3 easy sawaal ka time waste kar diya. Rule hai: agar sawaal 2 minute se zyada le raha hai, to use chhodo aur aage badho. End mein time bacha to wapas aao.
+
+Doosri galti hai **review na karna**. Kai log test ko end tak solve karte rehte hain aur review ka time nahi bachta. Review ke 10 minute mein aap marked sawaal dekhte ho aur silly mistakes pakadte ho — jaise galat option tick karna ya calculation mein galti. Review se 2-3 marks badh sakte hain. Isliye plan mein review ka time pehle se rakho.
+
+Teesri galti hai **ek section par zyada time lagana**. Quant pasand hai to uspar 45 minute laga diye, aur Verbal ke liye sirf 15 minute bache. Har section ke marks barabar hote hain — ek section par zyada time lagana, doosre section ke marks khona hai. Ghadi dekho aur section badlo, chahe sawaal baaki hon.
+
+Chauthi galti hai **mock test bina timer ke dena**. Bina timer ke mock dene se aapko time ka pata hi nahi chalta. Har mock timed do — 90 minute ka timer lagao aur plan follow karo. Mock mein hi time sense banta hai, asli test mein nahi.`,
+          `The biggest mistake is **getting stuck on the first question**. If the first question is hard, people spend 5 minutes on it. The first question is worth only 1 mark, and you spent 5 minutes on it — meaning you wasted the time of 3 easy questions. The rule is: if a question takes more than 2 minutes, leave it and move ahead. If time is left at the end, come back to it.
+
+The second mistake is **not reviewing**. Many people keep solving till the end of the test and no time is left for review. In the 10 minutes of review you look at the marked questions and catch silly mistakes — like ticking the wrong option or a mistake in calculation. Review can add 2-3 marks. So keep review time in the plan in advance.
+
+The third mistake is **spending too much time on one section**. If you like Quant, you spend 45 minutes on it, and only 15 minutes are left for Verbal. Every section has equal marks — spending more time on one section means losing marks in another section. Look at the clock and change the section, even if questions are left.
+
+The fourth mistake is **giving a mock test without a timer**. Giving a mock without a timer never teaches you about time. Give every mock timed — set a 90-minute timer and follow the plan. Time sense is built in the mock, not in the real test.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Time Khatam Ho Raha Hai, Ya Section Bahut Mushkil Hai',
+          '5. Edge Cases: Time Running Out, or a Section Very Hard'
+        ),
+        body: t(
+          `Pehla edge case: **time khatam ho raha hai**. Aakhri 10 minute mein 15 sawaal baaki hain. Tab panic mat karo — easy sawaal chuno aur unhe solve karo. Hard sawaal chhod do. 10 minute mein 5 easy sawaal solve karna, 15 sawaal mein atakne se behtar hai. Panic se marks nahi badhte, calm se badhte hain.
+
+Doosra edge case: **ek section bahut mushkil hai**. Quant ke sawaal samajh hi nahi aa rahe. Tab us section ko chhodo aur agle section par jao. Agle section mein marks lo, phir end mein time bacha to Quant par wapas aao. Ek mushkil section aapka poora test kharab nahi kar sakta, agar aap usse chipke nahi.
+
+Teesra edge case: **aapne galti se galat option tick kar diya**. Review ke time mein yeh pakda jaata hai. Isliye review ka time rakho. Agar review mein pata chale ki option galat hai, to use badlo — par sirf tab jab aapko yakeen ho. Bina yakeen ke option badalna, sahi ko galat bana deta hai.
+
+Chauthe edge case mein **aap test mein thak gaye**. 60 minute ke baad focus kam ho jaata hai. Tab 30 second ki pause lo — aankhein band karo, gehri saans lo, aur phir shuru karo. Yeh 30 second aapka focus wapas laata hai. Thaka hua dimaag galti karta hai, fresh dimaag nahi.`,
+          `The first edge case: **time is running out**. In the last 10 minutes, 15 questions are left. Then do not panic — pick the easy questions and solve them. Leave the hard questions. Solving 5 easy questions in 10 minutes is better than getting stuck on 15 questions. Panic does not add marks, calm does.
+
+The second edge case: **one section is very hard**. The Quant questions are not understood at all. Then leave that section and go to the next section. Take marks in the next section, then come back to Quant at the end if time is left. One hard section cannot spoil your whole test, if you do not stick to it.
+
+The third edge case: **you ticked the wrong option by mistake**. This is caught at review time. That is why you keep review time. If at review you find the option is wrong, change it — but only when you are sure. Changing an option without being sure turns a right answer into a wrong one.
+
+In the fourth edge case **you got tired in the test**. After 60 minutes focus drops. Then take a 30-second pause — close your eyes, take a deep breath, and start again. These 30 seconds bring your focus back. A tired mind makes mistakes, a fresh mind does not.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Mujhe Har Sawaal Solve Karna Hai?',
+          '6. What If: I Want to Solve Every Question?'
+        ),
+        body: t(
+          `What if aapko **har sawaal solve karna hai**? Yeh soch hi time management ko kharab karti hai. Test mein har sawaal solve karna zaroori nahi hai — 60 mein se 45 sahi solve karna, 60 mein se 30 galat solve karne se behtar hai. Accuracy, attempts se zyada matter karti hai. Har sawaal ko solve karne ki koshish mein aap easy sawaal bhi galat kar dete ho.
+
+What if aap **ek sawaal ko chhod nahi paate**? Tab us sawaal ko mark karo aur aage badho. Mark karna chhodna nahi hai — mark karna matlab hai "main wapas aaunga". End mein review ke time mein aap marked sawaal dekhte ho. Mark karne se aapka dimaag shant rehta hai — aapko lagta hai ki sawaal chhoda nahi, bas baad ke liye rakha hai.
+
+What if aapka **ek section weak hai**? Tab us section ko pehle mat karo — strong section pehle karo. Strong section se confidence milta hai aur marks bhi. Weak section ko beech mein karo, jab aapka focus sabse zyada ho. Weak section ko end mein karne se aap thake hue hote ho aur galti zyada hoti hai.
+
+What if aap **time dekhna bhool jaate ho**? Tab har 15 minute mein ghadi dekhne ki aadat banao. Mock mein ghadi ko table par rakho aur har section ke end mein time likho. Yeh aadat asli test mein kaam aati hai — aapko pata chalta hai ki aap plan par ho ya peeche.`,
+          `What if you want to **solve every question**? This thinking itself spoils time management. In a test it is not needed to solve every question — solving 45 of 60 correctly is better than solving 30 of 60 wrongly. Accuracy matters more than attempts. Trying to solve every question makes you get even the easy questions wrong.
+
+What if you **cannot leave a question**? Then mark that question and move ahead. Marking is not leaving — marking means "I will come back". At review time at the end you look at the marked questions. Marking keeps your mind calm — you feel the question was not left, only kept for later.
+
+What if **one section is weak**? Then do not do that section first — do the strong section first. The strong section gives confidence and marks too. Do the weak section in the middle, when your focus is highest. Doing the weak section at the end means you are tired and make more mistakes.
+
+What if you **forget to look at the time**? Then build the habit of looking at the clock every 15 minutes. In the mock, keep the clock on the table and write the time at the end of each section. This habit helps in the real test — you know whether you are on plan or behind.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Time Management ka Formula',
+          '7. Summary: The Time Management Formula'
+        ),
+        body: t(
+          `Poora article ek formula mein: **easy pehle, medium beech mein, hard end mein, aur review ke 10 minute**. Har sawaal ko 1.5 minute do, 2 minute se zyada lage to chhod do, aur har 15 minute mein ghadi dekho. 90 minute ka plan yaad rakho: Quant 30, Reasoning 30, Verbal 30.
+
+Yaad rakhne wali baatein: accuracy attempts se zyada matter karti hai, mark karna chhodna nahi hai, aur review se 2-3 marks badh sakte hain. Mock test hamesha timed do — time sense mock mein banta hai, asli test mein nahi.
+
+Revision ke liye: apna 90 minute ka plan neeche wale code se banao aur check karo ki total 90 minute hai ya nahi. Agle article mein hum stress interviews dekhenge — wahan time se zyada, calm rehna matter karta hai.`,
+          `The whole article in one formula: **easy first, medium in the middle, hard at the end, and 10 minutes for review**. Give 1.5 minutes to each question, leave it if it takes more than 2 minutes, and look at the clock every 15 minutes. Remember the 90-minute plan: Quant 30, Reasoning 30, Verbal 30.
+
+Things to remember: accuracy matters more than attempts, marking is not leaving, and review can add 2-3 marks. Always give mock tests timed — time sense is built in the mock, not in the real test.
+
+For revision: build your 90-minute plan with the code below and check whether the total is 90 minutes or not. In the next article we will look at stress interviews — there, staying calm matters more than time.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        '90 Minute ka Test Plan: Har Hissse ko Kitna Time?',
+        '90-Minute Test Plan: How Much Time for Each Part?'
+      ),
+      caption: t(
+        'Medium sawaal sabse zyada time lete hain, review ke 10 minute bhi zaroori hain',
+        'Medium questions take the most time, and the 10 minutes of review are also needed'
+      ),
+      nodes: [],
+      bars: [
+        {
+          label: t('Easy sawaal', 'Easy questions'),
+          value: 22,
+          note: t('20 minute', '20 minutes')
+        },
+        {
+          label: t('Medium sawaal', 'Medium questions'),
+          value: 44,
+          note: t('40 minute', '40 minutes')
+        },
+        {
+          label: t('Hard sawaal', 'Hard questions'),
+          value: 22,
+          note: t('20 minute', '20 minutes')
+        },
+        {
+          label: t('Review', 'Review'),
+          value: 11,
+          note: t('10 minute', '10 minutes')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Bacha Hua Time: 90 Minute mein se Kitna Bacha?',
+          'Time Left: How Much Is Left of 90 Minutes?'
+        ),
+        language: 'python',
+        code: `total = 90
+spent = [("Quant", 28), ("Reasoning", 32), ("Verbal", 25)]
+used = 0
+for name, minutes in spent:
+    used += minutes
+    print(name, "->", minutes, "minutes")
+print("Used:", used, "minutes")
+print("Left:", total - used, "minutes")`,
+        output: `Quant -> 28 minutes
+Reasoning -> 32 minutes
+Verbal -> 25 minutes
+Used: 85 minutes
+Left: 5 minutes`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '90 minute ke test mein 3 sections hain, har section 30 minute ka hai. Har section mein 20 sawaal hain. Per-question time kitna hai?',
+          'In a 90-minute test there are 3 sections, each 30 minutes. Each section has 20 questions. What is the per-question time?'
+        ),
+        opts: [
+          t('1.0 minute', '1.0 minute'),
+          t('1.5 minute', '1.5 minutes'),
+          t('2.0 minute', '2.0 minutes'),
+          t('3.0 minute', '3.0 minutes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 30 minute ko 20 sawaal se bhaag do to 1.5 minute aata hai — yahi per-question time hai.',
+          'Correct answer: 30 minutes divided by 20 questions is 1.5 minutes — that is the per-question time.'
+        )
+      },
+      {
+        q: t(
+          'Test mein sawaal kaunsa order sabse achha hai?',
+          'What is the best order of questions in a test?'
+        ),
+        opts: [
+          t('Hard pehle, easy end mein', 'Hard first, easy at the end'),
+          t('Easy pehle, medium beech mein, hard end mein', 'Easy first, medium in the middle, hard at the end'),
+          t('Random order', 'Random order'),
+          t('Sirf hard sawaal', 'Only hard questions')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: easy pehle karne se marks aur confidence milte hain, medium beech mein focus sabse zyada hota hai, aur hard end mein time waste nahi hota.',
+          'Correct answer: easy first gives marks and confidence, medium in the middle has the highest focus, and hard at the end does not waste time.'
+        )
+      },
+      {
+        q: t(
+          'Ek sawaal 2 minute se zyada le raha hai. Kya karna chahiye?',
+          'One question is taking more than 2 minutes. What should you do?'
+        ),
+        opts: [
+          t('Us par 5 minute aur lagao', 'Spend 5 more minutes on it'),
+          t('Use mark karo aur aage badho', 'Mark it and move ahead'),
+          t('Test chhod do', 'Leave the test'),
+          t('Random guess karo', 'Make a random guess')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sawaal ko mark karo aur aage badho — mark karna chhodna nahi hai, review ke time mein aap us par wapas aa sakte ho.',
+          'Correct answer: mark the question and move ahead — marking is not leaving, at review time you can come back to it.'
+        )
+      },
+      {
+        q: t(
+          '90 minute mein se 85 minute use ho gaye. Kitna time bacha?',
+          'Out of 90 minutes, 85 minutes are used. How much time is left?'
+        ),
+        opts: [
+          t('10 minute', '10 minutes'),
+          t('5 minute', '5 minutes'),
+          t('15 minute', '15 minutes'),
+          t('0 minute', '0 minutes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 90 - 85 = 5 minute bache hain — yeh review ka time hai, isme marked sawaal dekho.',
+          'Correct answer: 90 - 85 = 5 minutes are left — this is review time, look at the marked questions in it.'
+        )
+      },
+      {
+        q: t(
+          'Mock test kaise dena chahiye?',
+          'How should a mock test be given?'
+        ),
+        opts: [
+          t('Bina timer ke', 'Without a timer'),
+          t('Timer ke saath, plan follow karke', 'With a timer, following the plan'),
+          t('Sirf easy sawaal karke', 'Doing only easy questions'),
+          t('Bina plan ke', 'Without a plan')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mock test hamesha timer ke saath do — time sense mock mein banta hai, asli test mein nahi.',
+          'Correct answer: always give mock tests with a timer — time sense is built in the mock, not in the real test.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '90 minute ka plan: Quant 30, Reasoning 30, Verbal 30 — har sawaal ko 1.5 minute.',
+        '90-minute plan: Quant 30, Reasoning 30, Verbal 30 — 1.5 minutes per question.'
+      ),
+      t(
+        'Easy pehle, medium beech mein, hard end mein, review ke 10 minute.',
+        'Easy first, medium in the middle, hard at the end, 10 minutes for review.'
+      ),
+      t(
+        '2 minute se zyada lage to sawaal ko mark karo aur aage badho.',
+        'If a question takes more than 2 minutes, mark it and move ahead.'
+      ),
+      t(
+        'Accuracy attempts se zyada matter karti hai.',
+        'Accuracy matters more than attempts.'
+      ),
+      t(
+        'Mock test hamesha timed do — time sense mock mein banta hai.',
+        'Always give mock tests timed — time sense is built in the mock.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna 90 Minute ka Plan Banao',
+        'Practice: Build Your 90-Minute Plan'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur apne 90 minute ke test ka plan nikalo. Done tab hoga jab output mein Total: 90 minutes aur Test length: 90 minutes dikhe.',
+        'Run the starter code below and find the plan for your 90-minute test. You are done when the output shows Total: 90 minutes and Test length: 90 minutes.'
+      ),
+      language: 'python',
+      starter: `plan = [("Easy questions", 20), ("Medium questions", 40), ("Hard questions", 20), ("Review", 10)]
+total = 0
+for name, minutes in plan:
+    total += minutes
+    print(name, "->", minutes, "minutes")
+print("Total:", total, "minutes")
+print("Test length: 90 minutes")`,
+      expected: `Easy questions -> 20 minutes
+Medium questions -> 40 minutes
+Hard questions -> 20 minutes
+Review -> 10 minutes
+Total: 90 minutes
+Test length: 90 minutes`
+    },
+    readMinutes: 12
+  };
+
+const placementStressInterview: Article = {
+    id: 'placement-stress-interview',
+    subjectId: 'placement',
+    title: t(
+      'Stress Interviews: Kaise Shant Rahein aur Pressure mein Jawab Dein',
+      'Stress Interviews: How to Stay Calm and Answer Under Pressure'
+    ),
+    summary: t(
+      'Stress interview mein interviewer jaan-boojh kar pressure banata hai — mushkil sawaal, lambi chuppi, ya seedha challenge. Yahan knowledge se zyada calm rehna check hota hai. Seekho ki pause kaise lein, saans kaise lein, aur pressure mein bhi clear jawab kaise dein.',
+      'In a stress interview the interviewer deliberately creates pressure — hard questions, long silence, or a direct challenge. Here staying calm is checked more than knowledge. Learn how to pause, how to breathe, and how to give clear answers even under pressure.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Stress Interview Kya Hai?',
+          '1. What Is a Stress Interview?'
+        ),
+        body: t(
+          `Stress interview ek aisa interview hai jisme interviewer **jaan-boojh kar pressure** banata hai. Woh mushkil sawaal poochhta hai, aapke jawab ko challenge karta hai, ya lambi chuppi rakhta hai. Iska matlab yeh nahi hai ki interviewer aapko pasand nahi karta — matlab yeh hai ki woh dekhna chahta hai ki aap pressure mein kaise kaam karte ho. Kai jobs mein pressure normal hai, aur interviewer yeh check karta hai ki aap pressure mein toot-te ho ya calm rehte ho.
+
+Stress interview ke 3 common tareeke hain. Pehla: **mushkil sawaal** — "Aapko yeh bhi nahi aata?" jaisa sawaal, jo aapko nervous karne ke liye hota hai. Doosra: **lambi chuppi** — aapne jawab diya aur interviewer 10 second kuch nahi bolta, aapko lagta hai ki jawab galat tha. Teesra: **challenge** — "Mujhe lagta hai aapka project bekaar hai" jaisa statement, jo aapki reaction check karta hai.
+
+Stress interview mein jeetne ka rule simple hai: **pressure ko personal mat lo**. Interviewer aapko test kar raha hai, attack nahi kar raha. Aapka kaam hai calm rehna, pause lena, aur clear jawab dena. Jo candidate ghabra kar chup ho jaata hai ya gusse mein jawab deta hai, woh fail hota hai. Jo candidate calm reh kar jawab deta hai, woh pass hota hai.`,
+          `A stress interview is an interview where the interviewer **deliberately creates pressure**. They ask hard questions, challenge your answer, or keep a long silence. That does not mean the interviewer dislikes you — it means they want to see how you work under pressure. In many jobs pressure is normal, and the interviewer checks whether you break under pressure or stay calm.
+
+A stress interview has 3 common ways. First: **hard questions** — a question like "You do not even know this?" which is meant to make you nervous. Second: **long silence** — you gave your answer and the interviewer says nothing for 10 seconds, and you feel the answer was wrong. Third: **challenge** — a statement like "I think your project is useless", which checks your reaction.
+
+The rule to win a stress interview is simple: **do not take the pressure personally**. The interviewer is testing you, not attacking you. Your job is to stay calm, take a pause, and give a clear answer. A candidate who panics and goes silent, or answers in anger, fails. A candidate who stays calm and answers, passes.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Challenge, Chuppi aur Mushkil Sawaal',
+          '2. Real-Life Examples: Challenge, Silence, and Hard Questions'
+        ),
+        body: t(
+          `Arjun se interviewer ne kaha: "Mujhe lagta hai aapka project bekaar hai." Arjun gusse mein aa gaya aur bola: "Aapko kuch samajh nahi aata." Interview wahin khatam ho gaya. Arjun ne seekha ki challenge par gussa karna, challenge ko accept karne se bura hai. Sahi jawab hota: "Aapko project mein kya kami lagi? Main use sudharna chahta hoon." Yeh jawab calm hai aur interviewer ko aapki soch dikhata hai.
+
+Priya se interviewer ne sawaal poochha aur phir 10 second chup raha. Priya ko laga ki uska jawab galat tha, to woh ghabra kar apna jawab badalne lagi. Interviewer ne bola: "Aapne pehle sahi bola tha." Priya ne seekha ki **chuppi ka matlab galat jawab nahi hota** — interviewer soch raha hota hai ya notes likh raha hota hai. Chuppi mein apna jawab mat badlo.
+
+Sana se interviewer ne poochha: "Aapko yeh bhi nahi aata?" Sana ne calmly bola: "Iska exact answer mujhe nahi pata, par main aise approach karungi..." Aur usne approach bola. Interviewer ne kaha: "Good, approach sahi hai." Sana ne seekha ki mushkil sawaal par imaandaari aur approach, galat jawab se behtar hai. Stress interview mein approach hi marks deta hai.`,
+          `The interviewer told Arjun: "I think your project is useless." Arjun got angry and said: "You do not understand anything." The interview ended there. Arjun learned that getting angry at a challenge is worse than accepting the challenge. The right answer would be: "What did you find lacking in the project? I want to improve it." This answer is calm and shows the interviewer your thinking.
+
+The interviewer asked Priya a question and then stayed silent for 10 seconds. Priya felt her answer was wrong, so she panicked and started changing her answer. The interviewer said: "You were right the first time." Priya learned that **silence does not mean a wrong answer** — the interviewer is thinking or writing notes. Do not change your answer in the silence.
+
+The interviewer asked Sana: "You do not even know this?" Sana calmly said: "I do not know the exact answer, but I would approach it like this..." And she explained the approach. The interviewer said: "Good, the approach is right." Sana learned that on a hard question, honesty and an approach are better than a wrong answer. In a stress interview, the approach itself gives marks.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 12 Second ka Calm-Down Routine (Worked Example with Dry Run)',
+          '3. Step-by-Step: 12-Second Calm-Down Routine (Worked Example with Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek calm-down routine banate hain jo stress interview mein kaam aata hai. Total time hai **12 second**. Pehla step hai **pause aur saans lo (4 second)**: sawaal suno, ruko, aur gehri saans lo. Doosra step hai **hold (4 second)**: saans roko aur socho ki sawaal kya hai. Teesra step hai **slowly saans chhodo (4 second)**: saans chhodo aur calm ho jao. Chauthe step mein **ek chhote sentence mein jawab do**: pehle ek line bolo, phir detail do.
+
+Yeh 12 second interviewer ko bura nahi lagega — use lagega ki aap soch rahe ho. Jo candidate turant bolna shuru kar deta hai, woh bina soche bolta hai aur galti karta hai. Jo candidate 12 second ruk kar bolta hai, woh soch kar bolta hai aur clear jawab deta hai. Pause lena weakness nahi hai, strength hai.
+
+Dry run mein neeche wala code routine ke steps dikhata hai: pause aur saans lo 4 second, hold 4 second, slowly saans chhodo 4 second, aur phir ek chhote sentence mein jawab do. Total calm-down time hai 12 second. Yeh routine aapko har mushkil sawaal se pehle yaad rakhna hai — mushkil sawaal aaye to pehle routine, phir jawab. Routine se aapka stress score bhi kam hota hai, jaise agle example mein dikhega.`,
+          `Now let us build a calm-down routine that works in a stress interview. The total time is **12 seconds**. The first step is **pause and breathe in (4 seconds)**: hear the question, pause, and take a deep breath. The second step is **hold (4 seconds)**: hold the breath and think what the question is. The third step is **breathe out slowly (4 seconds)**: breathe out and become calm. In the fourth step **answer in one short sentence**: first say one line, then give the detail.
+
+These 12 seconds will not look bad to the interviewer — they will think you are thinking. A candidate who starts speaking at once speaks without thinking and makes a mistake. A candidate who pauses for 12 seconds and then speaks, speaks after thinking and gives a clear answer. Taking a pause is not a weakness, it is a strength.
+
+In the dry run the code below shows the steps of the routine: pause and breathe in for 4 seconds, hold for 4 seconds, breathe out slowly for 4 seconds, and then answer in one short sentence. The total calm-down time is 12 seconds. You must remember this routine before every hard question — when a hard question comes, first the routine, then the answer. The routine also lowers your stress score, as the next example will show.`
+        ),
+        code: {
+          title: t(
+            '12 Second ka Calm-Down Routine',
+            '12-Second Calm-Down Routine'
+          ),
+          language: 'python',
+          code: `steps = [("Pause and breathe in", 4), ("Hold", 4), ("Breathe out slowly", 4), ("Answer in one short sentence", 0)]
+for name, seconds in steps:
+    if seconds == 0:
+        print(name)
+    else:
+        print(name, "->", seconds, "seconds")
+print("Calm-down time: 12 seconds")`,
+          output: `Pause and breathe in -> 4 seconds
+Hold -> 4 seconds
+Breathe out slowly -> 4 seconds
+Answer in one short sentence
+Calm-down time: 12 seconds`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Gussa Karna, Jawab Badalna aur Chup Ho Jaana',
+          '4. Common Mistakes: Getting Angry, Changing the Answer, and Going Silent'
+        ),
+        body: t(
+          `Sabse badi galti hai **gussa karna**. Interviewer ne challenge kiya aur aapne gusse mein jawab diya. Gussa aapko unprofessional dikhata hai. Interviewer challenge isliye karta hai taaki woh dekhe ki aap gusse mein kaise react karte ho. Calm reh kar bolo: "Aapko kya kami lagi? Main use sudharna chahta hoon." Yeh jawab aapko professional dikhata hai.
+
+Doosri galti hai **chuppi mein jawab badalna**. Interviewer chup hai aur aap apna sahi jawab galat samajh kar badal dete ho. Chuppi ka matlab galat jawab nahi hota. Jawab dekar ruko — interviewer ko bolne ka time do. Agar interviewer kuch poochhe, to tab jawab badlo, chuppi dekh kar nahi.
+
+Teesri galti hai **chup ho jaana**. Mushkil sawaal aaya aur aap 30 second chup ho gaye. Chup rehna sabse bura hai — interviewer ko lagta hai ki aapko kuch nahi aata. Chup rehne se behtar hai approach bolna: "Mujhe exact answer nahi pata, par main aise sochunga..." Approach bolne se aapko marks milte hain, chup rehne se nahi.
+
+Chauthi galti hai **jaldi-jaldi bolna**. Stress mein log tez bolne lagte hain aur interviewer ko kuch samajh nahi aata. Slow bolo — itna slow ki aap khud ko sun sako. Slow bolna calm dikhata hai, tez bolna nervousness dikhata hai.`,
+          `The biggest mistake is **getting angry**. The interviewer challenged you and you answered in anger. Anger makes you look unprofessional. The interviewer challenges you so they can see how you react in anger. Say calmly: "What did you find lacking? I want to improve it." This answer makes you look professional.
+
+The second mistake is **changing the answer in the silence**. The interviewer is silent and you change your right answer thinking it was wrong. Silence does not mean a wrong answer. After giving the answer, wait — give the interviewer time to speak. If the interviewer asks something, then change the answer, not on seeing the silence.
+
+The third mistake is **going silent**. A hard question came and you went silent for 30 seconds. Staying silent is the worst — the interviewer feels you know nothing. Speaking your approach is better than staying silent: "I do not know the exact answer, but I would think like this..." Speaking the approach gives you marks, staying silent does not.
+
+The fourth mistake is **speaking very fast**. Under stress people start speaking fast and the interviewer understands nothing. Speak slowly — so slow that you can hear yourself. Speaking slowly looks calm, speaking fast shows nervousness.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Interviewer Rude Hai, Ya Sawaal Personal Hai',
+          '5. Edge Cases: Interviewer Is Rude, or the Question Is Personal'
+        ),
+        body: t(
+          `Pehla edge case: **interviewer rude hai**. Woh aapki har baat ko kaat ta hai, ya aapka mazaak udata hai. Tab bhi calm raho — rude hona interviewer ka test hai, aapki galti nahi. Polite raho, short jawab do, aur apna point clear rakho. Agar interviewer bahut rude ho, to bhi gussa mat karo — interview khatam hone ke baad aap decide kar sakte ho ki aapko wahan kaam karna hai ya nahi.
+
+Doosra edge case: **sawaal personal hai**. "Aapki family mein kaun kya karta hai?" ya "Aapki salary expectation kya hai?" — aise sawaal par aap polite tarike se boundary bana sakte ho. Family ke baare mein short jawab do, aur salary par bolo: "Main seekhne aur kaam par focus karna chahta hoon." Personal sawaal par gussa mat karo, par apni privacy bhi mat kholo.
+
+Teesra edge case: **aapko rona aa raha hai ya panic ho raha hai**. Tab pause lo — paani piyo, saans lo, aur bolo: "Kya main 10 second le sakta hoon?" Interviewer samajhta hai — woh bhi insaan hai. 10 second ka pause aapko calm karta hai aur interviewer ko bura nahi lagta. Panic mein jawab dena, pause lene se bura hai.
+
+Chauthe edge case mein **aapko lagta hai ki interview kharab ho gaya**. Tab bhi end tak achha do — interviewer aakhri 5 minute ko bhi yaad rakhta hai. End mein achha impression, poora interview badal sakta hai. Haar mat mano, end tak calm raho.`,
+          `The first edge case: **the interviewer is rude**. They cut every word of yours, or make fun of you. Even then stay calm — being rude is the interviewer's test, not your fault. Stay polite, give short answers, and keep your point clear. Even if the interviewer is very rude, do not get angry — after the interview ends you can decide whether you want to work there or not.
+
+The second edge case: **the question is personal**. "What does each person in your family do?" or "What is your salary expectation?" — on such questions you can set a boundary politely. Give a short answer about family, and on salary say: "I want to focus on learning and work." Do not get angry on a personal question, but do not open up your privacy either.
+
+The third edge case: **you feel like crying or panicking**. Then take a pause — drink water, breathe, and say: "Can I take 10 seconds?" The interviewer understands — they are also human. A 10-second pause calms you and does not look bad to the interviewer. Answering in panic is worse than taking a pause.
+
+In the fourth edge case **you feel the interview has gone badly**. Even then give your best till the end — the interviewer also remembers the last 5 minutes. A good impression at the end can change the whole interview. Do not give up, stay calm till the end.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Main Stress mein Bilkul Kaam Nahi Kar Paata?',
+          '6. What If: I Cannot Work at All Under Stress?'
+        ),
+        body: t(
+          `What if aap **stress mein bilkul kaam nahi kar paate**? Tab stress ko practice se kam karo — mock interview mein jaan-boojh kar stress banao. Dost se kaho ki woh mushkil sawaal poochhe, challenge kare, aur chup rahe. Pehle mock mein aap ghabraoge, teesre mock mein kam ghabraoge, paanchve mock mein calm rahoge. Stress practice se kam hota hai, avoid karne se nahi.
+
+What if aap **har interview mein nervous** ho jate ho? Tab nervousness ko normal samjho — har candidate nervous hota hai. Nervousness ka matlab yeh nahi ki aap taiyaar nahi ho, matlab yeh hai ki aapko farak padta hai. Nervousness ko chhupane ki koshish mat karo, use routine se calm karo: 4 second saans lo, 4 second roko, 4 second chhodo.
+
+What if aapko **lagta hai ki aap fail ho gaye**? Tab bhi interview ke baad likho: kya hua, kahan atke, kya sudharna hai. Har fail interview ek lesson hai. Agle interview mein wahi galti mat dohrao. Fail hona bura nahi hai, fail hokar seekhna nahi bura hai.
+
+What if aap **stress interview se darte** ho? Tab yaad rakho: stress interview mein interviewer aapko fail karne ke liye nahi, aapko test karne ke liye pressure banata hai. Jo candidate calm rehta hai, woh pass hota hai. Calm rehna ek skill hai — aur skill practice se banti hai.`,
+          `What if you **cannot work at all under stress**? Then reduce stress with practice — deliberately create stress in mock interviews. Ask a friend to ask hard questions, challenge you, and stay silent. In the first mock you will panic, in the third mock you will panic less, in the fifth mock you will stay calm. Stress reduces with practice, not with avoiding.
+
+What if you get **nervous in every interview**? Then treat nervousness as normal — every candidate is nervous. Nervousness does not mean you are not ready, it means you care. Do not try to hide nervousness, calm it with the routine: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds.
+
+What if you **feel you have failed**? Even then, after the interview write: what happened, where you got stuck, what to improve. Every failed interview is a lesson. Do not repeat the same mistake in the next interview. Failing is not bad, not learning from failure is bad.
+
+What if you are **afraid of a stress interview**? Then remember: in a stress interview the interviewer creates pressure not to fail you, but to test you. A candidate who stays calm passes. Staying calm is a skill — and a skill is built with practice.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Stress Interview ka Formula',
+          '7. Summary: The Stress Interview Formula'
+        ),
+        body: t(
+          `Poora article ek formula mein: **pause lo (12 second) + calm raho + approach bolo**. Mushkil sawaal aaye to pehle routine karo, phir jawab do. Challenge par gussa mat karo, chuppi mein jawab mat badlo, aur chup mat raho. Pressure ko personal mat lo — interviewer aapko test kar raha hai, attack nahi kar raha.
+
+Yaad rakhne wali baatein: 4 second saans lo, 4 second roko, 4 second chhodo — yeh 12 second aapko calm karta hai. "I do not know" bolna theek hai, par uske baad approach bolo. Aur end tak calm raho — aakhri 5 minute bhi interviewer yaad rakhta hai.
+
+Revision ke liye: apna calm-down routine neeche wale code se banao aur stress score track karo. Agar routine ke baad stress score kam hota hai, to routine kaam kar raha hai. Yeh batch ka aakhri article hai — ab aapke paas mock, company patterns, off-campus, internship, communication, body language, time management aur stress — poora placement toolkit hai.`,
+          `The whole article in one formula: **take a pause (12 seconds) + stay calm + say the approach**. When a hard question comes, first do the routine, then answer. Do not get angry at a challenge, do not change the answer in the silence, and do not go silent. Do not take the pressure personally — the interviewer is testing you, not attacking you.
+
+Things to remember: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds — these 12 seconds calm you. Saying "I do not know" is fine, but after that say the approach. And stay calm till the end — the interviewer remembers the last 5 minutes too.
+
+For revision: build your calm-down routine with the code below and track the stress score. If the stress score goes down after the routine, the routine is working. This is the last article of this batch — now you have the full placement toolkit: mock, company patterns, off-campus, internship, communication, body language, time management, and stress.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Stress Interview: Pressure aur Sahi Response',
+        'Stress Interview: Pressure and the Right Response'
+      ),
+      caption: t(
+        'Har pressure ka ek calm response hota hai — gussa ya chuppi kabhi sahi response nahi hai',
+        'Every pressure has a calm response — anger or silence is never the right response'
+      ),
+      nodes: [],
+      headers: [
+        t('Pressure', 'Pressure'),
+        t('Galat Response', 'Wrong Response'),
+        t('Sahi Response', 'Right Response')
+      ],
+      rows: [
+        [
+          t('Mushkil sawaal', 'Hard question'),
+          t('Chup ho jaana', 'Going silent'),
+          t('"I do not know, par approach yeh hai..."', '"I do not know, but the approach is..."')
+        ],
+        [
+          t('Challenge: "Project bekaar hai"', 'Challenge: "Project is useless"'),
+          t('Gussa karna', 'Getting angry'),
+          t('"Kya kami lagi? Main sudharna chahta hoon."', '"What did you find lacking? I want to improve it."')
+        ],
+        [
+          t('Lambi chuppi', 'Long silence'),
+          t('Jawab badal dena', 'Changing the answer'),
+          t('Rukna aur interviewer ko bolne dena', 'Waiting and letting the interviewer speak')
+        ],
+        [
+          t('Rude interviewer', 'Rude interviewer'),
+          t('Rude wapas bolna', 'Answering rudely back'),
+          t('Polite rehna, short jawab dena', 'Staying polite, giving short answers')
+        ]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Stress Score: Routine se Pehle aur Baad mein',
+          'Stress Score: Before and After the Routine'
+        ),
+        language: 'python',
+        code: `before = [8, 7, 6]
+after = [5, 4, 3]
+for i in range(3):
+    print("Round", i + 1, ": stress", before[i], "->", after[i])
+print("Average before:", sum(before) / 3)
+print("Average after:", sum(after) / 3)`,
+        output: `Round 1 : stress 8 -> 5
+Round 2 : stress 7 -> 4
+Round 3 : stress 6 -> 3
+Average before: 7.0
+Average after: 4.0`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Stress interview mein interviewer pressure kyun banata hai?',
+          'Why does the interviewer create pressure in a stress interview?'
+        ),
+        opts: [
+          t('Aapko fail karne ke liye', 'To fail you'),
+          t('Pressure mein aap kaise kaam karte ho, yeh dekhne ke liye', 'To see how you work under pressure'),
+          t('Aapko pasand nahi karta', 'Because they dislike you'),
+          t('Time waste karne ke liye', 'To waste time')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: interviewer pressure isliye banata hai taaki woh dekhe ki aap pressure mein calm rehte ho ya toot jaate ho — yeh ek test hai, attack nahi.',
+          'Correct answer: the interviewer creates pressure to see whether you stay calm under pressure or break — it is a test, not an attack.'
+        )
+      },
+      {
+        q: t(
+          'Calm-down routine ka total time kitna hai?',
+          'What is the total time of the calm-down routine?'
+        ),
+        opts: [
+          t('4 second', '4 seconds'),
+          t('8 second', '8 seconds'),
+          t('12 second', '12 seconds'),
+          t('60 second', '60 seconds')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: routine 12 second ka hai — 4 second saans lo, 4 second roko, 4 second chhodo, phir ek chhote sentence mein jawab do.',
+          'Correct answer: the routine is 12 seconds — breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds, then answer in one short sentence.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer ne kaha: "Aapka project bekaar hai." Sahi response kya hai?',
+          'The interviewer said: "Your project is useless." What is the right response?'
+        ),
+        opts: [
+          t('Gusse mein jawab dena', 'Answering in anger'),
+          t('"Kya kami lagi? Main sudharna chahta hoon."', '"What did you find lacking? I want to improve it."'),
+          t('Chup ho jaana', 'Going silent'),
+          t('Interview chhod dena', 'Leaving the interview')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: calm reh kar kami poochhna professional hai — gussa karna aapko unprofessional dikhata hai aur interview wahin khatam ho jaata hai.',
+          'Correct answer: calmly asking about the lacking part is professional — anger makes you look unprofessional and ends the interview there.'
+        )
+      },
+      {
+        q: t(
+          'Stress score routine se pehle 7.0 tha aur baad mein 4.0. Kitna kam hua?',
+          'The stress score was 7.0 before the routine and 4.0 after. How much did it fall?'
+        ),
+        opts: [
+          t('1.0', '1.0'),
+          t('2.0', '2.0'),
+          t('3.0', '3.0'),
+          t('4.0', '4.0')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 7.0 - 4.0 = 3.0 — routine ke baad stress score 3.0 kam hua, matlab routine kaam kar raha hai.',
+          'Correct answer: 7.0 - 4.0 = 3.0 — the stress score fell by 3.0 after the routine, meaning the routine is working.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer 10 second chup hai. Kya karna chahiye?',
+          'The interviewer is silent for 10 seconds. What should you do?'
+        ),
+        opts: [
+          t('Apna jawab badal dena', 'Changing your answer'),
+          t('Rukna aur interviewer ko bolne ka time dena', 'Waiting and giving the interviewer time to speak'),
+          t('Gussa karna', 'Getting angry'),
+          t('Interview chhod dena', 'Leaving the interview')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: chuppi ka matlab galat jawab nahi hota — interviewer soch raha hota hai ya notes likh raha hota hai, isliye ruko aur use bolne do.',
+          'Correct answer: silence does not mean a wrong answer — the interviewer is thinking or writing notes, so wait and let them speak.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Stress interview mein pressure ek test hai, attack nahi — use personal mat lo.',
+        'In a stress interview, pressure is a test, not an attack — do not take it personally.'
+      ),
+      t(
+        'Calm-down routine: 4 second saans lo, 4 second roko, 4 second chhodo — total 12 second.',
+        'Calm-down routine: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds — 12 seconds total.'
+      ),
+      t(
+        'Challenge par gussa mat karo — kami poochho aur sudharne ki baat karo.',
+        'Do not get angry at a challenge — ask about the lacking part and talk about improving it.'
+      ),
+      t(
+        'Chuppi mein jawab mat badlo — interviewer soch raha hota hai.',
+        'Do not change your answer in the silence — the interviewer is thinking.'
+      ),
+      t(
+        '"I do not know" theek hai, par uske baad approach zaroor bolo.',
+        '"I do not know" is fine, but always say the approach after it.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Calm-Down Routine Banao',
+        'Practice: Build Your Calm-Down Routine'
+      ),
+      task: t(
+        'Neeche wale starter code ko run karo aur calm-down routine ke 4 steps dekho. Done tab hoga jab output mein Steps: 4 dikhe aur aap 4 steps ko bina dekhe bol sako.',
+        'Run the starter code below and see the 4 steps of the calm-down routine. You are done when the output shows Steps: 4 and you can say the 4 steps without looking.'
+      ),
+      language: 'python',
+      starter: `routine = ["Pause for 3 seconds", "Take one slow breath", "Repeat the question in your own words", "Answer one point at a time"]
+for i, step in enumerate(routine, 1):
+    print(i, ".", step, sep="")
+print("Steps:", len(routine))`,
+      expected: `1.Pause for 3 seconds
+2.Take one slow breath
+3.Repeat the question in your own words
+4.Answer one point at a time
+Steps: 4`
+    },
+    readMinutes: 12
+  };
+
+const placementRejection: Article = {
+    id: 'placement-rejection',
+    subjectId: 'placement',
+    title: t(
+      'Rejection aur Re-attempt Plan — Ek Round Mein Fail Hone ke Baad Kya Karein',
+      'Handling Rejection and the Re-attempt Plan — What to Do After Failing a Round'
+    ),
+    summary: t(
+      'Rejection ka matlab ye nahi ki aap capable nahi ho — iska matlab hai ki ek round mein kuch kami reh gayi. Is article mein seekho ki rejection ko kaise samjho, feedback se apni weak round kaise pehchano, aur 15 din ka re-attempt plan bana kar agli company ke liye kaise taiyaar ho.',
+      'A rejection does not mean you are not capable — it means something was missing in one round. In this article you will learn how to read a rejection, how to use feedback to find your weak round, and how to build a 15-day re-attempt plan to get ready for the next company.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Rejection Kya Hai? (Ek Round ka Result, Poori Kahani Nahi)',
+          '1. What Is Rejection? (One Round Result, Not the Whole Story)'
+        ),
+        body: t(
+          `Placement mein **rejection** ka matlab hota hai ki aap kisi company ke kisi round mein aage nahi badh paaye — aptitude test, group discussion, technical interview ya HR interview, kisi mein bhi. Ye ek round ka result hai, aapki poori ability ka faisla nahi. Ek company ka test aapke ek din ke performance ko check karta hai, aapke chaar saal ki mehnat ko nahi. Isliye rejection ko personal failure ki tarah nahi, ek **signal** ki tarah dekho: signal ye batata hai ki kis round mein kaam karna hai.
+
+Har saal hazaaron students pehli company mein select nahi hote, aur doosri ya teesri company mein select ho jaate hain. Iska reason simple hai: har company ka test alag hota hai, har interviewer ke sawaal alag hote hain, aur har din aapka performance alag hota hai. Jo student aptitude mein fail hua, wohi student agle hafte reasoning mein strong nikal sakta hai. Rejection ka matlab sirf itna hai — **is baar, is round mein, is company ke liye** number kam pad gaya.
+
+Sabse pehla kaam ye hai ki rejection ko accept karo aur us din ko kharab mat hone do. Ek din rest lo, doston se baat karo, phir agle din se analysis shuru karo. Jo students rejection ke baad ruk jaate hain, woh peeche reh jaate hain. Jo students rejection ke baad **analysis** karte hain, woh aage badhte hain. Is article ka poora plan isi analysis par based hai.`,
+          `In placements, a **rejection** means you did not move ahead in one round of one company — an aptitude test, a group discussion, a technical interview, or an HR interview. It is the result of one round, not a judgement on your whole ability. One company test checks your performance on one day, not four years of hard work. So treat a rejection as a **signal**, not as a personal failure: the signal tells you which round needs work.
+
+Every year, thousands of students are not selected by the first company they try, and then get selected by the second or third company. The reason is simple: every company test is different, every interviewer asks different questions, and your performance is different every day. A student who fails in aptitude can be strong in reasoning the next week. A rejection only means this much — **this time, in this round, for this company**, the score fell short.
+
+The first job is to accept the rejection and not let that day go to waste. Take one day of rest, talk to friends, and start the analysis the next day. Students who stop after a rejection fall behind. Students who **analyse** after a rejection move ahead. The whole plan in this article is built on that analysis.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Asha, Rohan aur Doosri Company ka Offer',
+          '2. Real-Life Examples: Asha, Rohan, and the Offer from the Next Company'
+        ),
+        body: t(
+          `**Asha** (invented example) ek imaginary student hai. Usne pehli company ka aptitude test diya aur fail ho gayi — time khatam ho gaya aur 10 questions chhoot gaye. Usne do din rest liya, phir apni galti likhi: speed kam thi, formula yaad the par practice nahi thi. Usne 15 din tak roz 20 timed questions solve kiye. Doosri company mein uska aptitude clear ho gaya, aur teesri company mein usko final round tak jaane ka mauka mila. Asha ki kahani mein koi magic nahi hai — sirf **feedback, plan aur practice** hai.
+
+**Rohan** (invented example) technical interview mein fail hua. Interviewer ne DBMS ke basic sawaal poochhe — primary key kya hoti hai, join kaise kaam karta hai — aur Rohan atak gaya. Usne ghar aakar saare sawaal likhe jo usse poochhe gaye the, phir 7 din tak roz 1 ghanta DBMS revise kiya. Agli company mein jab wahi sawaal aaye, toh usne aaram se jawab diye. Rohan ne ye seekha ki interview mein poochhe gaye sawaal **aapki agli taiyaari ka syllabus** hote hain.
+
+Teesra example hai **waitlist** ka. Kabhi-kabhi company aapko reject nahi karti, bas waitlist par rakhti hai. Iska matlab hai ki aap borderline par the — thodi si taiyaari aur aap clear kar lete. Aise students ko sabse zyada fayda hota hai re-attempt plan se, kyunki unki kami chhoti hoti hai. In teeno examples mein ek hi pattern hai: **rejection -> likha hua analysis -> chhota sa plan -> dobara try**.`,
+          `**Asha** (an invented example) is an imaginary student. She took the first company aptitude test and failed — the time ran out and 10 questions were left unanswered. She rested for two days, then wrote down her mistake: her speed was low, she knew the formulas but had not practised them. For 15 days she solved 20 timed questions every day. In the second company her aptitude round was cleared, and in the third company she reached the final round. There is no magic in Asha story — only **feedback, a plan, and practice**.
+
+**Rohan** (an invented example) failed the technical interview. The interviewer asked basic DBMS questions — what a primary key is, how a join works — and Rohan got stuck. At home he wrote down every question he had been asked, then revised DBMS for one hour a day for 7 days. In the next company, when the same questions came up, he answered them calmly. Rohan learned that the questions asked in an interview are the **syllabus for your next preparation**.
+
+A third example is the **waitlist**. Sometimes a company does not reject you; it only puts you on a waitlist. That means you were on the borderline — a little more preparation and you would have cleared it. Such students gain the most from a re-attempt plan, because their gap is small. All three examples follow one pattern: **rejection -> written analysis -> small plan -> try again**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5 Steps ka Re-attempt Plan (Worked Example ke Saath)',
+          '3. Step-by-Step: The 5-Step Re-attempt Plan (with a Worked Example)'
+        ),
+        body: t(
+          `Ab hum Asha ka example lekar poora re-attempt plan step-by-step banate hain. Asha ne 3 companies try ki thi: Company A mein aptitude test mein fail, Company B mein technical interview mein fail, aur Company C mein HR interview ka result abhi waiting hai. Pehla step hai **saare attempts likhna** — company, round aur result. Likhe bina analysis nahi hota; dimaag mein rakhne se kuch yaad nahi rehta.
+
+**Step 1 — Attempts likho:** Neeche wala code Asha ke 3 attempts ko print karta hai aur batata hai ki kitne attempts abhi bhi process mein hain. Code mein \`attempts\` ek list hai aur har attempt ek \`dict\` hai jismein company, round aur result likhe hain. Dry run dekho: pehla attempt Company A, aptitude test, not cleared. Doosra attempt Company B, technical interview, not cleared. Teesra attempt Company C, HR interview, waiting. Total attempts 3, aur still in process 1. Ye simple list hi aapka analysis ka starting point hai.
+
+**Step 2 — Weak round pehchano:** Asha ke 2 fails mein se ek aptitude mein tha aur ek technical mein. Dono alag weak points hain, isliye dono par alag plan chahiye. Agar dono fails ek hi round mein hote, toh usi ek round par focus karna tha.
+
+**Step 3 — Feedback likho:** Agar company ne feedback diya ho toh use likho. Agar feedback na mila ho, toh khud likho — kis sawaal par atke, kahan time khatam hua, kya nervous the. Khud ka likha hua feedback bhi kaam karta hai.
+
+**Step 4 — 15 din ka plan banao:** Har weak point ke liye roz ka kaam fix karo. Aptitude ke liye roz 20 timed questions, technical ke liye roz 1 ghanta revision. Plan chhota rakho, taaki follow karna aasan ho.
+
+**Step 5 — Dobara apply karo:** Plan khatam hone se pehle hi 5 nayi companies mein apply kar do, taaki plan ke baad turant test dene ka mauka mile. Rejection ke baad sabse badi galti hai 1 mahina rukna — momentum khatam ho jaata hai.`,
+          `Now let us build the full re-attempt plan step by step, using Asha example. Asha tried 3 companies: she failed the aptitude test in Company A, failed the technical interview in Company B, and the HR interview result in Company C is still waiting. The first step is to **write down all attempts** — company, round, and result. Without writing them down there is no analysis; nothing stays clear in your head.
+
+**Step 1 — Write down the attempts:** The code below prints Asha 3 attempts and tells you how many are still in process. In the code, \`attempts\` is a list and every attempt is a \`dict\` with company, round, and result. Look at the dry run: the first attempt is Company A, aptitude test, not cleared. The second attempt is Company B, technical interview, not cleared. The third attempt is Company C, HR interview, waiting. Total attempts are 3, and 1 is still in process. This simple list is the starting point of your analysis.
+
+**Step 2 — Find the weak round:** Of Asha 2 failures, one was in aptitude and one was in technical. Those are two different weak points, so each needs its own plan. If both failures had been in the same round, the focus would have gone to that one round only.
+
+**Step 3 — Write the feedback:** If the company gave feedback, write it down. If no feedback came, write your own — which question you got stuck on, where the time ran out, whether you felt nervous. Your own written feedback works too.
+
+**Step 4 — Make a 15-day plan:** Fix a daily task for each weak point. For aptitude, 20 timed questions a day; for technical, one hour of revision a day. Keep the plan small so it is easy to follow.
+
+**Step 5 — Apply again:** Apply to 5 new companies before the plan ends, so you get a chance to test yourself right after the plan. The biggest mistake after a rejection is waiting for a month — the momentum dies.`
+        ),
+        code: {
+          title: t(
+            'Asha ke 3 Attempts ka Log aur Analysis',
+            'Log and Analysis of Asha 3 Attempts'
+          ),
+          language: 'python',
+          code: `# Asha ke attempts: company, round, result
+attempts = [
+    {"company": "Company A", "round": "Aptitude test", "result": "Not cleared"},
+    {"company": "Company B", "round": "Technical interview", "result": "Not cleared"},
+    {"company": "Company C", "round": "HR interview", "result": "Waiting"},
+]
+for a in attempts:
+    print(a["company"], "-", a["round"], "-", a["result"])
+waiting = 0
+for a in attempts:
+    if a["result"] == "Waiting":
+        waiting += 1
+print("Total attempts:", len(attempts))
+print("Still in process:", waiting)`,
+          output: `Company A - Aptitude test - Not cleared
+Company B - Technical interview - Not cleared
+Company C - HR interview - Waiting
+Total attempts: 3
+Still in process: 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Rejection ke Baad Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes After a Rejection'
+        ),
+        body: t(
+          `**Galti 1: Bina analysis ke 50 companies mein apply karna.** Kuch students rejection ke baad gusse mein har jagah apply kar dete hain, bina ye soche ki fail kyun hue. Result wahi hota hai — wahi round, wahi fail. Pehle analysis karo, phir apply karo. 5 sahi companies mein apply karna 50 random companies se behtar hai.
+
+**Galti 2: Feedback ko ignore karna.** Agar interviewer ne kaha ki communication weak hai, toh us par kaam karo. Bahut se students feedback ko bura maan kar bhool jaate hain. Feedback aapka free teacher hai — jo teacher aapko aapki kami batata hai, wohi aapko aage badhata hai.
+
+**Galti 3: Agle interview mein jhooth bolna.** Kuch students pehli rejection ko chhupane ke liye jhooth bolte hain — jaise "main pehli company mein select hua tha par join nahi kiya". Interviewer ko ye baat aasani se samajh aati hai, aur jhooth pakda jaane par trust khatam ho jaata hai. Sach bolo: "Main aptitude round mein fail hua, phir maine speed par kaam kiya." Ye jawab interviewer ko impress karta hai, kyunki ismein growth dikhti hai.
+
+**Galti 4: Taiyaari poori tarah chhod dena.** Rejection ke baad kuch students 2-3 hafte kuch nahi padhte. Isse unki purani taiyaari bhi kamzor ho jaati hai. Ek din rest theek hai, par uske baad roz thoda-thoda revision chalu rakho, chahe sirf 1 ghanta hi ho.`,
+          `**Mistake 1: Applying to 50 companies without any analysis.** Some students, angry after a rejection, apply everywhere without thinking about why they failed. The result is the same — the same round, the same failure. Analyse first, then apply. Applying to 5 right companies is better than applying to 50 random ones.
+
+**Mistake 2: Ignoring feedback.** If the interviewer said your communication is weak, work on it. Many students take feedback badly and forget it. Feedback is your free teacher — the teacher who tells you your weakness is the one who moves you forward.
+
+**Mistake 3: Lying in the next interview.** Some students lie to hide the first rejection — for example, "I was selected by the first company but I did not join." An interviewer sees through this easily, and once a lie is caught, trust is gone. Tell the truth: "I failed the aptitude round, then I worked on my speed." That answer impresses the interviewer, because it shows growth.
+
+**Mistake 4: Stopping preparation completely.** After a rejection, some students study nothing for 2-3 weeks. That weakens even their earlier preparation. One day of rest is fine, but after that keep revising a little every day, even if it is only one hour.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Final Round, Waitlist aur Dobara Apply Karna',
+          '5. Edge Cases: Final Round, Waitlist, and Applying Again'
+        ),
+        body: t(
+          `**Edge case 1: Final HR round mein rejection.** Ye sabse dukh bhara rejection hota hai, kyunki aap aakhir tak pahunche the. Iska matlab ye hai ki aapki technical taiyaari theek thi, bas HR round mein kuch kami reh gayi — jaise nervous hona, ya "why this company" ka jawab weak hona. Is case mein sirf HR answers par kaam karo, poori taiyaari dobara shuru mat karo.
+
+**Edge case 2: Waitlist par hona.** Waitlist ka matlab hai borderline. Aise mein dobara apply karne se pehle usi round par kaam karo jismein aap borderline the. Aur waitlist wali company ko bilkul bhool mat jao — kabhi-kabhi waitlist se bhi call aati hai, isliye apna phone aur email check karte raho.
+
+**Edge case 3: Usi company mein dobara apply karna.** Kuch companies 6 mahine ke baad dobara apply karne deti hain, kuch nahi deti. Rule simple hai: company ki policy check karo, aur agar dobara apply kar sakte ho toh pehle wali kami ko fix karke hi apply karo. Bina sudhaar ke dobara apply karna time waste hai.
+
+**Edge case 4: Ek hi hafte mein 3 rejections.** Aisa hota hai jab drive season chal raha ho. Iska matlab ye nahi ki aap kharab ho — iska matlab hai ki aapne bina gap ke test diye aur thak gaye. Ek din rest lo, analysis karo, phir ek-ek karke apply karo. Ek saath 3 test dena stamina bhi mangta hai.`,
+          `**Edge case 1: Rejection in the final HR round.** This is the most painful rejection, because you reached the very end. It means your technical preparation was fine, and only something in the HR round was missing — for example, feeling nervous, or a weak answer to "why this company". In this case work only on HR answers; do not restart the whole preparation.
+
+**Edge case 2: Being on a waitlist.** A waitlist means borderline. Before applying again, work on the same round where you were borderline. And do not forget the waitlist company completely — sometimes a call does come from the waitlist, so keep checking your phone and email.
+
+**Edge case 3: Applying to the same company again.** Some companies allow you to apply again after 6 months, and some do not. The rule is simple: check the company policy, and if you can apply again, do it only after fixing the earlier gap. Applying again without improvement is a waste of time.
+
+**Edge case 4: Three rejections in one week.** This happens during drive season. It does not mean you are bad — it means you gave tests without a gap and got tired. Take one day of rest, do the analysis, then apply one by one. Giving 3 tests together also needs stamina.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Feedback Na Mile, Ya Baar-Baar Rejection Aaye?',
+          '6. What-If: No Feedback Comes, or Rejections Keep Coming?'
+        ),
+        body: t(
+          `**What if: company ne koi feedback hi nahi diya?** Aksar companies feedback nahi deti — sirf "not selected" mail aata hai. Is case mein khud feedback banao: test ke baad turant likho ki kaunse questions chhoote, kahan time khatam hua, interview mein kaunsa sawaal atak gaya. Ye self-feedback 80% kaam kar deta hai. Mock test ke scores bhi feedback hi hote hain — agar mock mein aptitude weak hai, toh real test mein bhi wahi weak hoga.
+
+**What if: 3 baar lagatar rejection aaye?** Iska matlab hai ki koi ek basic kami baar-baar repeat ho rahi hai. Teeno rejections ko ek saath likho aur common point dhoondho. Agar teeno mein aptitude fail hua, toh aptitude hi problem hai — phir 2 hafte sirf aptitude par lagao, baaki sab band karke. Common point milte hi solution saaf dikhne lagta hai.
+
+**What if: dream company ne reject kar diya?** Ye sabse mushkil hota hai. Par yaad rakho — ek company aapki poori career nahi hai. Us company mein kaam karne wale log bhi kabhi kisi aur company se reject hue the. Dream company ko 6 mahine baad dobara try kar sakte ho, aur tab tak doosri company mein experience lekar jao. Experience ke saath dobara apply karna pehle se zyada strong hota hai.
+
+**What if: doston ka selection ho gaya aur aapka nahi?** Comparison se sirf stress badhta hai. Har student ka timeline alag hota hai. Apne doston se unki strategy poochho — unhone kaise taiyaari ki, kaunsi galti nahi ki — aur use apne plan mein daalo. Doston ki success se seekhna, unse jalna nahi.`,
+          `**What if the company gave no feedback at all?** Often companies give no feedback — only a "not selected" mail arrives. In that case, make your own feedback: right after the test, write down which questions were left, where the time ran out, and which interview question got you stuck. This self-feedback does 80% of the job. Mock test scores are feedback too — if aptitude is weak in mocks, it will be weak in the real test as well.
+
+**What if rejections come 3 times in a row?** That means one basic gap is repeating again and again. Write all three rejections together and find the common point. If aptitude failed in all three, then aptitude is the problem — then spend 2 weeks on aptitude only, stopping everything else. Once the common point is found, the solution becomes clear.
+
+**What if your dream company rejected you?** This is the hardest one. But remember — one company is not your whole career. The people working in that company were once rejected by some other company too. You can try the dream company again after 6 months, and by then you can go with experience from another company. Applying again with experience is stronger than applying the first time.
+
+**What if your friends got selected and you did not?** Comparison only adds stress. Every student has a different timeline. Ask your friends about their strategy — how they prepared, which mistake they avoided — and add it to your plan. Learn from your friends success; do not feel jealous of it.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Rejection ek Signal Hai, Full Stop Nahi',
+          '7. Summary: Rejection Is a Signal, Not a Full Stop'
+        ),
+        body: t(
+          `Poora article ek line mein: **rejection ek round ka result hai, aapki ability ka certificate nahi.** Pehla kaam hai attempts likhna, doosra kaam hai weak round pehchanna, teesra kaam hai 15 din ka chhota sa plan banana, aur chauthe kaam hai dobara apply karna. Jo students ye 4 kaam karte hain, woh aage badhte hain. Jo students sirf dukhi hokar ruk jaate hain, woh peeche reh jaate hain.
+
+Yaad rakhne wali 3 baatein: feedback ko teacher samjho, comparison se bacho, aur momentum mat todo. Ek din rest theek hai, ek mahina rukna galat hai. Agli company ka test aapka naya mauka hai, aur har naye test mein aap pehle se thode zyada taiyaar hote ho — kyunki aapko pata hai ki pichhli baar kya galat hua tha.
+
+Aakhiri baat: apna re-attempt plan aaj hi likho, kal par mat chhodo. Neeche diye gaye 5 key notes ko ek baar padh lo, phir practice task karo — apna feedback-action list banao. Agle article mein hum mock placement test denge, taaki re-attempt se pehle aap apni taiyaari ko test kar sako.`,
+          `The whole article in one line: **a rejection is the result of one round, not a certificate of your ability.** The first job is to write down the attempts, the second is to find the weak round, the third is to make a small 15-day plan, and the fourth is to apply again. Students who do these 4 things move ahead. Students who only feel sad and stop fall behind.
+
+Remember 3 things: treat feedback as a teacher, avoid comparison, and do not break the momentum. One day of rest is fine; stopping for a month is wrong. The next company test is your new chance, and in every new test you are a little more prepared than before — because you know what went wrong last time.
+
+One last thing: write your re-attempt plan today, not tomorrow. Read the 5 key notes below once, then do the practice task — make your own feedback-action list. In the next article we will take a mock placement test, so you can test your preparation before the re-attempt.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Re-attempt Plan: Rejection se Dobara Apply Tak',
+        'Re-attempt Plan: From Rejection to Applying Again'
+      ),
+      caption: t(
+        'Har step likha hua hona chahiye — dimaag mein rakha hua plan kaam nahi karta',
+        'Every step must be written down — a plan kept only in your head does not work'
+      ),
+      nodes: [
+        {
+          t: t('Rejection aayi', 'Rejection arrived'),
+          s: t('Ek din rest lo, phir analysis shuru karo', 'Take one day of rest, then start the analysis')
+        },
+        {
+          t: t('Attempts likho', 'Write down the attempts'),
+          s: t('Company, round aur result — teeno likho', 'Write all three: company, round, and result')
+        },
+        {
+          t: t('Weak round pehchano', 'Find the weak round'),
+          s: t('Feedback ya self-feedback se kami dhoondho', 'Find the gap from feedback or self-feedback')
+        },
+        {
+          t: t('15 din ka plan banao', 'Make a 15-day plan'),
+          s: t('Roz ka kaam fix karo: timed questions + revision', 'Fix a daily task: timed questions plus revision')
+        },
+        {
+          t: t('Dobara apply karo', 'Apply again'),
+          s: t('5 nayi companies mein apply karo, momentum mat todo', 'Apply to 5 new companies, do not break the momentum')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '15 Din ka Re-attempt Plan Print Karna',
+          'Printing the 15-Day Re-attempt Plan'
+        ),
+        language: 'python',
+        code: `plan = [
+    ("Day 1-2", "Read the feedback and note the weak round"),
+    ("Day 3-7", "Practise 20 aptitude questions daily"),
+    ("Day 8-14", "Give 2 mock tests and revise mistakes"),
+    ("Day 15", "Apply to 5 new companies"),
+]
+for day, task in plan:
+    print(day + ":", task)
+print("Total steps:", len(plan))`,
+        output: `Day 1-2: Read the feedback and note the weak round
+Day 3-7: Practise 20 aptitude questions daily
+Day 8-14: Give 2 mock tests and revise mistakes
+Day 15: Apply to 5 new companies
+Total steps: 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Rejection ke baad sabse pehla sahi kaam kya hai?',
+          'What is the first right thing to do after a rejection?'
+        ),
+        opts: [
+          t('Turant 50 companies mein apply kar dena', 'Apply to 50 companies at once'),
+          t('Attempts likhna aur weak round pehchanna', 'Write down the attempts and find the weak round'),
+          t('2-3 hafte tak kuch na padhna', 'Study nothing for 2-3 weeks'),
+          t('Doston se baat karna band kar dena', 'Stop talking to friends')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: likha hua analysis hi batata hai ki kis round mein kaam karna hai; bina analysis ke dobara apply karne se wahi fail repeat hota hai.',
+          'Correct answer: only a written analysis tells you which round needs work; applying again without analysis repeats the same failure.'
+        )
+      },
+      {
+        q: t(
+          'Asha Company A ke aptitude test mein fail hui. Uske liye sabse sahi plan kya hai?',
+          'Asha failed the aptitude test in Company A. What is the best plan for her?'
+        ),
+        opts: [
+          t('Aptitude chhod kar sirf HR ki taiyaari karna', 'Stop aptitude and prepare only for HR'),
+          t('Roz timed aptitude questions solve karna', 'Solve timed aptitude questions every day'),
+          t('Ek mahina rest lena', 'Take one month of rest'),
+          t('Bina taiyaari ke turant dobara test dena', 'Take the test again at once without preparation')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Asha ki kami speed aur practice ki hai, isliye roz timed questions solve karne se hi speed badhegi.',
+          'Correct answer: Asha gap is speed and practice, so solving timed questions every day is what will raise her speed.'
+        )
+      },
+      {
+        q: t(
+          'Company ne koi feedback nahi diya. Aap kya karoge?',
+          'The company gave no feedback. What will you do?'
+        ),
+        opts: [
+          t('Kuch nahi — feedback ke bina sudhaar impossible hai', 'Nothing — improvement is impossible without feedback'),
+          t('Khud feedback likhoge: kaunse questions chhoote, kahan time khatam hua', 'Write your own feedback: which questions were left, where time ran out'),
+          t('Usi company ko baar-baar mail karoge', 'Mail the same company again and again'),
+          t('Taiyaari chhod doge', 'Stop preparing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: self-feedback 80% kaam kar deta hai — test ke turant baad likha hua analysis hi aapka feedback ban jaata hai.',
+          'Correct answer: self-feedback does 80% of the job — an analysis written right after the test becomes your feedback.'
+        )
+      },
+      {
+        q: t(
+          'Final HR round mein reject hone par kya karna chahiye?',
+          'What should you do after being rejected in the final HR round?'
+        ),
+        opts: [
+          t('Poori taiyaari dobara shuru karna', 'Restart the whole preparation'),
+          t('Sirf HR answers par kaam karna', 'Work only on HR answers'),
+          t('Technical padhna band kar dena', 'Stop studying technical subjects'),
+          t('Placement chhod dena', 'Give up on placements')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: final round tak pahunchna matlab technical taiyaari theek thi; kami sirf HR round mein thi, isliye kaam bhi wahin karna hai.',
+          'Correct answer: reaching the final round means the technical preparation was fine; the gap was only in the HR round, so the work belongs there too.'
+        )
+      },
+      {
+        q: t(
+          'Agle interview mein pehli rejection ke baare mein kya bolna chahiye?',
+          'What should you say about the first rejection in the next interview?'
+        ),
+        opts: [
+          t('Jhooth bolna ki select ho gaye the', 'Lie that you were selected'),
+          t('Sach bolna aur batana ki kya sudhaara', 'Tell the truth and say what you improved'),
+          t('Is baare mein kuch na bolna', 'Say nothing about it'),
+          t('Company ki burai karna', 'Blame the company')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sach aur growth dikhane wala jawab interviewer ko impress karta hai; jhooth pakda jaane par trust khatam ho jaata hai.',
+          'Correct answer: an honest answer that shows growth impresses the interviewer; a lie destroys trust once it is caught.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Rejection ek round ka result hai, aapki ability ka certificate nahi.',
+        'A rejection is the result of one round, not a certificate of your ability.'
+      ),
+      t(
+        'Attempts likho, weak round pehchano, phir 15 din ka chhota sa plan banao.',
+        'Write down the attempts, find the weak round, then make a small 15-day plan.'
+      ),
+      t(
+        'Feedback na mile toh self-feedback likho — test ke turant baad.',
+        'If no feedback comes, write self-feedback — right after the test.'
+      ),
+      t(
+        'Bina analysis ke dobara apply karna wahi fail repeat karta hai.',
+        'Applying again without analysis repeats the same failure.'
+      ),
+      t(
+        'Ek din rest theek hai, ek mahina rukna momentum khatam kar deta hai.',
+        'One day of rest is fine; stopping for a month kills the momentum.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Feedback-Action List Banao',
+        'Practice: Make Your Own Feedback-Action List'
+      ),
+      task: t(
+        'Neeche diye gaye feedback ke liye ek-ek action likho aur code run karke verify karo ki output expected jaisa aata hai. Phir apne real feedback (ya mock test ke result) se apni khud ki list banao — har feedback ke saamne ek clear action hona chahiye.',
+        'Write one action for each feedback given below, run the code, and verify that the output matches the expected output. Then make your own list from your real feedback (or a mock test result) — every feedback must have one clear action next to it.'
+      ),
+      language: 'python',
+      starter: `feedback = ["Speed in aptitude was low", "DBMS basics were weak", "Spoke too fast in HR"]
+actions = ["Do 10 timed aptitude sets", "Revise DBMS notes for 3 days", "Practise answers out loud daily"]
+for f, a in zip(feedback, actions):
+    print("Feedback:", f)
+    print("Action:", a)
+    print()
+print("Actions planned:", len(actions))`,
+      expected: `Feedback: Speed in aptitude was low
+Action: Do 10 timed aptitude sets
+
+Feedback: DBMS basics were weak
+Action: Revise DBMS notes for 3 days
+
+Feedback: Spoke too fast in HR
+Action: Practise answers out loud daily
+
+Actions planned: 3`
+    },
+    readMinutes: 12
+  };
+
+const placementMockTest1: Article = {
+    id: 'placement-mock-test-1',
+    subjectId: 'placement',
+    title: t(
+      'Mock Placement Test 1 — Aptitude + Reasoning + Verbal',
+      'Mock Placement Test 1 — Aptitude, Reasoning, and Verbal'
+    ),
+    summary: t(
+      'Ye aapka pehla full mock placement test hai: aptitude, reasoning aur verbal — teeno sections ek saath. 3 sample questions ke worked solutions dekho, phir score calculator chalao aur apni taiyaari ka sach jaano. Mock test ka kaam selection nahi, aapki kami dikhana hai.',
+      'This is your first full mock placement test: aptitude, reasoning, and verbal — all three sections together. Study the worked solutions of 3 sample questions, then run the score calculator and learn the truth about your preparation. A mock test does not select you; it shows you your gaps.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock Test Kya Hai? (Asli Test se Pehle ka Rehearsal)',
+          '1. What Is a Mock Test? (A Rehearsal Before the Real Test)'
+        ),
+        body: t(
+          `**Mock test** ek practice test hota hai jo asli placement test jaisa dikhta hai — wahi sections, wahi type ke questions, aur wahi time limit. Farak sirf itna hai ki mock test ka result aapki selection par asar nahi karta; iska kaam hai aapko **taiyaar** karna. Mock test mein fail hona bilkul safe hai, kyunki usse aapko pata chalta hai ki asli test mein kya galat ho sakta hai.
+
+Is mock test mein 3 sections hain: **Aptitude** (numbers, percentage, time-speed), **Reasoning** (series, puzzles, seating) aur **Verbal** (synonyms, error spotting, comprehension). Har section ka apna time hota hai, aur poora test 45 minute ka hai. 55 questions hain — aptitude 20, reasoning 20, verbal 15. Time ka hisaab rakhna hi mock test ki sabse badi seekh hai.
+
+Mock test ko asli test ki tarah do: phone silent rakho, timer lagao, aur beech mein ruko mat. Agar aap mock test ko casually doge, toh uska result bhi casual hoga — aapko apni asli speed aur accuracy ka pata hi nahi chalega. Mock test ke baad sabse important kaam hai **mistake review**: kaunse questions galat hue, kyun galat hue, aur agli baar kya alag karoge.`,
+          `A **mock test** is a practice test that looks like the real placement test — the same sections, the same type of questions, and the same time limit. The only difference is that a mock test result does not affect your selection; its job is to **prepare** you. Failing a mock test is completely safe, because it shows you what could go wrong in the real test.
+
+This mock test has 3 sections: **Aptitude** (numbers, percentage, time and speed), **Reasoning** (series, puzzles, seating), and **Verbal** (synonyms, error spotting, comprehension). Each section has its own time, and the full test is 45 minutes long. There are 55 questions — 20 aptitude, 20 reasoning, and 15 verbal. Keeping track of time is the biggest lesson of a mock test.
+
+Take the mock test like the real test: keep the phone silent, set a timer, and do not stop in the middle. If you take the mock test casually, its result will be casual too — you will never learn your real speed and accuracy. After the mock test, the most important job is the **mistake review**: which questions went wrong, why they went wrong, and what you will do differently next time.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Timer, Rough Sheet aur Pehla Mock',
+          '2. Real-Life Examples: The Timer, the Rough Sheet, and the First Mock'
+        ),
+        body: t(
+          `**Asha** (invented example) ne apna pehla mock test bina timer ke diya. Usne 55 questions 90 minute mein solve kiye aur score achha aaya — 42 out of 55. Woh khush ho gayi. Par jab usne timer ke saath dobara test diya, toh 45 minute mein sirf 30 questions ho paaye. Uska asli score 42 nahi, 30 questions mein se 24 sahi tha. Pehla mock bina timer ke usko galat confidence de gaya tha. Tab se woh har mock timer ke saath deti hai.
+
+**Rohan** (invented example) ka pehla mock alag tarah se kharab hua. Usne rough sheet use nahi ki — saari calculation dimaag mein ki. 5 questions mein chhoti si calculation galti hui aur answer galat ho gaya. Agle mock mein usne har question ke liye rough sheet par 2 line likhi, aur uski accuracy 60% se 78% ho gayi. Rough sheet slow nahi karti, **galti kam karti hai**.
+
+Teesra example hai **section order** ka. Kuch students sabse mushkil section pehle karte hain aur time wahin khatam kar dete hain. Sahi tareeka hai: pehle apna strongest section karo, confidence banao, phir weak section par jao. Mock test mein ye order try karke dekho ki aapke liye kya kaam karta hai — asli test mein order badalna mushkil hota hai.`,
+          `**Asha** (an invented example) took her first mock test without a timer. She solved 55 questions in 90 minutes and scored well — 42 out of 55. She felt happy. But when she took the test again with a timer, she finished only 30 questions in 45 minutes. Her real score was not 42; it was 24 correct out of 30 questions. The first mock without a timer had given her false confidence. Since then she takes every mock with a timer.
+
+**Rohan** (an invented example) first mock went wrong in a different way. He did not use a rough sheet — he did all the calculation in his head. In 5 questions a small calculation mistake made the answer wrong. In the next mock he wrote 2 lines on the rough sheet for every question, and his accuracy rose from 60% to 78%. A rough sheet does not slow you down; it **reduces mistakes**.
+
+A third example is the **section order**. Some students start with the hardest section and finish all their time there. The right way is: do your strongest section first, build confidence, then go to the weak section. Try this order in the mock test and see what works for you — changing the order in the real test is hard.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 3 Sample Questions Solve Karo aur Score Nikalo',
+          '3. Step-by-Step: Solve 3 Sample Questions and Find Your Score'
+        ),
+        body: t(
+          `Ab hum mock test ke 3 sample questions ko step-by-step solve karte hain — ek aptitude, ek reasoning, ek verbal. Har question ke saath uska short solution hai, taaki aapko method samajh aaye.
+
+**Q1 — Aptitude:** 350 ka 20% kitna hota hai? Options: (A) 60 (B) 70 (C) 75 (D) 80. Solution: 20% matlab 20/100. 350 x 20/100 = 350/5 = 70. Sahi jawab **(B) 70**. Dry run: 10% of 350 = 35, isliye 20% = 35 x 2 = 70. Percentage ke questions mein pehle 10% nikaalo, phir multiply karo — ye sabse fast tareeka hai.
+
+**Q2 — Reasoning:** Series hai 2, 6, 12, 20, 30, ?. Agla number kya hoga? Options: (A) 36 (B) 40 (C) 42 (D) 44. Solution: farak dekho — 6-2=4, 12-6=6, 20-12=8, 30-20=10. Farak har baar 2 se badh raha hai: 4, 6, 8, 10, isliye agla farak 12 hoga. 30 + 12 = 42. Sahi jawab **(C) 42**. Series mein hamesha pehle farak (difference) dekho.
+
+**Q3 — Verbal:** "Happy" ka synonym kya hai? Options: (A) Sad (B) Glad (C) Angry (D) Tired. Solution: Happy matlab khush, aur Glad ka matlab bhi khush hota hai. Sahi jawab **(B) Glad**. Verbal mein pehle options ko Hindi mein translate karke dekho — galat options khud hi hat jaate hain.
+
+Ab score nikaalte hain. Neeche wala code 5 questions ke answers check karta hai: \`answers\` mein aapke jawab hain aur \`correct\` mein sahi jawab hain — dono ko compare karke score print hota hai. Dry run: Q1 sahi hai (B), Q2 galat hai (aapne A likha, sahi C hai), Q3 sahi hai (C), Q4 sahi hai (B), Q5 sahi hai (D). Score 4 out of 5. Isi calculator ko apne poore mock ke answers par chalao.`,
+          `Now let us solve 3 sample questions from the mock test step by step — one aptitude, one reasoning, and one verbal. Each question comes with a short solution, so you understand the method.
+
+**Q1 — Aptitude:** What is 20% of 350? Options: (A) 60 (B) 70 (C) 75 (D) 80. Solution: 20% means 20/100. 350 x 20/100 = 350/5 = 70. The correct answer is **(B) 70**. Dry run: 10% of 350 = 35, so 20% = 35 x 2 = 70. In percentage questions, first find 10%, then multiply — that is the fastest way.
+
+**Q2 — Reasoning:** The series is 2, 6, 12, 20, 30, ?. What is the next number? Options: (A) 36 (B) 40 (C) 42 (D) 44. Solution: look at the differences — 6-2=4, 12-6=6, 20-12=8, 30-20=10. The difference grows by 2 each time: 4, 6, 8, 10, so the next difference is 12. 30 + 12 = 42. The correct answer is **(C) 42**. In a series, always look at the difference first.
+
+**Q3 — Verbal:** What is the synonym of "Happy"? Options: (A) Sad (B) Glad (C) Angry (D) Tired. Solution: Happy means pleased, and Glad also means pleased. The correct answer is **(B) Glad**. In verbal questions, first translate the options into your own words — the wrong options remove themselves.
+
+Now let us find the score. The code below checks the answers of 5 questions: \`answers\` holds your answers and \`correct\` holds the right answers — comparing the two prints the score. Dry run: Q1 is correct (B), Q2 is wrong (you wrote A, the correct answer is C), Q3 is correct (C), Q4 is correct (B), Q5 is correct (D). Score is 4 out of 5. Run this same calculator on the answers of your full mock.`
+        ),
+        code: {
+          title: t(
+            'Mock Test 1 ka Score Calculator (5 Questions)',
+            'Score Calculator for Mock Test 1 (5 Questions)'
+          ),
+          language: 'python',
+          code: `# Aapke answers aur sahi answers
+answers = {"Q1": "B", "Q2": "A", "Q3": "C", "Q4": "B", "Q5": "D"}
+correct = {"Q1": "B", "Q2": "C", "Q3": "C", "Q4": "B", "Q5": "D"}
+score = 0
+for q in answers:
+    if answers[q] == correct[q]:
+        score += 1
+        print(q, ": correct")
+    else:
+        print(q, ": wrong (your answer", answers[q] + ", correct answer", correct[q] + ")")
+print("Score:", score, "out of", len(answers))`,
+          output: `Q1 : correct
+Q2 : wrong (your answer A, correct answer C)
+Q3 : correct
+Q4 : correct
+Q5 : correct
+Score: 4 out of 5`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Mock Test mein Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes in a Mock Test'
+        ),
+        body: t(
+          `**Galti 1: Bina timer ke mock dena.** Timer ke bina mock ka koi matlab nahi. Asli test mein time hi sabse badi challenge hoti hai, aur bina timer ke aapko apni speed ka pata hi nahi chalega. Har mock mein timer lagao — chahe score kam aaye, woh score sachha hoga.
+
+**Galti 2: Mistake review skip karna.** Bahut se students mock dekar score dekhte hain aur aage badh jaate hain. Mock ka 50% fayda test dene mein hai, 50% fayda **galtiyaan dekhne** mein hai. Har galat question ko dobara solve karo aur likho ki galti kyun hui — concept nahi aata tha, calculation galat hui, ya time khatam ho gaya.
+
+**Galti 3: Ek question par atak jaana.** Ek mushkil question par 5 minute lagana poore test ko kharab kar deta hai. Rule simple hai: agar 1 minute mein question samajh nahi aaya, toh aage badho aur aakhir mein wapas aao. Mock mein ye habit banao, taaki asli test mein automatic ho jaaye.
+
+**Galti 4: Guess karna ya chhodna — bina soche.** Agar negative marking nahi hai, toh guess karna theek hai. Agar negative marking hai, toh blind guess nuksaan karta hai. Mock dene se pehle test ke rules padho aur usi hisaab se strategy banao.`,
+          `**Mistake 1: Taking a mock without a timer.** A mock without a timer means nothing. In the real test, time is the biggest challenge, and without a timer you will never learn your speed. Set a timer for every mock — even if the score is low, that score will be honest.
+
+**Mistake 2: Skipping the mistake review.** Many students take a mock, look at the score, and move on. Half the benefit of a mock is in taking the test, and the other half is in **looking at the mistakes**. Solve every wrong question again and write down why it went wrong — the concept was missing, the calculation was wrong, or the time ran out.
+
+**Mistake 3: Getting stuck on one question.** Spending 5 minutes on one hard question spoils the whole test. The rule is simple: if you do not understand a question in 1 minute, move ahead and come back at the end. Build this habit in mocks, so it becomes automatic in the real test.
+
+**Mistake 4: Guessing or skipping without thinking.** If there is no negative marking, guessing is fine. If there is negative marking, blind guessing hurts you. Read the test rules before the mock and build your strategy from them.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Time Khatam, Negative Marking aur Calculator',
+          '5. Edge Cases: Time Running Out, Negative Marking, and the Calculator'
+        ),
+        body: t(
+          `**Edge case 1: Aakhri 5 minute mein 10 questions bache hon.** Aisa aksar hota hai. Is case mein panic mat karo — pehle woh questions karo jo aapko aate hain, phir bache hue mein educated guess karo. Panic mein kiya hua guess bhi galat hota hai, shaant dimaag se kiya hua guess aksar sahi nikalta hai.
+
+**Edge case 2: Negative marking ho.** Agar har galat jawab par marks kat-te hain, toh sirf un questions ka jawab do jinke baare mein aapko 70% se zyada confidence ho. Blind guess mat karo. Mock test mein negative marking wali strategy alag se practice karo.
+
+**Edge case 3: Calculator allowed ho ya na ho.** Kuch tests mein calculator allowed hota hai, kuch mein nahi. Mock dene se pehle check karo. Agar calculator allowed nahi hai, toh rough calculation ki practice karo — 2-digit multiplication aur percentage dimaag se nikaalna seekho.
+
+**Edge case 4: Ek section bahut mushkil lage.** Agar reasoning section bahut mushkil lag raha hai, toh us par zyada time mat lagao. Us section ko chhodo, doosre sections ko poora karo, phir wapas aao. Ek section ke peeche poora test mat kharab karo.`,
+          `**Edge case 1: Ten questions are left in the last 5 minutes.** This happens often. In this case do not panic — first do the questions you know, then make an educated guess on the rest. A guess made in panic is often wrong, while a guess made with a calm mind is often right.
+
+**Edge case 2: There is negative marking.** If marks are cut for every wrong answer, answer only the questions where you are more than 70% confident. Do not guess blindly. Practise a negative-marking strategy separately in mock tests.
+
+**Edge case 3: A calculator is allowed or not.** Some tests allow a calculator, and some do not. Check before the mock. If a calculator is not allowed, practise rough calculation — learn to do 2-digit multiplication and percentages in your head.
+
+**Edge case 4: One section feels very hard.** If the reasoning section feels very hard, do not spend too much time on it. Leave that section, finish the other sections, then come back. Do not spoil the whole test for one section.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Score Kam Aaye, Ya Ek Section Weak Ho?',
+          '6. What-If: The Score Is Low, or One Section Is Weak?'
+        ),
+        body: t(
+          `**What if: mock mein score bahut kam aaye?** Pehle mock mein kam score aana normal hai. Mock ka kaam hi ye hai ki aapki kami dikhaye. Score ko dekhkar ghabrao mat — section-wise score dekho. Agar aptitude 40% hai aur verbal 80% hai, toh problem sirf aptitude mein hai. Agle 7 din sirf aptitude par kaam karo, phir dobara mock do. Score badhega, kyunki aapne sahi jagah kaam kiya.
+
+**What if: ek section strong ho aur ek weak ho?** Ye sabse common situation hai. Strong section ko maintain karo — hafte mein 1 baar revision kaafi hai. Weak section par roz kaam karo. Dono par barabar time lagana galat hai; weak section ko zyada time do, strong ko kam.
+
+**What if: score achha aaye par time zyada lage?** Ye matlab hai ki accuracy theek hai, speed kam hai. Speed ke liye timed practice karo — roz 20 questions timer ke saath. 2 hafte mein speed badh jaati hai, kyunki formulas aur shortcuts haath mein aa jaate hain.
+
+**What if: mock mein sab kuch aata ho, phir bhi galti ho?** Ye careless mistakes hain — question galat padhna, option galat tick karna, calculation mein chhoti galti. Iska solution hai **slow down**: question ko 2 baar padho, answer ko tick karne se pehle ek baar check karo. Careless mistakes practice se kam hoti hain, tension se badhti hain.`,
+          `**What if the mock score is very low?** A low score in the first mock is normal. The job of a mock is to show your gaps. Do not panic at the score — look at the section-wise score. If aptitude is 40% and verbal is 80%, the problem is only in aptitude. Work on aptitude only for the next 7 days, then take the mock again. The score will rise, because you worked in the right place.
+
+**What if one section is strong and one is weak?** This is the most common situation. Maintain the strong section — revising it once a week is enough. Work on the weak section every day. Giving equal time to both is wrong; give more time to the weak section and less to the strong one.
+
+**What if the score is good but the time taken is too much?** That means accuracy is fine but speed is low. For speed, do timed practice — 20 questions a day with a timer. Speed rises in 2 weeks, because formulas and shortcuts come to hand.
+
+**What if you know everything in the mock but still make mistakes?** These are careless mistakes — reading the question wrong, ticking the wrong option, or a small calculation error. The solution is to **slow down**: read the question twice, and check once before ticking the answer. Careless mistakes fall with practice and rise with tension.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Mock Test ka Kaam Kami Dikhana Hai, Darana Nahi',
+          '7. Summary: A Mock Test Shows Gaps, It Does Not Scare You'
+        ),
+        body: t(
+          `Mock test ka ek hi kaam hai: **aapki kami dikhana, taaki asli test se pehle use fix kar sako.** Timer ke saath mock do, mistake review karo, aur section-wise score dekho. Pehle mock ka score kam hona normal hai — doosre mock mein score badhna hi progress hai.
+
+Yaad rakhne wali 3 baatein: timer hamesha lagao, ek question par 1 minute se zyada mat atko, aur har mock ke baad galtiyaan likho. Rough sheet use karo, section order apne hisaab se set karo, aur negative marking ke rules pehle se jaan lo.
+
+Agle article mein hum Mock Test 2 denge — naye questions, nayi strategy. Usse pehle neeche diye gaye 5 key notes padho aur practice task karo — apne mock ka grade nikaalo.`,
+          `A mock test has only one job: **to show your gaps so you can fix them before the real test.** Take the mock with a timer, review the mistakes, and look at the section-wise score. A low score in the first mock is normal — a higher score in the second mock is progress.
+
+Remember 3 things: always set a timer, do not get stuck on one question for more than 1 minute, and write down the mistakes after every mock. Use a rough sheet, set the section order your own way, and learn the negative marking rules in advance.
+
+In the next article we will take Mock Test 2 — new questions, a new strategy. Before that, read the 5 key notes below and do the practice task — find the grade of your mock.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        'Mock Test 1 ka 45 Minute ka Plan',
+        'The 45-Minute Plan for Mock Test 1'
+      ),
+      caption: t(
+        'Har section ko apna time do — ek section mein atak kar poora test mat kharab karo',
+        'Give each section its own time — do not spoil the whole test by getting stuck in one section'
+      ),
+      nodes: [
+        {
+          t: t('0-15 minute: Aptitude (20 questions)', '0-15 minutes: Aptitude (20 questions)'),
+          s: t('Pehle strong section karo, confidence banao', 'Do the strong section first and build confidence')
+        },
+        {
+          t: t('15-27 minute: Reasoning (20 questions)', '15-27 minutes: Reasoning (20 questions)'),
+          s: t('Series aur puzzles — 1 minute se zyada ek question par mat atko', 'Series and puzzles — do not spend more than 1 minute on one question')
+        },
+        {
+          t: t('27-45 minute: Verbal (15 questions)', '27-45 minutes: Verbal (15 questions)'),
+          s: t('Synonyms aur error spotting — options ko pehle samjho', 'Synonyms and error spotting — understand the options first')
+        },
+        {
+          t: t('Test ke baad: Mistake review (30 minute)', 'After the test: Mistake review (30 minutes)'),
+          s: t('Har galat question dobara solve karo aur wajah likho', 'Solve every wrong question again and write the reason')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Har Section ka Time Plan Print Karna',
+          'Printing the Time Plan for Each Section'
+        ),
+        language: 'python',
+        code: `sections = [("Aptitude", 15, 20), ("Reasoning", 12, 20), ("Verbal", 18, 15)]
+for name, minutes, questions in sections:
+    print(name, ":", questions, "questions in", minutes, "minutes")
+total_q = 0
+total_m = 0
+for _, m, q in sections:
+    total_q += q
+    total_m += m
+print("Total:", total_q, "questions in", total_m, "minutes")`,
+        output: `Aptitude : 20 questions in 15 minutes
+Reasoning : 20 questions in 12 minutes
+Verbal : 15 questions in 18 minutes
+Total: 55 questions in 45 minutes`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '350 ka 20% kitna hota hai?',
+          'What is 20% of 350?'
+        ),
+        opts: [
+          t('60', '60'),
+          t('70', '70'),
+          t('75', '75'),
+          t('80', '80')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 10% of 350 = 35, isliye 20% = 35 x 2 = 70.',
+          'Correct answer: 10% of 350 = 35, so 20% = 35 x 2 = 70.'
+        )
+      },
+      {
+        q: t(
+          'Series 2, 6, 12, 20, 30, ? mein agla number kya hoga?',
+          'What is the next number in the series 2, 6, 12, 20, 30, ?'
+        ),
+        opts: [
+          t('36', '36'),
+          t('40', '40'),
+          t('42', '42'),
+          t('44', '44')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: farak 4, 6, 8, 10 hai, agla farak 12 hoga, isliye 30 + 12 = 42.',
+          'Correct answer: the differences are 4, 6, 8, 10, so the next difference is 12, and 30 + 12 = 42.'
+        )
+      },
+      {
+        q: t(
+          '"Happy" ka synonym kya hai?',
+          'What is the synonym of "Happy"?'
+        ),
+        opts: [
+          t('Sad', 'Sad'),
+          t('Glad', 'Glad'),
+          t('Angry', 'Angry'),
+          t('Tired', 'Tired')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Glad ka matlab bhi khush hota hai, isliye ye Happy ka synonym hai.',
+          'Correct answer: Glad also means pleased, so it is the synonym of Happy.'
+        )
+      },
+      {
+        q: t(
+          'Mock test mein sabse important kaam test ke baad kya hai?',
+          'What is the most important job after a mock test?'
+        ),
+        opts: [
+          t('Score doston ko batana', 'Telling the score to friends'),
+          t('Mistake review karna', 'Doing a mistake review'),
+          t('Turant doosra mock dena', 'Taking another mock at once'),
+          t('Score bhool jaana', 'Forgetting the score')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mock ka aadha fayda galtiyaan dekhne mein hai — bina review ke wahi galtiyaan asli test mein repeat hongi.',
+          'Correct answer: half the benefit of a mock is in looking at the mistakes — without a review, the same mistakes will repeat in the real test.'
+        )
+      },
+      {
+        q: t(
+          'Ek question par kitne time se zyada atakna nahi chahiye?',
+          'How long should you not get stuck on one question?'
+        ),
+        opts: [
+          t('5 minute', '5 minutes'),
+          t('1 minute', '1 minute'),
+          t('3 minute', '3 minutes'),
+          t('10 minute', '10 minutes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 1 minute mein samajh na aaye toh aage badho aur aakhir mein wapas aao — ek question poora test kharab kar sakta hai.',
+          'Correct answer: if you do not understand it in 1 minute, move ahead and come back at the end — one question can spoil the whole test.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock test asli test ka rehearsal hai — iska score selection par asar nahi karta.',
+        'A mock test is a rehearsal for the real test — its score does not affect selection.'
+      ),
+      t(
+        'Har mock timer ke saath do, warna speed ka pata nahi chalega.',
+        'Take every mock with a timer, or you will never learn your speed.'
+      ),
+      t(
+        'Mock ka aadha fayda mistake review mein hai — har galat question dobara solve karo.',
+        'Half the benefit of a mock is in the mistake review — solve every wrong question again.'
+      ),
+      t(
+        'Ek question par 1 minute se zyada mat atko; aage badho aur aakhir mein wapas aao.',
+        'Do not get stuck on one question for more than 1 minute; move ahead and come back at the end.'
+      ),
+      t(
+        'Section-wise score dekho — weak section par zyada kaam karo, strong ko maintain karo.',
+        'Look at the section-wise score — work more on the weak section and maintain the strong one.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apne Mock ka Grade Nikaalo',
+        'Practice: Find the Grade of Your Mock'
+      ),
+      task: t(
+        'Apne mock test ka score (38) aur total questions (50) code mein daalo, code run karo aur verify karo ki output expected jaisa aata hai. Phir score ko 42 aur 30 se badal kar dekho ki grade kaise badalta hai.',
+        'Put your mock test score (38) and total questions (50) in the code, run it, and verify that the output matches the expected output. Then change the score to 42 and 30 and see how the grade changes.'
+      ),
+      language: 'python',
+      starter: `score = 38
+total = 50
+percent = score * 100 // total
+print("Score:", score, "/", total)
+print("Percent:", percent, "%")
+if percent >= 80:
+    print("Grade: Excellent")
+elif percent >= 60:
+    print("Grade: Good")
+else:
+    print("Grade: Needs more practice")`,
+      expected: `Score: 38 / 50
+Percent: 76 %
+Grade: Good`
+    },
+    readMinutes: 12
+  };
+
+const placementMockTest2: Article = {
+    id: 'placement-mock-test-2',
+    subjectId: 'placement',
+    title: t(
+      'Mock Placement Test 2 — Speed, Accuracy aur Weak Section',
+      'Mock Placement Test 2 — Speed, Accuracy, and the Weak Section'
+    ),
+    summary: t(
+      'Doosra mock test pehle se alag hai: ismein naye questions hain, aur focus hai speed aur accuracy par. Section-wise accuracy nikaalo, apna weakest section pehchano, aur seekho ki mock ke baad ka review asli taiyaari kaise banta hai.',
+      'The second mock test is different from the first: it has new questions, and the focus is on speed and accuracy. Find your section-wise accuracy, identify your weakest section, and learn how the review after a mock becomes real preparation.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Mock Test 2 Kya Hai? (Pehle Mock se Aage ka Step)',
+          '1. What Is Mock Test 2? (The Next Step After the First Mock)'
+        ),
+        body: t(
+          `**Mock Test 2** wahi structure rakhta hai jo Mock Test 1 mein tha — aptitude, reasoning aur verbal, 45 minute, 55 questions — par iske questions naye hain aur iska focus alag hai. Mock 1 mein aapne test ka format seekha tha; Mock 2 mein aap **speed aur accuracy** ko measure karte ho. Pehle mock ka score aapka starting point tha, doosre mock ka score aapki progress batata hai.
+
+Is mock mein har section ke 15 questions hain sample ke taur par, aur aapko har section ki accuracy alag se nikaalni hai. Accuracy ka matlab hai: jitne questions kiye, unmein se kitne sahi hue. Sirf total score dekhna kaafi nahi — ek student ka total score achha ho sakta hai, par ek section mein accuracy 50% ho sakti hai. Wahi section asli test mein problem banega.
+
+Mock 2 ko Mock 1 ke 3-4 din baad do, taaki beech mein aap apni galtiyaan fix kar sako. Agar aap dono mock ek hi din mein doge, toh doosre mock ka score pehle jaisa hi aayega, kyunki beech mein sudhaar ka time hi nahi mila. Mock ke beech ka gap hi asli taiyaari hai.`,
+          `**Mock Test 2** keeps the same structure as Mock Test 1 — aptitude, reasoning, and verbal, 45 minutes, 55 questions — but its questions are new and its focus is different. In Mock 1 you learned the test format; in Mock 2 you measure **speed and accuracy**. The first mock score was your starting point; the second mock score shows your progress.
+
+In this mock, each section has 15 questions as a sample, and you must find the accuracy of each section separately. Accuracy means: of the questions you attempted, how many were correct. Looking only at the total score is not enough — a student total score can look good while accuracy in one section is 50%. That same section will become the problem in the real test.
+
+Take Mock 2 three or four days after Mock 1, so you get time to fix your mistakes in between. If you take both mocks on the same day, the second mock score will look like the first, because there was no time to improve in between. The gap between mocks is the real preparation.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Accuracy, Speed aur Section-wise Score',
+          '2. Real-Life Examples: Accuracy, Speed, and the Section-wise Score'
+        ),
+        body: t(
+          `**Asha** (invented example) ne Mock 1 mein 55 mein se 40 questions kiye aur 32 sahi hue — accuracy 80%. Mock 2 mein usne 50 questions kiye aur 41 sahi hue — accuracy 82%. Total score zyada nahi badha, par accuracy badhi aur speed bhi badhi. Asha ne seekha ki **total score se zyada accuracy aur speed matter karte hain**, kyunki asli test mein time limit hoti hai.
+
+**Rohan** (invented example) ka case ulta tha. Mock 1 mein uska total score achha tha — 38 out of 55. Par jab usne section-wise score dekha, toh reasoning mein accuracy sirf 55% thi, jabki aptitude mein 85% thi. Usne agle 4 din sirf reasoning par kaam kiya: roz 20 series aur puzzle questions. Mock 2 mein uski reasoning accuracy 55% se 66% ho gayi. Total score sirf 3 marks badha, par weak section sudhra — aur wahi asli progress hai.
+
+Teesra example hai **speed vs accuracy** ka. Kuch students bahut fast hote hain par galtiyaan karte hain; kuch slow hote hain par accurate hote hain. Dono ko balance chahiye. Mock 2 mein apni speed aur accuracy dono likho: kitne questions kiye, kitne sahi hue, kitna time laga. Ye teeno numbers milkar aapki asli picture batate hain.`,
+          `**Asha** (an invented example) attempted 40 of 55 questions in Mock 1 and got 32 correct — 80% accuracy. In Mock 2 she attempted 50 questions and got 41 correct — 82% accuracy. The total score did not rise much, but accuracy rose and speed rose too. Asha learned that **accuracy and speed matter more than the total score**, because the real test has a time limit.
+
+**Rohan** (an invented example) case was the opposite. In Mock 1 his total score looked good — 38 out of 55. But when he looked at the section-wise score, accuracy in reasoning was only 55%, while aptitude was 85%. For the next 4 days he worked only on reasoning: 20 series and puzzle questions a day. In Mock 2 his reasoning accuracy rose from 55% to 66%. The total score rose by only 3 marks, but the weak section improved — and that is the real progress.
+
+A third example is **speed versus accuracy**. Some students are very fast but make mistakes; some are slow but accurate. Both need balance. In Mock 2, write down your speed and accuracy both: how many questions you attempted, how many were correct, and how much time it took. These three numbers together show your real picture.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 3 Naye Sample Questions aur Accuracy Nikaalna',
+          '3. Step-by-Step: 3 New Sample Questions and Finding Accuracy'
+        ),
+        body: t(
+          `Ab hum Mock 2 ke 3 naye sample questions solve karte hain — ek aptitude, ek reasoning, ek verbal. Har question ke saath short solution hai.
+
+**Q1 — Aptitude:** Ek train 60 km ki doori 1.5 ghante mein tay karti hai. Train ki speed kitni hai? Options: (A) 30 km/h (B) 40 km/h (C) 45 km/h (D) 50 km/h. Solution: Speed = Distance / Time = 60 / 1.5 = 40. Sahi jawab **(B) 40 km/h**. Dry run: 1.5 ghante matlab 3/2 ghante, 60 ko 3/2 se bhaag do toh 60 x 2/3 = 40. Time-speed ke questions mein hamesha formula likho: Speed = Distance / Time.
+
+**Q2 — Reasoning:** A, B ka bhai hai. B, C ki behen hai. C, D ka beta hai. A ka D se kya rishta hai? Options: (A) Beta (B) Bhai (C) Pita (D) Chacha. Solution: A aur B bhai-behen hain, C bhi unka bhai/behen hai kyunki B, C ki behen hai. C, D ka beta hai, isliye D, C ka parent hai. A bhi C ka bhai hai, isliye A bhi D ka beta hai. Sahi jawab **(A) Beta**. Blood relation mein pehle family tree banao, phir rishta dekho.
+
+**Q3 — Verbal:** Galat sentence pehchano: (A) He does not like tea. (B) He do not like tea. (C) They do not like tea. (D) She does not like tea. Solution: "He" ke saath "does" aata hai, "do" nahi. Isliye (B) galat hai. Sahi jawab **(B)**. Error spotting mein subject aur verb ka match dekho — He/She/It ke saath does, I/You/We/They ke saath do.
+
+Ab accuracy nikaalte hain. Neeche wala code 3 sections ki accuracy print karta hai: Aptitude 12/15 = 80%, Reasoning 10/15 = 66%, Verbal 13/15 = 86%. Dry run: 12 x 100 / 15 = 80, 10 x 100 / 15 = 66, 13 x 100 / 15 = 86. Sabse kam accuracy reasoning ki hai — isliye agle hafte ka focus reasoning hoga.`,
+          `Now let us solve 3 new sample questions from Mock 2 — one aptitude, one reasoning, and one verbal. Each question comes with a short solution.
+
+**Q1 — Aptitude:** A train covers 60 km in 1.5 hours. What is the speed of the train? Options: (A) 30 km/h (B) 40 km/h (C) 45 km/h (D) 50 km/h. Solution: Speed = Distance / Time = 60 / 1.5 = 40. The correct answer is **(B) 40 km/h**. Dry run: 1.5 hours means 3/2 hours; dividing 60 by 3/2 gives 60 x 2/3 = 40. In time-speed questions, always write the formula: Speed = Distance / Time.
+
+**Q2 — Reasoning:** A is the brother of B. B is the sister of C. C is the son of D. What is the relation of A to D? Options: (A) Son (B) Brother (C) Father (D) Uncle. Solution: A and B are brother and sister, and C is also their brother or sister because B is the sister of C. C is the son of D, so D is the parent of C. A is also the brother of C, so A is also the son of D. The correct answer is **(A) Son**. In blood relation questions, first draw the family tree, then find the relation.
+
+**Q3 — Verbal:** Find the wrong sentence: (A) He does not like tea. (B) He do not like tea. (C) They do not like tea. (D) She does not like tea. Solution: "He" goes with "does", not "do". So (B) is wrong. The correct answer is **(B)**. In error spotting, check the match between subject and verb — He/She/It goes with does, and I/You/We/They go with do.
+
+Now let us find the accuracy. The code below prints the accuracy of 3 sections: Aptitude 12/15 = 80%, Reasoning 10/15 = 66%, and Verbal 13/15 = 86%. Dry run: 12 x 100 / 15 = 80, 10 x 100 / 15 = 66, and 13 x 100 / 15 = 86. The lowest accuracy is in reasoning — so next week focus will be reasoning.`
+        ),
+        code: {
+          title: t(
+            'Mock Test 2 ki Section-wise Accuracy',
+            'Section-wise Accuracy for Mock Test 2'
+          ),
+          language: 'python',
+          code: `# Har section: (naam, sahi answers, total questions)
+sections = [
+    ("Aptitude", 12, 15),
+    ("Reasoning", 10, 15),
+    ("Verbal", 13, 15),
+]
+for name, right, total in sections:
+    print(name, ":", right, "/", total, "=", right * 100 // total, "%")`,
+          output: `Aptitude : 12 / 15 = 80 %
+Reasoning : 10 / 15 = 66 %
+Verbal : 13 / 15 = 86 %`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Mock 2 mein Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes in Mock 2'
+        ),
+        body: t(
+          `**Galti 1: Mock 1 ki galtiyaan bina fix kiye Mock 2 dena.** Agar aapne Mock 1 ke baad mistake review nahi kiya, toh Mock 2 mein wahi galtiyaan repeat hongi aur score wahi rahega. Mock 2 se pehle Mock 1 ki har galti ko ek baar dobara solve karo.
+
+**Galti 2: Sirf total score dekhna.** Total score achha lag sakta hai, par ek section mein accuracy 50% ho sakti hai. Mock 2 mein section-wise accuracy zaroor nikaalo — wahi aapko batayegi ki kahan kaam karna hai.
+
+**Galti 3: Speed badhane ke chakkar mein accuracy gira dena.** Kuch students jaldi-jaldi questions karte hain aur galtiyaan badh jaati hain. Speed aur accuracy ka balance rakho: pehle accuracy theek karo, phir speed badhao. Galat jawab fast dena bekaar hai.
+
+**Galti 4: Mock 2 ko Mock 1 se compare karke ghabrana.** Agar Mock 2 ka score Mock 1 se kam aaye, toh iska matlab ye nahi ki aap peeche gaye — ho sakta hai Mock 2 ke questions mushkil hon. Score ke saath accuracy aur questions ki mushkili ko bhi dekho.`,
+          `**Mistake 1: Taking Mock 2 without fixing the mistakes of Mock 1.** If you did not review the mistakes of Mock 1, the same mistakes will repeat in Mock 2 and the score will stay the same. Before Mock 2, solve every mistake of Mock 1 once again.
+
+**Mistake 2: Looking only at the total score.** The total score can look good while accuracy in one section is 50%. In Mock 2, always find the section-wise accuracy — that is what tells you where to work.
+
+**Mistake 3: Losing accuracy while trying to raise speed.** Some students rush through questions and make more mistakes. Keep a balance of speed and accuracy: first fix accuracy, then raise speed. Giving a wrong answer fast is useless.
+
+**Mistake 4: Panicking after comparing Mock 2 with Mock 1.** If the Mock 2 score is lower than Mock 1, it does not mean you went backwards — Mock 2 questions may simply be harder. Look at accuracy and the difficulty of the questions along with the score.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Score Kam Aaye, Ya Time Pehle Khatam Ho Jaaye',
+          '5. Edge Cases: A Low Score, or Time Running Out Early'
+        ),
+        body: t(
+          `**Edge case 1: Mock 2 ka score Mock 1 se kam aaye.** Pehle check karo ki questions mushkil the ya aapki taiyaari kam thi. Agar questions mushkil the, toh accuracy dekho — accuracy badhi hai toh progress hai. Agar accuracy bhi giri hai, toh beech ke 3-4 din mein kya kiya, use dekho. Shayad aapne revision nahi kiya.
+
+**Edge case 2: Ek section mein time khatam ho jaaye.** Agar reasoning mein time khatam ho gaya aur 5 questions chhoot gaye, toh iska matlab hai ki aap ek question par zyada time laga rahe ho. Agle mock mein har question ke liye 1 minute ka rule lagao — 1 minute mein na bane toh aage badho.
+
+**Edge case 3: Saare questions kar liye par time bach gaya.** Ye achhi baat hai — bache hue time mein apne answers ko dobara check karo. Aksar dobara check karne par 2-3 careless mistakes pakdi jaati hain. Bacha hua time waste mat karo, use review mein lagao.
+
+**Edge case 4: Mock ke beech mein dhyaan bhatak jaaye.** Agar beech mein phone ya shor se dhyaan bhatke, toh mock ka result sachha nahi hoga. Agli baar shaant jagah par mock do, phone silent rakho. Mock ka environment asli test jaisa hona chahiye.`,
+          `**Edge case 1: The Mock 2 score is lower than Mock 1.** First check whether the questions were harder or your preparation was less. If the questions were harder, look at accuracy — if accuracy rose, that is progress. If accuracy fell too, look at what you did in the 3-4 days in between. Perhaps you did not revise.
+
+**Edge case 2: Time runs out in one section.** If time ran out in reasoning and 5 questions were left, it means you are spending too much time on one question. In the next mock, apply the 1-minute rule for every question — if it is not solved in 1 minute, move ahead.
+
+**Edge case 3: You finish all questions with time left.** That is a good thing — use the remaining time to check your answers again. Often, checking again catches 2-3 careless mistakes. Do not waste the remaining time; use it for review.
+
+**Edge case 4: Your attention wanders in the middle of the mock.** If a phone or noise distracts you in the middle, the mock result will not be honest. Next time, take the mock in a quiet place and keep the phone silent. The mock environment should be like the real test.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Weak Section Mil Jaaye, Ya Score Na Badhe?',
+          '6. What-If: You Find the Weak Section, or the Score Does Not Rise?'
+        ),
+        body: t(
+          `**What if: weakest section mil jaaye?** Ye Mock 2 ki sabse badi jeet hai. Ab aapko pata hai ki kahan kaam karna hai. Agle 7 din ka plan banao: roz weak section ke 20 questions, strong sections ki sirf revision. Ek hafte baad Mock 3 do aur dekho ki accuracy badhi ya nahi.
+
+**What if: score 2 mock ke baad bhi na badhe?** Iska matlab hai ki aap mock de rahe ho, par galtiyaan fix nahi kar rahe. Mock dena taiyaari nahi hai — **galti fix karna** taiyaari hai. Apni galtiyaan ek notebook mein likho aur roz unhe dobara solve karo. 1 hafte mein farak dikhne lagega.
+
+**What if: accuracy achhi ho par speed kam ho?** Speed ke liye shortcuts aur formulas yaad karo. Har question par rough sheet par poora solution likhne ki jagah, chhote steps dimaag mein karo. Timed practice se speed 2 hafte mein badh jaati hai.
+
+**What if: Mock 2 mein sab kuch theek ho?** Toh aap sahi raaste par ho. Ab Mock 3 mein time ko aur kam karke dekho — 45 minute ki jagah 40 minute mein test do. Ye extra pressure aapko asli test ke liye aur strong banayega.`,
+          `**What if you find the weakest section?** That is the biggest win of Mock 2. Now you know where to work. Make a plan for the next 7 days: 20 questions of the weak section every day, and only revision of the strong sections. Take Mock 3 after a week and see whether accuracy rose or not.
+
+**What if the score does not rise even after 2 mocks?** That means you are taking mocks but not fixing the mistakes. Taking a mock is not preparation — **fixing mistakes** is preparation. Write your mistakes in a notebook and solve them again every day. The difference will show in 1 week.
+
+**What if accuracy is good but speed is low?** For speed, learn shortcuts and formulas. Instead of writing the full solution on the rough sheet for every question, do small steps in your head. Timed practice raises speed in 2 weeks.
+
+**What if everything is fine in Mock 2?** Then you are on the right path. Now try Mock 3 with even less time — take the test in 40 minutes instead of 45. This extra pressure will make you even stronger for the real test.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Mock 2 ka Kaam Weak Section Dhoondhna Hai',
+          '7. Summary: The Job of Mock 2 Is to Find the Weak Section'
+        ),
+        body: t(
+          `Mock 2 ka ek hi kaam hai: **section-wise accuracy se weakest section dhoondhna.** Total score se zyada accuracy dekho, speed aur accuracy ka balance rakho, aur Mock 1 ki galtiyaan fix karke Mock 2 do. Agar reasoning 66% hai aur verbal 86% hai, toh agle hafte ka focus reasoning hai — ye decision hi Mock 2 ki jeet hai.
+
+Yaad rakhne wali 3 baatein: mock ke beech mein 3-4 din ka gap rakho, har mock ke baad mistake review karo, aur weak section par roz kaam karo. Score ek din mein nahi badhta, par accuracy roz badh sakti hai.
+
+Agle article mein hum 30 din ka countdown plan banayenge — Mock 1 aur Mock 2 ke baad aapko pata hai ki kahan khade ho, ab plan banao ki 30 din mein kahan pahunchna hai.`,
+          `Mock 2 has only one job: **to find the weakest section from section-wise accuracy.** Look at accuracy more than the total score, keep a balance of speed and accuracy, and take Mock 2 after fixing the mistakes of Mock 1. If reasoning is 66% and verbal is 86%, then next week focus is reasoning — that decision itself is the win of Mock 2.
+
+Remember 3 things: keep a gap of 3-4 days between mocks, review mistakes after every mock, and work on the weak section every day. The score does not rise in one day, but accuracy can rise every day.
+
+In the next article we will build a 30-day countdown plan — after Mock 1 and Mock 2 you know where you stand; now plan where to reach in 30 days.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'Mock Test 2 ki Section-wise Accuracy',
+        'Section-wise Accuracy in Mock Test 2'
+      ),
+      caption: t(
+        'Sabse chhota bar hi aapka agla focus hai — reasoning 66% par sabse kam hai',
+        'The smallest bar is your next focus — reasoning is lowest at 66%'
+      ),
+      nodes: [],
+      bars: [
+        {
+          label: t('Aptitude — 80%', 'Aptitude — 80%'),
+          value: 80,
+          note: t('12 sahi out of 15', '12 correct out of 15')
+        },
+        {
+          label: t('Reasoning — 66%', 'Reasoning — 66%'),
+          value: 66,
+          note: t('10 sahi out of 15 — weakest section', '10 correct out of 15 — weakest section')
+        },
+        {
+          label: t('Verbal — 86%', 'Verbal — 86%'),
+          value: 86,
+          note: t('13 sahi out of 15 — strongest section', '13 correct out of 15 — strongest section')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          '5 Mock Tests ke Scores ka Best, Lowest aur Average',
+          'Best, Lowest, and Average of 5 Mock Test Scores'
+        ),
+        language: 'python',
+        code: `scores = [32, 38, 41, 29, 35]
+print("Scores:", scores)
+print("Best score:", max(scores))
+print("Lowest score:", min(scores))
+print("Average:", sum(scores) // len(scores))`,
+        output: `Scores: [32, 38, 41, 29, 35]
+Best score: 41
+Lowest score: 29
+Average: 35`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Ek train 60 km ki doori 1.5 ghante mein tay karti hai. Uski speed kitni hai?',
+          'A train covers 60 km in 1.5 hours. What is its speed?'
+        ),
+        opts: [
+          t('30 km/h', '30 km/h'),
+          t('40 km/h', '40 km/h'),
+          t('45 km/h', '45 km/h'),
+          t('50 km/h', '50 km/h')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Speed = Distance / Time = 60 / 1.5 = 40 km/h.',
+          'Correct answer: Speed = Distance / Time = 60 / 1.5 = 40 km/h.'
+        )
+      },
+      {
+        q: t(
+          'A, B ka bhai hai. B, C ki behen hai. C, D ka beta hai. A ka D se kya rishta hai?',
+          'A is the brother of B. B is the sister of C. C is the son of D. What is the relation of A to D?'
+        ),
+        opts: [
+          t('Beta (Son)', 'Son'),
+          t('Bhai (Brother)', 'Brother'),
+          t('Pita (Father)', 'Father'),
+          t('Chacha (Uncle)', 'Uncle')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: A, B aur C bhai-behen hain aur C, D ka beta hai, isliye A bhi D ka beta hai.',
+          'Correct answer: A, B, and C are siblings and C is the son of D, so A is also the son of D.'
+        )
+      },
+      {
+        q: t(
+          'Inmein se kaunsa sentence galat hai?',
+          'Which of these sentences is wrong?'
+        ),
+        opts: [
+          t('He does not like tea.', 'He does not like tea.'),
+          t('He do not like tea.', 'He do not like tea.'),
+          t('They do not like tea.', 'They do not like tea.'),
+          t('She does not like tea.', 'She does not like tea.')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "He" ke saath "does" aata hai, "do" nahi — isliye "He do not" galat hai.',
+          'Correct answer: "He" goes with "does", not "do" — so "He do not" is wrong.'
+        )
+      },
+      {
+        q: t(
+          'Aptitude 12/15, Reasoning 10/15, Verbal 13/15 — weakest section kaunsa hai?',
+          'Aptitude 12/15, Reasoning 10/15, Verbal 13/15 — which is the weakest section?'
+        ),
+        opts: [
+          t('Aptitude', 'Aptitude'),
+          t('Reasoning', 'Reasoning'),
+          t('Verbal', 'Verbal'),
+          t('Teeno barabar hain', 'All three are equal')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Reasoning ki accuracy 66% hai, jo sabse kam hai — isliye agle hafte ka focus reasoning hoga.',
+          'Correct answer: reasoning accuracy is 66%, which is the lowest — so next week focus will be reasoning.'
+        )
+      },
+      {
+        q: t(
+          'Mock 2 kab dena chahiye?',
+          'When should you take Mock 2?'
+        ),
+        opts: [
+          t('Mock 1 ke turant baad, usi din', 'Right after Mock 1, on the same day'),
+          t('Mock 1 ke 3-4 din baad, galtiyaan fix karke', '3-4 days after Mock 1, after fixing the mistakes'),
+          t('Asli test se ek din pehle', 'One day before the real test'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mock ke beech ka gap hi asli taiyaari hai — beech mein galtiyaan fix karo, phir dobara mock do.',
+          'Correct answer: the gap between mocks is the real preparation — fix the mistakes in between, then take the mock again.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Mock 2 ka focus speed aur accuracy hai, sirf total score nahi.',
+        'The focus of Mock 2 is speed and accuracy, not only the total score.'
+      ),
+      t(
+        'Section-wise accuracy nikaalo — weakest section hi aapka agla focus hai.',
+        'Find the section-wise accuracy — the weakest section is your next focus.'
+      ),
+      t(
+        'Mock ke beech mein 3-4 din ka gap rakho aur galtiyaan fix karo.',
+        'Keep a gap of 3-4 days between mocks and fix the mistakes.'
+      ),
+      t(
+        'Pehle accuracy theek karo, phir speed badhao.',
+        'Fix accuracy first, then raise speed.'
+      ),
+      t(
+        'Bacha hua time answers ko dobara check karne mein lagao.',
+        'Use the remaining time to check your answers again.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Weakest Section Dhoondho',
+        'Practice: Find Your Weakest Section'
+      ),
+      task: t(
+        'Neeche diye gaye accuracy numbers se weakest section nikaalo: code run karo aur verify karo ki output expected jaisa aata hai. Phir numbers ko apne mock ke real numbers se badal kar dobara chalao.',
+        'Find the weakest section from the accuracy numbers given below: run the code and verify that the output matches the expected output. Then replace the numbers with your real mock numbers and run it again.'
+      ),
+      language: 'python',
+      starter: `accuracy = {"Aptitude": 80, "Reasoning": 66, "Verbal": 86}
+weakest = "Aptitude"
+for name in accuracy:
+    if accuracy[name] < accuracy[weakest]:
+        weakest = name
+print("Accuracy:", accuracy)
+print("Weakest section:", weakest)
+print("Focus extra practice on:", weakest)`,
+      expected: `Accuracy: {'Aptitude': 80, 'Reasoning': 66, 'Verbal': 86}
+Weakest section: Reasoning
+Focus extra practice on: Reasoning`
+    },
+    readMinutes: 12
+  };
+
+const placement30DayPlan: Article = {
+    id: 'placement-30-day-plan',
+    subjectId: 'placement',
+    title: t(
+      '30-Day Placement Countdown Plan — Drive se Pehle ke 30 Din',
+      '30-Day Placement Countdown Plan — The 30 Days Before the Drive'
+    ),
+    summary: t(
+      'Drive se 30 din pehle se har din ka plan: pehle hafte aptitude basics, doosre mein reasoning, teesre mein verbal aur technical revision, aur aakhri hafte mein roz mock test. Ye plan aapko batata hai ki har din kya karna hai, taaki aakhri din panic na ho.',
+      'A plan for every day starting 30 days before the drive: aptitude basics in the first week, reasoning in the second, verbal and technical revision in the third, and a mock test every day in the last week. This plan tells you what to do each day, so there is no panic on the last day.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. 30-Day Plan Kya Hai? (Har Din ka Kaam, Pehle se Tay)',
+          '1. What Is a 30-Day Plan? (Each Day Work, Fixed in Advance)'
+        ),
+        body: t(
+          `**30-day plan** ek countdown plan hai — drive se 30 din pehle se lekar drive ke din tak, har din ka kaam pehle se likha hota hai. Iska sabse bada fayda ye hai ki aapko roz ye sochna nahi padta ki "aaj kya padhu". Plan dekhkar kaam shuru kar do. Bina plan ke 30 din mein aap ya toh sirf ek hi subject padhte rahoge, ya aakhri hafte mein sab kuch ek saath karne ki koshish karoge.
+
+Plan 4 hisson mein banta hai: **Week 1 (Day 1-7)** aptitude basics, **Week 2 (Day 8-14)** reasoning, **Week 3 (Day 15-21)** verbal aur technical revision, aur **Week 4 (Day 22-30)** mock tests aur mistake revision. Har hafte ka focus alag hai, taaki ek hi cheez se bore na ho aur har subject ko time mile.
+
+Roz ka time 3-4 ghante ka hai — zyada nahi, par roz. 30 din tak roz 3 ghante padhna, aakhri 5 din mein 10 ghante padhne se behtar hai. Dimaag ko roz thoda-thoda seekhna pasand hai, ek din mein bahut saara nahi. Isliye plan mein **roz ka kaam chhota** rakha gaya hai, taaki aap use poora kar sako.`,
+          `A **30-day plan** is a countdown plan — from 30 days before the drive till the drive day, the work of every day is written in advance. Its biggest benefit is that you never have to think each day, "what should I study today". Look at the plan and start working. Without a plan, in 30 days you will either keep studying only one subject, or try to do everything together in the last week.
+
+The plan is built in 4 parts: **Week 1 (Day 1-7)** aptitude basics, **Week 2 (Day 8-14)** reasoning, **Week 3 (Day 15-21)** verbal and technical revision, and **Week 4 (Day 22-30)** mock tests and mistake revision. Each week has a different focus, so you do not get bored with one thing and every subject gets time.
+
+The daily time is 3-4 hours — not more, but every day. Studying 3 hours every day for 30 days is better than studying 10 hours a day in the last 5 days. The mind likes learning a little every day, not a lot in one day. That is why the plan keeps the **daily work small**, so you can finish it.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bina Plan ke 30 Din vs Plan ke Saath 30 Din',
+          '2. Real-Life Examples: 30 Days Without a Plan vs 30 Days With a Plan'
+        ),
+        body: t(
+          `**Rohan** (invented example) ne bina plan ke 30 din bitaye. Pehle hafte mein usne sirf aptitude padha, doosre hafte mein use laga ki reasoning bhi karna hai, teesre hafte mein usne verbal shuru kiya, aur aakhri hafte mein use yaad aaya ki technical bhi revise karna hai. Aakhri 3 din mein usne sab kuch ek saath karne ki koshish ki aur kuch bhi theek se nahi hua. Uska mock score 30 din pehle jitna hi raha.
+
+**Asha** (invented example) ne plan ke saath 30 din bitaye. Usne Week 1 mein aptitude ke basics khatam kiye, Week 2 mein reasoning ke shortcuts seekhe, Week 3 mein verbal aur technical revise kiya, aur Week 4 mein roz ek mock test diya. Har hafte ke aakhir mein usne apni galtiyaan likhi. Uska mock score 30 din mein 32 se 41 ho gaya. Farak plan ka tha, mehnat ka nahi — dono ne roz 3-4 ghante padhe the.
+
+Teesra example hai **plan ko follow na karne** ka. Kuch students plan banate hain par follow nahi karte. Plan kaam tabhi karta hai jab aap use roz dekhte ho aur tick karte ho. Isliye plan ko wall par chipkao ya phone mein reminder lagao — jo kaam ho jaaye, use tick karo. Tick karne se motivation milti hai.`,
+          `**Rohan** (an invented example) spent 30 days without a plan. In the first week he studied only aptitude; in the second week he felt he should do reasoning too; in the third week he started verbal; and in the last week he remembered that technical also needed revision. In the last 3 days he tried to do everything together, and nothing went well. His mock score stayed the same as 30 days earlier.
+
+**Asha** (an invented example) spent 30 days with a plan. In Week 1 she finished aptitude basics, in Week 2 she learned reasoning shortcuts, in Week 3 she revised verbal and technical, and in Week 4 she took one mock test every day. At the end of each week she wrote down her mistakes. Her mock score rose from 32 to 41 in 30 days. The difference was the plan, not the hard work — both had studied 3-4 hours a day.
+
+A third example is **not following the plan**. Some students make a plan but do not follow it. A plan works only when you look at it every day and tick off the work. So stick the plan on the wall or set a reminder on the phone — tick off whatever is done. Ticking gives motivation.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 4 Hafton ka Plan Banao (Worked Example ke Saath)',
+          '3. Step-by-Step: Build the 4-Week Plan (with a Worked Example)'
+        ),
+        body: t(
+          `Ab hum 30 din ka plan step-by-step banate hain. Har hafte ka focus aur kaam alag hai.
+
+**Week 1 (Day 1-7) — Aptitude basics:** Numbers, percentage, time and work, time-speed. Roz 20 questions timer ke saath. Hafte ke aakhir mein ek chhota test do aur galtiyaan likho. Is hafte ka goal hai basics strong karna, speed nahi.
+
+**Week 2 (Day 8-14) — Reasoning:** Series, puzzles, seating arrangement, blood relation. Roz 20 questions. Reasoning mein shortcuts seekho — series mein farak dekhna, puzzle mein table banana. Hafte ke aakhir mein Mock 1 do.
+
+**Week 3 (Day 15-21) — Verbal + technical revision:** Synonyms, error spotting, comprehension, aur apne technical subjects (DBMS, OS, CN) ki revision. Roz 1 ghanta verbal, 1 ghanta technical. Hafte ke aakhir mein Mock 2 do.
+
+**Week 4 (Day 22-30) — Mock tests aur revision:** Roz ek full mock test do, phir mistake review karo. Naya topic mat shuru karo — sirf revision karo. Aakhri 2 din mein sirf notes revise karo, naya kuch mat padho.
+
+Neeche wala code poora 4 hafton ka plan print karta hai. Code mein \`weeks\` ek list hai jismein har hafte ka naam aur focus likha hai. Dry run: Week 1 aptitude basics, Week 2 reasoning, Week 3 verbal + technical + 3 mock tests, Week 4 roz mock test. Total days 30. Is code ko apne hisaab se badal kar apna plan banao.`,
+          `Now let us build the 30-day plan step by step. Each week has a different focus and work.
+
+**Week 1 (Day 1-7) — Aptitude basics:** Numbers, percentage, time and work, and time-speed. Solve 20 questions every day with a timer. At the end of the week, take a small test and write down the mistakes. The goal of this week is to make basics strong, not speed.
+
+**Week 2 (Day 8-14) — Reasoning:** Series, puzzles, seating arrangement, and blood relation. Solve 20 questions a day. In reasoning, learn shortcuts — looking at differences in a series, making a table for a puzzle. Take Mock 1 at the end of the week.
+
+**Week 3 (Day 15-21) — Verbal plus technical revision:** Synonyms, error spotting, comprehension, and revision of your technical subjects (DBMS, OS, CN). One hour of verbal and one hour of technical every day. Take Mock 2 at the end of the week.
+
+**Week 4 (Day 22-30) — Mock tests and revision:** Take one full mock test every day, then review the mistakes. Do not start any new topic — only revise. In the last 2 days, revise only your notes; do not study anything new.
+
+The code below prints the full 4-week plan. In the code, \`weeks\` is a list with the name and focus of each week. Dry run: Week 1 aptitude basics, Week 2 reasoning, Week 3 verbal plus technical plus 3 mock tests, and Week 4 a mock test every day. Total days are 30. Change this code your own way and build your own plan.`
+        ),
+        code: {
+          title: t(
+            '30 Din ka Plan: 4 Hafte, 4 Focus',
+            'The 30-Day Plan: 4 Weeks, 4 Focus Areas'
+          ),
+          language: 'python',
+          code: `weeks = [
+    ("Week 1 (Day 1-7)", "Aptitude basics: numbers, percentages, time and work"),
+    ("Week 2 (Day 8-14)", "Reasoning: puzzles, series, seating arrangement"),
+    ("Week 3 (Day 15-21)", "Verbal + technical revision + 3 mock tests"),
+    ("Week 4 (Day 22-30)", "Full mock tests daily + revise all mistakes"),
+]
+for week, focus in weeks:
+    print(week, "->", focus)
+print("Total days: 30")`,
+          output: `Week 1 (Day 1-7) -> Aptitude basics: numbers, percentages, time and work
+Week 2 (Day 8-14) -> Reasoning: puzzles, series, seating arrangement
+Week 3 (Day 15-21) -> Verbal + technical revision + 3 mock tests
+Week 4 (Day 22-30) -> Full mock tests daily + revise all mistakes
+Total days: 30`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: 30-Day Plan mein Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes in the 30-Day Plan'
+        ),
+        body: t(
+          `**Galti 1: Aakhri hafte mein naya topic shuru karna.** Aakhri hafte mein naya topic padhne se confidence girta hai, kyunki naya topic poora nahi hota. Aakhri hafte mein sirf revision aur mock test karo. Naya topic Week 1 ya 2 mein hi khatam karo.
+
+**Galti 2: Roz 8-10 ghante padhne ka plan banana.** Ye plan 2 din mein toot jaata hai. Roz 3-4 ghante ka plan banao jo 30 din tak chal sake. Chhota plan jo poora ho, bade plan se behtar hai jo adhoora reh jaaye.
+
+**Galti 3: Mock test ko plan mein na rakhna.** Kuch students 30 din sirf padhte hain aur ek bhi mock nahi dete. Phir asli test mein time management fail ho jaata hai. Week 3 se mock test shuru karo aur Week 4 mein roz ek mock do.
+
+**Galti 4: Plan ko follow na karna aur guilt mein padhna band kar dena.** Agar ek din plan chhoot jaaye, toh agle din se wapas shuru karo. Ek din chhootna plan fail hona nahi hai. Bahut se students ek din chhootne par poora plan chhod dete hain — ye sabse badi galti hai.`,
+          `**Mistake 1: Starting a new topic in the last week.** Studying a new topic in the last week lowers confidence, because the new topic never gets finished. In the last week, only revise and take mock tests. Finish new topics in Week 1 or 2.
+
+**Mistake 2: Making a plan to study 8-10 hours a day.** That plan breaks in 2 days. Make a plan of 3-4 hours a day that can run for 30 days. A small plan that gets finished is better than a big plan that stays incomplete.
+
+**Mistake 3: Not putting mock tests in the plan.** Some students only study for 30 days and take no mock at all. Then time management fails in the real test. Start mock tests from Week 3 and take one mock every day in Week 4.
+
+**Mistake 4: Not following the plan and stopping study out of guilt.** If one day is missed, start again from the next day. Missing one day is not a failed plan. Many students drop the whole plan after missing one day — that is the biggest mistake.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Plan Chhoot Jaaye, Ya Drive Aage Badh Jaaye',
+          '5. Edge Cases: The Plan Is Missed, or the Drive Moves Ahead'
+        ),
+        body: t(
+          `**Edge case 1: 2-3 din plan chhoot jaaye.** Koi baat nahi — chhoote hue dinon ka kaam ek saath mat karo. Bas agle din se plan par wapas aao. Chhoota hua kaam Week 4 ki revision mein cover ho jaayega, kyunki Week 4 mein revision ka time hai.
+
+**Edge case 2: Drive ki date aage badh jaaye.** Ye achhi khabar hai — aapko extra time mil gaya. Extra time mein naye mock test do aur weak section par kaam karo. Plan ko aage badhao, dobara shuru mat karo.
+
+**Edge case 3: Drive ki date paas aa jaaye.** Agar drive 30 din ki jagah 15 din mein hai, toh plan ko compress karo: Week 1 aur 2 ko 3-3 din mein khatam karo, Week 3 ko 4 din mein, aur Week 4 ko 5 din mein. Plan flexible hai — use apni date ke hisaab se badlo.
+
+**Edge case 4: Beech mein exams aa jaayein.** Agar college ke exams beech mein hain, toh plan ke ghante kam kar do — roz 1-2 ghante hi padho, par roz padho. Plan rukna nahi chahiye, sirf slow hona chahiye.`,
+          `**Edge case 1: The plan is missed for 2-3 days.** No problem — do not try to do the missed days work together. Just return to the plan from the next day. The missed work will be covered in the Week 4 revision, because Week 4 has time for revision.
+
+**Edge case 2: The drive date moves ahead.** That is good news — you got extra time. In the extra time, take new mock tests and work on the weak section. Extend the plan; do not restart it.
+
+**Edge case 3: The drive date comes closer.** If the drive is in 15 days instead of 30, compress the plan: finish Week 1 and 2 in 3 days each, Week 3 in 4 days, and Week 4 in 5 days. The plan is flexible — change it to fit your date.
+
+**Edge case 4: College exams come in between.** If college exams fall in between, reduce the plan hours — study only 1-2 hours a day, but study every day. The plan should not stop; it should only slow down.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Ek Subject Bahut Weak Ho, Ya Time Kam Ho?',
+          '6. What-If: One Subject Is Very Weak, or Time Is Short?'
+        ),
+        body: t(
+          `**What if: ek subject bahut weak ho?** Toh us subject ko Week 1 mein hi zyada time do. Jaise agar aptitude bahut weak hai, toh Week 1 mein roz 2 ghante aptitude karo aur Week 2 mein bhi 1 ghanta aptitude continue rakho. Weak subject ko ek hafte mein khatam karne ki koshish mat karo — use poore 30 din mein thoda-thoda karo.
+
+**What if: roz sirf 2 ghante milte hon?** Toh plan ko chhota karo: har din sirf ek hi kaam karo — ek din aptitude, ek din reasoning, ek din verbal. 30 din mein har subject ko 10 din milenge, jo kaafi hai basics ke liye. Kam time mein bhi plan kaam karta hai, bas kaam chhota hona chahiye.
+
+**What if: plan ke beech mein motivation khatam ho jaaye?** Motivation har din nahi rehti — isliye plan par bharosa rakho, mood par nahi. Roz sirf plan ka pehla kaam shuru karo; shuru karne ke 10 minute baad motivation khud aa jaati hai. Aur har hafte ke aakhir mein apna mock score dekho — badhta hua score sabse badi motivation hai.
+
+**What if: doston ka plan alag ho?** Har student ka plan alag hota hai, kyunki har student ki kami alag hoti hai. Doston ka plan copy mat karo — apne mock scores se apna plan banao. Apna plan apne weak sections par based hona chahiye.`,
+          `**What if one subject is very weak?** Then give that subject more time in Week 1 itself. For example, if aptitude is very weak, do 2 hours of aptitude a day in Week 1 and keep 1 hour of aptitude going in Week 2 too. Do not try to finish a weak subject in one week — do it a little at a time across all 30 days.
+
+**What if you get only 2 hours a day?** Then make the plan smaller: do only one task each day — one day aptitude, one day reasoning, one day verbal. In 30 days each subject will get 10 days, which is enough for basics. A plan works even with less time; the work only needs to be smaller.
+
+**What if motivation runs out in the middle of the plan?** Motivation does not stay every day — so trust the plan, not the mood. Every day, just start the first task of the plan; after 10 minutes of starting, motivation comes on its own. And at the end of each week, look at your mock score — a rising score is the biggest motivation.
+
+**What if your friends plan is different?** Every student plan is different, because every student gap is different. Do not copy a friend plan — build your plan from your mock scores. Your plan should be based on your weak sections.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 30 Din, 4 Hafte, Roz Thoda-Thoda',
+          '7. Summary: 30 Days, 4 Weeks, a Little Every Day'
+        ),
+        body: t(
+          `30-day plan ka ek hi rule hai: **roz thoda-thoda, 30 din tak.** Week 1 aptitude basics, Week 2 reasoning, Week 3 verbal + technical revision, Week 4 roz mock test aur mistake review. Naya topic aakhri hafte mein mat shuru karo, aur ek din chhoot jaaye toh plan mat chhodo.
+
+Yaad rakhne wali 3 baatein: plan likha hua hona chahiye, roz ka kaam chhota hona chahiye, aur har hafte ke aakhir mein mock test hona chahiye. Plan banane se taiyaari nahi hoti — plan ko follow karne se hoti hai.
+
+Agle article mein hum aakhri 7 din ka plan banayenge — drive se ek hafte pehle kya karna hai, kya nahi karna hai, aur aakhri din kaise bitana hai.`,
+          `The 30-day plan has only one rule: **a little every day, for 30 days.** Week 1 aptitude basics, Week 2 reasoning, Week 3 verbal plus technical revision, and Week 4 a mock test every day plus mistake review. Do not start a new topic in the last week, and do not drop the plan if one day is missed.
+
+Remember 3 things: the plan must be written down, the daily work must be small, and there must be a mock test at the end of each week. Preparation does not come from making a plan — it comes from following the plan.
+
+In the next article we will build the last 7 days plan — what to do and what not to do in the week before the drive, and how to spend the last day.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '30 Din ka Countdown: 4 Hafte',
+        'The 30-Day Countdown: 4 Weeks'
+      ),
+      caption: t(
+        'Har hafte ka focus alag hai — ek hafte mein sab kuch karne ki koshish mat karo',
+        'Each week has a different focus — do not try to do everything in one week'
+      ),
+      nodes: [
+        {
+          t: t('Week 1 (Day 1-7): Aptitude basics', 'Week 1 (Day 1-7): Aptitude basics'),
+          s: t('Numbers, percentage, time and work — roz 20 timed questions', 'Numbers, percentage, time and work — 20 timed questions a day')
+        },
+        {
+          t: t('Week 2 (Day 8-14): Reasoning', 'Week 2 (Day 8-14): Reasoning'),
+          s: t('Series, puzzles, seating — Mock 1 hafte ke aakhir mein', 'Series, puzzles, seating — Mock 1 at the end of the week')
+        },
+        {
+          t: t('Week 3 (Day 15-21): Verbal + technical', 'Week 3 (Day 15-21): Verbal plus technical'),
+          s: t('Synonyms, error spotting, DBMS/OS/CN revision — Mock 2', 'Synonyms, error spotting, DBMS/OS/CN revision — Mock 2')
+        },
+        {
+          t: t('Week 4 (Day 22-30): Mock tests + revision', 'Week 4 (Day 22-30): Mock tests plus revision'),
+          s: t('Roz ek full mock, phir mistake review — naya topic nahi', 'One full mock every day, then mistake review — no new topic')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Ek Hafte ke Padhai ke Ghante Ginna',
+          'Counting the Study Hours of One Week'
+        ),
+        language: 'python',
+        code: `hours = [3, 4, 3, 4, 3, 5, 2]
+print("Hours per day:", hours)
+print("Total hours this week:", sum(hours))
+print("Average per day:", sum(hours) // len(hours))`,
+        output: `Hours per day: [3, 4, 3, 4, 3, 5, 2]
+Total hours this week: 24
+Average per day: 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '30-day plan mein Week 1 ka focus kya hai?',
+          'What is the focus of Week 1 in the 30-day plan?'
+        ),
+        opts: [
+          t('Roz mock test', 'A mock test every day'),
+          t('Aptitude basics', 'Aptitude basics'),
+          t('Sirf verbal', 'Only verbal'),
+          t('Kuch nahi padhna', 'Studying nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Week 1 mein aptitude ke basics strong karte hain — numbers, percentage, time and work.',
+          'Correct answer: in Week 1 we make aptitude basics strong — numbers, percentage, time and work.'
+        )
+      },
+      {
+        q: t(
+          'Aakhri hafte (Week 4) mein kya karna chahiye?',
+          'What should you do in the last week (Week 4)?'
+        ),
+        opts: [
+          t('Naya topic shuru karna', 'Start a new topic'),
+          t('Roz mock test aur mistake review', 'A mock test every day and mistake review'),
+          t('Padhna band kar dena', 'Stop studying'),
+          t('Sirf ek subject padhna', 'Study only one subject')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: aakhri hafte mein sirf revision aur mock test hote hain — naya topic confidence girata hai.',
+          'Correct answer: the last week is only for revision and mock tests — a new topic lowers confidence.'
+        )
+      },
+      {
+        q: t(
+          'Roz kitne ghante padhne ka plan sahi hai?',
+          'How many hours a day is the right study plan?'
+        ),
+        opts: [
+          t('8-10 ghante', '8-10 hours'),
+          t('3-4 ghante, roz', '3-4 hours, every day'),
+          t('0 ghante', '0 hours'),
+          t('Sirf aakhri din 12 ghante', 'Only 12 hours on the last day')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: roz 3-4 ghante 30 din tak, aakhri 5 din mein 10 ghante padhne se behtar hai.',
+          'Correct answer: 3-4 hours every day for 30 days is better than 10 hours a day in the last 5 days.'
+        )
+      },
+      {
+        q: t(
+          'Agar plan ka ek din chhoot jaaye, toh kya karna chahiye?',
+          'If one day of the plan is missed, what should you do?'
+        ),
+        opts: [
+          t('Poora plan chhod dena', 'Drop the whole plan'),
+          t('Agle din se wapas plan par aana', 'Return to the plan from the next day'),
+          t('Chhoota hua kaam ek saath karna', 'Do all the missed work together'),
+          t('Plan dobara banana', 'Make the plan again')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek din chhootna plan fail hona nahi hai — agle din se wapas shuru karo.',
+          'Correct answer: missing one day is not a failed plan — start again from the next day.'
+        )
+      },
+      {
+        q: t(
+          'Mock test plan mein kab se shuru karne chahiye?',
+          'When should mock tests start in the plan?'
+        ),
+        opts: [
+          t('Week 1 se', 'From Week 1'),
+          t('Week 3 se, aur Week 4 mein roz', 'From Week 3, and every day in Week 4'),
+          t('Sirf aakhri din', 'Only on the last day'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Week 3 se mock shuru karo aur Week 4 mein roz ek mock do, taaki time management ki practice ho.',
+          'Correct answer: start mocks from Week 3 and take one mock every day in Week 4, so time management gets practised.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '30 din, 4 hafte: Week 1 aptitude, Week 2 reasoning, Week 3 verbal + technical, Week 4 mock tests.',
+        '30 days, 4 weeks: Week 1 aptitude, Week 2 reasoning, Week 3 verbal plus technical, Week 4 mock tests.'
+      ),
+      t(
+        'Roz 3-4 ghante, roz — aakhri dinon mein 10 ghante padhne se behtar hai.',
+        '3-4 hours every day, every day — better than 10 hours a day in the last days.'
+      ),
+      t(
+        'Aakhri hafte mein naya topic mat shuru karo — sirf revision aur mock test.',
+        'Do not start a new topic in the last week — only revision and mock tests.'
+      ),
+      t(
+        'Ek din chhoot jaaye toh plan mat chhodo — agle din se wapas shuru karo.',
+        'If one day is missed, do not drop the plan — start again from the next day.'
+      ),
+      t(
+        'Plan likha hua hona chahiye aur roz tick karna chahiye.',
+        'The plan must be written down and ticked off every day.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Countdown Printer Banao',
+        'Practice: Build Your Own Countdown Printer'
+      ),
+      task: t(
+        'Neeche diya gaya code 30, 20, 10 aur 1 din pehle ka kaam print karta hai. Code run karo aur verify karo ki output expected jaisa aata hai. Phir apne plan ke hisaab se tasks badal kar dobara chalao.',
+        'The code below prints the work for 30, 20, 10, and 1 day before the drive. Run the code and verify that the output matches the expected output. Then change the tasks to match your own plan and run it again.'
+      ),
+      language: 'python',
+      starter: `plan = [(30, "Start aptitude basics"), (20, "Finish reasoning practice"), (10, "Start daily mock tests"), (1, "Revise notes only")]
+for days_left, task in plan:
+    print(str(days_left) + " day(s) left:", task)`,
+      expected: `30 day(s) left: Start aptitude basics
+20 day(s) left: Finish reasoning practice
+10 day(s) left: Start daily mock tests
+1 day(s) left: Revise notes only`
+    },
+    readMinutes: 12
+  };
+
+const placement7DayPlan: Article = {
+    id: 'placement-7-day-plan',
+    subjectId: 'placement',
+    title: t(
+      'Last 7 Days Before the Drive — Aakhri Hafte ka Plan',
+      'Last 7 Days Before the Drive — The Final Week Plan'
+    ),
+    summary: t(
+      'Drive se pehle ke aakhri 7 din sabse important hote hain — is hafte mein naya kuch nahi padhna hai, sirf revision, mock test aur documents taiyaar karne hain. Har din ka kaam, mock test ka time, aur aakhri din ki checklist — sab kuch is article mein hai.',
+      'The last 7 days before the drive are the most important — in this week you study nothing new, only revise, take mock tests, and prepare documents. The work of each day, the mock test timing, and the last-day checklist — everything is in this article.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Aakhri 7 Din Kya Hote Hain? (Revision ka Hafta, Padhai ka Nahi)',
+          '1. What Are the Last 7 Days? (A Week of Revision, Not of Study)'
+        ),
+        body: t(
+          `**Aakhri 7 din** drive se pehle ka aakhri hafta hai — Day 1 se Day 7 tak. Is hafte ka rule sabse simple hai: **naya kuch mat padho, sirf purana revise karo.** Jo kuch aapne 30 din mein padha, wahi aapka syllabus hai. Aakhri hafte mein naya topic padhne se dimaag confuse hota hai aur confidence girta hai.
+
+Is hafte ke 3 kaam hain: **revision** (notes aur formulas dobara padhna), **mock test** (Day 4, 5 aur 6 ko ek-ek mock), aur **taiyaari** (documents, kapde, travel plan). Har din ka kaam 3-4 ghante se zyada nahi hona chahiye — aakhri hafte mein dimaag ko rest bhi chahiye, taaki drive ke din woh fresh rahe.
+
+Sabse important baat: Day 7 ko halka rakho. Aakhri din raat bhar jaag kar padhna sabse badi galti hai. Day 7 ko sirf notes ki ek jhalak dekho, documents check karo, aur jaldi so jao. Drive ke din fresh dimaag, 10 ghante ki padhai se zyada kaam aata hai.`,
+          `The **last 7 days** are the final week before the drive — from Day 1 to Day 7. The rule of this week is the simplest: **study nothing new, only revise the old.** Whatever you studied in 30 days is your syllabus. Studying a new topic in the last week confuses the mind and lowers confidence.
+
+This week has 3 jobs: **revision** (reading notes and formulas again), **mock tests** (one mock each on Day 4, 5, and 6), and **preparation** (documents, clothes, travel plan). The work of each day should not be more than 3-4 hours — in the last week the mind needs rest too, so it stays fresh on the drive day.
+
+The most important thing: keep Day 7 light. Staying awake all night to study on the last day is the biggest mistake. On Day 7, only glance at your notes, check the documents, and sleep early. A fresh mind on the drive day helps more than 10 hours of study.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Aakhri Raat Jaagna vs Jaldi Sona',
+          '2. Real-Life Examples: Staying Awake the Last Night vs Sleeping Early'
+        ),
+        body: t(
+          `**Rohan** (invented example) ne drive se pehle wali raat 3 baje tak padha. Usne socha ki raat bhar padhne se zyada yaad rahega. Par drive ke din woh itna thaka hua tha ki aptitude ke simple questions mein bhi galtiyaan karne laga. Uska dimaag slow ho gaya tha, aur woh time par questions poore nahi kar paaya. Raat bhar jaagna uski sabse badi galti thi.
+
+**Asha** (invented example) ne Day 7 ko sirf 2 ghante padha — formulas ki ek list dekhi, notes ke headings padhe, aur raat 10 baje so gayi. Drive ke din woh fresh thi, aur usne aptitude test time par poora kiya. Uska score Rohan se behtar tha, halanki dono ne 30 din barabar padha tha. Farak sirf aakhri raat ka tha.
+
+Teesra example hai **documents bhoolna**. Ek student (invented example) drive ke din resume bhool gaya aur wapas ghar jaana pada — uska aptitude test chhoot gaya. Isliye Day 6 ko documents ki checklist poori kar lo, aur Day 7 ko sirf check karo. Aakhri din par documents par time waste mat karo.`,
+          `**Rohan** (an invented example) studied till 3 in the morning on the night before the drive. He thought studying all night would help him remember more. But on the drive day he was so tired that he made mistakes even in simple aptitude questions. His mind had slowed down, and he could not finish the questions in time. Staying awake all night was his biggest mistake.
+
+**Asha** (an invented example) studied only 2 hours on Day 7 — she looked at a list of formulas, read the headings of her notes, and slept at 10 at night. On the drive day she was fresh, and she finished the aptitude test in time. Her score was better than Rohan, even though both had studied equally for 30 days. The difference was only the last night.
+
+A third example is **forgetting documents**. One student (an invented example) forgot the resume on the drive day and had to go back home — the aptitude test was missed. So finish the documents checklist on Day 6, and only check it on Day 7. Do not waste time on documents on the last day.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 7 Din ka Plan, Din-Dar-Din (Worked Example ke Saath)',
+          '3. Step-by-Step: The 7-Day Plan, Day by Day (with a Worked Example)'
+        ),
+        body: t(
+          `Ab hum 7 din ka plan din-dar-din banate hain. Har din ka ek hi focus hai, taaki dimaag par load na ho.
+
+**Day 1 — Aptitude formulas revise karo:** Saare formulas ki list banao aur ek baar padho. Percentage, time-speed, time-work ke formulas. 20 questions solve karo, par naye questions mat lo — purane mock ke galat questions dobara solve karo.
+
+**Day 2 — Reasoning shortcuts revise karo:** Series ke patterns, seating arrangement ke rules, blood relation ke shortcuts. 20 questions dobara solve karo. Naye puzzle mat shuru karo.
+
+**Day 3 — Verbal rules aur vocabulary:** Synonyms ki list, error spotting ke rules, aur comprehension ke tips. Apne notes ke headings padho. 1 ghanta kaafi hai.
+
+**Day 4 — Full mock test 1 + mistake review:** Subah mock test do, dopahar mein galtiyaan dekho. Mock ke baad naya kuch mat padho — sirf galtiyaan likho.
+
+**Day 5 — Full mock test 2 + mistake review:** Wahi pattern — subah mock, dopahar review. Agar Mock 1 aur 2 mein ek hi galti repeat hui, toh us topic ko ek ghanta aur do.
+
+**Day 6 — Notes revise karo + documents taiyaar karo:** Saare notes ek baar padho, documents ki checklist poori karo, kapde aur bag taiyaar karo. Aaj mock mat do.
+
+**Day 7 — Light revision + jaldi sona:** Sirf formulas ki list aur key notes dekho, 2 ghante se zyada mat padho, aur raat 10 baje so jao.
+
+Neeche wala code poora 7 din ka plan print karta hai. Dry run: Day 1 aptitude formulas, Day 2 reasoning shortcuts, Day 3 verbal, Day 4 mock 1, Day 5 mock 2, Day 6 notes + documents, Day 7 light revision. Total days 7.`,
+          `Now let us build the 7-day plan day by day. Each day has only one focus, so the mind is not loaded.
+
+**Day 1 — Revise aptitude formulas:** Make a list of all formulas and read it once. Formulas of percentage, time-speed, and time-work. Solve 20 questions, but do not take new questions — solve the wrong questions of old mocks again.
+
+**Day 2 — Revise reasoning shortcuts:** Patterns of series, rules of seating arrangement, shortcuts of blood relation. Solve 20 questions again. Do not start a new puzzle.
+
+**Day 3 — Verbal rules and vocabulary:** The list of synonyms, rules of error spotting, and tips of comprehension. Read the headings of your notes. One hour is enough.
+
+**Day 4 — Full mock test 1 plus mistake review:** Take the mock in the morning and look at the mistakes in the afternoon. After the mock, do not study anything new — only write down the mistakes.
+
+**Day 5 — Full mock test 2 plus mistake review:** The same pattern — mock in the morning, review in the afternoon. If the same mistake repeated in Mock 1 and 2, give that topic one more hour.
+
+**Day 6 — Revise notes plus prepare documents:** Read all the notes once, finish the documents checklist, and prepare clothes and bag. Do not take a mock today.
+
+**Day 7 — Light revision plus early sleep:** Only look at the formulas list and key notes, do not study more than 2 hours, and sleep at 10 at night.
+
+The code below prints the full 7-day plan. Dry run: Day 1 aptitude formulas, Day 2 reasoning shortcuts, Day 3 verbal, Day 4 mock 1, Day 5 mock 2, Day 6 notes plus documents, Day 7 light revision. Total days are 7.`
+        ),
+        code: {
+          title: t(
+            'Aakhri 7 Din ka Plan Print Karna',
+            'Printing the Last 7 Days Plan'
+          ),
+          language: 'python',
+          code: `days = [
+    ("Day 1", "Revise aptitude formulas"),
+    ("Day 2", "Revise reasoning shortcuts"),
+    ("Day 3", "Revise verbal rules and vocabulary"),
+    ("Day 4", "Full mock test 1 + mistake review"),
+    ("Day 5", "Full mock test 2 + mistake review"),
+    ("Day 6", "Revise notes + prepare documents"),
+    ("Day 7", "Light revision + early sleep"),
+]
+for day, task in days:
+    print(day, "-", task)
+print("Total days:", len(days))`,
+          output: `Day 1 - Revise aptitude formulas
+Day 2 - Revise reasoning shortcuts
+Day 3 - Revise verbal rules and vocabulary
+Day 4 - Full mock test 1 + mistake review
+Day 5 - Full mock test 2 + mistake review
+Day 6 - Revise notes + prepare documents
+Day 7 - Light revision + early sleep
+Total days: 7`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Aakhri Hafte mein Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes in the Last Week'
+        ),
+        body: t(
+          `**Galti 1: Naya topic shuru karna.** Aakhri hafte mein naya topic padhne se dimaag confuse hota hai. Jo nahi padha, use chhod do — aakhri hafte mein use seekhna mushkil hai aur confidence girta hai. Sirf revise karo.
+
+**Galti 2: Raat bhar jaag kar padhna.** Drive se pehle wali raat jaagna sabse badi galti hai. Thaka hua dimaag simple questions mein bhi galti karta hai. Day 7 ko jaldi so jao — neend bhi taiyaari ka hissa hai.
+
+**Galti 3: Mock test ke score se ghabrana.** Agar Day 4 ke mock mein score kam aaye, toh ghabrao mat. Aakhri hafte ka mock score aapki taiyaari ka faisla nahi karta — woh sirf aapko batata hai ki kya revise karna hai. Score dekhkar plan mat badlo.
+
+**Galti 4: Documents aur travel aakhri din par chhodna.** Drive ke din subah documents dhoondhna panic banata hai. Day 6 ko sab kuch taiyaar kar lo — resume, ID proof, pen, kapde, travel ka time. Day 7 ko sirf check karo.`,
+          `**Mistake 1: Starting a new topic.** Studying a new topic in the last week confuses the mind. Leave whatever you have not studied — learning it in the last week is hard and lowers confidence. Only revise.
+
+**Mistake 2: Staying awake all night to study.** Staying awake on the night before the drive is the biggest mistake. A tired mind makes mistakes even in simple questions. Sleep early on Day 7 — sleep is also a part of preparation.
+
+**Mistake 3: Panicking at the mock test score.** If the score is low in the Day 4 mock, do not panic. The mock score of the last week does not decide your preparation — it only tells you what to revise. Do not change the plan after seeing the score.
+
+**Mistake 4: Leaving documents and travel for the last day.** Searching for documents on the morning of the drive creates panic. Prepare everything on Day 6 — resume, ID proof, pen, clothes, and travel time. On Day 7, only check them.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Tabiyat Kharab, Ya Mock Score Bahut Kam',
+          '5. Edge Cases: Falling Sick, or a Very Low Mock Score'
+        ),
+        body: t(
+          `**Edge case 1: Aakhri hafte mein tabiyat kharab ho jaaye.** Agar bukhaar ya thakan ho, toh padhai kam kar do aur rest lo. Bimaar dimaag se padhna bekaar hai. 2 din rest karke drive ke din fresh rehna, 2 din padhkar drive ke din bimaar rehne se behtar hai.
+
+**Edge case 2: Day 4 ke mock mein score bahut kam aaye.** Ghabrao mat — mock ka kaam hi kami dikhana hai. Score ko dekhkar ye decide karo ki Day 5 aur 6 mein kya revise karna hai. Agar ek hi topic mein galtiyaan hain, toh us topic ko 1 ghanta aur do. Plan mat badlo, sirf focus badlo.
+
+**Edge case 3: Drive ki date achanak paas aa jaaye.** Agar 7 din ki jagah 3 din bache hon, toh plan compress karo: Day 1 mein aptitude + reasoning revise karo, Day 2 mein mock test do, Day 3 ko light rakho. Har din ka ek hi focus rakho, par kaam chhota karo.
+
+**Edge case 4: Aakhri din nervousness bahut zyada ho.** Nervous hona normal hai. Day 7 ko doston se baat karo, halka khana khao, aur jaldi so jao. Nervousness ko khatam karne ki koshish mat karo — use accept karo aur apna plan follow karo.`,
+          `**Edge case 1: You fall sick in the last week.** If you have a fever or feel tired, study less and take rest. Studying with a sick mind is useless. Resting for 2 days and staying fresh on the drive day is better than studying for 2 days and staying sick on the drive day.
+
+**Edge case 2: The score is very low in the Day 4 mock.** Do not panic — the job of a mock is to show gaps. Use the score to decide what to revise on Day 5 and 6. If mistakes are in one topic only, give that topic one more hour. Do not change the plan; only change the focus.
+
+**Edge case 3: The drive date suddenly comes closer.** If only 3 days are left instead of 7, compress the plan: revise aptitude plus reasoning on Day 1, take a mock test on Day 2, and keep Day 3 light. Keep one focus per day, but make the work smaller.
+
+**Edge case 4: Nervousness is very high on the last day.** Feeling nervous is normal. On Day 7, talk to friends, eat light food, and sleep early. Do not try to remove nervousness — accept it and follow your plan.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Neend Na Aaye, Ya Sab Kuch Bhool Jaaye?',
+          '6. What-If: You Cannot Sleep, or You Forget Everything?'
+        ),
+        body: t(
+          `**What if: Day 7 ki raat neend na aaye?** Ye normal hai — nervousness mein neend der se aati hai. Phone ko door rakho, halka sa paani piyo, aur aankhein band karke lete raho. Aankhein band karke rest karna bhi neend jaisa hi kaam karta hai. Subah jaldi uthne ke liye alarm lagao aur ek backup alarm bhi lagao.
+
+**What if: drive ke din sab kuch bhool jaaye?** Aisa lagta hai, par sach mein aisa nahi hota. Aapne 30 din padha hai — formulas dimaag mein hain, bas nervousness ki wajah se yaad nahi aa rahe. Test shuru hote hi pehle 2-3 easy questions solve karo — confidence wapas aa jaata hai aur yaad bhi aane lagta hai.
+
+**What if: Day 6 tak documents taiyaar na hon?** Toh Day 7 ki subah sabse pehle documents taiyaar karo, padhai baad mein. Documents ke bina test hi nahi de paoge, isliye documents padhai se zyada important hain. Checklist banao aur ek-ek karke tick karo.
+
+**What if: aakhri hafte mein doston ka selection ho jaaye?** Doston ki khushi mein shaamil ho, par apna plan mat chhodo. Unka selection aapki taiyaari par asar nahi karta. Apne plan par focus rakho — aapka din bhi aayega.`,
+          `**What if you cannot sleep on the night of Day 7?** That is normal — sleep comes late with nervousness. Keep the phone away, drink a little water, and lie down with your eyes closed. Resting with closed eyes works almost like sleep. Set an alarm to wake up early, and set a backup alarm too.
+
+**What if you forget everything on the drive day?** It feels that way, but it is not true. You studied for 30 days — the formulas are in your mind; nervousness is only blocking them. Once the test starts, solve the first 2-3 easy questions — confidence returns and memory comes back too.
+
+**What if documents are not ready by Day 6?** Then prepare the documents first thing on the morning of Day 7, and study later. Without documents you cannot even take the test, so documents are more important than study. Make a checklist and tick them off one by one.
+
+**What if your friends get selected in the last week?** Join in their happiness, but do not drop your plan. Their selection does not affect your preparation. Stay focused on your plan — your day will come too.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Aakhri Hafta Revision ka Hai, Padhai ka Nahi',
+          '7. Summary: The Last Week Is for Revision, Not for Study'
+        ),
+        body: t(
+          `Aakhri 7 din ka ek hi rule hai: **naya kuch mat padho, sirf revise karo, mock do, aur jaldi so jao.** Day 1-3 revision, Day 4-5 mock test, Day 6 notes + documents, Day 7 light revision aur jaldi neend. Jo student aakhri hafte mein shaant rehta hai, woh drive ke din fresh rehta hai.
+
+Yaad rakhne wali 3 baatein: Day 7 ko halka rakho, documents Day 6 ko taiyaar karo, aur mock ke score se ghabrao mat. Neend bhi taiyaari ka hissa hai — thaka hua dimaag simple questions mein bhi galti karta hai.
+
+Agle article mein hum interview day ki checklist dekhenge — subah uthne se lekar interview room se bahar aane tak, har step kya karna hai.`,
+          `The last 7 days have only one rule: **study nothing new, only revise, take mocks, and sleep early.** Day 1-3 revision, Day 4-5 mock tests, Day 6 notes plus documents, and Day 7 light revision and early sleep. The student who stays calm in the last week stays fresh on the drive day.
+
+Remember 3 things: keep Day 7 light, prepare documents on Day 6, and do not panic at the mock score. Sleep is also a part of preparation — a tired mind makes mistakes even in simple questions.
+
+In the next article we will look at the interview day checklist — from waking up in the morning to coming out of the interview room, what to do at every step.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        'Aakhri 7 Din: Din-Dar-Din Plan',
+        'The Last 7 Days: A Day-by-Day Plan'
+      ),
+      caption: t(
+        'Har din ka ek hi focus hai — Day 7 ko halka rakho aur jaldi so jao',
+        'Each day has only one focus — keep Day 7 light and sleep early'
+      ),
+      nodes: [
+        {
+          t: t('Day 1: Aptitude formulas', 'Day 1: Aptitude formulas'),
+          s: t('Purane mock ke galat questions dobara solve karo', 'Solve the wrong questions of old mocks again')
+        },
+        {
+          t: t('Day 2: Reasoning shortcuts', 'Day 2: Reasoning shortcuts'),
+          s: t('Series patterns aur seating rules revise karo', 'Revise series patterns and seating rules')
+        },
+        {
+          t: t('Day 3: Verbal rules', 'Day 3: Verbal rules'),
+          s: t('Synonyms aur error spotting — 1 ghanta kaafi hai', 'Synonyms and error spotting — 1 hour is enough')
+        },
+        {
+          t: t('Day 4-5: Mock test 1 aur 2', 'Day 4-5: Mock tests 1 and 2'),
+          s: t('Subah mock, dopahar mistake review', 'Mock in the morning, mistake review in the afternoon')
+        },
+        {
+          t: t('Day 6: Notes + documents', 'Day 6: Notes plus documents'),
+          s: t('Sab notes padho, checklist poori karo, bag taiyaar karo', 'Read all notes, finish the checklist, pack the bag')
+        },
+        {
+          t: t('Day 7: Light revision + jaldi sona', 'Day 7: Light revision plus early sleep'),
+          s: t('2 ghante se zyada mat padho, raat 10 baje so jao', 'Do not study more than 2 hours, sleep at 10 at night')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Aakhri Hafte ke Revision ke Ghante Ginna',
+          'Counting the Revision Hours of the Last Week'
+        ),
+        language: 'python',
+        code: `hours = {"Aptitude": 6, "Reasoning": 5, "Verbal": 4, "Mock tests": 8}
+for topic in hours:
+    print(topic, ":", hours[topic], "hours")
+print("Total revision hours:", sum(hours.values()))`,
+        output: `Aptitude : 6 hours
+Reasoning : 5 hours
+Verbal : 4 hours
+Mock tests : 8 hours
+Total revision hours: 23`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Aakhri 7 din mein sabse important rule kya hai?',
+          'What is the most important rule in the last 7 days?'
+        ),
+        opts: [
+          t('Naya topic shuru karna', 'Start a new topic'),
+          t('Naya kuch mat padho, sirf revise karo', 'Study nothing new, only revise'),
+          t('Raat bhar jaag kar padhna', 'Stay awake all night to study'),
+          t('Mock test bilkul mat dena', 'Take no mock test at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: aakhri hafte mein naya topic dimaag ko confuse karta hai; sirf purana revise karo.',
+          'Correct answer: a new topic in the last week confuses the mind; only revise the old work.'
+        )
+      },
+      {
+        q: t(
+          'Day 7 ko kya karna chahiye?',
+          'What should you do on Day 7?'
+        ),
+        opts: [
+          t('Raat 3 baje tak padhna', 'Study till 3 in the morning'),
+          t('Light revision aur jaldi sona', 'Light revision and early sleep'),
+          t('Naya chapter shuru karna', 'Start a new chapter'),
+          t('5 mock test dena', 'Take 5 mock tests')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Day 7 ko halka rakho aur jaldi so jao — drive ke din fresh dimaag sabse zyada kaam aata hai.',
+          'Correct answer: keep Day 7 light and sleep early — a fresh mind on the drive day helps the most.'
+        )
+      },
+      {
+        q: t(
+          'Documents kab taiyaar karne chahiye?',
+          'When should documents be prepared?'
+        ),
+        opts: [
+          t('Drive ke din subah', 'On the morning of the drive'),
+          t('Day 6 ko', 'On Day 6'),
+          t('Drive ke baad', 'After the drive'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Day 6 ko documents ki checklist poori kar lo, Day 7 ko sirf check karo.',
+          'Correct answer: finish the documents checklist on Day 6, and only check it on Day 7.'
+        )
+      },
+      {
+        q: t(
+          'Day 4 ke mock mein score kam aaye toh kya karna chahiye?',
+          'If the score is low in the Day 4 mock, what should you do?'
+        ),
+        opts: [
+          t('Ghabra kar plan badal dena', 'Panic and change the plan'),
+          t('Galtiyaan dekhna aur unhe revise karna', 'Look at the mistakes and revise them'),
+          t('Padhna band kar dena', 'Stop studying'),
+          t('Mock test dena band kar dena', 'Stop taking mock tests')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: mock ka kaam hi kami dikhana hai — score se ghabrao mat, galtiyaan revise karo.',
+          'Correct answer: the job of a mock is to show gaps — do not panic at the score, revise the mistakes.'
+        )
+      },
+      {
+        q: t(
+          'Aakhri hafte mein mock test kab dene chahiye?',
+          'When should mock tests be taken in the last week?'
+        ),
+        opts: [
+          t('Day 1, 2, 3 ko', 'On Day 1, 2, and 3'),
+          t('Day 4, 5 aur 6 ko', 'On Day 4, 5, and 6'),
+          t('Sirf Day 7 ko', 'Only on Day 7'),
+          t('Ek bhi nahi', 'Not even one')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Day 4, 5 aur 6 ko ek-ek mock do, phir mistake review karo; Day 7 ko mock mat do.',
+          'Correct answer: take one mock each on Day 4, 5, and 6, then review the mistakes; do not take a mock on Day 7.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Aakhri hafta revision ka hai — naya kuch mat padho.',
+        'The last week is for revision — study nothing new.'
+      ),
+      t(
+        'Day 1-3 revision, Day 4-5 mock test, Day 6 notes + documents, Day 7 light revision.',
+        'Day 1-3 revision, Day 4-5 mock tests, Day 6 notes plus documents, Day 7 light revision.'
+      ),
+      t(
+        'Day 7 ko jaldi so jao — neend bhi taiyaari ka hissa hai.',
+        'Sleep early on Day 7 — sleep is also a part of preparation.'
+      ),
+      t(
+        'Documents Day 6 ko taiyaar karo, drive ke din subah mat dhoondho.',
+        'Prepare documents on Day 6; do not search for them on the morning of the drive.'
+      ),
+      t(
+        'Mock ke score se ghabrao mat — woh sirf batata hai ki kya revise karna hai.',
+        'Do not panic at the mock score — it only tells you what to revise.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Mock Schedule Print Karo',
+        'Practice: Print Your Own Mock Schedule'
+      ),
+      task: t(
+        'Neeche diya gaya code Day 4, 5 aur 6 ke mock tests ka schedule print karta hai. Code run karo aur verify karo ki output expected jaisa aata hai. Phir apne hisaab se mock ke din badal kar dobara chalao.',
+        'The code below prints the mock test schedule for Day 4, 5, and 6. Run the code and verify that the output matches the expected output. Then change the mock days to match your own plan and run it again.'
+      ),
+      language: 'python',
+      starter: `mocks = [("Mock 1", "Day 4 morning"), ("Mock 2", "Day 5 morning"), ("Mock 3", "Day 6 morning")]
+for name, slot in mocks:
+    print(name, "->", slot)
+print("Mocks planned:", len(mocks))`,
+      expected: `Mock 1 -> Day 4 morning
+Mock 2 -> Day 5 morning
+Mock 3 -> Day 6 morning
+Mocks planned: 3`
+    },
+    readMinutes: 12
+  };
+
+const placementInterviewDay: Article = {
+    id: 'placement-interview-day',
+    subjectId: 'placement',
+    title: t(
+      'Interview Day Checklist — Subah se Interview Tak',
+      'Interview Day Checklist — From Morning to the Interview'
+    ),
+    summary: t(
+      'Interview wale din subah uthne se lekar interview room se bahar aane tak har step ki checklist: kya pehanna hai, kya le jaana hai, kab nikalna hai, interviewer se kaise baat karni hai, aur interview ke baad kya karna hai.',
+      'A checklist for every step on the interview day, from waking up in the morning to coming out of the interview room: what to wear, what to carry, when to leave, how to talk to the interviewer, and what to do after the interview.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Interview Day Kya Hota Hai? (Taiyaari ka Aakhri Test)',
+          '1. What Is the Interview Day? (The Final Test of Preparation)'
+        ),
+        body: t(
+          `**Interview day** woh din hai jab aapki saari taiyaari ka test hota hai — aptitude, technical, HR, sab kuch ek hi din mein. Is din aapki knowledge ke saath-saath aapki **taiyaari, time management aur confidence** bhi check hoti hai. Jo student interview ke din shaant rehta hai, woh apni taiyaari ka poora fayda utha paata hai.
+
+Is din ke 4 hisse hain: **subah** (uthna, taiyaar hona, nashta), **travel** (time par nikalna, venue par pahunchna), **interview** (andar jaana, sawaal-jawaab, bahar aana), aur **baad mein** (ghar aakar notes likhna, result ka wait karna). Har hisse ki apni checklist hai, aur is article mein har checklist di gayi hai.
+
+Sabse important baat: interview day par **naya kuch mat seekho**. Subah uthkar formulas revise karne ki koshish mat karo — usse sirf nervousness badhegi. Subah ka time sirf taiyaar hone aur shaant rehne ke liye hai. Aapki taiyaari pehle se poori hai; is din sirf use dikhana hai.`,
+          `The **interview day** is the day when all your preparation is tested — aptitude, technical, HR, everything in one day. On this day, along with your knowledge, your **preparation, time management, and confidence** are also checked. The student who stays calm on the interview day gets the full benefit of the preparation.
+
+This day has 4 parts: **morning** (waking up, getting ready, breakfast), **travel** (leaving on time, reaching the venue), **interview** (going in, questions and answers, coming out), and **afterwards** (coming home, writing notes, waiting for the result). Each part has its own checklist, and this article gives every checklist.
+
+The most important thing: on the interview day, **do not learn anything new**. Do not try to revise formulas after waking up — that only raises nervousness. The morning is only for getting ready and staying calm. Your preparation is already complete; today you only have to show it.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Late Pahunchna vs Time par Pahunchna',
+          '2. Real-Life Examples: Reaching Late vs Reaching on Time'
+        ),
+        body: t(
+          `**Rohan** (invented example) interview wale din late nikla. Usne socha ki venue paas hai, 30 minute mein pahunch jaayega. Par raaste mein traffic mil gaya aur woh 15 minute late pahuncha. Uska aptitude test shuru ho chuka tha, aur woh bhaag kar andar gaya — saans phool rahi thi, haath kaanp rahe the, aur pehle 10 minute mein uska dimaag kaam hi nahi kar raha tha. Late pahunchna uski sabse badi galti thi.
+
+**Asha** (invented example) interview se 1 ghanta pehle venue par pahunch gayi. Usne aaram se baith kar paani piya, apne documents ek baar check kiye, aur shaant hokar wait kiya. Jab uska number aaya, toh woh fresh thi aur usne pehle question ka jawab aaram se diya. Time par pahunchna uski jeet thi — usne apne liye **buffer time** rakha tha.
+
+Teesra example hai **kapdon ka**. Ek student (invented example) interview mein casual kapde pehen kar gaya aur interviewer ne pehle hi minute mein notice kar liya. Kapde aapki selection decide nahi karte, par pehla impression banate hain. Formal kapde pehno — clean shirt, formal shoes, aur saaf-suthra look. Interview day par kapdon par time waste mat karo; pehle din hi decide kar lo ki kya pehanna hai.`,
+          `**Rohan** (an invented example) left late on the interview day. He thought the venue was near and he would reach in 30 minutes. But he met traffic on the way and reached 15 minutes late. The aptitude test had already started, and he ran inside — his breath was short, his hands were shaking, and his mind did not work for the first 10 minutes. Reaching late was his biggest mistake.
+
+**Asha** (an invented example) reached the venue 1 hour before the interview. She sat calmly, drank water, checked her documents once, and waited peacefully. When her turn came, she was fresh and answered the first question calmly. Reaching on time was her win — she had kept **buffer time** for herself.
+
+A third example is about **clothes**. One student (an invented example) went to the interview in casual clothes, and the interviewer noticed it in the first minute. Clothes do not decide your selection, but they make the first impression. Wear formal clothes — a clean shirt, formal shoes, and a neat look. Do not waste time on clothes on the interview day; decide the day before what to wear.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Interview Day ki Checklist, Subah se Shaam Tak',
+          '3. Step-by-Step: The Interview Day Checklist, from Morning to Evening'
+        ),
+        body: t(
+          `Ab hum interview day ko step-by-step dekhte hain. Har step ke saath uski checklist hai.
+
+**Subah (6:00 - 8:00):** Jaldi utho, fresh ho jao, halka nashta karo. Formal kapde pehno — jo pehle din decide kiye the. Bag check karo: resume ki copies, ID proof, pen, photos, paani ki bottle. Ghar se nikalne se pehle ek baar checklist dekho.
+
+**Travel (8:00 - 9:00):** Time se 1 ghanta pehle niklo, taaki traffic ka buffer rahe. Venue ka address aur reporting time ek baar phir check karo. Raaste mein phone par kuch mat padho — shaant raho aur saans lo.
+
+**Interview (9:00 - 12:00):** Venue par report karo, apna number wait karo. Andar jaate time smile karo, "Good morning" bolo, aur baithne se pehle permission lo. Sawaal dhyaan se suno, phir jawab do. Agar jawab nahi aata, toh seedha bolo "I am not sure, but I will try" — jhooth mat bolo.
+
+**Baad mein (12:00 ke baad):** Ghar aakar saare sawaal likho jo poochhe gaye the — ye aapki agli taiyaari ka syllabus hai. Result ka wait shaant hokar karo, baar-baar mail check mat karo.
+
+Neeche wala code interview day ki checklist check karta hai. Dry run: resume copies done, ID proof done, pen done, water bottle PENDING, formal shoes done. Pending items 1 — water bottle. Isi checklist ko apne bag par chalao aur pending items ko pehle poora karo.`,
+          `Now let us look at the interview day step by step. Each step comes with its checklist.
+
+**Morning (6:00 - 8:00):** Wake up early, freshen up, and eat a light breakfast. Wear formal clothes — the ones you decided the day before. Check the bag: resume copies, ID proof, pen, photos, and a water bottle. Before leaving home, look at the checklist once.
+
+**Travel (8:00 - 9:00):** Leave 1 hour early, so there is buffer for traffic. Check the venue address and reporting time once again. On the way, do not study on the phone — stay calm and breathe.
+
+**Interview (9:00 - 12:00):** Report at the venue and wait for your turn. While going in, smile, say "Good morning", and take permission before sitting. Listen to the question carefully, then answer. If you do not know the answer, say plainly, "I am not sure, but I will try" — do not lie.
+
+**Afterwards (after 12:00):** After coming home, write down all the questions that were asked — they are the syllabus for your next preparation. Wait for the result calmly; do not check the mail again and again.
+
+The code below checks the interview day checklist. Dry run: resume copies done, ID proof done, pen done, water bottle PENDING, formal shoes done. Pending items are 1 — the water bottle. Run this same checklist on your bag and finish the pending items first.`
+        ),
+        code: {
+          title: t(
+            'Interview Day ki Checklist Check Karna',
+            'Checking the Interview Day Checklist'
+          ),
+          language: 'python',
+          code: `checklist = [
+    ("Resume copies", True),
+    ("ID proof", True),
+    ("Pen", True),
+    ("Water bottle", False),
+    ("Formal shoes", True),
+]
+for item, done in checklist:
+    status = "done" if done else "PENDING"
+    print("[" + status + "]", item)
+pending = 0
+for _, done in checklist:
+    if not done:
+        pending += 1
+print("Pending items:", pending)`,
+          output: `[done] Resume copies
+[done] ID proof
+[done] Pen
+[PENDING] Water bottle
+[done] Formal shoes
+Pending items: 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Interview Day par Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes on the Interview Day'
+        ),
+        body: t(
+          `**Galti 1: Late pahunchna.** Late pahunchne se pehla impression kharab hota hai aur dimaag panic mein chala jaata hai. Hamesha 1 ghanta pehle pahuncho — buffer time rakho.
+
+**Galti 2: Subah naya kuch padhna.** Subah uthkar formulas revise karne se nervousness badhti hai. Subah ka time sirf taiyaar hone ke liye hai. Jo padhna tha, woh pehle padh chuke ho.
+
+**Galti 3: Interviewer se behes karna.** Agar interviewer aapki baat se agree na kare, toh behes mat karo. Shaant hokar apna point rakho aur aage badho. Behes karne se interviewer ko lagta hai ki aap team mein kaam nahi kar paoge.
+
+**Galti 4: Jhooth bolna.** Agar jawab nahi aata, toh jhooth mat bolo. Interviewer ko jhooth aasani se samajh aata hai. Seedha bolo ki aapko nahi pata, par aap seekhna chahte ho. Honesty se trust banta hai.`,
+          `**Mistake 1: Reaching late.** Reaching late spoils the first impression and puts the mind into panic. Always reach 1 hour early — keep buffer time.
+
+**Mistake 2: Studying something new in the morning.** Revising formulas after waking up raises nervousness. The morning is only for getting ready. Whatever had to be studied is already studied.
+
+**Mistake 3: Arguing with the interviewer.** If the interviewer does not agree with you, do not argue. Put your point calmly and move ahead. Arguing makes the interviewer feel you cannot work in a team.
+
+**Mistake 4: Lying.** If you do not know the answer, do not lie. The interviewer sees through a lie easily. Say plainly that you do not know, but you want to learn. Honesty builds trust.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Interviewer Mushkil Sawaal Poochhe, Ya Aap Atak Jaayein',
+          '5. Edge Cases: The Interviewer Asks a Hard Question, or You Get Stuck'
+        ),
+        body: t(
+          `**Edge case 1: Interviewer bahut mushkil sawaal poochhe.** Agar sawaal samajh nahi aaya, toh dobara poochho — "Could you please repeat the question?" bolna bilkul theek hai. Sawaal ko dobara sunne se aksar jawab yaad aa jaata hai. Galat samajh kar jawab dena, dobara poochhne se bura hai.
+
+**Edge case 2: Beech mein atak jaayein.** Agar jawab dete-dete atak jaayein, toh ruko, saans lo, aur phir shuru karo. "Let me think for a moment" bolna theek hai. Interviewer ko aapki sochne ki speed nahi, aapka tareeka dekhna hai.
+
+**Edge case 3: Interviewer aapke resume par sawaal poochhe.** Resume mein jo kuch likha hai, uska jawab aapko aana chahiye. Agar resume mein koi project likha hai, toh us project ke baare mein sab kuch yaad rakho — kya banaya, kaise banaya, kya mushkil aayi. Resume par jhooth mat likho.
+
+**Edge case 4: Interview lamba chale ya chhota.** Interview lamba hona achha bhi ho sakta hai aur bura bhi — iska matlab kuch bhi nahi hota. Chhota interview bhi selection de sakta hai. Interview ke length se result ka andaza mat lagao.`,
+          `**Edge case 1: The interviewer asks a very hard question.** If you do not understand the question, ask again — saying "Could you please repeat the question?" is completely fine. Hearing the question again often brings the answer back. Answering with a wrong understanding is worse than asking again.
+
+**Edge case 2: You get stuck in the middle.** If you get stuck while answering, stop, breathe, and start again. Saying "Let me think for a moment" is fine. The interviewer wants to see your way of thinking, not your speed of thinking.
+
+**Edge case 3: The interviewer asks about your resume.** You should know the answer to everything written in your resume. If a project is written in your resume, remember everything about it — what you built, how you built it, and what was hard. Do not write lies in your resume.
+
+**Edge case 4: The interview runs long or short.** A long interview can be good or bad — it means nothing by itself. A short interview can also lead to selection. Do not guess the result from the length of the interview.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Nervous Ho Jaayein, Ya Sawaal ka Jawaab Na Aaye?',
+          '6. What-If: You Feel Nervous, or You Do Not Know the Answer?'
+        ),
+        body: t(
+          `**What if: interview se pehle bahut nervous ho jaayein?** Nervous hona normal hai — har student nervous hota hai. Deep breath lo, paani piyo, aur apne aap se bolo "Maine taiyaari ki hai". Nervousness ko khatam karne ki koshish mat karo — use accept karo aur andar jao. Andar jaate hi pehle 2 minute mein nervousness kam ho jaati hai.
+
+**What if: sawaal ka jawab bilkul na aaye?** Seedha bolo "I do not know the answer, but I would like to learn it." Ye jawab interviewer ko impress karta hai, kyunki ismein honesty hai. Jhooth bolkar galat jawab dena, "pata nahi" bolne se bura hai.
+
+**What if: interviewer aapse "Why should we hire you?" poochhe?** Iska jawab pehle se taiyaar rakho: apni 2 strengths batao aur ek example do. Jaise "Main fast learner hoon — maine 2 hafte mein Python seekh kar ek project banaya tha." Example ke bina strength khaali lagti hai.
+
+**What if: interview ke baad lage ki sab kharab ho gaya?** Aisa lagna normal hai — har student ko aisa lagta hai. Interview ke baad sawaal likho aur ghar jao. Result ka wait shaant hokar karo. Aksar interview lagta hai kharab hua, par result achha aata hai.`,
+          `**What if you feel very nervous before the interview?** Feeling nervous is normal — every student feels nervous. Take a deep breath, drink water, and tell yourself, "I have prepared." Do not try to remove nervousness — accept it and go in. Within the first 2 minutes inside, nervousness falls.
+
+**What if you do not know the answer to a question at all?** Say plainly, "I do not know the answer, but I would like to learn it." That answer impresses the interviewer, because it shows honesty. Giving a wrong answer by lying is worse than saying "I do not know."
+
+**What if the interviewer asks, "Why should we hire you?"** Keep the answer ready in advance: tell 2 strengths and give one example. For example, "I am a fast learner — I learned Python in 2 weeks and built a project." A strength without an example sounds empty.
+
+**What if after the interview you feel everything went wrong?** Feeling that way is normal — every student feels it. After the interview, write down the questions and go home. Wait for the result calmly. Often the interview feels bad, but the result turns out good.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Interview Day par Shaant Raho, Time par Pahuncho',
+          '7. Summary: Stay Calm on the Interview Day, Reach on Time'
+        ),
+        body: t(
+          `Interview day ka ek hi rule hai: **shaant raho, time par pahuncho, aur sach bolo.** Subah naya kuch mat padho, 1 ghanta pehle pahuncho, formal kapde pehno, aur checklist se bag check karo. Interviewer se aaram se baat karo, sawaal dhyaan se suno, aur jawab na aaye toh seedha bolo.
+
+Yaad rakhne wali 3 baatein: buffer time rakho, jhooth mat bolo, aur interview ke baad sawaal likh lo. Interview day par aapki taiyaari ka test hota hai, aapki kismat ka nahi — jo taiyaari ki hai, woh dikhane ka din hai.
+
+Agle article mein hum offer ke baad ka plan dekhenge — documents, joining, aur pehle 90 din mein kya karna hai.`,
+          `The interview day has only one rule: **stay calm, reach on time, and tell the truth.** Do not study anything new in the morning, reach 1 hour early, wear formal clothes, and check the bag with the checklist. Talk to the interviewer calmly, listen to the questions carefully, and if you do not know an answer, say so plainly.
+
+Remember 3 things: keep buffer time, do not lie, and write down the questions after the interview. The interview day tests your preparation, not your luck — it is the day to show what you prepared.
+
+In the next article we will look at the plan after the offer — documents, joining, and what to do in the first 90 days.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Interview Day ke 4 Hisse',
+        'The 4 Parts of the Interview Day'
+      ),
+      caption: t(
+        'Har hisse ki apni checklist hai — subah se lekar ghar wapas aane tak',
+        'Each part has its own checklist — from morning till coming back home'
+      ),
+      nodes: [
+        {
+          t: t('Subah: Taiyaar hona', 'Morning: Getting ready'),
+          s: t('Jaldi utho, nashta karo, formal kapde pehno, bag check karo', 'Wake up early, eat breakfast, wear formal clothes, check the bag')
+        },
+        {
+          t: t('Travel: Time par nikalna', 'Travel: Leaving on time'),
+          s: t('1 ghanta pehle niklo, traffic ka buffer rakho', 'Leave 1 hour early, keep buffer for traffic')
+        },
+        {
+          t: t('Interview: Shaant hokar jawab dena', 'Interview: Answering calmly'),
+          s: t('Sawaal suno, phir jawab do — jawab na aaye toh seedha bolo', 'Listen to the question, then answer — if you do not know, say so plainly')
+        },
+        {
+          t: t('Baad mein: Sawaal likhna', 'Afterwards: Writing down the questions'),
+          s: t('Ghar aakar sawaal likho — ye agli taiyaari ka syllabus hai', 'After coming home, write the questions — they are the syllabus for the next preparation')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Interview Day ka Subah ka Timeline Print Karna',
+          'Printing the Morning Timeline of the Interview Day'
+        ),
+        language: 'python',
+        code: `timeline = [
+    ("6:00 AM", "Wake up and freshen up"),
+    ("7:00 AM", "Breakfast and revise notes"),
+    ("8:00 AM", "Leave for the venue"),
+    ("9:00 AM", "Reach and report at the desk"),
+]
+for time, task in timeline:
+    print(time, "-", task)`,
+        output: `6:00 AM - Wake up and freshen up
+7:00 AM - Breakfast and revise notes
+8:00 AM - Leave for the venue
+9:00 AM - Reach and report at the desk`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Interview wale din venue par kab pahunchna chahiye?',
+          'When should you reach the venue on the interview day?'
+        ),
+        opts: [
+          t('Bilkul time par', 'Exactly on time'),
+          t('1 ghanta pehle', '1 hour early'),
+          t('15 minute late', '15 minutes late'),
+          t('Interview ke baad', 'After the interview')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 1 ghanta pehle pahuncho — traffic ka buffer rehta hai aur dimaag shaant rehta hai.',
+          'Correct answer: reach 1 hour early — there is buffer for traffic and the mind stays calm.'
+        )
+      },
+      {
+        q: t(
+          'Interview ke din subah kya karna chahiye?',
+          'What should you do on the morning of the interview day?'
+        ),
+        opts: [
+          t('Naye formulas revise karna', 'Revise new formulas'),
+          t('Taiyaar hona aur shaant rehna', 'Get ready and stay calm'),
+          t('Raat bhar jaag kar padhna', 'Stay awake all night to study'),
+          t('Naya topic shuru karna', 'Start a new topic')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: subah ka time sirf taiyaar hone ke liye hai — naya padhne se nervousness badhti hai.',
+          'Correct answer: the morning is only for getting ready — studying new things raises nervousness.'
+        )
+      },
+      {
+        q: t(
+          'Sawaal ka jawab na aaye toh kya karna chahiye?',
+          'If you do not know the answer to a question, what should you do?'
+        ),
+        opts: [
+          t('Jhooth bolkar galat jawab dena', 'Lie and give a wrong answer'),
+          t('Seedha bolna ki pata nahi, par seekhna chahte ho', 'Say plainly that you do not know, but you want to learn'),
+          t('Chup rehna', 'Stay silent'),
+          t('Interviewer se behes karna', 'Argue with the interviewer')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: honesty se trust banta hai — jhooth pakda jaane par interview kharab ho jaata hai.',
+          'Correct answer: honesty builds trust — a lie spoils the interview once it is caught.'
+        )
+      },
+      {
+        q: t(
+          'Interviewer se "Why should we hire you?" poochhe toh jawab kaisa hona chahiye?',
+          'If the interviewer asks "Why should we hire you?", how should the answer be?'
+        ),
+        opts: [
+          t('Sirf "I am the best" bolna', 'Only saying "I am the best"'),
+          t('2 strengths + ek example', '2 strengths plus one example'),
+          t('Kuch na bolna', 'Saying nothing'),
+          t('Doston ki tareef karna', 'Praising friends')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: strength ke saath example do — jaise 2 hafte mein Python seekh kar project banaya tha.',
+          'Correct answer: give an example with the strength — for example, learning Python in 2 weeks and building a project.'
+        )
+      },
+      {
+        q: t(
+          'Interview ke baad sabse pehla kaam kya hai?',
+          'What is the first job after the interview?'
+        ),
+        opts: [
+          t('Baar-baar mail check karna', 'Checking the mail again and again'),
+          t('Poochhe gaye sawaal likh lena', 'Writing down the questions that were asked'),
+          t('Taiyaari bilkul band kar dena', 'Stopping preparation completely'),
+          t('Doston ko interview ki burai karna', 'Complaining about the interview to friends')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: poochhe gaye sawaal agli taiyaari ka syllabus hote hain — unhe likhna sabse important hai.',
+          'Correct answer: the questions asked are the syllabus for the next preparation — writing them down is the most important job.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Interview day par naya kuch mat padho — subah sirf taiyaar hone ke liye hai.',
+        'Do not study anything new on the interview day — the morning is only for getting ready.'
+      ),
+      t(
+        'Venue par 1 ghanta pehle pahuncho — buffer time rakho.',
+        'Reach the venue 1 hour early — keep buffer time.'
+      ),
+      t(
+        'Formal kapde pehno aur bag checklist se check karo.',
+        'Wear formal clothes and check the bag with the checklist.'
+      ),
+      t(
+        'Jawab na aaye toh seedha bolo — jhooth mat bolo.',
+        'If you do not know the answer, say so plainly — do not lie.'
+      ),
+      t(
+        'Interview ke baad sawaal likh lo — ye agli taiyaari ka syllabus hai.',
+        'After the interview, write down the questions — they are the syllabus for the next preparation.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Bag Checklist Banao',
+        'Practice: Make Your Own Bag Checklist'
+      ),
+      task: t(
+        'Neeche diya gaya code bag mein rakhi cheezon ko gin kar print karta hai. Code run karo aur verify karo ki output expected jaisa aata hai. Phir apni cheezein badal kar dobara chalao — total 10 items hone chahiye.',
+        'The code below counts and prints the things kept in the bag. Run the code and verify that the output matches the expected output. Then change the items to your own and run it again — the total should be 10 items.'
+      ),
+      language: 'python',
+      starter: `bag = {"Resume copies": 3, "ID proof": 1, "Pens": 2, "Photos": 4}
+for item in bag:
+    print(item, "x", bag[item])
+print("Total items packed:", sum(bag.values()))`,
+      expected: `Resume copies x 3
+ID proof x 1
+Pens x 2
+Photos x 4
+Total items packed: 10`
+    },
+    readMinutes: 12
+  };
+
+const placementAfterOffer: Article = {
+    id: 'placement-after-offer',
+    subjectId: 'placement',
+    title: t(
+      'After the Offer — Documents, Joining aur Pehle 90 Din',
+      'After the Offer — Documents, Joining, and the First 90 Days'
+    ),
+    summary: t(
+      'Offer milne ke baad kya karna hai: offer letter ko dhyaan se padhna, documents taiyaar karna, joining date confirm karna, aur pehle 90 din mein team ko samajhna, chhote tasks lena aur apna kaam seekhna. Offer milna shuruaat hai, aakhri step nahi.',
+      'What to do after getting an offer: read the offer letter carefully, prepare documents, confirm the joining date, and in the first 90 days understand the team, take small tasks, and learn your work. Getting an offer is the start, not the last step.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Offer ke Baad Kya Hota Hai? (Selection se Joining Tak)',
+          '1. What Happens After the Offer? (From Selection to Joining)'
+        ),
+        body: t(
+          `**Offer** ka matlab hai ki company ne aapko select kar liya hai aur aapko ek offer letter bhejti hai. Offer letter mein joining date, role, location aur joining ke liye zaroori documents likhe hote hain. Offer milna bahut badi baat hai, par ye aakhri step nahi hai — offer ke baad **documents, joining aur pehle 90 din** ka kaam baki rehta hai.
+
+Sabse pehla kaam hai offer letter ko **dhyaan se padhna** — har line padho, joining date, documents ki list, aur koi bhi instruction note karo. Agar kuch samajh na aaye, toh company ke HR se poochho. Offer letter ko accept karne se pehle use poora samajhna zaroori hai. Jaldi mein accept mat karo.
+
+Doosra kaam hai documents taiyaar karna. Aksar ye documents chahiye hote hain: mark sheets, ID proof, passport photos, aur bank details. Har document ki ek copy aur original dono rakho. Documents taiyaar karne mein time lagta hai, isliye offer milte hi shuru kar do — joining ke din tak wait mat karo.`,
+          `An **offer** means the company has selected you and sends you an offer letter. The offer letter carries the joining date, the role, the location, and the documents needed for joining. Getting an offer is a big thing, but it is not the last step — after the offer, the work of **documents, joining, and the first 90 days** still remains.
+
+The first job is to read the offer letter **carefully** — read every line, note the joining date, the list of documents, and any instruction. If something is unclear, ask the company HR. It is important to fully understand the offer letter before accepting it. Do not accept it in a hurry.
+
+The second job is to prepare the documents. Often these documents are needed: mark sheets, ID proof, passport photos, and bank details. Keep both a copy and the original of every document. Preparing documents takes time, so start as soon as the offer arrives — do not wait till the joining day.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Documents Taiyaar vs Aakhri Din Bhaagna',
+          '2. Real-Life Examples: Documents Ready vs Running on the Last Day'
+        ),
+        body: t(
+          `**Asha** (invented example) ko offer mila aur usne usi din documents ki list banayi. Usne 3 din mein saare documents taiyaar kar liye — mark sheets ki copies, ID proof, photos, aur bank details. Joining ke din woh aaram se gayi, documents submit kiye, aur pehle din se kaam par focus kar paayi. Uska pehla din shaant tha, kyunki taiyaari pehle se poori thi.
+
+**Rohan** (invented example) ne documents ko joining ke din tak chhod diya. Joining wale din subah use pata chala ki passport photos khatam ho gaye hain aur bank details ka paper nahi mil raha. Woh subah-subah bhaag kar photo khinchwane gaya aur late pahuncha. Uska pehla din panic mein beeta. Documents ka kaam chhota lagta hai, par pehle din par iska asar bada hota hai.
+
+Teesra example hai **offer letter na padhne** ka. Ek student (invented example) ne offer letter ko bina padhe accept kar liya aur joining ke din pata chala ki joining location alag city mein hai. Usne travel ka koi plan nahi banaya tha. Offer letter ko dhyaan se padhna aur travel ka plan pehle se banana — ye dono kaam offer milte hi karne chahiye.`,
+          `**Asha** (an invented example) got the offer and made a list of documents the same day. In 3 days she prepared all the documents — copies of mark sheets, ID proof, photos, and bank details. On the joining day she went calmly, submitted the documents, and could focus on work from the first day. Her first day was peaceful, because the preparation was already complete.
+
+**Rohan** (an invented example) left the documents till the joining day. On the morning of joining, he found that the passport photos were finished and the bank details paper was missing. He ran in the morning to get photos taken and reached late. His first day passed in panic. The documents work looks small, but its effect on the first day is big.
+
+A third example is about **not reading the offer letter**. One student (an invented example) accepted the offer letter without reading it, and on the joining day found out that the joining location was in a different city. No travel plan had been made. Reading the offer letter carefully and making a travel plan in advance — both jobs should be done as soon as the offer arrives.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Documents Check Karo aur Joining Confirm Karo',
+          '3. Step-by-Step: Check the Documents and Confirm the Joining'
+        ),
+        body: t(
+          `Ab hum offer ke baad ke steps ko step-by-step dekhte hain.
+
+**Step 1 — Offer letter padho:** Har line padho. Joining date, role, location, documents ki list — sab note karo. Agar kuch samajh na aaye, toh HR se poochho. Offer ko accept karne ka tareeka bhi letter mein likha hota hai — mail se accept karo ya portal par, wahi karo.
+
+**Step 2 — Documents ki checklist banao:** Mark sheets, ID proof, passport photos, bank details — har document ke saamne tick karo. Jo document missing hai, use pehle taiyaar karo. Neeche wala code documents ki checklist check karta hai. Dry run: offer letter printout ready, mark sheets ready, ID proof ready, passport photos missing, bank details missing. Missing documents 2 — passport photos aur bank details. Isi checklist ko apne documents par chalao.
+
+**Step 3 — Joining date confirm karo:** HR ko mail karke joining date confirm karo aur poochho ki pehle din kya le jaana hai. Agar travel karna hai, toh travel aur rehne ka plan pehle se banao.
+
+**Step 4 — Pehle din ki taiyaari karo:** Pehle din ke liye formal kapde, documents ka folder, aur ek notebook taiyaar rakho. Pehle din ka kaam hai team se milna aur apna kaam samajhna — kuch bhi prove karne ki jaldi mat karo.`,
+          `Now let us look at the steps after the offer, one by one.
+
+**Step 1 — Read the offer letter:** Read every line. Note the joining date, the role, the location, and the list of documents. If something is unclear, ask HR. The way to accept the offer is also written in the letter — accept by mail or on the portal, whichever it says.
+
+**Step 2 — Make a documents checklist:** Mark sheets, ID proof, passport photos, bank details — tick each document. Prepare the missing document first. The code below checks the documents checklist. Dry run: offer letter printout ready, mark sheets ready, ID proof ready, passport photos missing, bank details missing. Missing documents are 2 — passport photos and bank details. Run this same checklist on your documents.
+
+**Step 3 — Confirm the joining date:** Mail HR to confirm the joining date and ask what to bring on the first day. If you must travel, make the travel and stay plan in advance.
+
+**Step 4 — Prepare for the first day:** Keep formal clothes, a folder of documents, and a notebook ready for the first day. The first day job is to meet the team and understand your work — do not rush to prove anything.`
+        ),
+        code: {
+          title: t(
+            'Joining ke Documents ki Checklist Check Karna',
+            'Checking the Checklist of Joining Documents'
+          ),
+          language: 'python',
+          code: `documents = [
+    ("Offer letter printout", True),
+    ("Mark sheets", True),
+    ("ID proof", True),
+    ("Passport photos", False),
+    ("Bank details", False),
+]
+for doc, ready in documents:
+    print(("Ready: " if ready else "Missing: ") + doc)
+missing = [d for d, r in documents if not r]
+print("Missing documents:", len(missing))
+for d in missing:
+    print("-", d)`,
+          output: `Ready: Offer letter printout
+Ready: Mark sheets
+Ready: ID proof
+Missing: Passport photos
+Missing: Bank details
+Missing documents: 2
+- Passport photos
+- Bank details`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Offer ke Baad Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes After the Offer'
+        ),
+        body: t(
+          `**Galti 1: Offer letter bina padhe accept karna.** Offer letter mein joining date, location aur documents likhe hote hain. Bina padhe accept karne se baad mein problem hoti hai. Har line padho, phir accept karo.
+
+**Galti 2: Documents aakhri din tak chhodna.** Documents taiyaar karne mein time lagta hai — photos khinchwana, copies nikalwana, bank details nikalna. Offer milte hi shuru kar do. Aakhri din bhaagna pehle din ko kharab kar deta hai.
+
+**Galti 3: Pehle din hi sab kuch prove karne ki koshish karna.** Pehle din ka kaam hai sunna aur samajhna, bolna nahi. Jo naye log pehle din hi sab kuch karne ki koshish karte hain, woh galtiyaan karte hain. Pehle hafte mein team ko samjho, phir kaam lo.
+
+**Galti 4: Pehle 90 din mein seekhna band kar dena.** Offer milne ke baad kuch log padhna band kar dete hain. Par pehle 90 din mein sabse zyada seekhna hota hai — naye tools, nayi team, naya kaam. Roz thoda-thoda seekhte raho aur notes likhte raho.`,
+          `**Mistake 1: Accepting the offer letter without reading it.** The offer letter carries the joining date, location, and documents. Accepting it without reading causes problems later. Read every line, then accept.
+
+**Mistake 2: Leaving documents till the last day.** Preparing documents takes time — getting photos taken, making copies, and getting bank details. Start as soon as the offer arrives. Running around on the last day spoils the first day.
+
+**Mistake 3: Trying to prove everything on the first day.** The first day job is to listen and understand, not to speak. New people who try to do everything on the first day make mistakes. Understand the team in the first week, then take work.
+
+**Mistake 4: Stopping learning in the first 90 days.** After getting an offer, some people stop studying. But the first 90 days are when the most learning happens — new tools, a new team, new work. Keep learning a little every day and keep writing notes.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Joining Date Badal Jaaye, Ya Documents Na Milen',
+          '5. Edge Cases: The Joining Date Changes, or Documents Are Missing'
+        ),
+        body: t(
+          `**Edge case 1: Joining date badal jaaye.** Kabhi-kabhi company joining date aage badha deti hai. Is case mein ghabrao mat — HR ko mail karke nayi date confirm karo aur us beech mein apni skills par kaam karo. Extra time ko waste mat karo.
+
+**Edge case 2: Koi document na mile.** Agar koi mark sheet ya certificate nahi mil raha, toh turant college se contact karo aur duplicate ke liye apply karo. Duplicate banne mein time lagta hai, isliye jaldi karo. HR ko bhi bata do ki document thoda late milega — sach bolne se trust banta hai.
+
+**Edge case 3: Joining location alag city mein ho.** Agar joining alag city mein hai, toh travel aur rehne ka plan pehle se banao. Pehle hafte ke liye rehne ki jagah confirm karo, travel tickets book karo, aur zaroori cheezein pack karo. Aakhri din par travel plan mat banao.
+
+**Edge case 4: Pehle din nervousness ho.** Pehla din sabke liye naya hota hai — team ke log bhi kabhi naye the. Team se milo, apna introduction do, aur sawaal poochhne se daro mat. Sawaal poochhna kamzori nahi, seekhne ki nishani hai.`,
+          `**Edge case 1: The joining date changes.** Sometimes the company pushes the joining date ahead. In that case do not panic — mail HR to confirm the new date and use the extra time to work on your skills. Do not waste the extra time.
+
+**Edge case 2: A document is missing.** If a mark sheet or certificate cannot be found, contact the college at once and apply for a duplicate. A duplicate takes time to make, so hurry. Tell HR too that the document will come a little late — telling the truth builds trust.
+
+**Edge case 3: The joining location is in a different city.** If joining is in a different city, make the travel and stay plan in advance. Confirm a place to stay for the first week, book travel tickets, and pack the needed things. Do not make the travel plan on the last day.
+
+**Edge case 4: Nervousness on the first day.** The first day is new for everyone — the team members were also new once. Meet the team, give your introduction, and do not fear asking questions. Asking questions is not weakness; it is a sign of learning.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Pehle 90 Din mein Kya Seekhna Hai?',
+          '6. What-If: What Should You Learn in the First 90 Days?'
+        ),
+        body: t(
+          `**What if: pehle 30 din mein kya karna hai?** Pehle 30 din ka kaam hai team, tools aur daily work ko samajhna. Apne manager se poochho ki aapka kaam kya hai, team kaise kaam karti hai, aur kaunse tools use hote hain. Notes likho — har din 5 lines. Notes likhne se seekhna fast hota hai.
+
+**What if: 31-60 din mein kya karna hai?** Chhote tasks lena shuru karo aur sawaal poochho. Galti hone par daro mat — galti se hi seekh milti hai. Apne senior se feedback lo: "Mera kaam kaisa chal raha hai?" Feedback lena growth ki nishani hai.
+
+**What if: 61-90 din mein kya karna hai?** Ek chhota task end-to-end khud karo — shuru se aakhir tak. Ye aapki pehli jeet hogi. Task poora hone par apne manager ko batao aur feedback lo. 90 din ke baad aap team ka hissa ban jaoge.
+
+**What if: pehle 90 din mein kuch samajh na aaye?** Ye normal hai. Sawaal poochho, notes likho, aur senior ki madad lo. Koi bhi pehle din se sab kuch nahi jaanta. Jo log sawaal poochhte hain, woh fast seekhte hain.`,
+          `**What if: what should you do in the first 30 days?** The first 30 days are for understanding the team, the tools, and the daily work. Ask your manager what your work is, how the team works, and which tools are used. Write notes — 5 lines every day. Writing notes makes learning fast.
+
+**What if: what should you do in days 31-60?** Start taking small tasks and asking questions. Do not fear mistakes — mistakes are how learning comes. Take feedback from your senior: "How is my work going?" Taking feedback is a sign of growth.
+
+**What if: what should you do in days 61-90?** Do one small task end to end by yourself — from start to finish. That will be your first win. When the task is done, tell your manager and take feedback. After 90 days you will have become a part of the team.
+
+**What if: you understand nothing in the first 90 days?** That is normal. Ask questions, write notes, and take help from seniors. Nobody knows everything from the first day. People who ask questions learn fast.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Offer Milna Shuruaat Hai, Aakhri Step Nahi',
+          '7. Summary: Getting an Offer Is the Start, Not the Last Step'
+        ),
+        body: t(
+          `Offer ke baad ke 3 kaam yaad rakho: **offer letter padho, documents taiyaar karo, aur joining confirm karo.** Phir pehle 90 din mein team ko samjho, chhote tasks lo, aur ek task end-to-end poora karo. Jo log pehle 90 din mein seekhte hain, woh aage badhte hain.
+
+Yaad rakhne wali 3 baatein: documents offer milte hi taiyaar karo, pehle din sunna aur samajhna hai — prove karna nahi, aur roz notes likho. Offer milna aapki mehnat ka result hai; pehle 90 din aapki aage ki mehnat ki shuruaat hai.
+
+Agle aur aakhri article mein hum placement ki master revision karenge — top 50 questions aur answers, ek hi jagah par.`,
+          `Remember the 3 jobs after the offer: **read the offer letter, prepare the documents, and confirm the joining.** Then, in the first 90 days, understand the team, take small tasks, and finish one task end to end. People who learn in the first 90 days move ahead.
+
+Remember 3 things: prepare documents as soon as the offer arrives, listen and understand on the first day — do not try to prove anything — and write notes every day. Getting an offer is the result of your hard work; the first 90 days are the start of your next hard work.
+
+In the next and last article, we will do the master revision for placements — the top 50 questions and answers, all in one place.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Offer se Pehle 90 Din Tak ka Raasta',
+        'The Path from the Offer to the First 90 Days'
+      ),
+      caption: t(
+        'Har step ka apna kaam hai — documents pehle, seekhna baad mein',
+        'Each step has its own work — documents first, learning after'
+      ),
+      nodes: [
+        {
+          t: t('Offer letter padho', 'Read the offer letter'),
+          s: t('Joining date, role, location aur documents note karo', 'Note the joining date, role, location, and documents')
+        },
+        {
+          t: t('Documents taiyaar karo', 'Prepare the documents'),
+          s: t('Mark sheets, ID proof, photos, bank details — checklist se check karo', 'Mark sheets, ID proof, photos, bank details — check with the checklist')
+        },
+        {
+          t: t('Joining confirm karo', 'Confirm the joining'),
+          s: t('HR ko mail karo, travel aur rehne ka plan banao', 'Mail HR, make the travel and stay plan')
+        },
+        {
+          t: t('Pehle 30 din: Team aur tools samjho', 'First 30 days: Understand the team and tools'),
+          s: t('Roz 5 lines notes likho', 'Write 5 lines of notes every day')
+        },
+        {
+          t: t('Din 31-90: Chhote tasks lo aur ek task end-to-end poora karo', 'Days 31-90: Take small tasks and finish one task end to end'),
+          s: t('Feedback lo aur seekhte raho', 'Take feedback and keep learning')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Pehle 90 Din ke 3 Phases Print Karna',
+          'Printing the 3 Phases of the First 90 Days'
+        ),
+        language: 'python',
+        code: `phases = [
+    ("Days 1-30", "Learn the team, tools and daily work"),
+    ("Days 31-60", "Take small tasks and ask questions"),
+    ("Days 61-90", "Own a small task end to end"),
+]
+for phase, goal in phases:
+    print(phase, "->", goal)`,
+        output: `Days 1-30 -> Learn the team, tools and daily work
+Days 31-60 -> Take small tasks and ask questions
+Days 61-90 -> Own a small task end to end`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Offer milne ke baad sabse pehla kaam kya hai?',
+          'What is the first job after getting an offer?'
+        ),
+        opts: [
+          t('Documents aakhri din tak chhod dena', 'Leave documents till the last day'),
+          t('Offer letter ko dhyaan se padhna', 'Read the offer letter carefully'),
+          t('Padhna band kar dena', 'Stop studying'),
+          t('Travel plan bilkul mat banana', 'Make no travel plan at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: offer letter mein joining date, role, location aur documents likhe hote hain — pehle use poora samjho, phir accept karo.',
+          'Correct answer: the offer letter carries the joining date, role, location, and documents — first understand it fully, then accept.'
+        )
+      },
+      {
+        q: t(
+          'Documents kab taiyaar karne chahiye?',
+          'When should documents be prepared?'
+        ),
+        opts: [
+          t('Joining ke din subah', 'On the morning of the joining day'),
+          t('Offer milte hi', 'As soon as the offer arrives'),
+          t('Joining ke 1 saal baad', 'One year after joining'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: documents taiyaar karne mein time lagta hai, isliye offer milte hi shuru kar do.',
+          'Correct answer: preparing documents takes time, so start as soon as the offer arrives.'
+        )
+      },
+      {
+        q: t(
+          'Pehle 30 din mein kya karna chahiye?',
+          'What should you do in the first 30 days?'
+        ),
+        opts: [
+          t('Sab kuch prove karne ki koshish karna', 'Try to prove everything'),
+          t('Team, tools aur daily work ko samajhna', 'Understand the team, tools, and daily work'),
+          t('Kisi se baat mat karna', 'Talk to nobody'),
+          t('Notes bilkul mat likhna', 'Write no notes at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle 30 din sunne aur samajhne ke hote hain — roz 5 lines notes likho.',
+          'Correct answer: the first 30 days are for listening and understanding — write 5 lines of notes every day.'
+        )
+      },
+      {
+        q: t(
+          'Koi document na mile toh kya karna chahiye?',
+          'If a document cannot be found, what should you do?'
+        ),
+        opts: [
+          t('HR ko bina bataye joining par jaana', 'Go for joining without telling HR'),
+          t('College se duplicate ke liye apply karna aur HR ko batana', 'Apply for a duplicate from the college and tell HR'),
+          t('Jhootha document banana', 'Make a false document'),
+          t('Joining chhod dena', 'Give up the joining')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: duplicate ke liye jaldi apply karo aur HR ko sach bata do — sach bolne se trust banta hai.',
+          'Correct answer: apply early for a duplicate and tell HR the truth — telling the truth builds trust.'
+        )
+      },
+      {
+        q: t(
+          'Pehle 90 din mein sabse important habit kya hai?',
+          'What is the most important habit in the first 90 days?'
+        ),
+        opts: [
+          t('Sawaal poochhna band kar dena', 'Stop asking questions'),
+          t('Roz notes likhna aur seekhte rehna', 'Write notes every day and keep learning'),
+          t('Team se door rehna', 'Stay away from the team'),
+          t('Feedback lena band kar dena', 'Stop taking feedback')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: roz notes likhna aur sawaal poochhna fast seekhne ka tareeka hai — jo log sawaal poochhte hain, woh fast seekhte hain.',
+          'Correct answer: writing notes every day and asking questions is the fast way to learn — people who ask questions learn fast.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Offer letter ko dhyaan se padho — joining date, role, location aur documents note karo.',
+        'Read the offer letter carefully — note the joining date, role, location, and documents.'
+      ),
+      t(
+        'Documents offer milte hi taiyaar karo — aakhri din tak mat chhodo.',
+        'Prepare documents as soon as the offer arrives — do not leave them till the last day.'
+      ),
+      t(
+        'Joining date HR ko mail karke confirm karo.',
+        'Confirm the joining date by mailing HR.'
+      ),
+      t(
+        'Pehle 30 din: team aur tools samjho; din 31-60: chhote tasks lo; din 61-90: ek task end-to-end poora karo.',
+        'First 30 days: understand the team and tools; days 31-60: take small tasks; days 61-90: finish one task end to end.'
+      ),
+      t(
+        'Roz notes likho aur feedback lo — seekhna band mat karo.',
+        'Write notes every day and take feedback — do not stop learning.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Joining se Pehle ke Tasks Print Karo',
+        'Practice: Print the Tasks Before Joining'
+      ),
+      task: t(
+        'Neeche diya gaya code joining se pehle ke 4 tasks ko number ke saath print karta hai. Code run karo aur verify karo ki output expected jaisa aata hai. Phir apne tasks badal kar dobara chalao.',
+        'The code below prints the 4 tasks before joining, with numbers. Run the code and verify that the output matches the expected output. Then change the tasks to your own and run it again.'
+      ),
+      language: 'python',
+      starter: `tasks = ["Collect documents", "Confirm joining date", "Plan travel and stay", "Read the offer letter fully"]
+for i, task in enumerate(tasks, 1):
+    print(i, ".", task)
+print("Tasks done before joining:", len(tasks))`,
+      expected: `1 . Collect documents
+2 . Confirm joining date
+3 . Plan travel and stay
+4 . Read the offer letter fully
+Tasks done before joining: 4`
+    },
+    readMinutes: 12
+  };
+
+const placementInterview: Article = {
+    id: 'placement-interview',
+    subjectId: 'placement',
+    title: t(
+      'Placement Master Revision + Top 50 Q&A — Ek Hi Jagah Par Sab Kuch',
+      'Placement Master Revision and Top 50 Q&A — Everything in One Place'
+    ),
+    summary: t(
+      'Placement ki poori taiyaari ka ek hi article mein revision: aptitude, reasoning, verbal, technical aur HR — har section ke top questions aur unke short answers. Drive se pehle is article ko ek baar padho aur apni taiyaari ko test karo.',
+      'Revision of the whole placement preparation in one article: aptitude, reasoning, verbal, technical, and HR — the top questions of each section with short answers. Read this article once before the drive and test your preparation.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Master Revision Kya Hai? (Poori Taiyaari, Ek Hi Jagah)',
+          '1. What Is Master Revision? (The Whole Preparation, in One Place)'
+        ),
+        body: t(
+          `**Master revision** ka matlab hai poori placement taiyaari ko ek hi baar mein dobara dekhna — aptitude ke formulas, reasoning ke shortcuts, verbal ke rules, technical ke basics, aur HR ke answers. Drive se 1-2 din pehle aapke paas har subject ko dobara padhne ka time nahi hota; master revision aapko **sabse important cheezein** ek hi jagah par deta hai.
+
+Is article mein 50 questions hain — har section ke 10. Technical section mein \`list\`, \`dict\`, \`stack\` aur \`queue\` jaise concepts aate hain. Ye 50 questions woh hain jo placement tests aur interviews mein sabse zyada poochhe jaate hain. In 50 ko yaad karne ka matlab ye nahi ki asli test mein wahi 50 aayenge; matlab ye hai ki in 50 ko solve karne se aapke **concepts** revise ho jaate hain, aur concepts se koi bhi question solve ho sakta hai.
+
+Master revision ka tareeka simple hai: pehle 50 questions ko khud solve karo, phir answers se match karo. Jo question galat ho, use mark karo aur us topic ko 15 minute aur do. Poora article 1 ghante mein khatam ho jaata hai — aur ye 1 ghanta drive se pehle sabse kaam ka ghanta hai.`,
+          `**Master revision** means looking at the whole placement preparation again in one go — aptitude formulas, reasoning shortcuts, verbal rules, technical basics, and HR answers. One or two days before the drive, you do not have time to study every subject again; master revision gives you the **most important things** in one place.
+
+This article has 50 questions — 10 from each section. The technical section covers concepts like \`list\`, \`dict\`, \`stack\`, and \`queue\`. These 50 are the questions asked most often in placement tests and interviews. Learning these 50 does not mean the same 50 will come in the real test; it means that solving these 50 revises your **concepts**, and with concepts any question can be solved.
+
+The way to do master revision is simple: first solve the 50 questions yourself, then match them with the answers. Mark the questions that go wrong and give that topic 15 more minutes. The whole article finishes in 1 hour — and that 1 hour is the most useful hour before the drive.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Revision se Confidence Kaise Badhta Hai',
+          '2. Real-Life Examples: How Revision Raises Confidence'
+        ),
+        body: t(
+          `**Asha** (invented example) ne drive se 1 din pehle master revision kiya. Usne 50 questions solve kiye aur 42 sahi hue. 8 galat questions mein se 5 ek hi topic ke the — time and work. Usne us topic ko 30 minute aur diye aur drive ke din time and work ke saare questions sahi kiye. Master revision ne use bataya ki **kahan kaam karna hai**, aur usne wahi kiya.
+
+**Rohan** (invented example) ne master revision nahi kiya. Usne drive se pehle wali raat naye topics padhe aur subah tak thak gaya. Drive ke din use formulas yaad nahi aa rahe the, kyunki usne purane formulas ko revise hi nahi kiya tha. Naya padhna uski galti thi; purana revise karna uski jeet hoti.
+
+Teesra example hai **flashcards** ka. Kuch students 50 questions ko flashcards ki tarah use karte hain — ek taraf question, doosri taraf answer. Roz 10 flashcards revise karo, aur drive se pehle saare 50 ek baar dekh lo. Flashcards se revision fast hoti hai, kyunki dimaag ko sirf answer yaad karna hota hai, poora chapter nahi.`,
+          `**Asha** (an invented example) did master revision 1 day before the drive. She solved 50 questions and got 42 correct. Of the 8 wrong questions, 5 were from one topic — time and work. She gave that topic 30 more minutes, and on the drive day she answered all time and work questions correctly. Master revision told her **where to work**, and she did exactly that.
+
+**Rohan** (an invented example) did no master revision. On the night before the drive he studied new topics and stayed tired till morning. On the drive day he could not remember the formulas, because he had never revised the old formulas. Studying new things was his mistake; revising the old would have been his win.
+
+A third example is **flashcards**. Some students use the 50 questions like flashcards — the question on one side, the answer on the other. Revise 10 flashcards every day, and look at all 50 once before the drive. Revision with flashcards is fast, because the mind only has to remember the answer, not the whole chapter.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Top 50 Q&A — Flashcards ki Tarah Solve Karo',
+          '3. Step-by-Step: Top 50 Q&A — Solve Them Like Flashcards'
+        ),
+        body: t(
+          `Ab hum 50 questions ko flashcards ki tarah solve karte hain. Pehle question padho, khud answer socho, phir neeche diya hua answer dekho. Har section ke 10 questions hain.
+
+**Aptitude (10):** 1. 250 ka 20% = 50. 2. 60 km, 1.5 ghante = 40 km/h. 3. 350 ka 10% = 35. 4. Simple interest: P=1000, R=10%, T=2 saal = 200. 5. Average of 10, 20, 30 = 20. 6. 15 ka square = 225. 7. 2/5 ko percentage mein = 40%. 8. A, B se 2 guna fast hai; A 10 din mein kaam kare toh B 20 din mein karega. 9. Train 100 km, 2 ghante = 50 km/h. 10. 500 mein se 25% = 125.
+
+**Reasoning (10):** 1. Series 2, 6, 12, 20, 30, ? = 42. 2. A, B ka bhai; B, C ki behen; C, D ka beta — A, D ka beta hai. 3. Odd one out: 2, 4, 8, 9 — 9 odd hai kyunki baaki even hain. 4. CAT ka code 3120 hai (A=1, B=2...), toh DOG = 4157. 5. North ki taraf 5 km, phir east 5 km — aap north-east mein ho. 6. Seating: A, B ke right mein hai — pehle table banao. 7. Mirror image mein left-right badalta hai. 8. 1, 4, 9, 16, 25 — agla 36 hai (squares). 9. If all cats are animals, toh kuch animals cats hain. 10. Puzzle: pehle saari conditions likho, phir table banao.
+
+**Verbal (10):** 1. Happy ka synonym = Glad. 2. Sad ka antonym = Happy. 3. "He do not" galat hai — "He does not" sahi hai. 4. "Their" matlab unka, "There" matlab wahan. 5. "Affect" matlab asar karna, "Effect" matlab asar. 6. Correct spelling: "Beautiful", "Necessary". 7. One word: "One who can use both hands" = Ambidextrous. 8. Idiom: "Break the ice" matlab pehli baar baat shuru karna. 9. Active to passive: "Ram writes a letter" = "A letter is written by Ram". 10. Comprehension: pehle questions padho, phir passage padho.
+
+**Technical (10):** 1. Primary key = table ki har row ko unique pehchanne wala column. 2. Python mein list = ordered, changeable items ka collection. 3. Dict = key-value pairs store karta hai. 4. OOP ke 4 pillars: Encapsulation, Inheritance, Polymorphism, Abstraction. 5. OS mein process = chalta hua program. 6. DBMS mein join = do tables ko jodne ka tareeka. 7. SQL mein SELECT = data nikaalne ka command. 8. Binary search sirf sorted array par kaam karta hai. 9. Stack = LIFO (last in, first out). 10. Queue = FIFO (first in, first out).
+
+**HR (10):** 1. "Tell me about yourself" — naam, padhai, skills, aur ek project, 1 minute mein. 2. "Why should we hire you?" — 2 strengths + ek example. 3. "Your strengths?" — ek strength + example. 4. "Your weakness?" — ek real weakness + use fix karne ka plan. 5. "Why this company?" — company ke baare mein 2 lines padh kar jao. 6. "Where do you see yourself in 5 years?" — skills seekhna aur team mein badhna. 7. "Tell me about your project" — kya banaya, kaise banaya, kya seekha. 8. "Can you work under pressure?" — ek example do jab pressure mein kaam kiya. 9. "Do you have questions for us?" — hamesha 1 sawaal poochho, jaise team kaise kaam karti hai. 10. "Why did you choose this field?" — interest aur ek example.
+
+Neeche wala code flashcards ki tarah 3 sample questions ko print karta hai aur score nikaalta hai. Dry run: list aur dict ke answers sahi hain, OOP ka answer revise karna hai. Score 2 out of 3. Isi tareeke se saare 50 questions ko flashcards ki tarah solve karo.`,
+          `Now let us solve the 50 questions like flashcards. First read the question, think of the answer yourself, then look at the answer given below. Each section has 10 questions.
+
+**Aptitude (10):** 1. 20% of 250 = 50. 2. 60 km in 1.5 hours = 40 km/h. 3. 10% of 350 = 35. 4. Simple interest: P=1000, R=10%, T=2 years = 200. 5. Average of 10, 20, 30 = 20. 6. Square of 15 = 225. 7. 2/5 as a percentage = 40%. 8. A is twice as fast as B; if A does the work in 10 days, B does it in 20 days. 9. Train 100 km in 2 hours = 50 km/h. 10. 25% of 500 = 125.
+
+**Reasoning (10):** 1. Series 2, 6, 12, 20, 30, ? = 42. 2. A is the brother of B; B is the sister of C; C is the son of D — A is the son of D. 3. Odd one out: 2, 4, 8, 9 — 9 is odd because the rest are even. 4. The code of CAT is 3120 (A=1, B=2...), so DOG = 4157. 5. 5 km north, then 5 km east — you are in the north-east. 6. Seating: A is to the right of B — first make the table. 7. In a mirror image, left and right change. 8. 1, 4, 9, 16, 25 — the next is 36 (squares). 9. If all cats are animals, then some animals are cats. 10. Puzzle: first write all conditions, then make the table.
+
+**Verbal (10):** 1. The synonym of Happy = Glad. 2. The antonym of Sad = Happy. 3. "He do not" is wrong — "He does not" is correct. 4. "Their" means belonging to them, "There" means at that place. 5. "Affect" means to influence, "Effect" means the result. 6. Correct spellings: "Beautiful", "Necessary". 7. One word: "One who can use both hands" = Ambidextrous. 8. Idiom: "Break the ice" means to start talking for the first time. 9. Active to passive: "Ram writes a letter" = "A letter is written by Ram". 10. Comprehension: first read the questions, then read the passage.
+
+**Technical (10):** 1. Primary key = the column that identifies each row of a table uniquely. 2. A list in Python = a collection of ordered, changeable items. 3. A dict stores key-value pairs. 4. The 4 pillars of OOP: Encapsulation, Inheritance, Polymorphism, Abstraction. 5. A process in OS = a running program. 6. A join in DBMS = a way to connect two tables. 7. SELECT in SQL = the command to fetch data. 8. Binary search works only on a sorted array. 9. Stack = LIFO (last in, first out). 10. Queue = FIFO (first in, first out).
+
+**HR (10):** 1. "Tell me about yourself" — name, studies, skills, and one project, in 1 minute. 2. "Why should we hire you?" — 2 strengths plus one example. 3. "Your strengths?" — one strength plus an example. 4. "Your weakness?" — one real weakness plus the plan to fix it. 5. "Why this company?" — read 2 lines about the company before going. 6. "Where do you see yourself in 5 years?" — learning skills and growing in the team. 7. "Tell me about your project" — what you built, how you built it, what you learned. 8. "Can you work under pressure?" — give one example of working under pressure. 9. "Do you have questions for us?" — always ask 1 question, for example how the team works. 10. "Why did you choose this field?" — your interest plus one example.
+
+The code below prints 3 sample questions like flashcards and finds the score. Dry run: the answers on list and dict are correct, and OOP needs revision. Score is 2 out of 3. Solve all 50 questions the same way, like flashcards.`
+        ),
+        code: {
+          title: t(
+            'Flashcards ki Tarah 3 Questions Solve Karna',
+            'Solving 3 Questions Like Flashcards'
+          ),
+          language: 'python',
+          code: `cards = [
+    ("What is a list in Python?", "A list stores many items in order"),
+    ("What is a dict?", "A dict stores key-value pairs"),
+    ("What is OOP?", "OOP groups data and functions into objects"),
+]
+answers = [True, True, False]
+score = 0
+for (q, a), right in zip(cards, answers):
+    print("Q:", q)
+    print("A:", a)
+    if right:
+        score += 1
+        print("You knew this one.")
+    else:
+        print("Revise this one.")
+    print()
+print("Score:", score, "/", len(cards))`,
+          output: `Q: What is a list in Python?
+A: A list stores many items in order
+You knew this one.
+
+Q: What is a dict?
+A: A dict stores key-value pairs
+You knew this one.
+
+Q: What is OOP?
+A: OOP groups data and functions into objects
+Revise this one.
+
+Score: 2 / 3`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Master Revision mein Ye 4 Galtiyaan Mat Karo',
+          '4. Common Mistakes: Do Not Make These 4 Mistakes in Master Revision'
+        ),
+        body: t(
+          `**Galti 1: Answers ko pehle dekh lena.** Flashcards ka matlab hai pehle khud sochna, phir answer dekhna. Agar aap pehle answer dekh loge, toh aapko lagega ki sab aata hai — par asli test mein wahi question aane par jawab yaad nahi aayega. Pehle socho, phir dekho.
+
+**Galti 2: Sirf padhna, solve na karna.** 50 questions ko sirf padhne se revision nahi hoti. Har question ko khud solve karo — pen aur paper par. Solve karne se pata chalta hai ki kya aata hai aur kya nahi.
+
+**Galti 3: Galat questions ko ignore karna.** Jo questions galat hue, unhe mark karo aur us topic ko 15 minute aur do. Galat questions ko ignore karne se wahi galti asli test mein repeat hogi. Galat question hi aapka teacher hai.
+
+**Galti 4: Master revision ko aakhri raat par chhodna.** Master revision drive se 1-2 din pehle karo, aakhri raat ko nahi. Aakhri raat ko sirf key notes dekho aur jaldi so jao. Aakhri raat par 50 questions karne se panic badhta hai.`,
+          `**Mistake 1: Looking at the answers first.** Flashcards mean thinking yourself first, then looking at the answer. If you look at the answer first, you will feel everything is known — but in the real test, when the same question comes, the answer will not be remembered. Think first, then look.
+
+**Mistake 2: Only reading, not solving.** Revision does not happen by only reading the 50 questions. Solve every question yourself — on pen and paper. Solving shows what you know and what you do not.
+
+**Mistake 3: Ignoring the wrong questions.** Mark the questions that went wrong and give that topic 15 more minutes. Ignoring wrong questions repeats the same mistake in the real test. The wrong question is your teacher.
+
+**Mistake 4: Leaving master revision for the last night.** Do master revision 1-2 days before the drive, not on the last night. On the last night, only look at key notes and sleep early. Doing 50 questions on the last night raises panic.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Ek Section Bahut Weak Ho, Ya Time Kam Ho',
+          '5. Edge Cases: One Section Is Very Weak, or Time Is Short'
+        ),
+        body: t(
+          `**Edge case 1: Ek section mein 10 mein se 3 se kam sahi hon.** Iska matlab hai ki woh section bahut weak hai. Us section ke 10 questions ko dobara solve karo aur us topic ke basics 1 ghanta revise karo. Weak section ko chhodna mat — use thoda aur time do.
+
+**Edge case 2: Sirf 30 minute hon.** Agar drive se pehle sirf 30 minute hain, toh sirf HR ke 10 answers aur aptitude ke formulas dekho. HR ke answers interview mein turant kaam aate hain, aur formulas aptitude test mein. Baaki sections ko chhod do — 30 minute mein sab kuch nahi ho sakta.
+
+**Edge case 3: 50 mein se 45 se zyada sahi hon.** Toh aap taiyaar ho. Ab aur mat padho — shaant raho aur jaldi so jao. Zyada padhne se confidence nahi badhta, rest se badhta hai. Taiyaar student ko aakhri din rest chahiye, padhai nahi.
+
+**Edge case 4: Technical ke answers yaad na hon.** Technical ke answers ratne se nahi, samajhne se yaad hote hain. Primary key, stack, queue — in sab ko ek example ke saath yaad karo. Example ke bina definition bhool jaati hai.`,
+          `**Edge case 1: Fewer than 3 correct out of 10 in one section.** That means the section is very weak. Solve the 10 questions of that section again and revise the basics of that topic for 1 hour. Do not leave the weak section — give it a little more time.
+
+**Edge case 2: Only 30 minutes are left.** If only 30 minutes are left before the drive, look only at the 10 HR answers and the aptitude formulas. HR answers help at once in the interview, and formulas help in the aptitude test. Leave the other sections — everything cannot be done in 30 minutes.
+
+**Edge case 3: More than 45 correct out of 50.** Then you are ready. Do not study more — stay calm and sleep early. More study does not raise confidence; rest does. A prepared student needs rest on the last day, not study.
+
+**Edge case 4: Technical answers are not remembered.** Technical answers are remembered by understanding, not by memorising. Remember primary key, stack, and queue each with one example. A definition without an example is forgotten.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: 50 Questions ke Baad Bhi Dar Lage?',
+          '6. What-If: You Still Feel Scared After the 50 Questions?'
+        ),
+        body: t(
+          `**What if: 50 questions ke baad bhi confidence na aaye?** Confidence questions se nahi, taiyaari se aata hai. Agar aapne 30 din padha hai, mock test diye hain, aur master revision kiya hai — toh aap taiyaar ho. Dar normal hai; dar ka matlab ye nahi ki taiyaari kam hai. Dar ko accept karo aur drive par jao.
+
+**What if: asli test mein 50 mein se koi question na aaye?** Koi baat nahi — 50 questions ka kaam concepts revise karna tha, questions repeat karna nahi. Concepts se koi bhi naya question solve ho sakta hai. Agar aapko percentage aata hai, toh percentage ka koi bhi question solve kar sakte ho.
+
+**What if: HR mein koi naya sawaal poochha jaaye?** HR ke sawaal aksar aapke resume aur aapki baaton se nikalte hain. Jo bhi sawaal aaye, shaant hokar jawab do — apni strength aur ek example ke saath. Naya sawaal darne ki baat nahi, apne baare mein bolne ka mauka hai.
+
+**What if: master revision ke baad bhi ek topic weak lage?** Toh us topic ko 15 minute aur do, phir chhod do. Aakhri din par ek topic ke peeche poora din mat lagao. 15 minute mein jo revise ho jaaye, wahi kaafi hai.`,
+          `**What if confidence does not come even after the 50 questions?** Confidence does not come from questions; it comes from preparation. If you studied for 30 days, took mock tests, and did master revision — then you are ready. Fear is normal; fear does not mean preparation is less. Accept the fear and go to the drive.
+
+**What if none of the 50 questions comes in the real test?** No problem — the job of the 50 questions was to revise concepts, not to repeat questions. With concepts, any new question can be solved. If you know percentage, you can solve any percentage question.
+
+**What if a new question is asked in HR?** HR questions often come from your resume and your own words. Whatever question comes, answer it calmly — with your strength and one example. A new question is not a reason to fear; it is a chance to talk about yourself.
+
+**What if one topic still feels weak after master revision?** Then give that topic 15 more minutes, then leave it. Do not spend the whole last day behind one topic. Whatever gets revised in 15 minutes is enough.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 50 Questions, 5 Sections, 1 Ghanta — Taiyaar Ho',
+          '7. Summary: 50 Questions, 5 Sections, 1 Hour — You Are Ready'
+        ),
+        body: t(
+          `Master revision ka ek hi kaam hai: **50 questions se apne concepts ko test karna aur weak topic dhoondhna.** Pehle khud solve karo, phir answers se match karo, galat questions ko mark karo aur us topic ko 15 minute aur do. Poora kaam 1 ghante mein ho jaata hai.
+
+Yaad rakhne wali 3 baatein: answers pehle mat dekho, galat questions ko ignore mat karo, aur master revision ko aakhri raat par mat chhodo. Drive se 1-2 din pehle revision karo, aakhri raat ko sirf key notes dekho aur jaldi so jao.
+
+Ye batch yahin khatam hota hai — rejection se lekar offer tak, mock test se lekar master revision tak. Aapne har step seekha hai. Ab drive par jao, shaant raho, aur apni taiyaari dikhao. All the best!`,
+          `Master revision has only one job: **to test your concepts with 50 questions and find the weak topic.** First solve them yourself, then match with the answers, mark the wrong questions, and give that topic 15 more minutes. The whole work finishes in 1 hour.
+
+Remember 3 things: do not look at the answers first, do not ignore the wrong questions, and do not leave master revision for the last night. Revise 1-2 days before the drive; on the last night, only look at key notes and sleep early.
+
+This batch ends here — from rejection to the offer, from mock tests to master revision. You have learned every step. Now go to the drive, stay calm, and show your preparation. All the best!`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'Master Revision ke 5 Layers',
+        'The 5 Layers of Master Revision'
+      ),
+      caption: t(
+        'Har layer ke 10 questions — pehle khud solve karo, phir answers se match karo',
+        '10 questions in each layer — first solve them yourself, then match with the answers'
+      ),
+      nodes: [
+        {
+          t: t('Aptitude — 10 questions', 'Aptitude — 10 questions'),
+          s: t('Percentage, speed, average, interest — formulas yaad karo', 'Percentage, speed, average, interest — remember the formulas')
+        },
+        {
+          t: t('Reasoning — 10 questions', 'Reasoning — 10 questions'),
+          s: t('Series, blood relation, puzzles — pehle farak aur table dekho', 'Series, blood relation, puzzles — first look at the difference and the table')
+        },
+        {
+          t: t('Verbal — 10 questions', 'Verbal — 10 questions'),
+          s: t('Synonyms, error spotting, idioms — options ko samjho', 'Synonyms, error spotting, idioms — understand the options')
+        },
+        {
+          t: t('Technical — 10 questions', 'Technical — 10 questions'),
+          s: t('DBMS, Python, OS, data structures — example ke saath yaad karo', 'DBMS, Python, OS, data structures — remember with an example')
+        },
+        {
+          t: t('HR — 10 questions', 'HR — 10 questions'),
+          s: t('Strengths + example, project, weakness + plan — 1 minute mein jawab', 'Strengths plus example, project, weakness plus plan — answer in 1 minute')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Revision ke Topics ka Status Check Karna',
+          'Checking the Status of Revision Topics'
+        ),
+        language: 'python',
+        code: `topics = {"Aptitude": "Done", "Reasoning": "Done", "Verbal": "In progress", "Technical": "Not started"}
+for topic in topics:
+    print(topic, "-", topics[topic])
+done = 0
+for t in topics:
+    if topics[t] == "Done":
+        done += 1
+print("Topics fully revised:", done, "of", len(topics))`,
+        output: `Aptitude - Done
+Reasoning - Done
+Verbal - In progress
+Technical - Not started
+Topics fully revised: 2 of 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '250 ka 20% kitna hota hai?',
+          'What is 20% of 250?'
+        ),
+        opts: [
+          t('40', '40'),
+          t('50', '50'),
+          t('60', '60'),
+          t('25', '25')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 10% of 250 = 25, isliye 20% = 25 x 2 = 50.',
+          'Correct answer: 10% of 250 = 25, so 20% = 25 x 2 = 50.'
+        )
+      },
+      {
+        q: t(
+          'Stack kis rule par kaam karta hai?',
+          'On which rule does a stack work?'
+        ),
+        opts: [
+          t('FIFO (First In, First Out)', 'FIFO (First In, First Out)'),
+          t('LIFO (Last In, First Out)', 'LIFO (Last In, First Out)'),
+          t('Random', 'Random'),
+          t('Alphabetical', 'Alphabetical')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: stack mein jo item aakhri mein daala jaata hai, woh pehle nikalta hai — LIFO.',
+          'Correct answer: in a stack, the item put in last comes out first — LIFO.'
+        )
+      },
+      {
+        q: t(
+          '"Tell me about yourself" ka jawab kitne time mein dena chahiye?',
+          'In how much time should you answer "Tell me about yourself"?'
+        ),
+        opts: [
+          t('10 minute mein', 'In 10 minutes'),
+          t('1 minute mein', 'In 1 minute'),
+          t('5 second mein', 'In 5 seconds'),
+          t('30 minute mein', 'In 30 minutes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 1 minute mein naam, padhai, skills aur ek project batao — lamba jawab interviewer ko bore karta hai.',
+          'Correct answer: in 1 minute, tell your name, studies, skills, and one project — a long answer bores the interviewer.'
+        )
+      },
+      {
+        q: t(
+          'Binary search kis par kaam karta hai?',
+          'What does binary search work on?'
+        ),
+        opts: [
+          t('Sirf sorted array par', 'Only on a sorted array'),
+          t('Kisi bhi list par', 'On any list'),
+          t('Sirf string par', 'Only on a string'),
+          t('Sirf dict par', 'Only on a dict')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: binary search beech wala element check karta hai, isliye array sorted hona zaroori hai.',
+          'Correct answer: binary search checks the middle element, so the array must be sorted.'
+        )
+      },
+      {
+        q: t(
+          'Master revision kab karna chahiye?',
+          'When should master revision be done?'
+        ),
+        opts: [
+          t('Drive se 1-2 din pehle', '1-2 days before the drive'),
+          t('Aakhri raat ko', 'On the last night'),
+          t('Drive ke baad', 'After the drive'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: drive se 1-2 din pehle revision karo; aakhri raat ko sirf key notes dekho aur jaldi so jao.',
+          'Correct answer: revise 1-2 days before the drive; on the last night, only look at key notes and sleep early.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Master revision = 50 questions, 5 sections, 1 ghanta — pehle khud solve karo, phir answers dekho.',
+        'Master revision = 50 questions, 5 sections, 1 hour — first solve them yourself, then look at the answers.'
+      ),
+      t(
+        'Galat questions ko mark karo aur us topic ko 15 minute aur do.',
+        'Mark the wrong questions and give that topic 15 more minutes.'
+      ),
+      t(
+        'Concepts se koi bhi naya question solve ho sakta hai — questions ratne se nahi.',
+        'With concepts, any new question can be solved — not by memorising questions.'
+      ),
+      t(
+        'Technical answers example ke saath yaad karo — definition akeli bhool jaati hai.',
+        'Remember technical answers with an example — a definition alone is forgotten.'
+      ),
+      t(
+        'Master revision drive se 1-2 din pehle karo, aakhri raat ko nahi.',
+        'Do master revision 1-2 days before the drive, not on the last night.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Self-Score Nikaalo',
+        'Practice: Find Your Own Self-Score'
+      ),
+      task: t(
+        'Neeche diya gaya code 50 questions mein se 42 sahi ka score nikaalta hai. Code run karo aur verify karo ki output expected jaisa aata hai. Phir correct ko apne real score se badal kar dekho ki aap taiyaar ho ya nahi (70% ya zyada matlab taiyaar).',
+        'The code below finds the score for 42 correct out of 50 questions. Run the code and verify that the output matches the expected output. Then replace the correct count with your real score and see whether you are ready or not (70% or more means ready).'
+      ),
+      language: 'python',
+      starter: `correct = 42
+total = 50
+print("Correct answers:", correct)
+print("Total questions:", total)
+print("Score:", correct * 100 // total, "%")
+if correct * 100 // total >= 70:
+    print("Ready for the drive: Yes")
+else:
+    print("Ready for the drive: Not yet")`,
+      expected: `Correct answers: 42
+Total questions: 50
+Score: 84 %
+Ready for the drive: Yes`
+    },
+    readMinutes: 12
+  };
 
 export const placement: Subject = {
   id: 'placement',
@@ -835,5 +13472,40 @@ export const placement: Subject = {
       },
       readMinutes: 12,
     },
+    placementAptitudePlan,
+    placementGroupDiscussion,
+    placementGdTopics,
+    placementHrAdvanced,
+    placementTechnicalCs,
+    placementTechnicalDsa,
+    placementCodingRound,
+    placementPuzzlesInterview,
+    placementBehavioural,
+    placementWhyHire,
+    placementWeakness,
+    placementSalary,
+    placementLinkedin,
+    placementJobSearch,
+    placementResumeAts,
+    placementCoverLetter,
+    placementPortfolio,
+    placementMockHr,
+    placementMockTechnical,
+    placementCompanyTcs,
+    placementCompanyProduct,
+    placementOffCampus,
+    placementInternships,
+    placementCommunication,
+    placementBodyLanguage,
+    placementTimeManagement,
+    placementStressInterview,
+    placementRejection,
+    placementMockTest1,
+    placementMockTest2,
+    placement30DayPlan,
+    placement7DayPlan,
+    placementInterviewDay,
+    placementAfterOffer,
+    placementInterview,
   ],
 };
