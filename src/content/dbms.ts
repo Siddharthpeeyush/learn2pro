@@ -1265,6 +1265,11689 @@ SELECT id, name, marks FROM students WHERE id = 3;`,
   readMinutes: 11,
 };
 
+
+const dbmsErModel: Article = {
+    id: 'dbms-er-model',
+    subjectId: 'dbms',
+    title: t(
+      'ER Model — Entity, Attribute, Relationship aur ER Diagram',
+      'ER Model — Entity, Attribute, Relationship, and ER Diagram'
+    ),
+    summary: t(
+      'Database banane se pehle design kaise karte hain, ye seekho: entity kya hoti hai, attribute kya hota hai, do entities ke beech relationship kaise banta hai, cardinality kya hoti hai, aur ER diagram ko SQL table mein kaise badalte hain.',
+      'Learn how to design a database before building it: what an entity is, what an attribute is, how a relationship forms between two entities, what cardinality means, and how an ER diagram turns into a SQL table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. ER Model Kya Hai? (Entity, Attribute aur Relationship)',
+          '1. What Is the ER Model? (Entity, Attribute, and Relationship)'
+        ),
+        body: t(
+          `ER model ka matlab hai **Entity-Relationship model** — database banane se pehle kagaz par banaya gaya design. Ismein teen cheezein hoti hain. **Entity** woh cheez hai jiske baare mein data rakhna hai, jaise \`Student\`, \`Book\` ya \`Member\`. **Attribute** us cheez ki khaasiyat hai, jaise Student ka \`name\` aur \`marks\`, ya Book ka \`title\` aur \`author\`. **Relationship** do entities ke beech ka connection hai, jaise Member ek Book ko **borrow** karta hai.
+
+ER diagram mein entities ko **box** (rectangle) mein likhte hain, attributes ko **gol ghare** (ellipse) mein, aur relationships ko **heere** (diamond) mein. Har entity ki ek **key** hoti hai — woh attribute jo har row ko alag pehchan deta hai, jaise Student ki key \`id\` hai aur Book ki key \`book_id\` hai. Bina key ke do ek jaise naam wale students ko alag karna mushkil ho jaata hai.
+
+ER model isliye zaroori hai kyunki seedha table banana galtiyon ko bulawa deta hai. Pehle design banao, phir table banao — kagaz par galti sudharna sasta hai, bani hui table aur bhara hua data badalna mehenga hai. Aage ke articles mein jo bhi table banegi, woh isi design se aayegi.`,
+          `The ER model means the **Entity-Relationship model** — a design drawn on paper before building a database. It has three parts. An **entity** is a thing you keep data about, such as \`Student\`, \`Book\`, or \`Member\`. An **attribute** is a property of that thing, such as the \`name\` and \`marks\` of a Student, or the \`title\` and \`author\` of a Book. A **relationship** is a connection between two entities, such as a Member **borrowing** a Book.
+
+In an ER diagram, entities go in a **box** (rectangle), attributes go in a **circle** (ellipse), and relationships go in a **diamond**. Every entity has a **key** — the attribute that gives every row its own identity, such as \`id\` for a Student and \`book_id\` for a Book. Without a key, it is hard to tell apart two students with the same name.
+
+The ER model matters because building a table straight away invites mistakes. Make the design first, then make the table — fixing a mistake on paper is cheap, while changing a built table and filled data is costly. Every table in the coming articles will come from a design like this one.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Library, School aur Railway Booking',
+          '2. Real-Life Examples: Library, School, and Railway Booking'
+        ),
+        body: t(
+          `Library ko hi lo. Wahan teen entities dikhti hain: **Book**, **Member** aur **Borrow**. Book ke attributes hain \`book_id\`, \`title\`, \`author\`. Member ke attributes hain \`member_id\`, \`name\`, \`phone\`. Borrow ke attributes hain \`borrow_date\` aur \`return_date\`. Relationship hai: Member, Book ko borrow karta hai. Ek member kai books le sakta hai, aur ek book alag-alag time par kai members ko mil sakti hai — ye **many-to-many** relationship hai.
+
+School ka register bhi ER model jaisa hai. **Student** entity hai, uske attributes hain \`id\`, \`name\`, \`marks\`. **Course** doosri entity hai, attributes hain \`course_id\` aur \`title\`. Relationship hai: Student ek Course mein **enrol** hota hai. Ek student kai courses le sakta hai, ek course mein kai students hote hain — phir se many-to-many.
+
+Railway booking mein **Passenger** aur **Train** entities hain, aur **Booking** relationship hai. Ek passenger kai trains mein safar kar sakta hai, ek train mein kai passengers hote hain. Booking ke apne attributes hote hain — \`booking_date\` aur \`seat_no\` — kyunki seat number na passenger ki property hai, na train ki, woh booking ki property hai.`,
+          `Take a library. You can see three entities there: **Book**, **Member**, and **Borrow**. The attributes of Book are \`book_id\`, \`title\`, and \`author\`. The attributes of Member are \`member_id\`, \`name\`, and \`phone\`. The attributes of Borrow are \`borrow_date\` and \`return_date\`. The relationship is: a Member borrows a Book. One member can take many books, and one book can go to many members at different times — that is a **many-to-many** relationship.
+
+A school register is like an ER model too. **Student** is an entity, with attributes \`id\`, \`name\`, and \`marks\`. **Course** is a second entity, with attributes \`course_id\` and \`title\`. The relationship is: a Student **enrols** in a Course. One student can take many courses, and one course holds many students — many-to-many again.
+
+In railway booking, **Passenger** and **Train** are entities, and **Booking** is the relationship. One passenger can travel on many trains, and one train carries many passengers. Booking has its own attributes — \`booking_date\` and \`seat_no\` — because the seat number is a property of neither the passenger nor the train, but of the booking itself.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Library ka ER Model Banana aur Table mein Badalna (worked example with dry run)',
+          '3. Step-by-Step: Building the Library ER Model and Turning It into a Table (worked example with dry run)'
+        ),
+        body: t(
+          `Chalo library ka ER model step by step banate hain. **Step 1: entities dhoondho.** Kaun-kaun si cheezein hain jinke baare mein data rakhna hai? Book, Member aur Borrow — ye teen entities hain. **Step 2: attributes likho.** Book ke liye \`book_id\`, \`title\`, \`author\`; Member ke liye \`member_id\`, \`name\`, \`phone\`; Borrow ke liye \`borrow_date\`, \`return_date\`.
+
+**Step 3: relationship aur cardinality banao.** Member, Book ko borrow karta hai. Ek member kai books le sakta hai (one-to-many, member ki taraf se), aur ek book kai members ko mil sakti hai (many, book ki taraf se) — dono taraf many, isliye **many-to-many**. **Step 4: key chuno.** Book ki key \`book_id\`, Member ki key \`member_id\`. Key woh attribute hai jo har row ko unique pehchan deta hai.
+
+**Step 5: har entity ko ek table banao.** Har attribute ek column banta hai, aur key \`PRIMARY KEY\` banti hai. Neeche wala code Book entity ko table mein badalta hai — isko run karo aur dekho ki design ka har hissa table mein kaise dikhta hai.`,
+          `Let us build the library ER model step by step. **Step 1: find the entities.** What things do we keep data about? Book, Member, and Borrow — these are three entities. **Step 2: write the attributes.** For Book: \`book_id\`, \`title\`, \`author\`; for Member: \`member_id\`, \`name\`, \`phone\`; for Borrow: \`borrow_date\`, \`return_date\`.
+
+**Step 3: make the relationship and the cardinality.** A Member borrows a Book. One member can take many books (one-to-many, from the member side), and one book can go to many members (many, from the book side) — many on both sides, so it is **many-to-many**. **Step 4: choose a key.** The key of Book is \`book_id\`, and the key of Member is \`member_id\`. A key is the attribute that gives every row a unique identity.
+
+**Step 5: turn every entity into a table.** Every attribute becomes a column, and the key becomes the \`PRIMARY KEY\`. The code below turns the Book entity into a table — run it and see how every part of the design shows up in the table.`
+        ),
+        code: {
+          title: t(
+            'Book Entity ko Table Banao',
+            'Turn the Book Entity into a Table'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS books;
+CREATE TABLE books (
+  book_id INTEGER PRIMARY KEY,
+  title TEXT,
+  author TEXT
+);
+INSERT INTO books VALUES (1, 'Godan', 'Premchand');
+INSERT INTO books VALUES (2, 'Malgudi Days', 'R. K. Narayan');
+SELECT book_id, title, author FROM books;`,
+          output: `book_id | title | author
+1 | Godan | Premchand
+2 | Malgudi Days | R. K. Narayan`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Design Soche Bina Table Banana aur Sab Kuch Ek Table mein Daalna',
+          '4. Common Mistakes: Building a Table Without a Design and Putting Everything in One Table'
+        ),
+        body: t(
+          `**Galti 1: seedha table banana, bina design soche.** Log pehle table bana lete hain, phir yaad aata hai ki ek aur column chahiye tha, phir ek aur. Table badalti rehti hai, purana data gadbad hota hai. Pehle kagaz par ER model banao — 10 minute ka design 10 ghante ki gadbad bachata hai.
+
+**Galti 2: ek hi table mein sab kuch daal dena.** Student ka naam, uska course, teacher ka naam, teacher ka phone — sab ek table mein. Phir teacher ka phone badle to 100 rows badalni padengi. Alag cheezein alag tables mein rakho — yehi normalization ki shuruaat hai.
+
+**Galti 3: key ke bina table banana.** Bina key ke do ek jaise rows ko alag nahi kar sakte, aur delete karte waqt galat row delete ho sakti hai. Har table mein ek key honi chahiye, jaise \`id\` ya \`book_id\`.
+
+**Galti 4: relationship ko attribute samajh lena.** Borrow ko Book ka attribute bana dena galat hai — borrow apne aap mein ek relationship hai, jiske apne attributes (\`borrow_date\`, \`return_date\`) hote hain. Agar use attribute bana doge, to ek book ke kai borrow records ko ek hi row mein nahi rakh paoge.`,
+          `**Mistake 1: building a table straight away, without thinking about the design.** People make a table first, then remember one more column was needed, then another. The table keeps changing and the old data gets messy. First draw the ER model on paper — 10 minutes of design saves 10 hours of mess.
+
+**Mistake 2: putting everything into one table.** The name of the student, the course, the name of the teacher, the phone of the teacher — all in one table. Then, when the phone of the teacher changes, 100 rows must be changed. Keep different things in different tables — that is the start of normalization.
+
+**Mistake 3: making a table without a key.** Without a key, two identical rows cannot be told apart, and while deleting, the wrong row can be deleted. Every table must have a key, such as \`id\` or \`book_id\`.
+
+**Mistake 4: treating a relationship as an attribute.** Making Borrow an attribute of Book is wrong — Borrow is a relationship in its own right, with its own attributes (\`borrow_date\`, \`return_date\`). If you make it an attribute, you cannot store the many borrow records of one book in a single row.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Bina Attribute wali Entity, Khaali Relationship aur Optional Participation',
+          '5. Edge Cases: Entity Without Attributes, Empty Relationship, and Optional Participation'
+        ),
+        body: t(
+          `**Edge case 1: entity jiske sirf key aur naam hon.** Jaise \`Category\` entity jisme sirf \`category_id\` aur \`category_name\` hon — ye bilkul theek hai. Lekin bina kisi attribute ke entity ka koi matlab nahi, use pehchanna hi nahi ja sakta.
+
+**Edge case 2: relationship bina rows ke.** Ek naya member jisne abhi koi book nahi li, wo Borrow relationship mein kahin nahi dikhega — aur ye theek hai. Ise **optional participation** kehte hain: member ka hona zaroori hai, borrow ka hona nahi.
+
+**Edge case 3: mandatory participation.** Agar har book ka ek author hona zaroori hai, to bina author ke book ka record hi nahi banna chahiye. Ye rule design mein likha jaata hai, aur baad mein \`NOT NULL\` constraint se enforce hota hai — constraints wala article is par detail mein jaayega.
+
+**Edge case 4: khaali database.** Tables hain, rows nahi — phir bhi ye ek database hai. Design galat ho to khaali database bhi galat hai; design sahi ho to khaali database bharna easy hai.`,
+          `**Edge case 1: an entity with only a key and a name.** For example, a \`Category\` entity with only \`category_id\` and \`category_name\` — that is completely fine. But an entity with no attribute at all has no meaning; it cannot be recognised at all.
+
+**Edge case 2: a relationship with no rows.** A new member who has not taken any book yet appears nowhere in the Borrow relationship — and that is fine. This is called **optional participation**: the member must exist, but the borrow need not.
+
+**Edge case 3: mandatory participation.** If every book must have an author, then a book record should not be made without an author. This rule is written in the design, and later it is enforced with a \`NOT NULL\` constraint — the constraints article will cover this in detail.
+
+**Edge case 4: an empty database.** It has tables but no rows — yet it is still a database. If the design is wrong, even an empty database is wrong; if the design is right, filling an empty database is easy.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Naya Attribute Jodo, Nayi Entity Jodo, ya Design Badlo?',
+          '6. What If: Add a New Attribute, Add a New Entity, or Change the Design?'
+        ),
+        body: t(
+          `**What if: library mein book ki language jodni ho?** Ye ek attribute jodne ka kaam hai — \`books\` table mein ek column jod do, design nahi badalta. Attribute badalna sasta hai.
+
+**What if: publisher company ka data rakhna ho?** Publisher ke baare mein alag se data rakhna hai — naam, city, phone. Ab ye sirf attribute nahi raha, ye ek nayi **entity** hai. Nayi entity matlab nayi table, aur Book se Publisher tak ek naya relationship. Entity badalna mehenga hai, isliye design karte waqt socho ki kaun si cheez apne aap mein ek entity hai.
+
+**What if: design banane ke baad pata chale ki galat tha?** Bani hui table ka data nayi tables mein baantna padega — is process ko **migration** kehte hain, aur bade systems mein ye hafton ka kaam ho sakta hai. Isiliye design pehle, table baad mein — ye rule har baar yaad rakho.
+
+**What if: relationship ke apne attributes hon?** Jaise Borrow ke \`borrow_date\` aur \`return_date\` — ye relationship ke attributes hain. Many-to-many relationship ko table mein badalte waqt ye attributes us nayi beech wali table mein jaate hain, jo dono entities ko jodti hai.`,
+          `**What if you want to add the language of a book to the library?** That is the job of adding one attribute — add one column to the \`books\` table, and the design does not change. Changing an attribute is cheap.
+
+**What if you want to keep data about the publishing company?** The publisher needs its own data — name, city, phone. Now it is no longer just an attribute; it is a new **entity**. A new entity means a new table, plus a new relationship from Book to Publisher. Changing an entity is costly, so while designing, think about which thing is an entity in its own right.
+
+**What if the design turns out to be wrong after it is built?** The data of the built table must be split into new tables — this process is called **migration**, and in big systems it can take weeks. That is why design comes first and tables come later — remember this rule every time.
+
+**What if a relationship has its own attributes?** For example, the \`borrow_date\` and \`return_date\` of Borrow — these are attributes of the relationship. When a many-to-many relationship is turned into a table, these attributes go into the new middle table that joins the two entities.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: ER Model se Table Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from ER Model to Table'
+        ),
+        body: t(
+          `**Entity** woh cheez hai jiske baare mein data rakhna hai, **attribute** uski khaasiyat hai, aur **relationship** do entities ka connection hai. Diagram mein entity box mein, attribute gol ghare mein, aur relationship heere (diamond) mein likhte hain. Har entity ki ek **key** hoti hai jo har row ko unique pehchan deti hai.
+
+Cardinality batati hai ki relationship kitne se kitne ka hai — **one-to-one**, **one-to-many** ya **many-to-many**. Library mein Member aur Book ka relationship many-to-many hai, kyunki ek member kai books le sakta hai aur ek book kai members ko mil sakti hai.
+
+Aakhir mein, har entity ek **table** banti hai, har attribute ek **column**, aur key **PRIMARY KEY** banti hai. Pehle kagaz par design banao, phir table banao — ulta karne se gadbad hoti hai. Agle article mein hum relational algebra dekhenge — wohi operations jo SQL ke peeche chhupi hain.`,
+          `An **entity** is a thing you keep data about, an **attribute** is its property, and a **relationship** is a connection between two entities. In a diagram, an entity goes in a box, an attribute in a circle, and a relationship in a diamond. Every entity has a **key** that gives every row a unique identity.
+
+Cardinality tells you how many on each side a relationship has — **one-to-one**, **one-to-many**, or **many-to-many**. In a library, the relationship between Member and Book is many-to-many, because one member can take many books and one book can go to many members.
+
+Finally, every entity becomes a **table**, every attribute becomes a **column**, and the key becomes the **PRIMARY KEY**. First make the design on paper, then make the table — doing it the other way round creates a mess. In the next article we will look at relational algebra — the same operations that sit behind SQL.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'ER Model se Table: Har Entity ek Table Banti Hai',
+        'From ER Model to Table: Every Entity Becomes a Table'
+      ),
+      caption: t(
+        'Har entity ek table, har attribute ek column, aur key PRIMARY KEY banti hai',
+        'Every entity becomes a table, every attribute becomes a column, and the key becomes the PRIMARY KEY'
+      ),
+      nodes: [],
+      headers: [t('Entity', 'Entity'), t('Attributes', 'Attributes'), t('Key', 'Key')],
+      rows: [
+        [t('Student', 'Student'), t('id, name, marks', 'id, name, marks'), t('id', 'id')],
+        [t('Book', 'Book'), t('book_id, title, author', 'book_id, title, author'), t('book_id', 'book_id')],
+        [t('Member', 'Member'), t('member_id, name, phone', 'member_id, name, phone'), t('member_id', 'member_id')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Students Table ko Dekho — Site ka Sample Data',
+          'Look at the Students Table — the Sample Data of This Site'
+        ),
+        language: 'sql',
+        code: `SELECT id, name, marks FROM students;`,
+        output: `id | name | marks
+1 | Rahul | 85
+2 | Priya | 92
+3 | Amit | 74
+4 | Sana | 88`
+      },
+      {
+        title: t(
+          'Member Entity ko Table Banao',
+          'Turn the Member Entity into a Table'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS members;
+CREATE TABLE members (
+  member_id INTEGER PRIMARY KEY,
+  name TEXT,
+  phone TEXT
+);
+INSERT INTO members VALUES (1, 'Asha', '98765');
+INSERT INTO members VALUES (2, 'Rohan', '98766');
+SELECT member_id, name FROM members;`,
+        output: `member_id | name
+1 | Asha
+2 | Rohan`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Library mein Book ek entity hai. "author" kya hai?',
+          'In a library, Book is an entity. What is "author"?'
+        ),
+        opts: [
+          t('Ek aur entity', 'Another entity'),
+          t('Book ka ek attribute', 'An attribute of Book'),
+          t('Ek relationship', 'A relationship'),
+          t('Ek key', 'A key')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: author book ki ek khaasiyat hai — har book ka ek author hota hai. Entity wo cheez hai, attribute uski property hai.',
+          'Correct answer: author is a property of a book — every book has one author. The entity is the thing, and the attribute is its property.'
+        )
+      },
+      {
+        q: t(
+          'ER diagram mein relationship ko kis shape mein dikhate hain?',
+          'In an ER diagram, which shape shows a relationship?'
+        ),
+        opts: [
+          t('Box (rectangle)', 'Box (rectangle)'),
+          t('Gol ghara (ellipse)', 'Circle (ellipse)'),
+          t('Heera (diamond)', 'Diamond'),
+          t('Teer (arrow)', 'Arrow')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: relationship ko heere (diamond) mein likhte hain, entity ko box mein aur attribute ko gol ghare mein.',
+          'Correct answer: a relationship goes in a diamond, an entity in a box, and an attribute in a circle.'
+        )
+      },
+      {
+        q: t(
+          'Ek member kai books le sakta hai, aur ek book kai members ko mil sakti hai. Ye relationship kaisi hai?',
+          'One member can take many books, and one book can go to many members. What kind of relationship is this?'
+        ),
+        opts: [
+          t('One-to-one', 'One-to-one'),
+          t('One-to-many', 'One-to-many'),
+          t('Many-to-many', 'Many-to-many'),
+          t('Koi relationship nahi', 'No relationship')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono taraf "kai" hai — ek member kai books, ek book kai members. Isiliye ye many-to-many hai.',
+          'Correct answer: "many" sits on both sides — one member takes many books, and one book goes to many members. So it is many-to-many.'
+        )
+      },
+      {
+        q: t(
+          'Table mein key kyun zaroori hai?',
+          'Why is a key needed in a table?'
+        ),
+        opts: [
+          t('Table tez chalti hai', 'The table runs faster'),
+          t('Har row ki alag pehchan milti hai', 'Every row gets its own identity'),
+          t('Table badi dikhti hai', 'The table looks bigger'),
+          t('Key ke bina table banti hi nahi', 'A table cannot be made at all without a key')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina key ke do ek jaise rows ko alag nahi kar sakte. Key har row ko ek unique pehchan deti hai, jaise roll number.',
+          'Correct answer: without a key, two identical rows cannot be told apart. A key gives every row a unique identity, like a roll number.'
+        )
+      },
+      {
+        q: t(
+          'ER model ko table mein badalte waqt attribute kya banta hai?',
+          'When an ER model is turned into a table, what does an attribute become?'
+        ),
+        opts: [
+          t('Ek nayi table', 'A new table'),
+          t('Ek column', 'A column'),
+          t('Ek row', 'A row'),
+          t('Ek database', 'A database')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har entity ek table banti hai, har attribute us table ka ek column banta hai, aur key PRIMARY KEY banti hai.',
+          'Correct answer: every entity becomes a table, every attribute becomes a column of that table, and the key becomes the PRIMARY KEY.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Entity woh cheez hai jiske baare mein data rakhna hai, attribute uski khaasiyat hai, relationship do entities ka connection hai.',
+        'An entity is a thing you keep data about, an attribute is its property, and a relationship is a connection between two entities.'
+      ),
+      t(
+        'Diagram mein entity box mein, attribute gol ghare mein, relationship heere mein likhte hain.',
+        'In a diagram, an entity goes in a box, an attribute in a circle, and a relationship in a diamond.'
+      ),
+      t(
+        'Cardinality batati hai ki relationship one-to-one, one-to-many ya many-to-many hai.',
+        'Cardinality tells you whether a relationship is one-to-one, one-to-many, or many-to-many.'
+      ),
+      t(
+        'Har entity ki ek key hoti hai jo har row ko unique pehchan deti hai.',
+        'Every entity has a key that gives every row a unique identity.'
+      ),
+      t(
+        'Har entity ek table, har attribute ek column, aur key PRIMARY KEY banti hai.',
+        'Every entity becomes a table, every attribute becomes a column, and the key becomes the PRIMARY KEY.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Course Entity ko Table Banao',
+        'Practice: Turn the Course Entity into a Table'
+      ),
+      task: t(
+        'Ek table courses banao jisme course_id INTEGER PRIMARY KEY, title TEXT aur teacher TEXT hon. Phir do courses insert karo: (1, \'Python\', \'Meera\') aur (2, \'SQL\', \'Arjun\'). Aakhir mein SELECT se teeno columns dikhao. Done tab maanenge jab output mein dono rows dikhein.',
+        'Make a table called courses with course_id INTEGER PRIMARY KEY, title TEXT, and teacher TEXT. Then insert two courses: (1, \'Python\', \'Meera\') and (2, \'SQL\', \'Arjun\'). At the end, show all three columns with SELECT. You are done when both rows appear in the output.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (
+  course_id INTEGER PRIMARY KEY,
+  title TEXT,
+  teacher TEXT
+);
+INSERT INTO courses VALUES (1, 'Python', 'Meera');
+INSERT INTO courses VALUES (2, 'SQL', 'Arjun');
+SELECT course_id, title, teacher FROM courses;`,
+      expected: `course_id | title | teacher
+1 | Python | Meera
+2 | SQL | Arjun`
+    },
+    readMinutes: 12
+  };
+
+const dbmsRelationalAlgebra: Article = {
+    id: 'dbms-relational-algebra',
+    subjectId: 'dbms',
+    title: t(
+      'Relational Algebra — Select, Project, Union, Difference aur Joins',
+      'Relational Algebra — Select, Project, Union, Difference, and Joins'
+    ),
+    summary: t(
+      'SQL ke peeche chhupa maths samjho: relational algebra ke operations — select (sigma), project (pi), union, difference aur joins — kaise tables ko filter, kaat aur jod kar nayi table banate hain, aur har operation ka SQL equivalent kya hai.',
+      'Understand the maths hidden behind SQL: how the operations of relational algebra — select (sigma), project (pi), union, difference, and joins — filter, cut, and join tables into a new table, and what the SQL version of every operation is.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Relational Algebra Kya Hai? (Tables par Maths)',
+          '1. What Is Relational Algebra? (Maths on Tables)'
+        ),
+        body: t(
+          `Relational algebra ek aisi language hai jismein tables par operations likhe jaate hain — jaise maths mein numbers par + aur - likhte hain. Har operation ek ya do tables leta hai aur ek nayi table deta hai. Isi liye ise **algebra** kehte hain: input table, output bhi table.
+
+Sabse basic operations paanch hain. **Select** (σ, sigma) rows ko filter karta hai — sirf woh rows rakhta hai jo condition ko satisfy karein. **Project** (π, pi) columns ko chunta hai — sirf woh columns rakhta hai jo chahiye. **Union** (∪) do tables ki rows ko jodta hai. **Difference** (−) pehli table mein se doosri table ki rows ko hata deta hai. **Join** (⋈) do tables ko ek common column se jodta hai.
+
+SQL inhi operations ka practical roop hai. \`WHERE\` clause select hai, \`SELECT name, marks\` mein column list project hai, \`UNION\` union hai, aur \`JOIN\` join hai. Algebra samajh loge to SQL ke queries khud banane lagoge, ratne ki zaroorat nahi padegi.`,
+          `Relational algebra is a language in which operations are written on tables — just as in maths you write + and - on numbers. Every operation takes one or two tables and returns a new table. That is why it is called **algebra**: the input is a table, and the output is also a table.
+
+There are five basic operations. **Select** (σ, sigma) filters rows — it keeps only the rows that satisfy a condition. **Project** (π, pi) picks columns — it keeps only the columns you need. **Union** (∪) joins the rows of two tables. **Difference** (−) removes the rows of the second table from the first table. **Join** (⋈) joins two tables on a common column.
+
+SQL is the practical form of these operations. The \`WHERE\` clause is select, the column list in \`SELECT name, marks\` is project, \`UNION\` is union, and \`JOIN\` is join. Once you understand the algebra, you will start writing SQL queries on your own, with no need to memorise them.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Attendance List, Marks Sheet aur Fee Records',
+          '2. Real-Life Examples: Attendance List, Marks Sheet, and Fee Records'
+        ),
+        body: t(
+          `School ki marks sheet socho. Teacher ko sirf un students ke naam chahiye jinke marks 85 se zyada hain — ye **select** hai: poori sheet mein se sirf kuch rows chunna. Phir teacher ko sirf naam chahiye, marks nahi — ye **project** hai: poori sheet mein se sirf ek column chunna.
+
+Do classes ki attendance lists hain, aur principal ko dono classes ke saare students ki ek list chahiye — ye **union** hai. Phir principal poochhta hai: kaun se students Class A mein hain par Class B mein nahi? Ye **difference** hai — pehli list mein se doosri list ki entries hatana.
+
+Fee records mein do tables hain: ek mein student ka \`id\` aur \`name\` hai, doosri mein \`id\` aur \`fee_paid\` hai. Dono ko \`id\` se jod kar ek poori list banao — naam ke saath fee status — ye **join** hai. Har roz ke kaam mein ye paanch operations hi ghumte rehte hain.`,
+          `Think of a school marks sheet. The teacher wants only the names of students with marks above 85 — that is **select**: picking only some rows from the whole sheet. Then the teacher wants only the names, not the marks — that is **project**: picking only one column from the whole sheet.
+
+There are attendance lists for two classes, and the principal wants one list of all students from both classes — that is **union**. Then the principal asks: which students are in Class A but not in Class B? That is **difference** — removing the entries of the second list from the first list.
+
+In fee records there are two tables: one holds the \`id\` and \`name\` of a student, and the other holds the \`id\` and \`fee_paid\`. Join both on \`id\` to make one full list — name together with fee status — and that is a **join**. These five operations keep turning up in everyday work.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Select aur Project ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of Select and Project (worked example with dry run)'
+        ),
+        body: t(
+          `Hamari \`students\` table mein 4 rows hain: Rahul 85, Priya 92, Amit 74, Sana 88. Ab operation hai **σ marks >= 85 (students)** — select, condition \`marks >= 85\`. Dry run karte hain, ek-ek row check karo:
+- **Rahul, 85:** 85 >= 85? Haan — row rakho.
+- **Priya, 92:** 92 >= 85? Haan — row rakho.
+- **Amit, 74:** 74 >= 85? Nahi — row hatao.
+- **Sana, 88:** 88 >= 85? Haan — row rakho.
+Result mein 3 rows bachi: Priya, Sana, Rahul.
+
+Ab us par **project** lagao: **π name, marks** — sirf \`name\` aur \`marks\` columns rakho, \`id\` hata do. Final result wahi 3 rows, sirf 2 columns ke saath. SQL mein ye dono operations ek hi query mein likhe jaate hain: \`SELECT name, marks\` project hai, \`WHERE marks >= 85\` select hai. Neeche wala code is dry run ko run karke dikhata hai — output mein wahi 3 rows aani chahiye, marks ke descending order mein.`,
+          `Our \`students\` table has 4 rows: Rahul 85, Priya 92, Amit 74, and Sana 88. Now the operation is **σ marks >= 85 (students)** — select, with the condition \`marks >= 85\`. Let us do a dry run and check each row one by one:
+- **Rahul, 85:** is 85 >= 85? Yes — keep the row.
+- **Priya, 92:** is 92 >= 85? Yes — keep the row.
+- **Amit, 74:** is 74 >= 85? No — drop the row.
+- **Sana, 88:** is 88 >= 85? Yes — keep the row.
+The result keeps 3 rows: Priya, Sana, and Rahul.
+
+Now apply **project** to it: **π name, marks** — keep only the \`name\` and \`marks\` columns and drop \`id\`. The final result is the same 3 rows, with only 2 columns. In SQL, both operations are written in a single query: \`SELECT name, marks\` is the project, and \`WHERE marks >= 85\` is the select. The code below runs this dry run — the output should show the same 3 rows, in descending order of marks.`
+        ),
+        code: {
+          title: t(
+            'Select + Project: 85 ya Zyada Marks wale Students',
+            'Select + Project: Students with 85 Marks or More'
+          ),
+          language: 'sql',
+          code: `SELECT name, marks FROM students WHERE marks >= 85 ORDER BY marks DESC;`,
+          output: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Select ko Project Samajhna, Union mein Alag Columns aur Join bina Condition ke',
+          '4. Common Mistakes: Confusing Select with Project, Different Columns in Union, and Join Without a Condition'
+        ),
+        body: t(
+          `**Galti 1: select aur project ko ek samajhna.** Select rows ko filter karta hai (horizontal kaat), project columns ko chunta hai (vertical kaat). \`WHERE marks >= 85\` select hai — rows kam hoti hain. \`SELECT name\` project hai — columns kam hote hain. Dono ek saath bhi chal sakte hain, par kaam alag hai.
+
+**Galti 2: union mein alag columns wali tables jodna.** Union sirf tab chalta hai jab dono tables ke columns ek jaise hon — same number, same type. \`students\` (id, name, marks) ko \`books\` (book_id, title) se union nahi kar sakte. SQL error dega, ya galat result dega.
+
+**Galti 3: join bina condition ke.** Do tables ko bina \`ON\` condition ke join karoge to **cross product** banega — har row har row se judegi. 4 students aur 4 enrolments hain to 16 rows ban jaayengi, jinmein se zyada tar bekaar hongi. Hamesha \`ON students.id = enrol.student_id\` jaisi condition likho.
+
+**Galti 4: difference ka order ulta karna.** A − B aur B − A ek nahi hote. Pehli list mein se doosri hatana hai ya doosri mein se pehli — order galat hua to answer ulta aayega.`,
+          `**Mistake 1: treating select and project as the same thing.** Select filters rows (a horizontal cut), while project picks columns (a vertical cut). \`WHERE marks >= 85\` is select — rows become fewer. \`SELECT name\` is project — columns become fewer. Both can run together, but their jobs are different.
+
+**Mistake 2: joining tables with different columns in a union.** A union only works when both tables have matching columns — the same number and the same type. You cannot union \`students\` (id, name, marks) with \`books\` (book_id, title). SQL will give an error, or a wrong result.
+
+**Mistake 3: a join without a condition.** If you join two tables without an \`ON\` condition, you get a **cross product** — every row joins with every row. With 4 students and 4 enrolments, you get 16 rows, most of them useless. Always write a condition like \`ON students.id = enrol.student_id\`.
+
+**Mistake 4: reversing the order of a difference.** A − B and B − A are not the same. Whether you remove the second list from the first or the first from the second changes the answer — a wrong order gives the opposite answer.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Result, Duplicate Rows aur Union mein Sorting',
+          '5. Edge Cases: Empty Result, Duplicate Rows, and Sorting in Union'
+        ),
+        body: t(
+          `**Edge case 1: select jismein koi row match na kare.** Jaise \`σ marks > 100\` — result khaali table hogi, columns wahi, rows zero. Ye error nahi hai; khaali result bhi ek valid result hai. Runner is par \`Query ran OK — no rows returned.\` dikhata hai.
+
+**Edge case 2: project mein duplicate values.** \`π name\` mein naam unique hain, par \`π marks\` mein do students ke marks ek jaise ho sakte hain. Pure relational algebra mein result ek **set** hota hai, isliye duplicates hat jaate hain. SQL mein \`SELECT DISTINCT\` likhna padta hai, warna duplicates dikhte hain.
+
+**Edge case 3: union duplicates hatata hai.** \`UNION\` do lists ko jod kar duplicate rows hata deta hai. Agar duplicates rakhne hon to \`UNION ALL\` likho. Exam mein poochha jaata hai ki union ke baad kitni rows hongi — duplicates ginna mat bhoolo.
+
+**Edge case 4: join jismein match hi na ho.** Agar \`enrol\` table mein ek student ka \`id\` hi nahi hai, to inner join mein woh student dikhega hi nahi. Woh student gayab nahi hua — join ne use chhupa diya. Aise students ko dikhane ke liye **left join** chahiye, jo aage ke article mein aayega.`,
+          `**Edge case 1: a select that matches no row.** For example, \`σ marks > 100\` — the result is an empty table, with the same columns and zero rows. That is not an error; an empty result is still a valid result. The runner shows \`Query ran OK — no rows returned.\` for it.
+
+**Edge case 2: duplicate values in a project.** In \`π name\` the names are unique, but in \`π marks\` two students can have the same marks. In pure relational algebra the result is a **set**, so duplicates are removed. In SQL you must write \`SELECT DISTINCT\`, or duplicates will show.
+
+**Edge case 3: a union removes duplicates.** \`UNION\` joins two lists and drops duplicate rows. If you want to keep duplicates, write \`UNION ALL\`. Exams ask how many rows remain after a union — do not forget to count the duplicates.
+
+**Edge case 4: a join with no match at all.** If the \`enrol\` table has no entry for a student \`id\`, that student will not appear in an inner join. The student has not vanished — the join has hidden them. To show such students you need a **left join**, which comes in a later article.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Project pehle lagayein, Join ki jagah Union, ya Difference ki jagah NOT IN?',
+          '6. What If: Project First, Union Instead of Join, or NOT IN Instead of Difference?'
+        ),
+        body: t(
+          `**What if: select se pehle project laga dein?** Jaise pehle \`π name\` karo, phir \`σ marks >= 85\` — ye chalega hi nahi, kyunki project ke baad \`marks\` column hi nahi bacha. Rule hai: jis column par condition lagani hai, woh project se pehle available hona chahiye. Isi liye SQL mein \`WHERE\` pehle evaluate hota hai, \`SELECT\` list baad mein.
+
+**What if: join ki jagah union use karein?** Union rows ko jodta hai (neeche), join columns ko jodta hai (bagal mein). Student ka naam aur uska course ek hi row mein chahiye to join chahiye; do classes ke students ki ek lambi list chahiye to union chahiye. Dono ka kaam alag hai, ek doosre ki jagah nahi le sakta.
+
+**What if: difference ki jagah \`NOT IN\` likhein?** SQL mein \`WHERE id NOT IN (SELECT ...)\` difference jaisa kaam karta hai. Par dhyaan do: agar subquery mein \`NULL\` aa jaaye to \`NOT IN\` khaali result de deta hai — ye ek famous trap hai. Difference wale logic mein \`NOT EXISTS\` zyada safe rehta hai.
+
+**What if: select aur project ko ek saath likhna ho?** SQL mein ye normal hai — har query mein dono hote hain. Algebra mein likhte hain **π name (σ marks >= 85 (students))** — andar se bahar padho: pehle select, phir project.`,
+          `**What if you apply project before select?** For example, apply \`π name\` first, then \`σ marks >= 85\` — that cannot work at all, because after the project the \`marks\` column no longer exists. The rule is: any column used in a condition must be available before the project. That is why in SQL the \`WHERE\` is evaluated first and the \`SELECT\` list after it.
+
+**What if you use union instead of join?** A union joins rows (below), while a join joins columns (beside). If you want a student name and the course in the same row, you need a join; if you want one long list of students from two classes, you need a union. Their jobs are different, and one cannot take the place of the other.
+
+**What if you write \`NOT IN\` instead of a difference?** In SQL, \`WHERE id NOT IN (SELECT ...)\` works like a difference. But be careful: if the subquery returns a \`NULL\`, \`NOT IN\` gives an empty result — that is a famous trap. For difference-style logic, \`NOT EXISTS\` stays safer.
+
+**What if you want to write select and project together?** That is normal in SQL — every query has both. In algebra you write **π name (σ marks >= 85 (students))** — read it from inside out: select first, then project.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Paanch Operations, Ek Table se Doosri Table',
+          '7. Summary: Five Operations, from One Table to Another'
+        ),
+        body: t(
+          `**Select (σ)** rows ko filter karta hai, **project (π)** columns ko chunta hai, **union (∪)** do tables ki rows jodta hai, **difference (−)** pehli table mein se doosri ki rows hatata hai, aur **join (⋈)** do tables ko common column se jodta hai. Har operation ka input table hai aur output bhi table hai — isiliye operations ko chain mein jod sakte ho.
+
+SQL mein: \`WHERE\` = select, \`SELECT\` list = project, \`UNION\` = union, \`JOIN ... ON\` = join. Algebra samajhne ka fayda ye hai ki koi bhi query banane se pehle tum soch sakte ho: pehle kaun si rows chahiye, phir kaun se columns, phir kis table se jodna hai.
+
+Agle article mein hum DDL dekhenge — tables ko banana, badalna aur hatana. Algebra se query banana aa gaya, ab table banana seekhenge.`,
+          `**Select (σ)** filters rows, **project (π)** picks columns, **union (∪)** joins the rows of two tables, **difference (−)** removes the rows of the second table from the first, and **join (⋈)** joins two tables on a common column. Every operation takes a table as input and returns a table as output — so operations can be chained together.
+
+In SQL: \`WHERE\` is select, the \`SELECT\` list is project, \`UNION\` is union, and \`JOIN ... ON\` is join. The benefit of understanding the algebra is that before building any query you can think: which rows do I need first, then which columns, then which table must be joined.
+
+In the next article we will look at DDL — making, changing, and removing tables. You now know how to build a query from algebra; next you will learn how to make a table.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Query ka Flow: Select, phir Project, phir Join',
+        'The Flow of a Query: Select, then Project, then Join'
+      ),
+      caption: t(
+        'Algebra mein operations andar se bahar padhe jaate hain — pehle select, phir project',
+        'In algebra, operations are read from inside out — select first, then project'
+      ),
+      nodes: [
+        {
+          t: t('students table (4 rows)', 'students table (4 rows)'),
+          s: t('Rahul 85, Priya 92, Amit 74, Sana 88', 'Rahul 85, Priya 92, Amit 74, Sana 88')
+        },
+        {
+          t: t('σ marks >= 85 — select', 'σ marks >= 85 — select'),
+          s: t('Sirf 3 rows bachti hain, Amit hat jaata hai', 'Only 3 rows remain, Amit is dropped')
+        },
+        {
+          t: t('π name, marks — project', 'π name, marks — project'),
+          s: t('Sirf 2 columns bachti hain, id hat jaata hai', 'Only 2 columns remain, id is dropped')
+        },
+        {
+          t: t('⋈ enrol — join', '⋈ enrol — join'),
+          s: t('id se jodo to har student ke saath uska course aa jaata hai', 'Joining on id brings each student together with the course')
+        },
+        {
+          t: t('Final result — nayi table', 'Final result — a new table'),
+          s: t('Har operation ka output phir se ek table hota hai', 'The output of every operation is a table again')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Union: 85+ wale aur 80 se Kam wale — Dono Lists Jodo',
+          'Union: Above 85 and Below 80 — Join Both Lists'
+        ),
+        language: 'sql',
+        code: `SELECT name FROM students WHERE marks >= 85
+UNION
+SELECT name FROM students WHERE marks < 80
+ORDER BY name;`,
+        output: `name
+Amit
+Priya
+Rahul
+Sana`
+      },
+      {
+        title: t(
+          'Join: Student ka Naam uske Course ke Saath',
+          'Join: Student Name Together with the Course'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS enrol;
+CREATE TABLE enrol (student_id INTEGER, course TEXT);
+INSERT INTO enrol VALUES (1, 'Python');
+INSERT INTO enrol VALUES (2, 'Python');
+INSERT INTO enrol VALUES (2, 'SQL');
+INSERT INTO enrol VALUES (3, 'SQL');
+SELECT students.name, enrol.course FROM students
+JOIN enrol ON students.id = enrol.student_id
+ORDER BY students.name, enrol.course;`,
+        output: `name | course
+Amit | SQL
+Priya | Python
+Priya | SQL
+Rahul | Python`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'σ marks >= 85 (students) mein σ ka matlab kya hai?',
+          'In σ marks >= 85 (students), what does σ mean?'
+        ),
+        opts: [
+          t('Columns chunna', 'Picking columns'),
+          t('Rows ko filter karna', 'Filtering rows'),
+          t('Do tables jodna', 'Joining two tables'),
+          t('Rows ko sort karna', 'Sorting rows')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: σ (sigma) select operation hai — ye condition ke hisaab se rows ko filter karta hai, columns ko nahi chunta.',
+          'Correct answer: σ (sigma) is the select operation — it filters rows by a condition; it does not pick columns.'
+        )
+      },
+      {
+        q: t(
+          'π name (students) ka result kya hoga?',
+          'What will π name (students) return?'
+        ),
+        opts: [
+          t('Sirf naam wali ek column, saari 4 rows', 'One column of names only, all 4 rows'),
+          t('Sirf 85+ marks wale students', 'Only the students with 85+ marks'),
+          t('Sirf pehli row', 'Only the first row'),
+          t('Poori table jaisi ki taisi', 'The whole table unchanged')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: π (pi) project hai — ye sirf name column rakhta hai, rows ko filter nahi karta, isliye saari 4 rows dikhengi.',
+          'Correct answer: π (pi) is project — it keeps only the name column and does not filter rows, so all 4 rows will show.'
+        )
+      },
+      {
+        q: t(
+          'Union chalane ke liye dono tables ke baare mein kya zaroori hai?',
+          'What must be true about both tables for a union to work?'
+        ),
+        opts: [
+          t('Dono ke columns ek jaise hon', 'Both must have matching columns'),
+          t('Dono mein same rows hon', 'Both must have the same rows'),
+          t('Dono ke naam ek jaise hon', 'Both must have the same name'),
+          t('Kuch zaroori nahi', 'Nothing is needed')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: union ke liye dono tables ke columns same number aur same type ke hone chahiye, warna union chalega hi nahi.',
+          'Correct answer: for a union, both tables must have columns of the same number and type, or the union will not run at all.'
+        )
+      },
+      {
+        q: t(
+          'Do tables ko bina ON condition ke join karne par kya banta hai?',
+          'What is formed when two tables are joined without an ON condition?'
+        ),
+        opts: [
+          t('Khaali table', 'An empty table'),
+          t('Cross product — har row har row se judti hai', 'Cross product — every row joins with every row'),
+          t('Sirf matching rows', 'Only the matching rows'),
+          t('Error aata hai, kuch nahi banta', 'An error comes, nothing is formed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina condition ke join cross product banata hai — 4 students aur 4 enrolments se 16 rows ban jaati hain, jinmein se zyada tar bekaar hoti hain.',
+          'Correct answer: a join without a condition makes a cross product — 4 students and 4 enrolments give 16 rows, most of them useless.'
+        )
+      },
+      {
+        q: t(
+          'A − B aur B − A ke baare mein kya sahi hai?',
+          'What is true about A − B and B − A?'
+        ),
+        opts: [
+          t('Dono hamesha ek jaise hote hain', 'Both are always the same'),
+          t('Dono alag hote hain, order matter karta hai', 'Both are different, order matters'),
+          t('Dono khaali hote hain', 'Both are empty'),
+          t('Dono union ke barabar hote hain', 'Both equal the union')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: difference mein order matter karta hai — A mein se B hatana, B mein se A hatane jaisa nahi hota.',
+          'Correct answer: order matters in a difference — removing B from A is not the same as removing A from B.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Select (σ) rows ko filter karta hai, project (π) columns ko chunta hai.',
+        'Select (σ) filters rows, and project (π) picks columns.'
+      ),
+      t(
+        'Union (∪) do tables ki rows jodta hai, par columns ek jaise hone chahiye.',
+        'Union (∪) joins the rows of two tables, but the columns must match.'
+      ),
+      t(
+        'Difference (−) mein order matter karta hai: A − B, B − A jaisa nahi hota.',
+        'In a difference (−), order matters: A − B is not like B − A.'
+      ),
+      t(
+        'Join (⋈) do tables ko common column se jodta hai — hamesha ON condition likho.',
+        'Join (⋈) joins two tables on a common column — always write the ON condition.'
+      ),
+      t(
+        'SQL mein WHERE = select, SELECT list = project, UNION = union, JOIN = join.',
+        'In SQL, WHERE is select, the SELECT list is project, UNION is union, and JOIN is join.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Select + Project se 80 se Zyada Marks wale Naam Nikaalo',
+        'Practice: Use Select + Project to Get the Names with More Than 80 Marks'
+      ),
+      task: t(
+        'students table se un students ke naam nikaalo jinke marks 80 se zyada hain, naam ke order mein. Starter code mein query pehle se likhi hai — isko run karo aur verify karo ki output mein sirf Priya, Rahul aur Sana aate hain, is order mein. Done tab maanenge jab output expected jaisa aaye.',
+        'From the students table, get the names of students with marks above 80, in name order. The query is already written in the starter code — run it and verify the output shows only Priya, Rahul, and Sana, in this order. You are done when the output matches the expected output.'
+      ),
+      language: 'sql',
+      starter: `SELECT name FROM students WHERE marks > 80 ORDER BY name;`,
+      expected: `name
+Priya
+Rahul
+Sana`
+    },
+    readMinutes: 12
+  };
+
+const dbmsSqlDdl: Article = {
+    id: 'dbms-sql-ddl',
+    subjectId: 'dbms',
+    title: t(
+      'SQL DDL — CREATE, ALTER, DROP, Data Types aur Constraints',
+      'SQL DDL — CREATE, ALTER, DROP, Data Types, and Constraints'
+    ),
+    summary: t(
+      'Tables ka structure banane wale commands seekho: CREATE TABLE se nayi table, ALTER TABLE se column jodna ya badalna, DROP TABLE se table hatana, sahi data types chunna, aur PRIMARY KEY aur NOT NULL jaise constraints lagana.',
+      'Learn the commands that build the structure of tables: CREATE TABLE for a new table, ALTER TABLE for adding or changing a column, DROP TABLE for removing a table, choosing the right data types, and adding constraints like PRIMARY KEY and NOT NULL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. DDL Kya Hai? (Table ka Structure Banana)',
+          '1. What Is DDL? (Building the Structure of a Table)'
+        ),
+        body: t(
+          `SQL ke commands do bade groups mein bante hain: **DDL** (Data Definition Language) aur **DML** (Data Manipulation Language). DDL table ka **structure** banata hai — table ka naam, uske columns, unke data types, aur constraints. DML table ke **andar ka data** badalta hai — rows insert, update aur delete karta hai.
+
+DDL ke teen main commands hain: **CREATE TABLE** nayi table banata hai, **ALTER TABLE** bani hui table ko badalta hai — column jodna, hatana ya badalna — aur **DROP TABLE** poori table ko hata deta hai, uske data ke saath. Ek aur command hai **TRUNCATE**, jo table ka structure rakh kar saara data hata deta hai, par SQLite mein ye nahi hota — wahan \`DELETE FROM table\` use hota hai.
+
+DDL commands ko ek baar chalane par table turant ban jaati hai ya badal jaati hai. Isliye DDL chalane se pehle design pakka kar lo — ER model wala article yaad rakho: pehle design, phir table.`,
+          `SQL commands fall into two big groups: **DDL** (Data Definition Language) and **DML** (Data Manipulation Language). DDL builds the **structure** of a table — the table name, its columns, their data types, and constraints. DML changes the **data inside** a table — it inserts, updates, and deletes rows.
+
+DDL has three main commands: **CREATE TABLE** makes a new table, **ALTER TABLE** changes a table that already exists — adding, removing, or changing a column — and **DROP TABLE** removes a whole table, together with its data. There is one more command, **TRUNCATE**, which removes all the data while keeping the table structure, but SQLite does not have it — there you use \`DELETE FROM table\`.
+
+Once you run a DDL command, the table is made or changed at once. So make the design firm before running DDL — remember the ER model article: design first, then table.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Naya Register, Naya Column aur Purana Register Phenkna',
+          '2. Real-Life Examples: A New Register, a New Column, and Throwing Away an Old Register'
+        ),
+        body: t(
+          `School mein naya saal shuru hota hai to naya register banta hai — har class ke liye ek naya register, usmein columns hain: roll number, naam, marks. Ye **CREATE TABLE** hai. Register ke columns pehle se tay hote hain: roll number number hoga, naam text hoga — ye **data types** hain.
+
+Beech saal mein principal kehta hai ki har student ka phone number bhi likhna hai. Register mein ek naya column jodna padta hai — ye **ALTER TABLE** hai. Column jodne par purana data waisa ka waisa rehta hai, naye column mein pehle khaali jagah rehti hai.
+
+Saal khatam hone par purana rough register phenk diya jaata hai — ye **DROP TABLE** hai. Dhyaan do: drop karne par register ke saath uska saara data bhi chala jaata hai. Isiliye DROP chalane se pehle do baar socho, aur agar table dobara banani ho to \`DROP TABLE IF EXISTS\` likho taaki pehle se bani table par dobara run karne par error na aaye.`,
+          `When a new school year starts, a new register is made — one new register per class, with columns for roll number, name, and marks. That is **CREATE TABLE**. The columns of the register are fixed in advance: the roll number will be a number and the name will be text — those are the **data types**.
+
+In the middle of the year, the principal says the phone number of every student must also be written. A new column must be added to the register — that is **ALTER TABLE**. When a column is added, the old data stays exactly as it was, and the new column starts out empty.
+
+When the year ends, the old rough register is thrown away — that is **DROP TABLE**. Note: dropping removes the register together with all its data. So think twice before running DROP, and if a table may need to be made again, write \`DROP TABLE IF EXISTS\` so that running it again on a table that already exists gives no error.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Books Table Banana — Types, Default aur Auto Number (worked example with dry run)',
+          '3. Step-by-Step: Making the Books Table — Types, Default, and Auto Number (worked example with dry run)'
+        ),
+        body: t(
+          `Chalo \`books\` table banate hain, step by step. **Step 1: table ka naam aur columns tay karo.** Chahiye: \`book_id\` (number), \`title\` (text), \`price\` (number). **Step 2: data types chuno.** SQLite mein main types hain: \`INTEGER\` poori sankhya ke liye, \`TEXT\` naam aur title ke liye, \`REAL\` decimal ke liye, jaise 99.50.
+
+**Step 3: constraints lagao.** \`book_id INTEGER PRIMARY KEY AUTOINCREMENT\` — har book ko apne aap ek naya number milega, tumhe likhna nahi padega. \`title TEXT NOT NULL\` — bina title ke book save hi nahi hogi. \`price INTEGER DEFAULT 0\` — price na likho to 0 maan liya jaayega.
+
+**Dry run:** pehli insert hai \`INSERT INTO books (title) VALUES ('Godan')\` — \`book_id\` apne aap 1 ban gaya, \`price\` apne aap 0 ban gaya. Doosri insert hai \`('Malgudi Days', 250)\` — \`book_id\` apne aap 2, price 250. Final \`SELECT\` mein dono rows dikhni chahiye. Neeche wala code run karo aur output se milao.`,
+          `Let us make a \`books\` table, step by step. **Step 1: fix the table name and the columns.** We need: \`book_id\` (number), \`title\` (text), and \`price\` (number). **Step 2: choose the data types.** The main types in SQLite are: \`INTEGER\` for whole numbers, \`TEXT\` for names and titles, and \`REAL\` for decimals, such as 99.50.
+
+**Step 3: add constraints.** \`book_id INTEGER PRIMARY KEY AUTOINCREMENT\` — every book gets a new number on its own; you do not have to write it. \`title TEXT NOT NULL\` — a book without a title cannot be saved at all. \`price INTEGER DEFAULT 0\` — if you do not write a price, it is taken as 0.
+
+**Dry run:** the first insert is \`INSERT INTO books (title) VALUES ('Godan')\` — \`book_id\` becomes 1 on its own, and \`price\` becomes 0 on its own. The second insert is \`('Malgudi Days', 250)\` — \`book_id\` becomes 2 on its own, and the price is 250. The final \`SELECT\` should show both rows. Run the code below and match it with the output.`
+        ),
+        code: {
+          title: t(
+            'Books Table: Auto ID, NOT NULL Title aur Default Price',
+            'Books Table: Auto ID, NOT NULL Title, and Default Price'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS books;
+CREATE TABLE books (
+  book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  price INTEGER DEFAULT 0
+);
+INSERT INTO books (title) VALUES ('Godan');
+INSERT INTO books (title, price) VALUES ('Malgudi Days', 250);
+SELECT book_id, title, price FROM books;`,
+          output: `book_id | title | price
+1 | Godan | 0
+2 | Malgudi Days | 250`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Galat Type, Bina DROP ke Dobara CREATE aur DROP vs DELETE',
+          '4. Common Mistakes: Wrong Type, CREATE Again Without DROP, and DROP vs DELETE'
+        ),
+        body: t(
+          `**Galti 1: galat data type chunna.** Marks ko \`TEXT\` bana diya to \`marks > 80\` wali query text comparison karegi — '92' aur '85' ka order number wale order se alag ho sakta hai. Numbers ke liye \`INTEGER\`, naam ke liye \`TEXT\`, decimal ke liye \`REAL\` — type pehle hi sahi chuno, baad mein badalna mushkil hai.
+
+**Galti 2: bina DROP ke dobara CREATE chalana.** Table pehle se bani hai aur tum phir \`CREATE TABLE books\` chala do to error aayega: table already exists. Isiliye is site ke saare CREATE examples \`DROP TABLE IF EXISTS\` se shuru hote hain — dobara run karne par bhi chalte hain.
+
+**Galti 3: DROP aur DELETE ko ek samajhna.** \`DROP TABLE books\` poori table hata deta hai — structure bhi, data bhi. \`DELETE FROM books\` sirf rows hatata hai, table aur uske columns bache rehte hain. Galat command chala di to table dobara banani padegi.
+
+**Galti 4: MySQL wali syntax SQLite mein likhna.** MySQL mein \`AUTO_INCREMENT\` likhte hain, SQLite mein \`AUTOINCREMENT\` — aur sirf \`INTEGER PRIMARY KEY\` ke saath. \`AUTO_INCREMENT\` SQLite mein error dega. Is site ka runner SQLite hai, isliye hamesha SQLite wali syntax likho.`,
+          `**Mistake 1: choosing the wrong data type.** If you make marks \`TEXT\`, then a query like \`marks > 80\` will compare text — the order of '92' and '85' can differ from the number order. Use \`INTEGER\` for numbers, \`TEXT\` for names, and \`REAL\` for decimals — choose the type right the first time, because changing it later is hard.
+
+**Mistake 2: running CREATE again without DROP.** If the table already exists and you run \`CREATE TABLE books\` again, you get an error: table already exists. That is why every CREATE example on this site starts with \`DROP TABLE IF EXISTS\` — it still runs when run again.
+
+**Mistake 3: treating DROP and DELETE as the same.** \`DROP TABLE books\` removes the whole table — structure and data both. \`DELETE FROM books\` removes only the rows; the table and its columns stay. If you run the wrong command, you must build the table again.
+
+**Mistake 4: writing MySQL syntax in SQLite.** MySQL uses \`AUTO_INCREMENT\`, while SQLite uses \`AUTOINCREMENT\` — and only with \`INTEGER PRIMARY KEY\`. \`AUTO_INCREMENT\` gives an error in SQLite. The runner on this site is SQLite, so always write SQLite syntax.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Table, Bina Column wali ALTER aur Pehle se Bani Table',
+          '5. Edge Cases: Empty Table, ALTER Without a Column, and a Table That Already Exists'
+        ),
+        body: t(
+          `**Edge case 1: khaali table banana.** \`CREATE TABLE\` ke baad table mein zero rows hoti hain — ye bilkul theek hai. Table banana aur data bharna do alag kaam hain. Pehle structure banao, phir \`INSERT\` se data bharo.
+
+**Edge case 2: ALTER se column jodna, par purani rows mein kya aayega?** Naye column mein purani rows ke liye \`NULL\` aayega, jab tak tum \`DEFAULT\` na do. Agar column \`NOT NULL\` hai aur koi default nahi hai, to SQLite purani rows wali table mein aisa column jodne hi nahi dega — error aayega. Isiliye ALTER se jodne wale column mein ya to \`DEFAULT\` do, ya use nullable rakho.
+
+**Edge case 3: \`IF EXISTS\` aur \`IF NOT EXISTS\`.** \`DROP TABLE IF EXISTS books\` — table na ho to bhi error nahi aata. \`CREATE TABLE IF NOT EXISTS books\` — table pehle se ho to dobara banane ki koshish nahi hoti, purani table waisi ki waisi rehti hai. Dono likhne ki aadat daalo, dobara run karne wale code mein ye bahut kaam aate hain.
+
+**Edge case 4: column ka naam SQLite ke keyword se takra jaaye.** Jaise column ka naam \`order\` ya \`group\` rakh diya — ye SQL ke keywords hain. Aise naam double quotes mein likhne padte hain: \`"order"\`. Behtar hai ki aise naam pehle se hi avoid karo.`,
+          `**Edge case 1: making an empty table.** After \`CREATE TABLE\`, the table holds zero rows — that is completely fine. Making a table and filling it with data are two separate jobs. Make the structure first, then fill the data with \`INSERT\`.
+
+**Edge case 2: adding a column with ALTER — what goes into the old rows?** The new column gets \`NULL\` for the old rows, unless you give a \`DEFAULT\`. If the column is \`NOT NULL\` and has no default, SQLite will not let you add such a column to a table with old rows at all — you get an error. So for a column added with ALTER, either give a \`DEFAULT\` or keep it nullable.
+
+**Edge case 3: \`IF EXISTS\` and \`IF NOT EXISTS\`.** \`DROP TABLE IF EXISTS books\` — no error comes even if the table is not there. \`CREATE TABLE IF NOT EXISTS books\` — if the table already exists, it is not made again; the old table stays as it is. Get into the habit of writing both; they help a lot in code that runs again.
+
+**Edge case 4: a column name clashes with an SQLite keyword.** For example, naming a column \`order\` or \`group\` — these are SQL keywords. Such names must be written in double quotes: \`"order"\`. It is better to avoid such names from the start.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Column ka Type Badalna ho, Table ka Naam Badalna ho, ya Column Hatana ho?',
+          '6. What If: Change a Column Type, Rename a Table, or Remove a Column?'
+        ),
+        body: t(
+          `**What if: column ka type badalna ho?** Jaise \`price\` ko \`INTEGER\` se \`REAL\` banana ho. SQLite mein \`ALTER TABLE ... ALTER COLUMN\` nahi hota. Rasta hai: nayi table banao sahi type ke saath, purana data copy karo, purani table drop karo, nayi table ka naam badlo. MySQL aur Postgres mein ye ek command mein hota hai, SQLite mein chaar steps lagte hain.
+
+**What if: table ka naam badalna ho?** SQLite mein ye easy hai: \`ALTER TABLE books RENAME TO old_books;\` — ek hi command, data waisa ka waisa rehta hai. Column ka naam badalna bhi aise hi hota hai: \`ALTER TABLE books RENAME COLUMN title TO book_title;\`.
+
+**What if: column hatana ho?** Naye SQLite mein \`ALTER TABLE books DROP COLUMN price;\` chalta hai. Purane SQLite mein nahi chalta tha — wahan nayi table banakar data copy karna padta tha. Is site ka runner modern SQLite hai, isliye DROP COLUMN chal jaayega.
+
+**What if: table banate waqt hi data bharna ho?** \`CREATE TABLE top_students AS SELECT * FROM students WHERE marks >= 85;\` — ek hi command mein nayi table banti hai aur select ka result usmein bhar jaata hai. Par dhyaan do: ismein constraints aur keys copy nahi hote, sirf data aur columns aate hain.`,
+          `**What if you want to change a column type?** For example, changing \`price\` from \`INTEGER\` to \`REAL\`. SQLite has no \`ALTER TABLE ... ALTER COLUMN\`. The way is: make a new table with the right type, copy the old data, drop the old table, and rename the new table. In MySQL and Postgres this takes one command; in SQLite it takes four steps.
+
+**What if you want to rename a table?** In SQLite this is easy: \`ALTER TABLE books RENAME TO old_books;\` — a single command, and the data stays exactly as it was. Renaming a column works the same way: \`ALTER TABLE books RENAME COLUMN title TO book_title;\`.
+
+**What if you want to remove a column?** In new SQLite, \`ALTER TABLE books DROP COLUMN price;\` works. In old SQLite it did not work — there you had to make a new table and copy the data. The runner on this site is modern SQLite, so DROP COLUMN will run.
+
+**What if you want to fill data while making the table?** \`CREATE TABLE top_students AS SELECT * FROM students WHERE marks >= 85;\` — one command both makes the new table and fills it with the result of the select. But note: constraints and keys are not copied in this, only the data and the columns come across.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: DDL se Structure, DML se Data',
+          '7. Summary: Structure from DDL, Data from DML'
+        ),
+        body: t(
+          `DDL table ka **structure** banata hai: **CREATE TABLE** nayi table, **ALTER TABLE** column jodna ya naam badalna, **DROP TABLE** poori table hatana. Data types mein **INTEGER** numbers ke liye, **TEXT** naam ke liye, **REAL** decimal ke liye hota hai.
+
+Constraints structure ka hissa hain: **PRIMARY KEY** har row ko unique pehchan deta hai, **NOT NULL** khaali value rokta hai, **DEFAULT** na likhi value ki jagah leta hai, aur **AUTOINCREMENT** number apne aap badhata hai. Har CREATE se pehle \`DROP TABLE IF EXISTS\` likho taaki code dobara run karne par bhi chale.
+
+Yaad rakho: DDL structure badalta hai, DML data badalta hai. Agle article mein hum constraints ko detail mein dekhenge — CHECK, UNIQUE, DEFAULT aur NOT NULL ka poora khel.`,
+          `DDL builds the **structure** of a table: **CREATE TABLE** for a new table, **ALTER TABLE** for adding a column or renaming, and **DROP TABLE** for removing a whole table. Among data types, **INTEGER** is for numbers, **TEXT** is for names, and **REAL** is for decimals.
+
+Constraints are part of the structure: **PRIMARY KEY** gives every row a unique identity, **NOT NULL** stops an empty value, **DEFAULT** takes the place of a value you did not write, and **AUTOINCREMENT** raises the number on its own. Before every CREATE, write \`DROP TABLE IF EXISTS\` so the code still runs when run again.
+
+Remember: DDL changes structure, and DML changes data. In the next article we will look at constraints in detail — the full story of CHECK, UNIQUE, DEFAULT, and NOT NULL.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'DDL ke Teen Commands: CREATE, ALTER, DROP',
+        'The Three DDL Commands: CREATE, ALTER, DROP'
+      ),
+      caption: t(
+        'DDL structure badalta hai, data nahi — data ke liye DML hota hai',
+        'DDL changes structure, not data — DML is for data'
+      ),
+      nodes: [
+        {
+          t: t('CREATE TABLE — nayi table banao', 'CREATE TABLE — make a new table'),
+          s: t('Naam, columns, types aur constraints ek saath likho', 'Write the name, columns, types, and constraints together')
+        },
+        {
+          t: t('ALTER TABLE — bani table badlo', 'ALTER TABLE — change a table that exists'),
+          s: t('Column jodo, naam badlo, ya column hatao', 'Add a column, rename, or remove a column')
+        },
+        {
+          t: t('DROP TABLE — poori table hatao', 'DROP TABLE — remove a whole table'),
+          s: t('Structure aur data dono chale jaate hain — do baar socho', 'Structure and data both go — think twice')
+        },
+        {
+          t: t('Data types: INTEGER, TEXT, REAL', 'Data types: INTEGER, TEXT, REAL'),
+          s: t('Number ke liye INTEGER, naam ke liye TEXT, decimal ke liye REAL', 'INTEGER for numbers, TEXT for names, REAL for decimals')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'ALTER: Books mein Author Column Jodo',
+          'ALTER: Add an Author Column to Books'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS books;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT);
+INSERT INTO books VALUES (1, 'Godan');
+ALTER TABLE books ADD COLUMN author TEXT;
+UPDATE books SET author = 'Premchand' WHERE book_id = 1;
+SELECT book_id, title, author FROM books;`,
+        output: `book_id | title | author
+1 | Godan | Premchand`
+      },
+      {
+        title: t(
+          'DROP: Temporary Table Banao, Dikhao, phir Hatao',
+          'DROP: Make a Temporary Table, Show It, then Remove It'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS temp_books;
+CREATE TABLE temp_books (book_id INTEGER PRIMARY KEY, title TEXT);
+INSERT INTO temp_books VALUES (1, 'Godan');
+SELECT book_id, title FROM temp_books;
+DROP TABLE temp_books;`,
+        output: `book_id | title
+1 | Godan`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'DDL ka kaam kya hai?',
+          'What is the job of DDL?'
+        ),
+        opts: [
+          t('Table ke andar ka data badalna', 'Changing the data inside a table'),
+          t('Table ka structure banana aur badalna', 'Making and changing the structure of a table'),
+          t('Rows ko sort karna', 'Sorting rows'),
+          t('Data ko search karna', 'Searching data')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: DDL (CREATE, ALTER, DROP) table ka structure banata aur badalta hai; data badalna DML ka kaam hai.',
+          'Correct answer: DDL (CREATE, ALTER, DROP) makes and changes the structure of a table; changing data is the job of DML.'
+        )
+      },
+      {
+        q: t(
+          'SQLite mein auto badhne wale number ke liye kya likhte hain?',
+          'What do you write in SQLite for a number that grows on its own?'
+        ),
+        opts: [
+          t('AUTO_INCREMENT', 'AUTO_INCREMENT'),
+          t('INTEGER PRIMARY KEY AUTOINCREMENT', 'INTEGER PRIMARY KEY AUTOINCREMENT'),
+          t('SERIAL', 'SERIAL'),
+          t('AUTO_NUMBER', 'AUTO_NUMBER')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: SQLite mein INTEGER PRIMARY KEY AUTOINCREMENT likhte hain; AUTO_INCREMENT MySQL ki syntax hai aur SQLite mein error dega.',
+          'Correct answer: in SQLite you write INTEGER PRIMARY KEY AUTOINCREMENT; AUTO_INCREMENT is MySQL syntax and gives an error in SQLite.'
+        )
+      },
+      {
+        q: t(
+          'DROP TABLE books chalane par kya hota hai?',
+          'What happens when you run DROP TABLE books?'
+        ),
+        opts: [
+          t('Sirf rows hat ti hain, table rehti hai', 'Only the rows go, the table stays'),
+          t('Poori table hat jaati hai — structure aur data dono', 'The whole table goes — structure and data both'),
+          t('Sirf pehli row hat ti hai', 'Only the first row goes'),
+          t('Kuch nahi hota', 'Nothing happens')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: DROP TABLE poori table hata deta hai, structure bhi aur data bhi. Sirf rows hatane ke liye DELETE FROM use hota hai.',
+          'Correct answer: DROP TABLE removes the whole table, structure and data both. To remove only rows, use DELETE FROM.'
+        )
+      },
+      {
+        q: t(
+          'Marks (jaise 85, 92) ke liye sahi data type kaun sa hai?',
+          'Which is the right data type for marks (such as 85, 92)?'
+        ),
+        opts: [
+          t('TEXT', 'TEXT'),
+          t('INTEGER', 'INTEGER'),
+          t('REAL', 'REAL'),
+          t('BLOB', 'BLOB')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: marks poori sankhya hain, isliye INTEGER sahi hai. TEXT bana doge to comparison text jaisa hoga aur galat order aa sakta hai.',
+          'Correct answer: marks are whole numbers, so INTEGER is right. If you make them TEXT, comparison works like text and can give the wrong order.'
+        )
+      },
+      {
+        q: t(
+          'Table pehle se bani ho aur phir CREATE TABLE chalao to kya hota hai?',
+          'What happens if you run CREATE TABLE when the table already exists?'
+        ),
+        opts: [
+          t('Purani table update ho jaati hai', 'The old table is updated'),
+          t('Error aata hai: table already exists', 'An error comes: table already exists'),
+          t('Purana data delete ho jaata hai', 'The old data is deleted'),
+          t('Nayi table alag naam se ban jaati hai', 'A new table is made with a different name')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle se bani table par dobara CREATE chalane par error aata hai. Isiliye pehle DROP TABLE IF EXISTS likhte hain.',
+          'Correct answer: running CREATE again on a table that already exists gives an error. That is why we write DROP TABLE IF EXISTS first.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'DDL structure banata hai: CREATE TABLE, ALTER TABLE, DROP TABLE.',
+        'DDL builds structure: CREATE TABLE, ALTER TABLE, DROP TABLE.'
+      ),
+      t(
+        'INTEGER numbers ke liye, TEXT naam ke liye, REAL decimal ke liye hota hai.',
+        'INTEGER is for numbers, TEXT is for names, and REAL is for decimals.'
+      ),
+      t(
+        'DROP TABLE poori table hatata hai, DELETE FROM sirf rows hatata hai.',
+        'DROP TABLE removes the whole table, while DELETE FROM removes only rows.'
+      ),
+      t(
+        'SQLite mein AUTOINCREMENT likhte hain, MySQL wala AUTO_INCREMENT nahi.',
+        'In SQLite write AUTOINCREMENT, not the MySQL AUTO_INCREMENT.'
+      ),
+      t(
+        'Har CREATE se pehle DROP TABLE IF EXISTS likho taaki code dobara bhi chale.',
+        'Before every CREATE, write DROP TABLE IF EXISTS so the code runs again too.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Authors Table Banao — Default City ke Saath',
+        'Practice: Make an Authors Table — With a Default City'
+      ),
+      task: t(
+        'Ek table authors banao jisme author_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL aur city TEXT DEFAULT \'Delhi\' hon. Phir do authors insert karo: sirf naam \'Premchand\' (city apne aap Delhi aani chahiye) aur naam \'R. K. Narayan\' with city \'Chennai\'. Aakhir mein SELECT se teeno columns dikhao. Done tab maanenge jab output mein dono rows dikhein aur pehli row ki city Delhi ho.',
+        'Make a table called authors with author_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, and city TEXT DEFAULT \'Delhi\'. Then insert two authors: only the name \'Premchand\' (the city should come as Delhi on its own) and the name \'R. K. Narayan\' with city \'Chennai\'. At the end, show all three columns with SELECT. You are done when both rows appear in the output and the first row has city Delhi.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS authors;
+CREATE TABLE authors (
+  author_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  city TEXT DEFAULT 'Delhi'
+);
+INSERT INTO authors (name) VALUES ('Premchand');
+INSERT INTO authors (name, city) VALUES ('R. K. Narayan', 'Chennai');
+SELECT author_id, name, city FROM authors;`,
+      expected: `author_id | name | city
+1 | Premchand | Delhi
+2 | R. K. Narayan | Chennai`
+    },
+    readMinutes: 12
+  };
+
+const dbmsConstraints: Article = {
+    id: 'dbms-constraints',
+    subjectId: 'dbms',
+    title: t(
+      'Constraints Deep — CHECK, DEFAULT, UNIQUE aur NOT NULL',
+      'Constraints Deep — CHECK, DEFAULT, UNIQUE, and NOT NULL'
+    ),
+    summary: t(
+      'Galat data ko table mein ghusne se rokne wale rules seekho: CHECK se range check, DEFAULT se apne aap value, UNIQUE se duplicate rokna, NOT NULL se khaali value rokna, aur PRIMARY KEY ka in sab se kya rishta hai.',
+      'Learn the rules that stop wrong data from entering a table: CHECK for a range check, DEFAULT for a value on its own, UNIQUE for stopping duplicates, NOT NULL for stopping empty values, and how PRIMARY KEY relates to all of them.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Constraint Kya Hai? (Table ke Andar ka Chowkidar)',
+          '1. What Is a Constraint? (The Guard Inside a Table)'
+        ),
+        body: t(
+          `Constraint table par lagaya gaya ek **rule** hai — jo data is rule ko todta hai, woh table mein ghus hi nahi sakta. Socho school ke gate par chowkidar khada hai: bina uniform ke andar nahi ja sakte, bina ID card ke andar nahi ja sakte. Constraint wahi chowkidar hai, par table ke gate par.
+
+Chaar main constraints hain. **NOT NULL** kehta hai: is column mein khaali value (\`NULL\`) nahi aani chahiye. **UNIQUE** kehta hai: is column mein do rows ki value ek jaisi nahi honi chahiye. **CHECK** kehta hai: value is condition ko satisfy kare, jaise marks 0 se 100 ke beech hon. **DEFAULT** kehta hai: agar value na likhi ho to ye value apne aap daal do.
+
+Inke saath **PRIMARY KEY** bhi ek constraint hai — woh NOT NULL aur UNIQUE dono ka combination hai: key na khaali ho sakti hai, na duplicate. Constraint ka fayda ye hai ki galat data database mein aata hi nahi — galti application mein pakadne se behtar hai ki database khud use rok de.`,
+          `A constraint is a **rule** placed on a table — data that breaks this rule cannot enter the table at all. Think of a guard standing at the school gate: no entry without a uniform, no entry without an ID card. A constraint is that same guard, but at the gate of a table.
+
+There are four main constraints. **NOT NULL** says: this column must not hold an empty value (\`NULL\`). **UNIQUE** says: no two rows may hold the same value in this column. **CHECK** says: the value must satisfy this condition, such as marks lying between 0 and 100. **DEFAULT** says: if no value is written, put this value in on its own.
+
+**PRIMARY KEY** is also a constraint — it is a combination of NOT NULL and UNIQUE both: a key can be neither empty nor duplicate. The benefit of a constraint is that wrong data never reaches the database at all — it is better for the database itself to stop it than to catch the mistake in the application.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam Form, Email ID aur Library Card',
+          '2. Real-Life Examples: Exam Form, Email ID, and Library Card'
+        ),
+        body: t(
+          `Exam form bharte waqt naam wala box khaali nahi chhod sakte — form submit hi nahi hota. Ye **NOT NULL** hai: naam likhna zaroori hai. Marks wala box mein 0 se 100 ke beech number likhna hota hai — 150 likhoge to form error dega. Ye **CHECK** hai: \`marks >= 0 AND marks <= 100\`.
+
+Email ID banate waqt do logon ki email ek jaisi nahi ho sakti — system bolega "ye email pehle se hai". Ye **UNIQUE** hai. Aur jab form mein city nahi likhte to apne aap "Delhi" bhar jaata hai — ye **DEFAULT** hai: na likhi value ki jagah pehle se tay value aa jaati hai.
+
+Library card ka number bhi **PRIMARY KEY** jaisa hai — har card ka number alag hota hai, aur bina number ke card banta hi nahi. Ek hi cheez mein NOT NULL aur UNIQUE dono rules chhupe hain.`,
+          `When filling an exam form, you cannot leave the name box empty — the form will not submit at all. That is **NOT NULL**: writing the name is required. In the marks box you must write a number between 0 and 100 — write 150 and the form gives an error. That is **CHECK**: \`marks >= 0 AND marks <= 100\`.
+
+When making an email ID, two people cannot have the same email — the system says "this email already exists". That is **UNIQUE**. And when you do not write a city in the form, "Delhi" fills in on its own — that is **DEFAULT**: a value fixed in advance takes the place of a value you did not write.
+
+A library card number is like a **PRIMARY KEY** too — every card has a different number, and a card is not made at all without a number. One thing hides both the NOT NULL and the UNIQUE rules inside it.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Results Table Banana — Saare Constraints Ek Saath (worked example with dry run)',
+          '3. Step-by-Step: Making the Results Table — All Constraints Together (worked example with dry run)'
+        ),
+        body: t(
+          `Chalo \`results\` table banate hain jismein chaaro constraints hon. **Step 1: columns aur rules likho.** \`id INTEGER PRIMARY KEY\` — unique aur not null, apne aap. \`name TEXT NOT NULL\` — naam khaali nahi ho sakta. \`marks INTEGER CHECK (marks >= 0 AND marks <= 100)\` — marks sirf 0 se 100 ke beech. \`grade TEXT DEFAULT 'B'\` — grade na likho to 'B' aa jaayega. \`email TEXT UNIQUE\` — do students ki email ek jaisi nahi ho sakti.
+
+**Step 2: dry run — do inserts check karo.** Pehli insert: \`(1, 'Rahul', 85, 'A', 'rahul@x.com')\` — id 1 unique hai, naam likha hai, marks 85 range mein hai, email pehli baar hai — sab rules pass, row save. Doosri insert: \`(2, 'Priya', 92, 'A', 'priya@x.com')\` — id 2 unique, marks 92 range mein, email alag — phir pass, row save.
+
+**Step 3: SELECT se verify karo.** Final result mein dono rows dikhni chahiye, grade 'A' ke saath. Neeche wala code run karo. Socho: agar teesri insert mein marks 150 likhte to kya hota? CHECK rule todta, database row ko reject kar deta — isiliye constraints ko chowkidar kehte hain.`,
+          `Let us make a \`results\` table that holds all four constraints. **Step 1: write the columns and the rules.** \`id INTEGER PRIMARY KEY\` — unique and not null, on its own. \`name TEXT NOT NULL\` — the name cannot be empty. \`marks INTEGER CHECK (marks >= 0 AND marks <= 100)\` — marks only between 0 and 100. \`grade TEXT DEFAULT 'B'\` — if you do not write a grade, 'B' comes in. \`email TEXT UNIQUE\` — two students cannot have the same email.
+
+**Step 2: dry run — check two inserts.** First insert: \`(1, 'Rahul', 85, 'A', 'rahul@x.com')\` — id 1 is unique, the name is written, marks 85 is in range, and the email is new — all rules pass, so the row is saved. Second insert: \`(2, 'Priya', 92, 'A', 'priya@x.com')\` — id 2 is unique, marks 92 is in range, and the email is different — pass again, so the row is saved.
+
+**Step 3: verify with SELECT.** The final result should show both rows, with grade 'A'. Run the code below. Think: what would happen if a third insert wrote marks as 150? It would break the CHECK rule, and the database would reject the row — that is why constraints are called guards.`
+        ),
+        code: {
+          title: t(
+            'Results Table: NOT NULL, CHECK, DEFAULT aur UNIQUE',
+            'Results Table: NOT NULL, CHECK, DEFAULT, and UNIQUE'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS results;
+CREATE TABLE results (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  marks INTEGER CHECK (marks >= 0 AND marks <= 100),
+  grade TEXT DEFAULT 'B',
+  email TEXT UNIQUE
+);
+INSERT INTO results VALUES (1, 'Rahul', 85, 'A', 'rahul@x.com');
+INSERT INTO results VALUES (2, 'Priya', 92, 'A', 'priya@x.com');
+SELECT id, name, marks, grade FROM results;`,
+          output: `id | name | marks | grade
+1 | Rahul | 85 | A
+2 | Priya | 92 | A`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: UNIQUE ko PRIMARY KEY Samajhna, CHECK mein Galat Range aur NULL ka Matlab',
+          '4. Common Mistakes: Confusing UNIQUE with PRIMARY KEY, Wrong Range in CHECK, and the Meaning of NULL'
+        ),
+        body: t(
+          `**Galti 1: UNIQUE ko PRIMARY KEY samajhna.** UNIQUE sirf duplicate rokta hai, khaali value nahi rokta — UNIQUE column mein \`NULL\` aa sakta hai. PRIMARY KEY dono rokta hai: na duplicate, na khaali. Email UNIQUE ho sakti hai, par PRIMARY KEY aksar \`id\` hota hai.
+
+**Galti 2: CHECK mein galat range likhna.** \`CHECK (marks > 0)\` likh diya aur 0 marks wala student fail ho gaya — jabki 0 ek valid marks hai. Range hamesha dono taraf se socho: \`marks >= 0 AND marks <= 100\`. Ek taraf bhool gaye to aadha rule reh jaayega.
+
+**Galti 3: NULL ko 0 ya khaali string samajhna.** \`NULL\` ka matlab hai "pata nahi" — ye 0 nahi hai, aur '' (khaali text) bhi nahi hai. \`marks = NULL\` se kuch nahi milta, uske liye \`marks IS NULL\` likhna padta hai. CHECK bhi NULL par pass ho jaata hai — kyunki "pata nahi" ko galat nahi kaha ja sakta. Isiliye jis column mein value zaroori hai, wahan CHECK ke saath NOT NULL bhi lagao.
+
+**Galti 4: constraint lagana bhool jaana aur baad mein pachtana.** Table banate waqt constraint lagana sasta hai, data bharne ke baad lagana mushkil — kyunki purana galat data pehle saaf karna padta hai. Constraints design ke waqt hi likho.`,
+          `**Mistake 1: treating UNIQUE as PRIMARY KEY.** UNIQUE only stops duplicates; it does not stop an empty value — a UNIQUE column can hold \`NULL\`. PRIMARY KEY stops both: neither duplicate nor empty. An email can be UNIQUE, but the PRIMARY KEY is often \`id\`.
+
+**Mistake 2: writing the wrong range in CHECK.** If you write \`CHECK (marks > 0)\`, a student with 0 marks fails — even though 0 is a valid marks value. Always think about both sides of a range: \`marks >= 0 AND marks <= 100\`. Forget one side and half the rule is gone.
+
+**Mistake 3: treating NULL as 0 or as an empty string.** \`NULL\` means "not known" — it is not 0, and it is not '' (empty text). \`marks = NULL\` finds nothing; you must write \`marks IS NULL\`. CHECK also passes on NULL — because "not known" cannot be called wrong. So for a column where a value is required, add NOT NULL along with CHECK.
+
+**Mistake 4: forgetting to add a constraint and regretting it later.** Adding a constraint while making a table is cheap; adding it after the data is filled is hard — because the old wrong data must first be cleaned. Write constraints at design time.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: UNIQUE mein NULL, CHECK mein NULL aur DEFAULT ke Saath INSERT',
+          '5. Edge Cases: NULL in UNIQUE, NULL in CHECK, and INSERT with DEFAULT'
+        ),
+        body: t(
+          `**Edge case 1: UNIQUE column mein NULL.** SQLite mein UNIQUE column mein ek se zyada \`NULL\` aa sakte hain — kyunki NULL ka matlab "pata nahi" hai, aur do "pata nahi" ek jaise nahi maane jaate. Agar email column UNIQUE hai aur do students ki email NULL hai, to dono rows save ho jaayengi. Ye alag databases mein alag hota hai, par SQLite ka rule yehi hai.
+
+**Edge case 2: CHECK column mein NULL.** \`marks\` par CHECK hai aur tum marks likhe bina insert karte ho — marks NULL ban jaata hai, aur CHECK pass ho jaata hai. Agar marks likhna zaroori hai to \`marks INTEGER NOT NULL CHECK (marks >= 0 AND marks <= 100)\` likho — dono constraints ek saath.
+
+**Edge case 3: DEFAULT ke saath INSERT.** Jab tum \`INSERT INTO results (id, name, marks) VALUES (3, 'Amit', 74)\` likhte ho — grade column list mein hi nahi hai — to grade apne aap 'B' ban jaata hai. Par agar tum \`VALUES (3, 'Amit', 74, NULL)\` likhoge to grade NULL banega, 'B' nahi — kyunki tumne khud NULL likha hai. DEFAULT sirf tab kaam karta hai jab column likha hi na ho.
+
+**Edge case 4: PRIMARY KEY par DEFAULT nahi hota.** \`id INTEGER PRIMARY KEY\` mein tumhe id likhna hi padta hai, warna SQLite apne aap rowid de deta hai. AUTOINCREMENT wali key mein id na likho to number apne aap badhta hai — ye DEFAULT jaisa lagta hai, par ye alag mechanism hai.`,
+          `**Edge case 1: NULL in a UNIQUE column.** In SQLite, a UNIQUE column can hold more than one \`NULL\` — because NULL means "not known", and two "not known" values are not treated as the same. If the email column is UNIQUE and two students have email NULL, both rows will be saved. This differs across databases, but this is the rule in SQLite.
+
+**Edge case 2: NULL in a CHECK column.** If \`marks\` has a CHECK and you insert without writing marks, marks becomes NULL and the CHECK passes. If writing marks is required, write \`marks INTEGER NOT NULL CHECK (marks >= 0 AND marks <= 100)\` — both constraints together.
+
+**Edge case 3: INSERT with DEFAULT.** When you write \`INSERT INTO results (id, name, marks) VALUES (3, 'Amit', 74)\` — the grade column is not in the list at all — the grade becomes 'B' on its own. But if you write \`VALUES (3, 'Amit', 74, NULL)\`, the grade becomes NULL, not 'B' — because you wrote NULL yourself. DEFAULT only works when the column is not written at all.
+
+**Edge case 4: PRIMARY KEY has no DEFAULT.** With \`id INTEGER PRIMARY KEY\` you must write the id, or SQLite gives a rowid on its own. With an AUTOINCREMENT key, if you do not write the id the number grows on its own — that looks like DEFAULT, but it is a different mechanism.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Constraint Todne wala Data Aaye, ya Constraint Baad mein Lagana ho?',
+          '6. What If: Data That Breaks a Constraint Arrives, or a Constraint Must Be Added Later?'
+        ),
+        body: t(
+          `**What if: CHECK todne wala data insert karein?** Jaise marks 150. Database error dega aur row save nahi hogi — poori INSERT fail hogi, aadhi nahi. Ye achhi baat hai: aadhi row save hoti to data adhura rehta. Application ko ye error dikhana chahiye taaki user sahi value likhe.
+
+**What if: UNIQUE todne wala data aaye?** Jaise doosre student ki email bhi 'rahul@x.com' ho. Phir se error, row reject. Agar tum chahte ho ki purani row badal jaaye to \`INSERT OR REPLACE\` likh sakte ho — par dhyaan do, ye purani row ko delete karke nayi daalta hai, update nahi karta.
+
+**What if: constraint baad mein lagana ho?** SQLite mein bani hui table par CHECK ya UNIQUE jodna seedha nahi hota — \`ALTER TABLE\` se sirf column jodna ya naam badalna hota hai, constraint jodna nahi. Rasta wahi hai: nayi table banao sahi constraints ke saath, data copy karo, purani table drop karo. Isiliye constraints pehle se soch kar lagao.
+
+**What if: koi constraint hi na ho?** Table bina constraints ke bhi chalti hai — par phir galat data rokne wala koi nahi. Marks mein 999, naam mein khaali, email mein duplicate — sab ghus jaayega. Constraints nahi hain to data ki quality ki zimmedari sirf application par hai, aur application mein galti hoti hi hai.`,
+          `**What if you insert data that breaks a CHECK?** For example, marks of 150. The database gives an error and the row is not saved — the whole INSERT fails, not half of it. That is a good thing: if half a row were saved, the data would be incomplete. The application should show this error so the user writes the right value.
+
+**What if data that breaks UNIQUE arrives?** For example, a second student with the email 'rahul@x.com' too. Again an error, and the row is rejected. If you want the old row to change instead, you can write \`INSERT OR REPLACE\` — but note, it deletes the old row and puts in the new one; it does not update it.
+
+**What if a constraint must be added later?** In SQLite, adding a CHECK or UNIQUE to a table that already exists is not direct — \`ALTER TABLE\` only adds a column or renames, it does not add a constraint. The way is the same as before: make a new table with the right constraints, copy the data, and drop the old table. That is why constraints should be planned in advance.
+
+**What if there is no constraint at all?** A table also works without constraints — but then nothing stops wrong data. Marks of 999, an empty name, a duplicate email — everything gets in. Without constraints, the quality of the data rests only on the application, and applications do make mistakes.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Chaar Constraints, Ek Chowkidar',
+          '7. Summary: Four Constraints, One Guard'
+        ),
+        body: t(
+          `**NOT NULL** khaali value rokta hai, **UNIQUE** duplicate rokta hai, **CHECK** range aur condition check karta hai, **DEFAULT** na likhi value ki jagah leta hai. **PRIMARY KEY** = NOT NULL + UNIQUE, ek saath.
+
+Yaad rakhne wali teen baatein: NULL ka matlab "pata nahi" hai — ye 0 ya khaali string nahi hai. CHECK NULL par pass ho jaata hai, isliye zaroori column mein NOT NULL bhi lagao. DEFAULT sirf tab kaam karta hai jab column INSERT mein likha hi na ho — khud NULL likhoge to NULL hi save hoga.
+
+Constraints ko design ke waqt lagao, data bharne ke baad nahi. Agle article mein hum DML dekhenge — data ko insert, update aur delete karna, inhi constraints ke saath.`,
+          `**NOT NULL** stops an empty value, **UNIQUE** stops a duplicate, **CHECK** checks a range and a condition, and **DEFAULT** takes the place of a value you did not write. **PRIMARY KEY** is NOT NULL + UNIQUE, together.
+
+Three things to remember: NULL means "not known" — it is not 0 or an empty string. CHECK passes on NULL, so add NOT NULL too on a column where a value is required. DEFAULT only works when the column is not written in the INSERT at all — if you write NULL yourself, NULL is what gets saved.
+
+Add constraints at design time, not after the data is filled. In the next article we will look at DML — inserting, updating, and deleting data, with these same constraints in place.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Chaar Constraints: Har Rule ek Alag Kaam Karta Hai',
+        'Four Constraints: Every Rule Does a Different Job'
+      ),
+      caption: t(
+        'PRIMARY KEY = NOT NULL + UNIQUE, ek saath',
+        'PRIMARY KEY = NOT NULL + UNIQUE, together'
+      ),
+      nodes: [
+        {
+          t: t('NOT NULL — khaali mana hai', 'NOT NULL — empty is not allowed'),
+          s: t('name TEXT NOT NULL — naam likhna zaroori hai', 'name TEXT NOT NULL — writing the name is required')
+        },
+        {
+          t: t('UNIQUE — duplicate mana hai', 'UNIQUE — duplicate is not allowed'),
+          s: t('email TEXT UNIQUE — do students ki email ek jaisi nahi', 'email TEXT UNIQUE — two students cannot share an email')
+        },
+        {
+          t: t('CHECK — range check karta hai', 'CHECK — checks the range'),
+          s: t('marks 0 se 100 ke beech, warna row reject', 'marks between 0 and 100, or the row is rejected')
+        },
+        {
+          t: t('DEFAULT — na likho to apne aap', 'DEFAULT — fills in on its own if you do not write it'),
+          s: t('grade DEFAULT \'B\' — grade na likho to B aa jaata hai', 'grade DEFAULT \'B\' — if you do not write a grade, B comes in')
+        },
+        {
+          t: t('PRIMARY KEY — NOT NULL + UNIQUE', 'PRIMARY KEY — NOT NULL + UNIQUE'),
+          s: t('id — na khaali, na duplicate, har row ki pehchan', 'id — neither empty nor duplicate, the identity of every row')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'DEFAULT Action mein: Grade Likhe Bina Insert Karo',
+          'DEFAULT in Action: Insert Without Writing the Grade'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS results;
+CREATE TABLE results (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  marks INTEGER CHECK (marks >= 0 AND marks <= 100),
+  grade TEXT DEFAULT 'B'
+);
+INSERT INTO results (id, name, marks) VALUES (3, 'Amit', 74);
+SELECT id, name, marks, grade FROM results;`,
+        output: `id | name | marks | grade
+3 | Amit | 74 | B`
+      },
+      {
+        title: t(
+          'UNIQUE + DEFAULT: Library Card par Fine',
+          'UNIQUE + DEFAULT: Fine on a Library Card'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS library_cards;
+CREATE TABLE library_cards (
+  card_no INTEGER PRIMARY KEY,
+  student_name TEXT NOT NULL,
+  fine INTEGER DEFAULT 0
+);
+INSERT INTO library_cards VALUES (1, 'Rahul', 0);
+INSERT INTO library_cards (card_no, student_name) VALUES (2, 'Priya');
+SELECT card_no, student_name, fine FROM library_cards;`,
+        output: `card_no | student_name | fine
+1 | Rahul | 0
+2 | Priya | 0`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Marks 0 se 100 ke beech hone chahiye. Kaun sa constraint ye rokega?',
+          'Marks must lie between 0 and 100. Which constraint will enforce this?'
+        ),
+        opts: [
+          t('NOT NULL', 'NOT NULL'),
+          t('UNIQUE', 'UNIQUE'),
+          t('CHECK (marks >= 0 AND marks <= 100)', 'CHECK (marks >= 0 AND marks <= 100)'),
+          t('DEFAULT 0', 'DEFAULT 0')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: CHECK condition check karta hai — marks range se bahar ho to row reject ho jaati hai. NOT NULL sirf khaali rokta hai, UNIQUE sirf duplicate rokta hai.',
+          'Correct answer: CHECK checks the condition — if marks fall outside the range, the row is rejected. NOT NULL only stops empty values, and UNIQUE only stops duplicates.'
+        )
+      },
+      {
+        q: t(
+          'UNIQUE aur PRIMARY KEY mein kya farak hai?',
+          'What is the difference between UNIQUE and PRIMARY KEY?'
+        ),
+        opts: [
+          t('Koi farak nahi', 'There is no difference'),
+          t('UNIQUE mein NULL aa sakta hai, PRIMARY KEY mein nahi', 'NULL can come in UNIQUE, but not in PRIMARY KEY'),
+          t('PRIMARY KEY mein duplicate aa sakta hai', 'Duplicates can come in PRIMARY KEY'),
+          t('UNIQUE sirf numbers par lagta hai', 'UNIQUE only applies to numbers')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: PRIMARY KEY = NOT NULL + UNIQUE. UNIQUE sirf duplicate rokta hai, khaali (NULL) nahi rokta; PRIMARY KEY dono rokta hai.',
+          'Correct answer: PRIMARY KEY is NOT NULL + UNIQUE. UNIQUE only stops duplicates, not empty (NULL) values; PRIMARY KEY stops both.'
+        )
+      },
+      {
+        q: t(
+          'INSERT mein grade column likha hi nahi, aur grade ka DEFAULT \'B\' hai. Grade kya banega?',
+          'The grade column is not written in the INSERT at all, and the DEFAULT of grade is \'B\'. What will the grade become?'
+        ),
+        opts: [
+          t('NULL', 'NULL'),
+          t('Khaali string', 'Empty string'),
+          t('B', 'B'),
+          t('Error aayega', 'An error will come')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: column INSERT mein likha hi na ho to DEFAULT value apne aap aa jaati hai — grade B banega. Khud NULL likhte to NULL save hota.',
+          'Correct answer: when a column is not written in the INSERT at all, the DEFAULT value comes in on its own — the grade becomes B. If you wrote NULL yourself, NULL would be saved.'
+        )
+      },
+      {
+        q: t(
+          'NULL ka matlab kya hai?',
+          'What does NULL mean?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('Khaali string', 'Empty string'),
+          t('Pata nahi — value missing hai', 'Not known — the value is missing'),
+          t('False', 'False')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: NULL ka matlab hai "pata nahi" — value missing hai. Ye 0 nahi hai aur khaali string bhi nahi hai, isliye marks = NULL se kuch nahi milta.',
+          'Correct answer: NULL means "not known" — the value is missing. It is not 0 and not an empty string, which is why marks = NULL finds nothing.'
+        )
+      },
+      {
+        q: t(
+          'CHECK todne wala data insert karne par kya hota hai?',
+          'What happens when you insert data that breaks a CHECK?'
+        ),
+        opts: [
+          t('Row save ho jaati hai, warning aati hai', 'The row is saved, with a warning'),
+          t('Poori INSERT fail hoti hai, row save nahi hoti', 'The whole INSERT fails, the row is not saved'),
+          t('Value apne aap sahi ho jaati hai', 'The value fixes itself on its own'),
+          t('Table delete ho jaati hai', 'The table is deleted')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: constraint todne par database error deta hai aur poori INSERT fail hoti hai — aadhi row save nahi hoti, isiliye data hamesha sahi rehta hai.',
+          'Correct answer: when a constraint breaks, the database gives an error and the whole INSERT fails — half a row is not saved, so the data always stays correct.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'NOT NULL khaali rokta hai, UNIQUE duplicate rokta hai, CHECK range check karta hai, DEFAULT value apne aap deta hai.',
+        'NOT NULL stops empty values, UNIQUE stops duplicates, CHECK checks the range, and DEFAULT gives a value on its own.'
+      ),
+      t(
+        'PRIMARY KEY = NOT NULL + UNIQUE, ek saath.',
+        'PRIMARY KEY is NOT NULL + UNIQUE, together.'
+      ),
+      t(
+        'NULL ka matlab "pata nahi" hai — ye 0 ya khaali string nahi hai.',
+        'NULL means "not known" — it is not 0 or an empty string.'
+      ),
+      t(
+        'CHECK NULL par pass ho jaata hai, isliye zaroori column mein NOT NULL bhi lagao.',
+        'CHECK passes on NULL, so add NOT NULL too on a column where a value is required.'
+      ),
+      t(
+        'Constraints design ke waqt lagao — data bharne ke baad lagana mushkil hai.',
+        'Add constraints at design time — adding them after the data is filled is hard.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: New Students Table Banao — CHECK aur DEFAULT ke Saath',
+        'Practice: Make a New Students Table — With CHECK and DEFAULT'
+      ),
+      task: t(
+        'Ek table new_students banao jisme id INTEGER PRIMARY KEY, name TEXT NOT NULL, marks INTEGER CHECK (marks BETWEEN 0 AND 100) aur city TEXT DEFAULT \'Delhi\' hon. Phir do rows insert karo: (1, \'Rahul\', 85, \'Patna\') aur (2, \'Priya\', 92) — doosri row mein city mat likho, DEFAULT se Delhi aani chahiye. Aakhir mein SELECT se chaaro columns dikhao. Done tab maanenge jab output mein dono rows dikhein aur Priya ki city Delhi ho.',
+        'Make a table called new_students with id INTEGER PRIMARY KEY, name TEXT NOT NULL, marks INTEGER CHECK (marks BETWEEN 0 AND 100), and city TEXT DEFAULT \'Delhi\'. Then insert two rows: (1, \'Rahul\', 85, \'Patna\') and (2, \'Priya\', 92) — do not write a city in the second row; Delhi should come from the DEFAULT. At the end, show all four columns with SELECT. You are done when both rows appear in the output and Priya has city Delhi.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS new_students;
+CREATE TABLE new_students (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  marks INTEGER CHECK (marks BETWEEN 0 AND 100),
+  city TEXT DEFAULT 'Delhi'
+);
+INSERT INTO new_students VALUES (1, 'Rahul', 85, 'Patna');
+INSERT INTO new_students (id, name, marks) VALUES (2, 'Priya', 92);
+SELECT id, name, marks, city FROM new_students;`,
+      expected: `id | name | marks | city
+1 | Rahul | 85 | Patna
+2 | Priya | 92 | Delhi`
+    },
+    readMinutes: 12
+  };
+
+const dbmsSqlDml: Article = {
+    id: 'dbms-sql-dml',
+    subjectId: 'dbms',
+    title: t(
+      'SQL DML Deep — INSERT, UPDATE, DELETE aur Bulk Operations',
+      'SQL DML Deep — INSERT, UPDATE, DELETE, and Bulk Operations'
+    ),
+    summary: t(
+      'Table ke andar ka data badalne wale commands seekho: INSERT se nayi rows, UPDATE se purani rows badalna, DELETE se rows hatana, ek saath kai rows bharna, aur WHERE bhoolne par kya hota hai.',
+      'Learn the commands that change the data inside a table: INSERT for new rows, UPDATE for changing old rows, DELETE for removing rows, filling many rows at once, and what happens when you forget WHERE.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. DML Kya Hai? (Data ko Insert, Update aur Delete Karna)',
+          '1. What Is DML? (Inserting, Updating, and Deleting Data)'
+        ),
+        body: t(
+          `DDL table ka **structure** banata hai, DML table ke **andar ka data** badalta hai. DML ke teen main commands hain: **INSERT** nayi row daalta hai, **UPDATE** purani row ko badalta hai, aur **DELETE** row ko hatata hai. In teeno ke saath ek aur command judta hai — **SELECT**, jo data ko padhta hai, badalta nahi.
+
+INSERT mein tum batate ho ki kaun se columns mein kaun si values jaayengi. UPDATE mein tum batate ho ki kaun si column ki value kya hogi, aur \`WHERE\` se batate ho ki kin rows par ye hoga. DELETE mein sirf \`WHERE\` batate ho — kin rows ko hatana hai. Teenon mein \`WHERE\` hi sabse important hissa hai, kyunki bina \`WHERE\` ke UPDATE aur DELETE poori table par chal jaate hain.
+
+DML commands ke baad table ka structure waisa ka waisa rehta hai — sirf rows badalti hain. Isiliye DML ko baar-baar chalana safe hota hai, jab tak WHERE sahi ho.`,
+          `DDL builds the **structure** of a table, while DML changes the **data inside** a table. DML has three main commands: **INSERT** adds a new row, **UPDATE** changes an old row, and **DELETE** removes a row. One more command joins these three — **SELECT**, which reads data without changing it.
+
+In INSERT you say which values go into which columns. In UPDATE you say what a column value will become, and with \`WHERE\` you say which rows it applies to. In DELETE you only say with \`WHERE\` which rows to remove. In all three, \`WHERE\` is the most important part, because without \`WHERE\`, UPDATE and DELETE run on the whole table.
+
+After DML commands, the structure of the table stays exactly as it was — only the rows change. That is why running DML again and again is safe, as long as the WHERE is right.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Naya Admission, Marks Correction aur TC',
+          '2. Real-Life Examples: New Admission, Marks Correction, and TC'
+        ),
+        body: t(
+          `School mein naya student aata hai to register mein ek nayi line likhi jaati hai — naam, roll number, marks. Ye **INSERT** hai. Ek student ke marks galat likhe gaye — 75 ki jagah 85 likhna tha — to usi line mein marks badle jaate hain, baaki sab waisa ka waisa. Ye **UPDATE** hai.
+
+Ek student school chhod kar chala gaya, uska TC (transfer certificate) ban gaya — uski line register se hat jaati hai. Ye **DELETE** hai. Aur jab poori class ke marks mein 5 grace marks jodne hon to ek-ek line badalne ki jagah ek hi order mein sab badal jaate hain — ye **bulk UPDATE** hai.
+
+Har kaam mein ek baat common hai: kaun si line badalni hai, ye pehchan zaroori hai. Naam se pehchanoge to do Rahul hone par dono badal jaayenge — isiliye \`id\` se pehchante hain, naam se nahi.`,
+          `When a new student joins a school, a new line is written in the register — name, roll number, marks. That is **INSERT**. The marks of one student were written wrong — 85 had to be written instead of 75 — so the marks in that same line are changed, and everything else stays as it was. That is **UPDATE**.
+
+A student leaves the school and gets a TC (transfer certificate) — that line is removed from the register. That is **DELETE**. And when 5 grace marks must be added to the marks of the whole class, instead of changing one line at a time, all of them change in a single order — that is a **bulk UPDATE**.
+
+One thing is common to every job: the identity of which line to change is essential. If you identify by name, then with two Rahuls both will change — that is why we identify by \`id\`, not by name.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: INSERT, UPDATE, DELETE ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of INSERT, UPDATE, DELETE (worked example with dry run)'
+        ),
+        body: t(
+          `Hamari \`students\` table mein 4 rows hain: Rahul 85, Priya 92, Amit 74, Sana 88. Ab teen commands ek ke baad ek chalate hain, aur har step par table kaisi dikhegi, ye dry run karte hain.
+
+**Step 1 — INSERT:** \`INSERT INTO students VALUES (5, 'Rohan', 81)\` — nayi row jud jaati hai. Table mein ab 5 rows: Rahul, Priya, Amit, Sana, Rohan.
+
+**Step 2 — UPDATE:** \`UPDATE students SET marks = 90 WHERE id = 1\` — sirf id 1 wali row badalti hai. Rahul ke marks 85 se 90 ho jaate hain. Baaki rows waisi ki waisi.
+
+**Step 3 — DELETE:** \`DELETE FROM students WHERE id = 3\` — Amit wali row hat jaati hai. Table mein ab 4 rows bachti hain: Rahul 90, Priya 92, Sana 88, Rohan 81.
+
+Neeche wala code ye teeno steps ek saath chalata hai aur final table dikhata hai. Output ko dry run se milao — har row ki value wahi honi chahiye jo tumne haath se nikali thi.`,
+          `Our \`students\` table has 4 rows: Rahul 85, Priya 92, Amit 74, and Sana 88. Now we run three commands one after another, and do a dry run of what the table looks like after each step.
+
+**Step 1 — INSERT:** \`INSERT INTO students VALUES (5, 'Rohan', 81)\` — a new row joins. The table now has 5 rows: Rahul, Priya, Amit, Sana, and Rohan.
+
+**Step 2 — UPDATE:** \`UPDATE students SET marks = 90 WHERE id = 1\` — only the row with id 1 changes. Rahul's marks go from 85 to 90. The other rows stay as they were.
+
+**Step 3 — DELETE:** \`DELETE FROM students WHERE id = 3\` — the Amit row goes away. The table now keeps 4 rows: Rahul 90, Priya 92, Sana 88, and Rohan 81.
+
+The code below runs all three steps together and shows the final table. Match the output with your dry run — every row value should be the same as the one you worked out by hand.`
+        ),
+        code: {
+          title: t(
+            'INSERT + UPDATE + DELETE: Table kaise Badalti Hai',
+            'INSERT + UPDATE + DELETE: How the Table Changes'
+          ),
+          language: 'sql',
+          code: `INSERT INTO students VALUES (5, 'Rohan', 81);
+UPDATE students SET marks = 90 WHERE id = 1;
+DELETE FROM students WHERE id = 3;
+SELECT id, name, marks FROM students ORDER BY id;`,
+          output: `id | name | marks
+1 | Rahul | 90
+2 | Priya | 92
+4 | Sana | 88
+5 | Rohan | 81`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: WHERE Bhoolna, Naam se Update Karna aur DELETE vs TRUNCATE',
+          '4. Common Mistakes: Forgetting WHERE, Updating by Name, and DELETE vs TRUNCATE'
+        ),
+        body: t(
+          `**Galti 1: UPDATE ya DELETE mein WHERE bhoolna.** \`UPDATE students SET marks = 90\` — bina WHERE ke saare students ke marks 90 ho jaayenge. \`DELETE FROM students\` — bina WHERE ke poori table khaali ho jaayegi. Ye sabse khatarnak galti hai, aur interview mein bhi poochhi jaati hai. Rule hai: UPDATE ya DELETE likhte hi pehle WHERE likho, phir SET likho.
+
+**Galti 2: naam se row pehchanna.** \`UPDATE students SET marks = 95 WHERE name = 'Rahul'\` — agar do Rahul hain to dono ke marks badal jaayenge. Hamesha \`id\` se pehchano: \`WHERE id = 1\`. Naam pehchan nahi hai, id pehchan hai.
+
+**Galti 3: INSERT mein columns ka order galat karna.** \`INSERT INTO students VALUES (85, 'Rahul', 1)\` — values table ke column order mein jaati hain: id, name, marks. Order ulta hua to 85 id ban jaayega aur 'Rahul' marks mein jaane ki koshish karega. Safe tareeka hai column list likhna: \`INSERT INTO students (id, name, marks) VALUES (5, 'Rohan', 81)\`.
+
+**Galti 4: DELETE ko wapas laane ki umeed karna.** DELETE ki hui row wapas nahi aati — koi undo nahi hota. Bade kaam se pehle backup lo, ya pehle \`SELECT\` se check karo ki WHERE kin rows ko pakad raha hai, phir DELETE chalao.`,
+          `**Mistake 1: forgetting WHERE in UPDATE or DELETE.** \`UPDATE students SET marks = 90\` — without WHERE, the marks of all students become 90. \`DELETE FROM students\` — without WHERE, the whole table becomes empty. This is the most dangerous mistake, and interviews ask about it too. The rule is: the moment you write UPDATE or DELETE, write WHERE first, then SET.
+
+**Mistake 2: identifying a row by name.** \`UPDATE students SET marks = 95 WHERE name = 'Rahul'\` — if there are two Rahuls, both will change. Always identify by \`id\`: \`WHERE id = 1\`. A name is not an identity; an id is.
+
+**Mistake 3: writing INSERT values in the wrong column order.** \`INSERT INTO students VALUES (85, 'Rahul', 1)\` — values go in the column order of the table: id, name, marks. If the order is reversed, 85 becomes the id and 'Rahul' tries to go into marks. The safe way is to write the column list: \`INSERT INTO students (id, name, marks) VALUES (5, 'Rohan', 81)\`.
+
+**Mistake 4: hoping to bring back a deleted row.** A deleted row does not come back — there is no undo. Take a backup before big work, or first check with \`SELECT\` which rows the WHERE catches, then run DELETE.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Duplicate ID Insert, Khaali UPDATE aur Khaali DELETE',
+          '5. Edge Cases: Duplicate ID Insert, Empty UPDATE, and Empty DELETE'
+        ),
+        body: t(
+          `**Edge case 1: duplicate id par INSERT.** \`students\` mein id PRIMARY KEY jaisa hai — agar tum \`INSERT INTO students VALUES (1, 'Rohan', 81)\` likhoge to error aayega, kyunki id 1 pehle se hai. Nayi row ke liye naya id chahiye, ya AUTOINCREMENT wali table mein id likho hi mat.
+
+**Edge case 2: UPDATE jismein koi row match na kare.** \`UPDATE students SET marks = 90 WHERE id = 99\` — koi row match nahi karti, to kuch badalta nahi, aur error bhi nahi aata. Runner dikhata hai "Query ran OK — no rows returned." Ye silent fail hai — hamesha check karo ki tumhari WHERE ne koi row pakdi bhi ya nahi.
+
+**Edge case 3: DELETE jismein koi row match na kare.** Wahi baat — \`DELETE FROM students WHERE id = 99\` kuch hatata nahi, error bhi nahi deta. Pehle SELECT se verify karo, phir DELETE chalao.
+
+**Edge case 4: UPDATE se value wahi likhna jo pehle se hai.** \`UPDATE students SET marks = 85 WHERE id = 1\` — Rahul ke marks pehle se 85 hain, to kuch badlega nahi, par command phir bhi "OK" bolegi. Database ye nahi batata ki kuch badla ya nahi — badlaav dekhne ke liye SELECT chalana padta hai.`,
+          `**Edge case 1: INSERT with a duplicate id.** In \`students\`, id works like a PRIMARY KEY — if you write \`INSERT INTO students VALUES (1, 'Rohan', 81)\` you get an error, because id 1 already exists. A new row needs a new id, or in an AUTOINCREMENT table do not write the id at all.
+
+**Edge case 2: UPDATE that matches no row.** \`UPDATE students SET marks = 90 WHERE id = 99\` — no row matches, so nothing changes, and no error comes either. The runner shows "Query ran OK — no rows returned." This is a silent fail — always check whether your WHERE caught any row at all.
+
+**Edge case 3: DELETE that matches no row.** The same thing — \`DELETE FROM students WHERE id = 99\` removes nothing and gives no error. Verify first with SELECT, then run DELETE.
+
+**Edge case 4: UPDATE writing the same value that is already there.** \`UPDATE students SET marks = 85 WHERE id = 1\` — Rahul's marks are already 85, so nothing will change, but the command will still say "OK". The database does not tell you whether anything changed — you must run SELECT to see the change.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Ek Saath Kai Rows Bharni hon, Sabke Marks Badhane hon, ya Galti se Delete ho jaaye?',
+          '6. What If: Fill Many Rows at Once, Raise Everyone Marks, or Delete by Mistake?'
+        ),
+        body: t(
+          `**What if: ek saath kai rows insert karni hon?** Ek-ek INSERT likhne ki jagah multi-row INSERT likho: \`INSERT INTO students VALUES (5, 'Rohan', 81), (6, 'Meera', 95);\` — ek hi command mein dono rows jud jaati hain. Ye bulk insert hai, aur ye alag-alag INSERT se tez hota hai.
+
+**What if: sabke marks 5 se badhane hon?** \`UPDATE students SET marks = marks + 5 WHERE marks < 80\` — purani value ke hisaab se nayi value banti hai. Amit ke 74 se 79 ho jaayenge, baaki kisi ke nahi badlenge kyunki unke marks 80 se kam nahi hain. SET mein purani value ka use kar sakte ho — ye DML ki taakat hai.
+
+**What if: galti se DELETE chal gaya?** Runner mein (aur SQLite mein) wapas laane ka rasta nahi hai. Real systems mein backup se restore hota hai, ya transaction mein \`ROLLBACK\` hota hai. Isiliye bade DELETE se pehle hamesha backup lo, aur pehle SELECT se WHERE ko test karo.
+
+**What if: INSERT mein SELECT ka result bharna ho?** \`INSERT INTO top_students SELECT * FROM students WHERE marks >= 85;\` — ek table ka data doosri table mein copy ho jaata hai. Columns ka order aur type match hona chahiye, warna error aayega.`,
+          `**What if you must insert many rows at once?** Instead of writing one INSERT at a time, write a multi-row INSERT: \`INSERT INTO students VALUES (5, 'Rohan', 81), (6, 'Meera', 95);\` — both rows join in a single command. This is a bulk insert, and it is faster than separate INSERTs.
+
+**What if everyone marks must go up by 5?** \`UPDATE students SET marks = marks + 5 WHERE marks < 80\` — the new value is built from the old value. Amit's 74 becomes 79, and nobody else changes because their marks are not below 80. You can use the old value inside SET — that is the strength of DML.
+
+**What if DELETE runs by mistake?** In the runner (and in SQLite) there is no way to bring it back. In real systems it is restored from a backup, or a \`ROLLBACK\` runs inside a transaction. So always take a backup before a big DELETE, and test the WHERE first with SELECT.
+
+**What if you want to fill an INSERT with the result of a SELECT?** \`INSERT INTO top_students SELECT * FROM students WHERE marks >= 85;\` — the data of one table is copied into another table. The order and type of the columns must match, or an error will come.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: INSERT Naya, UPDATE Purana, DELETE Hatana',
+          '7. Summary: INSERT Adds, UPDATE Changes, DELETE Removes'
+        ),
+        body: t(
+          `**INSERT** nayi row daalta hai, **UPDATE** purani row badalta hai, **DELETE** row hatata hai. Teenon mein \`WHERE\` sabse important hai — bina WHERE ke UPDATE aur DELETE poori table par chal jaate hain. Isiliye pehle WHERE likho, phir SET.
+
+Rows ko hamesha \`id\` se pehchano, naam se nahi — do ek jaise naam hone par naam se update galat rows ko badal dega. Bulk kaam ke liye multi-row INSERT aur expression wala UPDATE use karo: \`SET marks = marks + 5\`.
+
+Agle article mein hum WHERE ko detail mein dekhenge — AND, OR, NOT, LIKE, IN, BETWEEN aur IS NULL ka poora khel.`,
+          `**INSERT** adds a new row, **UPDATE** changes an old row, and **DELETE** removes a row. In all three, \`WHERE\` is the most important part — without WHERE, UPDATE and DELETE run on the whole table. So write WHERE first, then SET.
+
+Always identify rows by \`id\`, not by name — with two identical names, an update by name will change the wrong rows. For bulk work, use multi-row INSERT and UPDATE with an expression: \`SET marks = marks + 5\`.
+
+In the next article we will look at WHERE in detail — the full story of AND, OR, NOT, LIKE, IN, BETWEEN, and IS NULL.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'DML ka Flow: Pehle WHERE Check Karo, phir Badlo',
+        'The Flow of DML: Check WHERE First, then Change'
+      ),
+      caption: t(
+        'UPDATE ya DELETE likhte hi pehle WHERE likho — bina WHERE ke poori table badal jaati hai',
+        'The moment you write UPDATE or DELETE, write WHERE first — without WHERE the whole table changes'
+      ),
+      nodes: [
+        {
+          t: t('INSERT — nayi row jodo', 'INSERT — add a new row'),
+          s: t('(5, \'Rohan\', 81) — table mein 5 rows ho jaati hain', '(5, \'Rohan\', 81) — the table grows to 5 rows')
+        },
+        {
+          t: t('UPDATE — WHERE se row chuno', 'UPDATE — pick the row with WHERE'),
+          s: t('SET marks = 90 WHERE id = 1 — sirf Rahul badalta hai', 'SET marks = 90 WHERE id = 1 — only Rahul changes')
+        },
+        {
+          t: t('DELETE — WHERE se row hatao', 'DELETE — remove the row with WHERE'),
+          s: t('DELETE WHERE id = 3 — sirf Amit hat ta hai', 'DELETE WHERE id = 3 — only Amit goes')
+        },
+        {
+          t: t('SELECT — final table check karo', 'SELECT — check the final table'),
+          s: t('Rahul 90, Priya 92, Sana 88, Rohan 81', 'Rahul 90, Priya 92, Sana 88, Rohan 81')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Bulk INSERT: Ek Command mein Do Rows',
+          'Bulk INSERT: Two Rows in One Command'
+        ),
+        language: 'sql',
+        code: `INSERT INTO students VALUES (5, 'Rohan', 81), (6, 'Meera', 95);
+SELECT id, name, marks FROM students WHERE id >= 5 ORDER BY id;`,
+        output: `id | name | marks
+5 | Rohan | 81
+6 | Meera | 95`
+      },
+      {
+        title: t(
+          'UPDATE with Expression: 80 se Kam Marks mein 5 Jodo',
+          'UPDATE with Expression: Add 5 to Marks Below 80'
+        ),
+        language: 'sql',
+        code: `UPDATE students SET marks = marks + 5 WHERE marks < 80;
+SELECT id, name, marks FROM students WHERE id = 3;`,
+        output: `id | name | marks
+3 | Amit | 79`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'UPDATE students SET marks = 90 — bina WHERE ke — kya hoga?',
+          'What happens with UPDATE students SET marks = 90 — without WHERE?'
+        ),
+        opts: [
+          t('Sirf pehli row badlegi', 'Only the first row will change'),
+          t('Saare students ke marks 90 ho jaayenge', 'The marks of all students will become 90'),
+          t('Error aayega', 'An error will come'),
+          t('Kuch nahi badlega', 'Nothing will change')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina WHERE ke UPDATE poori table par chalta hai — saare students ke marks 90 ho jaayenge. Isiliye pehle WHERE likho, phir SET.',
+          'Correct answer: without WHERE, UPDATE runs on the whole table — the marks of all students will become 90. That is why you write WHERE first, then SET.'
+        )
+      },
+      {
+        q: t(
+          'Row ko pehchanne ke liye sabse safe tareeka kaun sa hai?',
+          'What is the safest way to identify a row?'
+        ),
+        opts: [
+          t('Naam se (WHERE name = \'Rahul\')', 'By name (WHERE name = \'Rahul\')'),
+          t('Marks se (WHERE marks = 85)', 'By marks (WHERE marks = 85)'),
+          t('ID se (WHERE id = 1)', 'By id (WHERE id = 1)'),
+          t('Pehli row se', 'By the first row')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: id har row ko unique pehchan deta hai. Naam ya marks do rows mein ek jaise ho sakte hain, isliye naam se update galat rows ko badal sakta hai.',
+          'Correct answer: id gives every row a unique identity. A name or marks can be the same in two rows, so an update by name can change the wrong rows.'
+        )
+      },
+      {
+        q: t(
+          'Ek saath do rows insert karne ka sahi tareeka kaun sa hai?',
+          'Which is the right way to insert two rows at once?'
+        ),
+        opts: [
+          t('INSERT INTO students VALUES (5, \'Rohan\', 81), (6, \'Meera\', 95);', 'INSERT INTO students VALUES (5, \'Rohan\', 81), (6, \'Meera\', 95);'),
+          t('INSERT INTO students VALUES (5, \'Rohan\', 81) AND (6, \'Meera\', 95);', 'INSERT INTO students VALUES (5, \'Rohan\', 81) AND (6, \'Meera\', 95);'),
+          t('INSERT TWO ROWS INTO students;', 'INSERT TWO ROWS INTO students;'),
+          t('INSERT INTO students VALUES (5, 6, \'Rohan\', \'Meera\', 81, 95);', 'INSERT INTO students VALUES (5, 6, \'Rohan\', \'Meera\', 81, 95);')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: multi-row INSERT mein values ko comma se alag karke ek hi VALUES mein likhte hain — ek command mein dono rows jud jaati hain.',
+          'Correct answer: in a multi-row INSERT, values are written in a single VALUES separated by commas — both rows join in one command.'
+        )
+      },
+      {
+        q: t(
+          'DELETE FROM students WHERE id = 99 chalane par kya hoga?',
+          'What happens when you run DELETE FROM students WHERE id = 99?'
+        ),
+        opts: [
+          t('Poori table delete ho jaayegi', 'The whole table will be deleted'),
+          t('Error aayega', 'An error will come'),
+          t('Kuch nahi hoga — koi row match nahi karti', 'Nothing will happen — no row matches'),
+          t('Pehli row delete ho jaayegi', 'The first row will be deleted')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: id 99 ki koi row hai hi nahi, isliye DELETE kuch hatata nahi aur error bhi nahi deta. Ye silent fail hai — pehle SELECT se WHERE ko test karo.',
+          'Correct answer: there is no row with id 99, so DELETE removes nothing and gives no error either. This is a silent fail — test the WHERE first with SELECT.'
+        )
+      },
+      {
+        q: t(
+          'DDL aur DML mein kya farak hai?',
+          'What is the difference between DDL and DML?'
+        ),
+        opts: [
+          t('DDL data badalta hai, DML structure badalta hai', 'DDL changes data, DML changes structure'),
+          t('DDL structure badalta hai, DML data badalta hai', 'DDL changes structure, DML changes data'),
+          t('Dono ek hi hain', 'Both are the same'),
+          t('DDL sirf SELECT ke liye hai', 'DDL is only for SELECT')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: DDL (CREATE, ALTER, DROP) table ka structure banata aur badalta hai; DML (INSERT, UPDATE, DELETE) table ke andar ka data badalta hai.',
+          'Correct answer: DDL (CREATE, ALTER, DROP) makes and changes the structure of a table; DML (INSERT, UPDATE, DELETE) changes the data inside a table.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'INSERT nayi row daalta hai, UPDATE purani row badalta hai, DELETE row hatata hai.',
+        'INSERT adds a new row, UPDATE changes an old row, and DELETE removes a row.'
+      ),
+      t(
+        'UPDATE ya DELETE likhte hi pehle WHERE likho — bina WHERE ke poori table badal jaati hai.',
+        'The moment you write UPDATE or DELETE, write WHERE first — without WHERE the whole table changes.'
+      ),
+      t(
+        'Rows ko hamesha id se pehchano, naam se nahi.',
+        'Always identify rows by id, not by name.'
+      ),
+      t(
+        'Multi-row INSERT se ek command mein kai rows bhar sakte ho.',
+        'With multi-row INSERT you can fill many rows in one command.'
+      ),
+      t(
+        'DELETE ki hui row wapas nahi aati — pehle SELECT se WHERE ko test karo.',
+        'A deleted row does not come back — test the WHERE first with SELECT.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: INSERT, UPDATE aur DELETE — Teenon Ek Saath',
+        'Practice: INSERT, UPDATE, and DELETE — All Three Together'
+      ),
+      task: t(
+        'students table par teen kaam karo: (1) Rohan ko insert karo — (5, \'Rohan\', 81); (2) Priya ke marks 95 kar do — WHERE name = \'Priya\'; (3) Amit ko delete kar do — WHERE name = \'Amit\'. Aakhir mein SELECT se poori table id ke order mein dikhao. Done tab maanenge jab output mein Rahul 85, Priya 95, Sana 88 aur Rohan 81 dikhein, is order mein.',
+        'Do three jobs on the students table: (1) insert Rohan — (5, \'Rohan\', 81); (2) make Priya marks 95 — WHERE name = \'Priya\'; (3) delete Amit — WHERE name = \'Amit\'. At the end, show the whole table with SELECT in id order. You are done when the output shows Rahul 85, Priya 95, Sana 88, and Rohan 81, in this order.'
+      ),
+      language: 'sql',
+      starter: `INSERT INTO students VALUES (5, 'Rohan', 81);
+UPDATE students SET marks = 95 WHERE name = 'Priya';
+DELETE FROM students WHERE name = 'Amit';
+SELECT id, name, marks FROM students ORDER BY id;`,
+      expected: `id | name | marks
+1 | Rahul | 85
+2 | Priya | 95
+4 | Sana | 88
+5 | Rohan | 81`
+    },
+    readMinutes: 12
+  };
+
+const dbmsWhereOperators: Article = {
+    id: 'dbms-where-operators',
+    subjectId: 'dbms',
+    title: t(
+      'WHERE Deep — AND, OR, NOT, LIKE, IN, BETWEEN aur IS NULL',
+      'WHERE Deep — AND, OR, NOT, LIKE, IN, BETWEEN, and IS NULL'
+    ),
+    summary: t(
+      'Rows ko filter karne ke saare tareeke seekho: AND/OR/NOT se conditions jodna, LIKE se pattern match karna, IN se list check karna, BETWEEN se range nikaalna, aur IS NULL se khaali values dhoondhna — precedence ke saath.',
+      'Learn every way to filter rows: joining conditions with AND/OR/NOT, matching patterns with LIKE, checking a list with IN, taking a range with BETWEEN, and finding empty values with IS NULL — together with precedence.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. WHERE Kya Hai? (Rows ko Filter Karne ke Operators)',
+          '1. What Is WHERE? (Operators for Filtering Rows)'
+        ),
+        body: t(
+          `**WHERE** query ka woh hissa hai jo batata hai ki kin rows ko rakhna hai aur kin ko hatana hai. Bina WHERE ke \`SELECT\` poori table dikhata hai; WHERE lagate hi sirf woh rows bachti hain jo condition ko satisfy karein. Ye relational algebra ka **select (σ)** operation hai.
+
+WHERE mein conditions likhne ke liye operators hote hain. **Comparison** operators: \`=\` (barabar), \`!=\` (barabar nahi), \`>\` (bada), \`<\` (chhota), \`>=\` (bada ya barabar), \`<=\` (chhota ya barabar). **Logic** operators: \`AND\` (dono conditions sach hon), \`OR\` (koi ek sach ho), \`NOT\` (condition ko ulta kar do). **Pattern** operator: \`LIKE\` — naam ke pattern se match karta hai. **List** operator: \`IN\` — value list mein hai ya nahi. **Range** operator: \`BETWEEN\` — value do numbers ke beech hai ya nahi. **NULL** check: \`IS NULL\` aur \`IS NOT NULL\`.
+
+In operators ko milakar tum lagbhag har filter likh sakte ho — "85 se zyada marks wale, naam R se shuru ho" se lekar "marks 80 se 90 ke beech, par Amit nahi" tak.`,
+          `WHERE has operators for writing conditions. **Comparison** operators: \`=\` (equal), \`!=\` (not equal), \`>\` (greater), \`<\` (smaller), \`>=\` (greater or equal), \`<=\` (smaller or equal). **Logic** operators: \`AND\` (both conditions true), \`OR\` (any one true), and \`NOT\` (turn a condition around). **Pattern** operator: \`LIKE\` — matches a name pattern. **List** operator: \`IN\` — whether a value is in a list. **Range** operator: \`BETWEEN\` — whether a value lies between two numbers. **NULL** check: \`IS NULL\` and \`IS NOT NULL\`.
+
+By joining these operators you can write almost any filter — from "marks above 85, with a name starting with R" to "marks between 80 and 90, but not Amit".`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Attendance, Fee List aur Library Search',
+          '2. Real-Life Examples: Attendance, Fee List, and Library Search'
+        ),
+        body: t(
+          `Teacher ko un students ki list chahiye jinke marks 85 se zyada **aur** attendance 75% se zyada hai — dono conditions ek saath, isliye **AND**. Principal ko un students ki list chahiye jinke marks 90 se zyada **ya** jo sports team mein hain — koi ek condition kaafi hai, isliye **OR**.
+
+Librarian ko woh books dhoondhni hain jinke title mein "Days" word hai — poora title yaad nahi, sirf ek hissa yaad hai. Ye **LIKE** hai: \`title LIKE '%Days%'\` — % ka matlab hai "kuch bhi". Fee office ko un students ki list chahiye jo Class 9, 10 ya 11 mein hain — teen values ki list, isliye **IN (9, 10, 11)**.
+
+Exam office ko 80 se 90 ke beech marks wale students chahiye — range ke liye **BETWEEN 80 AND 90**. Aur office ko woh forms dhoondhne hain jinmein phone number khaali hai — **IS NULL**. Har roz ke kaam mein ye operators hi chalte hain.`,
+          `A teacher wants the list of students with marks above 85 **and** attendance above 75% — both conditions together, so **AND**. The principal wants the list of students with marks above 90 **or** who are on the sports team — any one condition is enough, so **OR**.
+
+A librarian must find the books whose title holds the word "Days" — the full title is not remembered, only a part of it. That is **LIKE**: \`title LIKE '%Days%'\` — % means "anything". The fee office wants the list of students in Class 9, 10, or 11 — a list of three values, so **IN (9, 10, 11)**.
+
+The exam office wants students with marks between 80 and 90 — for a range, **BETWEEN 80 AND 90**. And the office must find the forms where the phone number is empty — **IS NULL**. These operators run everyday work.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: BETWEEN ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of BETWEEN (worked example with dry run)'
+        ),
+        body: t(
+          `Query hai: \`SELECT name, marks FROM students WHERE marks BETWEEN 80 AND 90 ORDER BY marks DESC\`. **BETWEEN** ka matlab hai: value 80 se badi-ya-barabar **aur** 90 se chhoti-ya-barabar ho. Matlab \`marks >= 80 AND marks <= 90\` — dono kinare included hain. Dry run karte hain:
+- **Rahul, 85:** 85 >= 80? Haan. 85 <= 90? Haan. Dono sach — row rakho.
+- **Priya, 92:** 92 >= 80? Haan. 92 <= 90? Nahi — 92 bada hai. Row hatao.
+- **Amit, 74:** 74 >= 80? Nahi — 74 chhota hai. Row hatao.
+- **Sana, 88:** 88 >= 80? Haan. 88 <= 90? Haan. Dono sach — row rakho.
+
+Result mein 2 rows bachti hain: Sana 88 aur Rahul 85. \`ORDER BY marks DESC\` se Sana pehle, Rahul baad mein. Neeche wala code run karo aur output se milao. Dhyaan do: BETWEEN ke dono kinare included hote hain — 80 ya 90 marks wala student bhi result mein aata.`,
+          `The query is: \`SELECT name, marks FROM students WHERE marks BETWEEN 80 AND 90 ORDER BY marks DESC\`. **BETWEEN** means: the value is greater-than-or-equal to 80 **and** less-than-or-equal to 90. That is \`marks >= 80 AND marks <= 90\` — both ends are included. Let us do a dry run:
+- **Rahul, 85:** is 85 >= 80? Yes. Is 85 <= 90? Yes. Both true — keep the row.
+- **Priya, 92:** is 92 >= 80? Yes. Is 92 <= 90? No — 92 is bigger. Drop the row.
+- **Amit, 74:** is 74 >= 80? No — 74 is smaller. Drop the row.
+- **Sana, 88:** is 88 >= 80? Yes. Is 88 <= 90? Yes. Both true — keep the row.
+
+The result keeps 2 rows: Sana 88 and Rahul 85. \`ORDER BY marks DESC\` puts Sana first and Rahul after. Run the code below and match it with the output. Note: both ends of BETWEEN are included — a student with 80 or 90 marks also comes in the result.`
+        ),
+        code: {
+          title: t(
+            'BETWEEN: 80 se 90 ke Beech Marks',
+            'BETWEEN: Marks Between 80 and 90'
+          ),
+          language: 'sql',
+          code: `SELECT name, marks FROM students WHERE marks BETWEEN 80 AND 90 ORDER BY marks DESC;`,
+          output: `name | marks
+Sana | 88
+Rahul | 85`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: AND/OR ki Precedence, = NULL likhna aur LIKE mein % Bhoolna',
+          '4. Common Mistakes: AND/OR Precedence, Writing = NULL, and Forgetting % in LIKE'
+        ),
+        body: t(
+          `**Galti 1: AND/OR ki precedence bhoolna.** \`WHERE marks >= 85 OR name = 'Amit' AND marks > 80\` mein AND pehle evaluate hota hai, OR baad mein — jaise maths mein multiply pehle, plus baad mein. Isliye ye query matlab hai: marks >= 85 wale **ya** (Amit **aur** marks > 80 wale). Agar tumhara matlab kuch aur tha to brackets lagao: \`WHERE (marks >= 85 OR name = 'Amit') AND marks > 80\`. Brackets se matlab saaf ho jaata hai.
+
+**Galti 2: \`marks = NULL\` likhna.** NULL ke saath \`=\` kaam nahi karta — \`marks = NULL\` hamesha "pata nahi" deta hai, aur row kabhi match nahi hoti. Khaali dhoondhna ho to \`marks IS NULL\` likho, bhara hua dhoondhna ho to \`marks IS NOT NULL\`.
+
+**Galti 3: LIKE mein % bhoolna.** \`name LIKE 'R'\` sirf woh naam pakdega jo bilkul 'R' hai — ek letter ka naam. 'Rahul' chahiye to \`name LIKE 'R%'\` likho — % ka matlab hai "uske baad kuch bhi". '%i%' ka matlab hai "beech mein kahin i ho".
+
+**Galti 4: IN mein ek value ke liye IN likhna.** \`WHERE id IN (1)\` chalega, par \`WHERE id = 1\` seedha aur saaf hai. IN tab use karo jab list mein 2 ya zyada values hon.`,
+          `**Mistake 1: forgetting AND/OR precedence.** In \`WHERE marks >= 85 OR name = 'Amit' AND marks > 80\`, AND is evaluated first and OR after — just as in maths multiply comes first and plus after. So this query means: those with marks >= 85 **or** (Amit **and** marks > 80). If you meant something else, add brackets: \`WHERE (marks >= 85 OR name = 'Amit') AND marks > 80\`. Brackets make the meaning clear.
+
+**Mistake 2: writing \`marks = NULL\`.** \`=\` does not work with NULL — \`marks = NULL\` always gives "not known", and a row never matches. To find empty values write \`marks IS NULL\`, and to find filled ones write \`marks IS NOT NULL\`.
+
+**Mistake 3: forgetting % in LIKE.** \`name LIKE 'R'\` only catches a name that is exactly 'R' — a one-letter name. For 'Rahul' write \`name LIKE 'R%'\` — % means "anything after it". '%i%' means "an i somewhere in the middle".
+
+**Mistake 4: writing IN for a single value.** \`WHERE id IN (1)\` works, but \`WHERE id = 1\` is direct and clear. Use IN when the list holds 2 or more values.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: NOT IN mein NULL, LIKE Case-Insensitive aur Khaali String vs NULL',
+          '5. Edge Cases: NULL in NOT IN, Case-Insensitive LIKE, and Empty String vs NULL'
+        ),
+        body: t(
+          `**Edge case 1: NOT IN mein NULL — famous trap.** \`WHERE id NOT IN (1, 2, NULL)\` ka result khaali aata hai — ek bhi row nahi. Kyun? Kyunki NULL ke saath comparison "pata nahi" hota hai, aur NOT IN ko har value se alag hona chahiye. Ek bhi NULL list mein ho to poora NOT IN fail ho jaata hai. Isiliye NOT IN ki jagah \`NOT EXISTS\` zyada safe hai.
+
+**Edge case 2: LIKE case-insensitive hota hai.** SQLite mein \`name LIKE 'rahul%'\` bhi 'Rahul' ko pakad leta hai — chhota 'r' aur bada 'R' ek maane jaate hain. Dusre databases mein ye case-sensitive bhi ho sakta hai, par SQLite mein nahi. Exam mein poochha jaata hai to SQLite ka rule yaad rakho.
+
+**Edge case 3: khaali string vs NULL.** \`name = ''\` (khaali text) aur \`name IS NULL\` (khaali hi nahi, missing) alag cheezein hain. Form mein naam ka box khaali chhod diya to '' save ho sakta hai, aur box tha hi nahi to NULL. Dono ko dhoondhne ke liye alag conditions chahiye.
+
+**Edge case 4: BETWEEN ulta likhna.** \`BETWEEN 90 AND 80\` — pehla number bada, doosra chhota — to koi row nahi aayegi, kyunki koi value ek saath >= 90 aur <= 80 nahi ho sakti. BETWEEN mein hamesha chhota number pehle, bada number baad mein likho.`,
+          `**Edge case 1: NULL in NOT IN — a famous trap.** \`WHERE id NOT IN (1, 2, NULL)\` returns an empty result — not a single row. Why? Because comparison with NULL gives "not known", and NOT IN needs to differ from every value. If even one NULL sits in the list, the whole NOT IN fails. That is why \`NOT EXISTS\` is safer than NOT IN.
+
+**Edge case 2: LIKE is case-insensitive.** In SQLite, \`name LIKE 'rahul%'\` also catches 'Rahul' — small 'r' and capital 'R' are treated as one. In other databases it can be case-sensitive, but not in SQLite. Remember the SQLite rule if an exam asks about it.
+
+**Edge case 3: empty string vs NULL.** \`name = ''\` (empty text) and \`name IS NULL\` (not empty, but missing) are different things. If the name box in a form is left empty, '' may be saved; if there was no box at all, it is NULL. Finding each needs a different condition.
+
+**Edge case 4: writing BETWEEN backwards.** \`BETWEEN 90 AND 80\` — the first number bigger, the second smaller — gives no rows at all, because no value can be >= 90 and <= 80 at the same time. In BETWEEN, always write the smaller number first and the bigger number after.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Teen Conditions Jodni hon, Pattern Ulta karna ho, ya Range ko AND se Likhna ho?',
+          '6. What If: Join Three Conditions, Reverse a Pattern, or Write a Range with AND?'
+        ),
+        body: t(
+          `**What if: teen conditions jodni hon?** Jaise marks >= 85 **aur** naam R se shuru **aur** id 2 se bada. AND se jodo: \`WHERE marks >= 85 AND name LIKE 'R%' AND id > 2\` — teeno sach honi chahiye. Ek bhi jhooth hui to row hat jaayegi. Lambi conditions mein brackets se groups banao taaki padhna easy ho.
+
+**What if: pattern ko ulta karna ho?** Jaise woh naam chahiye jo R se shuru **nahi** hote. \`WHERE name NOT LIKE 'R%'\` likho. NOT LIKE bhi ek operator hai — LIKE ka ulta. Isi tarah \`NOT IN\` aur \`NOT BETWEEN\` bhi hote hain.
+
+**What if: BETWEEN ki jagah AND likhna ho?** \`marks BETWEEN 80 AND 90\` aur \`marks >= 80 AND marks <= 90\` bilkul ek jaise hain — BETWEEN sirf chhota aur saaf tareeka hai. Dono ka result ek hi aata hai, aur interviewer dono ko ek maan kar poochhta hai.
+
+**What if: OR ki jagah IN likhna ho?** \`name = 'Rahul' OR name = 'Sana'\` aur \`name IN ('Rahul', 'Sana')\` ek hi baat hai. List lambi ho to IN saaf rehta hai, aur galti kam hoti hai.`,
+          `**What if you must join three conditions?** For example, marks >= 85 **and** a name starting with R **and** id above 2. Join with AND: \`WHERE marks >= 85 AND name LIKE 'R%' AND id > 2\` — all three must be true. If even one is false, the row goes. In long conditions, make groups with brackets so they stay easy to read.
+
+**What if you want to reverse a pattern?** For example, names that do **not** start with R. Write \`WHERE name NOT LIKE 'R%'\`. NOT LIKE is also an operator — the reverse of LIKE. In the same way, \`NOT IN\` and \`NOT BETWEEN\` also exist.
+
+**What if you want to write AND instead of BETWEEN?** \`marks BETWEEN 80 AND 90\` and \`marks >= 80 AND marks <= 90\` are exactly the same — BETWEEN is just the shorter, cleaner way. Both give the same result, and an interviewer treats both as one.
+
+**What if you want to write IN instead of OR?** \`name = 'Rahul' OR name = 'Sana'\` and \`name IN ('Rahul', 'Sana')\` say the same thing. When the list is long, IN stays clean and mistakes become fewer.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: WHERE ke Chhote Operators, Bada Kaam',
+          '7. Summary: Small WHERE Operators, Big Job'
+        ),
+        body: t(
+          `**AND** dono conditions sach maangta hai, **OR** koi ek, **NOT** condition ko ulta karta hai. **LIKE** pattern match karta hai — \`%\` ka matlab "kuch bhi", \`_\` ka matlab "ek character". **IN** list check karta hai, **BETWEEN** range nikaalta hai (dono kinare included), **IS NULL** khaali values dhoondhta hai.
+
+Yaad rakhne wali baatein: AND ki precedence OR se zyada hoti hai — doubt ho to brackets lagao. NULL ke saath \`=\` nahi, \`IS NULL\` likho. NOT IN mein NULL ho to result khaali aa jaata hai — ye trap yaad rakho.
+
+Agle article mein hum ORDER BY, GROUP BY, HAVING aur DISTINCT dekhenge — result ko sort karna aur groups mein baantna.`,
+          `**AND** needs both conditions true, **OR** needs any one, and **NOT** turns a condition around. **LIKE** matches a pattern — \`%\` means "anything", and \`_\` means "one character". **IN** checks a list, **BETWEEN** takes a range (both ends included), and **IS NULL** finds empty values.
+
+Things to remember: AND has higher precedence than OR — if in doubt, add brackets. With NULL, do not use \`=\`; write \`IS NULL\`. If NOT IN holds a NULL, the result comes out empty — remember this trap.
+
+In the next article we will look at ORDER BY, GROUP BY, HAVING, and DISTINCT — sorting the result and splitting it into groups.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'WHERE Operators: Har Operator ek Alag Filter',
+        'WHERE Operators: Every Operator Is a Different Filter'
+      ),
+      caption: t(
+        'AND ki precedence OR se zyada hoti hai — doubt ho to brackets lagao',
+        'AND has higher precedence than OR — if in doubt, add brackets'
+      ),
+      nodes: [
+        {
+          t: t('AND — dono sach hon', 'AND — both must be true'),
+          s: t('marks >= 85 AND name LIKE \'R%\'', 'marks >= 85 AND name LIKE \'R%\'')
+        },
+        {
+          t: t('OR — koi ek sach ho', 'OR — any one must be true'),
+          s: t('marks >= 90 OR name = \'Amit\'', 'marks >= 90 OR name = \'Amit\'')
+        },
+        {
+          t: t('LIKE — pattern match', 'LIKE — pattern match'),
+          s: t('% ka matlab "kuch bhi", _ ka matlab "ek character"', '% means "anything", _ means "one character"')
+        },
+        {
+          t: t('IN / BETWEEN — list aur range', 'IN / BETWEEN — list and range'),
+          s: t('IN (\'Rahul\', \'Sana\'), BETWEEN 80 AND 90', 'IN (\'Rahul\', \'Sana\'), BETWEEN 80 AND 90')
+        },
+        {
+          t: t('IS NULL — khaali dhoondho', 'IS NULL — find empty values'),
+          s: t('= NULL kabhi kaam nahi karta, IS NULL likho', '= NULL never works, write IS NULL')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'LIKE: Naam mein Kahin bhi "i" Ho',
+          'LIKE: An "i" Anywhere in the Name'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks FROM students WHERE name LIKE '%i%' ORDER BY name;`,
+        output: `name | marks
+Amit | 74
+Priya | 92`
+      },
+      {
+        title: t(
+          'IN + IS NOT NULL: Rahul aur Sana, Marks Bhare Hon',
+          'IN + IS NOT NULL: Rahul and Sana, with Marks Filled In'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks FROM students WHERE name IN ('Rahul', 'Sana') AND marks IS NOT NULL ORDER BY name;`,
+        output: `name | marks
+Rahul | 85
+Sana | 88`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'WHERE marks >= 85 OR name = \'Amit\' AND marks > 80 mein pehle kaun evaluate hoga?',
+          'In WHERE marks >= 85 OR name = \'Amit\' AND marks > 80, which is evaluated first?'
+        ),
+        opts: [
+          t('OR pehle, AND baad mein', 'OR first, AND after'),
+          t('AND pehle, OR baad mein', 'AND first, OR after'),
+          t('Dono ek saath', 'Both together'),
+          t('Jo pehle likha hai woh pehle', 'Whichever is written first')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: AND ki precedence OR se zyada hoti hai, jaise maths mein multiply ki plus se zyada. Isliye AND wala hissa pehle evaluate hota hai.',
+          'Correct answer: AND has higher precedence than OR, just as multiply has higher precedence than plus in maths. So the AND part is evaluated first.'
+        )
+      },
+      {
+        q: t(
+          'Khaali marks wale students dhoondhne ke liye kya likhoge?',
+          'What will you write to find students with empty marks?'
+        ),
+        opts: [
+          t('WHERE marks = NULL', 'WHERE marks = NULL'),
+          t('WHERE marks IS NULL', 'WHERE marks IS NULL'),
+          t('WHERE marks = 0', 'WHERE marks = 0'),
+          t('WHERE marks = \'\'', 'WHERE marks = \'\'')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: NULL ke saath = kaam nahi karta, IS NULL likhna padta hai. marks = 0 sirf 0 marks wale pakdega, khaali wale nahi.',
+          'Correct answer: = does not work with NULL; you must write IS NULL. marks = 0 only catches students with 0 marks, not empty ones.'
+        )
+      },
+      {
+        q: t(
+          'name LIKE \'R%\' ka matlab kya hai?',
+          'What does name LIKE \'R%\' mean?'
+        ),
+        opts: [
+          t('Naam bilkul R ho', 'The name is exactly R'),
+          t('Naam R se shuru ho', 'The name starts with R'),
+          t('Naam R par khatm ho', 'The name ends with R'),
+          t('Naam mein kahin R ho', 'The name has R somewhere')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: % ka matlab hai "uske baad kuch bhi", isliye \'R%\' woh naam pakdega jo R se shuru hote hain, jaise Rahul.',
+          'Correct answer: % means "anything after it", so \'R%\' catches names that start with R, such as Rahul.'
+        )
+      },
+      {
+        q: t(
+          'marks BETWEEN 80 AND 90 mein 80 aur 90 marks wale students aayenge ya nahi?',
+          'In marks BETWEEN 80 AND 90, will students with 80 and 90 marks come or not?'
+        ),
+        opts: [
+          t('Dono aayenge — kinare included hote hain', 'Both will come — the ends are included'),
+          t('Dono nahi aayenge', 'Neither will come'),
+          t('Sirf 80 aayega', 'Only 80 will come'),
+          t('Sirf 90 aayega', 'Only 90 will come')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: BETWEEN ka matlab hai marks >= 80 AND marks <= 90, isliye dono kinare included hote hain — 80 aur 90 dono aayenge.',
+          'Correct answer: BETWEEN means marks >= 80 AND marks <= 90, so both ends are included — both 80 and 90 will come.'
+        )
+      },
+      {
+        q: t(
+          'WHERE id NOT IN (1, 2, NULL) ka result kya hoga?',
+          'What will be the result of WHERE id NOT IN (1, 2, NULL)?'
+        ),
+        opts: [
+          t('Sirf id 3 aur 4 wali rows', 'Only the rows with id 3 and 4'),
+          t('Khaali result — ek bhi row nahi', 'Empty result — not a single row'),
+          t('Saari rows', 'All rows'),
+          t('Error aayega', 'An error will come')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: list mein ek NULL hai to NOT IN ka comparison "pata nahi" ban jaata hai, isliye ek bhi row match nahi hoti. Ye famous trap hai — NOT EXISTS zyada safe hai.',
+          'Correct answer: with one NULL in the list, the NOT IN comparison becomes "not known", so not a single row matches. This is a famous trap — NOT EXISTS is safer.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'AND dono sach maangta hai, OR koi ek, NOT condition ko ulta karta hai.',
+        'AND needs both true, OR needs any one, and NOT turns a condition around.'
+      ),
+      t(
+        'LIKE mein % ka matlab "kuch bhi", _ ka matlab "ek character" hota hai.',
+        'In LIKE, % means "anything" and _ means "one character".'
+      ),
+      t(
+        'BETWEEN ke dono kinare included hote hain: BETWEEN 80 AND 90 matlab >= 80 AND <= 90.',
+        'Both ends of BETWEEN are included: BETWEEN 80 AND 90 means >= 80 AND <= 90.'
+      ),
+      t(
+        'NULL ke saath = nahi, IS NULL likho; NOT IN mein NULL ho to result khaali aata hai.',
+        'With NULL, do not use =; write IS NULL. If NOT IN holds a NULL, the result comes out empty.'
+      ),
+      t(
+        'AND ki precedence OR se zyada hai — doubt ho to brackets lagao.',
+        'AND has higher precedence than OR — if in doubt, add brackets.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: OR se 85+ wale aur Amit ko Ek Saath Nikaalo',
+        'Practice: Get the 85+ Students and Amit Together with OR'
+      ),
+      task: t(
+        'students table se un students ke naam aur marks nikaalo jinke marks 85 ya zyada hon, ya jinka naam \'Amit\' ho. Result ko marks ke descending order mein dikhao. Starter code mein query pehle se likhi hai — isko run karo aur verify karo ki output mein Priya 92, Sana 88, Rahul 85 aur Amit 74 aate hain, is order mein. Done tab maanenge jab output expected jaisa aaye.',
+        'From the students table, get the names and marks of students with marks 85 or more, or whose name is \'Amit\'. Show the result in descending order of marks. The query is already written in the starter code — run it and verify the output shows Priya 92, Sana 88, Rahul 85, and Amit 74, in this order. You are done when the output matches the expected output.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks FROM students WHERE marks >= 85 OR name = 'Amit' ORDER BY marks DESC;`,
+      expected: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85
+Amit | 74`
+    },
+    readMinutes: 12
+  };
+
+const dbmsOrderGroup: Article = {
+    id: 'dbms-order-group',
+    subjectId: 'dbms',
+    title: t(
+      'ORDER BY, GROUP BY, HAVING aur DISTINCT — Sort aur Groups',
+      'ORDER BY, GROUP BY, HAVING, and DISTINCT — Sorting and Groups'
+    ),
+    summary: t(
+      'Result ko arrange karne ke tareeke seekho: ORDER BY se sort karna, DISTINCT se duplicates hatana, GROUP BY se rows ko groups mein baantna, aur HAVING se groups ko filter karna — WHERE aur HAVING ke farak ke saath.',
+      'Learn how to arrange a result: sorting with ORDER BY, removing duplicates with DISTINCT, splitting rows into groups with GROUP BY, and filtering groups with HAVING — together with the difference between WHERE and HAVING.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. ORDER BY, GROUP BY, HAVING aur DISTINCT Kya Hain?',
+          '1. What Are ORDER BY, GROUP BY, HAVING, and DISTINCT?'
+        ),
+        body: t(
+          `Query se rows milne ke baad unhe arrange karna bhi ek kaam hai. **ORDER BY** rows ko sort karta hai — marks ke hisaab se bada se chhota, ya naam ke hisaab se A se Z. **DISTINCT** duplicate values ko hatata hai — ek hi value ek baar dikhegi. **GROUP BY** rows ko groups mein baant ta hai — jaise har course ke students ek group mein. **HAVING** groups ko filter karta hai — sirf woh groups rakhta hai jo condition ko satisfy karein.
+
+Ye chaaro WHERE se alag hain. WHERE rows ko filter karta hai — query chalne se pehle. ORDER BY result ko sort karta hai — query chalne ke baad. GROUP BY rows ko jodta hai, aur HAVING un jode hue groups par condition lagata hai.
+
+Ek simple rule yaad rakho: **WHERE rows par, HAVING groups par.** Marks >= 85 wale students chahiye to WHERE likho; 2 se zyada students wale courses chahiye to GROUP BY ke saath HAVING likho.`,
+          `After a query returns rows, arranging them is also a job. **ORDER BY** sorts rows — by marks from big to small, or by name from A to Z. **DISTINCT** removes duplicate values — each value shows only once. **GROUP BY** splits rows into groups — such as the students of each course in one group. **HAVING** filters groups — it keeps only the groups that satisfy a condition.
+
+All four differ from WHERE. WHERE filters rows — before the query runs. ORDER BY sorts the result — after the query runs. GROUP BY joins rows together, and HAVING puts a condition on those joined groups.
+
+Remember one simple rule: **WHERE works on rows, HAVING works on groups.** For students with marks >= 85, write WHERE; for courses with more than 2 students, write HAVING with GROUP BY.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Merit List, Class Groups aur Top Courses',
+          '2. Real-Life Examples: Merit List, Class Groups, and Top Courses'
+        ),
+        body: t(
+          `School ki merit list marks ke order mein banti hai — sabse zyada marks wala pehle. Ye **ORDER BY marks DESC** hai. DESC ka matlab hai descending — bada se chhota. ASC ka matlab hai ascending — chhota se bada. Naam ki list A se Z order mein banti hai — **ORDER BY name ASC**.
+
+Principal ko har class mein kitne students hain, ye jaanna hai. Saare students ko class ke hisaab se groups mein baanto aur har group ko gino — ye **GROUP BY class** hai, saath mein \`COUNT(*)\`. Phir principal kehta hai: sirf woh classes dikhao jinmein 30 se zyada students hain — ye **HAVING COUNT(*) > 30** hai.
+
+Course list mein "Python" kai baar likha hai — ek student ne Python liya, doosre ne bhi. Sirf course ke naam ek baar chahiye to **SELECT DISTINCT course** likho — duplicate naam hat jaayenge.`,
+          `A school merit list is made in marks order — the highest marks first. That is **ORDER BY marks DESC**. DESC means descending — big to small. ASC means ascending — small to big. A name list is made in A to Z order — **ORDER BY name ASC**.
+
+The principal wants to know how many students are in each class. Split all students into groups by class and count each group — that is **GROUP BY class**, together with \`COUNT(*)\`. Then the principal says: show only the classes with more than 30 students — that is **HAVING COUNT(*) > 30**.
+
+In a course list, "Python" is written many times — one student took Python, another did too. To get each course name only once, write **SELECT DISTINCT course** — the duplicate names go away.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: GROUP BY aur HAVING ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of GROUP BY and HAVING (worked example with dry run)'
+        ),
+        body: t(
+          `Marks ko do groups mein baante hain: **High** (marks >= 85) aur **Low** (marks < 85). Query hai: \`SELECT CASE WHEN marks >= 85 THEN 'High' ELSE 'Low' END AS band, COUNT(*) AS n FROM students GROUP BY band ORDER BY band\`. Dry run karte hain, ek-ek row ko group mein daalo:
+- **Rahul, 85:** 85 >= 85? Haan — High group mein. High = 1.
+- **Priya, 92:** 92 >= 85? Haan — High group mein. High = 2.
+- **Amit, 74:** 74 >= 85? Nahi — Low group mein. Low = 1.
+- **Sana, 88:** 88 >= 85? Haan — High group mein. High = 3.
+
+Ab har group ko gino: High mein 3 students, Low mein 1 student. \`GROUP BY band\` ne 4 rows ko 2 groups mein badal diya, aur \`COUNT(*)\` ne har group ki ginti di. \`ORDER BY band\` se High pehle, Low baad mein — alphabetical order mein.
+
+Yehi pattern HAVING ke saath bhi chalta hai: groups banne ke baad HAVING un groups ko filter karta hai. Neeche wala code run karo aur output se milao.`,
+          `Let us split marks into two groups: **High** (marks >= 85) and **Low** (marks < 85). The query is: \`SELECT CASE WHEN marks >= 85 THEN 'High' ELSE 'Low' END AS band, COUNT(*) AS n FROM students GROUP BY band ORDER BY band\`. Do a dry run and put each row into a group:
+- **Rahul, 85:** is 85 >= 85? Yes — into the High group. High = 1.
+- **Priya, 92:** is 92 >= 85? Yes — into the High group. High = 2.
+- **Amit, 74:** is 74 >= 85? No — into the Low group. Low = 1.
+- **Sana, 88:** is 88 >= 85? Yes — into the High group. High = 3.
+
+Now count each group: High holds 3 students, Low holds 1 student. \`GROUP BY band\` turned 4 rows into 2 groups, and \`COUNT(*)\` gave the count of each group. \`ORDER BY band\` puts High first and Low after — in alphabetical order.
+
+The same pattern runs with HAVING too: after the groups are made, HAVING filters those groups. Run the code below and match it with the output.`
+        ),
+        code: {
+          title: t(
+            'GROUP BY: High aur Low Marks wale Groups Gino',
+            'GROUP BY: Count the High and Low Marks Groups'
+          ),
+          language: 'sql',
+          code: `SELECT CASE WHEN marks >= 85 THEN 'High' ELSE 'Low' END AS band, COUNT(*) AS n FROM students GROUP BY band ORDER BY band;`,
+          output: `band | n
+High | 3
+Low | 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: HAVING ki jagah WHERE, GROUP BY mein Galat Column aur ORDER BY mein Galat Direction',
+          '4. Common Mistakes: WHERE Instead of HAVING, Wrong Column in GROUP BY, and Wrong Direction in ORDER BY'
+        ),
+        body: t(
+          `**Galti 1: groups par WHERE lagana.** \`WHERE COUNT(*) > 1\` likhoge to error aayega — WHERE groups ko nahi jaanta, woh sirf rows ko jaanta hai. Groups par condition ke liye **HAVING** likho: \`GROUP BY course HAVING COUNT(*) > 1\`. Ye WHERE vs HAVING ka sabse zyada poochha jaane wala farak hai.
+
+**Galti 2: SELECT mein woh column likhna jo GROUP BY mein nahi hai.** \`SELECT course, name FROM enrol GROUP BY course\` — ek course group mein kai naam hain, to kaun sa naam dikhaye? SQLite pehli row ka naam dikha dega, par dusre databases mein error aayega. Rule hai: SELECT mein sirf woh columns likho jo GROUP BY mein hon, ya aggregate functions (COUNT, SUM, AVG) hon.
+
+**Galti 3: ORDER BY ki direction bhoolna.** Merit list ke liye \`ORDER BY marks\` likh diya — default ASC hota hai, chhota marks pehle aayega. Topper pehle chahiye to \`ORDER BY marks DESC\` likho. DESC likhna bhoolna merit list ko ulta kar deta hai.
+
+**Galti 4: DISTINCT ko GROUP BY samajhna.** DISTINCT duplicates hatata hai, groups nahi banata. \`SELECT DISTINCT course\` sirf course ke naam deta hai, unki ginti nahi. Ginti chahiye to GROUP BY + COUNT likho.`,
+          `**Mistake 1: putting WHERE on groups.** If you write \`WHERE COUNT(*) > 1\` you get an error — WHERE does not know groups; it knows only rows. For a condition on groups, write **HAVING**: \`GROUP BY course HAVING COUNT(*) > 1\`. This is the most asked difference between WHERE and HAVING.
+
+**Mistake 2: writing a column in SELECT that is not in GROUP BY.** \`SELECT course, name FROM enrol GROUP BY course\` — one course group holds many names, so which name should it show? SQLite shows the name of the first row, but other databases give an error. The rule is: in SELECT, write only columns that are in GROUP BY, or aggregate functions (COUNT, SUM, AVG).
+
+**Mistake 3: forgetting the direction of ORDER BY.** For a merit list you write \`ORDER BY marks\` — the default is ASC, so the smallest marks come first. To put the topper first, write \`ORDER BY marks DESC\`. Forgetting DESC turns the merit list upside down.
+
+**Mistake 4: treating DISTINCT as GROUP BY.** DISTINCT removes duplicates; it does not make groups. \`SELECT DISTINCT course\` gives only course names, not their counts. For counts, write GROUP BY + COUNT.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Groups, NULL ka Group aur LIMIT ke Saath ORDER BY',
+          '5. Edge Cases: Empty Groups, the NULL Group, and ORDER BY with LIMIT'
+        ),
+        body: t(
+          `**Edge case 1: GROUP BY jismein koi group hi na bane.** \`SELECT course, COUNT(*) FROM enrol WHERE course = 'Java' GROUP BY course\` — Java course hai hi nahi, to koi group nahi banta, result khaali aata hai. GROUP BY khaali table par khaali result deta hai, error nahi.
+
+**Edge case 2: NULL values ka group.** GROUP BY mein NULL ek alag group banta hai — saari NULL values ek group mein aa jaati hain. ORDER BY mein NULL sabse pehle aata hai (ASC mein), kyunki SQLite NULL ko sabse chhota maanta hai. Ye yaad rakho, warna sort ka order ajeeb lagega.
+
+**Edge case 3: ORDER BY + LIMIT — top 3 nikaalna.** \`ORDER BY marks DESC LIMIT 3\` — pehle sort hota hai, phir pehli 3 rows milti hain. LIMIT bina ORDER BY ke bekaar hai — bina sort ke "pehli 3 rows" ka matlab hi nahi hota, database koi bhi 3 rows de dega.
+
+**Edge case 4: ORDER BY mein column number.** \`ORDER BY 2\` ka matlab hai SELECT list ka doosra column. Ye chalega, par padhne mein mushkil hai — column ka naam likhna behtar hai.`,
+          `**Edge case 1: GROUP BY where no group forms at all.** \`SELECT course, COUNT(*) FROM enrol WHERE course = 'Java' GROUP BY course\` — there is no Java course, so no group forms and the result comes out empty. GROUP BY on an empty table gives an empty result, not an error.
+
+**Edge case 2: the group of NULL values.** In GROUP BY, NULL forms a separate group — all NULL values go into one group. In ORDER BY, NULL comes first (in ASC), because SQLite treats NULL as the smallest. Remember this, or the sort order will look strange.
+
+**Edge case 3: ORDER BY + LIMIT — taking the top 3.** \`ORDER BY marks DESC LIMIT 3\` — first it sorts, then it takes the first 3 rows. LIMIT without ORDER BY is useless — without a sort, "first 3 rows" has no meaning, and the database will give any 3 rows.
+
+**Edge case 4: a column number in ORDER BY.** \`ORDER BY 2\` means the second column of the SELECT list. It works, but it is hard to read — writing the column name is better.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Do Columns se Sort karna ho, Groups ko Sort karna ho, ya Pehle Filter phir Group karna ho?',
+          '6. What If: Sort by Two Columns, Sort the Groups, or Filter First and Then Group?'
+        ),
+        body: t(
+          `**What if: do columns se sort karna ho?** \`ORDER BY marks DESC, name ASC\` — pehle marks se sort hoga, aur jinke marks barabar hon unke naam se sort hoga. Pehla column main sort hai, doosra tie-breaker hai. Merit list mein do toppers ke marks barabar hon to naam se order tay hota hai.
+
+**What if: groups ko unki ginti se sort karna ho?** \`GROUP BY course ORDER BY COUNT(*) DESC\` — sabse bada group pehle aayega. ORDER BY mein aggregate function bhi likh sakte ho, ya uska alias: \`SELECT course, COUNT(*) AS n FROM enrol GROUP BY course ORDER BY n DESC\`.
+
+**What if: pehle filter, phir group karna ho?** Dono ek saath chalte hain: \`WHERE marks >= 80\` pehle rows ko filter karta hai, phir GROUP BY bachi hui rows ko groups mein baant ta hai. Order yaad rakho: WHERE → GROUP BY → HAVING → ORDER BY. Yehi SQL ke execution ka order hai.
+
+**What if: DISTINCT aur ORDER BY ek saath hon?** \`SELECT DISTINCT course FROM enrol ORDER BY course\` — pehle duplicates hat te hain, phir sort hota hai. ORDER BY mein sirf woh columns likh sakte ho jo SELECT mein hon, warna error aayega.`,
+          `**What if you want to sort by two columns?** \`ORDER BY marks DESC, name ASC\` — it sorts by marks first, and for equal marks it sorts by name. The first column is the main sort, and the second is the tie-breaker. In a merit list, if two toppers have equal marks, the name fixes the order.
+
+**What if you want to sort the groups by their count?** \`GROUP BY course ORDER BY COUNT(*) DESC\` — the biggest group comes first. In ORDER BY you can also write an aggregate function, or its alias: \`SELECT course, COUNT(*) AS n FROM enrol GROUP BY course ORDER BY n DESC\`.
+
+**What if you want to filter first and then group?** Both run together: \`WHERE marks >= 80\` filters the rows first, then GROUP BY splits the remaining rows into groups. Remember the order: WHERE → GROUP BY → HAVING → ORDER BY. That is the order in which SQL runs.
+
+**What if DISTINCT and ORDER BY run together?** \`SELECT DISTINCT course FROM enrol ORDER BY course\` — first the duplicates go, then the sort runs. In ORDER BY you can only write columns that are in the SELECT, or an error will come.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sort, Deduplicate, Group, Filter Groups',
+          '7. Summary: Sort, Deduplicate, Group, Filter Groups'
+        ),
+        body: t(
+          `**ORDER BY** result ko sort karta hai — DESC bada se chhota, ASC chhota se bada, default ASC hota hai. **DISTINCT** duplicate values hatata hai. **GROUP BY** rows ko groups mein baant ta hai, aur har group par COUNT, SUM ya AVG lagaya ja sakta hai. **HAVING** groups ko filter karta hai.
+
+Execution ka order yaad rakho: **WHERE → GROUP BY → HAVING → ORDER BY**. WHERE rows par condition lagata hai, HAVING groups par — dono ko interchange mat karo. SELECT mein GROUP BY ke saath sirf grouped columns ya aggregates likho.
+
+Agle article mein hum aggregates dekhenge — COUNT, SUM, AVG, MIN aur MAX ka poora khel, jo GROUP BY ke saath sabse zyada kaam aate hain.`,
+          `**ORDER BY** sorts the result — DESC is big to small, ASC is small to big, and the default is ASC. **DISTINCT** removes duplicate values. **GROUP BY** splits rows into groups, and COUNT, SUM, or AVG can be applied to each group. **HAVING** filters groups.
+
+Remember the order of execution: **WHERE → GROUP BY → HAVING → ORDER BY**. WHERE puts a condition on rows, HAVING puts one on groups — do not swap them. With GROUP BY, write only grouped columns or aggregates in SELECT.
+
+In the next article we will look at aggregates — the full story of COUNT, SUM, AVG, MIN, and MAX, which work most with GROUP BY.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Query Execution ka Order: WHERE, GROUP BY, HAVING, ORDER BY',
+        'The Order of Query Execution: WHERE, GROUP BY, HAVING, ORDER BY'
+      ),
+      caption: t(
+        'WHERE rows par, HAVING groups par — dono ko interchange mat karo',
+        'WHERE works on rows, HAVING on groups — do not swap them'
+      ),
+      nodes: [
+        {
+          t: t('WHERE — rows filter karo', 'WHERE — filter the rows'),
+          s: t('marks >= 80 wali rows rakho, baaki hatao', 'Keep the rows with marks >= 80, drop the rest')
+        },
+        {
+          t: t('GROUP BY — groups banao', 'GROUP BY — make groups'),
+          s: t('Bachi rows ko course ya band ke hisaab se baanto', 'Split the remaining rows by course or band')
+        },
+        {
+          t: t('HAVING — groups filter karo', 'HAVING — filter the groups'),
+          s: t('Sirf woh groups rakho jinmein COUNT(*) > 1 ho', 'Keep only the groups where COUNT(*) > 1')
+        },
+        {
+          t: t('ORDER BY — result sort karo', 'ORDER BY — sort the result'),
+          s: t('Marks DESC ya naam ASC — topper pehle aaye', 'Marks DESC or name ASC — the topper comes first')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'ORDER BY: Merit List — Marks Bada se Chhota',
+          'ORDER BY: Merit List — Marks Big to Small'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks FROM students ORDER BY marks DESC;`,
+        output: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85
+Amit | 74`
+      },
+      {
+        title: t(
+          'GROUP BY + HAVING: Sirf Woh Course Jismein 1 se Zyada Students Hon',
+          'GROUP BY + HAVING: Only the Course with More Than 1 Student'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS enrol;
+CREATE TABLE enrol (student_id INTEGER, course TEXT);
+INSERT INTO enrol VALUES (1, 'Python');
+INSERT INTO enrol VALUES (2, 'Python');
+INSERT INTO enrol VALUES (2, 'SQL');
+INSERT INTO enrol VALUES (4, 'Python');
+SELECT course, COUNT(*) AS n FROM enrol GROUP BY course HAVING COUNT(*) > 1 ORDER BY course;`,
+        output: `course | n
+Python | 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Groups par condition lagane ke liye kya use hota hai?',
+          'What is used to put a condition on groups?'
+        ),
+        opts: [
+          t('WHERE', 'WHERE'),
+          t('HAVING', 'HAVING'),
+          t('ORDER BY', 'ORDER BY'),
+          t('DISTINCT', 'DISTINCT')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: HAVING groups par condition lagata hai, jaise HAVING COUNT(*) > 1. WHERE sirf rows par kaam karta hai, groups par nahi.',
+          'Correct answer: HAVING puts a condition on groups, such as HAVING COUNT(*) > 1. WHERE works only on rows, not on groups.'
+        )
+      },
+      {
+        q: t(
+          'ORDER BY marks likhne par default order kaun sa hota hai?',
+          'What is the default order when you write ORDER BY marks?'
+        ),
+        opts: [
+          t('DESC — bada se chhota', 'DESC — big to small'),
+          t('ASC — chhota se bada', 'ASC — small to big'),
+          t('Random', 'Random'),
+          t('Naam ke order mein', 'In name order')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ORDER BY ka default ASC hota hai — chhota se bada. Topper pehle chahiye to DESC likhna padta hai.',
+          'Correct answer: the default of ORDER BY is ASC — small to big. To put the topper first, you must write DESC.'
+        )
+      },
+      {
+        q: t(
+          'SELECT DISTINCT course ka result kya hoga?',
+          'What will SELECT DISTINCT course return?'
+        ),
+        opts: [
+          t('Har course ka naam ek baar, bina duplicate ke', 'Each course name once, with no duplicates'),
+          t('Har course ke students ki ginti', 'The count of students in each course'),
+          t('Saare courses sort kiye bina', 'All courses without sorting'),
+          t('Sirf pehla course', 'Only the first course')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: DISTINCT duplicate values hata deta hai — har course ka naam sirf ek baar dikhega. Ginti ke liye GROUP BY + COUNT chahiye.',
+          'Correct answer: DISTINCT removes duplicate values — each course name shows only once. For counts you need GROUP BY + COUNT.'
+        )
+      },
+      {
+        q: t(
+          'SQL execution ka sahi order kaun sa hai?',
+          'What is the right order of SQL execution?'
+        ),
+        opts: [
+          t('ORDER BY → WHERE → GROUP BY → HAVING', 'ORDER BY → WHERE → GROUP BY → HAVING'),
+          t('WHERE → GROUP BY → HAVING → ORDER BY', 'WHERE → GROUP BY → HAVING → ORDER BY'),
+          t('GROUP BY → WHERE → ORDER BY → HAVING', 'GROUP BY → WHERE → ORDER BY → HAVING'),
+          t('HAVING → GROUP BY → WHERE → ORDER BY', 'HAVING → GROUP BY → WHERE → ORDER BY')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle WHERE rows ko filter karta hai, phir GROUP BY groups banata hai, phir HAVING groups ko filter karta hai, aur aakhir mein ORDER BY sort karta hai.',
+          'Correct answer: first WHERE filters the rows, then GROUP BY makes the groups, then HAVING filters the groups, and finally ORDER BY sorts.'
+        )
+      },
+      {
+        q: t(
+          'Top 3 students nikaalne ke liye kya likhoge?',
+          'What will you write to get the top 3 students?'
+        ),
+        opts: [
+          t('SELECT name FROM students LIMIT 3;', 'SELECT name FROM students LIMIT 3;'),
+          t('SELECT name, marks FROM students ORDER BY marks DESC LIMIT 3;', 'SELECT name, marks FROM students ORDER BY marks DESC LIMIT 3;'),
+          t('SELECT name FROM students ORDER BY name LIMIT 3;', 'SELECT name FROM students ORDER BY name LIMIT 3;'),
+          t('SELECT TOP 3 FROM students;', 'SELECT TOP 3 FROM students;')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle ORDER BY marks DESC se sort karo, phir LIMIT 3 se pehli 3 rows lo. Bina ORDER BY ke LIMIT koi bhi 3 rows de dega.',
+          'Correct answer: first sort with ORDER BY marks DESC, then take the first 3 rows with LIMIT 3. Without ORDER BY, LIMIT will give any 3 rows.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'ORDER BY sort karta hai — DESC bada se chhota, ASC chhota se bada, default ASC.',
+        'ORDER BY sorts — DESC is big to small, ASC is small to big, and the default is ASC.'
+      ),
+      t(
+        'DISTINCT duplicates hatata hai, groups nahi banata.',
+        'DISTINCT removes duplicates; it does not make groups.'
+      ),
+      t(
+        'WHERE rows par condition lagata hai, HAVING groups par.',
+        'WHERE puts a condition on rows, HAVING on groups.'
+      ),
+      t(
+        'Execution order: WHERE → GROUP BY → HAVING → ORDER BY.',
+        'Order of execution: WHERE → GROUP BY → HAVING → ORDER BY.'
+      ),
+      t(
+        'LIMIT bina ORDER BY ke bekaar hai — pehle sort karo, phir LIMIT lagao.',
+        'LIMIT without ORDER BY is useless — sort first, then apply LIMIT.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Top 3 Students Nikaalo — Merit List',
+        'Practice: Get the Top 3 Students — Merit List'
+      ),
+      task: t(
+        'students table se top 3 students ke naam aur marks nikaalo, marks ke descending order mein. Starter code mein query pehle se likhi hai — isko run karo aur verify karo ki output mein Priya 92, Sana 88 aur Rahul 85 aate hain, is order mein. Done tab maanenge jab output expected jaisa aaye.',
+        'From the students table, get the names and marks of the top 3 students, in descending order of marks. The query is already written in the starter code — run it and verify the output shows Priya 92, Sana 88, and Rahul 85, in this order. You are done when the output matches the expected output.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks FROM students ORDER BY marks DESC LIMIT 3;`,
+      expected: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85`
+    },
+    readMinutes: 12
+  };
+
+const dbmsAggregates: Article = {
+    id: 'dbms-aggregates',
+    subjectId: 'dbms',
+    title: t(
+      'Aggregates — COUNT, SUM, AVG, MIN aur MAX',
+      'Aggregates — COUNT, SUM, AVG, MIN, and MAX'
+    ),
+    summary: t(
+      'Kai rows ko ek number mein badalne wale functions seekho: COUNT se ginti, SUM se total, AVG se average, MIN se sabse chhota aur MAX se sabse bada — GROUP BY ke saath aur bina GROUP BY ke.',
+      'Learn the functions that turn many rows into one number: COUNT for counting, SUM for the total, AVG for the average, MIN for the smallest, and MAX for the biggest — with and without GROUP BY.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Aggregate Functions Kya Hain? (Kai Rows, Ek Answer)',
+          '1. What Are Aggregate Functions? (Many Rows, One Answer)'
+        ),
+        body: t(
+          `Aggregate functions kai rows ko lekar ek hi value dete hain. **COUNT** batata hai kitni rows hain, **SUM** batata hai total kitna hai, **AVG** batata hai average kitna hai, **MIN** batata hai sabse chhota value kya hai, aur **MAX** batata hai sabse bada value kya hai.
+
+Socho class ke marks: Rahul 85, Priya 92, Amit 74, Sana 88. \`COUNT(*)\` bolega 4 students hain. \`SUM(marks)\` bolega total 339 hai. \`AVG(marks)\` bolega average 84.75 hai. \`MIN(marks)\` bolega sabse kam 74 hai, aur \`MAX(marks)\` bolega sabse zyada 92 hai.
+
+Aggregate functions GROUP BY ke saath aur bhi powerful hote hain. Bina GROUP BY ke poori table ka ek answer milta hai; GROUP BY ke saath har group ka alag answer milta hai — jaise har course ka average alag.`,
+          `Aggregate functions take many rows and return a single value. **COUNT** tells how many rows there are, **SUM** tells what the total is, **AVG** tells what the average is, **MIN** tells what the smallest value is, and **MAX** tells what the biggest value is.
+
+Take the marks of a class: Rahul 85, Priya 92, Amit 74, and Sana 88. \`COUNT(*)\` says there are 4 students. \`SUM(marks)\` says the total is 339. \`AVG(marks)\` says the average is 84.75. \`MIN(marks)\` says the smallest is 74, and \`MAX(marks)\` says the biggest is 92.
+
+Aggregate functions become even more powerful with GROUP BY. Without GROUP BY you get one answer for the whole table; with GROUP BY you get a separate answer for each group — such as a different average for each course.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Class Average, Total Fees aur Topper',
+          '2. Real-Life Examples: Class Average, Total Fees, and Topper'
+        ),
+        body: t(
+          `Teacher ko class ka average chahiye — saare students ke marks ka \`AVG\`. Principal ko pata karna hai ki is mahine total kitni fees aayi — saari fees ka \`SUM\`. Exam office ko topper dhoondhna hai — sabse zyada marks, matlab \`MAX(marks)\`. Aur sabse kam marks wala bhi — \`MIN(marks)\`.
+
+Attendance register mein kitne students present the, ye ginna ho to \`COUNT(*)\` — poori class ki ginti. Kitne students pass hue, ye ginna ho to \`COUNT(*) ... WHERE marks >= 40\` — condition ke saath ginti.
+
+Cricket mein bhi aggregates hi chalte hain: total runs \`SUM\`, batting average \`AVG\`, highest score \`MAX\`, matches khele \`COUNT\`. Har jagah jahan "kitne, kitna total, kya average" poochha jaata hai, wahan aggregate function hota hai.`,
+          `A teacher wants the average of the class — the \`AVG\` of the marks of all students. The principal wants to know how much total fees came in this month — the \`SUM\` of all fees. The exam office must find the topper — the highest marks, which is \`MAX(marks)\`. And also the lowest marks — \`MIN(marks)\`.
+
+To count how many students were present in the attendance register, use \`COUNT(*)\` — the count of the whole class. To count how many students passed, use \`COUNT(*) ... WHERE marks >= 40\` — a count with a condition.
+
+Cricket runs on aggregates too: total runs is \`SUM\`, batting average is \`AVG\`, highest score is \`MAX\`, and matches played is \`COUNT\`. Wherever "how many, what total, what average" is asked, an aggregate function sits there.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Paanch Aggregates ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of All Five Aggregates (worked example with dry run)'
+        ),
+        body: t(
+          `Marks hain: Rahul 85, Priya 92, Amit 74, Sana 88. Query hai: \`SELECT COUNT(*) AS total, SUM(marks) AS total_marks, AVG(marks) AS avg_marks, MIN(marks) AS lowest, MAX(marks) AS highest FROM students\`. Dry run karte hain, ek-ek function haath se nikaalo:
+
+**COUNT(*):** rows gino — Rahul, Priya, Amit, Sana = **4**. **SUM(marks):** 85 + 92 + 74 + 88 = **339**. **AVG(marks):** 339 / 4 = **84.75**. **MIN(marks):** chaaro mein sabse chhota = **74** (Amit). **MAX(marks):** chaaro mein sabse bada = **92** (Priya).
+
+Result ek hi row mein aata hai — 5 columns, 1 row. Ye aggregates ki pehchan hai: input kai rows, output ek row. Neeche wala code run karo aur output se milao — har number wahi hona chahiye jo tumne haath se nikala tha.`,
+          `The marks are: Rahul 85, Priya 92, Amit 74, and Sana 88. The query is: \`SELECT COUNT(*) AS total, SUM(marks) AS total_marks, AVG(marks) AS avg_marks, MIN(marks) AS lowest, MAX(marks) AS highest FROM students\`. Do a dry run and work out each function by hand:
+
+**COUNT(*):** count the rows — Rahul, Priya, Amit, Sana = **4**. **SUM(marks):** 85 + 92 + 74 + 88 = **339**. **AVG(marks):** 339 / 4 = **84.75**. **MIN(marks):** the smallest of the four = **74** (Amit). **MAX(marks):** the biggest of the four = **92** (Priya).
+
+The result comes in a single row — 5 columns, 1 row. That is the mark of aggregates: many rows in, one row out. Run the code below and match it with the output — every number should be the same as the one you worked out by hand.`
+        ),
+        code: {
+          title: t(
+            'Paanch Aggregates Ek Saath: COUNT, SUM, AVG, MIN, MAX',
+            'All Five Aggregates Together: COUNT, SUM, AVG, MIN, MAX'
+          ),
+          language: 'sql',
+          code: `SELECT COUNT(*) AS total, SUM(marks) AS total_marks, AVG(marks) AS avg_marks, MIN(marks) AS lowest, MAX(marks) AS highest FROM students;`,
+          output: `total | total_marks | avg_marks | lowest | highest
+4 | 339 | 84.75 | 74 | 92`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: COUNT(*) vs COUNT(marks), AVG mein Integer aur Aggregate ko WHERE mein Likhna',
+          '4. Common Mistakes: COUNT(*) vs COUNT(marks), Integer in AVG, and Writing an Aggregate in WHERE'
+        ),
+        body: t(
+          `**Galti 1: COUNT(*) aur COUNT(marks) ko ek samajhna.** \`COUNT(*)\` saari rows ginta hai, chahe marks khaali ho. \`COUNT(marks)\` sirf woh rows ginta hai jinmein marks likha hai — NULL wali rows nahi ginta. Agar ek student ke marks NULL hain to COUNT(*) bolega 4, COUNT(marks) bolega 3. Farak yaad rakho.
+
+**Galti 2: AVG ka result decimal aana.** \`AVG(marks)\` = 84.75 — decimal mein aata hai, kyunki average hamesha poori sankhya nahi hota. Agar tumhe poora number chahiye to \`CAST(AVG(marks) AS INTEGER)\` ya \`ROUND(AVG(marks))\` likho. Interview mein poochha jaata hai ki AVG ka type kya hota hai — jawab hai decimal (REAL).
+
+**Galti 3: aggregate ko WHERE mein likhna.** \`WHERE AVG(marks) > 80\` likhoge to error aayega — WHERE rows par chalta hai, aggregates groups par chalte hain. Groups par condition ke liye **HAVING** likho: \`GROUP BY course HAVING AVG(marks) > 80\`.
+
+**Galti 4: SUM aur AVG ko text par lagana.** \`SUM(name)\` ya \`AVG(name)\` ka koi matlab nahi — naam ko joda nahi ja sakta. SUM aur AVG sirf numbers par chalte hain. MIN aur MAX text par bhi chalte hain — alphabetical order mein sabse pehla aur sabse aakhiri naam dete hain.`,
+          `**Mistake 1: treating COUNT(*) and COUNT(marks) as the same.** \`COUNT(*)\` counts all rows, even when marks are empty. \`COUNT(marks)\` counts only the rows where marks are written — it does not count NULL rows. If one student has marks NULL, COUNT(*) says 4 while COUNT(marks) says 3. Remember the difference.
+
+**Mistake 2: the result of AVG coming as a decimal.** \`AVG(marks)\` is 84.75 — it comes as a decimal, because an average is not always a whole number. If you want a whole number, write \`CAST(AVG(marks) AS INTEGER)\` or \`ROUND(AVG(marks))\`. Interviews ask what the type of AVG is — the answer is decimal (REAL).
+
+**Mistake 3: writing an aggregate in WHERE.** If you write \`WHERE AVG(marks) > 80\` you get an error — WHERE runs on rows, while aggregates run on groups. For a condition on groups, write **HAVING**: \`GROUP BY course HAVING AVG(marks) > 80\`.
+
+**Mistake 4: applying SUM and AVG to text.** \`SUM(name)\` or \`AVG(name)\` has no meaning — names cannot be added. SUM and AVG run only on numbers. MIN and MAX also run on text — they give the first and last name in alphabetical order.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Table par Aggregates, NULL Values aur COUNT(DISTINCT ...)',
+          '5. Edge Cases: Aggregates on an Empty Table, NULL Values, and COUNT(DISTINCT ...)'
+        ),
+        body: t(
+          `**Edge case 1: khaali table par aggregates.** \`SELECT COUNT(*) FROM students WHERE marks > 100\` — koi row match nahi karti, par COUNT(*) phir bhi **0** deta hai, khaali result nahi. Lekin SUM, AVG, MIN, MAX khaali table par **NULL** dete hain — kyunki jodne ke liye kuch hai hi nahi. Ye farak yaad rakho: COUNT hamesha number deta hai, baaki NULL de sakte hain.
+
+**Edge case 2: NULL values aggregates mein.** SUM aur AVG NULL values ko ignore karte hain — jaise woh rows hain hi nahi. Marks hain 85, 92, NULL, 88 to SUM = 265 aur AVG = 265 / 3 = 88.33 — NULL wali row ginti mein nahi aati. COUNT(*) NULL ko bhi ginta hai, COUNT(marks) nahi ginta.
+
+**Edge case 3: COUNT(DISTINCT marks).** Agar do students ke marks ek jaise hain to \`COUNT(marks)\` dono ko ginega, par \`COUNT(DISTINCT marks)\` ek jaise marks ko ek baar ginega. Distinct values ki ginti chahiye to DISTINCT andar likho.
+
+**Edge case 4: MIN/MAX text par.** \`SELECT MIN(name), MAX(name) FROM students\` — alphabetical order mein MIN = 'Amit', MAX = 'Sana'. Text par MIN/MAX dictionary order mein kaam karte hain.`,
+          `**Edge case 1: aggregates on an empty table.** \`SELECT COUNT(*) FROM students WHERE marks > 100\` — no row matches, yet COUNT(*) still gives **0**, not an empty result. But SUM, AVG, MIN, and MAX give **NULL** on an empty table — because there is nothing to add at all. Remember this difference: COUNT always gives a number, while the others can give NULL.
+
+**Edge case 2: NULL values in aggregates.** SUM and AVG ignore NULL values — as if those rows do not exist at all. With marks 85, 92, NULL, and 88, SUM is 265 and AVG is 265 / 3 = 88.33 — the NULL row does not enter the count. COUNT(*) counts NULL too, while COUNT(marks) does not.
+
+**Edge case 3: COUNT(DISTINCT ...).** If two students have the same marks, \`COUNT(marks)\` counts both, but \`COUNT(DISTINCT marks)\` counts equal marks once. To count distinct values, write DISTINCT inside.
+
+**Edge case 4: MIN/MAX on text.** \`SELECT MIN(name), MAX(name) FROM students\` — in alphabetical order, MIN is 'Amit' and MAX is 'Sana'. On text, MIN/MAX work in dictionary order.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Har Course ka Average, Pass Hue Students ki Ginti, ya Topper ka Naam?',
+          '6. What If: Average of Each Course, Count of Passed Students, or the Name of the Topper?'
+        ),
+        body: t(
+          `**What if: har course ka average chahiye?** GROUP BY ke saath likho: \`SELECT course, AVG(marks) AS avg_marks FROM ... GROUP BY course\` — har course ka alag average aayega. Bina GROUP BY ke poori table ka ek average aata hai; GROUP BY se har group ka apna average milta hai.
+
+**What if: pass hue students ki ginti chahiye?** WHERE ke saath COUNT likho: \`SELECT COUNT(*) AS passed FROM students WHERE marks >= 85\` — sirf 85+ wale gine jaayenge, answer 3 aayega. WHERE pehle rows ko filter karta hai, phir COUNT bachi hui rows ko ginta hai.
+
+**What if: topper ka naam chahiye, sirf marks nahi?** MAX sirf number deta hai, naam nahi. Naam ke liye ORDER BY + LIMIT likho: \`SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — Priya 92 aayegi. Ya subquery likho: \`WHERE marks = (SELECT MAX(marks) FROM students)\`.
+
+**What if: total aur average ek saath chahiye?** Ek hi query mein kai aggregates likh sakte ho: \`SELECT COUNT(*), SUM(marks), AVG(marks) FROM students\` — ek row mein teeno answers aa jaate hain.`,
+          `**What if you want the average of each course?** Write it with GROUP BY: \`SELECT course, AVG(marks) AS avg_marks FROM ... GROUP BY course\` — each course gets its own average. Without GROUP BY you get one average for the whole table; with GROUP BY each group gets its own average.
+
+**What if you want the count of passed students?** Write COUNT with WHERE: \`SELECT COUNT(*) AS passed FROM students WHERE marks >= 85\` — only the 85+ students are counted, and the answer is 3. WHERE filters the rows first, then COUNT counts the remaining rows.
+
+**What if you want the name of the topper, not only the marks?** MAX gives only the number, not the name. For the name, write ORDER BY + LIMIT: \`SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — Priya 92 comes. Or write a subquery: \`WHERE marks = (SELECT MAX(marks) FROM students)\`.
+
+**What if you want the total and the average together?** You can write many aggregates in one query: \`SELECT COUNT(*), SUM(marks), AVG(marks) FROM students\` — all three answers come in one row.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Paanch Functions, Ek Row ka Answer',
+          '7. Summary: Five Functions, One Row of Answers'
+        ),
+        body: t(
+          `**COUNT** rows ginta hai, **SUM** total nikaalta hai, **AVG** average nikaalta hai, **MIN** sabse chhota deta hai, **MAX** sabse bada deta hai. Bina GROUP BY ke poori table ka ek answer milta hai; GROUP BY ke saath har group ka alag answer milta hai.
+
+Yaad rakhne wali baatein: COUNT(*) saari rows ginta hai, COUNT(column) sirf bhari hui rows ginta hai. SUM aur AVG NULL ko ignore karte hain. Khaali table par COUNT 0 deta hai, baaki NULL dete hain. Aggregates par condition ke liye WHERE nahi, **HAVING** likho.
+
+Batch 1 yahin khatm hota hai: ER model se design, relational algebra se query ka logic, DDL se structure, constraints se rules, DML se data, WHERE se filter, ORDER/GROUP se arrangement, aur aggregates se summary. Agle batch mein joins, subqueries aur normalization aayenge.`,
+          `**COUNT** counts rows, **SUM** finds the total, **AVG** finds the average, **MIN** gives the smallest, and **MAX** gives the biggest. Without GROUP BY you get one answer for the whole table; with GROUP BY each group gets its own answer.
+
+Things to remember: COUNT(*) counts all rows, while COUNT(column) counts only the filled rows. SUM and AVG ignore NULL. On an empty table, COUNT gives 0 while the others give NULL. For a condition on aggregates, do not write WHERE; write **HAVING**.
+
+Batch 1 ends here: design from the ER model, query logic from relational algebra, structure from DDL, rules from constraints, data from DML, filters from WHERE, arrangement from ORDER/GROUP, and summary from aggregates. The next batch will bring joins, subqueries, and normalization.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'Class ke Marks: Har Student ka Score',
+        'Marks of the Class: The Score of Every Student'
+      ),
+      caption: t(
+        'Inhi 4 numbers par saare aggregates chalte hain: total 339, average 84.75, min 74, max 92',
+        'All aggregates run on these 4 numbers: total 339, average 84.75, min 74, max 92'
+      ),
+      nodes: [],
+      bars: [
+        { label: t('Rahul', 'Rahul'), value: 85, note: t('85 marks', '85 marks') },
+        { label: t('Priya', 'Priya'), value: 92, note: t('92 marks — MAX', '92 marks — MAX') },
+        { label: t('Amit', 'Amit'), value: 74, note: t('74 marks — MIN', '74 marks — MIN') },
+        { label: t('Sana', 'Sana'), value: 88, note: t('88 marks', '88 marks') }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'COUNT with WHERE: 85 ya Zyada Marks wale Kitne Hain?',
+          'COUNT with WHERE: How Many Have 85 Marks or More?'
+        ),
+        language: 'sql',
+        code: `SELECT COUNT(*) AS passed FROM students WHERE marks >= 85;`,
+        output: `passed
+3`
+      },
+      {
+        title: t(
+          'COUNT + SUM: Kitne Students, Total Kitna?',
+          'COUNT + SUM: How Many Students, What Total?'
+        ),
+        language: 'sql',
+        code: `SELECT COUNT(*) AS n, SUM(marks) AS total FROM students;`,
+        output: `n | total
+4 | 339`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Class ka average marks nikaalne ke liye kya likhoge?',
+          'What will you write to find the average marks of the class?'
+        ),
+        opts: [
+          t('SUM(marks)', 'SUM(marks)'),
+          t('COUNT(marks)', 'COUNT(marks)'),
+          t('AVG(marks)', 'AVG(marks)'),
+          t('MAX(marks)', 'MAX(marks)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: AVG average nikaalta hai — 339 / 4 = 84.75. SUM total deta hai, COUNT ginti deta hai, MAX sabse bada deta hai.',
+          'Correct answer: AVG finds the average — 339 / 4 = 84.75. SUM gives the total, COUNT gives the count, and MAX gives the biggest.'
+        )
+      },
+      {
+        q: t(
+          'COUNT(*) aur COUNT(marks) mein kya farak hai?',
+          'What is the difference between COUNT(*) and COUNT(marks)?'
+        ),
+        opts: [
+          t('Dono ek jaise hain', 'Both are the same'),
+          t('COUNT(*) saari rows ginta hai, COUNT(marks) sirf bhari hui rows ginta hai', 'COUNT(*) counts all rows, COUNT(marks) counts only the filled rows'),
+          t('COUNT(marks) saari rows ginta hai, COUNT(*) sirf bhari hui', 'COUNT(marks) counts all rows, COUNT(*) only the filled ones'),
+          t('COUNT(*) sirf numbers ginta hai', 'COUNT(*) counts only numbers')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: COUNT(*) NULL wali rows ko bhi ginta hai, COUNT(marks) NULL wali rows ko nahi ginta. Ek student ke marks NULL hon to COUNT(*) 4 bolega, COUNT(marks) 3.',
+          'Correct answer: COUNT(*) counts NULL rows too, while COUNT(marks) does not count NULL rows. If one student has marks NULL, COUNT(*) says 4 and COUNT(marks) says 3.'
+        )
+      },
+      {
+        q: t(
+          'Khaali table par COUNT(*) kya deta hai?',
+          'What does COUNT(*) give on an empty table?'
+        ),
+        opts: [
+          t('NULL', 'NULL'),
+          t('Error', 'Error'),
+          t('0', '0'),
+          t('Khaali result', 'Empty result')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: COUNT(*) khaali table par bhi 0 deta hai, khaali result nahi. Lekin SUM, AVG, MIN aur MAX khaali table par NULL dete hain.',
+          'Correct answer: COUNT(*) gives 0 even on an empty table, not an empty result. But SUM, AVG, MIN, and MAX give NULL on an empty table.'
+        )
+      },
+      {
+        q: t(
+          'Groups par condition lagane ke liye kya likhoge — jaise average 80 se zyada wale courses?',
+          'What will you write to put a condition on groups — such as courses with average above 80?'
+        ),
+        opts: [
+          t('WHERE AVG(marks) > 80', 'WHERE AVG(marks) > 80'),
+          t('HAVING AVG(marks) > 80', 'HAVING AVG(marks) > 80'),
+          t('ORDER BY AVG(marks) > 80', 'ORDER BY AVG(marks) > 80'),
+          t('GROUP BY AVG(marks) > 80', 'GROUP BY AVG(marks) > 80')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: aggregates par condition ke liye HAVING likhte hain. WHERE rows par chalta hai, isliye WHERE mein AVG likhne par error aayega.',
+          'Correct answer: for a condition on aggregates, write HAVING. WHERE runs on rows, so writing AVG in WHERE gives an error.'
+        )
+      },
+      {
+        q: t(
+          'Topper ka naam nikaalne ke liye sabse seedha tareeka kaun sa hai?',
+          'What is the simplest way to get the name of the topper?'
+        ),
+        opts: [
+          t('SELECT MAX(name) FROM students;', 'SELECT MAX(name) FROM students;'),
+          t('SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1;', 'SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1;'),
+          t('SELECT name FROM students WHERE marks = 100;', 'SELECT name FROM students WHERE marks = 100;'),
+          t('SELECT COUNT(*) FROM students;', 'SELECT COUNT(*) FROM students;')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: MAX sirf number deta hai, naam nahi. ORDER BY marks DESC LIMIT 1 se sabse zyada marks wali row milti hai — Priya 92, naam ke saath.',
+          'Correct answer: MAX gives only the number, not the name. ORDER BY marks DESC LIMIT 1 gives the row with the highest marks — Priya 92, together with the name.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'COUNT rows ginta hai, SUM total, AVG average, MIN sabse chhota, MAX sabse bada deta hai.',
+        'COUNT counts rows, SUM gives the total, AVG gives the average, MIN gives the smallest, and MAX gives the biggest.'
+      ),
+      t(
+        'COUNT(*) saari rows ginta hai, COUNT(column) sirf bhari hui rows ginta hai.',
+        'COUNT(*) counts all rows, while COUNT(column) counts only the filled rows.'
+      ),
+      t(
+        'SUM aur AVG NULL ko ignore karte hain; khaali table par COUNT 0 deta hai, baaki NULL.',
+        'SUM and AVG ignore NULL; on an empty table COUNT gives 0, while the others give NULL.'
+      ),
+      t(
+        'Aggregates par condition ke liye WHERE nahi, HAVING likho.',
+        'For a condition on aggregates, do not write WHERE; write HAVING.'
+      ),
+      t(
+        'MAX sirf number deta hai — topper ka naam chahiye to ORDER BY + LIMIT likho.',
+        'MAX gives only the number — for the name of the topper, write ORDER BY + LIMIT.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Class ki Summary Nikaalo — COUNT, AVG aur MAX',
+        'Practice: Find the Summary of the Class — COUNT, AVG, and MAX'
+      ),
+      task: t(
+        'students table se class ki summary nikaalo: total students (COUNT), average marks (AVG) aur top marks (MAX). Starter code mein query pehle se likhi hai — isko run karo aur verify karo ki output mein 4 students, average 84.75 aur top marks 92 aate hain. Done tab maanenge jab output expected jaisa aaye.',
+        'From the students table, find the summary of the class: total students (COUNT), average marks (AVG), and top marks (MAX). The query is already written in the starter code — run it and verify the output shows 4 students, average 84.75, and top marks 92. You are done when the output matches the expected output.'
+      ),
+      language: 'sql',
+      starter: `SELECT COUNT(*) AS total_students, AVG(marks) AS average_marks, MAX(marks) AS top_marks FROM students;`,
+      expected: `total_students | average_marks | top_marks
+4 | 84.75 | 92`
+    },
+    readMinutes: 12
+  };
+
+const dbmsDatesStrings: Article = {
+    id: 'dbms-dates-strings',
+    subjectId: 'dbms',
+    title: t(
+      'String aur Date Functions — UPPER, LENGTH, SUBSTR aur Date Maths',
+      'String and Date Functions — UPPER, LENGTH, SUBSTR, and Date Maths'
+    ),
+    summary: t(
+      'SQL mein text aur dates ko kaise badla jaata hai, ye seekho: UPPER aur LOWER se case badalna, LENGTH se naam ki lambai nikaalna, SUBSTR se naam ka pehla hissa kaatna, aur date functions se do dates ke beech din ginna ya date mein din jodna-ghataana.',
+      'Learn how SQL changes text and dates: switching case with UPPER and LOWER, measuring a name with LENGTH, cutting the first part of a name with SUBSTR, and using date functions to count the days between two dates or add and subtract days from a date.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. String aur Date Functions Kya Hain?',
+          '1. What Are String and Date Functions?'
+        ),
+        body: t(
+          `**String functions** woh SQL functions hain jo text par kaam karte hain — text ko bada ya chhota karna, uski lambai nikaalna, ya uska ek hissa kaatna. **Date functions** dates par kaam karte hain — do dates ke beech ka farak nikaalna, kisi date mein din jodna, ya date se saal aur mahina nikaalna. Ye functions data ko store karne ke liye nahi, data ko **dikhaane aur compare karne** ke liye use hote hain. Original table mein kuch nahi badalta, sirf result badal jaata hai.\n\nSabse zyada use hone wale string functions hain: \`UPPER(name)\` jo text ko capital letters mein badal deta hai, \`LOWER(name)\` jo text ko chhote letters mein badal deta hai, \`LENGTH(name)\` jo text mein kitne characters hain ye bataata hai, aur \`SUBSTR(name, 1, 2)\` jo text ke pehle 2 characters kaat kar deta hai. Inka kaam bilkul simple hai — input ek text, output ek naya text ya number.\n\nDate functions mein sabse kaam ke hain: \`date('2026-01-10', '+30 days')\` jo date mein 30 din jod deta hai, \`date('2026-03-15', '-7 days')\` jo 7 din ghata deta hai, aur \`julianday('2026-03-15') - julianday('2026-03-01')\` jo do dates ke beech kitne din hain ye bataata hai. SQLite mein dates ko \`'YYYY-MM-DD'\` format mein likha jaata hai, aur ye format har database mein lagbhag ek jaisa hota hai.`,
+          `**String functions** are SQL functions that work on text — making text upper or lower case, measuring its length, or cutting out a part of it. **Date functions** work on dates — finding the difference between two dates, adding days to a date, or pulling the year and month out of a date. These functions are not used to store data; they are used to **show and compare** data. Nothing changes in the original table, only the result changes.\n\nThe most used string functions are: \`UPPER(name)\`, which turns text into capital letters; \`LOWER(name)\`, which turns text into small letters; \`LENGTH(name)\`, which tells you how many characters are in the text; and \`SUBSTR(name, 1, 2)\`, which cuts out the first 2 characters of the text. Their job is very simple — the input is a text and the output is a new text or a number.\n\nThe most useful date functions are: \`date('2026-01-10', '+30 days')\`, which adds 30 days to a date; \`date('2026-03-15', '-7 days')\`, which subtracts 7 days; and \`julianday('2026-03-15') - julianday('2026-03-01')\`, which tells you how many days lie between two dates. In SQLite, dates are written in the \`'YYYY-MM-DD'\` format, and this format is almost the same in every database.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Search Box, Certificate aur Due Date',
+          '2. Real-Life Examples: Search Box, Certificate, and Due Date'
+        ),
+        body: t(
+          `Pehla example hai **search box**. Aapne kabhi notice kiya hai ki website par naam chhote letters mein likho ya bade mein, result ek hi aata hai? Uske peeche \`UPPER\` ya \`LOWER\` hota hai. Database mein naam "Rahul" likha hai aur user "rahul" type karta hai — seedha compare karoge to match nahi hoga, kyunki 'R' aur 'r' alag characters hain. Solution hai dono taraf \`LOWER\` lagaana: \`LOWER(name) = LOWER('rahul')\`. Isi liye search case-insensitive ban jaata hai.\n\nDoosra example hai **certificate aur ID card**. Certificate par naam bade capital letters mein chhapta hai — "PRIYA SHARMA". Database mein naam normal case mein hai, par print karte time \`UPPER(name)\` laga diya jaata hai. Table mein data badla nahi, sirf print hone wala version badal gaya. Yehi string functions ki taakat hai — data ek jagah, dikhaane ke tareeke alag-alag.\n\nTeesra example hai **due date aur fine**. Library mein book 10 January ko issue hui aur 30 din ke liye mili. Due date nikaalne ke liye \`date('2026-01-10', '+30 days')\` chalao — answer aayega 2026-02-09. Agar aaj 15 March hai aur book 1 March ko issue hui thi, to \`julianday('2026-03-15') - julianday('2026-03-01')\` bata dega ki 14 din beet gaye. Late fee nikaalna ho to is number ko fine rate se multiply kar do.`,
+          `The first example is a **search box**. Have you noticed that on a website you can type a name in small letters or capital letters and still get the same result? Behind that sits \`UPPER\` or \`LOWER\`. The database stores the name "Rahul" and the user types "rahul" — a direct comparison finds no match, because 'R' and 'r' are different characters. The fix is to apply \`LOWER\` on both sides: \`LOWER(name) = LOWER('rahul')\`. That is how a search becomes case-insensitive.\n\nThe second example is a **certificate or ID card**. A certificate prints the name in big capital letters — "PRIYA SHARMA". The database holds the name in normal case, but at print time \`UPPER(name)\` is applied. The data in the table did not change, only the printed version changed. That is the power of string functions — one copy of the data, many ways to show it.\n\nThe third example is a **due date and fine**. A library book was issued on 10 January for 30 days. To find the due date, run \`date('2026-01-10', '+30 days')\` — the answer is 2026-02-09. If today is 15 March and the book was issued on 1 March, then \`julianday('2026-03-15') - julianday('2026-03-01')\` tells you that 14 days have passed. To work out a late fee, multiply this number by the fine rate.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Naam ko Capital Karna aur Date mein Din Jodna',
+          '3. Step-by-Step: Capitalising a Name and Adding Days to a Date'
+        ),
+        body: t(
+          `Ab hum \`students\` table par step-by-step kaam karenge. Table mein 4 rows hain: Rahul 85, Priya 92, Amit 74, Sana 88. Pehla kaam hai har naam ko capital letters mein dikhaana aur uski lambai nikaalna. Query hai: \`SELECT name, UPPER(name) AS upper_name, LENGTH(name) AS name_len FROM students ORDER BY id\`.\n\nDry run, ek-ek row:\n- **Rahul:** \`UPPER('Rahul')\` = 'RAHUL', \`LENGTH('Rahul')\` = 5. Row banegi: Rahul | RAHUL | 5.\n- **Priya:** \`UPPER('Priya')\` = 'PRIYA', \`LENGTH('Priya')\` = 5. Row banegi: Priya | PRIYA | 5.\n- **Amit:** \`UPPER('Amit')\` = 'AMIT', \`LENGTH('Amit')\` = 4. Row banegi: Amit | AMIT | 4.\n- **Sana:** \`UPPER('Sana')\` = 'SANA', \`LENGTH('Sana')\` = 4. Row banegi: Sana | SANA | 4.\n\nDhyaan do: \`AS upper_name\` sirf result ke column ka naam badalta hai, table ka column nahi. Aur \`ORDER BY id\` isliye likha hai taaki rows hamesha ek hi order mein aayein — bina \`ORDER BY\` ke database kisi bhi order mein rows de sakta hai. Date wale hisse mein bhi yahi logic hai: \`date('2026-01-10', '+30 days')\` mein January ke 31 din hote hain, isliye 10 January + 30 din = 9 February, 10 February nahi. Date maths mein mahine ki lambai ka dhyaan database khud rakhta hai.`,
+          `Now we will work step by step on the \`students\` table. The table has 4 rows: Rahul 85, Priya 92, Amit 74, Sana 88. The first job is to show every name in capital letters and find its length. The query is: \`SELECT name, UPPER(name) AS upper_name, LENGTH(name) AS name_len FROM students ORDER BY id\`.\n\nDry run, one row at a time:\n- **Rahul:** \`UPPER('Rahul')\` = 'RAHUL', \`LENGTH('Rahul')\` = 5. The row becomes: Rahul | RAHUL | 5.\n- **Priya:** \`UPPER('Priya')\` = 'PRIYA', \`LENGTH('Priya')\` = 5. The row becomes: Priya | PRIYA | 5.\n- **Amit:** \`UPPER('Amit')\` = 'AMIT', \`LENGTH('Amit')\` = 4. The row becomes: Amit | AMIT | 4.\n- **Sana:** \`UPPER('Sana')\` = 'SANA', \`LENGTH('Sana')\` = 4. The row becomes: Sana | SANA | 4.\n\nNote this: \`AS upper_name\` only changes the name of the column in the result, not the column in the table. And \`ORDER BY id\` is written so that the rows always come back in the same order — without \`ORDER BY\`, the database may return rows in any order. The same logic holds for the date part: in \`date('2026-01-10', '+30 days')\`, January has 31 days, so 10 January + 30 days = 9 February, not 10 February. The database itself keeps track of how long each month is when it does date maths.`
+        ),
+        code: {
+          title: t(
+            'UPPER aur LENGTH — Har Naam ko Capital Karna',
+            'UPPER and LENGTH — Capitalising Every Name'
+          ),
+          language: 'sql',
+          code: `SELECT name, UPPER(name) AS upper_name, LENGTH(name) AS name_len
+FROM students
+ORDER BY id;`,
+          output: `name | upper_name | name_len
+Rahul | RAHUL | 5
+Priya | PRIYA | 5
+Amit | AMIT | 4
+Sana | SANA | 4`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: SUBSTR ki Counting aur Date ka Galat Format',
+          '4. Common Mistakes: SUBSTR Counting and the Wrong Date Format'
+        ),
+        body: t(
+          `**Galti 1: SUBSTR mein 0 se counting shuru karna.** SQL mein \`SUBSTR(name, 1, 2)\` ka matlab hai pehle character se shuru karo aur 2 characters lo. Python mein counting 0 se shuru hoti hai, SQL mein 1 se. Agar aap \`SUBSTR(name, 0, 2)\` likh doge to bhi SQLite pehle 2 characters de dega, par dusre databases mein ye alag behave kar sakta hai. Hamesha 1 se gino.\n\n**Galti 2: date ko galat format mein likhna.** SQLite mein date hamesha \`'YYYY-MM-DD'\` format mein likhni chahiye, jaise '2026-01-10'. Agar aap '10-01-2026' ya '10/01/2026' likh doge to date functions kaam nahi karenge — wo text ko date hi nahi samjhenge aur galat ya khaali result denge. Format fix rakho, chahe dikhaane ka style kuch bhi ho.\n\n**Galti 3: LENGTH ko marks jaisi number par lagaana.** \`LENGTH(marks)\` chalega, par wo marks ki value ko text mein badal kar uski lambai dega — 85 ki lambai 2. Ye woh nahi hai jo aap chahte ho. String functions text par, number functions numbers par. Galat column par function lagaana silent galti hai: error nahi aata, bas galat answer aata hai.\n\n**Galti 4: UPPER ko WHERE mein sirf ek taraf lagaana.** \`WHERE UPPER(name) = 'rahul'\` kabhi match nahi karega, kyunki left side 'RAHUL' ban jaata hai aur right side 'rahul' hi rehta hai. Dono taraf ek hi function lagaao: \`WHERE UPPER(name) = UPPER('rahul')\`.`,
+          `**Mistake 1: Starting to count from 0 in SUBSTR.** In SQL, \`SUBSTR(name, 1, 2)\` means start from the first character and take 2 characters. In Python counting starts from 0, but in SQL it starts from 1. If you write \`SUBSTR(name, 0, 2)\`, SQLite still gives the first 2 characters, but other databases may behave differently. Always count from 1.\n\n**Mistake 2: Writing a date in the wrong format.** In SQLite a date must always be written in the \`'YYYY-MM-DD'\` format, like '2026-01-10'. If you write '10-01-2026' or '10/01/2026', the date functions will not work — they will not recognise the text as a date and will give a wrong or empty result. Keep the format fixed, whatever style you use to show the date.\n\n**Mistake 3: Applying LENGTH to a number like marks.** \`LENGTH(marks)\` runs, but it turns the marks value into text and gives its length — the length of 85 is 2. That is not what you want. String functions belong on text, and number functions belong on numbers. Applying a function to the wrong column is a silent mistake: no error appears, only a wrong answer.\n\n**Mistake 4: Applying UPPER on only one side in WHERE.** \`WHERE UPPER(name) = 'rahul'\` never matches, because the left side becomes 'RAHUL' while the right side stays 'rahul'. Apply the same function on both sides: \`WHERE UPPER(name) = UPPER('rahul')\`.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali String, NULL aur Leap Year',
+          '5. Edge Cases: Empty String, NULL, and Leap Year'
+        ),
+        body: t(
+          `**1. Khaali string.** \`LENGTH('')\` ka answer 0 hota hai aur \`UPPER('')\` khaali hi rehta hai. Koi error nahi aata. Agar naam ka column khaali ho, to result mein 0 dikhega — iska matlab ye nahi ki naam missing hai, sirf ye hai ki naam ki lambai zero hai.\n\n**2. NULL naam.** Agar naam NULL ho to \`UPPER(NULL)\`, \`LENGTH(NULL)\` aur \`SUBSTR(NULL, 1, 2)\` — teeno ka answer NULL hota hai, error nahi. SQL mein NULL par koi bhi function NULL hi deta hai. Isliye NULL naam wali row result mein khaali jagah ke saath dikhegi.\n\n**3. Leap year.** \`date('2024-02-28', '+1 day')\` ka answer 2024-02-29 hota hai, kyunki 2024 leap year hai. Lekin \`date('2026-02-28', '+1 day')\` ka answer 2026-03-01 hota hai, kyunki 2026 leap year nahi hai. Date maths mein ye farak database khud handle karta hai — aapko calendar yaad rakhne ki zaroorat nahi.\n\n**4. SUBSTR jo string se zyada maange.** \`SUBSTR('Amit', 1, 10)\` ka answer sirf 'Amit' hota hai — jitne characters hain, utne hi milte hain, error nahi aata. Aur \`SUBSTR('Amit', 10, 2)\` ka answer khaali string hota hai, kyunki 10th character hai hi nahi.`,
+          `**1. Empty string.** \`LENGTH('')\` gives 0 and \`UPPER('')\` stays empty. No error appears. If the name column is empty, the result shows 0 — that does not mean the name is missing, only that the name has zero length.\n\n**2. NULL name.** If the name is NULL, then \`UPPER(NULL)\`, \`LENGTH(NULL)\`, and \`SUBSTR(NULL, 1, 2)\` all give NULL, not an error. In SQL any function on NULL gives NULL. So a row with a NULL name appears in the result with an empty space.\n\n**3. Leap year.** \`date('2024-02-28', '+1 day')\` gives 2024-02-29, because 2024 is a leap year. But \`date('2026-02-28', '+1 day')\` gives 2026-03-01, because 2026 is not a leap year. The database handles this difference in date maths by itself — you do not need to remember the calendar.\n\n**4. SUBSTR asking for more than the string holds.** \`SUBSTR('Amit', 1, 10)\` gives only 'Amit' — you get as many characters as exist, with no error. And \`SUBSTR('Amit', 10, 2)\` gives an empty string, because there is no 10th character.`
+        ),
+      },
+      {
+        heading: t(
+          '6. What If: UPPER ki Jagah LOWER, aur Date ki Jagah Text',
+          '6. What If: LOWER Instead of UPPER, and Text Instead of Date'
+        ),
+        body: t(
+          `**What if: UPPER ki jagah LOWER use karein?** Result ulta ho jaata hai — 'RAHUL' ki jagah 'rahul'. Search ke liye dono barabar kaam karte hain, bas dono taraf ek hi function hona chahiye. Certificate print karna ho to UPPER, email address banana ho to LOWER — kaam ke hisaab se chunna hai, function ke hisaab se nahi.\n\n**What if: date ko text samajh kar compare karein?** \`'2026-02-09' > '2026-01-10'\` text compare mein bhi sahi answer deta hai, kyunki YYYY-MM-DD format mein text ka order date ke order jaisa hi hota hai. Lekin '10-01-2026' format mein text compare galat answer dega. Isi liye date format YYYY-MM-DD rakha jaata hai — ismein text compare bhi kaam karta hai.\n\n**What if: julianday ki jagah seedha minus karein?** \`'2026-03-15' - '2026-03-01'\` SQLite mein 0 dega, kyunki text minus text ka koi matlab nahi hai. Dates ko ghataane ke liye pehle unhe number mein badalna padta hai — wahi kaam \`julianday\` karta hai. Har database mein date minus karne ka apna tareeka hota hai, isliye hamesha date function use karo, seedha minus nahi.`,
+          `**What if we use LOWER instead of UPPER?** The result flips — 'rahul' instead of 'RAHUL'. For a search both work equally well, as long as the same function is used on both sides. To print a certificate use UPPER, to build an email address use LOWER — choose by the job, not by the function.\n\n**What if we compare a date as plain text?** \`'2026-02-09' > '2026-01-10'\` gives the right answer even as a text comparison, because in the YYYY-MM-DD format the text order matches the date order. But in the '10-01-2026' format a text comparison gives a wrong answer. That is why the YYYY-MM-DD date format is kept — in this format even a text comparison works.\n\n**What if we subtract dates directly instead of using julianday?** \`'2026-03-15' - '2026-03-01'\` gives 0 in SQLite, because text minus text has no meaning. To subtract dates you must first turn them into numbers — that is exactly what \`julianday\` does. Every database has its own way of subtracting dates, so always use a date function, never a plain minus.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: String aur Date Functions ka Poora Picture',
+          '7. Summary: The Full Picture of String and Date Functions'
+        ),
+        body: t(
+          `String functions text ko badalte hain aur date functions dates ko: \`UPPER\` capital karta hai, \`LOWER\` chhota karta hai, \`LENGTH\` lambai nikaalta hai, \`SUBSTR\` hissa kaat-ta hai, \`date\` din jodta-ghataata hai, aur \`julianday\` do dates ke beech din ginta hai. Ye functions table ko nahi badalte, sirf result ko badalte hain.\n\nYaad rakhne wali teen baatein: pehli, SQL mein counting 1 se shuru hoti hai, 0 se nahi. Doosri, date hamesha 'YYYY-MM-DD' format mein likho, warna date functions kaam nahi karenge. Teesri, search mein function dono taraf lagaao, warna case mismatch ki wajah se match nahi hoga.\n\nAgle article mein hum \`CASE\` expressions dekhenge — jab result ek fixed value nahi, balki condition par depend karta hai, jaise marks ke hisaab se grade nikaalna.`,
+          `String functions change text and date functions change dates: \`UPPER\` makes text capital, \`LOWER\` makes it small, \`LENGTH\` measures length, \`SUBSTR\` cuts out a part, \`date\` adds or subtracts days, and \`julianday\` counts the days between two dates. These functions do not change the table, only the result.\n\nThree things to remember: first, counting in SQL starts from 1, not 0. Second, always write a date in the 'YYYY-MM-DD' format, or the date functions will not work. Third, in a search apply the function on both sides, or the match will fail because of a case mismatch.\n\nIn the next article we will look at \`CASE\` expressions — when the result is not a fixed value but depends on a condition, like working out a grade from marks.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'String Function ka Flow: Input Text se Output Tak',
+        'String Function Flow: From Input Text to Output'
+      ),
+      nodes: [
+        {
+          t: t('Input: name = Rahul', 'Input: name = Rahul'),
+          s: t('Table se aaya hua original text', 'The original text from the table')
+        },
+        {
+          t: t('UPPER(name) -> RAHUL', 'UPPER(name) -> RAHUL'),
+          s: t('Saare letters capital ho gaye', 'All letters become capital')
+        },
+        {
+          t: t('LENGTH(name) -> 5', 'LENGTH(name) -> 5'),
+          s: t('Text mein 5 characters hain', 'The text has 5 characters')
+        },
+        {
+          t: t('SUBSTR(name, 1, 2) -> Ra', 'SUBSTR(name, 1, 2) -> Ra'),
+          s: t('Pehle 2 characters kaat liye', 'The first 2 characters are cut out')
+        },
+        {
+          t: t('Result: table nahi badli', 'Result: the table did not change'),
+          s: t('Sirf dikhaane wala result badla', 'Only the shown result changed')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'SUBSTR — Sirf 85 ya Usse Zyada Marks Walon ke Naam ke Pehle 2 Akshar',
+          'SUBSTR — First 2 Letters of Names with 85 or More Marks'
+        ),
+        language: 'sql',
+        code: `SELECT name, SUBSTR(name, 1, 2) AS first_two, marks
+FROM students
+WHERE marks >= 85
+ORDER BY marks DESC;`,
+        output: `name | first_two | marks
+Priya | Pr | 92
+Sana | Sa | 88
+Rahul | Ra | 85`
+      },
+      {
+        title: t(
+          'Date Maths — 30 Din Jodna, 7 Din Ghataana, Beech ke Din Ginna',
+          'Date Maths — Adding 30 Days, Subtracting 7 Days, Counting Days Between'
+        ),
+        language: 'sql',
+        code: `SELECT date('2026-01-10', '+30 days') AS plus_30_days,
+       date('2026-03-15', '-7 days') AS minus_7_days,
+       julianday('2026-03-15') - julianday('2026-03-01') AS days_between;`,
+        output: `plus_30_days | minus_7_days | days_between
+2026-02-09 | 2026-03-08 | 14`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'UPPER(\'Rahul\') ka result kya hoga?',
+          'What is the result of UPPER(\'Rahul\')?'
+        ),
+        opts: [
+          t('rahul', 'rahul'),
+          t('RAHUL', 'RAHUL'),
+          t('Rahul', 'Rahul'),
+          t('5', '5')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: UPPER saare letters ko capital mein badal deta hai, isliye Rahul se RAHUL banta hai.',
+          'Correct answer: UPPER turns all letters into capitals, so Rahul becomes RAHUL.'
+        )
+      },
+      {
+        q: t(
+          'LENGTH(\'Priya\') ka answer kya hai?',
+          'What is the answer of LENGTH(\'Priya\')?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('92', '92'),
+          t('5', '5'),
+          t('0', '0')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Priya mein 5 characters hain — P, r, i, y, a — isliye LENGTH 5 deta hai.',
+          'Correct answer: Priya has 5 characters — P, r, i, y, a — so LENGTH gives 5.'
+        )
+      },
+      {
+        q: t(
+          'SUBSTR(\'Sana\', 1, 2) kya dega?',
+          'What does SUBSTR(\'Sana\', 1, 2) give?'
+        ),
+        opts: [
+          t('na', 'na'),
+          t('S', 'S'),
+          t('Sa', 'Sa'),
+          t('Sana', 'Sana')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: SUBSTR pehle character se shuru karke 2 characters leta hai, isliye Sana se Sa milta hai.',
+          'Correct answer: SUBSTR starts from the first character and takes 2 characters, so Sana gives Sa.'
+        )
+      },
+      {
+        q: t(
+          'date(\'2026-01-10\', \'+30 days\') ka result kya hai?',
+          'What is the result of date(\'2026-01-10\', \'+30 days\')?'
+        ),
+        opts: [
+          t('2026-02-10', '2026-02-10'),
+          t('2026-01-40', '2026-01-40'),
+          t('2026-02-09', '2026-02-09'),
+          t('2026-03-10', '2026-03-10')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: January mein 31 din hote hain, isliye 10 January + 30 din = 9 February hota hai, 10 February nahi.',
+          'Correct answer: January has 31 days, so 10 January + 30 days = 9 February, not 10 February.'
+        )
+      },
+      {
+        q: t(
+          'Case-insensitive search ke liye sahi tareeka kaunsa hai?',
+          'Which is the right way to do a case-insensitive search?'
+        ),
+        opts: [
+          t('WHERE name = \'rahul\'', 'WHERE name = \'rahul\''),
+          t('WHERE UPPER(name) = \'rahul\'', 'WHERE UPPER(name) = \'rahul\''),
+          t('WHERE LOWER(name) = LOWER(\'Rahul\')', 'WHERE LOWER(name) = LOWER(\'Rahul\')'),
+          t('WHERE LENGTH(name) = 5', 'WHERE LENGTH(name) = 5')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: function dono taraf lagana padta hai, warna ek taraf capital aur dusri taraf chhote letters honge aur match nahi hoga.',
+          'Correct answer: the function must be applied on both sides, or one side will be capital and the other small and the match will fail.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'UPPER capital karta hai, LOWER chhota karta hai, LENGTH lambai deta hai, SUBSTR hissa kaat-ta hai.',
+        'UPPER makes text capital, LOWER makes it small, LENGTH gives the length, SUBSTR cuts out a part.'
+      ),
+      t(
+        'SQL mein counting 1 se shuru hoti hai — SUBSTR(name, 1, 2) pehle 2 characters deta hai.',
+        'Counting in SQL starts from 1 — SUBSTR(name, 1, 2) gives the first 2 characters.'
+      ),
+      t(
+        'Date hamesha YYYY-MM-DD format mein likho, warna date functions kaam nahi karenge.',
+        'Always write a date in the YYYY-MM-DD format, or the date functions will not work.'
+      ),
+      t(
+        'date() din jodta-ghataata hai, julianday() do dates ke beech ke din ginta hai.',
+        'date() adds or subtracts days, and julianday() counts the days between two dates.'
+      ),
+      t(
+        'Ye functions table ko nahi badalte, sirf result ko badalte hain.',
+        'These functions do not change the table, only the result.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: 80 ya Usse Zyada Marks Walon ke Naam Capital Mein',
+        'Practice: Names in Capitals for Students with 80 or More Marks'
+      ),
+      task: t(
+        'students table se un students ke naam, unke capital version aur naam ki lambai nikaalo jinke marks 80 ya usse zyada hain. Result marks ke hisaab se bade se chhote order mein aana chahiye. Done tab maanenge jab output mein sirf Priya, Sana aur Rahul dikhein, is order mein: Priya | PRIYA | 5, Sana | SANA | 4, Rahul | RAHUL | 5.',
+        'From the students table, get the name, its capital version, and the name length for students with 80 or more marks. The result must come in order of marks from high to low. You are done when the output shows only Priya, Sana, and Rahul, in this order: Priya | PRIYA | 5, Sana | SANA | 4, Rahul | RAHUL | 5.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, UPPER(name) AS shout, LENGTH(name) AS name_len
+FROM students
+WHERE marks >= 80
+ORDER BY marks DESC;`,
+      expected: `name | shout | name_len
+Priya | PRIYA | 5
+Sana | SANA | 4
+Rahul | RAHUL | 5`
+    },
+    readMinutes: 12
+  };
+
+const dbmsCase: Article = {
+    id: 'dbms-case',
+    subjectId: 'dbms',
+    title: t(
+      'CASE Expressions — Marks se Grade, Condition par Result',
+      'CASE Expressions — Grade from Marks, Result by Condition'
+    ),
+    summary: t(
+      'CASE expression seekho: ek hi query mein condition ke hisaab se alag-alag value kaise nikaali jaati hai. Marks se grade banana, pass-fail likhna, aur CASE ko COUNT aur SUM ke saath use karke group-wise counting karna — sab students table par live examples ke saath.',
+      'Learn the CASE expression: how one query returns a different value for each condition. Making a grade from marks, writing pass or fail, and using CASE with COUNT and SUM for group-wise counting — all with live examples on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. CASE Expression Kya Hai?',
+          '1. What Is a CASE Expression?'
+        ),
+        body: t(
+          `**CASE** SQL ka if-else hai. Ye ek column ki value ko condition ke hisaab se badal deta hai: agar marks 90 ya usse zyada hain to 'A', agar 80 ya usse zyada hain to 'B', warna 'C'. CASE table mein kuch store nahi karta — ye sirf result mein ek naya column bana deta hai, jiska naam aap \`AS grade\` se de sakte ho.\n\nCASE ka structure simple hai: \`CASE WHEN <condition> THEN <value> WHEN <condition> THEN <value> ELSE <value> END\`. Database conditions ko **upar se neeche** check karta hai, aur jo pehli condition true hoti hai, usi ka value milta hai. Isi liye conditions ka order matter karta hai — 90 wali condition hamesha 80 wali se pehle aani chahiye, warna 92 marks wala bhi 'B' ban jaayega.\n\nCASE ko aap \`SELECT\` mein, \`WHERE\` mein, \`ORDER BY\` mein — kahin bhi use kar sakte ho. Is article mein hum ise SELECT mein use karenge, kyunki wahan ye sabse zyada kaam aata hai: raw numbers ko readable labels mein badalna.`,
+          `**CASE** is the if-else of SQL. It changes a column value based on a condition: if marks are 90 or more, give 'A'; if 80 or more, give 'B'; otherwise give 'C'. CASE stores nothing in the table — it only creates a new column in the result, which you can name with \`AS grade\`.\n\nThe structure of CASE is simple: \`CASE WHEN <condition> THEN <value> WHEN <condition> THEN <value> ELSE <value> END\`. The database checks the conditions **from top to bottom**, and the value of the first condition that is true is the one you get. That is why the order of the conditions matters — the 90 condition must always come before the 80 condition, or a student with 92 marks would also become 'B'.\n\nYou can use CASE in \`SELECT\`, in \`WHERE\`, in \`ORDER BY\` — anywhere. In this article we use it in SELECT, where it is most useful: turning raw numbers into readable labels.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Report Card, Discount aur Delivery Status',
+          '2. Real-Life Examples: Report Card, Discount, and Delivery Status'
+        ),
+        body: t(
+          `Pehla example hai **report card**. School ki database mein sirf marks store hote hain — 92, 88, 85, 74. Report card par grade chhapta hai — A, B, C. Grade alag se store nahi kiya jaata, kyunki wo marks se hi nikal sakta hai. Har baar report card banate time CASE chalaya jaata hai aur grade nikaala jaata hai. Agar grading rule badal jaaye, to sirf query badalni padti hai, poori table nahi.\n\nDoosra example hai **discount**. Online shop mein agar bill 5000 se zyada hai to 20% discount, 2000 se zyada hai to 10% discount, warna 0%. Ye rule bhi CASE se likha jaata hai. Discount store nahi kiya jaata, kyunki bill badalte hi discount bhi badal jaayega — isliye har baar CASE se fresh calculate kiya jaata hai.\n\nTeesra example hai **delivery status**. Order table mein sirf ek number store hota hai: 0 matlab pending, 1 matlab shipped, 2 matlab delivered. Customer ko number nahi, word dikhaana hota hai. CASE number ko word mein badal deta hai: \`CASE WHEN status = 0 THEN 'Pending' WHEN status = 1 THEN 'Shipped' ELSE 'Delivered' END\`.`,
+          `The first example is a **report card**. A school database stores only marks — 92, 88, 85, 74. The report card prints a grade — A, B, C. The grade is not stored separately, because it can be worked out from the marks. Every time a report card is made, CASE runs and the grade is worked out. If the grading rule changes, only the query changes, not the whole table.\n\nThe second example is a **discount**. In an online shop, a bill above 5000 gets 20% off, above 2000 gets 10% off, and the rest get 0%. This rule is also written with CASE. The discount is not stored, because the moment the bill changes the discount changes too — so it is freshly calculated with CASE every time.\n\nThe third example is a **delivery status**. The order table stores only a number: 0 means pending, 1 means shipped, 2 means delivered. The customer must see a word, not a number. CASE turns the number into a word: \`CASE WHEN status = 0 THEN 'Pending' WHEN status = 1 THEN 'Shipped' ELSE 'Delivered' END\`.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Marks se Grade Nikaalna (Dry Run)',
+          '3. Step-by-Step: Working Out a Grade from Marks (Dry Run)'
+        ),
+        body: t(
+          `Query hai: \`SELECT name, marks, CASE WHEN marks >= 90 THEN 'A' WHEN marks >= 80 THEN 'B' ELSE 'C' END AS grade FROM students ORDER BY marks DESC\`. Pehle \`ORDER BY marks DESC\` rows ko sort karta hai: Priya 92, Sana 88, Rahul 85, Amit 74. Phir har row par CASE chalta hai, upar se neeche.\n\nDry run, ek-ek row:\n- **Priya, 92:** Pehli condition \`marks >= 90\` — 92 >= 90 true hai. Grade 'A' mil gaya, aage check nahi hota. Row: Priya | 92 | A.\n- **Sana, 88:** Pehli condition \`marks >= 90\` — 88 >= 90 false hai. Doosri condition \`marks >= 80\` — 88 >= 80 true hai. Grade 'B'. Row: Sana | 88 | B.\n- **Rahul, 85:** Pehli condition false (85 >= 90 nahi), doosri true (85 >= 80 hai). Grade 'B'. Row: Rahul | 85 | B.\n- **Amit, 74:** Pehli condition false, doosri false (74 >= 80 nahi). Koi WHEN true nahi hua, to \`ELSE 'C'\` chalta hai. Row: Amit | 74 | C.\n\nAb socho agar conditions ka order ulta hota: pehle \`marks >= 80\` aur phir \`marks >= 90\`. Priya 92 ke liye pehli condition hi true ho jaati aur grade 'B' mil jaata — galat! Isi liye CASE mein hamesha **sabse strict condition pehle** likho.`,
+          `The query is: \`SELECT name, marks, CASE WHEN marks >= 90 THEN 'A' WHEN marks >= 80 THEN 'B' ELSE 'C' END AS grade FROM students ORDER BY marks DESC\`. First, \`ORDER BY marks DESC\` sorts the rows: Priya 92, Sana 88, Rahul 85, Amit 74. Then CASE runs on every row, from top to bottom.\n\nDry run, one row at a time:\n- **Priya, 92:** First condition \`marks >= 90\` — 92 >= 90 is true. The grade 'A' is given, and no further check happens. Row: Priya | 92 | A.\n- **Sana, 88:** First condition \`marks >= 90\` — 88 >= 90 is false. Second condition \`marks >= 80\` — 88 >= 80 is true. Grade 'B'. Row: Sana | 88 | B.\n- **Rahul, 85:** First condition is false (85 >= 90 is not true), second is true (85 >= 80 is true). Grade 'B'. Row: Rahul | 85 | B.\n- **Amit, 74:** First condition is false, second is false (74 >= 80 is not true). No WHEN was true, so \`ELSE 'C'\` runs. Row: Amit | 74 | C.\n\nNow imagine the conditions were in the opposite order: \`marks >= 80\` first and \`marks >= 90\` second. For Priya with 92, the first condition would already be true and the grade would be 'B' — wrong! That is why in CASE you must always write the **strictest condition first**.`
+        ),
+        code: {
+          title: t(
+            'Marks se Grade — CASE ka Classic Example',
+            'Grade from Marks — The Classic CASE Example'
+          ),
+          language: 'sql',
+          code: `SELECT name, marks,
+  CASE WHEN marks >= 90 THEN 'A'
+       WHEN marks >= 80 THEN 'B'
+       ELSE 'C' END AS grade
+FROM students
+ORDER BY marks DESC;`,
+          output: `name | marks | grade
+Priya | 92 | A
+Sana | 88 | B
+Rahul | 85 | B
+Amit | 74 | C`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Galat Order, ELSE Bhoolna aur = ki Jagah >=',
+          '4. Common Mistakes: Wrong Order, Forgetting ELSE, and = Instead of >='
+        ),
+        body: t(
+          `**Galti 1: conditions ka galat order.** Jaise upar dekha, agar \`marks >= 80\` pehle likh diya to 92 marks wala bhi 'B' ban jaayega, kyunki CASE pehli true condition par ruk jaata hai. Rule yaad rakho: sabse badi limit pehle, phir chhoti. Grade wale CASE mein hamesha 90 pehle, 80 baad mein.\n\n**Galti 2: ELSE bhool jaana.** Agar koi bhi WHEN true na ho aur ELSE na likha ho, to CASE ka result NULL hota hai. Amit 74 ke liye bina ELSE ke grade khaali dikhega — error nahi aayega, bas khaali jagah dikhegi. Hamesha ELSE likho, taaki har row ko koi na koi value mile.\n\n**Galti 3: >= ki jagah = likhna.** \`WHEN marks = 90 THEN 'A'\` sirf exactly 90 marks walon ko 'A' dega — 92 marks wala 'A' nahi banega. Range ke liye hamesha >= ya BETWEEN use karo. Marks jaise numbers par range check karna hai, exact match nahi.\n\n**Galti 4: CASE ko WHERE samajh lena.** CASE rows ko filter nahi karta, wo sirf value badalta hai. Agar aapko sirf 'A' grade wale students chahiye, to CASE ke saath WHERE bhi likhna padega, ya CASE ko WHERE mein repeat karna padega. CASE naya column banata hai, rows ko chhupaata nahi.`,
+          `**Mistake 1: Wrong order of conditions.** As seen above, if \`marks >= 80\` is written first, even a student with 92 marks becomes 'B', because CASE stops at the first true condition. Remember the rule: the biggest limit first, then the smaller ones. In a grade CASE, always write 90 first and 80 after.\n\n**Mistake 2: Forgetting ELSE.** If no WHEN is true and no ELSE is written, the result of CASE is NULL. For Amit with 74, the grade would show as empty without ELSE — no error appears, only an empty space. Always write ELSE, so that every row gets some value.\n\n**Mistake 3: Writing = instead of >=.** \`WHEN marks = 90 THEN 'A'\` gives 'A' only to students with exactly 90 marks — a student with 92 marks would not become 'A'. For a range, always use >= or BETWEEN. On numbers like marks you need a range check, not an exact match.\n\n**Mistake 4: Treating CASE like WHERE.** CASE does not filter rows, it only changes a value. If you want only the students with grade 'A', you must also write WHERE, or repeat the CASE in WHERE. CASE creates a new column, it does not hide rows.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Boundary Marks, NULL Marks aur Overlapping Ranges',
+          '5. Edge Cases: Boundary Marks, NULL Marks, and Overlapping Ranges'
+        ),
+        body: t(
+          `**1. Boundary marks — exactly 90 ya exactly 80.** Priya ke 92 aur Sana ke 88 se boundary nahi dikhti. Socho kisi student ke exactly 90 marks hain: \`marks >= 90\` true hai, grade 'A'. Exactly 80 marks hain to pehli condition false, doosri true, grade 'B'. Boundary par >= ka matlab hai "90 bhi included hai". Agar aap > likhte, to exactly 90 wala 'B' ban jaata — ek chhota sa sign poora grade badal deta hai.\n\n**2. NULL marks.** Agar kisi student ke marks NULL hain, to \`NULL >= 90\` na true hota hai na false — wo NULL hota hai. CASE us condition ko false ki tarah treat karta hai aur aage badhta hai. Aakhir mein koi WHEN true nahi hota, to ELSE chalta hai. NULL marks wala student 'C' ban jaayega, jo galat ho sakta hai — behtar hai ELSE mein 'No marks' likhna ya WHERE mein NULL ko alag se handle karna.\n\n**3. Overlapping ranges.** \`WHEN marks >= 80 THEN 'B' WHEN marks >= 85 THEN 'A'\` likhoge to 88 marks wala 'B' ban jaayega, kyunki pehli condition pehle true ho gayi. Overlapping ranges mein hamesha badi limit pehle likho, warna neeche wali condition kabhi chalegi hi nahi — wo dead code ban jaayegi.\n\n**4. CASE mein alag-alag types.** Ek hi CASE mein ek THEN 'A' (text) aur doosra THEN 1 (number) likhoge to database confuse ho jaayega aur types ko mix kar dega. Ek CASE ke saare THEN values ek hi type ke hone chahiye — saare text ya saare number.`,
+          `**1. Boundary marks — exactly 90 or exactly 80.** Priya with 92 and Sana with 88 do not show the boundary. Imagine a student with exactly 90 marks: \`marks >= 90\` is true, so the grade is 'A'. With exactly 80 marks, the first condition is false and the second is true, so the grade is 'B'. On a boundary, >= means "90 is included too". If you wrote >, the student with exactly 90 would become 'B' — one small sign changes the whole grade.\n\n**2. NULL marks.** If a student's marks are NULL, then \`NULL >= 90\` is neither true nor false — it is NULL. CASE treats that condition as false and moves on. In the end no WHEN is true, so ELSE runs. The student with NULL marks becomes 'C', which may be wrong — it is better to write 'No marks' in ELSE or to handle NULL separately in WHERE.\n\n**3. Overlapping ranges.** If you write \`WHEN marks >= 80 THEN 'B' WHEN marks >= 85 THEN 'A'\`, a student with 88 marks becomes 'B', because the first condition turns true first. With overlapping ranges always write the bigger limit first, or the lower condition will never run at all — it becomes dead code.\n\n**4. Mixed types in one CASE.** If one THEN gives 'A' (text) and another gives 1 (number) in the same CASE, the database gets confused and mixes the types. All the THEN values in one CASE should be of the same type — all text or all numbers.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: CASE ko SUM ke Saath, aur Grade Store kar Dein to?',
+          '6. What If: CASE with SUM, and What If We Stored the Grade?'
+        ),
+        body: t(
+          `**What if: CASE ko SUM aur COUNT ke saath use karein?** CASE sirf label banane ke liye nahi hai — ye counting ke liye bhi kaam aata hai. \`SUM(CASE WHEN marks >= 85 THEN 1 ELSE 0 END)\` ka matlab hai: har row par check karo, 85 ya zyada hai to 1 jodo, warna 0. Total aayega 3, kyunki Priya, Sana aur Rahul — teeno ke marks 85 ya zyada hain. Is pattern se aap ek hi query mein kai groups gin sakte ho, bina alag-alag query chalaaye.\n\n**What if: grade ko table mein store kar dein?** Ye buri idea hai. Agar Rahul ke marks 85 se badh kar 91 ho jaayein, to stored grade 'B' galat ho jaayega aur use alag se update karna padega. CASE se grade har baar fresh nikalta hai, isliye wo kabhi purana nahi padta. Rule hai: jo value doosri value se nikal sakti hai, use store mat karo — use CASE se nikaalo.\n\n**What if: CASE ki jagah alag-alag queries chalaayein?** A grade ke liye ek query, B ke liye doosri — ye kaam karega, par 3 queries chalengi aur result ko jodna padega. CASE ek hi query mein saare grades de deta hai. Ek query hamesha 3 queries se fast aur simple hoti hai.`,
+          `**What if we use CASE with SUM and COUNT?** CASE is not only for making labels — it also works for counting. \`SUM(CASE WHEN marks >= 85 THEN 1 ELSE 0 END)\` means: check every row, add 1 if the marks are 85 or more, else add 0. The total is 3, because Priya, Sana, and Rahul all have 85 or more marks. With this pattern you can count several groups in a single query, without running separate queries.\n\n**What if we stored the grade in the table?** That is a bad idea. If Rahul's marks rise from 85 to 91, the stored grade 'B' becomes wrong and must be updated separately. With CASE the grade is worked out fresh every time, so it never goes stale. The rule is: if a value can be worked out from another value, do not store it — work it out with CASE.\n\n**What if we ran separate queries instead of CASE?** One query for grade A, another for grade B — that works, but it runs 3 queries and the results must be joined together. CASE gives all the grades in a single query. One query is always faster and simpler than 3 queries.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: CASE ka Poora Picture',
+          '7. Summary: The Full Picture of CASE'
+        ),
+        body: t(
+          `CASE SQL ka if-else hai: conditions upar se neeche check hoti hain, pehli true condition ka value milta hai, aur koi condition true na ho to ELSE chalta hai. Grade, discount, status — har jagah jahan value condition par depend karti hai, wahan CASE kaam aata hai.\n\nYaad rakhne wali teen baatein: pehli, sabse strict condition pehle likho, warna neeche wali kabhi chalegi hi nahi. Doosri, ELSE hamesha likho, warna bina match wali rows NULL ban jaayengi. Teesri, jo value nikal sakti hai use store mat karo — CASE se fresh nikaalo.\n\nAgle article mein hum subqueries dekhenge — query ke andar query, jaise average se zyada marks walon ko dhoondhna.`,
+          `CASE is the if-else of SQL: conditions are checked from top to bottom, the first true condition gives the value, and if no condition is true, ELSE runs. Grade, discount, status — wherever a value depends on a condition, CASE is the tool.\n\nThree things to remember: first, write the strictest condition first, or the lower ones will never run. Second, always write ELSE, or unmatched rows become NULL. Third, do not store a value that can be worked out — work it out fresh with CASE.\n\nIn the next article we will look at subqueries — a query inside a query, like finding the students with more than the average marks.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'CASE ka Flow: Marks se Grade Tak',
+        'CASE Flow: From Marks to Grade'
+      ),
+      nodes: [
+        {
+          t: t('Input: marks = 88', 'Input: marks = 88'),
+          s: t('Sana ke marks table se aaye', 'Sana marks came from the table')
+        },
+        {
+          t: t('marks >= 90? Nahi', 'marks >= 90? No'),
+          s: t('88 >= 90 false hai, aage badho', '88 >= 90 is false, move on')
+        },
+        {
+          t: t('marks >= 80? Haan', 'marks >= 80? Yes'),
+          s: t('88 >= 80 true hai, yahin ruko', '88 >= 80 is true, stop here')
+        },
+        {
+          t: t('Result: grade B', 'Result: grade B'),
+          s: t('Pehli true condition ka value milta hai', 'The first true condition gives the value')
+        },
+        {
+          t: t('Koi WHEN true na ho to ELSE', 'If no WHEN is true, ELSE runs'),
+          s: t('ELSE bhoologe to result NULL hoga', 'If you forget ELSE, the result is NULL')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'CASE se Remark — Topper, Good ya Needs Work',
+          'Remark with CASE — Topper, Good, or Needs Work'
+        ),
+        language: 'sql',
+        code: `SELECT name,
+  CASE WHEN marks >= 90 THEN 'Topper'
+       WHEN marks >= 80 THEN 'Good'
+       ELSE 'Needs work' END AS remark
+FROM students
+ORDER BY id;`,
+        output: `name | remark
+Rahul | Good
+Priya | Topper
+Amit | Needs work
+Sana | Good`
+      },
+      {
+        title: t(
+          'CASE + SUM — Kitne Students ke Marks 85 ya Zyada Hain?',
+          'CASE + SUM — How Many Students Have 85 or More Marks?'
+        ),
+        language: 'sql',
+        code: `SELECT SUM(CASE WHEN marks >= 85 THEN 1 ELSE 0 END) AS high_scorers,
+       COUNT(*) AS total
+FROM students;`,
+        output: `high_scorers | total
+3 | 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'CASE mein conditions kis order mein check hoti hain?',
+          'In what order does CASE check its conditions?'
+        ),
+        opts: [
+          t('Neeche se upar', 'From bottom to top'),
+          t('Upar se neeche, pehli true par ruk jaata hai', 'From top to bottom, stopping at the first true one'),
+          t('Random order mein', 'In random order'),
+          t('Saari ek saath', 'All at once')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: CASE conditions ko upar se neeche check karta hai aur pehli true condition ka value dekar ruk jaata hai, isliye strict condition pehle likhni chahiye.',
+          'Correct answer: CASE checks conditions from top to bottom and stops at the first true one, so the strictest condition must come first.'
+        )
+      },
+      {
+        q: t(
+          '92 marks wale student ka grade kya hoga, jab CASE mein pehle marks >= 90 aur phir marks >= 80 likha ho?',
+          'What grade does a student with 92 marks get, when CASE checks marks >= 90 first and then marks >= 80?'
+        ),
+        opts: [
+          t('B', 'B'),
+          t('C', 'C'),
+          t('A', 'A'),
+          t('NULL', 'NULL')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 92 >= 90 true hai, isliye pehli condition par hi grade A mil jaata hai aur doosri condition check hi nahi hoti.',
+          'Correct answer: 92 >= 90 is true, so the grade A is given at the first condition itself and the second condition is never checked.'
+        )
+      },
+      {
+        q: t(
+          'Agar koi WHEN true na ho aur ELSE bhi na likha ho, to CASE kya deta hai?',
+          'If no WHEN is true and no ELSE is written, what does CASE give?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('Error', 'Error'),
+          t('NULL', 'NULL'),
+          t('Pehla WHEN ka value', 'The value of the first WHEN')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: bina ELSE ke, bina match wali row ka CASE result NULL hota hai — isliye ELSE hamesha likhna chahiye.',
+          'Correct answer: without ELSE, the CASE result for an unmatched row is NULL — so ELSE should always be written.'
+        )
+      },
+      {
+        q: t(
+          'SUM(CASE WHEN marks >= 85 THEN 1 ELSE 0 END) students table par kya dega?',
+          'What does SUM(CASE WHEN marks >= 85 THEN 1 ELSE 0 END) give on the students table?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('339', '339'),
+          t('3', '3'),
+          t('1', '1')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: Priya 92, Sana 88 aur Rahul 85 — teeno ke marks 85 ya zyada hain, isliye teen baar 1 judta hai aur total 3 aata hai.',
+          'Correct answer: Priya 92, Sana 88, and Rahul 85 all have 85 or more marks, so 1 is added three times and the total is 3.'
+        )
+      },
+      {
+        q: t(
+          'Grade ko table mein store karne ki jagah CASE se nikaalna behtar kyun hai?',
+          'Why is it better to work out a grade with CASE instead of storing it in the table?'
+        ),
+        opts: [
+          t('CASE fast hota hai', 'CASE is faster'),
+          t('Marks badalne par grade apne aap sahi rehta hai, update nahi karna padta', 'When marks change, the grade stays correct by itself, with no update needed'),
+          t('CASE mein error nahi aata', 'CASE never gives an error'),
+          t('Grade store karna allowed nahi hai', 'Storing a grade is not allowed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: stored grade marks badalte hi purana pad jaata hai, jabki CASE har baar fresh grade nikaalta hai, isliye wo kabhi galat nahi hota.',
+          'Correct answer: a stored grade goes stale the moment marks change, while CASE works out a fresh grade every time, so it never goes wrong.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'CASE conditions ko upar se neeche check karta hai aur pehli true condition par ruk jaata hai.',
+        'CASE checks conditions from top to bottom and stops at the first true one.'
+      ),
+      t(
+        'Sabse strict condition pehle likho — 90 wali 80 wali se pehle.',
+        'Write the strictest condition first — the 90 one before the 80 one.'
+      ),
+      t(
+        'ELSE hamesha likho, warna bina match wali rows ka result NULL hoga.',
+        'Always write ELSE, or unmatched rows will give NULL.'
+      ),
+      t(
+        'CASE rows ko filter nahi karta, sirf value badalta hai.',
+        'CASE does not filter rows, it only changes a value.'
+      ),
+      t(
+        'CASE + SUM se ek hi query mein kai groups gine jaa sakte hain.',
+        'CASE with SUM can count several groups in a single query.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Marks se Result — Distinction, First Class ya Pass',
+        'Practice: Result from Marks — Distinction, First Class, or Pass'
+      ),
+      task: t(
+        'students table par CASE likho jo har student ko result de: 90 ya zyada par Distinction, 75 ya zyada par First class, warna Pass. Result marks ke hisaab se bade se chhote order mein aana chahiye. Done tab maanenge jab output mein Priya | 92 | Distinction, Sana | 88 | First class, Rahul | 85 | First class, Amit | 74 | Pass dikhe.',
+        'Write a CASE on the students table that gives every student a result: Distinction for 90 or more, First class for 75 or more, otherwise Pass. The result must come in order of marks from high to low. You are done when the output shows Priya | 92 | Distinction, Sana | 88 | First class, Rahul | 85 | First class, Amit | 74 | Pass.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks,
+  CASE WHEN marks >= 90 THEN 'Distinction'
+       WHEN marks >= 75 THEN 'First class'
+       ELSE 'Pass' END AS result
+FROM students
+ORDER BY marks DESC;`,
+      expected: `name | marks | result
+Priya | 92 | Distinction
+Sana | 88 | First class
+Rahul | 85 | First class
+Amit | 74 | Pass`
+    },
+    readMinutes: 12
+  };
+
+const dbmsSubqueries: Article = {
+    id: 'dbms-subqueries',
+    subjectId: 'dbms',
+    title: t(
+      'Subqueries — Scalar, Correlated, EXISTS aur IN',
+      'Subqueries: Scalar, Correlated, EXISTS, and IN'
+    ),
+    summary: t(
+      'Query ke andar query likhna seekho: average se zyada marks walon ko dhoondhna, IN se list ke andar match karna, EXISTS se kisi row ke hone ko check karna, aur correlated subquery mein bahar wali row ko andar use karna — har type ka dry run students table par.',
+      'Learn to write a query inside a query: finding students above the average marks, matching inside a list with IN, checking that a row exists with EXISTS, and using the outer row inside a correlated subquery — with a dry run of every type on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Subquery Kya Hai? (Scalar, IN, EXISTS aur Correlated)',
+          '1. What Is a Subquery? (Scalar, IN, EXISTS, and Correlated)'
+        ),
+        body: t(
+          `**Subquery** matlab query ke andar ek aur query. Bahar wali query ko **outer query** kehte hain aur andar wali ko **inner query** ya subquery. Subquery pehle chalti hai, uska result outer query ko milta hai, aur phir outer query us result ko use karke final answer deti hai. Jaise: pehle average marks nikaalo (84.75), phir un students ko dhoondho jinke marks isse zyada hain.\n\nSubqueries 4 main types ki hoti hain. **Scalar subquery** ek hi value deti hai — jaise \`AVG(marks)\` ya \`MAX(marks)\`. **IN subquery** values ki list deti hai — jaise un students ki id jinke marks 88 ya zyada hain. **EXISTS subquery** sirf ye bataati hai ki koi row hai ya nahi — true ya false. **Correlated subquery** har outer row ke liye dobara chalti hai, kyunki wo outer row ki value use karti hai.\n\nSubquery ko brackets \`(...)\` mein likha jaata hai aur ye \`WHERE\`, \`SELECT\` ya \`FROM\` — kahin bhi aa sakti hai. Is article mein hum WHERE wali subqueries par focus karenge, kyunki wahi sabse zyada use hoti hain.`,
+          `A **subquery** is a query inside another query. The outer query is called the **outer query** and the inner one is the **subquery**. The subquery runs first, its result goes to the outer query, and then the outer query uses that result to give the final answer. For example: first work out the average marks (84.75), then find the students whose marks are above it.\n\nSubqueries come in 4 main types. A **scalar subquery** gives a single value — like \`AVG(marks)\` or \`MAX(marks)\`. An **IN subquery** gives a list of values — like the ids of students with 88 or more marks. An **EXISTS subquery** only tells you whether a row exists or not — true or false. A **correlated subquery** runs again for every outer row, because it uses a value from the outer row.\n\nA subquery is written inside brackets \`(...)\` and can appear in \`WHERE\`, \`SELECT\`, or \`FROM\`. In this article we focus on subqueries in WHERE, because those are used the most.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Average se Upar, Topper aur Waiting List',
+          '2. Real-Life Examples: Above Average, Topper, and Waiting List'
+        ),
+        body: t(
+          `Pehla example hai **average se upar wale students**. Teacher ko un students ki list chahiye jinke marks class average se zyada hain. Average ek number hai jo pehle nikaalna padta hai, aur phir us number se compare karna padta hai. Ye do steps ek hi query mein subquery se ho jaate hain: \`WHERE marks > (SELECT AVG(marks) FROM students)\`. Bina subquery ke aapko pehle average nikaal kar number likhna padta, aur agar marks badal jaayein to number bhi badalna padta.\n\nDoosra example hai **topper dhoondhna**. Sabse zyada marks wala student kaun hai? \`WHERE marks = (SELECT MAX(marks) FROM students)\`. MAX ek hi value deta hai — 92 — aur outer query us value se match karti hai. Agar kal kisi aur ke 95 marks aa jaayein, to query bina badle sahi topper de degi, kyunki MAX har baar fresh nikalta hai.\n\nTeesra example hai **waiting list**. Maan lo kuch students ne ek special course ke liye apply kiya hai aur unki id ek alag list mein hai. Aapko un students ke naam chahiye jo us list mein hain. \`WHERE id IN (SELECT id FROM ...)\` — IN list ke andar check karta hai. Aur EXISTS ka use tab hota hai jab sirf ye jaanna ho ki "kya is student se zyada marks wala koi aur hai?" — answer sirf haan ya naa mein chahiye, poori list nahi.`,
+          `The first example is **students above the average**. A teacher wants the list of students whose marks are above the class average. The average is a number that must first be worked out, and then compared against. These two steps happen in one query with a subquery: \`WHERE marks > (SELECT AVG(marks) FROM students)\`. Without a subquery you would first work out the average and type the number in, and if the marks changed you would have to change the number too.\n\nThe second example is **finding the topper**. Which student has the highest marks? \`WHERE marks = (SELECT MAX(marks) FROM students)\`. MAX gives a single value — 92 — and the outer query matches against that value. If tomorrow someone else scores 95, the query still gives the right topper without any change, because MAX is worked out fresh every time.\n\nThe third example is a **waiting list**. Suppose some students applied for a special course and their ids sit in a separate list. You need the names of the students who are on that list. \`WHERE id IN (SELECT id FROM ...)\` — IN checks inside the list. And EXISTS is used when you only want to know "is there anyone with more marks than this student?" — the answer is needed only as yes or no, not as a full list.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Average se Zyada Marks Walon ka Dry Run',
+          '3. Step-by-Step: Dry Run for Students Above the Average'
+        ),
+        body: t(
+          `Query hai: \`SELECT name, marks FROM students WHERE marks > (SELECT AVG(marks) FROM students) ORDER BY marks DESC\`. Ye query do hisso mein chalti hai — pehle andar wali, phir bahar wali.\n\n**Step 1 — subquery chalao:** \`SELECT AVG(marks) FROM students\` — marks hain 85, 92, 74, 88. Total = 85 + 92 + 74 + 88 = 339. Average = 339 / 4 = 84.75. Subquery ka result ek hi number hai: 84.75. Ye scalar subquery hai.\n\n**Step 2 — outer query chalao:** Ab query ban jaati hai \`WHERE marks > 84.75\`. Ek-ek row check karo:\n- **Rahul, 85:** 85 > 84.75 true hai — row aayegi.\n- **Priya, 92:** 92 > 84.75 true hai — row aayegi.\n- **Amit, 74:** 74 > 84.75 false hai — row nahi aayegi.\n- **Sana, 88:** 88 > 84.75 true hai — row aayegi.\n\n**Step 3 — sort karo:** \`ORDER BY marks DESC\` se order banta hai Priya 92, Sana 88, Rahul 85. Final result mein 3 rows hain. Dhyaan do: average 84.75 ek decimal number hai, isliye 85 marks wala Rahul bhi average se upar aa gaya — agar average 85 hota to Rahul nahi aata.`,
+          `The query is: \`SELECT name, marks FROM students WHERE marks > (SELECT AVG(marks) FROM students) ORDER BY marks DESC\`. This query runs in two parts — first the inner one, then the outer one.\n\n**Step 1 — run the subquery:** \`SELECT AVG(marks) FROM students\` — the marks are 85, 92, 74, 88. Total = 85 + 92 + 74 + 88 = 339. Average = 339 / 4 = 84.75. The subquery result is a single number: 84.75. This is a scalar subquery.\n\n**Step 2 — run the outer query:** Now the query becomes \`WHERE marks > 84.75\`. Check one row at a time:\n- **Rahul, 85:** 85 > 84.75 is true — the row comes.\n- **Priya, 92:** 92 > 84.75 is true — the row comes.\n- **Amit, 74:** 74 > 84.75 is false — the row does not come.\n- **Sana, 88:** 88 > 84.75 is true — the row comes.\n\n**Step 3 — sort:** \`ORDER BY marks DESC\` gives the order Priya 92, Sana 88, Rahul 85. The final result has 3 rows. Note this: the average 84.75 is a decimal number, so Rahul with 85 marks also lands above the average — if the average were 85, Rahul would not come.`
+        ),
+        code: {
+          title: t(
+            'Scalar Subquery — Average se Zyada Marks Wale',
+            'Scalar Subquery — Students Above the Average'
+          ),
+          language: 'sql',
+          code: `SELECT name, marks
+FROM students
+WHERE marks > (SELECT AVG(marks) FROM students)
+ORDER BY marks DESC;`,
+          output: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Ek Value ki Jagah List, aur Ulta Correlated',
+          '4. Common Mistakes: A List Where One Value Belongs, and a Backwards Correlated Query'
+        ),
+        body: t(
+          `**Galti 1: scalar jagah par list dene wali subquery.** \`WHERE marks = (SELECT marks FROM students WHERE marks >= 88)\` likhoge to error aayega, kyunki andar wali query 2 values deti hai (92 aur 88) aur \`=\` ko ek hi value chahiye. \`=\` ke saath subquery hamesha ek hi value deni chahiye. List mile to \`IN\` use karo: \`WHERE marks IN (SELECT marks FROM ...)\`.\n\n**Galti 2: IN ki jagah = use karna.** \`WHERE id = (SELECT id FROM students WHERE marks >= 88)\` bhi wahi error dega. Jab bhi subquery se kai values aane ki possibility ho, \`IN\` likho. \`=\` sirf tab jab aapko pakka pata ho ki ek hi value aayegi, jaise MAX ya AVG.\n\n**Galti 3: correlated subquery mein alias bhoolna.** Correlated subquery mein bahar wali table ko alias dena zaroori hai, jaise \`students s\` aur andar wali ko \`students t\`. Bina alias ke \`WHERE t.marks > s.marks\` likh hi nahi sakte, kyunki database ko pata nahi chalega kaun sa marks bahar wala hai aur kaun sa andar wala. Alias correlated subquery ki pehchan hai.\n\n**Galti 4: EXISTS ko IN samajh lena.** EXISTS sirf true/false deta hai, values nahi. \`SELECT * FROM students WHERE EXISTS (SELECT ...)\` mein andar wali query kya select karti hai, isse koi farak nahi padta — aksar \`SELECT 1\` likha jaata hai. Agar aapko values chahiye, to EXISTS galat tool hai, IN use karo.`,
+          `**Mistake 1: A subquery that gives a list where a single value belongs.** If you write \`WHERE marks = (SELECT marks FROM students WHERE marks >= 88)\`, you get an error, because the inner query gives 2 values (92 and 88) while \`=\` needs exactly one value. With \`=\`, the subquery must always give a single value. If a list comes back, use \`IN\`: \`WHERE marks IN (SELECT marks FROM ...)\`.\n\n**Mistake 2: Using = instead of IN.** \`WHERE id = (SELECT id FROM students WHERE marks >= 88)\` gives the same error. Whenever the subquery may return several values, write \`IN\`. Use \`=\` only when you are sure a single value will come back, like with MAX or AVG.\n\n**Mistake 3: Forgetting the alias in a correlated subquery.** In a correlated subquery you must give the outer table an alias, like \`students s\`, and the inner one another, like \`students t\`. Without aliases you cannot write \`WHERE t.marks > s.marks\`, because the database cannot tell which marks is the outer one and which is the inner one. Aliases are the mark of a correlated subquery.\n\n**Mistake 4: Treating EXISTS like IN.** EXISTS gives only true or false, not values. In \`SELECT * FROM students WHERE EXISTS (SELECT ...)\`, it does not matter what the inner query selects — people usually write \`SELECT 1\`. If you need values, EXISTS is the wrong tool; use IN.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Subquery, NULL aur Correlated ka Slow Hona',
+          '5. Edge Cases: Empty Subquery, NULL, and Why Correlated Queries Are Slow'
+        ),
+        body: t(
+          `**1. Khaali subquery.** \`WHERE marks > (SELECT AVG(marks) FROM students WHERE marks > 100)\` — andar wali query koi row nahi deti, to AVG NULL hota hai. Phir \`marks > NULL\` har row ke liye NULL hota hai, aur koi row nahi aati. Error nahi aata, bas khaali result aata hai. Khaali subquery silent fail hoti hai — isliye pehle subquery ko alag se chala kar check karo.\n\n**2. IN ke andar NULL.** \`WHERE id IN (SELECT id FROM ...)\` mein agar list mein NULL ho, to result ajeeb ho sakta hai. \`IN\` mein NULL ka matlab hai "pata nahi", aur "pata nahi" kabhi true nahi hota. Isliye NULL values wali subquery ke saath IN use karte time WHERE mein NULL ko filter kar dena behtar hai.\n\n**3. Correlated subquery slow hoti hai.** Normal subquery ek baar chalti hai, par correlated subquery har outer row ke liye dobara chalti hai. Students table mein 4 rows hain, to andar wali query 4 baar chalegi. 10 lakh rows hain to 10 lakh baar chalegi — bahut slow. Badi table par correlated subquery ki jagah JOIN use karna behtar hota hai.\n\n**4. EXISTS hamesha fast hota hai.** EXISTS ko sirf pehli matching row milte hi ruk jaana hota hai — use poori table scan nahi karni padti. Isliye "kya koi hai?" wale sawaal ke liye EXISTS, IN se fast hota hai.`,
+          `**1. Empty subquery.** \`WHERE marks > (SELECT AVG(marks) FROM students WHERE marks > 100)\` — the inner query gives no rows, so AVG is NULL. Then \`marks > NULL\` is NULL for every row, and no row comes back. No error appears, only an empty result. An empty subquery fails silently — so first run the subquery alone and check it.\n\n**2. NULL inside IN.** In \`WHERE id IN (SELECT id FROM ...)\`, if the list holds a NULL, the result can be strange. NULL in \`IN\` means "not known", and "not known" is never true. So when using IN with a subquery that may hold NULL values, it is better to filter NULL out in WHERE.\n\n**3. Correlated subqueries are slow.** A normal subquery runs once, but a correlated subquery runs again for every outer row. The students table has 4 rows, so the inner query runs 4 times. With 1,000,000 rows it runs 1,000,000 times — very slow. On a big table it is better to use a JOIN instead of a correlated subquery.\n\n**4. EXISTS is always fast.** EXISTS only needs to stop the moment it finds the first matching row — it does not have to scan the whole table. So for a "does anyone exist?" question, EXISTS is faster than IN.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Subquery ki Jagah JOIN, aur IN ki Jagah EXISTS',
+          '6. What If: JOIN Instead of a Subquery, and EXISTS Instead of IN'
+        ),
+        body: t(
+          `**What if: subquery ki jagah JOIN use karein?** Kai subqueries ko JOIN se bhi likha jaa sakta hai. Average wali subquery ko JOIN se likhna mushkil hai, par IN wali subquery ko JOIN se likhna aasan hai. JOIN aam taur par fast hota hai, kyunki database dono tables ko ek saath process karta hai. Lekin subquery padhne mein aasan hoti hai — "marks average se zyada hain" seedha samajh aata hai. Chhoti table par subquery likho, badi table par JOIN socho.\n\n**What if: IN ki jagah EXISTS use karein?** \`WHERE EXISTS (SELECT 1 FROM students t WHERE t.marks > s.marks)\` ka matlab hai: kya is student se zyada marks wala koi aur student hai? Priya ke liye answer naa hai — usse zyada koi nahi hai — isliye Priya result mein nahi aati. Rahul, Amit aur Sana ke liye answer haan hai, isliye wo aate hain. EXISTS ka result hamesha haan ya naa hota hai, list nahi.\n\n**What if: subquery ko SELECT mein likhein?** \`SELECT name, (SELECT MAX(marks) FROM students) AS top_marks FROM students\` — har row ke saath top marks bhi dikhenge. Ye scalar subquery SELECT mein bhi chalti hai. Lekin har row ke liye wahi ek value repeat hogi, isliye ise sirf tab use karo jab har row ke saath ek summary value dikhaani ho.`,
+          `**What if we use a JOIN instead of a subquery?** Many subqueries can also be written as a JOIN. The average subquery is hard to write as a JOIN, but the IN subquery is easy to write as one. A JOIN is usually faster, because the database processes both tables together. But a subquery is easier to read — "marks are above the average" is clear at once. On a small table write a subquery; on a big table think about a JOIN.\n\n**What if we use EXISTS instead of IN?** \`WHERE EXISTS (SELECT 1 FROM students t WHERE t.marks > s.marks)\` means: is there any other student with more marks than this student? For Priya the answer is no — nobody has more than her — so Priya does not appear in the result. For Rahul, Amit, and Sana the answer is yes, so they appear. The result of EXISTS is always yes or no, never a list.\n\n**What if we put the subquery in SELECT?** \`SELECT name, (SELECT MAX(marks) FROM students) AS top_marks FROM students\` — every row also shows the top marks. This scalar subquery also works in SELECT. But the same value repeats on every row, so use it only when you want to show one summary value next to every row.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Subqueries ka Poora Picture',
+          '7. Summary: The Full Picture of Subqueries'
+        ),
+        body: t(
+          `Subquery pehle chalti hai aur uska result outer query use karti hai. Scalar subquery ek value deti hai (AVG, MAX), IN list deti hai, EXISTS haan/naa deta hai, aur correlated subquery har outer row ke liye dobara chalti hai kyunki wo outer row ki value use karti hai.\n\nYaad rakhne wali teen baatein: pehli, \`=\` ke saath subquery ek hi value deni chahiye, list mile to IN use karo. Doosri, correlated subquery mein alias zaroori hai — bina alias ke bahar aur andar ka farak nahi pata chalega. Teesri, subquery ko pehle alag se chala kar check karo, kyunki khaali subquery bina error ke khaali result deti hai.\n\nAgle article mein hum advanced joins dekhenge — self join, cross join aur outer joins ko gehraai se.`,
+          `A subquery runs first and the outer query uses its result. A scalar subquery gives one value (AVG, MAX), IN gives a list, EXISTS gives yes or no, and a correlated subquery runs again for every outer row because it uses the outer row value.\n\nThree things to remember: first, with \`=\` the subquery must give a single value; if a list comes back, use IN. Second, in a correlated subquery an alias is essential — without one, the outer and inner values cannot be told apart. Third, run the subquery alone first to check it, because an empty subquery gives an empty result with no error.\n\nIn the next article we will look at advanced joins — self join, cross join, and outer joins in depth.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Subquery ka Flow: Pehle Andar, Phir Bahar',
+        'Subquery Flow: Inner First, Then Outer'
+      ),
+      nodes: [
+        {
+          t: t('Step 1: Subquery chalao', 'Step 1: Run the subquery'),
+          s: t('AVG(marks) = 84.75, ek hi number', 'AVG(marks) = 84.75, a single number')
+        },
+        {
+          t: t('Step 2: Outer query mein daalo', 'Step 2: Put it in the outer query'),
+          s: t('WHERE marks > 84.75 ban jaata hai', 'It becomes WHERE marks > 84.75')
+        },
+        {
+          t: t('Step 3: Har row check karo', 'Step 3: Check every row'),
+          s: t('Rahul haan, Priya haan, Amit naa, Sana haan', 'Rahul yes, Priya yes, Amit no, Sana yes')
+        },
+        {
+          t: t('Step 4: Sort aur result', 'Step 4: Sort and result'),
+          s: t('Priya 92, Sana 88, Rahul 85', 'Priya 92, Sana 88, Rahul 85')
+        },
+        {
+          t: t('IN list deta hai, EXISTS haan/naa', 'IN gives a list, EXISTS gives yes or no'),
+          s: t('Correlated har row ke liye dobara chalta hai', 'A correlated query runs again for every row')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'IN Subquery — 88 ya Zyada Marks Walon ki List',
+          'IN Subquery — List of Students with 88 or More Marks'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks
+FROM students
+WHERE id IN (SELECT id FROM students WHERE marks >= 88)
+ORDER BY marks DESC;`,
+        output: `name | marks
+Priya | 92
+Sana | 88`
+      },
+      {
+        title: t(
+          'EXISTS (Correlated) — Jinse Zyada Marks Wala Koi Aur Hai',
+          'EXISTS (Correlated) — Students Someone Scored Higher Than'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks
+FROM students s
+WHERE EXISTS (SELECT 1 FROM students t WHERE t.marks > s.marks)
+ORDER BY id;`,
+        output: `name | marks
+Rahul | 85
+Amit | 74
+Sana | 88`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Subquery kab chalti hai — outer query se pehle ya baad mein?',
+          'When does a subquery run — before or after the outer query?'
+        ),
+        opts: [
+          t('Baad mein', 'After'),
+          t('Pehle, uska result outer query use karti hai', 'First, and the outer query uses its result'),
+          t('Dono ek saath', 'Both at the same time'),
+          t('Subquery kabhi nahi chalti', 'The subquery never runs')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: subquery pehle chalti hai, uska result outer query ko milta hai, aur phir outer query final answer deti hai.',
+          'Correct answer: the subquery runs first, its result goes to the outer query, and then the outer query gives the final answer.'
+        )
+      },
+      {
+        q: t(
+          'Average marks kitne hain, aur average se zyada marks wale kaun hain?',
+          'What are the average marks, and who has more than the average?'
+        ),
+        opts: [
+          t('84.75 — Priya, Sana, Rahul', '84.75 — Priya, Sana, Rahul'),
+          t('85 — sirf Priya aur Sana', '85 — only Priya and Sana'),
+          t('84.75 — sirf Priya', '84.75 — only Priya'),
+          t('80 — chaaro students', '80 — all four students')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: average (85+92+74+88)/4 = 84.75 hai, aur 85, 92, 88 teeno isse zyada hain, isliye Priya, Sana aur Rahul aate hain.',
+          'Correct answer: the average (85+92+74+88)/4 = 84.75, and 85, 92, and 88 are all above it, so Priya, Sana, and Rahul come back.'
+        )
+      },
+      {
+        q: t(
+          'WHERE marks = (SELECT marks FROM students WHERE marks >= 88) par kya hoga?',
+          'What happens with WHERE marks = (SELECT marks FROM students WHERE marks >= 88)?'
+        ),
+        opts: [
+          t('Priya aur Sana dono aayenge', 'Both Priya and Sana come back'),
+          t('Error, kyunki subquery 2 values deti hai aur = ko ek chahiye', 'Error, because the subquery gives 2 values and = needs one'),
+          t('Sirf Priya aayegi', 'Only Priya comes back'),
+          t('Khaali result aayega', 'An empty result comes back')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: andar wali query 92 aur 88 — do values deti hai, par = sirf ek value se compare kar sakta hai, isliye error aata hai; list ke liye IN use karo.',
+          'Correct answer: the inner query gives two values, 92 and 88, but = can only compare with one value, so it errors; use IN for a list.'
+        )
+      },
+      {
+        q: t(
+          'EXISTS wale example mein Priya result mein kyun nahi aati?',
+          'Why does Priya not appear in the result of the EXISTS example?'
+        ),
+        opts: [
+          t('Priya ke marks sabse kam hain', 'Priya has the lowest marks'),
+          t('Priya se zyada marks wala koi student hi nahi hai', 'No student has more marks than Priya'),
+          t('EXISTS Priya ko skip kar deta hai', 'EXISTS skips Priya'),
+          t('Priya ki id list mein nahi hai', 'Priya id is not in the list')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: EXISTS check karta hai ki kya is student se zyada marks wala koi aur hai — Priya 92 ke saath top par hai, isliye uske liye answer naa hai.',
+          'Correct answer: EXISTS checks whether any other student has more marks than this student — Priya is on top with 92, so the answer for her is no.'
+        )
+      },
+      {
+        q: t(
+          'Correlated subquery normal subquery se alag kaise hoti hai?',
+          'How is a correlated subquery different from a normal subquery?'
+        ),
+        opts: [
+          t('Wo ek baar chalti hai', 'It runs once'),
+          t('Wo har outer row ke liye dobara chalti hai, kyunki wo outer row ki value use karti hai', 'It runs again for every outer row, because it uses the outer row value'),
+          t('Wo SELECT mein nahi likhi jaa sakti', 'It cannot be written in SELECT'),
+          t('Wo hamesha fast hoti hai', 'It is always fast')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: correlated subquery outer row ki value par depend karti hai, isliye har row ke liye dobara chalti hai — aur badi table par ye slow ho jaati hai.',
+          'Correct answer: a correlated subquery depends on the outer row value, so it runs again for every row — and on a big table that becomes slow.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Subquery pehle chalti hai, uska result outer query use karti hai.',
+        'A subquery runs first, and the outer query uses its result.'
+      ),
+      t(
+        'Scalar subquery ek value deti hai, IN list deti hai, EXISTS haan/naa deta hai.',
+        'A scalar subquery gives one value, IN gives a list, EXISTS gives yes or no.'
+      ),
+      t(
+        '= ke saath subquery ek hi value deni chahiye, list mile to IN use karo.',
+        'With =, the subquery must give a single value; if a list comes back, use IN.'
+      ),
+      t(
+        'Correlated subquery mein alias zaroori hai aur wo har row ke liye dobara chalti hai.',
+        'A correlated subquery needs an alias and runs again for every row.'
+      ),
+      t(
+        'Subquery ko pehle alag se chala kar check karo — khaali subquery bina error ke khaali result deti hai.',
+        'Run the subquery alone first to check it — an empty subquery gives an empty result with no error.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Topper Dhoondho — MAX Subquery se',
+        'Practice: Find the Topper — with a MAX Subquery'
+      ),
+      task: t(
+        'Ek subquery likho jo sabse zyada marks wale student ka naam aur marks de. MAX(marks) wali scalar subquery use karo. Done tab maanenge jab output mein sirf ek row dikhe: Priya | 92.',
+        'Write a subquery that gives the name and marks of the student with the highest marks. Use a scalar subquery with MAX(marks). You are done when the output shows only one row: Priya | 92.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks
+FROM students
+WHERE marks = (SELECT MAX(marks) FROM students);`,
+      expected: `name | marks
+Priya | 92`
+    },
+    readMinutes: 12
+  };
+
+const dbmsJoinsAdvanced: Article = {
+    id: 'dbms-joins-advanced',
+    subjectId: 'dbms',
+    title: t(
+      'Advanced Joins — Self Join, Cross Join, Natural Join aur Outer Joins',
+      'Advanced Joins: Self Join, Cross Join, Natural Join, and Outer Joins in Depth'
+    ),
+    summary: t(
+      'Basic INNER aur LEFT JOIN ke aage badho: ek hi table ko khud se jodna (self join), har row ko har row se jodna (cross join), same naam wale columns par auto-join (natural join), aur LEFT, RIGHT aur FULL OUTER joins ka gehra farak — sab students table par live dry run ke saath.',
+      'Go beyond basic INNER and LEFT JOIN: joining a table to itself (self join), joining every row with every row (cross join), auto-joining on same-named columns (natural join), and the deep difference between LEFT, RIGHT, and FULL OUTER joins — all with a live dry run on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Advanced Joins Kya Hain? (Self, Cross, Natural, Outer)',
+          '1. What Are Advanced Joins? (Self, Cross, Natural, Outer)'
+        ),
+        body: t(
+          `Basic joins do alag tables ko jodte hain. Advanced joins usse aage jaate hain. **Self join** mein ek hi table ko khud se joda jaata hai — jaise students table ko students table se, taaki pata chale kaun kisse zyada marks laaya. Iske liye table ko do alag naam (alias) dene padte hain: \`students a\` aur \`students b\`, warna database confuse ho jaayega ki kaun si taraf ka naam chahiye.\n\n**Cross join** har row ko har row se jod deta hai. 4 students ka cross join 4 x 4 = 16 rows dega. Ye wahi cartesian product hai jo bina ON wale join se banta hai — is baar jaan-boojh kar banaya jaata hai, jaise saare possible pairs banana ho.\n\n**Natural join** do tables ko un columns par khud-ba-khud jod deta hai jinke naam dono tables mein ek jaise hain — ON likhne ki zaroorat nahi padti. **Outer joins** (LEFT, RIGHT, FULL) match na hone par bhi rows ko bacha lete hain: LEFT left table ki saari rows deta hai, RIGHT right table ki, aur FULL dono ki.`,
+          `Basic joins connect two different tables. Advanced joins go further. In a **self join**, a table is joined to itself — like joining the students table to the students table, to find out who scored more than whom. For this the table must be given two different names (aliases): \`students a\` and \`students b\`, or the database gets confused about which side a name comes from.\n\nA **cross join** joins every row with every row. A cross join of 4 students gives 4 x 4 = 16 rows. This is the same cartesian product that a join without ON creates — this time made on purpose, for example to build all possible pairs.\n\nA **natural join** joins two tables by itself on the columns that have the same name in both tables — no ON is needed. **Outer joins** (LEFT, RIGHT, FULL) keep rows even when there is no match: LEFT gives all rows of the left table, RIGHT gives all rows of the right table, and FULL gives all rows of both.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Senior-Junior, Saare Pairs aur Bina Course Wale',
+          '2. Real-Life Examples: Senior-Junior, All Pairs, and Students Without a Course'
+        ),
+        body: t(
+          `Pehla example hai **senior-junior**. School mein har student ke liye ye jaanna ho ki usse zyada marks wale kaun hain — to students table ko khud se jodna padega. Ek taraf "chhota" student, doosri taraf "bada" student. Self join se ye ek hi query mein nikal aata hai, bina koi nayi table banaaye.\n\nDoosra example hai **saare possible pairs**. Debate competition mein har student ka har doosre student se match karwana ho, to cross join saare pairs bana dega. 4 students ke 6 alag pairs bante hain (khud se match nahi, aur ek pair do baar nahi). Cross join se pehle 16 rows banti hain, phir \`WHERE a.id < b.id\` se sirf 6 kaam ki bachaayi jaati hain.\n\nTeesra example hai **bina course wale students**. Courses table mein 3 courses hain — Maths (Rahul), Physics (Priya), Art (kisi ka nahi). LEFT JOIN se Art bhi dikhega, uske student ki jagah 'nobody' likha hoga. INNER JOIN se Art gayab ho jaata. Outer join ka kaam hi ye hai: bina match wali rows ko bhi dikhaana.`,
+          `The first example is **senior-junior**. In a school, to know for every student who scored more than them, the students table must be joined to itself. On one side the "smaller" student, on the other the "bigger" student. A self join gets this in a single query, without building any new table.\n\nThe second example is **all possible pairs**. In a debate competition, if every student must face every other student, a cross join builds all the pairs. 4 students make 6 different pairs (no match with yourself, and no pair twice). The cross join first makes 16 rows, then \`WHERE a.id < b.id\` keeps only the 6 useful ones.\n\nThe third example is **students without a course**. The courses table has 3 courses — Maths (Rahul), Physics (Priya), Art (nobody). With a LEFT JOIN, Art still appears, with 'nobody' written in the student place. With an INNER JOIN, Art vanishes. That is exactly the job of an outer join: to show rows that have no match too.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Self Join ka Dry Run — Kaun Kiska Senior Hai',
+          '3. Step-by-Step: Self Join Dry Run — Who Is Senior to Whom'
+        ),
+        body: t(
+          `Query hai: \`SELECT a.name AS student, b.name AS senior FROM students a JOIN students b ON b.marks > a.marks ORDER BY a.name, b.name\`. Yahan \`a\` chhota student hai aur \`b\` bada student hai. Condition hai \`b.marks > a.marks\` — matlab b ke marks a se zyada hone chahiye.\n\nDry run, ek-ek student:\n- **Amit, 74:** Usse zyada marks wale hain Priya 92, Rahul 85, Sana 88 — teeno senior hain. Rows: Amit | Priya, Amit | Rahul, Amit | Sana.\n- **Rahul, 85:** Usse zyada hain Priya 92 aur Sana 88. Rows: Rahul | Priya, Rahul | Sana.\n- **Sana, 88:** Usse zyada sirf Priya 92 hai. Row: Sana | Priya.\n- **Priya, 92:** Usse zyada koi nahi hai — Priya ke liye koi row nahi banegi.\n\nTotal 6 rows banti hain. \`ORDER BY a.name, b.name\` se pehle student ke naam se sort hota hai, phir senior ke naam se. Dhyaan do: self join mein alias zaroori hai — bina \`a\` aur \`b\` ke database ko pata hi nahi chalega ki \`name\` kis taraf ka chahiye, aur query error de degi.`,
+          `The query is: \`SELECT a.name AS student, b.name AS senior FROM students a JOIN students b ON b.marks > a.marks ORDER BY a.name, b.name\`. Here \`a\` is the smaller student and \`b\` is the bigger student. The condition is \`b.marks > a.marks\` — meaning b must have more marks than a.\n\nDry run, one student at a time:\n- **Amit, 74:** Those with more marks than him are Priya 92, Rahul 85, Sana 88 — all three are seniors. Rows: Amit | Priya, Amit | Rahul, Amit | Sana.\n- **Rahul, 85:** Those with more than him are Priya 92 and Sana 88. Rows: Rahul | Priya, Rahul | Sana.\n- **Sana, 88:** Only Priya 92 has more than her. Row: Sana | Priya.\n- **Priya, 92:** Nobody has more than her — no row is made for Priya.\n\n6 rows are made in total. \`ORDER BY a.name, b.name\` sorts first by the student name, then by the senior name. Note this: in a self join the alias is essential — without \`a\` and \`b\` the database cannot tell which side a \`name\` comes from, and the query gives an error.`
+        ),
+        code: {
+          title: t(
+            'Self Join — Har Student ke Senior Kaun Hain?',
+            'Self Join — Who Is Senior to Each Student?'
+          ),
+          language: 'sql',
+          code: `SELECT a.name AS student, b.name AS senior
+FROM students a
+JOIN students b ON b.marks > a.marks
+ORDER BY a.name, b.name;`,
+          output: `student | senior
+Amit | Priya
+Amit | Rahul
+Amit | Sana
+Rahul | Priya
+Rahul | Sana
+Sana | Priya`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Alias Bhoolna, Cross Join ka Blast aur LEFT-RIGHT Confusion',
+          '4. Common Mistakes: Forgetting the Alias, Cross Join Blast, and LEFT-RIGHT Confusion'
+        ),
+        body: t(
+          `**Galti 1: self join mein alias bhoolna.** \`SELECT name FROM students JOIN students ON ...\` likhoge to database error dega: kaun sa name? Dono tables ka naam ek hi hai. Self join mein hamesha alias likho — \`students a\` aur \`students b\` — aur har column ke saath alias lagao: \`a.name\`, \`b.marks\`.\n\n**Galti 2: cross join ko bina filter ke chalaana.** 4 students ka cross join 16 rows deta hai, par 10,000 students ka cross join 10 crore rows de dega — database atak jaayega. Cross join hamesha WHERE ke saath use karo, jaise \`WHERE a.id < b.id\`, taaki bekaar pairs pehle hi hat jaayein.\n\n**Galti 3: LEFT aur RIGHT ko ulta samajhna.** \`students LEFT JOIN courses\` students ki saari rows deta hai. \`courses LEFT JOIN students\` courses ki saari rows deta hai. Kaun si table left mein likhi hai, yehi decide karta hai kiski saari rows aayengi. SQLite mein RIGHT JOIN hota hi nahi — uski jagah tables ko swap karke LEFT JOIN likha jaata hai.\n\n**Galti 4: natural join par blind trust.** Natural join un columns par join karta hai jinke naam dono tables mein ek jaise hain. Agar dono tables mein \`id\` ke alawa \`name\` bhi common ho gaya, to natural join dono par join karne lagega aur galat result dega. Isliye natural join sirf tab use karo jab aapko pakka pata ho ki kaun se columns common hain — warna ON ke saath normal join likho.`,
+          `**Mistake 1: Forgetting the alias in a self join.** If you write \`SELECT name FROM students JOIN students ON ...\`, the database gives an error: which name? Both tables have the same name. In a self join always write aliases — \`students a\` and \`students b\` — and put the alias on every column: \`a.name\`, \`b.marks\`.\n\n**Mistake 2: Running a cross join without a filter.** A cross join of 4 students gives 16 rows, but a cross join of 10,000 students gives 100 million rows — the database will freeze. Always use a cross join with a WHERE, like \`WHERE a.id < b.id\`, so that the useless pairs are removed at once.\n\n**Mistake 3: Mixing up LEFT and RIGHT.** \`students LEFT JOIN courses\` gives all rows of students. \`courses LEFT JOIN students\` gives all rows of courses. Which table is written on the left decides whose rows all come back. SQLite does not have RIGHT JOIN at all — instead you swap the tables and write a LEFT JOIN.\n\n**Mistake 4: Blind trust in a natural join.** A natural join joins on the columns that have the same name in both tables. If, apart from \`id\`, a \`name\` column also becomes common in both tables, the natural join starts joining on both and gives a wrong result. So use a natural join only when you are sure which columns are common — otherwise write a normal join with ON.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khud se Match, Barabar Marks aur FULL OUTER ki Kami',
+          '5. Edge Cases: Matching Yourself, Equal Marks, and the Missing FULL OUTER'
+        ),
+        body: t(
+          `**1. Khud se match.** Self join mein condition \`b.marks > a.marks\` hai, isliye koi student khud se match nahi karta — 85 > 85 false hai. Lekin agar condition \`b.marks >= a.marks\` likh di to har student khud se bhi match karne lagega aur 4 extra rows aa jaayengi. \`>\` aur \`>=\` ka ek sign poora result badal deta hai.\n\n**2. Barabar marks.** Maan lo Rahul aur Sana dono ke 88 marks hote. Tab \`b.marks > a.marks\` dono ke liye false hota — na Rahul Sana ka senior, na Sana Rahul ki. Barabar marks wale ek doosre ke senior nahi bante. Agar barabar walon ko bhi pair mein chahiye, to condition mein \`>=\` aur \`a.id <> b.id\` dono likhne padenge.\n\n**3. SQLite mein FULL OUTER JOIN nahi hai.** FULL OUTER JOIN dono tables ki saari rows deta hai, par SQLite ise support nahi karta. Uski jagah LEFT JOIN aur RIGHT JOIN wale results ko UNION se joda jaata hai. Interview mein ye poochha jaata hai, isliye yaad rakho: SQLite mein FULL OUTER ka kaam UNION se hota hai.\n\n**4. Cross join mein a.id < b.id kyun?** Bina is condition ke 16 rows aati hain — har student khud se bhi judta hai aur har pair do baar aata hai (Rahul-Priya aur Priya-Rahul). \`a.id < b.id\` se khud wala match hat jaata hai aur har pair sirf ek baar aata hai — total 6 rows.`,
+          `**1. Matching yourself.** In the self join the condition is \`b.marks > a.marks\`, so no student matches themselves — 85 > 85 is false. But if the condition were \`b.marks >= a.marks\`, every student would match themselves too and 4 extra rows would appear. One sign, \`>\` versus \`>=\`, changes the whole result.\n\n**2. Equal marks.** Suppose Rahul and Sana both had 88 marks. Then \`b.marks > a.marks\` would be false for both — neither Rahul is senior to Sana nor Sana to Rahul. Students with equal marks do not become seniors of each other. If equal ones must also pair up, the condition needs both \`>=\` and \`a.id <> b.id\`.\n\n**3. SQLite has no FULL OUTER JOIN.** A FULL OUTER JOIN gives all rows of both tables, but SQLite does not support it. Instead, the results of a LEFT JOIN and a RIGHT JOIN are joined with UNION. This is asked in interviews, so remember: in SQLite the job of FULL OUTER is done with UNION.\n\n**4. Why a.id < b.id in a cross join?** Without this condition 16 rows come — every student joins with themselves too, and every pair appears twice (Rahul-Priya and Priya-Rahul). \`a.id < b.id\` removes the self match and makes each pair appear only once — 6 rows in total.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Self Join ki Jagah Subquery, aur ON ki Jagah WHERE',
+          '6. What If: Subquery Instead of Self Join, and WHERE Instead of ON'
+        ),
+        body: t(
+          `**What if: self join ki jagah subquery use karein?** "Rahul se zyada marks wale kaun hain?" — ye subquery se bhi nikal sakta hai: \`WHERE marks > (SELECT marks FROM students WHERE name = 'Rahul')\`. Par har student ke liye ye alag query chalani padegi. Self join ek hi query mein saare students ke senior de deta hai. Ek student ke liye subquery, saare students ke liye self join — yehi farak hai.\n\n**What if: ON ki jagah WHERE mein condition likh dein?** INNER JOIN mein ON aur WHERE ka result ek jaisa hota hai. Lekin LEFT JOIN mein farak padta hai: \`LEFT JOIN ... ON s.id = c.student_id AND c.title = 'Maths'\` mein bina Maths wale courses bhi dikhenge (NULL ke saath), jabki \`WHERE c.title = 'Maths'\` likhne se wo rows gayab ho jaayengi, kyunki WHERE join ke baad filter karta hai. LEFT JOIN mein condition hamesha ON mein likho.\n\n**What if: cross join se pairs ki jagah teams banaayein?** Cross join se 3 students ki teams bhi ban sakti hain — students table ko 3 baar join karo. Par rows bahut tezi se badhti hain: 4 students ki 3-teams 64 combinations deti hain. Cross join ko hamesha filter ke saath aur chhoti table par use karo.`,
+          `**What if we use a subquery instead of a self join?** "Who has more marks than Rahul?" — this can also come from a subquery: \`WHERE marks > (SELECT marks FROM students WHERE name = 'Rahul')\`. But a separate query would be needed for every student. A self join gives the seniors of all students in a single query. A subquery for one student, a self join for all students — that is the difference.\n\n**What if we write the condition in WHERE instead of ON?** In an INNER JOIN, ON and WHERE give the same result. But in a LEFT JOIN it matters: with \`LEFT JOIN ... ON s.id = c.student_id AND c.title = 'Maths'\`, courses without Maths still appear (with NULL), while writing \`WHERE c.title = 'Maths'\` makes those rows vanish, because WHERE filters after the join. In a LEFT JOIN, always write the condition in ON.\n\n**What if we build teams of 3 from a cross join instead of pairs?** A cross join can also build teams of 3 students — join the students table 3 times. But the rows grow very fast: teams of 3 from 4 students give 64 combinations. Always use a cross join with a filter and on a small table.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Advanced Joins ka Poora Picture',
+          '7. Summary: The Full Picture of Advanced Joins'
+        ),
+        body: t(
+          `Self join ek hi table ko khud se jodta hai aur alias ke bina nahi chalta. Cross join har row ko har row se jodta hai — hamesha filter ke saath use karo. Natural join same naam wale columns par khud join karta hai, par us par blind trust mat karo. Outer joins bina match wali rows ko bhi bacha lete hain: LEFT left table ki, RIGHT right table ki, FULL dono ki — aur SQLite mein FULL OUTER ki jagah UNION use hota hai.\n\nYaad rakhne wali teen baatein: pehli, self join mein har column ke saath alias lagao. Doosri, LEFT JOIN mein condition ON mein likho, WHERE mein nahi. Teesri, cross join chhoti table par aur filter ke saath, warna rows ka blast ho jaayega.\n\nAgle article mein hum set operations dekhenge — UNION, INTERSECT aur EXCEPT se do queries ke results ko jodna, kaatna aur compare karna.`,
+          `A self join joins a table to itself and does not work without an alias. A cross join joins every row with every row — always use it with a filter. A natural join joins by itself on same-named columns, but do not trust it blindly. Outer joins also save rows without a match: LEFT saves the left table, RIGHT saves the right table, FULL saves both — and in SQLite, UNION does the job of FULL OUTER.\n\nThree things to remember: first, in a self join put an alias on every column. Second, in a LEFT JOIN write the condition in ON, not in WHERE. Third, use a cross join on a small table and with a filter, or the rows will explode.\n\nIn the next article we will look at set operations — joining, cutting, and comparing the results of two queries with UNION, INTERSECT, and EXCEPT.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Self Join: Ek Table, Do Role — Student aur Senior',
+        'Self Join: One Table, Two Roles — Student and Senior'
+      ),
+      nodes: [
+        {
+          t: t('students a — chhota student', 'students a — the smaller student'),
+          s: t('a.name student hai, a.marks uske marks', 'a.name is the student, a.marks are their marks')
+        },
+        {
+          t: t('students b — bada student', 'students b — the bigger student'),
+          s: t('b.name senior hai, b.marks uske marks', 'b.name is the senior, b.marks are their marks')
+        },
+        {
+          t: t('Condition: b.marks > a.marks', 'Condition: b.marks > a.marks'),
+          s: t('Sirf wahi pair jismein b ke marks zyada hon', 'Only pairs where b has more marks')
+        },
+        {
+          t: t('Result: 6 rows', 'Result: 6 rows'),
+          s: t('Priya ke liye koi row nahi — usse zyada koi nahi', 'No row for Priya — nobody has more than her')
+        },
+        {
+          t: t('Alias bina self join nahi chalta', 'A self join does not work without an alias'),
+          s: t('Bina a aur b ke name ka matlab pata nahi chalega', 'Without a and b, the meaning of name is unclear')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Cross Join — Saare Possible Pairs (Sirf 6 Kaam ke)',
+          'Cross Join — All Possible Pairs (Only 6 Useful)'
+        ),
+        language: 'sql',
+        code: `SELECT a.name AS first_student, b.name AS second_student
+FROM students a
+CROSS JOIN students b
+WHERE a.id < b.id
+ORDER BY a.id, b.id;`,
+        output: `first_student | second_student
+Rahul | Priya
+Rahul | Amit
+Rahul | Sana
+Priya | Amit
+Priya | Sana
+Amit | Sana`
+      },
+      {
+        title: t(
+          'LEFT JOIN — Bina Student Wala Course bhi Dikhe',
+          'LEFT JOIN — A Course Without a Student Still Shows'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (
+  course_id INTEGER PRIMARY KEY,
+  title TEXT,
+  student_id INTEGER
+);
+INSERT INTO courses VALUES (1, 'Maths', 1);
+INSERT INTO courses VALUES (2, 'Physics', 2);
+INSERT INTO courses VALUES (3, 'Art', NULL);
+SELECT c.title, COALESCE(s.name, 'nobody') AS student
+FROM courses c
+LEFT JOIN students s ON s.id = c.student_id
+ORDER BY c.course_id;`,
+        output: `title | student
+Maths | Rahul
+Physics | Priya
+Art | nobody`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Self join mein alias kyun zaroori hai?',
+          'Why is an alias essential in a self join?'
+        ),
+        opts: [
+          t('Alias se query fast hoti hai', 'An alias makes the query fast'),
+          t('Dono taraf table ka naam ek hi hai, bina alias ke pata nahi chalega kaun sa column kis taraf ka hai', 'Both sides have the same table name, so without an alias it is unclear which side a column comes from'),
+          t('Alias bina join error nahi deta', 'Without an alias the join gives no error'),
+          t('Alias sirf style ke liye hota hai', 'An alias is only for style')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: self join mein ek hi table do baar aati hai, isliye a.name aur b.name jaise alias ke bina database ko pata nahi chalega ki name kis taraf ka chahiye.',
+          'Correct answer: in a self join the same table appears twice, so without aliases like a.name and b.name the database cannot tell which side a name comes from.'
+        )
+      },
+      {
+        q: t(
+          'Self join wale example mein Priya ke liye koi row kyun nahi banti?',
+          'Why is no row made for Priya in the self join example?'
+        ),
+        opts: [
+          t('Priya table mein nahi hai', 'Priya is not in the table'),
+          t('Priya se zyada marks wala koi student hi nahi hai', 'No student has more marks than Priya'),
+          t('Priya ka naam lamba hai', 'Priya name is long'),
+          t('ORDER BY ne Priya ko hata diya', 'ORDER BY removed Priya')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: condition b.marks > a.marks hai aur Priya 92 ke saath top par hai, isliye usse zyada marks wala koi b nahi milta.',
+          'Correct answer: the condition is b.marks > a.marks and Priya is on top with 92, so no b with more marks is found for her.'
+        )
+      },
+      {
+        q: t(
+          '4 students ka cross join bina filter ke kitni rows dega?',
+          'How many rows does a cross join of 4 students give without a filter?'
+        ),
+        opts: [
+          t('4', '4'),
+          t('6', '6'),
+          t('12', '12'),
+          t('16', '16')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: cross join har row ko har row se jodta hai, isliye 4 x 4 = 16 rows banti hain; a.id < b.id lagane par sirf 6 kaam ki pairs bachte hain.',
+          'Correct answer: a cross join joins every row with every row, so 4 x 4 = 16 rows are made; with a.id < b.id only the 6 useful pairs remain.'
+        )
+      },
+      {
+        q: t(
+          'LEFT JOIN mein condition ON ki jagah WHERE mein likhne se kya hota hai?',
+          'What happens if the condition in a LEFT JOIN is written in WHERE instead of ON?'
+        ),
+        opts: [
+          t('Kuch nahi badalta', 'Nothing changes'),
+          t('Bina match wali rows gayab ho jaati hain, kyunki WHERE join ke baad filter karta hai', 'The unmatched rows vanish, because WHERE filters after the join'),
+          t('Query error de deti hai', 'The query gives an error'),
+          t('Result ulta ho jaata hai', 'The result flips')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: WHERE join ke baad chalta hai aur NULL wali rows ko hata deta hai, isliye LEFT JOIN ka fayda khatm ho jaata hai — condition ON mein likhni chahiye.',
+          'Correct answer: WHERE runs after the join and removes the NULL rows, so the benefit of the LEFT JOIN is lost — the condition belongs in ON.'
+        )
+      },
+      {
+        q: t(
+          'SQLite mein FULL OUTER JOIN ki jagah kya use hota hai?',
+          'What is used in place of FULL OUTER JOIN in SQLite?'
+        ),
+        opts: [
+          t('RIGHT JOIN', 'RIGHT JOIN'),
+          t('CROSS JOIN', 'CROSS JOIN'),
+          t('LEFT JOIN ke results ko UNION se jodna', 'Joining LEFT JOIN results with UNION'),
+          t('FULL OUTER JOIN SQLite mein chalta hai', 'FULL OUTER JOIN works in SQLite')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: SQLite mein FULL OUTER JOIN support nahi hota, isliye dono taraf ke LEFT JOIN results ko UNION se joda jaata hai.',
+          'Correct answer: SQLite does not support FULL OUTER JOIN, so the LEFT JOIN results from both sides are joined with UNION.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Self join mein ek hi table do alias ke saath aati hai — a.name aur b.name.',
+        'In a self join the same table appears with two aliases — a.name and b.name.'
+      ),
+      t(
+        'Cross join har row ko har row se jodta hai — hamesha filter ke saath use karo.',
+        'A cross join joins every row with every row — always use it with a filter.'
+      ),
+      t(
+        'LEFT JOIN mein condition ON mein likho, WHERE mein nahi.',
+        'In a LEFT JOIN, write the condition in ON, not in WHERE.'
+      ),
+      t(
+        'Natural join same naam wale columns par khud join karta hai — blind trust mat karo.',
+        'A natural join joins by itself on same-named columns — do not trust it blindly.'
+      ),
+      t(
+        'SQLite mein RIGHT aur FULL OUTER JOIN nahi hain — tables swap karke LEFT JOIN ya UNION use karo.',
+        'SQLite has no RIGHT or FULL OUTER JOIN — swap the tables for a LEFT JOIN or use UNION.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Amit ke Saare Senior Dhoondho (Self Join)',
+        'Practice: Find All of Amit Seniors (Self Join)'
+      ),
+      task: t(
+        'Self join likho jo Amit se zyada marks wale saare students ke naam de. a.name Amit hona chahiye aur b.marks > a.marks condition honi chahiye. Done tab maanenge jab output mein 3 rows dikhein, senior ke naam ke order mein: Amit | Priya, Amit | Rahul, Amit | Sana.',
+        'Write a self join that gives the names of all students with more marks than Amit. a.name must be Amit and the condition must be b.marks > a.marks. You are done when the output shows 3 rows, in order of the senior name: Amit | Priya, Amit | Rahul, Amit | Sana.'
+      ),
+      language: 'sql',
+      starter: `SELECT a.name AS lower_scorer, b.name AS higher_scorer
+FROM students a
+JOIN students b ON b.marks > a.marks
+WHERE a.name = 'Amit'
+ORDER BY b.name;`,
+      expected: `lower_scorer | higher_scorer
+Amit | Priya
+Amit | Rahul
+Amit | Sana`
+    },
+    readMinutes: 12
+  };
+
+const dbmsSetOperations: Article = {
+    id: 'dbms-set-operations',
+    subjectId: 'dbms',
+    title: t(
+      'Set Operations — UNION, INTERSECT aur EXCEPT',
+      'Set Operations: UNION, INTERSECT, and EXCEPT'
+    ),
+    summary: t(
+      'Do queries ke results ko set ki tarah jodna, kaatna aur compare karna seekho: UNION se dono ke naam ek list mein, UNION ALL se duplicate ke saath, INTERSECT se dono mein common naam, aur EXCEPT se ek mein hai par doosre mein nahi — sab students table par dry run ke saath.',
+      'Learn to join, cut, and compare the results of two queries like sets: UNION for both names in one list, UNION ALL with duplicates kept, INTERSECT for names common to both, and EXCEPT for names in one but not the other — all with a dry run on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Set Operations Kya Hain? (UNION, INTERSECT, EXCEPT)',
+          '1. What Are Set Operations? (UNION, INTERSECT, EXCEPT)'
+        ),
+        body: t(
+          `**Set operations** do SELECT queries ke results ko ek result mein milaate hain. **UNION** dono queries ke results ko jod deta hai aur duplicate rows ko hata deta hai. **UNION ALL** bhi jodta hai, par duplicate rows ko rehne deta hai. **INTERSECT** sirf wahi rows deta hai jo dono queries mein hain. **EXCEPT** pehli query ki un rows ko deta hai jo doosri query mein nahi hain.\n\nSet operations ka sabse important rule hai: dono queries mein **columns ki ginti aur type ek jaisi** honi chahiye. Pehli query 1 column deti hai to doosri bhi 1 column deni chahiye. Pehli query naam (text) deti hai to doosri bhi naam (text) deni chahiye — naam aur marks ko UNION nahi kar sakte.\n\nSet operations JOIN se alag hain. JOIN rows ko side-by-side jodta hai (columns badhte hain), jabki UNION rows ko upar-neeche jodta hai (rows badhti hain). Jab do alag lists ko ek list banana ho, to UNION use hota hai; jab do tables ke columns ko ek row mein laana ho, to JOIN use hota hai.`,
+          `**Set operations** merge the results of two SELECT queries into one result. **UNION** joins the results of both queries and removes duplicate rows. **UNION ALL** also joins them, but keeps the duplicate rows. **INTERSECT** gives only the rows that are in both queries. **EXCEPT** gives the rows of the first query that are not in the second query.\n\nThe most important rule of set operations is: both queries must have the **same number of columns and the same types**. If the first query gives 1 column, the second must also give 1 column. If the first query gives a name (text), the second must also give a name (text) — you cannot UNION a name with marks.\n\nSet operations are different from JOIN. A JOIN joins rows side by side (columns grow), while UNION joins rows on top of each other (rows grow). When two separate lists must become one list, use UNION; when columns from two tables must come into one row, use JOIN.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Do Classes ki List, Common Students aur Bina Fee Wale',
+          '2. Real-Life Examples: Two Class Lists, Common Students, and Students Without Fees'
+        ),
+        body: t(
+          `Pehla example hai **do classes ki ek list**. Class A ke toppers aur Class B ke toppers ki ek hi list chahiye — dono ke naam ek saath. UNION dono lists ko jod deta hai. Agar ek student dono classes mein ho (duplicate naam), to UNION use ek baar dikhayega, UNION ALL use do baar.\n\nDoosra example hai **common students**. Kaun se students Maths bhi lete hain aur Science bhi lete hain? Pehli query Maths walon ki list deti hai, doosri Science walon ki. INTERSECT dono mein common naam de dega — sirf wahi students jo dono courses mein hain.\n\nTeesra example hai **bina fee wale students**. Saare students ki list mein se fee bharne walon ki list hata do — jo bachte hain, wahi bina fee wale hain. Ye EXCEPT ka kaam hai: pehli list minus doosri list.`,
+          `The first example is **one list from two classes**. The toppers of Class A and the toppers of Class B are needed in a single list — both names together. UNION joins the two lists. If a student is in both classes (a duplicate name), UNION shows them once, while UNION ALL shows them twice.\n\nThe second example is **common students**. Which students take both Maths and Science? The first query gives the list of Maths students, the second gives the list of Science students. INTERSECT gives the names common to both — only the students who are in both courses.\n\nThe third example is **students without fees**. Take the list of all students and remove the list of those who paid the fees — whoever remains are the ones without fees. That is the job of EXCEPT: the first list minus the second list.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: UNION ka Dry Run — 88+ aur 80 se Kam',
+          '3. Step-by-Step: UNION Dry Run — 88+ and Below 80'
+        ),
+        body: t(
+          `Query hai: \`SELECT name FROM students WHERE marks >= 88 UNION SELECT name FROM students WHERE marks < 80 ORDER BY name\`. Ismein do SELECT queries hain, beech mein UNION hai.\n\n**Step 1 — pehli query:** \`WHERE marks >= 88\` — Priya 92 aur Sana 88 aate hain. List banegi: {Priya, Sana}.\n\n**Step 2 — doosri query:** \`WHERE marks < 80\` — sirf Amit 74 aata hai. List banegi: {Amit}.\n\n**Step 3 — UNION jodo:** Dono lists ko jodo: {Priya, Sana, Amit}. Duplicate check karo — koi naam dono lists mein nahi hai, isliye kuch hat-ta nahi.\n\n**Step 4 — sort karo:** \`ORDER BY name\` se alphabetical order banta hai: Amit, Priya, Sana. Final result mein 3 rows hain. Dhyaan do: \`ORDER BY\` sirf aakhir mein ek baar likha jaata hai, poore UNION result par — pehli ya doosri query ke andar alag se ORDER BY nahi likha jaata.`,
+          `The query is: \`SELECT name FROM students WHERE marks >= 88 UNION SELECT name FROM students WHERE marks < 80 ORDER BY name\`. It has two SELECT queries, with UNION in between.\n\n**Step 1 — first query:** \`WHERE marks >= 88\` — Priya 92 and Sana 88 come back. The list is: {Priya, Sana}.\n\n**Step 2 — second query:** \`WHERE marks < 80\` — only Amit 74 comes back. The list is: {Amit}.\n\n**Step 3 — UNION joins them:** Join both lists: {Priya, Sana, Amit}. Check for duplicates — no name is in both lists, so nothing is removed.\n\n**Step 4 — sort:** \`ORDER BY name\` gives alphabetical order: Amit, Priya, Sana. The final result has 3 rows. Note this: \`ORDER BY\` is written only once at the end, on the whole UNION result — it is not written separately inside the first or second query.`
+        ),
+        code: {
+          title: t(
+            'UNION — 88+ Wale aur 80 se Kam Wale Ek List Mein',
+            'UNION — 88+ and Below 80 in One List'
+          ),
+          language: 'sql',
+          code: `SELECT name FROM students WHERE marks >= 88
+UNION
+SELECT name FROM students WHERE marks < 80
+ORDER BY name;`,
+          output: `name
+Amit
+Priya
+Sana`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Column Mismatch, UNION vs UNION ALL aur ORDER BY ki Jagah',
+          '4. Common Mistakes: Column Mismatch, UNION vs UNION ALL, and ORDER BY Placement'
+        ),
+        body: t(
+          `**Galti 1: columns ki ginti alag hona.** Pehli query \`SELECT name, marks\` (2 columns) aur doosri \`SELECT name\` (1 column) — UNION error de dega. Dono queries mein columns ki ginti barabar honi chahiye. Fix ye hai ki doosri query mein bhi 2 columns do, ya pehli mein se ek hatao.\n\n**Galti 2: columns ka type alag hona.** Pehli query naam (text) de aur doosri marks (number) — UNION chal bhi jaaye to result ka koi matlab nahi hoga, kyunki ek column mein kabhi naam aur kabhi number dikhega. Hamesha ek jaise type ke columns ko UNION karo.\n\n**Galti 3: UNION aur UNION ALL ko ek samajhna.** UNION duplicate hata deta hai, UNION ALL nahi hataata. Agar aapko ginna hai ki ek naam kitni baar aaya, to UNION galat hai — wo duplicate kha jaayega aur count kam ho jaayega. Counting ke liye UNION ALL use karo.\n\n**Galti 4: ORDER BY ko pehli query mein likhna.** \`SELECT name FROM students ORDER BY name UNION SELECT ...\` error dega. ORDER BY sirf poore result ke aakhir mein likha jaata hai. Column ka naam ORDER BY mein pehli query ke column se lena padta hai.`,
+          `**Mistake 1: Different numbers of columns.** The first query gives \`SELECT name, marks\` (2 columns) and the second gives \`SELECT name\` (1 column) — UNION gives an error. Both queries must have the same number of columns. The fix is to give 2 columns in the second query too, or to remove one from the first.\n\n**Mistake 2: Different column types.** The first query gives a name (text) and the second gives marks (a number) — even if UNION runs, the result has no meaning, because one column sometimes shows a name and sometimes a number. Always UNION columns of the same type.\n\n**Mistake 3: Treating UNION and UNION ALL as the same.** UNION removes duplicates, UNION ALL does not. If you must count how many times a name appears, UNION is wrong — it eats the duplicate and the count comes out low. For counting, use UNION ALL.\n\n**Mistake 4: Writing ORDER BY in the first query.** \`SELECT name FROM students ORDER BY name UNION SELECT ...\` gives an error. ORDER BY is written only at the end of the whole result. The column name in ORDER BY must come from the first query column.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Result, Poora Duplicate aur INTERSECT ka Khaali Answer',
+          '5. Edge Cases: Empty Result, Full Duplicate, and an Empty INTERSECT Answer'
+        ),
+        body: t(
+          `**1. Ek query khaali ho.** Pehli query 3 naam de aur doosri query koi row na de, to UNION ka result sirf pehli query ke 3 naam honge. Khaali query UNION ko todti nahi — wo bas kuch add nahi karti. EXCEPT mein agar doosri query khaali ho, to result poori pehli query hoti hai, kyunki hataane ke liye kuch hai hi nahi.\n\n**2. Dono queries ek jaisi hon.** \`SELECT name FROM students UNION SELECT name FROM students\` ka result sirf 4 naam honge — duplicate hat jaayenge. Lekin UNION ALL se 8 naam aayenge, har naam do baar. Ye UNION aur UNION ALL ka farak dikhaane ka sabse seedha tareeka hai.\n\n**3. INTERSECT ka khaali answer.** \`WHERE marks >= 90\` aur \`WHERE marks < 80\` ka INTERSECT khaali hoga, kyunki koi student dono conditions mein nahi hai. Khaali INTERSECT error nahi hai — iska matlab hai "koi common nahi hai".\n\n**4. EXCEPT ka order matter karta hai.** \`A EXCEPT B\` aur \`B EXCEPT A\` alag results dete hain. Pehla A mein se B hataata hai, doosra B mein se A. EXCEPT mein pehli aur doosri query ko swap karne se answer badal jaata hai — UNION mein swap karne se nahi badalta.`,
+          `**1. One query is empty.** If the first query gives 3 names and the second gives no rows, the UNION result is only the 3 names of the first query. An empty query does not break UNION — it simply adds nothing. In EXCEPT, if the second query is empty, the result is the whole first query, because there is nothing to remove.\n\n**2. Both queries are the same.** \`SELECT name FROM students UNION SELECT name FROM students\` gives only 4 names — the duplicates are removed. But with UNION ALL, 8 names come back, each name twice. This is the simplest way to show the difference between UNION and UNION ALL.\n\n**3. An empty INTERSECT answer.** The INTERSECT of \`WHERE marks >= 90\` and \`WHERE marks < 80\` is empty, because no student is in both conditions. An empty INTERSECT is not an error — it means "nothing is common".\n\n**4. The order matters in EXCEPT.** \`A EXCEPT B\` and \`B EXCEPT A\` give different results. The first removes B from A, the second removes A from B. Swapping the first and second queries in EXCEPT changes the answer — swapping them in UNION does not.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: UNION ki Jagah OR, aur EXCEPT ki Jagah NOT IN',
+          '6. What If: OR Instead of UNION, and NOT IN Instead of EXCEPT'
+        ),
+        body: t(
+          `**What if: UNION ki jagah OR use karein?** Is article wali UNION query ko OR se bhi likha jaa sakta hai: \`WHERE marks >= 88 OR marks < 80\`. Dono ka result ek jaisa hoga. Lekin OR sirf tab kaam karta hai jab dono conditions ek hi table par hon. Agar lists do alag tables se aati hon, to OR kaam nahi karega — wahan UNION hi chahiye.\n\n**What if: EXCEPT ki jagah NOT IN use karein?** \`WHERE name NOT IN (SELECT name FROM students WHERE marks >= 90)\` bhi wahi dega jo EXCEPT deta hai — Rahul aur Sana. Lekin NOT IN mein NULL ka problem hai: agar list mein NULL ho, to NOT IN kuch bhi nahi deta. EXCEPT mein NULL ka aisa problem nahi hota. Isliye list-minus kaam ke liye EXCEPT safe hai.\n\n**What if: INTERSECT ki jagah AND use karein?** \`WHERE marks >= 80 AND marks <= 90\` wahi dega jo INTERSECT deta hai — Rahul aur Sana. Par phir bhi, jab conditions do alag queries ya do alag tables se aati hon, to AND kaam nahi karega aur INTERSECT chahiye hoga.`,
+          `**What if we use OR instead of UNION?** The UNION query in this article can also be written with OR: \`WHERE marks >= 88 OR marks < 80\`. Both give the same result. But OR only works when both conditions are on the same table. If the lists come from two different tables, OR does not work — UNION is needed there.\n\n**What if we use NOT IN instead of EXCEPT?** \`WHERE name NOT IN (SELECT name FROM students WHERE marks >= 90)\` also gives what EXCEPT gives — Rahul and Sana. But NOT IN has a NULL problem: if the list holds a NULL, NOT IN gives nothing at all. EXCEPT does not have this NULL problem. So for a list-minus job, EXCEPT is safer.\n\n**What if we use AND instead of INTERSECT?** \`WHERE marks >= 80 AND marks <= 90\` gives what INTERSECT gives — Rahul and Sana. But still, when the conditions come from two different queries or two different tables, AND does not work and INTERSECT is needed.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Set Operations ka Poora Picture',
+          '7. Summary: The Full Picture of Set Operations'
+        ),
+        body: t(
+          `UNION do lists ko jodta hai aur duplicate hata deta hai. UNION ALL jodta hai par duplicate rehne deta hai. INTERSECT sirf common rows deta hai. EXCEPT pehli list mein se doosri list ko hata deta hai. Dono queries mein columns ki ginti aur type ek jaisi honi chahiye, aur ORDER BY sirf aakhir mein likha jaata hai.\n\nYaad rakhne wali teen baatein: pehli, UNION duplicate hataata hai, UNION ALL nahi — counting ke liye UNION ALL use karo. Doosri, EXCEPT mein order matter karta hai, UNION mein nahi. Teesri, JOIN columns ko side-by-side jodta hai, UNION rows ko upar-neeche — kaam ke hisaab se chunna hai.\n\nAgle article mein hum window functions dekhenge — ROW_NUMBER, RANK aur running totals, jismein har row ke saath uski ranking bhi dikhti hai.`,
+          `UNION joins two lists and removes duplicates. UNION ALL joins them but keeps duplicates. INTERSECT gives only the common rows. EXCEPT removes the second list from the first list. Both queries must have the same number of columns and the same types, and ORDER BY is written only at the end.\n\nThree things to remember: first, UNION removes duplicates and UNION ALL does not — for counting, use UNION ALL. Second, order matters in EXCEPT, but not in UNION. Third, a JOIN joins columns side by side, while UNION joins rows on top of each other — choose by the job.\n\nIn the next article we will look at window functions — ROW_NUMBER, RANK, and running totals, where every row also shows its ranking.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Set Operations: Do Lists, Chaar Tareeke',
+        'Set Operations: Two Lists, Four Ways'
+      ),
+      nodes: [
+        {
+          t: t('List A: 88+ wale', 'List A: 88+ students'),
+          s: t('Priya, Sana', 'Priya, Sana')
+        },
+        {
+          t: t('List B: 80 se kam wale', 'List B: below 80 students'),
+          s: t('Amit', 'Amit')
+        },
+        {
+          t: t('UNION: A + B, duplicate hatao', 'UNION: A + B, remove duplicates'),
+          s: t('Amit, Priya, Sana — 3 rows', 'Amit, Priya, Sana — 3 rows')
+        },
+        {
+          t: t('INTERSECT: sirf common', 'INTERSECT: only the common ones'),
+          s: t('Yahan khaali — koi common nahi', 'Empty here — nothing is common')
+        },
+        {
+          t: t('EXCEPT: A mein se B hatao', 'EXCEPT: remove B from A'),
+          s: t('Order matter karta hai — A EXCEPT B alag, B EXCEPT A alag', 'Order matters — A EXCEPT B differs from B EXCEPT A')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'UNION ALL — Duplicate ke Saath Jodna',
+          'UNION ALL — Joining with Duplicates Kept'
+        ),
+        language: 'sql',
+        code: `SELECT name FROM students WHERE id IN (1, 2)
+UNION ALL
+SELECT name FROM students WHERE id IN (2, 3)
+ORDER BY name;`,
+        output: `name
+Amit
+Priya
+Priya
+Rahul`
+      },
+      {
+        title: t(
+          'EXCEPT — 80+ Mein se 90+ Hatao',
+          'EXCEPT — Remove 90+ from 80+'
+        ),
+        language: 'sql',
+        code: `SELECT name FROM students WHERE marks >= 80
+EXCEPT
+SELECT name FROM students WHERE marks >= 90
+ORDER BY name;`,
+        output: `name
+Rahul
+Sana`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'UNION aur UNION ALL mein kya farak hai?',
+          'What is the difference between UNION and UNION ALL?'
+        ),
+        opts: [
+          t('Koi farak nahi hai', 'There is no difference'),
+          t('UNION duplicate hata deta hai, UNION ALL nahi hataata', 'UNION removes duplicates, UNION ALL does not'),
+          t('UNION ALL duplicate hata deta hai, UNION nahi hataata', 'UNION ALL removes duplicates, UNION does not'),
+          t('UNION sirf numbers par chalta hai', 'UNION only works on numbers')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: UNION jodne ke baad duplicate rows ko hata deta hai, jabki UNION ALL unhe rehne deta hai — isliye counting ke liye UNION ALL use hota hai.',
+          'Correct answer: UNION removes duplicate rows after joining, while UNION ALL lets them stay — so UNION ALL is used for counting.'
+        )
+      },
+      {
+        q: t(
+          'INTERSECT kya deta hai?',
+          'What does INTERSECT give?'
+        ),
+        opts: [
+          t('Dono queries ki saari rows', 'All rows of both queries'),
+          t('Sirf wahi rows jo dono queries mein hain', 'Only the rows that are in both queries'),
+          t('Pehli query ki rows minus doosri', 'The rows of the first query minus the second'),
+          t('Sirf duplicate rows', 'Only the duplicate rows')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: INTERSECT sirf common rows deta hai — jo row dono queries mein hai, wahi result mein aati hai.',
+          'Correct answer: INTERSECT gives only the common rows — a row comes in the result only if it is in both queries.'
+        )
+      },
+      {
+        q: t(
+          'SELECT name FROM students WHERE marks >= 80 EXCEPT SELECT name FROM students WHERE marks >= 90 ka result kya hai?',
+          'What is the result of SELECT name FROM students WHERE marks >= 80 EXCEPT SELECT name FROM students WHERE marks >= 90?'
+        ),
+        opts: [
+          t('Priya', 'Priya'),
+          t('Rahul, Sana', 'Rahul, Sana'),
+          t('Amit', 'Amit'),
+          t('Khaali', 'Empty')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehli list mein Priya, Sana, Rahul hain aur doosri mein sirf Priya hai, isliye Priya hat jaati hai aur Rahul aur Sana bachte hain.',
+          'Correct answer: the first list has Priya, Sana, and Rahul, and the second has only Priya, so Priya is removed and Rahul and Sana remain.'
+        )
+      },
+      {
+        q: t(
+          'Set operations mein dono queries ke baare mein kaunsa rule zaroori hai?',
+          'Which rule is essential for both queries in set operations?'
+        ),
+        opts: [
+          t('Dono mein ORDER BY hona chahiye', 'Both must have ORDER BY'),
+          t('Columns ki ginti aur type ek jaisi honi chahiye', 'The number of columns and their types must match'),
+          t('Dono ek hi table se honi chahiye', 'Both must come from the same table'),
+          t('Dono mein WHERE hona chahiye', 'Both must have WHERE')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: UNION, INTERSECT aur EXCEPT tabhi chalte hain jab dono queries mein columns ki ginti aur type ek jaisi ho, warna error aata hai.',
+          'Correct answer: UNION, INTERSECT, and EXCEPT only work when both queries have the same number of columns and the same types, or an error comes.'
+        )
+      },
+      {
+        q: t(
+          'JOIN aur UNION mein kya farak hai?',
+          'What is the difference between JOIN and UNION?'
+        ),
+        opts: [
+          t('Dono ek hi kaam karte hain', 'Both do the same job'),
+          t('JOIN rows ko side-by-side jodta hai, UNION rows ko upar-neeche jodta hai', 'JOIN joins rows side by side, UNION joins rows on top of each other'),
+          t('UNION columns jodta hai, JOIN rows jodta hai', 'UNION joins columns, JOIN joins rows'),
+          t('JOIN sirf ek table par chalta hai', 'JOIN only works on one table')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: JOIN do tables ke columns ko ek row mein laata hai, jabki UNION do queries ki rows ko ek list mein jodta hai.',
+          'Correct answer: JOIN brings columns from two tables into one row, while UNION joins the rows of two queries into one list.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'UNION jodta hai aur duplicate hata deta hai, UNION ALL duplicate rehne deta hai.',
+        'UNION joins and removes duplicates, UNION ALL keeps duplicates.'
+      ),
+      t(
+        'INTERSECT sirf common rows deta hai, EXCEPT pehli list mein se doosri hata deta hai.',
+        'INTERSECT gives only common rows, EXCEPT removes the second list from the first.'
+      ),
+      t(
+        'Dono queries mein columns ki ginti aur type ek jaisi honi chahiye.',
+        'Both queries must have the same number of columns and the same types.'
+      ),
+      t(
+        'ORDER BY sirf poore result ke aakhir mein ek baar likha jaata hai.',
+        'ORDER BY is written only once, at the end of the whole result.'
+      ),
+      t(
+        'EXCEPT mein order matter karta hai, UNION mein nahi.',
+        'Order matters in EXCEPT, but not in UNION.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Topper aur Sabse Kam Marks Wala Ek List Mein',
+        'Practice: Topper and Lowest Scorer in One List'
+      ),
+      task: t(
+        'UNION likho jo topper (90 ya zyada) aur sabse kam marks wale (74 ya kam) students ke naam ek list mein de. Done tab maanenge jab output mein 2 rows dikhein, naam ke order mein: Amit, Priya.',
+        'Write a UNION that gives the names of the topper (90 or more) and the lowest scorer (74 or less) in one list. You are done when the output shows 2 rows, in name order: Amit, Priya.'
+      ),
+      language: 'sql',
+      starter: `SELECT name FROM students WHERE marks >= 90
+UNION
+SELECT name FROM students WHERE marks <= 74
+ORDER BY name;`,
+      expected: `name
+Amit
+Priya`
+    },
+    readMinutes: 12
+  };
+
+const dbmsWindow: Article = {
+    id: 'dbms-window',
+    subjectId: 'dbms',
+    title: t(
+      'Window Functions — ROW_NUMBER, RANK, PARTITION BY aur Running Total',
+      'Window Functions: ROW_NUMBER, RANK, PARTITION BY, and Running Totals'
+    ),
+    summary: t(
+      'Window functions seekho: bina rows ko group kiye har row ke saath uski ranking aur running total kaise nikaala jaata hai. ROW_NUMBER se har row ko number, RANK se barabar marks walon ko ek hi rank, PARTITION BY se group-wise average, aur OVER se chalta hua total — sab students table par.',
+      'Learn window functions: how to work out the ranking and running total of every row without grouping the rows. ROW_NUMBER for numbering every row, RANK for giving equal marks the same rank, PARTITION BY for a group-wise average, and OVER for a running total — all on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Window Functions Kya Hain? (ROW_NUMBER, RANK, PARTITION BY)',
+          '1. What Are Window Functions? (ROW_NUMBER, RANK, PARTITION BY)'
+        ),
+        body: t(
+          `**Window function** ek aisa function hai jo har row ke liye ek value nikaalta hai, par rows ko group karke ek row mein nahi badalta. GROUP BY mein 4 rows ka ek hi total banta hai, par window function mein 4 rows rehti hain aur har row ke saath uska apna number ya total jud jaata hai. Isi liye ise "window" kehte hain — function har row ke aas-paas ki rows ko dekh kar value nikaalta hai.\n\nSabse kaam ke window functions hain: **ROW_NUMBER()** jo har row ko 1, 2, 3, 4 number deta hai; **RANK()** jo ranking deta hai aur barabar marks walon ko ek hi rank deta hai; **SUM() OVER** jo running total nikaalta hai; aur **AVG() OVER** jo group ka average har row ke saath dikhaata hai. In sabke saath \`OVER (...)\` likha jaata hai, jo bataata hai ki rows ko kis order mein dekhna hai ya kis group mein baantna hai.\n\n**PARTITION BY** rows ko groups mein baant deta hai — jaise marks 85 ya zyada walon ko 'High' group aur baaki ko 'Low' group. Har group ke andar function alag se chalta hai. PARTITION BY, GROUP BY jaisa lagta hai, par farak ye hai ki PARTITION BY rows ko ek mein nahi milata — 4 rows 4 hi rehti hain.`,
+          `A **window function** is a function that works out a value for every row, but does not group the rows into one row. With GROUP BY, 4 rows become a single total, but with a window function the 4 rows stay and each row gains its own number or total. That is why it is called a "window" — the function looks at the rows around each row to work out the value.\n\nThe most useful window functions are: **ROW_NUMBER()**, which gives every row a number 1, 2, 3, 4; **RANK()**, which gives a ranking and gives equal marks the same rank; **SUM() OVER**, which works out a running total; and **AVG() OVER**, which shows the group average next to every row. All of them are written with \`OVER (...)\`, which tells the function in which order to look at the rows or how to split them into groups.\n\n**PARTITION BY** splits the rows into groups — for example, students with 85 or more marks into a 'High' group and the rest into a 'Low' group. The function runs separately inside each group. PARTITION BY looks like GROUP BY, but the difference is that PARTITION BY does not merge rows into one — 4 rows stay 4 rows.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Leaderboard, Top 3 aur Class Average',
+          '2. Real-Life Examples: Leaderboard, Top 3, and Class Average'
+        ),
+        body: t(
+          `Pehla example hai **leaderboard**. Game ya exam mein har player ki rank dikhaani ho to ROW_NUMBER ya RANK use hota hai. Pehle number par kaun hai, doosre par kaun — ye ranking window function se nikalti hai, bina rows ko hataaye. Saare players dikhte hain, har ek ke saath uski rank.\n\nDoosra example hai **top 3**. Sirf pehle 3 students chahiye hon to ROW_NUMBER ke saath ek outer query likhi jaati hai: \`WHERE rn <= 3\`. Ye tareeka LIMIT se behtar hai jab ranking ke baad filter karna ho, kyunki LIMIT sirf pehli rows kaat-ta hai, rank ke hisaab se nahi.\n\nTeesra example hai **class average har row ke saath**. Har student ke saath ye bhi dikhaana ho ki uske group ka average kitna hai — to PARTITION BY se group ka average nikaal kar har row ke saath dikha diya jaata hai. Student apne marks ko apne group ke average se compare kar sakta hai, bina alag query chalaaye.`,
+          `The first example is a **leaderboard**. In a game or exam, to show the rank of every player, ROW_NUMBER or RANK is used. Who is first, who is second — this ranking comes from a window function, without removing any rows. All players are shown, each with their rank.\n\nThe second example is the **top 3**. To get only the first 3 students, an outer query is written with ROW_NUMBER: \`WHERE rn <= 3\`. This way is better than LIMIT when you must filter by ranking, because LIMIT only cuts the first rows, not by rank.\n\nThe third example is the **class average next to every row**. To show next to every student what the average of their group is, PARTITION BY works out the group average and shows it next to every row. A student can compare their marks with their group average without running a separate query.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: ROW_NUMBER aur RANK ka Dry Run',
+          '3. Step-by-Step: ROW_NUMBER and RANK Dry Run'
+        ),
+        body: t(
+          `Query hai: \`SELECT name, marks, ROW_NUMBER() OVER (ORDER BY marks DESC) AS row_no, RANK() OVER (ORDER BY marks DESC) AS rank_no FROM students\`. \`OVER (ORDER BY marks DESC)\` ka matlab hai: rows ko marks ke hisaab se bade se chhote order mein dekho, phir number do.\n\nDry run, sort ke baad:\n- **Priya, 92:** Sabse upar hai. ROW_NUMBER 1, RANK 1. Row: Priya | 92 | 1 | 1.\n- **Sana, 88:** Doosre number par hai. ROW_NUMBER 2, RANK 2. Row: Sana | 88 | 2 | 2.\n- **Rahul, 85:** Teesre number par hai. ROW_NUMBER 3, RANK 3. Row: Rahul | 85 | 3 | 3.\n- **Amit, 74:** Chauthe number par hai. ROW_NUMBER 4, RANK 4. Row: Amit | 74 | 4 | 4.\n\nIs table mein ROW_NUMBER aur RANK ek jaise dikhte hain, kyunki kisi ke marks barabar nahi hain. Farak tab dikhta hai jab do students ke marks barabar hon: maan lo Rahul aur Sana dono ke 88 hote, to dono ko RANK 2 milta aur agle student ko RANK 4 milta (3 skip ho jaata), jabki ROW_NUMBER phir bhi 1, 2, 3, 4 deta. RANK barabar walon ko ek hi rank deta hai aur agla number skip kar deta hai.`,
+          `The query is: \`SELECT name, marks, ROW_NUMBER() OVER (ORDER BY marks DESC) AS row_no, RANK() OVER (ORDER BY marks DESC) AS rank_no FROM students\`. \`OVER (ORDER BY marks DESC)\` means: look at the rows in order of marks from high to low, then give the numbers.\n\nDry run, after sorting:\n- **Priya, 92:** She is on top. ROW_NUMBER 1, RANK 1. Row: Priya | 92 | 1 | 1.\n- **Sana, 88:** She is second. ROW_NUMBER 2, RANK 2. Row: Sana | 88 | 2 | 2.\n- **Rahul, 85:** He is third. ROW_NUMBER 3, RANK 3. Row: Rahul | 85 | 3 | 3.\n- **Amit, 74:** He is fourth. ROW_NUMBER 4, RANK 4. Row: Amit | 74 | 4 | 4.\n\nIn this table ROW_NUMBER and RANK look the same, because no two marks are equal. The difference shows when two students have equal marks: suppose Rahul and Sana both had 88, then both would get RANK 2 and the next student would get RANK 4 (3 is skipped), while ROW_NUMBER would still give 1, 2, 3, 4. RANK gives equal students the same rank and skips the next number.`
+        ),
+        code: {
+          title: t(
+            'ROW_NUMBER aur RANK — Har Student ki Ranking',
+            'ROW_NUMBER and RANK — Every Student Ranking'
+          ),
+          language: 'sql',
+          code: `SELECT name, marks,
+  ROW_NUMBER() OVER (ORDER BY marks DESC) AS row_no,
+  RANK() OVER (ORDER BY marks DESC) AS rank_no
+FROM students;`,
+          output: `name | marks | row_no | rank_no
+Priya | 92 | 1 | 1
+Sana | 88 | 2 | 2
+Rahul | 85 | 3 | 3
+Amit | 74 | 4 | 4`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: OVER Bhoolna, WHERE mein Window Function aur RANK vs ROW_NUMBER',
+          '4. Common Mistakes: Forgetting OVER, Window Function in WHERE, and RANK vs ROW_NUMBER'
+        ),
+        body: t(
+          `**Galti 1: OVER bhool jaana.** \`SELECT ROW_NUMBER() FROM students\` error dega — window function ke saath OVER likhna zaroori hai. Bina OVER ke database ko pata nahi chalega ki rows ko kis order mein number dena hai. Hamesha likho: \`ROW_NUMBER() OVER (ORDER BY marks DESC)\`.\n\n**Galti 2: window function ko WHERE mein likhna.** \`WHERE ROW_NUMBER() OVER (...) <= 2\` error dega, kyunki WHERE window function se pehle chalta hai. Window function ka result sirf SELECT ke baad milta hai, isliye us par filter karna ho to outer query chahiye: andar ROW_NUMBER nikaalo, bahar \`WHERE rn <= 2\` likho.\n\n**Galti 3: RANK aur ROW_NUMBER ko ek samajhna.** Barabar marks par RANK ek hi rank deta hai aur agla number skip karta hai, ROW_NUMBER har row ko alag number deta hai. Agar aapko top 3 students chahiye aur do students ki rank 2 hai, to RANK se 4 students aa sakte hain (rank 1, 2, 2, 3) — ROW_NUMBER se hamesha exactly 3 aayenge.\n\n**Galti 4: PARTITION BY ko GROUP BY samajhna.** PARTITION BY rows ko group karta hai par unhe ek row mein nahi milata. Agar aapko sirf group ka average chahiye, ek row mein, to GROUP BY use karo. Agar har row ke saath uske group ka average chahiye, to PARTITION BY use karo.`,
+          `**Mistake 1: Forgetting OVER.** \`SELECT ROW_NUMBER() FROM students\` gives an error — a window function must be written with OVER. Without OVER the database does not know in which order to number the rows. Always write: \`ROW_NUMBER() OVER (ORDER BY marks DESC)\`.\n\n**Mistake 2: Writing a window function in WHERE.** \`WHERE ROW_NUMBER() OVER (...) <= 2\` gives an error, because WHERE runs before the window function. The result of a window function is only available after SELECT, so to filter on it you need an outer query: work out ROW_NUMBER inside, and write \`WHERE rn <= 2\` outside.\n\n**Mistake 3: Treating RANK and ROW_NUMBER as the same.** On equal marks, RANK gives the same rank and skips the next number, while ROW_NUMBER gives every row a different number. If you want the top 3 students and two students share rank 2, RANK can give 4 students (ranks 1, 2, 2, 3) — ROW_NUMBER always gives exactly 3.\n\n**Mistake 4: Treating PARTITION BY like GROUP BY.** PARTITION BY groups rows but does not merge them into one row. If you want only the group average, in one row, use GROUP BY. If you want the group average next to every row, use PARTITION BY.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Barabar Marks, Khaali Partition aur ORDER BY ke Bina OVER',
+          '5. Edge Cases: Equal Marks, Empty Partition, and OVER Without ORDER BY'
+        ),
+        body: t(
+          `**1. Barabar marks.** Rahul aur Sana dono ke 88 hote to RANK dono ko 2 deta aur Amit ko 4 deta — 3 skip ho jaata. Ise "rank gap" kehte hain. Agar gap nahi chahiye, to \`DENSE_RANK()\` use karo — wo 2, 2 ke baad 3 deta hai, 4 nahi. Kaunsa use karna hai, ye rule par depend karta hai: competition mein aam taur par RANK use hota hai.\n\n**2. Khaali partition.** PARTITION BY mein agar kisi group mein koi row nahi hai, to us group ka average bhi nahi nikalta — koi error nahi aata, bas wo group result mein dikhta hi nahi. Partition sirf un groups ke liye banta hai jinmein kam se kam ek row hai.\n\n**3. OVER ke andar ORDER BY na ho.** \`ROW_NUMBER() OVER ()\` bina ORDER BY ke chalega, par numbers ka order fix nahi hoga — har baar alag order aa sakta hai. Ranking ke liye OVER ke andar ORDER BY zaroori hai, warna rank ka koi matlab nahi rahega.\n\n**4. Running total ka order.** \`SUM(marks) OVER (ORDER BY marks DESC)\` mein running total bade se chhote marks ke order mein judta hai: 92, phir 92+88=180, phir 265, phir 339. Agar ORDER BY ASC hota, to total ulta judta: 74, 159, 247, 339. Aakhiri total dono mein 339 hi hota hai — poora total order par depend nahi karta, beech ke totals karte hain.`,
+          `**1. Equal marks.** If Rahul and Sana both had 88, RANK would give both 2 and give Amit 4 — 3 is skipped. This is called a "rank gap". If no gap is wanted, use \`DENSE_RANK()\` — it gives 3 after 2, 2, not 4. Which one to use depends on the rule: in competitions, RANK is usually used.\n\n**2. Empty partition.** If a group in PARTITION BY has no rows, its average is not worked out either — no error appears, that group simply does not show in the result. A partition is only made for groups that hold at least one row.\n\n**3. No ORDER BY inside OVER.** \`ROW_NUMBER() OVER ()\` runs without ORDER BY, but the order of the numbers is not fixed — a different order may come every time. For a ranking, ORDER BY inside OVER is essential, or the rank has no meaning.\n\n**4. The order of a running total.** In \`SUM(marks) OVER (ORDER BY marks DESC)\`, the running total adds up in order of marks from high to low: 92, then 92+88=180, then 265, then 339. If ORDER BY were ASC, the total would add up the other way: 74, 159, 247, 339. The last total is 339 in both cases — the full total does not depend on order, but the middle totals do.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Window ki Jagah GROUP BY, aur LIMIT ki Jagah ROW_NUMBER',
+          '6. What If: GROUP BY Instead of a Window, and ROW_NUMBER Instead of LIMIT'
+        ),
+        body: t(
+          `**What if: window function ki jagah GROUP BY use karein?** GROUP BY se group ka average nikal sakta hai, par har row ke saath nahi dikha sakta. GROUP BY 4 rows ko 2 rows mein badal dega (High aur Low). Window function 4 rows ko 4 hi rakhta hai aur har row ke saath group average jod deta hai. Kaam ke hisaab se chunna hai: summary chahiye to GROUP BY, detail + summary chahiye to window.\n\n**What if: top 2 ke liye LIMIT use karein?** \`ORDER BY marks DESC LIMIT 2\` bhi Priya aur Sana de dega, aur ye chhota bhi hai. Lekin LIMIT sirf pehli 2 rows kaat-ta hai. Agar aapko har group ke top 2 chahiye (High group ke top 2 aur Low group ke top 2), to LIMIT kaam nahi karega — wahan PARTITION BY + ROW_NUMBER chahiye hoga. LIMIT simple kaam ke liye, window function mushkil kaam ke liye.\n\n**What if: running total ki jagah alag query chalaayein?** Har row ke liye \`SELECT SUM(marks) FROM students WHERE marks >= ...\` chalana 4 queries maangta hai aur slow hota hai. Window function ek hi query mein saare running totals de deta hai.`,
+          `**What if we use GROUP BY instead of a window function?** GROUP BY can work out a group average, but it cannot show it next to every row. GROUP BY turns 4 rows into 2 rows (High and Low). A window function keeps 4 rows as 4 and adds the group average next to every row. Choose by the job: for a summary use GROUP BY, for detail plus summary use a window.\n\n**What if we use LIMIT for the top 2?** \`ORDER BY marks DESC LIMIT 2\` also gives Priya and Sana, and it is shorter. But LIMIT only cuts the first 2 rows. If you want the top 2 of every group (top 2 of the High group and top 2 of the Low group), LIMIT does not work — there you need PARTITION BY + ROW_NUMBER. LIMIT is for simple jobs, window functions for hard jobs.\n\n**What if we ran a separate query for the running total?** Running \`SELECT SUM(marks) FROM students WHERE marks >= ...\` for every row needs 4 queries and is slow. A window function gives all the running totals in a single query.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Window Functions ka Poora Picture',
+          '7. Summary: The Full Picture of Window Functions'
+        ),
+        body: t(
+          `Window functions har row ke saath ek value jodte hain, bina rows ko group kiye. ROW_NUMBER har row ko alag number deta hai, RANK barabar walon ko ek hi rank deta hai aur agla number skip karta hai, PARTITION BY groups mein baant-ta hai, aur SUM() OVER running total nikaalta hai. Sabke saath OVER likhna zaroori hai.\n\nYaad rakhne wali teen baatein: pehli, window function ko WHERE mein nahi likh sakte — filter ke liye outer query chahiye. Doosri, OVER ke andar ORDER BY likhna zaroori hai, warna ranking ka order fix nahi hoga. Teesri, GROUP BY summary deta hai, window function detail + summary deta hai.\n\nAgle article mein hum CTEs dekhenge — WITH se query ko naam dekar use dobara use karna, aur recursive queries se counting karna.`,
+          `Window functions add a value next to every row, without grouping the rows. ROW_NUMBER gives every row a different number, RANK gives equal ones the same rank and skips the next number, PARTITION BY splits into groups, and SUM() OVER works out a running total. OVER must be written with all of them.\n\nThree things to remember: first, you cannot write a window function in WHERE — filtering needs an outer query. Second, ORDER BY inside OVER is essential, or the ranking order is not fixed. Third, GROUP BY gives a summary, a window function gives detail plus summary.\n\nIn the next article we will look at CTEs — giving a query a name with WITH so it can be used again, and counting with recursive queries.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Window Function ka Flow: Rows Wahi, Value Jud Jaati Hai',
+        'Window Function Flow: Same Rows, Value Added'
+      ),
+      nodes: [
+        {
+          t: t('Input: 4 rows', 'Input: 4 rows'),
+          s: t('Priya 92, Sana 88, Rahul 85, Amit 74', 'Priya 92, Sana 88, Rahul 85, Amit 74')
+        },
+        {
+          t: t('OVER (ORDER BY marks DESC)', 'OVER (ORDER BY marks DESC)'),
+          s: t('Rows ko bade se chhote order mein dekho', 'Look at the rows from high to low')
+        },
+        {
+          t: t('ROW_NUMBER: 1, 2, 3, 4', 'ROW_NUMBER: 1, 2, 3, 4'),
+          s: t('Har row ko alag number milta hai', 'Every row gets a different number')
+        },
+        {
+          t: t('SUM() OVER: 92, 180, 265, 339', 'SUM() OVER: 92, 180, 265, 339'),
+          s: t('Running total chalta hua judta hai', 'The running total keeps adding up')
+        },
+        {
+          t: t('Output: phir bhi 4 rows', 'Output: still 4 rows'),
+          s: t('GROUP BY jaisi merging nahi hoti', 'No merging like GROUP BY')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Running Total — Marks Chalte Hue Judte Hain',
+          'Running Total — Marks Adding Up as They Go'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks,
+  SUM(marks) OVER (ORDER BY marks DESC) AS running_total
+FROM students;`,
+        output: `name | marks | running_total
+Priya | 92 | 92
+Sana | 88 | 180
+Rahul | 85 | 265
+Amit | 74 | 339`
+      },
+      {
+        title: t(
+          'PARTITION BY — High aur Low Group ka Average Har Row ke Saath',
+          'PARTITION BY — High and Low Group Average Next to Every Row'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks,
+  ROUND(AVG(marks) OVER (
+    PARTITION BY CASE WHEN marks >= 85 THEN 'High' ELSE 'Low' END
+  ), 1) AS group_avg
+FROM students
+ORDER BY marks DESC;`,
+        output: `name | marks | group_avg
+Priya | 92 | 88.3
+Sana | 88 | 88.3
+Rahul | 85 | 88.3
+Amit | 74 | 74`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Window function aur GROUP BY mein sabse bada farak kya hai?',
+          'What is the biggest difference between a window function and GROUP BY?'
+        ),
+        opts: [
+          t('GROUP BY fast hota hai', 'GROUP BY is faster'),
+          t('Window function rows ko group karke ek row nahi banata — 4 rows 4 hi rehti hain', 'A window function does not merge rows into one — 4 rows stay 4 rows'),
+          t('Window function sirf numbers par chalta hai', 'A window function only works on numbers'),
+          t('GROUP BY ranking nahi de sakta', 'GROUP BY cannot give a ranking')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: GROUP BY 4 rows ko ek summary row mein badal deta hai, jabki window function har row ke saath value jodta hai aur rows ki ginti wahi rehti hai.',
+          'Correct answer: GROUP BY turns 4 rows into one summary row, while a window function adds a value next to every row and the row count stays the same.'
+        )
+      },
+      {
+        q: t(
+          'Rahul aur Sana dono ke 88 marks hote, to RANK kya deta?',
+          'If Rahul and Sana both had 88 marks, what would RANK give?'
+        ),
+        opts: [
+          t('Dono ko 2, agle ko 3', 'Both get 2, the next gets 3'),
+          t('Dono ko 2, agle ko 4 (3 skip)', 'Both get 2, the next gets 4 (3 skipped)'),
+          t('Ek ko 2, doosre ko 3', 'One gets 2, the other gets 3'),
+          t('Dono ko 3', 'Both get 3')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: RANK barabar walon ko ek hi rank deta hai aur agla number skip kar deta hai, isliye 2, 2 ke baad 4 aata hai.',
+          'Correct answer: RANK gives equal ones the same rank and skips the next number, so after 2, 2 comes 4.'
+        )
+      },
+      {
+        q: t(
+          'Running total wale example mein Sana ki row mein 180 kyun hai?',
+          'Why is the running total 180 in Sana row in the running total example?'
+        ),
+        opts: [
+          t('Sana ke marks 180 hain', 'Sana marks are 180'),
+          t('92 + 88 = 180, Priya aur Sana ke marks ka chalta hua total', '92 + 88 = 180, the running total of Priya and Sana marks'),
+          t('180 class ka average hai', '180 is the class average'),
+          t('180 ek random number hai', '180 is a random number')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: running total har row tak ke marks ko jodta hai — Priya ke 92 ke baad Sana ke 88 judte hain, isliye 92 + 88 = 180.',
+          'Correct answer: a running total adds the marks up to each row — after Priya 92, Sana 88 is added, so 92 + 88 = 180.'
+        )
+      },
+      {
+        q: t(
+          'Window function ko WHERE mein kyun nahi likh sakte?',
+          'Why can a window function not be written in WHERE?'
+        ),
+        opts: [
+          t('WHERE mein sirf numbers allowed hain', 'Only numbers are allowed in WHERE'),
+          t('WHERE window function se pehle chalta hai, isliye uska result tab tak milta hi nahi', 'WHERE runs before the window function, so its result is not available yet'),
+          t('Window function WHERE mein slow hota hai', 'A window function is slow in WHERE'),
+          t('SQLite mein WHERE allowed nahi hai', 'WHERE is not allowed in SQLite')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: SQL mein WHERE pehle chalta hai aur window function baad mein, isliye WHERE ko window ka result pata hi nahi hota — filter ke liye outer query chahiye.',
+          'Correct answer: in SQL, WHERE runs first and the window function runs later, so WHERE does not know the window result yet — filtering needs an outer query.'
+        )
+      },
+      {
+        q: t(
+          'PARTITION BY ka kaam kya hai?',
+          'What is the job of PARTITION BY?'
+        ),
+        opts: [
+          t('Rows ko delete karna', 'Deleting rows'),
+          t('Rows ko groups mein baantna, bina unhe ek row mein milaaye', 'Splitting rows into groups without merging them into one row'),
+          t('Rows ko sort karna', 'Sorting rows'),
+          t('Table ko do hisso mein todna', 'Breaking the table into two parts')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: PARTITION BY rows ko groups mein baant deta hai aur function har group ke andar alag se chalta hai, par rows ki ginti wahi rehti hai.',
+          'Correct answer: PARTITION BY splits rows into groups and the function runs separately inside each group, but the row count stays the same.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Window function har row ke saath value jodta hai, rows ko ek mein nahi milata.',
+        'A window function adds a value next to every row without merging rows into one.'
+      ),
+      t(
+        'ROW_NUMBER har row ko alag number deta hai, RANK barabar walon ko ek hi rank deta hai.',
+        'ROW_NUMBER gives every row a different number, RANK gives equal ones the same rank.'
+      ),
+      t(
+        'OVER likhna zaroori hai — bina OVER ke window function error deta hai.',
+        'OVER must be written — without OVER a window function gives an error.'
+      ),
+      t(
+        'Window function ko WHERE mein nahi likh sakte — filter ke liye outer query chahiye.',
+        'A window function cannot be written in WHERE — filtering needs an outer query.'
+      ),
+      t(
+        'PARTITION BY groups mein baant-ta hai, GROUP BY groups ko ek row mein milata hai.',
+        'PARTITION BY splits into groups, GROUP BY merges groups into one row.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Top 2 Students — ROW_NUMBER ke Saath',
+        'Practice: Top 2 Students — with ROW_NUMBER'
+      ),
+      task: t(
+        'ROW_NUMBER wali subquery likho jo sirf top 2 students (sabse zyada marks wale) de. Andar wali query mein ROW_NUMBER() OVER (ORDER BY marks DESC) se rn nikaalo, bahar wali mein WHERE rn <= 2 likho. Done tab maanenge jab output mein sirf 2 rows dikhein: Priya | 92, Sana | 88.',
+        'Write a subquery with ROW_NUMBER that gives only the top 2 students (the highest marks). In the inner query work out rn with ROW_NUMBER() OVER (ORDER BY marks DESC), and in the outer query write WHERE rn <= 2. You are done when the output shows only 2 rows: Priya | 92, Sana | 88.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks
+FROM (SELECT name, marks,
+             ROW_NUMBER() OVER (ORDER BY marks DESC) AS rn
+      FROM students)
+WHERE rn <= 2;`,
+      expected: `name | marks
+Priya | 92
+Sana | 88`
+    },
+    readMinutes: 12
+  };
+
+const dbmsCte: Article = {
+    id: 'dbms-cte',
+    subjectId: 'dbms',
+    title: t(
+      'CTEs aur Recursive Queries — WITH se Query ko Naam Dena',
+      'CTEs and Recursive Queries — Naming a Query with WITH'
+    ),
+    summary: t(
+      'CTE seekho: WITH se ek query ko naam dekar use main query mein dobara use karna, lambi query ko chhote readable hisso mein todna, aur WITH RECURSIVE se 1 se 5 tak ginna — sab students table par live examples ke saath.',
+      'Learn CTEs: giving a query a name with WITH so it can be used again in the main query, breaking a long query into small readable parts, and counting from 1 to 5 with WITH RECURSIVE — all with live examples on the students table.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. CTE Kya Hai? (WITH, Recursive aur Subquery se Farak)',
+          '1. What Is a CTE? (WITH, Recursive, and How It Differs from a Subquery)'
+        ),
+        body: t(
+          `**CTE** matlab Common Table Expression — ek temporary naam wali query jo sirf ek query ke liye banti hai. \`WITH avg_marks AS (SELECT AVG(marks) AS avg_m FROM students)\` likhne ke baad, main query mein \`avg_marks\` ko ek table ki tarah use kar sakte ho. CTE table mein store nahi hoti — query khatm hote hi wo gayab ho jaati hai.\n\nCTE subquery jaisi lagti hai, par do farak hain. Pehla, CTE query ke **shuru mein** likhi jaati hai aur use **naam** milta hai, isliye main query chhoti aur readable rehti hai. Doosra, ek CTE ko main query mein **kai baar** use kar sakte ho — subquery ko har baar dobara likhna padta hai.\n\n**Recursive CTE** khud ko dobara call karti hai. \`WITH RECURSIVE cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt WHERE n < 5)\` — pehle 1 aata hai, phir usse 2 banta hai, phir 3, 4, 5. Jab \`n < 5\` false ho jaata hai, to recursion ruk jaati hai. Isse counting, dates ki list, ya tree jaise data ko traverse kiya jaata hai.`,
+          `A **CTE** is a Common Table Expression — a temporary named query that exists only for one query. After writing \`WITH avg_marks AS (SELECT AVG(marks) AS avg_m FROM students)\`, the main query can use \`avg_marks\` like a table. A CTE is not stored in the table — it vanishes the moment the query ends.\n\nA CTE looks like a subquery, but there are two differences. First, a CTE is written at the **start** of the query and gets a **name**, so the main query stays short and readable. Second, one CTE can be used **several times** in the main query — a subquery must be written again every time.\n\nA **recursive CTE** calls itself again. \`WITH RECURSIVE cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt WHERE n < 5)\` — first 1 comes, then 2 is made from it, then 3, 4, 5. When \`n < 5\` becomes false, the recursion stops. This is used for counting, making a list of dates, or walking through tree-like data.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Average se Upar, Dates ki List aur Org Chart',
+          '2. Real-Life Examples: Above Average, List of Dates, and Org Chart'
+        ),
+        body: t(
+          `Pehla example hai **average se upar wale students**. Average nikaalna aur phir compare karna — do steps hain. CTE se pehla step ek naam paa jaata hai (\`avg_marks\`), aur main query seedhi padhi jaati hai: "marks avg_m se zyada hon". Bina CTE ke ye subquery se bhi hota hai, par CTE wala version padhne mein zyada saaf hota hai.\n\nDoosra example hai **dates ki list**. Agle 5 dinon ki list chahiye ho — 1, 2, 3, 4, 5 — to recursive CTE se bana sakte ho, bina table banaaye. Calendar, attendance aur reports mein aisi lists baar-baar chahiye hoti hain.\n\nTeesra example hai **org chart**. Company mein har employee ka manager hota hai, manager ka bhi manager hota hai. CEO se lekar neeche tak ki chain nikaalni ho, to recursive CTE ek-ek level neeche jaati hai jab tak koi manager na bache. Ye wahi kaam hai jo subquery se nahi ho sakta, kyunki levels ki ginti pehle se pata nahi hoti.`,
+          `The first example is **students above the average**. Working out the average and then comparing are two steps. With a CTE the first step gets a name (\`avg_marks\`), and the main query reads plainly: "marks are more than avg_m". Without a CTE this also works with a subquery, but the CTE version is cleaner to read.\n\nThe second example is a **list of dates**. To get the list of the next 5 days — 1, 2, 3, 4, 5 — a recursive CTE can build it without making a table. Calendars, attendance, and reports need such lists again and again.\n\nThe third example is an **org chart**. In a company every employee has a manager, and the manager also has a manager. To get the chain from the CEO down to the bottom, a recursive CTE goes one level down at a time until no manager remains. This is the job a subquery cannot do, because the number of levels is not known in advance.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: CTE se Average se Zyada Marks Walon ka Dry Run',
+          '3. Step-by-Step: CTE Dry Run for Students Above the Average'
+        ),
+        body: t(
+          `Query hai: \`WITH avg_marks AS (SELECT AVG(marks) AS avg_m FROM students) SELECT name, marks FROM students, avg_marks WHERE marks > avg_m ORDER BY marks DESC\`.\n\n**Step 1 — CTE chalao:** \`SELECT AVG(marks) FROM students\` — total 339, average 84.75. CTE \`avg_marks\` ek chhoti si temporary table ban jaati hai, jismein ek hi row aur ek hi column hai: avg_m = 84.75.\n\n**Step 2 — main query chalao:** \`FROM students, avg_marks\` dono ko jodta hai — har student ke saath avg_m = 84.75 jud jaata hai. Phir \`WHERE marks > avg_m\` check karta hai:\n- **Rahul, 85:** 85 > 84.75 true — row aayegi.\n- **Priya, 92:** 92 > 84.75 true — row aayegi.\n- **Amit, 74:** 74 > 84.75 false — row nahi aayegi.\n- **Sana, 88:** 88 > 84.75 true — row aayegi.\n\n**Step 3 — sort karo:** \`ORDER BY marks DESC\` se order banta hai Priya 92, Sana 88, Rahul 85. Final result mein 3 rows hain. Dhyaan do: CTE ka naam \`avg_marks\` main query mein ek table ki tarah use hua — yehi CTE ki pehchan hai.`,
+          `The query is: \`WITH avg_marks AS (SELECT AVG(marks) AS avg_m FROM students) SELECT name, marks FROM students, avg_marks WHERE marks > avg_m ORDER BY marks DESC\`.\n\n**Step 1 — run the CTE:** \`SELECT AVG(marks) FROM students\` — total 339, average 84.75. The CTE \`avg_marks\` becomes a tiny temporary table with a single row and a single column: avg_m = 84.75.\n\n**Step 2 — run the main query:** \`FROM students, avg_marks\` joins the two — every student gains avg_m = 84.75 next to them. Then \`WHERE marks > avg_m\` checks:\n- **Rahul, 85:** 85 > 84.75 is true — the row comes.\n- **Priya, 92:** 92 > 84.75 is true — the row comes.\n- **Amit, 74:** 74 > 84.75 is false — the row does not come.\n- **Sana, 88:** 88 > 84.75 is true — the row comes.\n\n**Step 3 — sort:** \`ORDER BY marks DESC\` gives the order Priya 92, Sana 88, Rahul 85. The final result has 3 rows. Note this: the CTE name \`avg_marks\` was used in the main query like a table — that is the mark of a CTE.`
+        ),
+        code: {
+          title: t(
+            'CTE — Average ko Naam Dekar Average se Zyada Wale Dhoondhna',
+            'CTE — Naming the Average to Find Students Above It'
+          ),
+          language: 'sql',
+          code: `WITH avg_marks AS (
+  SELECT AVG(marks) AS avg_m FROM students
+)
+SELECT name, marks
+FROM students, avg_marks
+WHERE marks > avg_m
+ORDER BY marks DESC;`,
+          output: `name | marks
+Priya | 92
+Sana | 88
+Rahul | 85`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: WITH ki Jagah, RECURSIVE Bhoolna aur Rukne ki Condition',
+          '4. Common Mistakes: WITH Placement, Forgetting RECURSIVE, and the Stopping Condition'
+        ),
+        body: t(
+          `**Galti 1: WITH ko query ke beech mein likhna.** CTE hamesha query ke **shuru mein** aati hai, SELECT se pehle. \`SELECT ... WITH ...\` error dega. Structure yaad rakho: pehle WITH, phir main SELECT.\n\n**Galti 2: recursive CTE mein RECURSIVE bhoolna.** \`WITH cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt ...)\` — bina RECURSIVE ke database error dega, kyunki CTE khud ko refer nahi kar sakti. Recursive CTE mein hamesha \`WITH RECURSIVE\` likhna padta hai.\n\n**Galti 3: rukne ki condition bhoolna.** \`SELECT n + 1 FROM cnt WHERE n < 5\` mein \`WHERE n < 5\` hi recursion ko rokta hai. Agar ye condition bhool gaye, to recursion kabhi nahi rukegi — 1, 2, 3... hamesha badhta rahega aur database atak jaayega ya limit par error de dega. Har recursive CTE mein rukne ki condition zaroori hai.\n\n**Galti 4: CTE ko dobara use karne ki koshish doosri query mein.** CTE sirf usi query ke liye banti hai jismein wo likhi hai. Agli query mein \`avg_marks\` likhoge to error aayega — wo tab tak gayab ho chuki hogi. CTE ko baar-baar chahiye ho to use ek VIEW ya asli table bana lo.`,
+          `**Mistake 1: Writing WITH in the middle of the query.** A CTE always comes at the **start** of the query, before SELECT. \`SELECT ... WITH ...\` gives an error. Remember the structure: first WITH, then the main SELECT.\n\n**Mistake 2: Forgetting RECURSIVE in a recursive CTE.** \`WITH cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt ...)\` — without RECURSIVE the database gives an error, because a CTE cannot refer to itself. In a recursive CTE you must always write \`WITH RECURSIVE\`.\n\n**Mistake 3: Forgetting the stopping condition.** In \`SELECT n + 1 FROM cnt WHERE n < 5\`, the \`WHERE n < 5\` is what stops the recursion. If you forget this condition, the recursion never stops — 1, 2, 3... keeps growing forever and the database freezes or errors at its limit. Every recursive CTE needs a stopping condition.\n\n**Mistake 4: Trying to use a CTE again in another query.** A CTE exists only for the query it is written in. If you write \`avg_marks\` in the next query, you get an error — it has vanished by then. If you need a CTE again and again, make it a VIEW or a real table.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali CTE, Recursive mein UNION vs UNION ALL aur Do CTEs',
+          '5. Edge Cases: Empty CTE, UNION vs UNION ALL in Recursion, and Two CTEs'
+        ),
+        body: t(
+          `**1. Khaali CTE.** Agar CTE ki query koi row nahi deti, to main query ko koi row nahi milegi — error nahi aayega, bas khaali result aayega. Jaise subquery, waise hi CTE ko bhi pehle alag se chala kar check karo.\n\n**2. Recursive mein UNION vs UNION ALL.** Recursive CTE mein \`UNION ALL\` likha jaata hai, kyunki har step mein nayi value aati hai aur duplicate hataane ki zaroorat nahi hoti. \`UNION\` (bina ALL) bhi chalega, par wo har step par duplicate check karega aur slow hoga. Counting jaise kaam mein UNION ALL sahi hai.\n\n**3. Do CTEs ek saath.** Ek query mein kai CTEs ho sakti hain: \`WITH a AS (...), b AS (...) SELECT ...\` — doosri CTE pehli CTE ko use bhi kar sakti hai. CTEs ko comma se alag kiya jaata hai aur WITH sirf ek baar likha jaata hai.\n\n**4. Recursive CTE mein column ka naam.** \`cnt(n)\` mein \`n\` column ka naam hai. Agar naam na dein, to column ka naam pehli SELECT se aayega. Naam dena behtar hai, kyunki recursive part mein \`n + 1\` likhte time pata rehta hai ki column ka naam kya hai.`,
+          `**1. Empty CTE.** If the CTE query gives no rows, the main query gets no rows either — no error appears, only an empty result. Like a subquery, a CTE should also be run alone first to check it.\n\n**2. UNION vs UNION ALL in recursion.** A recursive CTE is written with \`UNION ALL\`, because every step brings a new value and there is no need to remove duplicates. \`UNION\` (without ALL) also runs, but it checks for duplicates at every step and is slow. For a counting job, UNION ALL is right.\n\n**3. Two CTEs together.** One query can hold several CTEs: \`WITH a AS (...), b AS (...) SELECT ...\` — the second CTE can even use the first CTE. CTEs are separated by commas and WITH is written only once.\n\n**4. Column name in a recursive CTE.** In \`cnt(n)\`, \`n\` is the column name. If no name is given, the column name comes from the first SELECT. Giving a name is better, because when writing \`n + 1\` in the recursive part you know what the column is called.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: CTE ki Jagah Subquery, aur Recursive ki Jagah Loop',
+          '6. What If: Subquery Instead of CTE, and a Loop Instead of Recursion'
+        ),
+        body: t(
+          `**What if: CTE ki jagah subquery use karein?** Average wala example subquery se bhi ho jaata hai: \`WHERE marks > (SELECT AVG(marks) FROM students)\`. CTE tab jeet-ta hai jab wahi calculation main query mein **do ya zyada baar** chahiye ho — subquery ko har baar dobara likhna padega, CTE ko ek baar likh kar kai baar use kar sakte ho. Ek baar ke kaam ke liye subquery, baar-baar ke kaam ke liye CTE.\n\n**What if: recursive ki jagah application mein loop chalaayein?** 1 se 5 tak ginna Python mein loop se bhi ho jaata hai. Lekin jab counting database ke andar hi chahiye ho — jaise dates ki list banakar us par join karna ho — to recursive CTE behtar hai, kyunki data database se bahar jaata hi nahi. Kaam jahan ka hai, wahi karo: data ka kaam database mein, display ka kaam application mein.\n\n**What if: CTE mein ORDER BY likh dein?** CTE ke andar ORDER BY likhna allowed hai, par uska order main query mein guarantee nahi hota — main query apne ORDER BY se sort karti hai. CTE ke andar ORDER BY sirf tab kaam aata hai jab LIMIT ke saath use ho.`,
+          `**What if we use a subquery instead of a CTE?** The average example also works with a subquery: \`WHERE marks > (SELECT AVG(marks) FROM students)\`. A CTE wins when the same calculation is needed **two or more times** in the main query — a subquery must be written again every time, while a CTE is written once and used several times. A subquery for a one-time job, a CTE for a repeated job.\n\n**What if we run a loop in the application instead of recursion?** Counting from 1 to 5 can also be done with a loop in Python. But when the counting is needed inside the database itself — for example, to build a list of dates and join on it — a recursive CTE is better, because the data never leaves the database. Do the job where it belongs: data work in the database, display work in the application.\n\n**What if we write ORDER BY inside a CTE?** ORDER BY is allowed inside a CTE, but its order is not guaranteed in the main query — the main query sorts with its own ORDER BY. ORDER BY inside a CTE only matters when it is used with LIMIT.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: CTEs ka Poora Picture',
+          '7. Summary: The Full Picture of CTEs'
+        ),
+        body: t(
+          `CTE query ke shuru mein WITH se likhi jaane wali naam wali temporary query hai. Ye lambi query ko readable banaati hai aur ek calculation ko kai baar use karne deti hai. Recursive CTE khud ko dobara call karti hai aur counting ya tree traverse karne ke kaam aati hai — usmein WITH RECURSIVE aur rukne ki condition dono zaroori hain.\n\nYaad rakhne wali teen baatein: pehli, WITH hamesha query ke shuru mein aata hai. Doosri, recursive CTE mein RECURSIVE aur rukne ki condition dono likhna zaroori hai, warna recursion kabhi nahi rukegi. Teesri, CTE sirf ek query ke liye banti hai — dobara chahiye ho to VIEW ya table banao.\n\nAgle article mein hum keys ko gehraai se dekhenge — primary, foreign, candidate, super aur composite keys, aur referential integrity ka matlab.`,
+          `A CTE is a named temporary query written with WITH at the start of a query. It makes a long query readable and lets one calculation be used several times. A recursive CTE calls itself again and is used for counting or walking a tree — it needs both WITH RECURSIVE and a stopping condition.\n\nThree things to remember: first, WITH always comes at the start of the query. Second, in a recursive CTE both RECURSIVE and the stopping condition must be written, or the recursion never stops. Third, a CTE exists for only one query — if you need it again, make a VIEW or a table.\n\nIn the next article we will look at keys in depth — primary, foreign, candidate, super, and composite keys, and what referential integrity means.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'CTE ka Flow: Naam Do, Phir Use Karo',
+        'CTE Flow: Give a Name, Then Use It'
+      ),
+      nodes: [
+        {
+          t: t('WITH avg_marks AS (...)', 'WITH avg_marks AS (...)'),
+          s: t('Average nikaal kar naam de diya', 'The average is worked out and named')
+        },
+        {
+          t: t('avg_marks = 84.75', 'avg_marks = 84.75'),
+          s: t('Ek row, ek column ki temporary table', 'A temporary table with one row and one column')
+        },
+        {
+          t: t('Main query: marks > avg_m', 'Main query: marks > avg_m'),
+          s: t('CTE ko table ki tarah use karo', 'Use the CTE like a table')
+        },
+        {
+          t: t('Result: Priya, Sana, Rahul', 'Result: Priya, Sana, Rahul'),
+          s: t('Amit nahi aata — 74 < 84.75', 'Amit does not come — 74 < 84.75')
+        },
+        {
+          t: t('Recursive: 1 se 5 tak', 'Recursive: from 1 to 5'),
+          s: t('WITH RECURSIVE + rukne ki condition', 'WITH RECURSIVE + a stopping condition')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Recursive CTE — 1 se 5 Tak Ginna',
+          'Recursive CTE — Counting from 1 to 5'
+        ),
+        language: 'sql',
+        code: `WITH RECURSIVE cnt(n) AS (
+  SELECT 1
+  UNION ALL
+  SELECT n + 1 FROM cnt WHERE n < 5
+)
+SELECT n FROM cnt;`,
+        output: `n
+1
+2
+3
+4
+5`
+      },
+      {
+        title: t(
+          'CTE — Toppers ki List ko Naam Dekar Use Karna',
+          'CTE — Naming the Toppers List and Using It'
+        ),
+        language: 'sql',
+        code: `WITH toppers AS (
+  SELECT name, marks FROM students WHERE marks >= 88
+)
+SELECT name, marks, 'Topper' AS tag
+FROM toppers
+ORDER BY marks DESC;`,
+        output: `name | marks | tag
+Priya | 92 | Topper
+Sana | 88 | Topper`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'CTE query mein kahan likhi jaati hai?',
+          'Where is a CTE written in a query?'
+        ),
+        opts: [
+          t('Aakhir mein', 'At the end'),
+          t('Shuru mein, WITH se, SELECT se pehle', 'At the start, with WITH, before SELECT'),
+          t('WHERE ke andar', 'Inside WHERE'),
+          t('Kahin bhi', 'Anywhere')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: CTE hamesha query ke shuru mein WITH se likhi jaati hai, aur uske baad main SELECT aata hai.',
+          'Correct answer: a CTE is always written at the start of the query with WITH, and the main SELECT comes after it.'
+        )
+      },
+      {
+        q: t(
+          'Recursive CTE mein kya zaroori hai?',
+          'What is essential in a recursive CTE?'
+        ),
+        opts: [
+          t('Sirf WITH', 'Only WITH'),
+          t('WITH RECURSIVE aur rukne ki condition (jaise WHERE n < 5)', 'WITH RECURSIVE and a stopping condition (like WHERE n < 5)'),
+          t('Sirf ORDER BY', 'Only ORDER BY'),
+          t('Kuch zaroori nahi hai', 'Nothing is essential')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: recursive CTE khud ko call karti hai, isliye WITH RECURSIVE likhna padta hai aur rukne ki condition bhi chahiye, warna recursion kabhi nahi rukegi.',
+          'Correct answer: a recursive CTE calls itself, so WITH RECURSIVE must be written and a stopping condition is needed, or the recursion never stops.'
+        )
+      },
+      {
+        q: t(
+          'WITH RECURSIVE cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt WHERE n < 5) kitne numbers dega?',
+          'How many numbers does WITH RECURSIVE cnt(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM cnt WHERE n < 5) give?'
+        ),
+        opts: [
+          t('4 — 1 se 4 tak', '4 — from 1 to 4'),
+          t('5 — 1 se 5 tak', '5 — from 1 to 5'),
+          t('6 — 1 se 6 tak', '6 — from 1 to 6'),
+          t('Infinite', 'Infinite')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehle 1 aata hai, phir har step par 1 judta hai jab tak n < 5 hai — 5 par condition false ho jaati hai, isliye 1, 2, 3, 4, 5 milte hain.',
+          'Correct answer: first 1 comes, then 1 is added at each step while n < 5 — at 5 the condition turns false, so 1, 2, 3, 4, 5 come back.'
+        )
+      },
+      {
+        q: t(
+          'CTE subquery se behtar kab hoti hai?',
+          'When is a CTE better than a subquery?'
+        ),
+        opts: [
+          t('Jab calculation ek hi baar chahiye ho', 'When the calculation is needed only once'),
+          t('Jab wahi calculation main query mein kai baar chahiye ho, ya query lambi ho', 'When the same calculation is needed several times in the main query, or the query is long'),
+          t('CTE hamesha slow hoti hai', 'A CTE is always slow'),
+          t('CTE kabhi behtar nahi hoti', 'A CTE is never better')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: CTE ko ek baar naam dekar kai baar use kar sakte ho, jabki subquery ko har baar dobara likhna padta hai — isliye repeated ya lambi query mein CTE behtar hai.',
+          'Correct answer: a CTE is named once and used several times, while a subquery must be written again every time — so a CTE is better for a repeated or long query.'
+        )
+      },
+      {
+        q: t(
+          'CTE kab gayab ho jaati hai?',
+          'When does a CTE vanish?'
+        ),
+        opts: [
+          t('Database band hone par', 'When the database closes'),
+          t('Query khatm hote hi — agle query mein use nahi kar sakte', 'As soon as the query ends — it cannot be used in the next query'),
+          t('Kabhi nahi', 'Never'),
+          t('Table delete hone par', 'When the table is deleted')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: CTE sirf usi query ke liye banti hai jismein wo likhi hai, query khatm hote hi wo gayab ho jaati hai.',
+          'Correct answer: a CTE exists only for the query it is written in, and it vanishes as soon as that query ends.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'CTE WITH se query ke shuru mein likhi jaati hai aur use naam milta hai.',
+        'A CTE is written with WITH at the start of the query and gets a name.'
+      ),
+      t(
+        'Ek CTE ko main query mein kai baar use kar sakte ho, subquery ko dobara likhna padta hai.',
+        'One CTE can be used several times in the main query, while a subquery must be written again.'
+      ),
+      t(
+        'Recursive CTE mein WITH RECURSIVE aur rukne ki condition dono zaroori hain.',
+        'A recursive CTE needs both WITH RECURSIVE and a stopping condition.'
+      ),
+      t(
+        'CTE sirf ek query ke liye banti hai — dobara chahiye ho to VIEW ya table banao.',
+        'A CTE exists for only one query — if you need it again, make a VIEW or a table.'
+      ),
+      t(
+        'Recursive CTE counting, dates ki list aur org chart jaise kaam ke liye hoti hai.',
+        'A recursive CTE is for counting, a list of dates, and an org chart.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: CTE se 85 ya Zyada Marks Wale Students',
+        'Practice: Students with 85 or More Marks, with a CTE'
+      ),
+      task: t(
+        'Ek CTE likho jiska naam high ho aur jo 85 ya zyada marks wale students ke naam de. Phir main query mein us CTE se naam nikaalo, naam ke order mein. Done tab maanenge jab output mein 3 rows dikhein: Priya, Rahul, Sana.',
+        'Write a CTE named high that gives the names of students with 85 or more marks. Then get the names from that CTE in the main query, in name order. You are done when the output shows 3 rows: Priya, Rahul, Sana.'
+      ),
+      language: 'sql',
+      starter: `WITH high AS (
+  SELECT name FROM students WHERE marks >= 85
+)
+SELECT name FROM high
+ORDER BY name;`,
+      expected: `name
+Priya
+Rahul
+Sana`
+    },
+    readMinutes: 12
+  };
+
+const dbmsKeys: Article = {
+    id: 'dbms-keys',
+    subjectId: 'dbms',
+    title: t(
+      'Keys Deep — Primary, Foreign, Candidate, Super aur Composite Keys',
+      'Keys in Depth: Primary, Foreign, Candidate, Super, and Composite Keys'
+    ),
+    summary: t(
+      'Keys ko gehraai se samjho: har row ki pehchan kaise banti hai, primary key aur foreign key ka farak, candidate aur super key mein kya antar hai, do columns se bani composite key, aur referential integrity ka matlab — sab students, courses aur enrollments tables par live SQL ke saath.',
+      'Understand keys in depth: how every row gets its identity, the difference between a primary key and a foreign key, how a candidate key differs from a super key, a composite key made of two columns, and what referential integrity means — all with live SQL on the students, courses, and enrollments tables.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Keys Kya Hain? (Primary, Foreign, Candidate, Super, Composite)',
+          '1. What Are Keys? (Primary, Foreign, Candidate, Super, Composite)'
+        ),
+        body: t(
+          `**Key** ek ya kai columns ka set hai jo table ki har row ko uniquely pehchan-ta hai. Students table mein \`id\` key hai, kyunki har student ki id alag hai — id 2 likho to sirf Priya milegi, koi aur nahi. Naam key nahi hai, kyunki do students ka naam ek jaisa ho sakta hai.\n\n**Primary key** table ki main key hoti hai — ek table mein sirf ek primary key hoti hai, wo kabhi NULL nahi hoti aur kabhi duplicate nahi hoti. **Foreign key** ek table ka column hota hai jo doosri table ki primary key ko point karta hai — jaise enrollments table mein \`student_id\` students table ki \`id\` ko point karta hai.\n\n**Super key** columns ka koi bhi set hai jo har row ko uniquely pehchan sake — jaise (id), (id, name), (id, name, marks) teeno super keys hain. **Candidate key** sabse chhoti super key hai — usmein se koi column hatao to wo unique nahi rehti. (id) candidate key hai, par (id, name) nahi hai, kyunki usmein se name hataane par bhi id akeli unique rehti hai. **Composite key** wo primary key hai jo ek se zyada columns se banti hai, jaise (student_id, subject).`,
+          `A **key** is a set of one or more columns that identifies every row of a table uniquely. In the students table, \`id\` is a key, because every student id is different — write id 2 and you get only Priya, nobody else. A name is not a key, because two students can have the same name.\n\nA **primary key** is the main key of a table — a table has only one primary key, it is never NULL and never a duplicate. A **foreign key** is a column of one table that points to the primary key of another table — like \`student_id\` in the enrollments table pointing to \`id\` in the students table.\n\nA **super key** is any set of columns that can identify every row uniquely — for example (id), (id, name), and (id, name, marks) are all super keys. A **candidate key** is the smallest super key — remove any column from it and it stops being unique. (id) is a candidate key, but (id, name) is not, because removing name still leaves id unique on its own. A **composite key** is a primary key made of more than one column, like (student_id, subject).`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Roll Number, Aadhaar aur Exam Seat',
+          '2. Real-Life Examples: Roll Number, Aadhaar, and Exam Seat'
+        ),
+        body: t(
+          `Pehla example hai **roll number**. School mein har student ka roll number alag hota hai — wahi students table ki primary key hai. Naam se student nahi dhoondha jaata, roll number se dhoondha jaata hai, kyunki naam duplicate ho sakta hai aur roll number nahi.\n\nDoosra example hai **Aadhaar aur PAN**. Ek insaan ke paas Aadhaar bhi hai aur PAN bhi — dono alag-alag candidate keys hain, kyunki dono akeli pehchan kar sakti hain. Database mein ek ko primary key bana diya jaata hai aur doosra candidate key rehta hai. Dono mein se koi ek chunna padta hai, dono primary nahi ho sakte.\n\nTeesra example hai **exam seat**. Exam hall mein ek seat ki pehchan sirf room number se nahi hoti aur sirf seat number se bhi nahi — dono mil kar pehchan banti hai: (room, seat). Ye composite key hai. Room 1, Seat 5 aur Room 2, Seat 5 alag seats hain — sirf dono columns mil kar unique bante hain.`,
+          `The first example is a **roll number**. In a school every student has a different roll number — that is the primary key of the students table. A student is not found by name, but by roll number, because a name can be a duplicate and a roll number cannot.\n\nThe second example is **Aadhaar and PAN**. A person has both an Aadhaar and a PAN — both are separate candidate keys, because either one alone can identify them. In the database one is made the primary key and the other stays a candidate key. One of the two must be chosen; both cannot be primary.\n\nThe third example is an **exam seat**. In an exam hall, a seat is not identified by the room number alone or by the seat number alone — both together make the identity: (room, seat). This is a composite key. Room 1, Seat 5 and Room 2, Seat 5 are different seats — only both columns together are unique.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Foreign Key se Enrollments ko Jodna (Dry Run)',
+          '3. Step-by-Step: Joining Enrollments with a Foreign Key (Dry Run)'
+        ),
+        body: t(
+          `Pehle do tables banate hain. \`courses\` table mein \`course_id INTEGER PRIMARY KEY\` hai aur ek row hai: (1, 'Maths'). \`enrollments\` table mein \`enroll_id INTEGER PRIMARY KEY\` hai, \`student_id INTEGER REFERENCES students(id)\` hai aur \`course_id INTEGER REFERENCES courses(course_id)\` hai. Ek row hai: (1, 1, 1) — matlab enroll_id 1, student_id 1 (Rahul), course_id 1 (Maths).\n\nAb join chalao: \`SELECT e.enroll_id, s.name, c.title FROM enrollments e JOIN students s ON s.id = e.student_id JOIN courses c ON c.course_id = e.course_id\`. Dry run:\n- **Enrollments row (1, 1, 1):** \`s.id = 1\` se students mein Rahul milta hai. \`c.course_id = 1\` se courses mein Maths milta hai. Row banegi: 1 | Rahul | Maths.\n- **Aur koi row nahi hai**, isliye result mein sirf 1 row aati hai.\n\nYehi foreign key ka kaam hai: \`student_id = 1\` ka matlab sirf tab banta hai jab students mein id 1 maujood ho. Foreign key do tables ke beech ka link hai — iske bina enrollments mein 1 likha hota, par pata nahi chalta ki 1 kaun hai.`,
+          `First, two tables are made. The \`courses\` table has \`course_id INTEGER PRIMARY KEY\` and one row: (1, 'Maths'). The \`enrollments\` table has \`enroll_id INTEGER PRIMARY KEY\`, \`student_id INTEGER REFERENCES students(id)\`, and \`course_id INTEGER REFERENCES courses(course_id)\`. It has one row: (1, 1, 1) — meaning enroll_id 1, student_id 1 (Rahul), course_id 1 (Maths).\n\nNow run the join: \`SELECT e.enroll_id, s.name, c.title FROM enrollments e JOIN students s ON s.id = e.student_id JOIN courses c ON c.course_id = e.course_id\`. Dry run:\n- **Enrollments row (1, 1, 1):** \`s.id = 1\` finds Rahul in students. \`c.course_id = 1\` finds Maths in courses. The row becomes: 1 | Rahul | Maths.\n- **There is no other row**, so the result has only 1 row.\n\nThat is the job of a foreign key: \`student_id = 1\` only has meaning when id 1 exists in students. A foreign key is the link between two tables — without it, enrollments would hold a 1, but nobody would know who 1 is.`
+        ),
+        code: {
+          title: t(
+            'Primary + Foreign Key — Courses aur Enrollments ko Jodna',
+            'Primary + Foreign Key — Joining Courses and Enrollments'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (
+  course_id INTEGER PRIMARY KEY,
+  title TEXT
+);
+CREATE TABLE enrollments (
+  enroll_id INTEGER PRIMARY KEY,
+  student_id INTEGER REFERENCES students(id),
+  course_id INTEGER REFERENCES courses(course_id)
+);
+INSERT INTO courses VALUES (1, 'Maths');
+INSERT INTO enrollments VALUES (1, 1, 1);
+SELECT e.enroll_id, s.name, c.title
+FROM enrollments e
+JOIN students s ON s.id = e.student_id
+JOIN courses c ON c.course_id = e.course_id;`,
+          output: `enroll_id | name | title
+1 | Rahul | Maths`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Naam ko Key Banana, Duplicate PK aur Dangling Foreign Key',
+          '4. Common Mistakes: Making a Name a Key, Duplicate PK, and Dangling Foreign Key'
+        ),
+        body: t(
+          `**Galti 1: naam ko primary key banana.** \`name TEXT PRIMARY KEY\` likh doge to doosra Rahul kabhi insert nahi ho paayega — database duplicate naam par error de dega. Naam unique nahi hota, isliye naam kabhi primary key nahi ban sakta. Primary key hamesha wohi column bano jo kabhi duplicate nahi hoga — jaise id ya roll number.\n\n**Galti 2: primary key mein duplicate ya NULL daalna.** Primary key mein ek hi id do baar nahi daal sakte aur NULL bhi nahi daal sakte. \`INSERT INTO courses VALUES (1, 'Physics')\` jab course_id 1 pehle se ho, to database error dega. Ye error hi primary key ka kaam hai — wo galat data ko andar aane se rokta hai.\n\n**Galti 3: dangling foreign key.** Enrollments mein student_id 99 daal diya, par students mein id 99 hai hi nahi — to ye row kisi ko point nahi karti, latki hui hai. Ise **dangling foreign key** kehte hain. **Referential integrity** ka matlab hai ki aisa kabhi na ho — har foreign key value doosri table mein maujood honi chahiye. Foreign key constraint yehi check karta hai.\n\n**Galti 4: candidate aur super key ko ek samajhna.** (id, name) super key hai par candidate key nahi hai, kyunki usmein extra column hai. Candidate key wohi hai jismein se ek bhi column hatao to uniqueness khatm ho jaaye. Interview mein ye farak sabse zyada poochha jaata hai.`,
+          `**Mistake 1: Making a name the primary key.** If you write \`name TEXT PRIMARY KEY\`, a second Rahul can never be inserted — the database gives an error on a duplicate name. A name is not unique, so a name can never be a primary key. Always make the primary key the column that can never be a duplicate — like id or a roll number.\n\n**Mistake 2: Putting a duplicate or NULL in a primary key.** The same id cannot be put twice in a primary key, and NULL cannot be put either. \`INSERT INTO courses VALUES (1, 'Physics')\` gives a database error when course_id 1 already exists. This error is exactly the job of a primary key — it stops wrong data from getting in.\n\n**Mistake 3: A dangling foreign key.** Putting student_id 99 in enrollments when students has no id 99 means the row points at nobody — it hangs loose. This is called a **dangling foreign key**. **Referential integrity** means this must never happen — every foreign key value must exist in the other table. The foreign key constraint checks exactly this.\n\n**Mistake 4: Treating a candidate key and a super key as the same.** (id, name) is a super key but not a candidate key, because it holds an extra column. A candidate key is one where removing even a single column ends the uniqueness. This difference is asked the most in interviews.`
+        ),
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Composite Key ka Half Duplicate, NULL Foreign Key aur Do Candidate Keys',
+          '5. Edge Cases: Half Duplicate in a Composite Key, NULL Foreign Key, and Two Candidate Keys'
+        ),
+        body: t(
+          `**1. Composite key ka half duplicate.** Grades table mein primary key (student_id, subject) hai. (1, 'Maths') aur (1, 'English') dono chalenge — student_id ek jaisa hai, par subject alag hai, isliye poora pair alag hai. Lekin (1, 'Maths') dobara daaloge to error aayega, kyunki poora pair duplicate ho gaya. Composite key mein ek column duplicate ho sakta hai, poora set nahi.\n\n**2. NULL foreign key.** Foreign key mein NULL allowed hota hai — iska matlab hai "abhi pata nahi". Courses table mein student_id NULL hai Art course ke liye, kyunki us course ko abhi kisi ne nahi liya. NULL foreign key dangling nahi hoti, kyunki wo kisi ko point hi nahi karti. Primary key mein NULL allowed nahi hai, foreign key mein hai — ye farak yaad rakho.\n\n**3. Do candidate keys.** Students table mein id ke alawa email bhi candidate key ho sakti hai, agar har email unique ho. Tab ek ko primary key banao aur doosre par UNIQUE constraint lagao. UNIQUE wala column bhi duplicate nahi hone dega, par wo primary key nahi kehlayega.\n\n**4. Bina key wali table.** Bina primary key ke table bhi ban sakti hai, par usmein duplicate rows aa sakti hain aur koi row uniquely pehchan-ni nahi ja sakti. Interview mein hamesha poochha jaata hai: har table mein primary key honi chahiye.`,
+          `**1. Half duplicate in a composite key.** In the grades table the primary key is (student_id, subject). (1, 'Maths') and (1, 'English') both work — student_id is the same, but the subject differs, so the whole pair differs. But inserting (1, 'Maths') again gives an error, because the whole pair is a duplicate. In a composite key one column may repeat, but the whole set may not.\n\n**2. NULL foreign key.** NULL is allowed in a foreign key — it means "not known yet". In the courses table, student_id is NULL for the Art course, because nobody has taken that course yet. A NULL foreign key is not dangling, because it points at nobody. NULL is not allowed in a primary key, but it is allowed in a foreign key — remember this difference.\n\n**3. Two candidate keys.** In the students table, apart from id, an email can also be a candidate key, if every email is unique. Then make one the primary key and put a UNIQUE constraint on the other. The UNIQUE column also stops duplicates, but it is not called the primary key.\n\n**4. A table without a key.** A table can be made without a primary key, but duplicate rows can enter it and no row can be identified uniquely. In interviews it is always asked: every table should have a primary key.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Primary Key Badal Di, aur Foreign Key Hata Di to?',
+          '6. What If: The Primary Key Is Changed, and the Foreign Key Is Removed?'
+        ),
+        body: t(
+          `**What if: primary key ko naam se id par badal dein?** Pehle naam primary key tha, ab id hai. Saare joins aur foreign keys jo naam par the, wo bhi badalne padenge — warna wo toote hue links ban jaayenge. Isi liye primary key hamesha wohi chuno jo kabhi nahi badlega, jaise id. Naam badal sakta hai, id nahi badalta.\n\n**What if: foreign key constraint hata dein?** Tab enrollments mein student_id 99 daalna allowed ho jaayega — database kuch nahi bolega. Lekin join karoge to wo row kabhi kisi student se nahi judegi aur report mein gayab ho jaayegi. Constraint hataane se error khatm hota hai, par data ka bharosa bhi khatm ho jaata hai. Constraint data ki raksha karta hai, pareshaani nahi.\n\n**What if: har table mein auto-increment id use karein?** \`INTEGER PRIMARY KEY AUTOINCREMENT\` se har nayi row ko apne aap naya id mil jaata hai. Ye sabse safe tareeka hai — id kabhi duplicate nahi hoga aur kabhi NULL nahi hoga. Zyada tar real tables mein yahi pattern use hota hai.`,
+          `**What if the primary key is changed from name to id?** First the name was the primary key, now id is. All the joins and foreign keys that were on the name must also change — or they become broken links. That is why you should always choose a primary key that never changes, like id. A name can change, an id does not change.\n\n**What if the foreign key constraint is removed?** Then putting student_id 99 in enrollments becomes allowed — the database says nothing. But when you join, that row never joins with any student and vanishes from the report. Removing the constraint ends the error, but it also ends trust in the data. A constraint protects the data, it is not a problem.\n\n**What if every table uses an auto-increment id?** With \`INTEGER PRIMARY KEY AUTOINCREMENT\`, every new row gets a new id by itself. This is the safest way — an id is never a duplicate and never NULL. Most real tables use this pattern.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Keys ka Poora Picture',
+          '7. Summary: The Full Picture of Keys'
+        ),
+        body: t(
+          `Primary key har row ki unique pehchan hai — ek table mein ek, kabhi NULL nahi, kabhi duplicate nahi. Foreign key doosri table ki primary key ko point karta hai aur referential integrity ko bachaata hai. Super key koi bhi unique set hai, candidate key sabse chhoti super key hai, aur composite key ek se zyada columns se banti hai.\n\nYaad rakhne wali teen baatein: pehli, naam kabhi primary key nahi ban sakta, kyunki wo duplicate ho sakta hai. Doosri, composite key mein ek column duplicate ho sakta hai, poora set nahi. Teesri, foreign key mein NULL allowed hai, primary key mein nahi.\n\nAgle article mein hum functional dependencies dekhenge — kaise ek column doosre column ko decide karta hai, aur isse table ko sahi tareeke se kaise toda jaata hai.`,
+          `A primary key is the unique identity of every row — one per table, never NULL, never a duplicate. A foreign key points to the primary key of another table and protects referential integrity. A super key is any unique set, a candidate key is the smallest super key, and a composite key is made of more than one column.\n\nThree things to remember: first, a name can never be a primary key, because it can be a duplicate. Second, in a composite key one column may repeat, but the whole set may not. Third, NULL is allowed in a foreign key, but not in a primary key.\n\nIn the next article we will look at functional dependencies — how one column decides another column, and how a table is split correctly using this.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Keys ka Parivaar: Super, Candidate, Primary, Foreign',
+        'The Key Family: Super, Candidate, Primary, Foreign'
+      ),
+      nodes: [
+        {
+          t: t('Super key: koi bhi unique set', 'Super key: any unique set'),
+          s: t('(id), (id, name), (id, name, marks) — teeno super keys hain', '(id), (id, name), (id, name, marks) — all three are super keys')
+        },
+        {
+          t: t('Candidate key: sabse chhoti super key', 'Candidate key: the smallest super key'),
+          s: t('(id) candidate hai, (id, name) nahi — name extra hai', '(id) is a candidate, (id, name) is not — name is extra')
+        },
+        {
+          t: t('Primary key: chuni hui candidate key', 'Primary key: the chosen candidate key'),
+          s: t('Ek table mein ek, kabhi NULL nahi, kabhi duplicate nahi', 'One per table, never NULL, never a duplicate')
+        },
+        {
+          t: t('Foreign key: doosri table ki taraf ishara', 'Foreign key: a pointer to another table'),
+          s: t('enrollments.student_id -> students.id', 'enrollments.student_id -> students.id')
+        },
+        {
+          t: t('Composite key: do columns mil kar', 'Composite key: two columns together'),
+          s: t('(student_id, subject) — ek column duplicate ho sakta hai, poora set nahi', '(student_id, subject) — one column may repeat, the whole set may not')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Composite Key — (student_id, subject) se Grades',
+          'Composite Key — Grades with (student_id, subject)'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS grades;
+CREATE TABLE grades (
+  student_id INTEGER,
+  subject TEXT,
+  marks INTEGER,
+  PRIMARY KEY (student_id, subject)
+);
+INSERT INTO grades VALUES (1, 'Maths', 90);
+INSERT INTO grades VALUES (1, 'English', 80);
+INSERT INTO grades VALUES (2, 'Maths', 95);
+SELECT student_id, subject, marks
+FROM grades
+ORDER BY student_id, subject;`,
+        output: `student_id | subject | marks
+1 | English | 80
+1 | Maths | 90
+2 | Maths | 95`
+      },
+      {
+        title: t(
+          'UNIQUE Constraint — Email kabhi Duplicate Nahi',
+          'UNIQUE Constraint — Email Is Never a Duplicate'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS contacts;
+CREATE TABLE contacts (
+  id INTEGER PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL
+);
+INSERT INTO contacts VALUES (1, 'rahul@mail.com');
+INSERT INTO contacts VALUES (2, 'priya@mail.com');
+SELECT id, email FROM contacts ORDER BY id;`,
+        output: `id | email
+1 | rahul@mail.com
+2 | priya@mail.com`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Students table mein primary key kaunsa column hai aur kyun?',
+          'Which column is the primary key in the students table, and why?'
+        ),
+        opts: [
+          t('name, kyunki naam se pehchan hoti hai', 'name, because a name identifies a person'),
+          t('id, kyunki har id unique hai aur kabhi duplicate nahi hota', 'id, because every id is unique and never a duplicate'),
+          t('marks, kyunki marks se ranking hoti hai', 'marks, because marks give a ranking'),
+          t('Koi primary key nahi hai', 'There is no primary key')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: id har row ko uniquely pehchan-ta hai aur kabhi duplicate nahi hota, jabki naam duplicate ho sakta hai, isliye id primary key hai.',
+          'Correct answer: id identifies every row uniquely and is never a duplicate, while a name can be a duplicate, so id is the primary key.'
+        )
+      },
+      {
+        q: t(
+          'Candidate key aur super key mein kya farak hai?',
+          'What is the difference between a candidate key and a super key?'
+        ),
+        opts: [
+          t('Koi farak nahi hai', 'There is no difference'),
+          t('Candidate key sabse chhoti super key hai — usmein se koi column hatao to unique nahi rehti', 'A candidate key is the smallest super key — remove any column from it and it stops being unique'),
+          t('Super key sabse chhoti hoti hai', 'A super key is the smallest one'),
+          t('Candidate key mein duplicate allowed hain', 'Duplicates are allowed in a candidate key')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: (id) candidate key hai kyunki usmein se kuch hata hi nahi sakte, jabki (id, name) super key hai par candidate nahi, kyunki name hataane par bhi id unique rehta hai.',
+          'Correct answer: (id) is a candidate key because nothing can be removed from it, while (id, name) is a super key but not a candidate, because removing name still leaves id unique.'
+        )
+      },
+      {
+        q: t(
+          'Composite key (student_id, subject) mein kaunsi baat sahi hai?',
+          'Which statement is true about the composite key (student_id, subject)?'
+        ),
+        opts: [
+          t('student_id kabhi repeat nahi ho sakta', 'student_id can never repeat'),
+          t('Ek column repeat ho sakta hai, par poora pair kabhi duplicate nahi ho sakta', 'One column may repeat, but the whole pair can never be a duplicate'),
+          t('Dono columns mein NULL allowed hai', 'NULL is allowed in both columns'),
+          t('Composite key mein sirf ek column hota hai', 'A composite key has only one column')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: (1, Maths) aur (1, English) dono chalenge kyunki pair alag hai, par (1, Maths) dobara daalne par poora pair duplicate ho jaayega aur error aayega.',
+          'Correct answer: (1, Maths) and (1, English) both work because the pair differs, but inserting (1, Maths) again makes the whole pair a duplicate and gives an error.'
+        )
+      },
+      {
+        q: t(
+          'Referential integrity ka matlab kya hai?',
+          'What does referential integrity mean?'
+        ),
+        opts: [
+          t('Har table mein primary key honi chahiye', 'Every table must have a primary key'),
+          t('Har foreign key value doosri table mein maujood honi chahiye — dangling row nahi honi chahiye', 'Every foreign key value must exist in the other table — no dangling row'),
+          t('Foreign key mein NULL allowed nahi hai', 'NULL is not allowed in a foreign key'),
+          t('Do tables ka naam ek jaisa hona chahiye', 'Two tables must have the same name')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: referential integrity ka matlab hai ki foreign key hamesha kisi maujood row ko point kare — student_id 99 tabhi allowed hai jab students mein id 99 ho.',
+          'Correct answer: referential integrity means a foreign key always points to a row that exists — student_id 99 is allowed only when students has an id 99.'
+        )
+      },
+      {
+        q: t(
+          'Primary key aur foreign key mein NULL ko lekar kya farak hai?',
+          'What is the difference between a primary key and a foreign key about NULL?'
+        ),
+        opts: [
+          t('Dono mein NULL allowed hai', 'NULL is allowed in both'),
+          t('Dono mein NULL allowed nahi hai', 'NULL is not allowed in either'),
+          t('Primary key mein NULL allowed nahi hai, foreign key mein allowed hai', 'NULL is not allowed in a primary key, but it is allowed in a foreign key'),
+          t('Primary key mein NULL allowed hai, foreign key mein nahi', 'NULL is allowed in a primary key, but not in a foreign key')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: primary key har row ki pehchan hai, isliye usmein NULL nahi ho sakta; foreign key mein NULL ka matlab hai "abhi pata nahi", jaise Art course ka student_id NULL hai.',
+          'Correct answer: a primary key is the identity of every row, so it cannot hold NULL; NULL in a foreign key means "not known yet", like the Art course student_id being NULL.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Primary key ek table mein ek hoti hai — kabhi NULL nahi, kabhi duplicate nahi.',
+        'A table has one primary key — never NULL, never a duplicate.'
+      ),
+      t(
+        'Foreign key doosri table ki primary key ko point karta hai aur referential integrity bachaata hai.',
+        'A foreign key points to the primary key of another table and protects referential integrity.'
+      ),
+      t(
+        'Candidate key sabse chhoti super key hai — ek bhi column hatao to unique nahi rehti.',
+        'A candidate key is the smallest super key — remove even one column and it stops being unique.'
+      ),
+      t(
+        'Composite key mein ek column duplicate ho sakta hai, poora set nahi.',
+        'In a composite key one column may repeat, but the whole set may not.'
+      ),
+      t(
+        'Naam kabhi primary key nahi ban sakta, kyunki wo duplicate ho sakta hai.',
+        'A name can never be a primary key, because it can be a duplicate.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apni Table Banao — Primary Key ke Saath',
+        'Practice: Build Your Own Table — with a Primary Key'
+      ),
+      task: t(
+        'Ek library table banao jismein book_id INTEGER PRIMARY KEY ho aur title TEXT NOT NULL ho. Usmein 2 books daalo: (1, DBMS Guide) aur (2, SQL Practice). Phir book_id ke order mein saari rows nikaalo. Done tab maanenge jab output mein 2 rows dikhein: 1 | DBMS Guide, 2 | SQL Practice.',
+        'Build a library table with book_id INTEGER PRIMARY KEY and title TEXT NOT NULL. Put 2 books in it: (1, DBMS Guide) and (2, SQL Practice). Then get all rows in book_id order. You are done when the output shows 2 rows: 1 | DBMS Guide, 2 | SQL Practice.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS library;
+CREATE TABLE library (
+  book_id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL
+);
+INSERT INTO library VALUES (1, 'DBMS Guide');
+INSERT INTO library VALUES (2, 'SQL Practice');
+SELECT book_id, title FROM library ORDER BY book_id;`,
+      expected: `book_id | title
+1 | DBMS Guide
+2 | SQL Practice`
+    },
+    readMinutes: 12
+  };
+
+const dbmsFd: Article = {
+    id: 'dbms-fd',
+    subjectId: 'dbms',
+    title: t(
+      'Functional Dependencies — Armstrong ke Axioms, Closure aur Minimal Cover',
+      'Functional Dependencies: Armstrong Axioms, Closure, and Minimal Cover'
+    ),
+    summary: t(
+      'Functional dependency seekho: kaise ek column doosre column ko decide karta hai, Armstrong ke 3 axioms se nayi dependencies kaise nikaali jaati hain, closure se ek column se kya-kya nikal sakta hai, aur minimal cover se extra dependencies kaise hataayi jaati hain — sab students aur results tables par.',
+      'Learn functional dependency: how one column decides another column, how Armstrong 3 axioms derive new dependencies, how closure finds everything one column can give, and how a minimal cover removes extra dependencies — all on the students and results tables.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Functional Dependency Kya Hai? (Armstrong ke Axioms)',
+          '1. What Is a Functional Dependency? (Armstrong Axioms)'
+        ),
+        body: t(
+          `**Functional dependency (FD)** ka matlab hai: ek column ki value se doosre column ki value fix ho jaati hai. Students table mein \`id -> name\` hai — id 2 likho to naam hamesha Priya hi hoga, kabhi kuch aur nahi. Ise aise likha jaata hai: \`id -> name, marks\` — id se naam aur marks dono decide hote hain. Lekin \`name -> marks\` nahi hai, kyunki do students ka naam ek jaisa ho sakta hai aur unke marks alag ho sakte hain.\n\nFDs se nayi FDs nikaalne ke 3 rules hain, jinhe **Armstrong ke axioms** kehte hain. **Reflexivity:** agar Y, X ka hissa hai, to X -> Y hamesha true hai — jaise (id, name) -> name. **Augmentation:** agar X -> Y hai, to XZ -> YZ bhi hai — dono taraf ek hi column jod do. **Transitivity:** agar X -> Y hai aur Y -> Z hai, to X -> Z bhi hai — jaise id -> student_name aur student_name -> marks hota to id -> marks bhi hota.\n\nYe 3 axioms poore hain — in se jo bhi FD nikal sakti hai, wo sahi hogi, aur jo nahi nikal sakti, wo galat hogi. Isi liye inhe yaad rakhna zaroori hai: interview mein aksar poochha jaata hai ki ek FD doosri se kaise nikli.`,
+          `A **functional dependency (FD)** means: the value of one column fixes the value of another column. In the students table, \`id -> name\` holds — write id 2 and the name is always Priya, never anything else. It is written like this: \`id -> name, marks\` — id decides both the name and the marks. But \`name -> marks\` does not hold, because two students can share a name and have different marks.\n\nThere are 3 rules for deriving new FDs from given FDs, called **Armstrong axioms**. **Reflexivity:** if Y is part of X, then X -> Y is always true — like (id, name) -> name. **Augmentation:** if X -> Y holds, then XZ -> YZ also holds — add the same column on both sides. **Transitivity:** if X -> Y holds and Y -> Z holds, then X -> Z also holds — like if id -> student_name and student_name -> marks held, then id -> marks would also hold.\n\nThese 3 axioms are complete — any FD that can be derived from them is correct, and any FD that cannot be derived is wrong. That is why they must be remembered: interviews often ask how one FD was derived from another.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Roll Number, Pincode aur Subject-Teacher',
+          '2. Real-Life Examples: Roll Number, Pincode, and Subject-Teacher'
+        ),
+        body: t(
+          `Pehla example hai **roll number**. Roll number se naam aur marks dono decide hote hain: \`roll_no -> name, marks\`. Lekin naam se roll number decide nahi hota, kyunki do students ka naam ek jaisa ho sakta hai. Yehi FD ka test hai: left side ki ek value par right side ki sirf ek hi value aani chahiye.\n\nDoosra example hai **pincode**. Pincode se sheher decide hota hai: \`pincode -> city\`. Ek pincode ka ek hi sheher hota hai. Lekin sheher se pincode decide nahi hota, kyunki ek sheher mein kai pincode hote hain. FD sirf ek taraf chalti hai — ulta check karna sabse common galti hai.\n\nTeesra example hai **subject aur teacher**. Agar ek subject ko hamesha ek hi teacher padhata hai, to \`subject -> teacher\` hai. Lekin agar do teachers ek hi subject padhate hain, to ye FD nahi hai. FD data par depend karti hai — data badle to FD bhi badal sakti hai.`,
+          `The first example is a **roll number**. A roll number decides both the name and the marks: \`roll_no -> name, marks\`. But a name does not decide a roll number, because two students can share a name. This is the test of an FD: for one value on the left side, only one value must come on the right side.\n\nThe second example is a **pincode**. A pincode decides the city: \`pincode -> city\`. One pincode has only one city. But a city does not decide a pincode, because one city has many pincodes. An FD runs in only one direction — checking it backwards is the most common mistake.\n\nThe third example is **subject and teacher**. If one subject is always taught by the same teacher, then \`subject -> teacher\` holds. But if two teachers teach the same subject, this FD does not hold. An FD depends on the data — if the data changes, the FD can change too.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Closure Nikaalna — id se Kya-Kya Milta Hai (Dry Run)',
+          '3. Step-by-Step: Working Out a Closure — What id Gives (Dry Run)'
+        ),
+        body: t(
+          `**Closure** ka matlab hai: ek column se shuru karke, FDs ko baar-baar laga kar, woh saare columns nikaalna jo us column se decide hote hain. Students table mein FDs hain: \`id -> name\` aur \`id -> marks\`. Ab \`id+\` (id ka closure) nikaalte hain.\n\nDry run:\n- **Step 1 — shuru karo:** Closure mein pehle id khud aata hai: {id}.\n- **Step 2 — id -> name lagaao:** id se name milta hai. Closure ban gaya: {id, name}.\n- **Step 3 — id -> marks lagaao:** id se marks milta hai. Closure ban gaya: {id, name, marks}.\n- **Step 4 — aur koi FD bachi?** Nahi. Closure final hai: id+ = {id, name, marks}.\n\nClosure se pata chalta hai ki id **super key** hai — kyunki uske closure mein table ke saare columns aa gaye. Aur id **candidate key** bhi hai, kyunki usmein se kuch hata hi nahi sakte — id akela column hai. SQL mein closure ko aise check karte hain: \`SELECT id, COUNT(DISTINCT name) AS distinct_names FROM students GROUP BY id\` — har id ke liye sirf 1 alag naam hai, matlab id -> name pakka hai.`,
+          `A **closure** means: starting from one column and applying the FDs again and again, finding all the columns that are decided by that column. In the students table the FDs are: \`id -> name\` and \`id -> marks\`. Now work out \`id+\` (the closure of id).\n\nDry run:\n- **Step 1 — start:** The closure first holds id itself: {id}.\n- **Step 2 — apply id -> name:** id gives name. The closure becomes: {id, name}.\n- **Step 3 — apply id -> marks:** id gives marks. The closure becomes: {id, name, marks}.\n- **Step 4 — any FD left?** No. The closure is final: id+ = {id, name, marks}.\n\nThe closure shows that id is a **super key** — because its closure holds all the columns of the table. And id is also a **candidate key**, because nothing can be removed from it — id is a single column. In SQL, a closure is checked like this: \`SELECT id, COUNT(DISTINCT name) AS distinct_names FROM students GROUP BY id\` — for every id there is only 1 distinct name, which means id -> name definitely holds.`
+        ),
+        code: {
+          title: t(
+            'Closure Check — Har id ka Sirf Ek Naam',
+            'Closure Check — Only One Name per id'
+          ),
+          language: 'sql',
+          code: `SELECT id, COUNT(DISTINCT name) AS distinct_names
+FROM students
+GROUP BY id
+ORDER BY id;`,
+          output: `id | distinct_names
+1 | 1
+2 | 1
+3 | 1
+4 | 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Ulti FD, Partial Dependency aur Extra Column',
+          '4. Common Mistakes: Backwards FD, Partial Dependency, and Extra Column'
+        ),
+        body: t(
+          `**Galti 1: FD ko ulta padhna.** \`id -> name\` ka matlab hai id se name decide hota hai, iska ulta \`name -> id\` nahi hota. Do students ka naam ek jaisa ho sakta hai, par id hamesha alag hota hai. FD ek taraf ki hoti hai — hamesha check karo ki left side ki ek value par right side ki ek hi value aati hai ya nahi.\n\n**Galti 2: partial dependency ko ignore karna.** Results table mein primary key (student_id, subject) hai aur \`student_id -> student_name\` hai — naam sirf student_id se decide hota hai, poori key se nahi. Ise **partial dependency** kehte hain, aur ye 2NF ka violation hai. Student ka naam har row mein repeat hota hai — Rahul do baar dikhta hai — aur agar naam badle to dono rows update karni padengi.\n\n**Galti 3: closure mein jaldi ruk jaana.** Closure nikaalte time FDs ko tab tak lagana hai jab tak koi naya column na mile. Ek baar mein ruk jaoge to closure adhura reh jaayega aur key galat niklegi. Rule hai: jab tak closure badh raha hai, tab tak FDs lagaate raho.\n\n**Galti 4: minimal cover mein extra FD rakhna.** Agar \`id -> name\` aur \`id -> name, marks\` dono hain, to pehli FD doosri mein chhupi hai — extra hai. Minimal cover mein sirf wahi FDs rehti hain jo zaroori hain. Extra FD hataane se kuch nahi badalta, par design saaf ho jaata hai.`,
+          `**Mistake 1: Reading an FD backwards.** \`id -> name\` means id decides name; its reverse \`name -> id\` does not hold. Two students can share a name, but an id is always different. An FD runs in one direction — always check whether one value on the left gives only one value on the right.\n\n**Mistake 2: Ignoring a partial dependency.** In the results table the primary key is (student_id, subject) and \`student_id -> student_name\` holds — the name is decided by student_id alone, not by the whole key. This is called a **partial dependency**, and it breaks 2NF. The student name repeats in every row — Rahul appears twice — and if the name changes, both rows must be updated.\n\n**Mistake 3: Stopping too early in a closure.** While working out a closure, keep applying the FDs until no new column appears. If you stop after one round, the closure stays incomplete and the key comes out wrong. The rule is: keep applying FDs as long as the closure keeps growing.\n\n**Mistake 4: Keeping an extra FD in a minimal cover.** If both \`id -> name\` and \`id -> name, marks\` are present, the first FD is hidden inside the second — it is extra. A minimal cover keeps only the FDs that are needed. Removing an extra FD changes nothing, but it makes the design clean.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Trivial FD, Khaali Left Side aur Transitive Dependency',
+          '5. Edge Cases: Trivial FD, Empty Left Side, and Transitive Dependency'
+        ),
+        body: t(
+          `**1. Trivial FD.** \`(id, name) -> name\` hamesha true hai, kyunki right side left side ka hissa hai. Aisi FD ko **trivial** kehte hain — ye koi nayi jaankari nahi deti, isliye minimal cover mein ise hata diya jaata hai. Armstrong ka reflexivity axiom hi trivial FDs ko banata hai.\n\n**2. Khaali left side.** Agar koi column hamesha ek hi value rakhta hai, to khaali set se bhi wo decide ho sakta hai. Ye edge case interview mein kabhi-kabhi poochha jaata hai, par real tables mein kam dikhta hai.\n\n**3. Transitive dependency.** Results table mein \`student_id -> subject\` nahi hai, par socho ek table mein \`id -> city\` aur \`city -> pincode\` ho, to \`id -> pincode\` transitive dependency hai — id se pincode seedha nahi, city ke through decide hota hai. Ye 3NF ka violation hai, kyunki pincode non-key column city par depend karta hai.\n\n**4. Closure mein poori table.** Agar kisi column ka closure poori table ko cover kar le, to wo column super key hai. Agar closure mein ek bhi column chhoot jaaye, to wo column super key nahi hai. Closure hi key dhoondhne ka sabse pakka tareeka hai.`,
+          `**1. Trivial FD.** \`(id, name) -> name\` is always true, because the right side is part of the left side. Such an FD is called **trivial** — it gives no new information, so it is removed in a minimal cover. Armstrong reflexivity axiom is what creates trivial FDs.\n\n**2. Empty left side.** If a column always holds the same value, even an empty set can decide it. This edge case is sometimes asked in interviews, but it rarely appears in real tables.\n\n**3. Transitive dependency.** In the results table, \`student_id -> subject\` does not hold, but imagine a table with \`id -> city\` and \`city -> pincode\` — then \`id -> pincode\` is a transitive dependency, because id decides pincode not directly but through city. This breaks 3NF, because pincode depends on the non-key column city.\n\n**4. Closure covering the whole table.** If the closure of a column covers the whole table, that column is a super key. If even one column is missing from the closure, that column is not a super key. A closure is the surest way to find a key.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Minimal Cover se Table Todo, aur FD Badal Jaaye to?',
+          '6. What If: Splitting a Table with a Minimal Cover, and What If an FD Changes?'
+        ),
+        body: t(
+          `**What if: minimal cover se table ko todo?** Results table mein partial dependency hai: student_name sirf student_id par depend karta hai. Iska fix hai table ko todna: ek table (student_id, student_name) aur doosri table (student_id, subject, marks). Ab naam ek hi jagah store hota hai aur repeat nahi hota. Yehi normalization ka pehla kadam hai — FDs ko dekh kar table ko todna.\n\n**What if: FD badal jaaye?** Maan lo ab ek subject ko do teachers padhane lage, to \`subject -> teacher\` khatm ho jaata hai. Design jo us FD par bana tha, wo bhi badalna padega. Isi liye FDs ko data se verify karna chahiye, assume nahi karna chahiye. Data badle to FDs dobara check karo.\n\n**What if: closure se key nikaalne ki jagah guess karein?** Guess se key galat nikal sakti hai — jaise name ko key samajh lena. Closure se key pakka nikalta hai, kyunki wo FDs ko step-by-step lagata hai. Interview mein key poochhe jaane par hamesha closure se jawab do, guess se nahi.`,
+          `**What if a table is split using a minimal cover?** The results table has a partial dependency: student_name depends only on student_id. The fix is to split the table: one table (student_id, student_name) and another table (student_id, subject, marks). Now the name is stored in only one place and never repeats. This is the first step of normalization — splitting a table by looking at its FDs.\n\n**What if an FD changes?** Suppose two teachers now teach one subject, so \`subject -> teacher\` stops holding. The design built on that FD must also change. That is why FDs must be verified from the data, not assumed. When the data changes, check the FDs again.\n\n**What if we guess a key instead of working it out from a closure?** A guess can give a wrong key — like treating a name as a key. A closure gives a sure key, because it applies the FDs step by step. When an interview asks for a key, always answer from a closure, not from a guess.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Functional Dependencies ka Poora Picture',
+          '7. Summary: The Full Picture of Functional Dependencies'
+        ),
+        body: t(
+          `FD ka matlab hai left side ki value se right side ki value fix ho jaana: id -> name, marks. Armstrong ke 3 axioms — reflexivity, augmentation, transitivity — se nayi FDs nikaali jaati hain. Closure se pata chalta hai ki ek column se kya-kya decide hota hai, aur closure poori table cover kare to wo column super key hai. Minimal cover mein sirf zaroori FDs rehti hain, extra aur trivial FDs hata di jaati hain.\n\nYaad rakhne wali teen baatein: pehli, FD ek taraf chalti hai — ulta check karna galti hai. Doosri, closure nikaalte time FDs ko tab tak lagaao jab tak koi naya column na mile. Teesri, partial dependency (key ke hisse par dependency) 2NF ka violation hai aur table tod kar fix hoti hai.\n\nYe DBMS batch 2 ka aakhiri article hai. Ab aapke paas advanced SQL — string aur date functions, CASE, subqueries, advanced joins, set operations, window functions, CTEs — aur design theory — keys aur functional dependencies — dono ka poora picture hai.`,
+          `An FD means the value on the left fixes the value on the right: id -> name, marks. Armstrong 3 axioms — reflexivity, augmentation, transitivity — derive new FDs. A closure shows what one column decides, and if the closure covers the whole table, that column is a super key. A minimal cover keeps only the needed FDs; extra and trivial FDs are removed.\n\nThree things to remember: first, an FD runs in one direction — checking it backwards is a mistake. Second, while working out a closure, keep applying FDs until no new column appears. Third, a partial dependency (a dependency on part of a key) breaks 2NF and is fixed by splitting the table.\n\nThis is the last article of DBMS batch 2. You now have the full picture of both advanced SQL — string and date functions, CASE, subqueries, advanced joins, set operations, window functions, CTEs — and design theory — keys and functional dependencies.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Closure ka Flow: id se Poori Table Tak',
+        'Closure Flow: From id to the Whole Table'
+      ),
+      nodes: [
+        {
+          t: t('Shuru: {id}', 'Start: {id}'),
+          s: t('Closure mein pehle id khud aata hai', 'The closure first holds id itself')
+        },
+        {
+          t: t('id -> name lagaao', 'Apply id -> name'),
+          s: t('Closure ban gaya {id, name}', 'The closure becomes {id, name}')
+        },
+        {
+          t: t('id -> marks lagaao', 'Apply id -> marks'),
+          s: t('Closure ban gaya {id, name, marks}', 'The closure becomes {id, name, marks}')
+        },
+        {
+          t: t('Closure = poori table', 'Closure = the whole table'),
+          s: t('Isliye id super key hai, aur candidate key bhi', 'So id is a super key, and a candidate key too')
+        },
+        {
+          t: t('Partial dependency: student_id -> student_name', 'Partial dependency: student_id -> student_name'),
+          s: t('Naam poori key par nahi, key ke hisse par depend karta hai — 2NF violation', 'The name depends on part of the key, not the whole key — a 2NF violation')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'FD Check — 88 ya Zyada Marks Walon ke Naam',
+          'FD Check — Names of Students with 88 or More Marks'
+        ),
+        language: 'sql',
+        code: `SELECT DISTINCT name
+FROM students
+WHERE marks >= 88
+ORDER BY name;`,
+        output: `name
+Priya
+Sana`
+      },
+      {
+        title: t(
+          'Partial Dependency — Naam Har Row Mein Repeat Hota Hai',
+          'Partial Dependency — The Name Repeats in Every Row'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS results;
+CREATE TABLE results (
+  student_id INTEGER,
+  subject TEXT,
+  student_name TEXT,
+  marks INTEGER,
+  PRIMARY KEY (student_id, subject)
+);
+INSERT INTO results VALUES (1, 'Maths', 'Rahul', 90);
+INSERT INTO results VALUES (1, 'English', 'Rahul', 80);
+INSERT INTO results VALUES (2, 'Maths', 'Priya', 95);
+SELECT student_id, student_name, COUNT(*) AS rows_per_student
+FROM results
+GROUP BY student_id, student_name
+ORDER BY student_id;`,
+        output: `student_id | student_name | rows_per_student
+1 | Rahul | 2
+2 | Priya | 1`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Students table mein kaunsi FD sahi hai?',
+          'Which FD is correct in the students table?'
+        ),
+        opts: [
+          t('name -> marks', 'name -> marks'),
+          t('marks -> name', 'marks -> name'),
+          t('id -> name, marks', 'id -> name, marks'),
+          t('name -> id', 'name -> id')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: id har row ko uniquely pehchan-ta hai, isliye id se naam aur marks dono fix hote hain; naam se marks fix nahi hote kyunki do students ka naam ek jaisa ho sakta hai.',
+          'Correct answer: id identifies every row uniquely, so id fixes both the name and the marks; a name does not fix marks because two students can share a name.'
+        )
+      },
+      {
+        q: t(
+          'Armstrong ke axioms mein kaunsa rule kehta hai: X -> Y hai aur Y -> Z hai, to X -> Z bhi hai?',
+          'Which Armstrong axiom says: if X -> Y holds and Y -> Z holds, then X -> Z also holds?'
+        ),
+        opts: [
+          t('Reflexivity', 'Reflexivity'),
+          t('Augmentation', 'Augmentation'),
+          t('Transitivity', 'Transitivity'),
+          t('Decomposition', 'Decomposition')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: transitivity ka matlab hai chain se nikaalna — X se Y aur Y se Z, to X se Z bhi nikal jaata hai.',
+          'Correct answer: transitivity means deriving through a chain — from X to Y and from Y to Z, X to Z follows too.'
+        )
+      },
+      {
+        q: t(
+          'FDs id -> name aur id -> marks hon, to id ka closure (id+) kya hai?',
+          'With FDs id -> name and id -> marks, what is the closure of id (id+)?'
+        ),
+        opts: [
+          t('{id}', '{id}'),
+          t('{id, name}', '{id, name}'),
+          t('{id, name, marks}', '{id, name, marks}'),
+          t('{name, marks}', '{name, marks}')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: closure mein pehle id aata hai, phir id -> name se name judta hai aur id -> marks se marks judta hai, isliye id+ = {id, name, marks} hota hai.',
+          'Correct answer: the closure first holds id, then id -> name adds name and id -> marks adds marks, so id+ = {id, name, marks}.'
+        )
+      },
+      {
+        q: t(
+          'Results table mein student_id -> student_name ko kya kehte hain aur ye kyun problem hai?',
+          'What is student_id -> student_name called in the results table, and why is it a problem?'
+        ),
+        opts: [
+          t('Trivial FD, koi problem nahi hai', 'Trivial FD, no problem at all'),
+          t('Partial dependency — naam poori key (student_id, subject) par nahi, sirf uske hisse par depend karta hai, isliye naam repeat hota hai', 'Partial dependency — the name depends only on part of the key (student_id, subject), not the whole key, so the name repeats'),
+          t('Transitive dependency, koi problem nahi hai', 'Transitive dependency, no problem at all'),
+          t('Candidate key, ye sahi design hai', 'Candidate key, this is good design')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: primary key (student_id, subject) hai, par naam sirf student_id se decide hota hai — ye partial dependency hai, 2NF ka violation hai, aur Rahul ka naam har row mein repeat hota hai.',
+          'Correct answer: the primary key is (student_id, subject), but the name is decided by student_id alone — this is a partial dependency, a 2NF violation, and Rahul name repeats in every row.'
+        )
+      },
+      {
+        q: t(
+          'Minimal cover mein kya rehta hai?',
+          'What stays in a minimal cover?'
+        ),
+        opts: [
+          t('Saari FDs, extra bhi', 'All FDs, including the extra ones'),
+          t('Sirf zaroori FDs — extra aur trivial FDs hata di jaati hain', 'Only the needed FDs — extra and trivial FDs are removed'),
+          t('Sirf trivial FDs', 'Only the trivial FDs'),
+          t('Koi FD nahi rehti', 'No FD stays')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: minimal cover FDs ka sabse chhota set hai jo wahi dependencies de — extra FDs (jaise doosri mein chhupi hui) aur trivial FDs hata di jaati hain.',
+          'Correct answer: a minimal cover is the smallest set of FDs that gives the same dependencies — extra FDs (like one hidden inside another) and trivial FDs are removed.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'FD ka matlab hai left side ki value se right side ki value fix ho jaana: id -> name, marks.',
+        'An FD means the value on the left fixes the value on the right: id -> name, marks.'
+      ),
+      t(
+        'Armstrong ke 3 axioms: reflexivity, augmentation, transitivity.',
+        'Armstrong 3 axioms: reflexivity, augmentation, transitivity.'
+      ),
+      t(
+        'Closure se pata chalta hai ek column se kya-kya decide hota hai; poori table cover kare to wo super key hai.',
+        'A closure shows what one column decides; if it covers the whole table, that column is a super key.'
+      ),
+      t(
+        'Partial dependency key ke hisse par dependency hai aur 2NF ka violation hai.',
+        'A partial dependency is a dependency on part of a key and breaks 2NF.'
+      ),
+      t(
+        'Minimal cover mein sirf zaroori FDs rehti hain — extra aur trivial FDs hata di jaati hain.',
+        'A minimal cover keeps only the needed FDs — extra and trivial FDs are removed.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: id se Priya ki Row Nikaalo — id -> name, marks',
+        'Practice: Get Priya Row from id — id -> name, marks'
+      ),
+      task: t(
+        'Ek query likho jo sirf id = 2 se Priya ki poori row (id, name, marks) nikaale. Ye dikhaata hai ki id se naam aur marks dono decide hote hain. Done tab maanenge jab output mein sirf ek row dikhe: 2 | Priya | 92.',
+        'Write a query that gets Priya full row (id, name, marks) using only id = 2. This shows that id decides both the name and the marks. You are done when the output shows only one row: 2 | Priya | 92.'
+      ),
+      language: 'sql',
+      starter: `SELECT id, name, marks
+FROM students
+WHERE id = 2;`,
+      expected: `id | name | marks
+2 | Priya | 92`
+    },
+    readMinutes: 12
+  };
+
+const dbmsNormalizationAdvanced: Article = {
+    id: 'dbms-normalization-advanced',
+    subjectId: 'dbms',
+    title: t(
+      'Normalization Deep — 1NF, 2NF, 3NF, BCNF aur 4NF/5NF ka Idea',
+      'Normalization in Depth — 1NF, 2NF, 3NF, BCNF, and the Idea of 4NF/5NF'
+    ),
+    summary: t(
+      'Normalization ko gehrai se samjho: ek hi table mein data repeat hone se kaunsi teen problems aati hain, 1NF se BCNF tak har normal form kya rule jodta hai, aur 4NF/5NF kab zaroori hote hain. Har rule ko students aur enrolment wale example par SQL ke saath dekho.',
+      'Learn normalization in depth: the three problems that appear when data repeats inside one table, what rule each normal form from 1NF to BCNF adds, and when 4NF and 5NF become necessary. See every rule on a students and enrolment example, with SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Normalization Kya Hai? (1NF, 2NF, 3NF, BCNF)',
+          '1. What Is Normalization? (1NF, 2NF, 3NF, BCNF)'
+        ),
+        body: t(
+          `**Normalization** matlab ek bade table ko chhote, saaf tables mein todna, taaki koi fact sirf ek jagah par store ho. Jab ek hi fact do jagah likha hota hai, toh teen problems aati hain. **Update anomaly:** teacher Meera ka phone number 100 rows mein likha hai, toh number badalne par 100 rows badalni padengi — ek row chhoot gayi toh data galat ho jaayega. **Insert anomaly:** ek naye teacher ko tab tak add nahi kar sakte jab tak uska koi student na ho, kyunki table mein student ke bina row banti hi nahi. **Delete anomaly:** ek student ko delete karte hi uske teacher ka phone number bhi hamesha ke liye kho jaata hai. Normalization in teeno problems ko khatam karta hai.
+
+Har **normal form** ek rule hai, aur har agla form pichle form ke upar ek aur rule jodta hai. **1NF** kehta hai har cell mein sirf ek value hogi — ek cell mein "SQL, Python" jaise do courses nahi likhe jaayenge, har course ki alag row hogi. **2NF** kehta hai har non-key column poori primary key par depend karega, key ke ek hisse par nahi. **3NF** kehta hai non-key column kisi aur non-key column par depend nahi karega — matlab transitive dependency nahi hogi. **BCNF** 3NF ka sakht version hai: har determinant ek candidate key hona chahiye. Aam taur par 3NF ya BCNF tak pahunchna kaafi hota hai.
+
+**4NF** aur **5NF** bahut kam use hote hain. 4NF multi-valued dependency ko todta hai — jaise ek student ke kai courses aur kai hobbies hon, toh courses aur hobbies ko alag tables mein rakhna padega, warna har course ke saath har hobby repeat hogi. 5NF join dependency ko todta hai, jo real life mein lagbhag kabhi nahi milti. Interview mein 4NF/5NF ki sirf definition aur ek example kaafi hai; BCNF tak ki samajh hi asli kaam aati hai.`,
+          `**Normalization** means splitting one big table into small, clean tables so that each fact is stored in exactly one place. When the same fact is written in two places, three problems appear. **Update anomaly:** if the phone number of teacher Meera is written in 100 rows, changing the number means changing 100 rows — miss one row and the data becomes wrong. **Insert anomaly:** you cannot add a new teacher until that teacher has a student, because the table has no row without a student. **Delete anomaly:** deleting a student also deletes the phone number of the teacher forever. Normalization removes all three problems.
+
+Every **normal form** is a rule, and each next form adds one more rule on top of the previous form. **1NF** says every cell holds only one value — one cell will not hold two courses like "SQL, Python"; each course gets its own row. **2NF** says every non-key column must depend on the whole primary key, not on one part of it. **3NF** says a non-key column must not depend on another non-key column — that is, no transitive dependency. **BCNF** is a strict version of 3NF: every determinant must be a candidate key. In practice, reaching 3NF or BCNF is enough.
+
+**4NF** and **5NF** are rarely used. 4NF breaks a multi-valued dependency — for example, if a student has many courses and many hobbies, courses and hobbies must go in separate tables, otherwise every hobby repeats with every course. 5NF breaks a join dependency, which almost never appears in real life. For an interview, the definition of 4NF and 5NF with one example is enough; real understanding up to BCNF is what actually helps.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: School Register, Library aur Phone Contacts',
+          '2. Real-Life Examples: School Register, Library, and Phone Contacts'
+        ),
+        body: t(
+          `School register socho: ek hi register mein student ka naam, course aur teacher ka phone likha hai. Ek student do courses leta hai, toh uski do lines ban jaati hain aur teacher ka phone dono lines mein repeat hota hai. Teacher ka phone badla toh dono lines badalni padengi. Yahi unnormalized table hai. Sahi design mein student, course aur teacher teeno alag tables hote hain, aur teacher ka phone sirf teacher wali table mein ek baar likha hota hai.
+
+Library mein bhi wahi kahani hai: book, member aur issue — teeno ko ek table mein likhoge toh ek member ki har book ke saath uska phone number repeat hoga. Phone badla toh har row badalni padegi. Isiliye library system mein member table alag hoti hai aur issue table mein sirf member_id likha hota hai. Phone contacts app bhi aisa hi karti hai: ek contact ka naam aur number ek jagah store hota hai, aur groups sirf contact ka id store karte hain, naam dobara nahi likhte.
+
+Roz ki zindagi mein normalization ka matlab hai: **ek fact, ek jagah**. Jab bhi tum dekho ki ek hi cheez table mein baar-baar likhi ja rahi hai, samjho wahan normalization ki zaroorat hai.`,
+          `Think of a school register: one register holds the name of the student, the course, and the phone of the teacher. A student who takes two courses gets two lines, and the phone of the teacher repeats in both lines. When the phone changes, both lines must change. That is an unnormalized table. In a correct design, student, course, and teacher are three separate tables, and the phone of the teacher is written only once, in the teacher table.
+
+A library tells the same story: book, member, and issue — put all three in one table and the phone of a member repeats with every book that member takes. Change the phone and every row must change. That is why a library system keeps a separate member table and the issue table stores only the member_id, not the name again. A phone contacts app does the same: the name and number of a contact are stored in one place, and groups store only the id of the contact, never the name again.
+
+In daily life, normalization means: **one fact, one place**. Whenever you see the same thing written again and again inside a table, that is where normalization is needed.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Gadbad Table ko 3NF Tak Le Jaana (worked example with dry run)',
+          '3. Step-by-Step: Taking One Messy Table to 3NF (worked example with dry run)'
+        ),
+        body: t(
+          `Neeche wali table dekho — \`enroll_raw\` mein student, course, teacher aur teacher ka phone sab ek saath hai. Dry run karte hain: Rahul ke do courses hain, isliye uski do rows hain. Meera SQL padhati hai, aur Priya bhi Meera se SQL padhti hai — isliye Meera ka phone 98100 do rows mein repeat ho raha hai. Ab Meera ka phone badal kar 98300 karna ho toh do rows badalni padengi. Aur agar Rahul apna Python course chhod de toh Arjun ka record hi khatam ho jaayega — delete anomaly.
+
+Step 1 (1NF): har cell mein ek hi value hai, ye table pehle se 1NF mein hai — kisi cell mein do courses nahi likhe. Step 2 (2NF): primary key hai (student_id, course). Teacher sirf course par depend karta hai, poori key par nahi — ye partial dependency hai, isliye 2NF fail hota hai. Step 3: teacher ko alag table mein nikalo — \`teachers(teacher, phone)\` aur \`enrolments(student_id, course, teacher)\`. Ab Meera ka phone sirf ek jagah hai. Step 4 (3NF check): \`enrolments\` mein teacher se phone nahi nikalta, kyunki phone ab teachers table mein hai — koi transitive dependency nahi bachi. Table ab 3NF mein hai.
+
+BCNF check: \`teachers\` mein teacher hi key hai aur phone us par depend karta hai — determinant key hai, isliye BCNF bhi pass hai. Neeche wala code pehle gadbad table banata hai, phir code examples mein usi ko tod kar dikhaya gaya hai.`,
+          `Look at the table below — \`enroll_raw\` holds the student, the course, the teacher, and the phone of the teacher all together. Let us do a dry run: Rahul takes two courses, so he has two rows. Meera teaches SQL, and Priya also learns SQL from Meera — so the phone of Meera, 98100, repeats in two rows. To change the phone of Meera to 98300, two rows must change. And if Rahul drops his Python course, the record of Arjun disappears completely — a delete anomaly.
+
+Step 1 (1NF): every cell holds one value, so this table is already in 1NF — no cell holds two courses. Step 2 (2NF): the primary key is (student_id, course). The teacher depends only on the course, not on the whole key — that is a partial dependency, so 2NF fails. Step 3: move the teacher into a separate table — \`teachers(teacher, phone)\` and \`enrolments(student_id, course, teacher)\`. Now the phone of Meera exists in only one place. Step 4 (3NF check): in \`enrolments\` you cannot get the phone from the teacher, because the phone now lives in the teachers table — no transitive dependency is left. The table is now in 3NF.
+
+BCNF check: in \`teachers\` the teacher is the key and the phone depends on it — the determinant is a key, so BCNF passes too. The code below builds the messy table first, and the code examples show the same table split apart.`
+        ),
+        code: {
+          title: t(
+            'Unnormalized table: teacher ka phone repeat ho raha hai',
+            'Unnormalized table: the teacher phone repeats'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS enroll_raw;
+CREATE TABLE enroll_raw (student_id INTEGER, student_name TEXT, course TEXT, teacher TEXT, teacher_phone TEXT);
+INSERT INTO enroll_raw VALUES (1, 'Rahul', 'SQL', 'Meera', '98100');
+INSERT INTO enroll_raw VALUES (1, 'Rahul', 'Python', 'Arjun', '98200');
+INSERT INTO enroll_raw VALUES (2, 'Priya', 'SQL', 'Meera', '98100');
+SELECT student_id, student_name, course, teacher FROM enroll_raw;`,
+          output: 'student_id | student_name | course | teacher\n1 | Rahul | SQL | Meera\n1 | Rahul | Python | Arjun\n2 | Priya | SQL | Meera'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Over-Normalization, Galat Key aur BCNF ka Dar',
+          '4. Common Mistakes: Over-Normalization, Wrong Key, and Fear of BCNF'
+        ),
+        body: t(
+          `**Galti 1: Over-normalization.** Har chhoti cheez ko alag table mein tod dena. Agar ek table ko 10 tables mein tod doge toh har chhota sawaal 10 tables ke JOIN se jawab dega — slow aur mushkil. 3NF tak jao, phir ruko. Reporting wale kaam mein kabhi-kabhi thoda denormalization bhi jaan-boojh kar kiya jaata hai, taaki report fast chale.
+
+**Galti 2: Galat primary key chunna.** Log aksar naam ko key bana lete hain — do students ka naam ek jaisa ho sakta hai. Key hamesha aisi chuno jo kabhi repeat na ho aur kabhi change na ho, jaise student_id. Composite key mein key ka sirf ek hissa use karke dependency check karna bhi galti hai — 2NF poori key par depend karta hai.
+
+**Galti 3: BCNF ko 3NF samajh lena.** 3NF mein non-key column kisi aur non-key par depend nahi kar sakta, par BCNF usse aage jaata hai: key ka hissa bhi kisi non-key par depend nahi kar sakta. Classic example hai student, course aur teacher — ek course ka ek hi teacher hota hai, par teacher key nahi hai, isliye 3NF pass karke bhi BCNF fail hota hai.`,
+          `**Mistake 1: Over-normalization.** Splitting every small thing into a separate table. If you split one table into 10 tables, every small question needs a JOIN of 10 tables — slow and hard. Go up to 3NF, then stop. For reporting work, a little denormalization is sometimes done on purpose so that reports run fast.
+
+**Mistake 2: Choosing the wrong primary key.** People often make the name the key — two students can have the same name. Always choose a key that never repeats and never changes, like student_id. Checking a dependency against only one part of a composite key is also a mistake — 2NF depends on the whole key.
+
+**Mistake 3: Treating BCNF as 3NF.** In 3NF, a non-key column cannot depend on another non-key column, but BCNF goes further: even a part of a key cannot depend on a non-key column. The classic example is student, course, and teacher — one course has one teacher, but the teacher is not a key, so the table passes 3NF and still fails BCNF.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Sirf Key Wali Table, NULL aur Ek Hi Row',
+          '5. Edge Cases: Key-Only Table, NULL, and a Single Row'
+        ),
+        body: t(
+          `**Sirf key wali table:** kuch tables mein sirf do keys hoti hain, jaise \`enrolments(student_id, course)\` — ye ek relationship table hai. Ismein non-key column hai hi nahi, isliye 2NF aur 3NF ka sawaal hi nahi uthta. Aisi table apne aap BCNF mein hoti hai.
+
+**NULL values:** agar teacher column mein NULL ho, toh dependency check mushkil ho jaata hai, kyunki NULL ka matlab "pata nahi" hota hai, "khaali" nahi. Design karte waqt socho ki kaunse columns mein NULL allowed hai — key columns mein NULL kabhi nahi hona chahiye.
+
+**Ek hi row wali table:** ek chhoti table jismein sirf ek row hai, usmein anomaly dikhai hi nahi deta — problem tab aati hai jab data badhta hai. Isiliye normalization ko data badhne se pehle, design ke waqt hi karna chahiye, baad mein nahi.`,
+          `**Key-only table:** some tables hold only two keys, like \`enrolments(student_id, course)\` — that is a relationship table. It has no non-key column at all, so the question of 2NF and 3NF never arises. Such a table is in BCNF by itself.
+
+**NULL values:** if the teacher column holds NULL, checking a dependency becomes hard, because NULL means "unknown", not "empty". While designing, decide which columns may hold NULL — key columns must never hold NULL.
+
+**Single-row table:** in a small table with only one row, no anomaly is visible — the problem appears only when the data grows. That is why normalization must be done at design time, before the data grows, not afterwards.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Normalization Na Karein, Ya 5NF Tak Chale Jaayein?',
+          '6. What If: We Skip Normalization, or Go All the Way to 5NF?'
+        ),
+        body: t(
+          `**What if normalization na karein?** Chhote project mein ek badi table chal jaati hai — 100 rows mein update anomaly dikhega bhi nahi. Par jaise hi users badhenge, ek hi phone number 10 jagah update karna padega aur koi na koi copy purani reh jaayegi. Data badhne ke saath gadbad bhi badhti hai, isliye bade system mein normalization pehle din se zaroori hai.
+
+**What if 5NF tak chale jaayein?** 5NF tak jaane se tables itne chhote ho jaate hain ki har query mein 5-6 JOIN lagte hain. Interview mein 5NF ki definition poochhi jaati hai, par real project mein 5NF tak jaana bahut rare hai. 3NF ya BCNF woh sweet spot hai jahan data saaf bhi hai aur queries fast bhi hain.`,
+          `**What if we skip normalization?** In a small project, one big table works fine — with 100 rows, an update anomaly will not even show. But as soon as users grow, one phone number must be updated in 10 places, and some copy will stay old. The mess grows with the data, so in a big system normalization is necessary from day one.
+
+**What if we go all the way to 5NF?** Going to 5NF makes tables so small that every query needs 5 or 6 JOINs. Interviews ask for the definition of 5NF, but in a real project going to 5NF is very rare. 3NF or BCNF is the sweet spot where the data is clean and the queries are still fast.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Har Form Ek Rule Jodta Hai',
+          '7. Summary: Every Form Adds One Rule'
+        ),
+        body: t(
+          `Normalization ka goal hai **ek fact, ek jagah** — isse update, insert aur delete anomaly khatam hote hain. **1NF:** har cell mein ek value. **2NF:** har non-key column poori key par depend kare. **3NF:** non-key column kisi aur non-key par depend na kare. **BCNF:** har determinant ek candidate key ho. **4NF:** multi-valued dependency todta hai. **5NF:** join dependency todta hai — real life mein rare hai.
+
+Yaad rakhne ka tareeka: 1NF repeat hatata hai, 2NF partial dependency hatata hai, 3NF transitive dependency hatata hai, BCNF key ke hisse ki dependency hatata hai. 3NF ya BCNF tak pahunchna aam taur par kaafi hai — usse aage jaana interview ki baat hai, project ki nahi.`,
+          `The goal of normalization is **one fact, one place** — it removes update, insert, and delete anomalies. **1NF:** one value in every cell. **2NF:** every non-key column depends on the whole key. **3NF:** a non-key column does not depend on another non-key column. **BCNF:** every determinant is a candidate key. **4NF:** breaks a multi-valued dependency. **5NF:** breaks a join dependency — rare in real life.
+
+The way to remember it: 1NF removes repeats, 2NF removes partial dependency, 3NF removes transitive dependency, and BCNF removes dependency on part of a key. Reaching 3NF or BCNF is usually enough — going further is interview talk, not project work.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Normal forms: har form kya rule jodta hai',
+        'Normal forms: what rule each form adds'
+      ),
+      caption: t(
+        'Har agla form pichle form ke saare rules ke saath ek naya rule jodta hai',
+        'Each next form keeps all the rules of the previous form and adds one new rule'
+      ),
+      nodes: [],
+      headers: [t('Form', 'Form'), t('Rule', 'Rule')],
+      rows: [
+        [t('1NF', '1NF'), t('Har cell mein ek value', 'One value in every cell')],
+        [t('2NF', '2NF'), t('Poori key par dependency, hisse par nahi', 'Dependency on the whole key, not on part of it')],
+        [t('3NF', '3NF'), t('Non-key, non-key par depend na kare', 'A non-key column does not depend on another non-key column')],
+        [t('BCNF', 'BCNF'), t('Har determinant ek candidate key ho', 'Every determinant is a candidate key')],
+        [t('4NF / 5NF', '4NF / 5NF'), t('Multi-valued / join dependency todna', 'Break multi-valued / join dependency')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Normalized tables: teacher ka phone ab sirf ek jagah',
+          'Normalized tables: the teacher phone is now in one place'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS teachers;
+DROP TABLE IF EXISTS enrolments;
+CREATE TABLE teachers (teacher TEXT PRIMARY KEY, phone TEXT);
+INSERT INTO teachers VALUES ('Meera', '98100');
+INSERT INTO teachers VALUES ('Arjun', '98200');
+CREATE TABLE enrolments (student_id INTEGER, course TEXT, teacher TEXT);
+INSERT INTO enrolments VALUES (1, 'SQL', 'Meera');
+INSERT INTO enrolments VALUES (1, 'Python', 'Arjun');
+INSERT INTO enrolments VALUES (2, 'SQL', 'Meera');
+SELECT student_id, course, teacher FROM enrolments ORDER BY student_id, course;`,
+        output: 'student_id | course | teacher\n1 | Python | Arjun\n1 | SQL | Meera\n2 | SQL | Meera'
+      },
+      {
+        title: t(
+          'Teacher ka phone sirf teachers table mein — ek jagah',
+          'The teacher phone lives only in the teachers table — one place'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS teachers;
+CREATE TABLE teachers (teacher TEXT PRIMARY KEY, phone TEXT);
+INSERT INTO teachers VALUES ('Meera', '98100');
+INSERT INTO teachers VALUES ('Arjun', '98200');
+SELECT teacher, phone FROM teachers ORDER BY teacher;`,
+        output: 'teacher | phone\nArjun | 98200\nMeera | 98100'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Ek teacher ka phone number 100 rows mein repeat ho raha hai. Phone badalne par sirf 99 rows update hui. Ye kaunsi anomaly hai?',
+          'The phone number of a teacher repeats in 100 rows. After a change, only 99 rows were updated. Which anomaly is this?'
+        ),
+        opts: [
+          t('Insert anomaly', 'Insert anomaly'),
+          t('Update anomaly', 'Update anomaly'),
+          t('Delete anomaly', 'Delete anomaly'),
+          t('Koi anomaly nahi', 'No anomaly')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek hi fact kai jagah likha hai, isliye ek jagah update karne par baaki jagah purana data reh gaya — yahi update anomaly hai.',
+          'Correct answer: the same fact is written in many places, so updating one place leaves old data in the rest — that is an update anomaly.'
+        )
+      },
+      {
+        q: t(
+          '1NF ka rule kya hai?',
+          'What is the rule of 1NF?'
+        ),
+        opts: [
+          t('Har cell mein sirf ek value hogi', 'Every cell holds only one value'),
+          t('Har table mein sirf ek column hoga', 'Every table holds only one column'),
+          t('Har row mein sirf ek word hoga', 'Every row holds only one word'),
+          t('Koi primary key nahi hogi', 'There is no primary key')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 1NF kehta hai har cell atomic hogi — ek cell mein "SQL, Python" jaise do values nahi likhi jaayengi.',
+          'Correct answer: 1NF says every cell is atomic — one cell will not hold two values like "SQL, Python".'
+        )
+      },
+      {
+        q: t(
+          '2NF kis dependency ko hatata hai?',
+          'Which dependency does 2NF remove?'
+        ),
+        opts: [
+          t('Transitive dependency', 'Transitive dependency'),
+          t('Partial dependency', 'Partial dependency'),
+          t('Multi-valued dependency', 'Multi-valued dependency'),
+          t('Join dependency', 'Join dependency')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 2NF kehta hai har non-key column poori primary key par depend kare, key ke ek hisse par nahi — partial dependency hat jaati hai.',
+          'Correct answer: 2NF says every non-key column depends on the whole primary key, not on one part of it — the partial dependency goes away.'
+        )
+      },
+      {
+        q: t(
+          'BCNF, 3NF se kaise alag hai?',
+          'How is BCNF different from 3NF?'
+        ),
+        opts: [
+          t('BCNF mein har determinant ek candidate key hona chahiye', 'In BCNF every determinant must be a candidate key'),
+          t('BCNF mein primary key nahi hoti', 'In BCNF there is no primary key'),
+          t('BCNF mein sirf ek table hoti hai', 'In BCNF there is only one table'),
+          t('Dono bilkul ek jaise hain', 'Both are exactly the same')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: 3NF sirf non-key columns par rule lagata hai, BCNF har determinant par — isliye BCNF, 3NF se sakht hai.',
+          'Correct answer: 3NF puts its rule only on non-key columns, while BCNF puts it on every determinant — so BCNF is stricter than 3NF.'
+        )
+      },
+      {
+        q: t(
+          '4NF kis problem ko solve karta hai?',
+          'Which problem does 4NF solve?'
+        ),
+        opts: [
+          t('Ek cell mein do values', 'Two values in one cell'),
+          t('Partial dependency', 'Partial dependency'),
+          t('Multi-valued dependency', 'Multi-valued dependency'),
+          t('Duplicate primary key', 'Duplicate primary key')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 4NF multi-valued dependency ko todta hai — jaise ek student ke kai courses aur kai hobbies ko alag tables mein rakhna.',
+          'Correct answer: 4NF breaks a multi-valued dependency — for example, keeping the many courses and the many hobbies of a student in separate tables.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Normalization ka goal: ek fact, ek jagah — update, insert aur delete anomaly khatam.',
+        'The goal of normalization: one fact, one place — update, insert, and delete anomalies go away.'
+      ),
+      t(
+        '1NF: har cell mein ek value. 2NF: poori key par dependency. 3NF: transitive dependency nahi.',
+        '1NF: one value in every cell. 2NF: dependency on the whole key. 3NF: no transitive dependency.'
+      ),
+      t(
+        'BCNF: har determinant ek candidate key hona chahiye — 3NF se sakht.',
+        'BCNF: every determinant must be a candidate key — stricter than 3NF.'
+      ),
+      t(
+        '4NF multi-valued dependency aur 5NF join dependency todta hai — real life mein rare.',
+        '4NF breaks a multi-valued dependency and 5NF breaks a join dependency — rare in real life.'
+      ),
+      t(
+        '3NF ya BCNF tak jao, phir ruko — over-normalization queries ko slow kar deta hai.',
+        'Go to 3NF or BCNF, then stop — over-normalization makes queries slow.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Enrolment Table ko Normalize Karo',
+        'Practice: Normalize the Enrolment Table'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye student_courses table banata hai jismein har student ka naam sirf ek baar likhne ke bajaye har course ke saath repeat hota hai. Tumhara kaam ye samajhna hai ki ye table kis normal form mein hai aur teacher jaisi extra info ko alag table mein kyun nikalna chahiye. Done tab mano jab output expected jaisa aaye aur tum bata sako ki is table mein kaunsi anomaly abhi bhi bachi hai.',
+        'Run the starter below: it builds a student_courses table where the name of each student repeats with every course instead of being written once. Your job is to work out which normal form this table is in and why extra facts like a teacher belong in a separate table. You are done when the output matches the expected output and you can say which anomaly is still left in this table.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS student_courses;
+CREATE TABLE student_courses (student_id INTEGER, student_name TEXT, course TEXT);
+INSERT INTO student_courses VALUES (1, 'Rahul', 'SQL');
+INSERT INTO student_courses VALUES (1, 'Rahul', 'Python');
+INSERT INTO student_courses VALUES (2, 'Priya', 'SQL');
+SELECT student_id, student_name, course FROM student_courses ORDER BY student_id, course;`,
+      expected: 'student_id | student_name | course\n1 | Rahul | Python\n1 | Rahul | SQL\n2 | Priya | SQL'
+    },
+    readMinutes: 12
+  };
+
+const dbmsIndexes: Article = {
+    id: 'dbms-indexes',
+    subjectId: 'dbms',
+    title: t(
+      'Indexes — B-tree, Hash Index, Clustered vs Non-Clustered',
+      'Indexes — B-tree, Hash Index, Clustered vs Non-Clustered'
+    ),
+    summary: t(
+      'Index ko zero se samjho: bina index ke database poori table scan karta hai, index ke saath woh seedha sahi row par jaata hai. B-tree index range queries mein kyun jeetta hai, hash index sirf equality mein kyun fast hai, aur clustered vs non-clustered index mein kya farak hai — sab SQL aur EXPLAIN ke saath.',
+      'Learn indexes from scratch: without an index the database scans the whole table, with an index it jumps straight to the right row. Why a B-tree index wins on range queries, why a hash index is fast only for equality, and how a clustered index differs from a non-clustered index — all with SQL and EXPLAIN.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Index Kya Hai? (B-tree aur Hash Index)',
+          '1. What Is an Index? (B-tree and Hash Index)'
+        ),
+        body: t(
+          `**Index** ek alag, chhota data structure hai jo table ke ek column ke values ko sorted order mein, unki row ki location ke saath store karta hai. Bina index ke, \`WHERE marks = 92\` likhne par database ko table ki har row ko ek-ek karke check karna padta hai — isko **full table scan** kehte hain, aur ye O(n) hota hai. Index ke saath database index mein value ko dhoondhta hai aur seedha sahi row par chala jaata hai — O(log n) time mein.
+
+Sabse common index **B-tree index** hai. B-tree ek balanced tree hota hai: values sorted order mein leaves mein hoti hain, aur upar ke levels se search neeche ki taraf badhta hai. Isliye B-tree **equality** (\`marks = 92\`) aur **range** (\`marks >= 88\`) dono mein fast hai, aur \`ORDER BY\` mein bhi madad karta hai kyunki values pehle se sorted hain. **Hash index** value ka hash nikaal kar bucket mein rakhta hai — equality search mein ye O(1) hota hai, par range query mein bekaar hai kyunki hash se order ka pata nahi chalta. Isi liye aam databases mein B-tree default index hota hai.
+
+Index free nahi hota: har \`INSERT\`, \`UPDATE\` aur \`DELETE\` par index ko bhi update karna padta hai, aur index disk par jagah bhi leta hai. Isliye har column par index banana galat hai — sirf un columns par index banao jin par baar-baar search, join ya sort hota hai.`,
+          `An **index** is a separate, small data structure that stores the values of one column of a table in sorted order, together with the location of each row. Without an index, writing \`WHERE marks = 92\` forces the database to check every row of the table one by one — this is called a **full table scan**, and it takes O(n) time. With an index, the database finds the value in the index and jumps straight to the right row — in O(log n) time.
+
+The most common index is the **B-tree index**. A B-tree is a balanced tree: the values sit in sorted order in the leaves, and a search moves down from the upper levels. That is why a B-tree is fast for both **equality** (\`marks = 92\`) and **range** (\`marks >= 88\`) queries, and it also helps \`ORDER BY\` because the values are already sorted. A **hash index** hashes the value and stores it in a bucket — equality search is O(1) with it, but a range query is useless because a hash says nothing about order. That is why the B-tree is the default index in most databases.
+
+An index is not free: every \`INSERT\`, \`UPDATE\`, and \`DELETE\` must also update the index, and the index takes disk space too. So putting an index on every column is wrong — put an index only on columns that are searched, joined, or sorted again and again.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Book Index, Dictionary aur Library Card',
+          '2. Real-Life Examples: Book Index, Dictionary, and Library Card'
+        ),
+        body: t(
+          `Kitab ke peeche wala **index** sabse achha example hai. Agar kitab mein "normalization" kahan hai ye dhoondhna ho, toh tum poori kitab page by page nahi padhte — peeche wale index mein "normalization" dhoondhte ho, uske saamne page number likha hota hai, aur seedha us page par chale jaate ho. Database ka index bilkul wahi karta hai: value ke saamne row ki location likhi hoti hai.
+
+Dictionary bhi ek index hai: words sorted order mein hote hain, isliye tum "zebra" dhoondhne ke liye "a" se shuru nahi karte — seedha aakhri hisse mein jaate ho. B-tree bhi isi sorted order ka fayda uthata hai. Library ka purana card catalog bhi index tha: har book ka card author ya title ke hisab se sorted drawer mein hota tha, aur card par shelf number likha hota tha.
+
+Har example mein ek hi pattern hai: **pehle chhoti, sorted list mein dhoondho, phir seedha asli cheez par jao**. Poori cheez ko scan karna hamesha aakhri option hona chahiye.`,
+          `The **index** at the back of a book is the best example. To find where "normalization" appears in a book, you do not read the whole book page by page — you look up "normalization" in the index at the back, find the page number next to it, and jump straight to that page. A database index does exactly that: the location of the row sits next to the value.
+
+A dictionary is also an index: the words sit in sorted order, so to find "zebra" you do not start at "a" — you jump straight to the last part. A B-tree uses the same benefit of sorted order. The old card catalog of a library was an index too: each book had a card in a drawer sorted by author or title, and the card carried the shelf number.
+
+Every example follows one pattern: **first search the small, sorted list, then jump straight to the real thing**. Scanning the whole thing must always be the last option.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Index Banana aur EXPLAIN se Check Karna (worked example with dry run)',
+          '3. Step-by-Step: Creating an Index and Checking It with EXPLAIN (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain students table par, jismein 4 rows hain: Rahul 85, Priya 92, Amit 74, Sana 88. Query hai \`WHERE marks >= 88\`. Bina index ke database 4 rows ko ek-ek karke check karta hai — 4 steps. Chhoti table mein ye farak nahi dikhta, par 10 lakh rows mein 10 lakh steps lagenge. Ab \`CREATE INDEX idx_marks ON students(marks)\` chalao. Database marks column ki sorted list banata hai: 74 (Amit), 85 (Rahul), 88 (Sana), 92 (Priya) — har value ke saath uski row ki location.
+
+Ab wahi query dobara chalao. Database index mein 88 ko dhoondhta hai aur wahan se aage ki saari values le leta hai — Sana aur Priya. Sirf 2 rows ko chhoona pada, poori table scan nahi hui. \`EXPLAIN QUERY PLAN\` se tum khud dekh sakte ho ki database ne index use kiya ya table scan kiya: output mein \`SEARCH students USING INDEX idx_marks\` likha aayega. Neeche wala code index banata hai aur toppers nikaalta hai; code examples mein EXPLAIN ka output dikhaya gaya hai.`,
+          `Let us do a dry run on the students table, which has 4 rows: Rahul 85, Priya 92, Amit 74, Sana 88. The query is \`WHERE marks >= 88\`. Without an index, the database checks the 4 rows one by one — 4 steps. In a small table the difference does not show, but with 1,000,000 rows it would take 1,000,000 steps. Now run \`CREATE INDEX idx_marks ON students(marks)\`. The database builds a sorted list of the marks column: 74 (Amit), 85 (Rahul), 88 (Sana), 92 (Priya) — each value with the location of its row.
+
+Now run the same query again. The database finds 88 in the index and takes all the values from there onward — Sana and Priya. Only 2 rows were touched; no full table scan happened. With \`EXPLAIN QUERY PLAN\` you can see for yourself whether the database used the index or scanned the table: the output says \`SEARCH students USING INDEX idx_marks\`. The code below creates the index and finds the toppers; the code examples show the EXPLAIN output.`
+        ),
+        code: {
+          title: t(
+            'Index banao aur marks >= 88 wale students nikalo',
+            'Create an index and find students with marks >= 88'
+          ),
+          language: 'sql',
+          code: `CREATE INDEX idx_marks ON students(marks);
+SELECT id, name, marks FROM students WHERE marks >= 88 ORDER BY marks DESC;`,
+          output: 'id | name | marks\n2 | Priya | 92\n4 | Sana | 88'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Har Column par Index, Index ko Magic Samajhna',
+          '4. Common Mistakes: An Index on Every Column, Treating an Index as Magic'
+        ),
+        body: t(
+          `**Galti 1: Har column par index banana.** Index likhne ko fast karta hai, par \`INSERT\` aur \`UPDATE\` ko slow karta hai, kyunki har change par index bhi update hota hai. Ek table par 5-6 se zyada index aam taur par nuksaan karte hain. Sirf woh columns index karo jo \`WHERE\`, \`JOIN\` ya \`ORDER BY\` mein baar-baar aate hain.
+
+**Galti 2: Index ko magic samajhna.** Index har query ko fast nahi karta. Agar query table ki 90% rows mangti hai, toh database index ko ignore karke full scan karega — aur ye sahi hai, kyunki index se ek-ek row ko dhoondhna scan se slow padega. Index tab kaam aata hai jab query chhota hissa mangti hai. \`LIKE '%ra%'\` wali query bhi index use nahi kar sakti, kyunki pattern aage se shuru nahi hota.
+
+**Galti 3: Composite index ka order galat rakhna.** Index (course, student_id) par banao toh \`WHERE course = 'SQL'\` fast hoga, par \`WHERE student_id = 1\` fast nahi hoga — index left se right kaam karta hai. Jo column sabse zyada filter hota hai, use pehle rakho.`,
+          `**Mistake 1: Putting an index on every column.** An index makes reads fast, but it makes \`INSERT\` and \`UPDATE\` slow, because every change must also update the index. More than 5 or 6 indexes on one table usually do harm. Index only the columns that appear again and again in \`WHERE\`, \`JOIN\`, or \`ORDER BY\`.
+
+**Mistake 2: Treating an index as magic.** An index does not speed up every query. If a query asks for 90% of the rows of a table, the database ignores the index and does a full scan — and that is correct, because finding rows one by one through the index would be slower than a scan. An index helps when a query asks for a small part. A query with \`LIKE '%ra%'\` cannot use an index either, because the pattern does not start at the front.
+
+**Mistake 3: Wrong order in a composite index.** With an index on (course, student_id), \`WHERE course = 'SQL'\` is fast, but \`WHERE student_id = 1\` is not fast — an index works from left to right. Put the column that filters most often first.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Table, Duplicate Values aur Bahut Chhoti Table',
+          '5. Edge Cases: Empty Table, Duplicate Values, and a Very Small Table'
+        ),
+        body: t(
+          `**Khaali table:** khaali table par index banane se kuch nahi hota — index bhi khaali rehta hai. Index ka fayda tab dikhta hai jab data badhta hai. Isiliye index ko design ke waqt banaya jaata hai, data bharne ke baad bhi banaya ja sakta hai.
+
+**Duplicate values:** index unique nahi hota, jab tak tum \`UNIQUE INDEX\` na banao. Marks column mein do students ke 85 marks ho sakte hain — index dono ko handle kar leta hai, kyunki har entry ke saath row ki location judi hoti hai. Unique index alag hai: woh duplicate value ko insert hone se hi rok deta hai, jaise email column par unique index.
+
+**Bahut chhoti table:** 4 rows wali table par index banane se query fast nahi hoti — database aksar index ko ignore karke scan kar leta hai, kyunki scan mein sirf 4 steps lagte hain. Index ka asli fayda lakhon rows par dikhta hai. Interview mein ye point bahut pasand kiya jaata hai.`,
+          `**Empty table:** creating an index on an empty table does nothing — the index stays empty too. The benefit of an index shows only when the data grows. That is why an index is made at design time, though it can also be made after the data is loaded.
+
+**Duplicate values:** an index is not unique unless you make a \`UNIQUE INDEX\`. Two students can both have 85 marks — the index handles both, because each entry carries the location of its row. A unique index is different: it stops a duplicate value from being inserted at all, like a unique index on an email column.
+
+**Very small table:** an index does not make a query on a 4-row table fast — the database often ignores the index and scans instead, because a scan takes only 4 steps. The real benefit of an index shows on tables with millions of rows. Interviewers like this point a lot.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Index Hata Dein, Ya Sirf Hash Index Use Karein?',
+          '6. What If: We Remove the Index, or Use Only a Hash Index?'
+        ),
+        body: t(
+          `**What if index hata dein?** \`DROP INDEX idx_marks\` karte hi queries wapas full scan par chali jaayengi. Chhoti table mein kuch farak nahi padega, par badi table mein wahi query seconds se minutes mein badal jaayegi. Index hatana hamesha safe hai — data ko kuch nahi hota, sirf speed jaati hai.
+
+**What if sirf hash index use karein?** \`WHERE marks = 92\` O(1) mein chalega, par \`WHERE marks >= 88\` ke liye hash index bekaar hai — hash se order ka pata nahi chalta, isliye database ko phir bhi poori table scan karni padegi. Range queries aur sorting ke liye B-tree hi chahiye. Isi liye zyada tar databases mein B-tree default hai aur hash index sirf khaas cases mein use hota hai.`,
+          `**What if we remove the index?** The moment you run \`DROP INDEX idx_marks\`, queries go back to a full scan. On a small table nothing changes, but on a big table the same query grows from seconds to minutes. Removing an index is always safe — the data is untouched; only the speed goes away.
+
+**What if we use only a hash index?** \`WHERE marks = 92\` runs in O(1), but for \`WHERE marks >= 88\` a hash index is useless — a hash says nothing about order, so the database must still scan the whole table. Range queries and sorting need a B-tree. That is why most databases use a B-tree by default and a hash index only in special cases.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Index Chhota, Sorted aur Fast Rasta Hai',
+          '7. Summary: An Index Is a Small, Sorted, Fast Path'
+        ),
+        body: t(
+          `Index ek chhota, sorted data structure hai jo value ke saath row ki location store karta hai. **B-tree index** equality aur range dono mein fast hai aur sorting mein madad karta hai — ye default choice hai. **Hash index** sirf equality mein O(1) hai, range mein bekaar hai. **Clustered index** table ke rows ko hi index ke order mein arrange karta hai — ek table mein sirf ek clustered index ho sakta hai, aam taur par primary key par. **Non-clustered index** alag structure hota hai jo row ki location point karta hai — ek table mein kai non-clustered index ho sakte hain.
+
+Yaad rakho: index reads ko fast karta hai, writes ko slow karta hai. Sirf un columns par index banao jo baar-baar search, join ya sort hote hain, aur \`EXPLAIN QUERY PLAN\` se hamesha check karo ki database ne index use kiya ya nahi.`,
+          `An index is a small, sorted data structure that stores the location of a row next to its value. A **B-tree index** is fast for both equality and range queries and helps sorting — it is the default choice. A **hash index** is O(1) only for equality and useless for range queries. A **clustered index** arranges the rows of the table itself in the order of the index — a table can have only one clustered index, usually on the primary key. A **non-clustered index** is a separate structure that points to the location of a row — a table can have many non-clustered indexes.
+
+Remember: an index makes reads fast and writes slow. Put an index only on columns that are searched, joined, or sorted again and again, and always check with \`EXPLAIN QUERY PLAN\` whether the database actually used the index.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'B-tree index: marks par search kaise chalta hai',
+        'B-tree index: how a search on marks works'
+      ),
+      caption: t(
+        'Values sorted order mein hain, isliye range query seedha sahi hisse par jaati hai',
+        'The values are in sorted order, so a range query jumps straight to the right part'
+      ),
+      nodes: [
+        {
+          t: t('Root: 85', 'Root: 85'),
+          s: t('85 se chhota left, bada right', 'Smaller than 85 goes left, bigger goes right')
+        },
+        {
+          t: t('Left leaf: 74 (Amit)', 'Left leaf: 74 (Amit)'),
+          s: t('74 < 85, isliye left taraf', '74 < 85, so it goes left')
+        },
+        {
+          t: t('Right leaf: 88 (Sana), 92 (Priya)', 'Right leaf: 88 (Sana), 92 (Priya)'),
+          s: t('marks >= 88 yahin se milta hai', 'marks >= 88 is found right here')
+        },
+        {
+          t: t('Hash index: sirf marks = 92', 'Hash index: only marks = 92'),
+          s: t('Range query mein hash se order nahi milta', 'A range query gets no order from a hash')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'EXPLAIN: database ne index use kiya ya nahi?',
+          'EXPLAIN: did the database use the index?'
+        ),
+        language: 'sql',
+        code: `CREATE INDEX idx_marks ON students(marks);
+EXPLAIN QUERY PLAN SELECT name FROM students WHERE marks = 92;`,
+        output: 'id | parent | notused | detail\n3 | 0 | 0 | SEARCH students USING INDEX idx_marks (marks=?)'
+      },
+      {
+        title: t(
+          'Clustered jaisa table: PRIMARY KEY par row seedha milti hai',
+          'A clustered-like table: the row is found directly on the PRIMARY KEY'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS scores;
+CREATE TABLE scores (id INTEGER PRIMARY KEY, marks INTEGER);
+INSERT INTO scores VALUES (1, 85);
+INSERT INTO scores VALUES (2, 92);
+INSERT INTO scores VALUES (3, 74);
+INSERT INTO scores VALUES (4, 88);
+SELECT id, marks FROM scores WHERE id = 3;`,
+        output: 'id | marks\n3 | 74'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Bina index ke WHERE marks = 92 wali query database kaise chalata hai?',
+          'How does the database run a WHERE marks = 92 query without an index?'
+        ),
+        opts: [
+          t('Seedha sahi row par jaata hai', 'It jumps straight to the right row'),
+          t('Poori table ko ek-ek row scan karta hai', 'It scans the whole table row by row'),
+          t('Pehli row de deta hai', 'It returns the first row'),
+          t('Error deta hai', 'It gives an error')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina index ke database ko har row check karni padti hai — isko full table scan kehte hain, aur ye O(n) hota hai.',
+          'Correct answer: without an index the database must check every row — this is called a full table scan, and it takes O(n) time.'
+        )
+      },
+      {
+        q: t(
+          'Range query (marks >= 88) ke liye kaunsa index behtar hai?',
+          'Which index is better for a range query (marks >= 88)?'
+        ),
+        opts: [
+          t('Hash index', 'Hash index'),
+          t('B-tree index', 'B-tree index'),
+          t('Koi index nahi', 'No index'),
+          t('Dono barabar', 'Both are equal')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: B-tree mein values sorted hoti hain, isliye range query seedha sahi hisse par jaati hai; hash se order ka pata nahi chalta.',
+          'Correct answer: values are sorted in a B-tree, so a range query jumps straight to the right part; a hash says nothing about order.'
+        )
+      },
+      {
+        q: t(
+          'Ek table mein kitne clustered index ho sakte hain?',
+          'How many clustered indexes can one table have?'
+        ),
+        opts: [
+          t('Sirf ek', 'Only one'),
+          t('Jitne chaho', 'As many as you want'),
+          t('Ek bhi nahi', 'Not even one'),
+          t('Hamesha do', 'Always two')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: clustered index table ke rows ko hi apne order mein arrange karta hai, aur rows ka sirf ek order ho sakta hai — isliye sirf ek clustered index hota hai.',
+          'Correct answer: a clustered index arranges the rows of the table itself in its order, and rows can have only one order — so there is only one clustered index.'
+        )
+      },
+      {
+        q: t(
+          'Index ka sabse bada nuksaan kya hai?',
+          'What is the biggest drawback of an index?'
+        ),
+        opts: [
+          t('SELECT slow ho jaata hai', 'SELECT becomes slow'),
+          t('INSERT / UPDATE slow ho jaata hai aur jagah leta hai', 'INSERT / UPDATE becomes slow and it takes space'),
+          t('Table delete ho jaati hai', 'The table gets deleted'),
+          t('Koi nuksaan nahi', 'There is no drawback')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har INSERT, UPDATE aur DELETE par index ko bhi update karna padta hai, aur index disk par jagah bhi leta hai.',
+          'Correct answer: every INSERT, UPDATE, and DELETE must also update the index, and the index takes disk space too.'
+        )
+      },
+      {
+        q: t(
+          'EXPLAIN QUERY PLAN mein "SEARCH students USING INDEX idx_marks" ka matlab kya hai?',
+          'What does "SEARCH students USING INDEX idx_marks" mean in EXPLAIN QUERY PLAN?'
+        ),
+        opts: [
+          t('Database ne poori table scan ki', 'The database scanned the whole table'),
+          t('Database ne index se row dhoondhi', 'The database found the row through the index'),
+          t('Index delete ho gaya', 'The index was deleted'),
+          t('Query mein error hai', 'There is an error in the query')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: SEARCH ... USING INDEX ka matlab hai database ne table scan ki jagah index se seedha sahi row dhoondhi.',
+          'Correct answer: SEARCH ... USING INDEX means the database found the right row straight through the index instead of scanning the table.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Index value ke saath row ki location store karta hai — search O(n) se O(log n) ho jaata hai.',
+        'An index stores the location of a row next to its value — search goes from O(n) to O(log n).'
+      ),
+      t(
+        'B-tree equality aur range dono mein fast hai; hash index sirf equality mein O(1) hai.',
+        'A B-tree is fast for both equality and range; a hash index is O(1) only for equality.'
+      ),
+      t(
+        'Clustered index ek hi ho sakta hai; non-clustered index kai ho sakte hain.',
+        'There can be only one clustered index; there can be many non-clustered indexes.'
+      ),
+      t(
+        'Index reads ko fast aur writes ko slow karta hai — har column par index mat banao.',
+        'An index makes reads fast and writes slow — do not put an index on every column.'
+      ),
+      t(
+        'EXPLAIN QUERY PLAN se check karo ki database ne index use kiya ya full scan kiya.',
+        'Use EXPLAIN QUERY PLAN to check whether the database used the index or did a full scan.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Name par Index Banao aur Priya ko Dhoondho',
+        'Practice: Create an Index on Name and Find Priya'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye students ke name par index banata hai aur phir name se Priya ko dhoondhta hai. Done tab mano jab output expected jaisa aaye aur tum bata sako ki name par index banane se ye query kyun fast hui.',
+        'Run the starter below: it creates an index on the name of students and then finds Priya by name. You are done when the output matches the expected output and you can say why this query became fast with an index on name.'
+      ),
+      language: 'sql',
+      starter: `CREATE INDEX idx_name ON students(name);
+SELECT name, marks FROM students WHERE name = 'Priya';`,
+      expected: 'name | marks\nPriya | 92'
+    },
+    readMinutes: 12
+  };
+
+const dbmsViews: Article = {
+    id: 'dbms-views',
+    subjectId: 'dbms',
+    title: t(
+      'Views — Create, Update aur Materialized View ka Idea',
+      'Views — Create, Update, and the Idea of a Materialized View'
+    ),
+    summary: t(
+      'View ko samjho: ek saved query jo table jaisi dikhti hai par data store nahi karti. View kaise banate hain, view se data kaise dekhte hain, view ke peeche ka data badalne par view khud kaise badal jaata hai, aur materialized view kab kaam aata hai — sab SQL ke saath.',
+      'Learn views: a saved query that looks like a table but stores no data. How to create a view, how to read data through it, how a view changes by itself when the data behind it changes, and when a materialized view helps — all with SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. View Kya Hai? (Virtual Table)',
+          '1. What Is a View? (Virtual Table)'
+        ),
+        body: t(
+          `**View** ek saved \`SELECT\` query hai jisko tum table ki tarah use kar sakte ho. Jab tum \`CREATE VIEW toppers AS SELECT ...\` likhte ho, toh database us query ko save kar leta hai — data save nahi karta. Jab bhi tum view se \`SELECT\` karte ho, database us saved query ko asal tables par chala kar fresh result deta hai. Isiliye view ko **virtual table** kehte hain: dikhti table jaisi hai, par andar koi data nahi hota.
+
+View ke teen bade fayde hain. **Pehla, simplicity:** ek lambi query jismein JOIN aur filter hon, use ek baar view mein save karo, phir har baar sirf \`SELECT * FROM toppers\` likho. **Doosra, security:** ek employee ko poori salary table mat dikhao — sirf naam aur department wali view dikhao, salary column chhupa rahega. **Teesra, consistency:** toppers ki definition ek jagah likhi hai, toh har report mein toppers ka matlab ek hi rahega.
+
+View aur table ka sabse bada farak ye hai: table mein data hota hai, view mein sirf query hoti hai. Table mein row insert karne se data badhta hai; view mein row insert karne ka matlab asal table mein row insert karna hota hai — aur ye hamesha possible nahi hota.`,
+          `A **view** is a saved \`SELECT\` query that you can use like a table. When you write \`CREATE VIEW toppers AS SELECT ...\`, the database saves that query — it does not save the data. Whenever you run \`SELECT\` on the view, the database runs the saved query on the real tables and gives a fresh result. That is why a view is called a **virtual table**: it looks like a table, but it holds no data inside.
+
+A view has three big benefits. **First, simplicity:** save a long query with JOINs and filters once in a view, and then just write \`SELECT * FROM toppers\` every time. **Second, security:** do not show an employee the whole salary table — show only a view with the name and the department, and the salary column stays hidden. **Third, consistency:** the definition of toppers is written in one place, so every report means the same thing by toppers.
+
+The biggest difference between a view and a table is this: a table holds data, a view holds only a query. Inserting a row into a table adds data; inserting a row into a view means inserting a row into the real table — and that is not always possible.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Report Card, Bank Statement aur News Feed',
+          '2. Real-Life Examples: Report Card, Bank Statement, and News Feed'
+        ),
+        body: t(
+          `School ka **report card** ek view jaisa hai: report card mein naam, subject aur marks dikhte hain, par report card khud data store nahi karta — woh register se nikaal kar dikhata hai. Register mein marks badle toh agla report card khud-b-khud naya marks dikhayega. View bilkul aisa hi karta hai.
+
+Bank statement bhi view jaisa hai: statement mein tumhare transactions dikhte hain, par statement khud paise store nahi karti — woh account ke data se banti hai. Naya transaction hote hi agle statement mein dikh jaata hai. News feed bhi aisa hi hai: feed ek saved filter hai — "mere friends ki posts, nayi pehle" — har baar feed kholne par wahi filter fresh posts par chalta hai.
+
+Har example mein pattern ek hi hai: **ek hi definition, har baar fresh result**. View wahi definition hai.`,
+          `A school **report card** is like a view: the report card shows the name, the subject, and the marks, but the report card itself stores no data — it takes the data from the register and shows it. Change the marks in the register and the next report card shows the new marks by itself. A view does exactly that.
+
+A bank statement is like a view too: the statement shows your transactions, but the statement itself stores no money — it is built from the data of the account. A new transaction appears in the next statement at once. A news feed is the same: the feed is a saved filter — "posts of my friends, newest first" — and every time you open the feed, the same filter runs on fresh posts.
+
+Every example follows one pattern: **one definition, a fresh result every time**. A view is that definition.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Toppers ki View Banana aur Data Badalna (worked example with dry run)',
+          '3. Step-by-Step: Creating a Toppers View and Changing the Data (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain students table par: Rahul 85, Priya 92, Amit 74, Sana 88. Step 1: view banao — \`CREATE VIEW toppers AS SELECT id, name, marks FROM students WHERE marks >= 85\`. Ab database mein ek naya naam \`toppers\` ban gaya hai, par koi data copy nahi hua. Step 2: \`SELECT name, marks FROM toppers ORDER BY marks DESC\` chalao. Database view ki query ko students par chalata hai: 85 ya zyada wale teen students milte hain — Priya 92, Sana 88, Rahul 85. Amit 74 hai, isliye nahi aaya.
+
+Step 3: ab base table badlo — \`UPDATE students SET marks = 90 WHERE name = 'Rahul'\`. Step 4: view se dobara \`SELECT\` karo. Bina view ko chhede, Rahul ab 90 ke saath dikhega — Priya 92, Rahul 90, Sana 88. View ne khud ko update kar liya, kyunki view mein data nahi, query hai. Yahi view ki sabse badi taakat hai: **ek jagah definition, har jagah fresh data**. Neeche wala code step 1 aur 2 karta hai; code examples mein step 3 aur 4 dikhaye gaye hain.`,
+          `Let us do a dry run on the students table: Rahul 85, Priya 92, Amit 74, Sana 88. Step 1: create the view — \`CREATE VIEW toppers AS SELECT id, name, marks FROM students WHERE marks >= 85\`. A new name \`toppers\` now exists in the database, but no data was copied. Step 2: run \`SELECT name, marks FROM toppers ORDER BY marks DESC\`. The database runs the query of the view on students: the three students with 85 or more appear — Priya 92, Sana 88, Rahul 85. Amit has 74, so he does not appear.
+
+Step 3: now change the base table — \`UPDATE students SET marks = 90 WHERE name = 'Rahul'\`. Step 4: run \`SELECT\` on the view again. Without touching the view, Rahul now appears with 90 — Priya 92, Rahul 90, Sana 88. The view updated itself, because a view holds a query, not data. That is the greatest strength of a view: **one definition, fresh data everywhere**. The code below does steps 1 and 2; the code examples show steps 3 and 4.`
+        ),
+        code: {
+          title: t(
+            'Toppers ki view banao aur use padho',
+            'Create a toppers view and read it'
+          ),
+          language: 'sql',
+          code: `DROP VIEW IF EXISTS toppers;
+CREATE VIEW toppers AS SELECT id, name, marks FROM students WHERE marks >= 85;
+SELECT name, marks FROM toppers ORDER BY marks DESC;`,
+          output: 'name | marks\nPriya | 92\nSana | 88\nRahul | 85'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: View ko Table Samajhna, View par Update',
+          '4. Common Mistakes: Treating a View as a Table, Updating a View'
+        ),
+        body: t(
+          `**Galti 1: View ko table samajhna.** Log sochte hain view mein data copy ho gaya hai. Nahi — view mein sirf query hai. Agar base table delete ho jaaye toh view bhi kaam karna band kar dega. View ki speed bhi base tables ki speed par depend karti hai — view khud kuch fast nahi karta.
+
+**Galti 2: Har view par update karna.** Simple view (ek table, koi JOIN nahi, koi aggregate nahi) par \`UPDATE\` aam taur par chal jaata hai, par JOIN ya \`GROUP BY\` wali view par update nahi chalta — database ko samajh nahi aata ki kaunsi table ki kaunsi row badalni hai. SQLite mein toh simple view par seedha \`UPDATE\` bhi nahi chalta; update hamesha base table par karo, view khud badal jaayega.
+
+**Galti 3: View par view banana.** View ke upar view, uske upar view — 3-4 level deep chain ban jaati hai aur debug karna mushkil ho jaata hai. Ek view kharab ho toh poori chain gir jaati hai. Chain ko chhota rakho — aam taur par ek level kaafi hai.`,
+          `**Mistake 1: Treating a view as a table.** People think the data was copied into the view. No — a view holds only a query. If the base table is deleted, the view stops working too. The speed of a view also depends on the speed of the base tables — a view itself makes nothing fast.
+
+**Mistake 2: Updating every view.** An \`UPDATE\` usually works on a simple view (one table, no JOIN, no aggregate), but it does not work on a view with a JOIN or a \`GROUP BY\` — the database cannot tell which row of which table to change. In SQLite, even a direct \`UPDATE\` on a simple view does not work; always update the base table, and the view changes by itself.
+
+**Mistake 3: Building a view on a view.** A view on a view on a view — a chain 3 or 4 levels deep — becomes hard to debug. If one view breaks, the whole chain falls. Keep the chain short — usually one level is enough.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali View, View ka Naam aur Base Table Delete',
+          '5. Edge Cases: Empty View, View Name, and Deleting the Base Table'
+        ),
+        body: t(
+          `**Khaali view:** agar koi student 85 se upar nahi hai, toh toppers view khaali dikhega — \`SELECT\` chalega, par koi row nahi aayegi. Ye error nahi hai; view hamesha base table ki current haalat dikhata hai.
+
+**View ka naam:** view ka naam table jaisa hi hota hai, aur ek hi naam se table aur view dono nahi ho sakte. View banane se pehle check karo ki us naam ki table toh nahi hai, warna error aayega.
+
+**Base table delete:** agar \`students\` table ko \`DROP\` kar do, toh toppers view toot jaayega — us par \`SELECT\` karne par error aayega. View ko bhi \`DROP VIEW toppers\` se hatana padta hai. Isiliye production mein table hatane se pehle us par bani views ko check karo.`,
+          `**Empty view:** if no student is above 85, the toppers view looks empty — the \`SELECT\` runs, but no row comes back. That is not an error; a view always shows the current state of the base table.
+
+**View name:** a view has a name like a table, and one name cannot be both a table and a view. Before creating a view, check that no table already has that name, or you will get an error.
+
+**Deleting the base table:** if you \`DROP\` the \`students\` table, the toppers view breaks — a \`SELECT\` on it gives an error. The view must also be removed with \`DROP VIEW toppers\`. That is why, in production, you check the views built on a table before removing the table.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: View ki Jagah Table Bana Lein, Ya Materialized View Use Karein?',
+          '6. What If: We Make a Table Instead of a View, or Use a Materialized View?'
+        ),
+        body: t(
+          `**What if view ki jagah table bana lein?** \`CREATE TABLE toppers AS SELECT ...\` se ek asli table ban jaayegi jismein data copy ho jaayega. Ye fast hogi, par stale ho jaayegi — Rahul ke marks badalne par toppers table purani hi rahegi, jab tak use dobara na banao. View hamesha fresh rehta hai, table hamesha fast rehti hai. Jo chahiye, woh chuno.
+
+**What if materialized view use karein?** **Materialized view** beech ka rasta hai: ye view ki query ka result store karke rakhta hai, jaise table, par use refresh kiya ja sakta hai. Badi report jo roz ek baar chalti hai, uske liye materialized view perfect hai — raat ko refresh karo, din bhar fast report dekho. SQLite mein materialized view nahi hota, par MySQL aur Postgres mein hota hai. Interview mein sirf ye farak kaafi hai: normal view data store nahi karta, materialized view karta hai.`,
+          `**What if we make a table instead of a view?** \`CREATE TABLE toppers AS SELECT ...\` makes a real table with the data copied into it. It is fast, but it goes stale — when the marks of Rahul change, the toppers table stays old until you build it again. A view is always fresh, and a table is always fast. Choose the one you need.
+
+**What if we use a materialized view?** A **materialized view** is the middle path: it stores the result of the query of a view, like a table, but it can be refreshed. It is perfect for a big report that runs once a day — refresh it at night and read fast reports all day. SQLite has no materialized view, but MySQL and Postgres do. For an interview, this difference is enough: a normal view stores no data, a materialized view does.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: View Query Hai, Table Data Hai',
+          '7. Summary: A View Is a Query, a Table Is Data'
+        ),
+        body: t(
+          `View ek saved query hai jo table jaisi dikhti hai. **Fayde:** lambi query chhoti ho jaati hai, sensitive columns chhup jaate hain, aur definition ek jagah rehti hai. **Asli sach:** view mein data nahi hota — har \`SELECT\` par query dobara chalti hai, isliye view hamesha fresh hota hai aur base table badalne par khud badal jaata hai. **Materialized view** result ko store karke rakhta hai aur refresh par update hota hai — badi, roz ki report ke liye best hai.
+
+Yaad rakho: update hamesha base table par karo, view par nahi. View ko table mat samjho, aur view par view ki lambi chain mat banao.`,
+          `A view is a saved query that looks like a table. **Benefits:** a long query becomes short, sensitive columns stay hidden, and the definition lives in one place. **The real truth:** a view holds no data — every \`SELECT\` runs the query again, so a view is always fresh and changes by itself when the base table changes. A **materialized view** stores the result and updates on refresh — best for a big, daily report.
+
+Remember: always update the base table, never the view. Do not treat a view as a table, and do not build a long chain of views on views.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'View kaise kaam karta hai: upar view, neeche asli table',
+        'How a view works: the view on top, the real table below'
+      ),
+      caption: t(
+        'View mein data nahi hota — har SELECT par query base table par chalti hai',
+        'A view holds no data — every SELECT runs the query on the base table'
+      ),
+      nodes: [
+        {
+          t: t('User: SELECT * FROM toppers', 'User: SELECT * FROM toppers'),
+          s: t('User ko lagta hai ye ek table hai', 'The user thinks this is a table')
+        },
+        {
+          t: t('View toppers: saved query', 'View toppers: saved query'),
+          s: t('Sirf query save hai: WHERE marks >= 85', 'Only the query is saved: WHERE marks >= 85')
+        },
+        {
+          t: t('Base table students', 'Base table students'),
+          s: t('Asli data yahin hai — Rahul 85, Priya 92, Amit 74, Sana 88', 'The real data is here — Rahul 85, Priya 92, Amit 74, Sana 88')
+        },
+        {
+          t: t('Fresh result: Priya, Sana, Rahul', 'Fresh result: Priya, Sana, Rahul'),
+          s: t('Marks badle toh result khud badal jaata hai', 'Change the marks and the result changes by itself')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'View se average: result_summary',
+          'Average through a view: result_summary'
+        ),
+        language: 'sql',
+        code: `DROP VIEW IF EXISTS result_summary;
+CREATE VIEW result_summary AS SELECT COUNT(*) AS total, AVG(marks) AS avg_marks FROM students;
+SELECT total, avg_marks FROM result_summary;`,
+        output: 'total | avg_marks\n4 | 84.75'
+      },
+      {
+        title: t(
+          'Base table badlo, view khud badal jaata hai',
+          'Change the base table, the view changes by itself'
+        ),
+        language: 'sql',
+        code: `DROP VIEW IF EXISTS toppers;
+CREATE VIEW toppers AS SELECT id, name, marks FROM students WHERE marks >= 85;
+UPDATE students SET marks = 90 WHERE name = 'Rahul';
+SELECT name, marks FROM toppers ORDER BY marks DESC;`,
+        output: 'name | marks\nPriya | 92\nRahul | 90\nSana | 88'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'View mein kya store hota hai?',
+          'What is stored in a view?'
+        ),
+        opts: [
+          t('Poora data copy hota hai', 'A full copy of the data'),
+          t('Sirf SELECT query save hoti hai', 'Only the SELECT query is saved'),
+          t('Sirf pehli row', 'Only the first row'),
+          t('Kuch bhi store nahi hota', 'Nothing is stored at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: view mein sirf query save hoti hai; har SELECT par woh query base tables par dobara chalti hai, isliye result hamesha fresh hota hai.',
+          'Correct answer: a view saves only the query; every SELECT runs that query again on the base tables, so the result is always fresh.'
+        )
+      },
+      {
+        q: t(
+          'Rahul ke marks 85 se 90 ho gaye. Toppers view (marks >= 85) ab kya dikhayega?',
+          'The marks of Rahul went from 85 to 90. What will the toppers view (marks >= 85) show now?'
+        ),
+        opts: [
+          t('Rahul ab bhi 85 dikhega', 'Rahul still shows 85'),
+          t('Rahul 90 dikhega', 'Rahul shows 90'),
+          t('Rahul view se gayab ho jaayega', 'Rahul disappears from the view'),
+          t('View error dega', 'The view gives an error')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: view mein data nahi hota, har SELECT par query dobara chalti hai — isliye Rahul ka naya marks 90 dikhega.',
+          'Correct answer: a view holds no data, and every SELECT runs the query again — so the new marks of Rahul, 90, will show.'
+        )
+      },
+      {
+        q: t(
+          'View ka security mein kya fayda hai?',
+          'What is the benefit of a view for security?'
+        ),
+        opts: [
+          t('View password lagata hai', 'A view sets a password'),
+          t('View sirf chune hue columns dikhata hai, sensitive columns chhup jaate hain', 'A view shows only chosen columns, so sensitive columns stay hidden'),
+          t('View data ko encrypt karta hai', 'A view encrypts the data'),
+          t('View table ko delete kar deta hai', 'A view deletes the table')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: view mein sirf woh columns rakho jo dikhane hain — jaise naam aur department, salary nahi — aur sensitive data chhupa rahega.',
+          'Correct answer: put only the columns you want to show in the view — like name and department, not salary — and the sensitive data stays hidden.'
+        )
+      },
+      {
+        q: t(
+          'Materialized view, normal view se kaise alag hai?',
+          'How is a materialized view different from a normal view?'
+        ),
+        opts: [
+          t('Materialized view result ko store karke rakhta hai', 'A materialized view stores the result'),
+          t('Materialized view mein query nahi hoti', 'A materialized view has no query'),
+          t('Materialized view hamesha khaali hota hai', 'A materialized view is always empty'),
+          t('Dono bilkul ek jaise hain', 'Both are exactly the same')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: normal view sirf query save karta hai, materialized view query ka result store karke rakhta hai aur refresh par update hota hai.',
+          'Correct answer: a normal view saves only the query, while a materialized view stores the result of the query and updates on refresh.'
+        )
+      },
+      {
+        q: t(
+          'JOIN aur GROUP BY wali view par UPDATE kyun mushkil hai?',
+          'Why is UPDATE hard on a view with JOIN and GROUP BY?'
+        ),
+        opts: [
+          t('Database ko samajh nahi aata kaunsi table ki kaunsi row badalni hai', 'The database cannot tell which row of which table to change'),
+          t('View mein password hota hai', 'The view has a password'),
+          t('View bahut chhota hota hai', 'The view is too small'),
+          t('UPDATE view par hamesha chalta hai', 'UPDATE always works on a view')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: JOIN ya aggregate wali view ki ek row kai tables se banti hai, isliye database decide nahi kar sakta ki badlaav kahan likha jaaye.',
+          'Correct answer: one row of a view with a JOIN or an aggregate comes from many tables, so the database cannot decide where to write the change.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'View ek saved query hai — dikhti table jaisi hai, par data store nahi karti.',
+        'A view is a saved query — it looks like a table, but it stores no data.'
+      ),
+      t(
+        'Har SELECT par view ki query dobara chalti hai, isliye view hamesha fresh hota hai.',
+        'Every SELECT runs the query of the view again, so a view is always fresh.'
+      ),
+      t(
+        'View se lambi query chhoti hoti hai aur sensitive columns chhup jaate hain.',
+        'A view makes a long query short and hides sensitive columns.'
+      ),
+      t(
+        'Update hamesha base table par karo — view khud badal jaayega.',
+        'Always update the base table — the view changes by itself.'
+      ),
+      t(
+        'Materialized view result store karta hai aur refresh par update hota hai.',
+        'A materialized view stores the result and updates on refresh.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Pass List ki View Banao',
+        'Practice: Create a Pass List View'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye pass_list naam ki view banata hai jismein sirf woh students hain jinke marks 80 ya zyada hain, aur phir view ko padhta hai. Done tab mano jab output expected jaisa aaye aur tum bata sako ki Amit view mein kyun nahi dikha.',
+        'Run the starter below: it creates a view called pass_list with only the students whose marks are 80 or more, and then reads the view. You are done when the output matches the expected output and you can say why Amit does not appear in the view.'
+      ),
+      language: 'sql',
+      starter: `DROP VIEW IF EXISTS pass_list;
+CREATE VIEW pass_list AS SELECT name FROM students WHERE marks >= 80 ORDER BY name;
+SELECT name FROM pass_list;`,
+      expected: 'name\nPriya\nRahul\nSana'
+    },
+    readMinutes: 12
+  };
+
+const dbmsTriggers: Article = {
+    id: 'dbms-triggers',
+    subjectId: 'dbms',
+    title: t(
+      'Triggers — BEFORE/AFTER, Row-Level Trigger',
+      'Triggers — BEFORE/AFTER, Row-Level Trigger'
+    ),
+    summary: t(
+      'Trigger ko samjho: ek aisa rule jo table par INSERT, UPDATE ya DELETE hote hi khud chal padta hai. BEFORE aur AFTER trigger mein kya farak hai, row-level trigger har row par kyun chalta hai, aur audit log jaisa kaam trigger se kaise hota hai — sab SQLite mein verify kiya hua SQL.',
+      'Learn triggers: a rule that runs by itself the moment an INSERT, UPDATE, or DELETE happens on a table. How a BEFORE trigger differs from an AFTER trigger, why a row-level trigger runs on every row, and how work like an audit log is done with a trigger — all with SQL verified in SQLite.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Trigger Kya Hai? (BEFORE/AFTER, Row-Level)',
+          '1. What Is a Trigger? (BEFORE/AFTER, Row-Level)'
+        ),
+        body: t(
+          `**Trigger** database mein save kiya hua ek rule hai jo kisi event par khud chal padta hai. Event matlab \`INSERT\`, \`UPDATE\` ya \`DELETE\` — aur table woh hai jis par trigger laga hai. Tumhe trigger ko baar-baar call nahi karna padta; jab bhi event hota hai, database khud trigger ko chala deta hai. Isiliye trigger ko "automatic" kehte hain.
+
+Do cheezein trigger ko define karti hain: **kab** aur **kis par**. **BEFORE trigger** event se pehle chalta hai — jaise row insert hone se pehle uski value check karna ya badalna. **AFTER trigger** event ke baad chalta hai — jaise marks update hone ke baad purana aur naya marks ek log table mein likhna. **Row-level trigger** har ek row par alag se chalta hai: agar ek \`UPDATE\` se 3 rows badli, toh trigger 3 baar chalega — har row ke liye ek baar. SQLite mein sirf row-level trigger hote hain, statement-level nahi.
+
+Trigger ke andar tum \`OLD\` aur \`NEW\` se row ki values padh sakte ho: \`OLD.marks\` matlab update se pehle wale marks, \`NEW.marks\` matlab update ke baad wale marks. \`INSERT\` mein sirf \`NEW\` hota hai, \`DELETE\` mein sirf \`OLD\` hota hai, \`UPDATE\` mein dono hote hain.`,
+          `A **trigger** is a rule saved in the database that runs by itself when an event happens. An event means \`INSERT\`, \`UPDATE\`, or \`DELETE\` — and the table is the one the trigger sits on. You never call a trigger again and again; whenever the event happens, the database runs the trigger itself. That is why a trigger is called "automatic".
+
+Two things define a trigger: **when** and **on what**. A **BEFORE trigger** runs before the event — for example, to check or change the value of a row before it is inserted. An **AFTER trigger** runs after the event — for example, to write the old and new marks into a log table after the marks are updated. A **row-level trigger** runs separately on every row: if one \`UPDATE\` changes 3 rows, the trigger runs 3 times — once for each row. SQLite has only row-level triggers, not statement-level ones.
+
+Inside a trigger you can read the values of a row with \`OLD\` and \`NEW\`: \`OLD.marks\` means the marks before the update, and \`NEW.marks\` means the marks after the update. \`INSERT\` has only \`NEW\`, \`DELETE\` has only \`OLD\`, and \`UPDATE\` has both.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: CCTV, Bank SMS aur Attendance Register',
+          '2. Real-Life Examples: CCTV, Bank SMS, and Attendance Register'
+        ),
+        body: t(
+          `**CCTV camera** trigger jaisa hai: tumhe camera ko baar-baar "record karo" nahi kehna padta — jaise hi koi movement hoti hai, camera khud record karne lagta hai. Event hua, action khud chal pada. Trigger bhi aisa hi hai: event hua, rule khud chal pada.
+
+Bank ka **SMS alert** bhi trigger jaisa hai: paise nikalte hi SMS aa jaata hai, tumhe bank ko phone karke poochhna nahi padta. Database mein AFTER UPDATE trigger aisa hi karta hai — balance badla, log table mein entry likh di. School ka attendance register bhi aisa hi hai: student class mein aaya, teacher ne tick lagaya — tick lagte hi present count khud badh jaata hai, koi dobara ginne nahi baithta.
+
+Har example mein ek hi baat hai: **event hote hi action, bina kisi ko bulaye**.`,
+          `A **CCTV camera** is like a trigger: you never tell the camera "record" again and again — the moment there is movement, the camera starts recording by itself. The event happened, and the action ran by itself. A trigger is the same: the event happened, and the rule ran by itself.
+
+A bank **SMS alert** is like a trigger too: the moment money is withdrawn, the SMS arrives — you never call the bank to ask. An AFTER UPDATE trigger in a database does the same — the balance changed, and an entry was written in the log table. A school attendance register is the same: a student came to class, the teacher put a tick, and the present count went up by itself — nobody sits down to count again.
+
+Every example says one thing: **the moment the event happens, the action runs, without anyone being called**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Marks Badlo, Audit Log Khud Banega (worked example with dry run)',
+          '3. Step-by-Step: Change the Marks, the Audit Log Builds Itself (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain. Step 1: log table banao — \`marks_log(student_id, old_marks, new_marks)\`. Ye table sirf history rakhne ke liye hai. Step 2: trigger banao — \`CREATE TRIGGER trg_marks AFTER UPDATE OF marks ON students FOR EACH ROW BEGIN INSERT INTO marks_log VALUES (OLD.id, OLD.marks, NEW.marks); END\`. Iska matlab: students ke marks par jab bhi UPDATE ho, har row ke liye purana aur naya marks log mein likh do. Trigger \`AFTER\` hai kyunki log update ke baad likhna hai, aur \`FOR EACH ROW\` hai kyunki har row ka alag log chahiye.
+
+Step 3: \`UPDATE students SET marks = 90 WHERE id = 1\` chalao. Tumne sirf marks badle, par database ne do kaam kiye: pehle Rahul ke marks 85 se 90 kiye, phir trigger chalakar log mein (1, 85, 90) likh diya. Step 4: \`SELECT * FROM marks_log\` karo — output mein ek row dikhegi: student 1, purane marks 85, naye marks 90. Tumne log likhne ka code likha hi nahi, phir bhi log ban gaya — yahi trigger ki taakat hai.`,
+          `Let us do a dry run. Step 1: make the log table — \`marks_log(student_id, old_marks, new_marks)\`. This table exists only to keep history. Step 2: create the trigger — \`CREATE TRIGGER trg_marks AFTER UPDATE OF marks ON students FOR EACH ROW BEGIN INSERT INTO marks_log VALUES (OLD.id, OLD.marks, NEW.marks); END\`. It means: whenever an UPDATE happens on the marks of students, write the old and new marks into the log for every row. The trigger is \`AFTER\` because the log must be written after the update, and \`FOR EACH ROW\` because every row needs its own log.
+
+Step 3: run \`UPDATE students SET marks = 90 WHERE id = 1\`. You only changed the marks, but the database did two things: first it changed the marks of Rahul from 85 to 90, then it ran the trigger and wrote (1, 85, 90) into the log. Step 4: run \`SELECT * FROM marks_log\` — the output shows one row: student 1, old marks 85, new marks 90. You never wrote code to write the log, yet the log was made — that is the power of a trigger.`
+        ),
+        code: {
+          title: t(
+            'AFTER UPDATE trigger: marks badlo, log khud banega',
+            'AFTER UPDATE trigger: change the marks, the log builds itself'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS marks_log;
+CREATE TABLE marks_log (student_id INTEGER, old_marks INTEGER, new_marks INTEGER);
+DROP TRIGGER IF EXISTS trg_marks;
+CREATE TRIGGER trg_marks AFTER UPDATE OF marks ON students FOR EACH ROW BEGIN INSERT INTO marks_log VALUES (OLD.id, OLD.marks, NEW.marks); END;
+UPDATE students SET marks = 90 WHERE id = 1;
+SELECT student_id, old_marks, new_marks FROM marks_log;`,
+          output: 'student_id | old_marks | new_marks\n1 | 85 | 90'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Trigger mein Galat Table Update, Infinite Loop',
+          '4. Common Mistakes: Updating the Wrong Table in a Trigger, Infinite Loop'
+        ),
+        body: t(
+          `**Galti 1: Trigger wali table ko trigger ke andar update karna.** Agar students par trigger hai aur trigger ke andar hi students ko update kar do, toh trigger dobara chalega, phir dobara — infinite loop ban jaayega. Trigger ke andar hamesha doosri table (jaise log table) ko update karo, wahi table ko nahi.
+
+**Galti 2: BEFORE aur AFTER ko ulta samajhna.** Value ko badalne ya rokne ke liye BEFORE trigger chahiye — AFTER trigger mein row pehle hi badal chuki hoti hai. Log likhne ke liye AFTER trigger chahiye — BEFORE mein log likhoge toh log mein woh likha jaayega jo abhi hua hi nahi. Kaam ke hisaab se sahi timing chuno.
+
+**Galti 3: Trigger ko business logic ka dabba banana.** Saari logic trigger mein daal doge toh koi samajh nahi paayega ki data kaise badal raha hai — debugging mushkil ho jaata hai. Trigger sirf chhote, automatic kaam ke liye rakho: audit log, derived value, simple check. Badi logic application code mein rakho.`,
+          `**Mistake 1: Updating the trigger table inside the trigger.** If a trigger sits on students and inside the trigger you update students again, the trigger runs again, then again — an infinite loop is made. Inside a trigger, always update a different table (like a log table), never the same table.
+
+**Mistake 2: Mixing up BEFORE and AFTER.** To change or stop a value you need a BEFORE trigger — in an AFTER trigger the row has already changed. To write a log you need an AFTER trigger — if you write the log in a BEFORE trigger, the log records something that has not happened yet. Choose the timing that fits the job.
+
+**Mistake 3: Making a trigger the box for all business logic.** If you put all the logic in triggers, nobody can tell how the data is changing — debugging becomes hard. Keep a trigger only for small, automatic jobs: an audit log, a derived value, a simple check. Keep big logic in the application code.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Ek UPDATE se 3 Rows, DELETE par OLD, INSERT par NEW',
+          '5. Edge Cases: One UPDATE Changing 3 Rows, OLD on DELETE, NEW on INSERT'
+        ),
+        body: t(
+          `**Ek UPDATE, 3 rows:** \`UPDATE students SET marks = marks + 5 WHERE marks < 90\` se 3 rows badalti hain — Rahul, Amit aur Sana. Row-level trigger 3 baar chalega aur log mein 3 rows likhega. Agar tumhe sirf ek baar log chahiye hota, toh row-level trigger galat choice hoti — par SQLite mein sirf row-level trigger hai, isliye ye samajhna zaroori hai.
+
+**DELETE par OLD:** delete wale trigger mein \`NEW\` nahi hota, kyunki nayi row hai hi nahi. Sirf \`OLD\` hota hai — delete hone se pehle wali row. Audit log mein delete ko record karne ke liye \`OLD.id\` aur \`OLD.marks\` use karo.
+
+**INSERT par NEW:** insert wale trigger mein \`OLD\` nahi hota, kyunki purani row hai hi nahi. Sirf \`NEW\` hota hai — abhi insert hui row. Naye student ke aate hi welcome log likhna ho toh \`NEW.name\` use karo.`,
+          `**One UPDATE, 3 rows:** \`UPDATE students SET marks = marks + 5 WHERE marks < 90\` changes 3 rows — Rahul, Amit, and Sana. A row-level trigger runs 3 times and writes 3 rows in the log. If you wanted only one log entry, a row-level trigger would be the wrong choice — but SQLite has only row-level triggers, so understanding this is essential.
+
+**OLD on DELETE:** a delete trigger has no \`NEW\`, because there is no new row. It has only \`OLD\` — the row before it was deleted. To record a delete in an audit log, use \`OLD.id\` and \`OLD.marks\`.
+
+**NEW on INSERT:** an insert trigger has no \`OLD\`, because there is no old row. It has only \`NEW\` — the row that was just inserted. To write a welcome log when a new student arrives, use \`NEW.name\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Trigger ki Jagah Application Code Likhein?',
+          '6. What If: We Write Application Code Instead of a Trigger?'
+        ),
+        body: t(
+          `**What if trigger ki jagah application code likhein?** Marks update karne wali har jagah par log likhne ka code bhi likh sakte ho — par ek jagah bhool gaye toh log adhura reh jaayega. Trigger database ke andar rehta hai, isliye chahe koi bhi application, koi bhi user, kahin se bhi update kare, log hamesha banega. Audit jaise kaam ke liye trigger behtar hai.
+
+**What if trigger hata dein?** \`DROP TRIGGER trg_marks\` karte hi log banana band ho jaayega, par purana log table aur uska data safe rahega. Trigger hatana hamesha safe hai — data ko kuch nahi hota, sirf automatic kaam ruk jaata hai. Isiliye trigger ko experiment karke dekho, phir decide karo ki use rakhna hai ya nahi.`,
+          `**What if we write application code instead of a trigger?** You can write the code to write a log at every place that updates marks — but if you forget one place, the log stays incomplete. A trigger lives inside the database, so no matter which application, which user, or from where the update comes, the log is always made. For audit work, a trigger is better.
+
+**What if we remove the trigger?** The moment you run \`DROP TRIGGER trg_marks\`, the log stops being made, but the old log table and its data stay safe. Removing a trigger is always safe — the data is untouched; only the automatic work stops. That is why you should try a trigger, see it work, and then decide whether to keep it.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Event Hua, Trigger Chala',
+          '7. Summary: The Event Happened, the Trigger Ran'
+        ),
+        body: t(
+          `Trigger ek automatic rule hai: \`INSERT\`, \`UPDATE\` ya \`DELETE\` hote hi khud chal padta hai. **BEFORE trigger** event se pehle chalta hai — value check ya badalne ke liye. **AFTER trigger** event ke baad chalta hai — audit log likhne ke liye. **Row-level trigger** har row par alag se chalta hai — ek UPDATE se 3 rows badli toh trigger 3 baar chalega. \`OLD\` purani row hai, \`NEW\` nayi row hai — INSERT mein sirf NEW, DELETE mein sirf OLD, UPDATE mein dono.
+
+Yaad rakho: trigger ke andar wahi table update mat karo jis par trigger laga hai, warna infinite loop banega. Audit log trigger ka sabse common aur sabse sahi use hai.`,
+          `A trigger is an automatic rule: the moment an \`INSERT\`, \`UPDATE\`, or \`DELETE\` happens, it runs by itself. A **BEFORE trigger** runs before the event — to check or change a value. An **AFTER trigger** runs after the event — to write an audit log. A **row-level trigger** runs separately on every row — if one UPDATE changes 3 rows, the trigger runs 3 times. \`OLD\` is the old row and \`NEW\` is the new row — INSERT has only NEW, DELETE has only OLD, and UPDATE has both.
+
+Remember: never update inside a trigger the same table the trigger sits on, or you will make an infinite loop. An audit log is the most common and most correct use of a trigger.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Trigger ka flow: UPDATE se log tak',
+        'Trigger flow: from UPDATE to log'
+      ),
+      caption: t(
+        'Tum sirf UPDATE likhte ho — trigger khud chal kar log likh deta hai',
+        'You only write the UPDATE — the trigger runs by itself and writes the log'
+      ),
+      nodes: [
+        {
+          t: t('UPDATE students SET marks = 90 WHERE id = 1', 'UPDATE students SET marks = 90 WHERE id = 1'),
+          s: t('Tumhara ek statement', 'Your one statement')
+        },
+        {
+          t: t('AFTER UPDATE trigger chalta hai', 'AFTER UPDATE trigger runs'),
+          s: t('Har row ke liye ek baar (row-level)', 'Once for every row (row-level)')
+        },
+        {
+          t: t('OLD.marks = 85, NEW.marks = 90', 'OLD.marks = 85, NEW.marks = 90'),
+          s: t('Trigger purani aur nayi value padhta hai', 'The trigger reads the old and new values')
+        },
+        {
+          t: t('marks_log mein (1, 85, 90) likha gaya', 'marks_log gets (1, 85, 90)'),
+          s: t('Audit log khud ban gaya', 'The audit log built itself')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'AFTER INSERT trigger: naya student aate hi log',
+          'AFTER INSERT trigger: a log the moment a new student arrives'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS audit;
+CREATE TABLE audit (note TEXT);
+DROP TRIGGER IF EXISTS trg_new;
+CREATE TRIGGER trg_new AFTER INSERT ON students FOR EACH ROW BEGIN INSERT INTO audit VALUES ('new student ' || NEW.name); END;
+INSERT INTO students VALUES (5, 'Karan', 81);
+SELECT note FROM audit;`,
+        output: 'note\nnew student Karan'
+      },
+      {
+        title: t(
+          'Row-level: ek UPDATE, 3 rows, 3 log entries',
+          'Row-level: one UPDATE, 3 rows, 3 log entries'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS marks_log;
+CREATE TABLE marks_log (student_id INTEGER, new_marks INTEGER);
+DROP TRIGGER IF EXISTS trg_marks2;
+CREATE TRIGGER trg_marks2 AFTER UPDATE OF marks ON students FOR EACH ROW BEGIN INSERT INTO marks_log VALUES (OLD.id, NEW.marks); END;
+UPDATE students SET marks = marks + 5 WHERE marks < 90;
+SELECT student_id, new_marks FROM marks_log ORDER BY student_id;`,
+        output: 'student_id | new_marks\n1 | 90\n3 | 79\n4 | 93'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Trigger kab chalta hai?',
+          'When does a trigger run?'
+        ),
+        opts: [
+          t('Jab user use call karta hai', 'When the user calls it'),
+          t('INSERT / UPDATE / DELETE event hote hi khud', 'By itself, the moment an INSERT / UPDATE / DELETE event happens'),
+          t('Sirf raat ko', 'Only at night'),
+          t('Kabhi nahi', 'Never')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: trigger ko call nahi karna padta — event hote hi database khud use chala deta hai, isiliye use automatic kehte hain.',
+          'Correct answer: a trigger is never called — the moment the event happens, the database runs it by itself, which is why it is called automatic.'
+        )
+      },
+      {
+        q: t(
+          'Marks update hone ke baad audit log likhne ke liye kaunsa trigger chahiye?',
+          'Which trigger is needed to write an audit log after the marks are updated?'
+        ),
+        opts: [
+          t('BEFORE UPDATE', 'BEFORE UPDATE'),
+          t('AFTER UPDATE', 'AFTER UPDATE'),
+          t('BEFORE INSERT', 'BEFORE INSERT'),
+          t('AFTER DELETE', 'AFTER DELETE')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: log update ke baad likhna hai, isliye AFTER UPDATE trigger chahiye — BEFORE mein log woh likhega jo abhi hua hi nahi.',
+          'Correct answer: the log must be written after the update, so an AFTER UPDATE trigger is needed — a BEFORE trigger would log something that has not happened yet.'
+        )
+      },
+      {
+        q: t(
+          'Ek UPDATE se 3 rows badli. Row-level trigger kitni baar chalega?',
+          'One UPDATE changed 3 rows. How many times will a row-level trigger run?'
+        ),
+        opts: [
+          t('1 baar', '1 time'),
+          t('3 baar', '3 times'),
+          t('0 baar', '0 times'),
+          t('9 baar', '9 times')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: row-level trigger har row par alag se chalta hai, isliye 3 rows par 3 baar chalega aur log mein 3 entries likhega.',
+          'Correct answer: a row-level trigger runs separately on every row, so for 3 rows it runs 3 times and writes 3 entries in the log.'
+        )
+      },
+      {
+        q: t(
+          'UPDATE wale trigger mein OLD.marks aur NEW.marks ka matlab kya hai?',
+          'In an UPDATE trigger, what do OLD.marks and NEW.marks mean?'
+        ),
+        opts: [
+          t('OLD naye marks, NEW purane marks', 'OLD is the new marks, NEW is the old marks'),
+          t('OLD purane marks, NEW naye marks', 'OLD is the old marks, NEW is the new marks'),
+          t('Dono ek jaise hain', 'Both are the same'),
+          t('Dono hamesha 0 hote hain', 'Both are always 0')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: OLD update se pehle wali row hai aur NEW update ke baad wali row hai — isiliye audit log mein dono likhe jaate hain.',
+          'Correct answer: OLD is the row before the update and NEW is the row after the update — that is why both are written in the audit log.'
+        )
+      },
+      {
+        q: t(
+          'Trigger ke andar wahi table update karne se kya hoga?',
+          'What happens if you update the same table inside its own trigger?'
+        ),
+        opts: [
+          t('Kuch nahi hoga', 'Nothing happens'),
+          t('Infinite loop ban jaayega', 'An infinite loop is made'),
+          t('Table delete ho jaayegi', 'The table gets deleted'),
+          t('Trigger khud delete ho jaayega', 'The trigger deletes itself')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: update se trigger dobara chalega, phir dobara — isiliye trigger ke andar hamesha doosri table ko update karo.',
+          'Correct answer: the update runs the trigger again, then again — so inside a trigger, always update a different table.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Trigger automatic hai — INSERT, UPDATE ya DELETE hote hi khud chal padta hai.',
+        'A trigger is automatic — it runs by itself the moment an INSERT, UPDATE, or DELETE happens.'
+      ),
+      t(
+        'BEFORE trigger value check ya badalne ke liye, AFTER trigger audit log ke liye.',
+        'A BEFORE trigger is for checking or changing a value, an AFTER trigger is for an audit log.'
+      ),
+      t(
+        'Row-level trigger har row par alag se chalta hai — 3 rows badli toh 3 baar chalega.',
+        'A row-level trigger runs separately on every row — 3 rows changed means it runs 3 times.'
+      ),
+      t(
+        'OLD purani row, NEW nayi row — INSERT mein sirf NEW, DELETE mein sirf OLD.',
+        'OLD is the old row, NEW is the new row — INSERT has only NEW, DELETE has only OLD.'
+      ),
+      t(
+        'Trigger ke andar wahi table update mat karo — infinite loop banega.',
+        'Never update the same table inside its trigger — an infinite loop is made.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Priya ke Marks ka Audit Log Banao',
+        'Practice: Build an Audit Log for the Marks of Priya'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye marks_log table aur AFTER UPDATE trigger banata hai, phir Priya ke marks 92 se 95 karta hai. Done tab mano jab output expected jaisa aaye aur tum bata sako ki log mein 92 kyun likha hai — 95 kyun nahi.',
+        'Run the starter below: it builds the marks_log table and an AFTER UPDATE trigger, then changes the marks of Priya from 92 to 95. You are done when the output matches the expected output and you can say why the log shows 92 — and not 95.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS marks_log;
+CREATE TABLE marks_log (student_id INTEGER, old_marks INTEGER, new_marks INTEGER);
+DROP TRIGGER IF EXISTS trg_marks;
+CREATE TRIGGER trg_marks AFTER UPDATE OF marks ON students FOR EACH ROW BEGIN INSERT INTO marks_log VALUES (OLD.id, OLD.marks, NEW.marks); END;
+UPDATE students SET marks = 95 WHERE id = 2;
+SELECT student_id, old_marks, new_marks FROM marks_log;`,
+      expected: 'student_id | old_marks | new_marks\n2 | 92 | 95'
+    },
+    readMinutes: 12
+  };
+
+const dbmsProcedures: Article = {
+    id: 'dbms-procedures',
+    subjectId: 'dbms',
+    title: t(
+      'Stored Procedures aur Functions — Ek Baar Likho, Baar-Baar Chalao',
+      'Stored Procedures and Functions — Write Once, Run Again and Again'
+    ),
+    summary: t(
+      'Stored procedure aur function ko samjho: database mein save kiya hua code jo ek naam se baar-baar chalta hai. Procedure aur function mein kya farak hai, parameter kaise kaam karta hai, aur SQLite mein procedure na hone par usi kaam ko view aur CASE se kaise karte hain — MySQL syntax prose mein, runnable SQL SQLite mein.',
+      'Learn stored procedures and functions: code saved in the database that runs again and again under one name. How a procedure differs from a function, how a parameter works, and how the same job is done with a view and CASE in SQLite, where procedures do not exist — MySQL syntax in the prose, runnable SQL in SQLite.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Stored Procedure aur Function Kya Hain?',
+          '1. What Are a Stored Procedure and a Function?'
+        ),
+        body: t(
+          `**Stored procedure** database mein save kiya hua SQL code ka ek block hai jisko ek naam dekar baar-baar chalaya ja sakta hai. MySQL mein ye aise likha jaata hai: \`CREATE PROCEDURE GetTopper() BEGIN SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1; END\`. Ek baar ban gaya, toh phir sirf \`CALL GetTopper()\` likhna hai — poori query dobara likhne ki zaroorat nahi. Procedure ke andar kai statements ho sakte hain: \`SELECT\`, \`INSERT\`, \`UPDATE\` — sab ek saath chalte hain.
+
+**Function** procedure jaisa hi hota hai, par ek farak hai: function hamesha **ek value return karta hai** aur use query ke andar likha ja sakta hai, jaise \`SELECT GetGrade(92)\`. Procedure koi value return nahi karta — woh sirf kaam karta hai, jaise report banana ya data update karna. MySQL mein function aise likha jaata hai: \`CREATE FUNCTION GetGrade(m INT) RETURNS TEXT ...\` — andar \`CASE\` se grade nikal kar \`RETURN\` kiya jaata hai.
+
+**Parameter** procedure ya function ko di gayi input hoti hai. Jaise \`GetStudentsAbove(85)\` mein 85 ek parameter hai — wahi procedure 80 ke saath bhi chalega aur 90 ke saath bhi. Parameter ki wajah se ek hi code har cut-off par kaam karta hai.`,
+          `A **stored procedure** is a block of SQL code saved in the database that can be run again and again under one name. In MySQL it is written like this: \`CREATE PROCEDURE GetTopper() BEGIN SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1; END\`. Once it is made, you only write \`CALL GetTopper()\` — there is no need to write the whole query again. A procedure can hold many statements: \`SELECT\`, \`INSERT\`, \`UPDATE\` — all run together.
+
+A **function** is like a procedure, but with one difference: a function always **returns one value** and can be written inside a query, like \`SELECT GetGrade(92)\`. A procedure returns no value — it only does work, like making a report or updating data. In MySQL a function is written like this: \`CREATE FUNCTION GetGrade(m INT) RETURNS TEXT ...\` — inside it, a \`CASE\` finds the grade and a \`RETURN\` sends it back.
+
+A **parameter** is the input given to a procedure or a function. In \`GetStudentsAbove(85)\`, 85 is a parameter — the same procedure also works with 80 and with 90. Because of the parameter, one piece of code works for every cut-off.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: ATM, Washing Machine aur Calculator',
+          '2. Real-Life Examples: ATM, Washing Machine, and Calculator'
+        ),
+        body: t(
+          `**ATM** ek stored procedure jaisa hai: tum card daalte ho, PIN daalte ho, paise nikaalte ho — andar ka process hamesha ek jaisa hai, tumhe har baar steps dobara nahi sochne padte. Procedure bhi aisa hi hai: ek baar steps likh diye, phir sirf naam se chalao. ATM ka PIN ek parameter hai — alag PIN, alag account, wahi process.
+
+**Washing machine** bhi procedure jaisa hai: "quick wash" button dabao aur machine khud paani bharegi, dhoyegi, sukhayegi — tumhe har step alag se nahi karna padta. **Calculator** function jaisa hai: tum 92 daalte ho, woh 'A' grade deta hai — input diya, ek value wapas mili. Function ka yahi matlab hai: input lo, ek value do.
+
+Har example mein ek hi baat hai: **ek baar likho, baar-baar chalao**.`,
+          `An **ATM** is like a stored procedure: you insert the card, enter the PIN, and withdraw money — the process inside is always the same, and you never think through the steps again. A procedure is the same: write the steps once, then run them by name. The PIN of an ATM is a parameter — a different PIN, a different account, the same process.
+
+A **washing machine** is like a procedure too: press the "quick wash" button and the machine fills the water, washes, and dries by itself — you never do each step separately. A **calculator** is like a function: you enter 92 and it gives back an 'A' grade — you gave an input and got one value back. That is the meaning of a function: take an input, give one value back.
+
+Every example says one thing: **write once, run again and again**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Topper Nikaalne ka Procedure (worked example with dry run)',
+          '3. Step-by-Step: A Procedure to Find the Topper (worked example with dry run)'
+        ),
+        body: t(
+          `MySQL mein dry run karte hain. Step 1: procedure banao — \`CREATE PROCEDURE GetTopper() BEGIN SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1; END\`. Ab database mein \`GetTopper\` naam ka saved code hai. Step 2: \`CALL GetTopper()\` chalao. Database procedure ke andar ki query chalata hai: marks ke hisaab se sort karta hai — Priya 92, Sana 88, Rahul 85, Amit 74 — aur pehli row deta hai: Priya, 92. Step 3: marks badlo — Priya 92 se 95 ho jaaye toh \`CALL GetTopper()\` phir se Priya ko hi dega, par 95 ke saath. Procedure har baar fresh data par chalta hai.
+
+Par is site ka SQL runner SQLite hai, aur **SQLite mein CREATE PROCEDURE hota hi nahi** — isiliye neeche wala code procedure ka SQLite equivalent dikhata hai: ek **view** jo wahi query save karke rakhta hai. \`CREATE VIEW topper AS SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — phir \`SELECT name, marks FROM topper\` wahi result deta hai jo \`CALL GetTopper()\` deta. Farak sirf itna hai: view mein parameter nahi hota, procedure mein hota hai. Code examples mein function ka SQLite equivalent — \`CASE\` se grade — dikhaya gaya hai.`,
+          `Let us do a dry run in MySQL. Step 1: create the procedure — \`CREATE PROCEDURE GetTopper() BEGIN SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1; END\`. The database now holds saved code called \`GetTopper\`. Step 2: run \`CALL GetTopper()\`. The database runs the query inside the procedure: it sorts by marks — Priya 92, Sana 88, Rahul 85, Amit 74 — and gives the first row: Priya, 92. Step 3: change the marks — if Priya goes from 92 to 95, \`CALL GetTopper()\` still gives Priya, but with 95. A procedure runs on fresh data every time.
+
+But the SQL runner on this site is SQLite, and **SQLite has no CREATE PROCEDURE at all** — so the code below shows the SQLite equivalent of a procedure: a **view** that saves the same query. \`CREATE VIEW topper AS SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — then \`SELECT name, marks FROM topper\` gives the same result that \`CALL GetTopper()\` gives. The only difference is this: a view has no parameter, a procedure has one. The code examples show the SQLite equivalent of a function — a grade from \`CASE\`.`
+        ),
+        code: {
+          title: t(
+            'Procedure ka SQLite equivalent: topper wali view',
+            'The SQLite equivalent of a procedure: a topper view'
+          ),
+          language: 'sql',
+          code: `DROP VIEW IF EXISTS topper;
+CREATE VIEW topper AS SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1;
+SELECT name, marks FROM topper;`,
+          output: 'name | marks\nPriya | 92'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Function mein DDL, Procedure se Value Maangna',
+          '4. Common Mistakes: DDL Inside a Function, Asking a Procedure for a Value'
+        ),
+        body: t(
+          `**Galti 1: Function se value ki jagah table badalna.** Function ka kaam value dena hai, data badalna nahi. MySQL mein function ke andar \`INSERT\` ya \`UPDATE\` likhna allowed nahi hota — function ko pure rakhna hota hai, matlab woh sirf calculate karke value de. Data badalne ka kaam procedure ka hai.
+
+**Galti 2: Procedure se value maangna.** \`SELECT GetTopper()\` likhoge toh error aayega, kyunki procedure value return nahi karta. Procedure ko \`CALL\` se chalaya jaata hai, query ke andar nahi likha jaata. Function ko query ke andar likha jaata hai, procedure ko nahi — ye farak interview mein sabse zyada poochha jaata hai.
+
+**Galti 3: Parameter ka naam column se takrana.** Agar parameter ka naam \`marks\` hai aur table mein bhi \`marks\` column hai, toh database confuse ho jaata hai ki kaunsa marks use kare. Parameter ka naam hamesha alag rakho, jaise \`p_marks\` ya \`cutoff\` — MySQL mein parameter ke aage \`IN\` likhna bhi madad karta hai.`,
+          `**Mistake 1: Changing a table from a function.** The job of a function is to give a value, not to change data. Writing \`INSERT\` or \`UPDATE\` inside a function is not allowed in MySQL — a function must stay pure, which means it only calculates and gives a value. Changing data is the job of a procedure.
+
+**Mistake 2: Asking a procedure for a value.** Writing \`SELECT GetTopper()\` gives an error, because a procedure returns no value. A procedure is run with \`CALL\`, never written inside a query. A function is written inside a query, a procedure is not — this difference is asked most often in interviews.
+
+**Mistake 3: A parameter name colliding with a column.** If the parameter is called \`marks\` and the table also has a \`marks\` column, the database gets confused about which marks to use. Always give a parameter a different name, like \`p_marks\` or \`cutoff\` — in MySQL, writing \`IN\` before a parameter also helps.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Bina Parameter ka Procedure, Khaali Result',
+          '5. Edge Cases: Procedure Without a Parameter, Empty Result'
+        ),
+        body: t(
+          `**Bina parameter ka procedure:** \`GetTopper()\` mein koi parameter nahi hai — ye theek hai. Har procedure ko parameter ki zaroorat nahi hoti. Parameter tab chahiye jab wahi kaam alag input par karna ho, jaise alag cut-off par students nikaalna.
+
+**Khaali result:** agar koi student hi nahi hai, toh \`CALL GetTopper()\` koi row nahi dega — error nahi aayega. Procedure ko hamesha is hisaab se likhna chahiye ki khaali result bhi handle ho jaaye, jaise "no topper found" jaisa message.
+
+**SQLite mein procedure nahi:** is site par \`CREATE PROCEDURE\` likhoge toh error aayega, kyunki SQLite mein procedure hota hi nahi. Iska matlab ye nahi ki concept bekaar hai — MySQL aur Postgres mein procedure roz use hota hai. SQLite mein usi kaam ke liye view, \`CASE\` ya application code use karo.`,
+          `**Procedure without a parameter:** \`GetTopper()\` has no parameter — that is fine. Not every procedure needs a parameter. A parameter is needed only when the same job must run on a different input, like finding students above a different cut-off.
+
+**Empty result:** if there is no student at all, \`CALL GetTopper()\` gives no row — no error appears. A procedure must always be written so that an empty result is handled too, with a message like "no topper found".
+
+**No procedure in SQLite:** writing \`CREATE PROCEDURE\` on this site gives an error, because SQLite has no procedure at all. That does not mean the concept is useless — MySQL and Postgres use procedures every day. In SQLite, do the same job with a view, a \`CASE\`, or application code.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Procedure ki Jagah Har Baar Query Likhein?',
+          '6. What If: We Write the Query Every Time Instead of a Procedure?'
+        ),
+        body: t(
+          `**What if procedure ki jagah har baar query likhein?** Chhota kaam hai toh theek hai — ek line ki query dobara likhne mein koi nuksaan nahi. Par jab kaam 20 lines ka ho aur 10 jagah se chalta ho, toh ek jagah badlaav karne par 10 jagah badalni padegi — koi ek jagah chhoot gayi toh report galat ho jaayegi. Procedure mein badlaav ek jagah hota hai aur har jagah apne aap lag jaata hai.
+
+**What if function ki jagah CASE har query mein likhein?** Grade nikaalne wala \`CASE\` har query mein likhna padega — lamba aur galti wala kaam. Function mein ek baar likho, phir har query mein sirf \`GetGrade(marks)\` likho. Dono ka result ek hi hai, par function wala tareeka saaf aur safe hai.`,
+          `**What if we write the query every time instead of a procedure?** For a small job that is fine — writing a one-line query again costs nothing. But when the job is 20 lines long and runs from 10 places, one change means changing 10 places — miss one place and the report goes wrong. In a procedure, the change happens in one place and applies everywhere by itself.
+
+**What if we write CASE in every query instead of a function?** The \`CASE\` that finds the grade must be written in every query — long and error-prone work. Write it once in a function, and then just write \`GetGrade(marks)\` in every query. The result is the same in both cases, but the function way is clean and safe.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Procedure Kaam Karta Hai, Function Value Deta Hai',
+          '7. Summary: A Procedure Does Work, a Function Gives a Value'
+        ),
+        body: t(
+          `**Stored procedure** database mein save kiya hua code hai — ek naam se baar-baar chalao, \`CALL\` se. Uske andar kai statements ho sakte hain aur woh data badal sakta hai. **Function** ek value return karta hai aur query ke andar likha ja sakta hai — jaise \`GetGrade(92)\` se 'A' milta hai. **Parameter** input hota hai jo ek hi code ko har input par chalata hai.
+
+SQLite mein \`CREATE PROCEDURE\` nahi hota — wahan usi kaam ke liye **view** (saved query) aur **CASE** (grade jaisi calculation) use karo. MySQL aur Postgres mein procedure roz use hota hai, isliye concept samajhna interview ke liye zaroori hai.`,
+          `A **stored procedure** is code saved in the database — run it again and again by name, with \`CALL\`. It can hold many statements and it can change data. A **function** returns one value and can be written inside a query — like \`GetGrade(92)\` giving 'A'. A **parameter** is the input that runs the same code on every input.
+
+SQLite has no \`CREATE PROCEDURE\` — there, do the same job with a **view** (a saved query) and a **CASE** (a calculation like a grade). MySQL and Postgres use procedures every day, so understanding the concept is essential for an interview.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Procedure vs Function: ek nazar mein',
+        'Procedure vs Function: at a glance'
+      ),
+      caption: t(
+        'Dono database mein save hote hain, par ek kaam karta hai aur doosra value deta hai',
+        'Both are saved in the database, but one does work and the other gives a value'
+      ),
+      nodes: [
+        {
+          t: t('Stored Procedure: CALL GetTopper()', 'Stored Procedure: CALL GetTopper()'),
+          s: t('Koi value return nahi karta, data badal sakta hai', 'Returns no value, can change data')
+        },
+        {
+          t: t('Function: SELECT GetGrade(92)', 'Function: SELECT GetGrade(92)'),
+          s: t('Ek value return karta hai, query ke andar chalta hai', 'Returns one value, runs inside a query')
+        },
+        {
+          t: t('Parameter: GetStudentsAbove(85)', 'Parameter: GetStudentsAbove(85)'),
+          s: t('Ek hi code, har input par — 85, 80 ya 90', 'One code, every input — 85, 80, or 90')
+        },
+        {
+          t: t('SQLite: view + CASE', 'SQLite: view + CASE'),
+          s: t('SQLite mein procedure nahi — view aur CASE se wahi kaam', 'SQLite has no procedure — the same job with a view and CASE')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Function ka SQLite equivalent: CASE se grade',
+          'The SQLite equivalent of a function: a grade from CASE'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks, CASE WHEN marks >= 90 THEN 'A' WHEN marks >= 80 THEN 'B' ELSE 'C' END AS grade FROM students ORDER BY marks DESC;`,
+        output: 'name | marks | grade\nPriya | 92 | A\nSana | 88 | B\nRahul | 85 | B\nAmit | 74 | C'
+      },
+      {
+        title: t(
+          'Procedure with parameter ka equivalent: cut-off 85',
+          'The equivalent of a procedure with a parameter: cut-off 85'
+        ),
+        language: 'sql',
+        code: `SELECT name, marks FROM students WHERE marks >= 85 ORDER BY marks DESC;`,
+        output: 'name | marks\nPriya | 92\nSana | 88\nRahul | 85'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Stored procedure ko kaise chalaya jaata hai?',
+          'How is a stored procedure run?'
+        ),
+        opts: [
+          t('SELECT se', 'With SELECT'),
+          t('CALL se', 'With CALL'),
+          t('DELETE se', 'With DELETE'),
+          t('Khud chal jaata hai', 'It runs by itself')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: procedure ko CALL se chalaya jaata hai — jaise CALL GetTopper(). SELECT se function chalaya jaata hai, procedure nahi.',
+          'Correct answer: a procedure is run with CALL — like CALL GetTopper(). A function is run with SELECT, not a procedure.'
+        )
+      },
+      {
+        q: t(
+          'Function aur procedure mein sabse bada farak kya hai?',
+          'What is the biggest difference between a function and a procedure?'
+        ),
+        opts: [
+          t('Function value return karta hai, procedure nahi', 'A function returns a value, a procedure does not'),
+          t('Procedure value return karta hai, function nahi', 'A procedure returns a value, a function does not'),
+          t('Dono ek jaise hain', 'Both are the same'),
+          t('Function mein parameter nahi hota', 'A function has no parameter')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: function hamesha ek value return karta hai aur query ke andar likha ja sakta hai; procedure sirf kaam karta hai aur CALL se chalta hai.',
+          'Correct answer: a function always returns one value and can be written inside a query; a procedure only does work and runs with CALL.'
+        )
+      },
+      {
+        q: t(
+          'Parameter ka kya fayda hai?',
+          'What is the benefit of a parameter?'
+        ),
+        opts: [
+          t('Ek hi code har input par chalta hai', 'One code runs on every input'),
+          t('Query fast ho jaati hai', 'The query becomes fast'),
+          t('Table delete ho jaati hai', 'The table gets deleted'),
+          t('Koi fayda nahi', 'There is no benefit')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: parameter ki wajah se GetStudentsAbove(85) aur GetStudentsAbove(90) ek hi code se chalte hain — har input ke liye alag code nahi likhna padta.',
+          'Correct answer: because of the parameter, GetStudentsAbove(85) and GetStudentsAbove(90) run from the same code — no separate code is needed for every input.'
+        )
+      },
+      {
+        q: t(
+          'Is site ke SQLite runner mein CREATE PROCEDURE kyun nahi chalta?',
+          'Why does CREATE PROCEDURE not run in the SQLite runner on this site?'
+        ),
+        opts: [
+          t('SQLite mein stored procedure hota hi nahi', 'SQLite has no stored procedure at all'),
+          t('Procedure ka naam galat hai', 'The name of the procedure is wrong'),
+          t('Internet slow hai', 'The internet is slow'),
+          t('Table khaali hai', 'The table is empty')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: SQLite mein CREATE PROCEDURE syntax hi nahi hai — procedure MySQL aur Postgres jaisi databases mein hota hai, SQLite mein usi kaam ke liye view aur CASE use karte hain.',
+          'Correct answer: SQLite has no CREATE PROCEDURE syntax at all — procedures exist in databases like MySQL and Postgres, while in SQLite the same job is done with a view and CASE.'
+        )
+      },
+      {
+        q: t(
+          'Grade nikaalne ke liye function use karna CASE ko har query mein likhne se kyun behtar hai?',
+          'Why is using a function to find a grade better than writing CASE in every query?'
+        ),
+        opts: [
+          t('Ek baar likho, har jagah use karo — badlaav ek jagah hota hai', 'Write once, use everywhere — a change happens in one place'),
+          t('Function query ko slow karta hai', 'A function makes the query slow'),
+          t('CASE se grade galat aata hai', 'CASE gives a wrong grade'),
+          t('Koi farak nahi', 'There is no difference')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: function mein logic ek jagah rehta hai — grade ka rule badla toh sirf function badlega, har query nahi. CASE har query mein likhne par ek jagah chhoot sakti hai.',
+          'Correct answer: with a function the logic lives in one place — if the grade rule changes, only the function changes, not every query. Writing CASE in every query risks missing one place.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Stored procedure database mein save kiya hua code hai — CALL se chalta hai, value return nahi karta.',
+        'A stored procedure is code saved in the database — it runs with CALL and returns no value.'
+      ),
+      t(
+        'Function ek value return karta hai aur query ke andar likha ja sakta hai.',
+        'A function returns one value and can be written inside a query.'
+      ),
+      t(
+        'Parameter ek hi code ko har input par chalata hai — jaise cut-off 85 ya 90.',
+        'A parameter runs the same code on every input — like a cut-off of 85 or 90.'
+      ),
+      t(
+        'SQLite mein CREATE PROCEDURE nahi hota — view aur CASE se wahi kaam karo.',
+        'SQLite has no CREATE PROCEDURE — do the same job with a view and CASE.'
+      ),
+      t(
+        'Data badalne ka kaam procedure ka hai, value dene ka kaam function ka hai.',
+        'Changing data is the job of a procedure, giving a value is the job of a function.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Grade Nikaalo — Function jaisa CASE',
+        'Practice: Find the Grade — a CASE Like a Function'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye har student ka result nikaalta hai — 90 ya zyada par Distinction, baaki par Pass. Done tab mano jab output expected jaisa aaye aur tum bata sako ki ye CASE ek function GetResult(marks) jaisa kyun hai.',
+        'Run the starter below: it finds the result of every student — Distinction for 90 or more, Pass for the rest. You are done when the output matches the expected output and you can say why this CASE is like a function GetResult(marks).'
+      ),
+      language: 'sql',
+      starter: `SELECT name, CASE WHEN marks >= 90 THEN 'Distinction' ELSE 'Pass' END AS result FROM students ORDER BY name;`,
+      expected: 'name | result\nAmit | Pass\nPriya | Distinction\nRahul | Pass\nSana | Pass'
+    },
+    readMinutes: 12
+  };
+
+const dbmsAcid: Article = {
+    id: 'dbms-acid',
+    subjectId: 'dbms',
+    title: t(
+      'ACID Deep — Atomicity, Consistency, Isolation, Durability',
+      'ACID in Depth — Atomicity, Consistency, Isolation, Durability'
+    ),
+    summary: t(
+      'ACID ko gehrai se samjho: transaction kya hai, Atomicity ka matlab "sab kuch ya kuch nahi" kyun hai, Consistency data ke rules ko kaise bachati hai, Isolation ek transaction ko doosre se kaise alag rakhta hai, aur Durability commit ke baad data ko kaise bacha kar rakhta hai — sab SQL transactions ke saath.',
+      'Learn ACID in depth: what a transaction is, why Atomicity means "all or nothing", how Consistency protects the rules of the data, how Isolation keeps one transaction apart from another, and how Durability keeps the data safe after a commit — all with SQL transactions.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. ACID Kya Hai? (Transaction aur Chaar Properties)',
+          '1. What Is ACID? (Transaction and the Four Properties)'
+        ),
+        body: t(
+          `**Transaction** SQL statements ka ek group hai jo ek unit ki tarah chalta hai — ya toh poora chalega, ya kuch bhi nahi chalega. Paise transfer karna ek transaction hai: ek account se paise katna aur doosre mein jodna — dono steps ek saath hone chahiye, ek step akele nahi. Transaction \`BEGIN\` se shuru hota hai, \`COMMIT\` se pakka hota hai, aur \`ROLLBACK\` se wapas liya jaata hai.
+
+**Atomicity** ka matlab hai "sab kuch ya kuch nahi". Agar transaction ke beech mein light chali jaaye ya error aaye, toh jo steps ho chuke hain woh bhi wapas ho jaayenge — aadha transaction kabhi save nahi hota. **Consistency** ka matlab hai transaction ke baad data apne rules ko follow karega — jaise balance kabhi negative nahi hoga, aur total paise transfer se pehle aur baad mein ek jaise rahenge. **Isolation** ka matlab hai ek transaction doosre transaction ko beech mein nahi dekh sakta — jaise do log ek saath ek hi seat book na kar sakein. **Durability** ka matlab hai ek baar \`COMMIT\` ho gaya, toh data pakka save hai — light jaane ya system crash hone par bhi woh wapas nahi jaayega.`,
+          `A **transaction** is a group of SQL statements that runs as one unit — either the whole group runs, or nothing runs at all. Transferring money is a transaction: taking money from one account and adding it to another — both steps must happen together, never one step alone. A transaction starts with \`BEGIN\`, becomes final with \`COMMIT\`, and is taken back with \`ROLLBACK\`.
+
+**Atomicity** means "all or nothing". If the power goes off or an error comes in the middle of a transaction, even the steps that already ran are taken back — half a transaction is never saved. **Consistency** means the data follows its rules after the transaction — for example, a balance never goes negative, and the total money stays the same before and after a transfer. **Isolation** means one transaction cannot see another transaction in the middle — so two people cannot book the same seat at the same time. **Durability** means once a \`COMMIT\` is done, the data is saved for good — it does not go back even if the power goes off or the system crashes.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: ATM Transfer, Train Ticket aur Exam Form',
+          '2. Real-Life Examples: ATM Transfer, Train Ticket, and Exam Form'
+        ),
+        body: t(
+          `**ATM transfer** ACID ka sabse achha example hai. Tum 500 rupaye bhejte ho: tumhare account se 500 katte hain aur dost ke account mein 500 judte hain. Agar beech mein ATM band ho jaaye toh kya hoga? Atomicity ki wajah se dono steps wapas ho jaayenge — paise na katenge, na judenge. Aadha transfer kabhi nahi hota. Consistency ki wajah se total paise ek jaise rehte hain — paise kahin gayab nahi hote.
+
+**Train ticket booking** mein isolation dikhta hai: ek hi seat ko do log ek saath book karne ki koshish karein toh ek ko milegi, doosre ko "seat booked" dikhega — kyunki ek transaction ke khatam hone tak doosra us seat ko free nahi dekh sakta. **Exam form** mein durability dikhti hai: form submit karne ke baad light chali bhi jaaye toh form save rehta hai — submit ka matlab hai commit ho gaya.`,
+          `An **ATM transfer** is the best example of ACID. You send 500 rupees: 500 is taken from your account and 500 is added to the account of your friend. What if the ATM stops in the middle? Because of Atomicity, both steps are taken back — the money is neither taken nor added. Half a transfer never happens. Because of Consistency, the total money stays the same — money never disappears anywhere.
+
+**Train ticket booking** shows isolation: if two people try to book the same seat at the same time, one gets it and the other sees "seat booked" — because until one transaction finishes, the other cannot see that seat as free. An **exam form** shows durability: even if the power goes off after you submit the form, the form stays saved — submit means the commit is done.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Rollback se Atomicity Dekhna (worked example with dry run)',
+          '3. Step-by-Step: Seeing Atomicity with Rollback (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain students table par. Step 1: \`BEGIN\` likho — transaction shuru hua. Step 2: \`UPDATE students SET marks = 100 WHERE id = 1\` chalao. Abhi ke liye Rahul ke marks 100 dikhenge, par ye change abhi pakka nahi hai — ye transaction ke andar hai. Step 3: \`ROLLBACK\` likho — transaction wapas liya gaya. Step 4: \`SELECT id, name, marks FROM students WHERE id = 1\` chalao — Rahul ke marks phir se 85 dikhenge. 100 wala change gayab ho gaya, jaise kabhi hua hi nahi. Yahi atomicity hai: transaction poora commit nahi hua, toh uska koi step save nahi hua.
+
+Isi ka ulta hai commit: \`BEGIN\`, phir update, phir \`COMMIT\` — ab change pakka hai aur rollback se bhi wapas nahi hoga. Code examples mein commit aur consistency (total paise ek jaise rakhna) dono dikhaye gaye hain.`,
+          `Let us do a dry run on the students table. Step 1: write \`BEGIN\` — the transaction starts. Step 2: run \`UPDATE students SET marks = 100 WHERE id = 1\`. For now the marks of Rahul show 100, but this change is not final yet — it is inside the transaction. Step 3: write \`ROLLBACK\` — the transaction is taken back. Step 4: run \`SELECT id, name, marks FROM students WHERE id = 1\` — the marks of Rahul show 85 again. The change to 100 is gone, as if it never happened. That is atomicity: the transaction was never fully committed, so none of its steps were saved.
+
+The opposite is a commit: \`BEGIN\`, then the update, then \`COMMIT\` — now the change is final and even a rollback cannot take it back. The code examples show both a commit and consistency (keeping the total money the same).`
+        ),
+        code: {
+          title: t(
+            'Atomicity: ROLLBACK se change wapas',
+            'Atomicity: the change goes back with ROLLBACK'
+          ),
+          language: 'sql',
+          code: `BEGIN;
+UPDATE students SET marks = 100 WHERE id = 1;
+ROLLBACK;
+SELECT id, name, marks FROM students WHERE id = 1;`,
+          output: 'id | name | marks\n1 | Rahul | 85'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: COMMIT Bhoolna, Har Query ko Transaction Samajhna',
+          '4. Common Mistakes: Forgetting COMMIT, Treating Every Query as a Transaction'
+        ),
+        body: t(
+          `**Galti 1: COMMIT bhoolna.** \`BEGIN\` karke update kiya, par \`COMMIT\` likhna bhool gaye — phir connection band hote hi saare changes wapas ho jaayenge. SQLite mein har statement apne aap commit hota hai (autocommit), par \`BEGIN\` likhte hi autocommit band ho jaata hai. Transaction shuru karo toh use \`COMMIT\` ya \`ROLLBACK\` se khatam karna mat bhoolo.
+
+**Galti 2: Har query ko transaction samajhna.** Ek akele \`SELECT\` ke liye transaction ki zaroorat nahi hoti — woh apne aap atomic hota hai. Transaction tab chahiye jab do ya zyada statements ko ek unit banana ho, jaise paise katna aur jodna. Har chhoti query par transaction lagana system ko slow kar deta hai.
+
+**Galti 3: Consistency ko sirf database par chhodna.** Database \`CHECK\` constraint se balance negative hone se rok sakta hai, par "total paise ek jaise rahenge" jaise rule ko application aur transaction dono ko milkar nibhana padta hai. Rule sirf ek jagah likhne se kaam nahi chalta.`,
+          `**Mistake 1: Forgetting COMMIT.** You wrote \`BEGIN\` and updated, but forgot to write \`COMMIT\` — then the moment the connection closes, all the changes go back. In SQLite, every statement commits by itself (autocommit), but writing \`BEGIN\` turns autocommit off. If you start a transaction, never forget to finish it with \`COMMIT\` or \`ROLLBACK\`.
+
+**Mistake 2: Treating every query as a transaction.** A single \`SELECT\` needs no transaction — it is atomic by itself. A transaction is needed when two or more statements must become one unit, like taking money and adding money. Putting a transaction on every small query makes the system slow.
+
+**Mistake 3: Leaving consistency only to the database.** The database can stop a balance from going negative with a \`CHECK\` constraint, but a rule like "the total money stays the same" must be kept by the application and the transaction together. Writing the rule in only one place does not work.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Crash ke Beech mein Commit, Khaali Transaction',
+          '5. Edge Cases: Crash in the Middle of a Commit, Empty Transaction'
+        ),
+        body: t(
+          `**Crash ke beech mein commit:** agar \`COMMIT\` likhte waqt hi light chali jaaye, toh kya hoga? Database write-ahead log (WAL) use karta hai — commit se pehle har change log mein likha jaata hai. System wapas aane par database log padh kar decide karta hai: commit poora hua tha toh change rakho, nahi toh wapas lo. Isiliye durability ka waada nibhaya ja sakta hai.
+
+**Khaali transaction:** \`BEGIN\` karke bina kuch kiye \`COMMIT\` kar do — kuch nahi hoga, koi error nahi aayega. Ye theek hai, par bekaar hai. Transaction hamesha tabhi shuru karo jab uske andar kaam ho.
+
+**SELECT transaction ke andar:** transaction ke andar kiya hua \`SELECT\` apne hi changes ko dekhta hai — Rahul ke marks 100 dikhenge. Par doosra user abhi bhi 85 dekhega, jab tak commit na ho. Yahi isolation ka pehla kadam hai.`,
+          `**Crash in the middle of a commit:** what if the power goes off right while \`COMMIT\` is being written? The database uses a write-ahead log (WAL) — before a commit, every change is written in the log. When the system comes back, the database reads the log and decides: if the commit was complete, keep the change; if not, take it back. That is how the promise of durability is kept.
+
+**Empty transaction:** write \`BEGIN\` and then \`COMMIT\` without doing anything — nothing happens, no error appears. That is fine, but useless. Always start a transaction only when there is work inside it.
+
+**SELECT inside a transaction:** a \`SELECT\` inside a transaction sees its own changes — the marks of Rahul show 100. But another user still sees 85 until the commit happens. That is the first step of isolation.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: ACID Na Ho, Ya Sirf Atomicity Ho?',
+          '6. What If: There Is No ACID, or Only Atomicity?'
+        ),
+        body: t(
+          `**What if ACID na ho?** Paise transfer karte waqt ek step ho jaaye aur doosra na ho — paise ek account se kat jaayein aur doosre mein kabhi na pahunchein. Bank aise system par koi bharosa nahi karega. ACID ke bina database sirf file jaisa hota — data store karta hai, par uski sahi hone ki guarantee nahi deta.
+
+**What if sirf atomicity ho?** Transfer aadha nahi hoga — ye achha hai. Par do log ek saath ek hi seat book kar sakte hain (isolation nahi), aur commit ke baad light jaane par data kho sakta hai (durability nahi). Har property ek alag problem solve karti hai, isiliye chaaro chahiye. NoSQL databases mein kabhi-kabhi ACID ko halka kiya jaata hai taaki speed badhe — par bank aur ticket booking jaise kaam mein ACID se samjhauta nahi hota.`,
+          `**What if there is no ACID?** While transferring money, one step happens and the other does not — the money leaves one account and never reaches the other. No bank would trust such a system. Without ACID, a database is only like a file — it stores data, but it gives no promise that the data is correct.
+
+**What if there is only atomicity?** A transfer never stays half done — that is good. But two people can still book the same seat at the same time (no isolation), and data can still be lost if the power goes off after a commit (no durability). Every property solves a different problem, which is why all four are needed. Some NoSQL databases relax ACID to gain speed — but in work like banking and ticket booking, there is no compromise on ACID.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: ACID Transaction ka Vaada Hai',
+          '7. Summary: ACID Is the Promise of a Transaction'
+        ),
+        body: t(
+          `**Atomicity:** sab kuch ya kuch nahi — aadha transaction kabhi save nahi hota, \`ROLLBACK\` sab wapas le leta hai. **Consistency:** transaction ke baad data apne rules ko follow karega — total paise ek jaise rahenge, balance negative nahi hoga. **Isolation:** ek transaction doosre ko beech mein nahi dekh sakta. **Durability:** \`COMMIT\` ke baad data pakka save hai — crash ke baad bhi.
+
+Yaad rakhne ka tareeka: A — All or nothing, C — Correct rules, I — Isolated, D — Durable. Interview mein har property ka ek real-life example do — ATM, train ticket, exam form — aur phir SQL mein \`BEGIN\`, \`COMMIT\`, \`ROLLBACK\` dikhao.`,
+          `**Atomicity:** all or nothing — half a transaction is never saved, and \`ROLLBACK\` takes everything back. **Consistency:** after a transaction, the data follows its rules — the total money stays the same, and a balance never goes negative. **Isolation:** one transaction cannot see another in the middle. **Durability:** after a \`COMMIT\`, the data is saved for good — even after a crash.
+
+The way to remember it: A — All or nothing, C — Correct rules, I — Isolated, D — Durable. In an interview, give one real-life example for every property — ATM, train ticket, exam form — and then show \`BEGIN\`, \`COMMIT\`, and \`ROLLBACK\` in SQL.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Transaction ka cycle: BEGIN se COMMIT ya ROLLBACK tak',
+        'The cycle of a transaction: from BEGIN to COMMIT or ROLLBACK'
+      ),
+      caption: t(
+        'COMMIT pakka karta hai, ROLLBACK sab wapas le leta hai',
+        'COMMIT makes it final, ROLLBACK takes everything back'
+      ),
+      nodes: [
+        {
+          t: t('BEGIN — transaction shuru', 'BEGIN — the transaction starts'),
+          s: t('Autocommit band, ab steps ek unit hain', 'Autocommit is off, now the steps are one unit')
+        },
+        {
+          t: t('Statements: UPDATE, UPDATE', 'Statements: UPDATE, UPDATE'),
+          s: t('Paise katna aur jodna — dono steps', 'Taking money and adding money — both steps')
+        },
+        {
+          t: t('COMMIT — pakka save', 'COMMIT — saved for good'),
+          s: t('Durability: crash ke baad bhi data safe', 'Durability: the data is safe even after a crash')
+        },
+        {
+          t: t('ROLLBACK — sab wapas', 'ROLLBACK — everything goes back'),
+          s: t('Atomicity: aadha transaction kabhi save nahi hota', 'Atomicity: half a transaction is never saved')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'COMMIT: change pakka ho gaya',
+          'COMMIT: the change is final'
+        ),
+        language: 'sql',
+        code: `BEGIN;
+UPDATE students SET marks = 95 WHERE id = 3;
+COMMIT;
+SELECT id, name, marks FROM students WHERE id = 3;`,
+        output: 'id | name | marks\n3 | Amit | 95'
+      },
+      {
+        title: t(
+          'Consistency: transfer ke baad bhi total 150 hi hai',
+          'Consistency: the total is still 150 after the transfer'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts (id INTEGER PRIMARY KEY, balance INTEGER);
+INSERT INTO accounts VALUES (1, 100);
+INSERT INTO accounts VALUES (2, 50);
+BEGIN;
+UPDATE accounts SET balance = balance - 30 WHERE id = 1;
+UPDATE accounts SET balance = balance + 30 WHERE id = 2;
+COMMIT;
+SELECT id, balance FROM accounts ORDER BY id;`,
+        output: 'id | balance\n1 | 70\n2 | 80'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Atomicity ka matlab kya hai?',
+          'What does Atomicity mean?'
+        ),
+        opts: [
+          t('Transaction ka aadha hissa save hota hai', 'Half of the transaction is saved'),
+          t('Sab kuch ya kuch nahi — poora transaction ya zero', 'All or nothing — the whole transaction or zero'),
+          t('Transaction bahut fast hota hai', 'The transaction is very fast'),
+          t('Transaction mein sirf ek statement hota hai', 'A transaction has only one statement')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: atomicity ka matlab hai transaction ek unit hai — ya toh uske saare steps save honge, ya ek bhi nahi. ROLLBACK se sab wapas ho jaata hai.',
+          'Correct answer: atomicity means a transaction is one unit — either all its steps are saved, or none of them. ROLLBACK takes everything back.'
+        )
+      },
+      {
+        q: t(
+          'Paise transfer mein ek account se 30 kate aur doosre mein 30 jude. Total pehle 150 tha. Consistency ke hisaab se total ab kitna hona chahiye?',
+          'In a money transfer, 30 was taken from one account and 30 was added to another. The total was 150 before. By consistency, what must the total be now?'
+        ),
+        opts: [
+          t('120', '120'),
+          t('180', '180'),
+          t('150', '150'),
+          t('0', '0')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: consistency ka matlab hai transaction ke baad data apne rules ko follow karega — transfer mein paise sirf jagah badalte hain, total ek jaisa rehta hai.',
+          'Correct answer: consistency means the data follows its rules after a transaction — in a transfer, money only changes place, so the total stays the same.'
+        )
+      },
+      {
+        q: t(
+          'Do log ek saath ek hi train seat book karne ki koshish karte hain. Kaunsi property rokegi ki dono ko seat na mile?',
+          'Two people try to book the same train seat at the same time. Which property stops both of them from getting the seat?'
+        ),
+        opts: [
+          t('Atomicity', 'Atomicity'),
+          t('Consistency', 'Consistency'),
+          t('Isolation', 'Isolation'),
+          t('Durability', 'Durability')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: isolation ka matlab hai ek transaction doosre ko beech mein nahi dekh sakta — ek ke khatam hone tak doosra seat ko free nahi samajh sakta.',
+          'Correct answer: isolation means one transaction cannot see another in the middle — until one finishes, the other cannot treat the seat as free.'
+        )
+      },
+      {
+        q: t(
+          'COMMIT ke baad light chali jaaye toh data ka kya hoga?',
+          'What happens to the data if the power goes off after a COMMIT?'
+        ),
+        opts: [
+          t('Data kho jaayega', 'The data is lost'),
+          t('Data pakka save rahega', 'The data stays saved for good'),
+          t('Data aadha save hoga', 'Half of the data is saved'),
+          t('Database delete ho jaayega', 'The database gets deleted')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: durability ka matlab hai COMMIT ke baad data pakka save hai — database write-ahead log se crash ke baad bhi use wapas laata hai.',
+          'Correct answer: durability means the data is saved for good after a COMMIT — the database brings it back after a crash using the write-ahead log.'
+        )
+      },
+      {
+        q: t(
+          'BEGIN karke UPDATE kiya, phir ROLLBACK likha. Data ka kya hoga?',
+          'You wrote BEGIN, ran an UPDATE, then wrote ROLLBACK. What happens to the data?'
+        ),
+        opts: [
+          t('UPDATE save ho jaayega', 'The UPDATE is saved'),
+          t('UPDATE wapas ho jaayega, purana data rahega', 'The UPDATE goes back, the old data stays'),
+          t('Table delete ho jaayegi', 'The table gets deleted'),
+          t('Error aayega', 'An error appears')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ROLLBACK transaction ke saare steps ko wapas le leta hai — isiliye Rahul ke marks 100 karne ke baad bhi 85 hi dikhenge.',
+          'Correct answer: ROLLBACK takes back all the steps of the transaction — so even after changing the marks of Rahul to 100, they still show 85.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Atomicity: sab kuch ya kuch nahi — ROLLBACK sab wapas le leta hai.',
+        'Atomicity: all or nothing — ROLLBACK takes everything back.'
+      ),
+      t(
+        'Consistency: transaction ke baad data apne rules ko follow karega.',
+        'Consistency: after a transaction, the data follows its rules.'
+      ),
+      t(
+        'Isolation: ek transaction doosre ko beech mein nahi dekh sakta.',
+        'Isolation: one transaction cannot see another in the middle.'
+      ),
+      t(
+        'Durability: COMMIT ke baad data pakka save hai, crash ke baad bhi.',
+        'Durability: after a COMMIT, the data is saved for good, even after a crash.'
+      ),
+      t(
+        'Transaction BEGIN se shuru, COMMIT ya ROLLBACK se khatam hota hai.',
+        'A transaction starts with BEGIN and ends with COMMIT or ROLLBACK.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: ROLLBACK se Priya ke Marks Wapas Lao',
+        'Practice: Bring Back the Marks of Priya with ROLLBACK'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye transaction mein Priya ke marks 92 se 102 karta hai, phir ROLLBACK karta hai. Done tab mano jab output expected jaisa aaye — Priya ke marks 92 hi dikhen — aur tum bata sako ki 102 kahan gaya.',
+        'Run the starter below: inside a transaction it changes the marks of Priya from 92 to 102, then runs ROLLBACK. You are done when the output matches the expected output — the marks of Priya still show 92 — and you can say where the 102 went.'
+      ),
+      language: 'sql',
+      starter: `BEGIN;
+UPDATE students SET marks = marks + 10 WHERE id = 2;
+ROLLBACK;
+SELECT name, marks FROM students WHERE id = 2;`,
+      expected: 'name | marks\nPriya | 92'
+    },
+    readMinutes: 12
+  };
+
+const dbmsConcurrency: Article = {
+    id: 'dbms-concurrency',
+    subjectId: 'dbms',
+    title: t(
+      'Concurrency — Locks, Lost Update, Dirty Read aur Isolation Levels',
+      'Concurrency — Locks, Lost Update, Dirty Read, and Isolation Levels'
+    ),
+    summary: t(
+      'Concurrency ko samjho: jab do transactions ek saath ek hi data ko chhoote hain toh kya gadbad hoti hai. Lost update mein ek kaam kyun kho jaata hai, dirty read mein galat data kyun dikhta hai, lock kaise bachata hai, aur chaar isolation levels mein se kaunsa kab chunna hai — sab SQL ke saath.',
+      'Learn concurrency: what goes wrong when two transactions touch the same data at the same time. Why one piece of work is lost in a lost update, why wrong data appears in a dirty read, how a lock saves the day, and which of the four isolation levels to choose when — all with SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Concurrency Kya Hai? (Locks aur Isolation Levels)',
+          '1. What Is Concurrency? (Locks and Isolation Levels)'
+        ),
+        body: t(
+          `**Concurrency** ka matlab hai kai transactions ka ek saath chalna. Ek user apne marks dekh raha hai, doosra user usi waqt marks update kar raha hai — database ko dono ka kaam ek saath sambhalna hai. Bina control ke, ek saath chalna gadbad karta hai: ek ka update kho jaata hai, ya koi aisa data padh leta hai jo kabhi save hi nahi hua. Is control ko **concurrency control** kehte hain, aur uska sabse common tareeka hai **lock**.
+
+**Lock** ek chhota sa "kabza" hai: jo transaction kisi row par lock lagata hai, use tab tak koi doosra transaction badal nahi sakta. **Shared lock (S)** padhne ke liye hota hai — kai log ek saath padh sakte hain. **Exclusive lock (X)** likhne ke liye hota hai — sirf ek transaction likh sakta hai, aur us waqt koi padh bhi nahi sakta. Lock lagte hi doosra transaction wait karta hai, jab tak pehla lock na chhode.
+
+**Isolation levels** batate hain ki ek transaction doosre ko kitna dekh sakta hai. Chaar levels hain, kam se zyada sakht: **Read Uncommitted** (sabse halka — dirty read allowed), **Read Committed** (sirf committed data dikhta hai), **Repeatable Read** (ek hi read dobara karne par wahi value milti hai), aur **Serializable** (sabse sakht — jaise transactions ek ke baad ek chale hon). Sakht level zyada safe hai, par slow bhi hai.`,
+          `**Concurrency** means many transactions running at the same time. One user is reading the marks while another user updates the same marks at that very moment — the database must handle both jobs together. Without control, running together creates a mess: one update is lost, or someone reads data that was never saved. This control is called **concurrency control**, and its most common tool is a **lock**.
+
+A **lock** is a small "hold": while one transaction holds a lock on a row, no other transaction can change it. A **shared lock (S)** is for reading — many people can read together. An **exclusive lock (X)** is for writing — only one transaction can write, and nobody can read at that time. Once a lock is set, the other transaction waits until the first one releases the lock.
+
+**Isolation levels** say how much one transaction can see of another. There are four levels, from loosest to strictest: **Read Uncommitted** (the loosest — dirty read allowed), **Read Committed** (only committed data is visible), **Repeatable Read** (reading the same thing again gives the same value), and **Serializable** (the strictest — as if the transactions ran one after another). A stricter level is safer, but also slower.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Train Seat, Bank Counter aur Exam Hall',
+          '2. Real-Life Examples: Train Seat, Bank Counter, and Exam Hall'
+        ),
+        body: t(
+          `**Train seat booking** concurrency ka sabse achha example hai. Do log ek saath ek hi seat book karte hain. Bina lock ke dono ko "seat available" dikhega aur dono book kar lenge — ek seat, do tickets. Lock ki wajah se pehla booking karte waqt seat lock ho jaati hai, doosre ko wait karna padta hai, aur phir use "seat booked" dikhta hai.
+
+**Bank counter** par bhi wahi hota hai: do cashier ek hi account se paise nikaalne ki koshish karein toh lock ke bina balance galat ho jaayega. **Exam hall** mein bhi concurrency hai: ek student answer likh raha hai, teacher usi waqt copy check kar raha hai — teacher ko wahi answer dikhna chahiye jo student ne likha tha, beech mein badla hua nahi. Har example mein ek hi baat hai: **ek saath kaam, par ek doosre ka kaam kharab na kare**.`,
+          `**Train seat booking** is the best example of concurrency. Two people book the same seat at the same time. Without a lock, both see "seat available" and both book it — one seat, two tickets. Because of the lock, the seat locks while the first booking runs, the second one waits, and then it sees "seat booked".
+
+The same happens at a **bank counter**: if two cashiers try to withdraw money from the same account, the balance goes wrong without a lock. An **exam hall** has concurrency too: a student is writing an answer while the teacher checks the copy at the same time — the teacher must see the answer the student wrote, not one changed in the middle. Every example says one thing: **work together, but never spoil each other's work**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Lost Update ka Dry Run (worked example with dry run)',
+          '3. Step-by-Step: A Dry Run of a Lost Update (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain Rahul ke marks par, jo abhi 85 hain. Do transactions hain: T1 marks ko 90 karna chahta hai, T2 marks ko 95 karna chahta hai. Bina lock ke ye hota hai: T1 marks padhta hai — 85. T2 bhi marks padhta hai — 85. T1 likhta hai — 90. T2 likhta hai — 95. Aakhiri mein marks 95 dikhenge. T1 ka kaam (90 karna) **kho gaya** — use **lost update** kehte hain. T1 ko laga uska update save ho gaya, par asal mein woh overwrite ho gaya.
+
+Lock ke saath ye hota hai: T1 pehle row par exclusive lock lagata hai, update karta hai (90), commit karta hai, phir lock chhodta hai. Tab T2 ko row milti hai — ab woh 90 padhta hai, phir 95 likhta hai. Dono updates bache rehte hain, koi khoya nahi. Neeche wala code lost update ko dikhata hai: do UPDATE ek ke baad ek chalte hain aur aakhiri wala jeetta hai — output mein 95 dikhega, 90 kahin nahi dikhega.`,
+          `Let us do a dry run on the marks of Rahul, which are 85 right now. There are two transactions: T1 wants to set the marks to 90, and T2 wants to set them to 95. Without a lock, this happens: T1 reads the marks — 85. T2 also reads the marks — 85. T1 writes — 90. T2 writes — 95. In the end the marks show 95. The work of T1 (setting 90) is **lost** — this is called a **lost update**. T1 thought its update was saved, but it was actually overwritten.
+
+With a lock, this happens: T1 first sets an exclusive lock on the row, updates it (90), commits, and then releases the lock. Only then does T2 get the row — now it reads 90, then writes 95. Both updates survive; nothing is lost. The code below shows a lost update: two UPDATEs run one after another and the last one wins — the output shows 95, and 90 appears nowhere.`
+        ),
+        code: {
+          title: t(
+            'Lost update: aakhiri likhne wala jeetta hai',
+            'Lost update: the last writer wins'
+          ),
+          language: 'sql',
+          code: `UPDATE students SET marks = 90 WHERE id = 1;
+UPDATE students SET marks = 95 WHERE id = 1;
+SELECT id, marks FROM students WHERE id = 1;`,
+          output: 'id | marks\n1 | 95'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Lock ko Bhoolna, Har Jagah Serializable Lagana',
+          '4. Common Mistakes: Forgetting the Lock, Using Serializable Everywhere'
+        ),
+        body: t(
+          `**Galti 1: Lock ko bhoolna.** Log sochte hain database khud sab sambhal lega. Database lock lagata hai, par sirf tab jab transaction sahi tareeke se likha ho. Agar tum bina transaction ke do alag UPDATE likhoge, toh database unhe do alag kaam samjhega — lost update phir bhi ho sakta hai. Dono UPDATE ko ek transaction mein rakho, taaki lock sahi waqt par lage.
+
+**Galti 2: Har jagah Serializable lagana.** Serializable sabse safe hai, par sabse slow bhi hai — transactions ek ke baad ek chalte hain, jaise ek hi line mein khade hon. Report dekhne jaisi read-only query ke liye Read Committed kaafi hai. Isolation level kaam ke hisaab se chuno: paise ke kaam mein sakht, report mein halka.
+
+**Galti 3: Dirty read ko normal samajhna.** Read Uncommitted mein tum aisa data padh sakte ho jo abhi commit hi nahi hua — aur agar woh transaction rollback ho jaaye, toh tumne aisa data padha jo kabhi tha hi nahi. Bank balance jaise kaam mein dirty read kabhi allowed nahi hona chahiye.`,
+          `**Mistake 1: Forgetting the lock.** People think the database handles everything by itself. The database does set locks, but only when the transaction is written correctly. If you write two separate UPDATEs without a transaction, the database treats them as two separate jobs — a lost update can still happen. Put both UPDATEs in one transaction so the lock is set at the right time.
+
+**Mistake 2: Using Serializable everywhere.** Serializable is the safest, but also the slowest — transactions run one after another, as if standing in a single line. For a read-only query like viewing a report, Read Committed is enough. Choose the isolation level by the job: strict for money work, loose for reports.
+
+**Mistake 3: Treating a dirty read as normal.** In Read Uncommitted you can read data that is not committed yet — and if that transaction rolls back, you read data that never existed. A dirty read must never be allowed in work like a bank balance.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Deadlock, Lock Wait aur Read-Only Transaction',
+          '5. Edge Cases: Deadlock, Lock Wait, and Read-Only Transaction'
+        ),
+        body: t(
+          `**Deadlock:** T1 ne A ko lock kiya aur B chahiye, T2 ne B ko lock kiya aur A chahiye — dono ek doosre ka wait karte hain aur koi aage nahi badhta. Iska detail agle article mein hai. Lock wait hamesha deadlock nahi hota — aksar ek transaction thodi der wait karke aage badh jaata hai.
+
+**Lock wait:** T2 ko T1 ke lock chhodne ka wait karna padta hai. Agar wait bahut lamba ho jaaye, toh database timeout dekar T2 ko wapas bhej deta hai. Isiliye transaction ko chhota rakho — jitni der lock rahega, utni der doosre wait karenge.
+
+**Read-only transaction:** sirf padhne wale transaction ko exclusive lock ki zaroorat nahi hoti — shared lock kaafi hai, aur kai readers ek saath padh sakte hain. Report wale kaam mein read-only transaction use karne se system fast rehta hai.`,
+          `**Deadlock:** T1 locked A and wants B, while T2 locked B and wants A — both wait for each other and nobody moves ahead. The detail is in the next article. A lock wait is not always a deadlock — often one transaction waits a little while and then moves ahead.
+
+**Lock wait:** T2 must wait for T1 to release the lock. If the wait gets too long, the database gives a timeout and sends T2 back. That is why a transaction must stay short — the longer a lock is held, the longer others wait.
+
+**Read-only transaction:** a transaction that only reads needs no exclusive lock — a shared lock is enough, and many readers can read together. Using a read-only transaction for report work keeps the system fast.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Lock Na Ho, Ya Isolation Level Badal Dein?',
+          '6. What If: There Is No Lock, or We Change the Isolation Level?'
+        ),
+        body: t(
+          `**What if lock na ho?** Har update lost update ban sakta hai aur har read dirty read ban sakta hai. Do log ek hi seat book kar lenge, bank balance galat ho jaayega. Lock ke bina concurrency ka koi matlab nahi — database sirf ek user ke liye kaam karega.
+
+**What if isolation level badal dein?** Read Uncommitted se Serializable par jaane se system safe ho jaata hai, par slow bhi ho jaata hai — transactions line mein khade ho jaate hain. Serializable se Read Committed par aane se system fast ho jaata hai, par non-repeatable read ka risk aata hai: ek hi transaction mein dobara padhne par value badli hui mil sakti hai. Level hamesha kaam ke risk ke hisaab se chuno.`,
+          `**What if there is no lock?** Every update can become a lost update and every read can become a dirty read. Two people book the same seat, and a bank balance goes wrong. Without a lock, concurrency has no meaning — the database works for only one user.
+
+**What if we change the isolation level?** Going from Read Uncommitted to Serializable makes the system safe, but also slow — transactions stand in a line. Going from Serializable to Read Committed makes the system fast, but brings the risk of a non-repeatable read: reading the same thing again in one transaction can give a changed value. Always choose the level by the risk of the job.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Lock Bachata Hai, Isolation Level Tay Karta Hai',
+          '7. Summary: A Lock Saves, an Isolation Level Decides'
+        ),
+        body: t(
+          `**Lost update:** do transactions ek hi value padh kar likhte hain, ek ka kaam kho jaata hai — lock se bachta hai. **Dirty read:** koi aisa data padh leta hai jo abhi commit nahi hua aur baad mein rollback ho jaata hai — Read Committed se bachta hai. **Lock:** shared lock padhne ke liye, exclusive lock likhne ke liye. **Isolation levels:** Read Uncommitted (sabse halka), Read Committed, Repeatable Read, Serializable (sabse sakht).
+
+Yaad rakho: paise aur seat jaise kaam mein sakht level chuno, report jaise kaam mein halka. Transaction chhota rakho, taaki lock jaldi chhoote aur doosre wait na karein.`,
+          `**Lost update:** two transactions read the same value and write, and the work of one is lost — a lock saves it. **Dirty read:** someone reads data that is not committed yet and is later rolled back — Read Committed saves it. **Lock:** a shared lock for reading, an exclusive lock for writing. **Isolation levels:** Read Uncommitted (the loosest), Read Committed, Repeatable Read, Serializable (the strictest).
+
+Remember: choose a strict level for work like money and seats, and a loose level for work like reports. Keep a transaction short, so the lock is released quickly and others do not wait.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Isolation levels: halka se sakht',
+        'Isolation levels: from loose to strict'
+      ),
+      caption: t(
+        'Jitna sakht level, utna safe — aur utna slow',
+        'The stricter the level, the safer — and the slower'
+      ),
+      nodes: [
+        {
+          t: t('Read Uncommitted — dirty read allowed', 'Read Uncommitted — dirty read allowed'),
+          s: t('Sabse fast, sabse khatarnak', 'The fastest, the most dangerous')
+        },
+        {
+          t: t('Read Committed — sirf committed data', 'Read Committed — only committed data'),
+          s: t('Dirty read band, non-repeatable read ho sakta hai', 'Dirty read stops, non-repeatable read can happen')
+        },
+        {
+          t: t('Repeatable Read — dobara wahi value', 'Repeatable Read — the same value again'),
+          s: t('Ek transaction mein read hamesha ek jaisa', 'A read inside one transaction is always the same')
+        },
+        {
+          t: t('Serializable — jaise ek ke baad ek', 'Serializable — as if one after another'),
+          s: t('Sabse safe, sabse slow', 'The safest, the slowest')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Dirty read: transaction ke andar 100 dikhta hai',
+          'Dirty read: 100 shows inside the transaction'
+        ),
+        language: 'sql',
+        code: `BEGIN;
+UPDATE students SET marks = 100 WHERE id = 1;
+SELECT id, marks FROM students WHERE id = 1;
+ROLLBACK;`,
+        output: 'id | marks\n1 | 100'
+      },
+      {
+        title: t(
+          'Lock jaisa transaction: BEGIN IMMEDIATE se likho, COMMIT se chhodo',
+          'A lock-like transaction: write with BEGIN IMMEDIATE, release with COMMIT'
+        ),
+        language: 'sql',
+        code: `BEGIN IMMEDIATE;
+UPDATE students SET marks = 89 WHERE id = 4;
+COMMIT;
+SELECT id, name, marks FROM students WHERE id = 4;`,
+        output: 'id | name | marks\n4 | Sana | 89'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Lost update kya hai?',
+          'What is a lost update?'
+        ),
+        opts: [
+          t('Do transactions ek hi value padh kar likhte hain, ek ka kaam kho jaata hai', 'Two transactions read the same value and write, and the work of one is lost'),
+          t('Table delete ho jaati hai', 'The table gets deleted'),
+          t('Data khud badh jaata hai', 'The data grows by itself'),
+          t('Lock kabhi nahi chhootta', 'The lock is never released')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: T1 aur T2 dono 85 padhte hain, T1 90 likhta hai, T2 95 likhta hai — aakhiri mein 95 dikhta hai aur T1 ka 90 kho jaata hai.',
+          'Correct answer: T1 and T2 both read 85, T1 writes 90, T2 writes 95 — in the end 95 shows and the 90 of T1 is lost.'
+        )
+      },
+      {
+        q: t(
+          'Dirty read kya hai?',
+          'What is a dirty read?'
+        ),
+        opts: [
+          t('Committed data padhna', 'Reading committed data'),
+          t('Aisa data padhna jo abhi commit nahi hua aur baad mein rollback ho jaaye', 'Reading data that is not committed yet and is later rolled back'),
+          t('Table ko scan karna', 'Scanning the table'),
+          t('Index use karna', 'Using an index')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Read Uncommitted mein tum doosre transaction ka uncommitted data padh sakte ho — agar woh rollback ho jaaye toh tumne aisa data padha jo kabhi tha hi nahi.',
+          'Correct answer: in Read Uncommitted you can read the uncommitted data of another transaction — if it rolls back, you read data that never existed.'
+        )
+      },
+      {
+        q: t(
+          'Likhne ke liye kaunsa lock chahiye?',
+          'Which lock is needed for writing?'
+        ),
+        opts: [
+          t('Shared lock (S)', 'Shared lock (S)'),
+          t('Exclusive lock (X)', 'Exclusive lock (X)'),
+          t('Koi lock nahi', 'No lock'),
+          t('Dono ek jaise', 'Both are the same')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: likhne ke liye exclusive lock chahiye — us waqt sirf ek transaction likh sakta hai aur koi padh bhi nahi sakta.',
+          'Correct answer: writing needs an exclusive lock — at that time only one transaction can write and nobody can read either.'
+        )
+      },
+      {
+        q: t(
+          'Sabse sakht isolation level kaunsa hai?',
+          'Which is the strictest isolation level?'
+        ),
+        opts: [
+          t('Read Uncommitted', 'Read Uncommitted'),
+          t('Read Committed', 'Read Committed'),
+          t('Repeatable Read', 'Repeatable Read'),
+          t('Serializable', 'Serializable')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: Serializable sabse sakht hai — transactions aise chalte hain jaise ek ke baad ek chale hon, isliye koi concurrency problem nahi hoti, par system slow ho jaata hai.',
+          'Correct answer: Serializable is the strictest — transactions run as if one after another, so no concurrency problem happens, but the system becomes slow.'
+        )
+      },
+      {
+        q: t(
+          'Kaunsi problem Read Committed level par khatam ho jaati hai?',
+          'Which problem goes away at the Read Committed level?'
+        ),
+        opts: [
+          t('Dirty read', 'Dirty read'),
+          t('Lost update', 'Lost update'),
+          t('Deadlock', 'Deadlock'),
+          t('Koi problem khatam nahi hoti', 'No problem goes away')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: Read Committed mein sirf committed data dikhta hai, isliye dirty read nahi ho sakta — lost update ke liye lock chahiye, level nahi.',
+          'Correct answer: in Read Committed only committed data is visible, so a dirty read cannot happen — a lost update needs a lock, not a level.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Lost update: do transactions ek hi value padh kar likhte hain, ek ka kaam kho jaata hai.',
+        'Lost update: two transactions read the same value and write, and the work of one is lost.'
+      ),
+      t(
+        'Dirty read: uncommitted data padhna jo baad mein rollback ho jaaye.',
+        'Dirty read: reading uncommitted data that is later rolled back.'
+      ),
+      t(
+        'Shared lock padhne ke liye, exclusive lock likhne ke liye.',
+        'A shared lock is for reading, an exclusive lock is for writing.'
+      ),
+      t(
+        'Isolation levels: Read Uncommitted, Read Committed, Repeatable Read, Serializable.',
+        'Isolation levels: Read Uncommitted, Read Committed, Repeatable Read, Serializable.'
+      ),
+      t(
+        'Paise ke kaam mein sakht level, report mein halka level — transaction chhota rakho.',
+        'A strict level for money work, a loose level for reports — keep a transaction short.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Transaction mein Update aur COMMIT',
+        'Practice: Update and COMMIT Inside a Transaction'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye transaction mein Amit ke marks 74 se 80 karta hai aur COMMIT karta hai. Done tab mano jab output expected jaisa aaye aur tum bata sako ki COMMIT ke baad ROLLBACK se ye change wapas kyun nahi hoga.',
+        'Run the starter below: inside a transaction it changes the marks of Amit from 74 to 80 and runs COMMIT. You are done when the output matches the expected output and you can say why ROLLBACK after COMMIT cannot take this change back.'
+      ),
+      language: 'sql',
+      starter: `BEGIN;
+UPDATE students SET marks = 80 WHERE id = 3;
+COMMIT;
+SELECT name, marks FROM students WHERE id = 3;`,
+      expected: 'name | marks\nAmit | 80'
+    },
+    readMinutes: 12
+  };
+
+const dbmsSchedules: Article = {
+    id: 'dbms-schedules',
+    subjectId: 'dbms',
+    title: t(
+      'Schedules — Serializability, Conflict Serializable aur Precedence Graph',
+      'Schedules — Serializability, Conflict Serializable, and Precedence Graph'
+    ),
+    summary: t(
+      'Schedules ko samjho: kai transactions ke operations ko kis order mein chalaya jaaye. Serial schedule kya hai, conflict serializable kaise check karte hain, precedence graph mein cycle ka matlab kya hai, aur recoverable schedule kyun zaroori hai — sab dry run aur SQL ke saath.',
+      'Learn schedules: in what order the operations of many transactions should run. What a serial schedule is, how to check conflict serializability, what a cycle in a precedence graph means, and why a recoverable schedule is necessary — all with a dry run and SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Schedule Kya Hai? (Serializability)',
+          '1. What Is a Schedule? (Serializability)'
+        ),
+        body: t(
+          `**Schedule** transactions ke operations (read aur write) ko chalane ka order hai. Do transactions T1 aur T2 ek saath chal rahe hon toh unke operations aapas mein mil jaate hain — jaise T1 padhe, T2 padhe, T1 likhe, T2 likhe. Ye milna-julna hi schedule hai. **Serial schedule** woh hai jismein ek transaction poora khatam ho, phir doosra shuru ho — koi milna-julna nahi. Serial schedule hamesha sahi hota hai, par slow hota hai kyunki transactions line mein khade hote hain.
+
+**Serializability** ka matlab hai: ek schedule ka result wahi hona chahiye jo kisi serial schedule ka hota. Agar interleaved schedule ka final result serial schedule jaisa hai, toh woh schedule **serializable** hai — matlab sahi hai. Serializability hi concurrency control ka goal hai: transactions ko ek saath chalao, par result aisa do jaise ek ke baad ek chale hon.
+
+Do operations mein **conflict** tab hota hai jab dono ek hi data item par hon, kam se kam ek write ho, aur dono alag transactions ke hon. Read-read mein conflict nahi hota — dono sirf padh rahe hain. Read-write aur write-write mein conflict hota hai.`,
+          `A **schedule** is the order in which the operations (read and write) of transactions run. When two transactions T1 and T2 run together, their operations mix — like T1 reads, T2 reads, T1 writes, T2 writes. That mixing is the schedule. A **serial schedule** is one where one transaction finishes fully, then the other starts — no mixing at all. A serial schedule is always correct, but slow, because the transactions stand in a line.
+
+**Serializability** means: the result of a schedule must be the same as the result of some serial schedule. If an interleaved schedule gives the same final result as a serial schedule, that schedule is **serializable** — which means it is correct. Serializability is the goal of concurrency control: run transactions together, but give a result as if they ran one after another.
+
+Two operations have a **conflict** when both are on the same data item, at least one is a write, and both belong to different transactions. Read-read has no conflict — both only read. Read-write and write-write have a conflict.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bank Counter ki Line, Kitchen aur Railway Booking',
+          '2. Real-Life Examples: Bank Counter Queue, Kitchen, and Railway Booking'
+        ),
+        body: t(
+          `**Bank counter ki line** serial schedule hai: ek customer ka kaam poora ho, phir doosra aaye. Koi gadbad nahi, par slow hai. **Kitchen** mein serializability dikhti hai: do cooks ek saath kaam karte hain — ek sabzi kaat raha hai, doosra roti bana raha hai — par khana waisa hi banta hai jaise ek cook ne ek ke baad ek banaya ho. Kaam ek saath hua, result serial jaisa.
+
+**Railway booking** mein schedule ka matlab saaf dikhta hai: T1 seat A ko padhe, T2 seat A ko padhe, T1 seat A book kare, T2 seat A book kare — ye schedule galat hai, kyunki serial schedule mein ek ko seat milti aur doosre ko "booked" dikhta. Interleaved schedule ka result serial jaisa nahi hai, isliye ye serializable nahi hai.`,
+          `A **bank counter queue** is a serial schedule: one customer finishes fully, then the next one comes. No mess, but slow. A **kitchen** shows serializability: two cooks work together — one cuts vegetables, the other makes bread — but the food comes out the same as if one cook made it one dish after another. The work happened together, but the result is like a serial one.
+
+**Railway booking** shows the meaning of a schedule clearly: T1 reads seat A, T2 reads seat A, T1 books seat A, T2 books seat A — this schedule is wrong, because in a serial schedule one would get the seat and the other would see "booked". The result of the interleaved schedule is not like a serial one, so it is not serializable.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Precedence Graph Banana aur Cycle Check Karna (worked example with dry run)',
+          '3. Step-by-Step: Building a Precedence Graph and Checking for a Cycle (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain schedule S par: T1 ne A padha, T1 ne A likha, T2 ne A padha, T2 ne A likha. Matlab order hai: R1(A), W1(A), R2(A), W2(A). Ye schedule serial hai — T1 poora pehle, phir T2 — isliye serializable hai. Ab precedence graph banate hain: har conflict ke liye ek arrow banao. W1(A) ke baad R2(A) aaya — T1 ne likha, T2 ne padha — isliye arrow T1 se T2 ki taraf. R1(A) ke baad W2(A) bhi conflict hai — arrow T1 se T2 ki taraf. Graph mein sirf ek taraf arrow hai, koi cycle nahi hai — isliye schedule conflict serializable hai.
+
+Ab ulta schedule dekho: R1(A), R2(A), W1(A), W2(A). Yahan T1 ne padha, T2 ne padha, phir dono ne likha. Conflicts: R1(A) ke baad W2(A) — arrow T1 se T2. R2(A) ke baad W1(A) — arrow T2 se T1. Graph mein T1 se T2 aur T2 se T1 — **cycle** ban gaya. Cycle ka matlab hai schedule conflict serializable nahi hai — ye lost update wala schedule hai. Neeche wala code pehle wale serial schedule ko table mein dikhata hai; code examples mein precedence graph ke edges dikhaye gaye hain.`,
+          `Let us do a dry run on schedule S: T1 read A, T1 wrote A, T2 read A, T2 wrote A. The order is: R1(A), W1(A), R2(A), W2(A). This schedule is serial — T1 fully first, then T2 — so it is serializable. Now build the precedence graph: draw one arrow for every conflict. W1(A) came before R2(A) — T1 wrote, T2 read — so the arrow goes from T1 to T2. R1(A) before W2(A) is also a conflict — an arrow from T1 to T2. The graph has arrows in only one direction and no cycle — so the schedule is conflict serializable.
+
+Now look at the opposite schedule: R1(A), R2(A), W1(A), W2(A). Here T1 read, T2 read, then both wrote. Conflicts: R1(A) before W2(A) — an arrow from T1 to T2. R2(A) before W1(A) — an arrow from T2 to T1. The graph has T1 to T2 and T2 to T1 — a **cycle** is made. A cycle means the schedule is not conflict serializable — this is the lost update schedule. The code below shows the first serial schedule in a table; the code examples show the edges of the precedence graph.`
+        ),
+        code: {
+          title: t(
+            'Serial schedule: T1 poora, phir T2 — total 300 safe hai',
+            'Serial schedule: T1 fully, then T2 — the total 300 stays safe'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts (id INTEGER PRIMARY KEY, balance INTEGER);
+INSERT INTO accounts VALUES (1, 200);
+INSERT INTO accounts VALUES (2, 100);
+UPDATE accounts SET balance = balance - 50 WHERE id = 1;
+UPDATE accounts SET balance = balance + 50 WHERE id = 2;
+SELECT id, balance FROM accounts ORDER BY id;`,
+          output: 'id | balance\n1 | 150\n2 | 150'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Har Interleaved Schedule ko Galat Samajhna, Graph mein Arrow Ulta',
+          '4. Common Mistakes: Treating Every Interleaved Schedule as Wrong, Reversed Arrow in the Graph'
+        ),
+        body: t(
+          `**Galti 1: Har interleaved schedule ko galat samajhna.** Interleaved ka matlab galat nahi hota — sirf woh schedule galat hai jiska result serial jaisa nahi hai. Agar T1 aur T2 alag-alag data par kaam kar rahe hon, toh unka interleaving bilkul sahi hai aur graph mein koi edge hi nahi banega.
+
+**Galti 2: Graph mein arrow ulta banana.** Arrow hamesha pehle wale transaction se baad wale ki taraf jaata hai — jo pehle likha ya padha, usse jo baad mein aaya. Arrow ulta bana diya toh cycle galat jagah dikhega aur sahi schedule galat lagega. Rule yaad rakho: **pehle se baad ki taraf**.
+
+**Galti 3: Read-read ko conflict samajhna.** Dono transactions sirf padh rahe hon toh koi conflict nahi hai — order se koi farak nahi padta. Conflict ke liye kam se kam ek write zaroori hai.`,
+          `**Mistake 1: Treating every interleaved schedule as wrong.** Interleaved does not mean wrong — only a schedule whose result is not like a serial one is wrong. If T1 and T2 work on different data, their interleaving is fully correct and the graph has no edge at all.
+
+**Mistake 2: Drawing the arrow backwards in the graph.** An arrow always goes from the earlier transaction to the later one — from the one that wrote or read first to the one that came after. Draw the arrow backwards and a cycle appears in the wrong place, making a correct schedule look wrong. Remember the rule: **from earlier to later**.
+
+**Mistake 3: Treating read-read as a conflict.** If both transactions only read, there is no conflict — the order makes no difference. A conflict needs at least one write.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Sirf Reads Wala Schedule, Ek Hi Transaction',
+          '5. Edge Cases: Schedule with Only Reads, a Single Transaction'
+        ),
+        body: t(
+          `**Sirf reads wala schedule:** agar dono transactions sirf padh rahe hain, toh koi conflict nahi, graph khaali hai, aur schedule hamesha serializable hai. Read-only kaam mein concurrency control ki zaroorat hi nahi hoti — isiliye reports ko alag se chalaya jaata hai.
+
+**Ek hi transaction:** schedule mein sirf ek transaction ho toh woh apne aap serial hai — koi interleaving nahi, koi conflict nahi. Serializability ka sawaal hi nahi uthta. Interview mein ye edge case poochha jaata hai taaki dekha ja sake ki tum basic samajhte ho ya nahi.
+
+**Recoverable schedule:** agar T2 ne T1 ka uncommitted data padha aur T1 rollback ho gaya, toh T2 ko bhi rollback hona chahiye — warna T2 ne aisa data use kiya jo kabhi tha hi nahi. Aise schedule ko non-recoverable kehte hain aur use kabhi allow nahi karna chahiye.`,
+          `**Schedule with only reads:** if both transactions only read, there is no conflict, the graph is empty, and the schedule is always serializable. Read-only work needs no concurrency control at all — that is why reports are run separately.
+
+**A single transaction:** if a schedule has only one transaction, it is serial by itself — no interleaving, no conflict. The question of serializability never arises. Interviews ask this edge case to see whether you understand the basics.
+
+**Recoverable schedule:** if T2 read the uncommitted data of T1 and T1 rolls back, T2 must also roll back — otherwise T2 used data that never existed. Such a schedule is called non-recoverable and must never be allowed.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Serializability Check Na Karein, Ya Sab Kuch Serial Chala Dein?',
+          '6. What If: We Skip the Serializability Check, or Run Everything Serially?'
+        ),
+        body: t(
+          `**What if serializability check na karein?** Database ko pata nahi chalega ki schedule sahi hai ya galat — lost update aur dirty read chup-chap hote rahenge. Precedence graph check hi woh test hai jo batata hai ki interleaving safe hai ya nahi. Bade databases mein ye check lock lagate waqt hi ho jaata hai.
+
+**What if sab kuch serial chala dein?** Sab kuch sahi hoga — koi conflict, koi cycle, koi lost update nahi. Par system bahut slow ho jaayega, kyunki ek waqt par sirf ek transaction chalega. Serializability ka matlab hi ye hai: serial jaisa result, par ek saath chalne ki speed.`,
+          `**What if we skip the serializability check?** The database will never know whether a schedule is right or wrong — lost updates and dirty reads will keep happening quietly. The precedence graph check is the test that tells whether an interleaving is safe. In big databases this check happens while the locks are being set.
+
+**What if we run everything serially?** Everything is correct — no conflict, no cycle, no lost update. But the system becomes very slow, because only one transaction runs at a time. Serializability means exactly this: a serial-like result, but with the speed of running together.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Cycle Nahi, Toh Schedule Sahi',
+          '7. Summary: No Cycle, So the Schedule Is Correct'
+        ),
+        body: t(
+          `**Schedule** operations ka order hai. **Serial schedule** ek ke baad ek chalta hai — hamesha sahi, par slow. **Serializable** schedule ka result serial jaisa hota hai — ye concurrency control ka goal hai. **Conflict** tab hota hai jab dono operations ek hi item par hon aur kam se kam ek write ho. **Precedence graph** mein har conflict ek arrow hai — **cycle hai toh schedule conflict serializable nahi hai**, cycle nahi hai toh sahi hai. **Recoverable schedule** mein koi transaction doosre ke uncommitted data par depend nahi karta.
+
+Yaad rakhne ka tareeka: graph banao, cycle dhoondho. Cycle mila toh schedule galat, nahi mila toh sahi.`,
+          `A **schedule** is the order of operations. A **serial schedule** runs one after another — always correct, but slow. A **serializable** schedule gives a serial-like result — that is the goal of concurrency control. A **conflict** happens when both operations are on the same item and at least one is a write. In a **precedence graph**, every conflict is an arrow — **if there is a cycle, the schedule is not conflict serializable**; if there is no cycle, it is correct. In a **recoverable schedule**, no transaction depends on the uncommitted data of another.
+
+The way to remember it: build the graph, look for a cycle. A cycle means the schedule is wrong; no cycle means it is correct.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Precedence graph: cycle ka matlab schedule galat hai',
+        'Precedence graph: a cycle means the schedule is wrong'
+      ),
+      caption: t(
+        'R1(A) ke baad W2(A) aur R2(A) ke baad W1(A) — dono taraf arrow, cycle ban gaya',
+        'W2(A) after R1(A) and W1(A) after R2(A) — arrows both ways, a cycle is made'
+      ),
+      nodes: [
+        {
+          t: t('T1: R(A), phir W(A)', 'T1: R(A), then W(A)'),
+          s: t('T1 ne A padha, phir likha', 'T1 read A, then wrote it')
+        },
+        {
+          t: t('T2: R(A), phir W(A)', 'T2: R(A), then W(A)'),
+          s: t('T2 ne A padha, phir likha', 'T2 read A, then wrote it')
+        },
+        {
+          t: t('Arrow T1 -> T2: R1(A) se pehle, W2(A) baad mein', 'Arrow T1 -> T2: R1(A) first, W2(A) after'),
+          s: t('Pehle se baad ki taraf', 'From earlier to later')
+        },
+        {
+          t: t('Arrow T2 -> T1: R2(A) se pehle, W1(A) baad mein', 'Arrow T2 -> T1: R2(A) first, W1(A) after'),
+          s: t('Cycle! Schedule conflict serializable nahi hai', 'Cycle! The schedule is not conflict serializable')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Serial schedule ko table mein likhna',
+          'Writing a serial schedule in a table'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS ops;
+CREATE TABLE ops (txn TEXT, op TEXT, item TEXT);
+INSERT INTO ops VALUES ('T1', 'R', 'A');
+INSERT INTO ops VALUES ('T1', 'W', 'A');
+INSERT INTO ops VALUES ('T2', 'R', 'A');
+INSERT INTO ops VALUES ('T2', 'W', 'A');
+SELECT txn, op, item FROM ops;`,
+        output: 'txn | op | item\nT1 | R | A\nT1 | W | A\nT2 | R | A\nT2 | W | A'
+      },
+      {
+        title: t(
+          'Precedence graph ka ek edge: T1 -> T2',
+          'One edge of the precedence graph: T1 -> T2'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS edges;
+CREATE TABLE edges (from_txn TEXT, to_txn TEXT, reason TEXT);
+INSERT INTO edges VALUES ('T1', 'T2', 'T1 wrote A before T2 read A');
+SELECT from_txn, to_txn FROM edges;`,
+        output: 'from_txn | to_txn\nT1 | T2'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Serial schedule kya hai?',
+          'What is a serial schedule?'
+        ),
+        opts: [
+          t('Ek transaction poora khatam, phir doosra shuru', 'One transaction finishes fully, then the other starts'),
+          t('Dono transactions ek saath likhte hain', 'Both transactions write together'),
+          t('Sirf reads hote hain', 'There are only reads'),
+          t('Koi transaction nahi hota', 'There is no transaction')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: serial schedule mein transactions ek ke baad ek chalte hain — koi interleaving nahi hoti, isliye ye hamesha sahi hota hai.',
+          'Correct answer: in a serial schedule transactions run one after another — there is no interleaving, so it is always correct.'
+        )
+      },
+      {
+        q: t(
+          'Do operations mein conflict kab hota hai?',
+          'When do two operations have a conflict?'
+        ),
+        opts: [
+          t('Dono sirf padh rahe hon', 'Both only read'),
+          t('Dono ek hi item par hon aur kam se kam ek write ho', 'Both are on the same item and at least one is a write'),
+          t('Dono alag tables par hon', 'Both are on different tables'),
+          t('Dono ek hi transaction ke hon', 'Both belong to the same transaction')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: conflict ke liye dono operations ka ek hi item par hona, kam se kam ek write hona aur alag transactions ka hona zaroori hai — read-read mein conflict nahi hota.',
+          'Correct answer: a conflict needs both operations on the same item, at least one write, and different transactions — read-read has no conflict.'
+        )
+      },
+      {
+        q: t(
+          'Precedence graph mein cycle ka matlab kya hai?',
+          'What does a cycle in the precedence graph mean?'
+        ),
+        opts: [
+          t('Schedule conflict serializable hai', 'The schedule is conflict serializable'),
+          t('Schedule conflict serializable nahi hai', 'The schedule is not conflict serializable'),
+          t('Koi transaction nahi hai', 'There is no transaction'),
+          t('Graph galat bana hai', 'The graph was drawn wrong')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: cycle ka matlab hai T1 ko T2 se pehle aana chahiye aur T2 ko T1 se pehle — dono ek saath possible nahi, isliye schedule serial jaisa nahi ho sakta.',
+          'Correct answer: a cycle means T1 must come before T2 and T2 must come before T1 — both cannot hold together, so the schedule cannot be serial-like.'
+        )
+      },
+      {
+        q: t(
+          'R1(A), R2(A), W1(A), W2(A) — ye schedule kya hai?',
+          'R1(A), R2(A), W1(A), W2(A) — what is this schedule?'
+        ),
+        opts: [
+          t('Serial schedule', 'Serial schedule'),
+          t('Lost update wala non-serializable schedule', 'A non-serializable schedule with a lost update'),
+          t('Sirf reads wala schedule', 'A schedule with only reads'),
+          t('Recoverable schedule', 'Recoverable schedule')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: dono ne A padha, phir dono ne likha — ek ka update kho gaya aur precedence graph mein cycle ban gaya, isliye ye serializable nahi hai.',
+          'Correct answer: both read A, then both wrote it — one update was lost and the precedence graph has a cycle, so it is not serializable.'
+        )
+      },
+      {
+        q: t(
+          'Recoverable schedule kyun zaroori hai?',
+          'Why is a recoverable schedule necessary?'
+        ),
+        opts: [
+          t('Taaki koi transaction doosre ke uncommitted data par depend na kare', 'So that no transaction depends on the uncommitted data of another'),
+          t('Taaki schedule fast chale', 'So that the schedule runs fast'),
+          t('Taaki lock na lage', 'So that no lock is set'),
+          t('Taaki sirf ek transaction chale', 'So that only one transaction runs')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: agar T2 ne T1 ka uncommitted data padha aur T1 rollback ho gaya, toh T2 ne aisa data use kiya jo kabhi tha hi nahi — isiliye aise schedule ko allow nahi karna chahiye.',
+          'Correct answer: if T2 read the uncommitted data of T1 and T1 rolls back, T2 used data that never existed — so such a schedule must not be allowed.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Schedule operations ka order hai; serial schedule ek ke baad ek chalta hai.',
+        'A schedule is the order of operations; a serial schedule runs one after another.'
+      ),
+      t(
+        'Serializable schedule ka result serial schedule jaisa hota hai.',
+        'A serializable schedule gives the same result as a serial schedule.'
+      ),
+      t(
+        'Conflict tab hota hai jab dono operations ek hi item par hon aur kam se kam ek write ho.',
+        'A conflict happens when both operations are on the same item and at least one is a write.'
+      ),
+      t(
+        'Precedence graph mein cycle hai toh schedule conflict serializable nahi hai.',
+        'If the precedence graph has a cycle, the schedule is not conflict serializable.'
+      ),
+      t(
+        'Recoverable schedule mein koi transaction doosre ke uncommitted data par depend nahi karta.',
+        'In a recoverable schedule, no transaction depends on the uncommitted data of another.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Lost Update Wala Schedule Table mein Likho',
+        'Practice: Write the Lost Update Schedule in a Table'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye R1(A), R2(A), W1(A), W2(A) wala interleaved schedule ek table mein likhta hai. Done tab mano jab output expected jaisa aaye aur tum bata sako ki is schedule mein cycle kyun banega aur kaunsa update kho jaayega.',
+        'Run the starter below: it writes the interleaved schedule R1(A), R2(A), W1(A), W2(A) into a table. You are done when the output matches the expected output and you can say why this schedule makes a cycle and which update is lost.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS ops;
+CREATE TABLE ops (txn TEXT, op TEXT, item TEXT);
+INSERT INTO ops VALUES ('T1', 'R', 'A');
+INSERT INTO ops VALUES ('T2', 'R', 'A');
+INSERT INTO ops VALUES ('T1', 'W', 'A');
+INSERT INTO ops VALUES ('T2', 'W', 'A');
+SELECT txn, op, item FROM ops;`,
+      expected: 'txn | op | item\nT1 | R | A\nT2 | R | A\nT1 | W | A\nT2 | W | A'
+    },
+    readMinutes: 12
+  };
+
+const dbmsDeadlock: Article = {
+    id: 'dbms-deadlock',
+    subjectId: 'dbms',
+    title: t(
+      'Deadlock in DBMS — Detection, Prevention, Wait-Die aur Wound-Wait',
+      'Deadlock in DBMS — Detection, Prevention, Wait-Die, and Wound-Wait'
+    ),
+    summary: t(
+      'Deadlock ko samjho: do transactions ek doosre ka wait karte hain aur koi aage nahi badhta. Deadlock kab banta hai, wait-for graph se use kaise detect karte hain, prevention mein wait-die aur wound-wait kaise kaam karte hain, aur detection ke baad kis transaction ko victim banaya jaata hai — sab dry run aur SQL ke saath.',
+      'Learn deadlock: two transactions wait for each other and nobody moves ahead. When a deadlock is made, how it is found with a wait-for graph, how wait-die and wound-wait work in prevention, and which transaction becomes the victim after detection — all with a dry run and SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Deadlock Kya Hai? (Detection aur Prevention)',
+          '1. What Is a Deadlock? (Detection and Prevention)'
+        ),
+        body: t(
+          `**Deadlock** tab banta hai jab do ya zyada transactions ek doosre ke lock ka wait karte hain aur koi bhi aage nahi badh sakta. Classic example: T1 ne resource A ko lock kiya hai aur B chahiye, T2 ne B ko lock kiya hai aur A chahiye. T1, T2 ka wait kar raha hai aur T2, T1 ka — dono hamesha ke liye ruk gaye. Deadlock ke liye chaar conditions ek saath chahiye: **mutual exclusion** (ek resource ek waqt par ek hi transaction ke paas), **hold and wait** (lock pakde hue doosra lock maangna), **no preemption** (lock zabardasti chheena nahi ja sakta), aur **circular wait** (gol ghum kar wait karna).
+
+Deadlock se nipatne ke teen tareeke hain. **Prevention:** deadlock ko banne hi na do — rules aise banao ki chaaro conditions ek saath kabhi na hon. **Avoidance:** har lock maangne se pehle check karo ki ye deadlock banayega ya nahi. **Detection aur recovery:** deadlock banne do, use dhoondho, phir ek transaction ko rollback karke todo. Aam databases detection wala tareeka use karte hain, kyunki prevention bahut sakht hota hai.`,
+          `A **deadlock** is made when two or more transactions wait for each other's lock and nobody can move ahead. The classic example: T1 locked resource A and wants B, while T2 locked resource B and wants A. T1 waits for T2 and T2 waits for T1 — both stop forever. A deadlock needs four conditions together: **mutual exclusion** (one resource belongs to one transaction at a time), **hold and wait** (holding a lock while asking for another), **no preemption** (a lock cannot be taken by force), and **circular wait** (waiting in a circle).
+
+There are three ways to handle a deadlock. **Prevention:** never let a deadlock form — make rules so the four conditions never hold together. **Avoidance:** before giving every lock, check whether it will make a deadlock. **Detection and recovery:** let the deadlock form, find it, then break it by rolling back one transaction. Most databases use detection, because prevention is too strict.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Do Raste, Do Chaabiyan aur Traffic Jam',
+          '2. Real-Life Examples: Two Roads, Two Keys, and a Traffic Jam'
+        ),
+        body: t(
+          `**Do raste wala example** sabse achha hai: ek gali itni patli hai ki ek waqt par sirf ek gaadi nikal sakti hai. Do gaadiyan aamne-saamne aa gayin — dono ek doosre ko rasta dene ka wait kar rahi hain, aur koi peeche bhi nahi hat sakti. Yahi deadlock hai — circular wait, koi aage nahi badh sakta.
+
+**Do chaabiyan:** ek kamre ki chaabi Ram ke paas hai aur doosre kamre ki Shyam ke paas. Ram ko Shyam wale kamre mein jaana hai, Shyam ko Ram wale kamre mein — dono ek doosre ki chaabi ka wait kar rahe hain. **Traffic jam** mein bhi deadlock dikhta hai: chaar gaadiyan chauraha band karke khadi hain, har ek doosri ka rasta rok rahi hai. Har example mein ek hi pattern hai: **gol ghum kar wait karna**.`,
+          `The **two roads example** is the best: a lane is so narrow that only one car can pass at a time. Two cars meet face to face — both wait for the other to give way, and neither can move back. That is a deadlock — a circular wait, with nobody able to move ahead.
+
+**Two keys:** Ram holds the key to one room and Shyam holds the key to the other. Ram wants to enter the room of Shyam, and Shyam wants to enter the room of Ram — both wait for the key of the other. A **traffic jam** also shows a deadlock: four cars stand blocking a crossing, each one blocking the path of another. Every example follows one pattern: **waiting in a circle**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Wait-For Graph Banana aur Cycle Dhoondhna (worked example with dry run)',
+          '3. Step-by-Step: Building a Wait-For Graph and Finding the Cycle (worked example with dry run)'
+        ),
+        body: t(
+          `Dry run karte hain. Step 1: T1 ne A ko lock kiya. Step 2: T2 ne B ko lock kiya. Step 3: T1 ne B maanga — B, T2 ke paas hai, isliye T1 wait karne laga. Wait-for graph mein arrow banao: T1 se T2 ki taraf, matlab T1, T2 ka wait kar raha hai. Step 4: T2 ne A maanga — A, T1 ke paas hai, isliye T2 bhi wait karne laga. Arrow banao: T2 se T1 ki taraf.
+
+Step 5: graph dekho — T1 se T2 aur T2 se T1 — **cycle** ban gaya. Cycle ka matlab hai deadlock hai. Step 6: recovery — database ek transaction ko **victim** chunega aur use rollback karega. Aam taur par woh transaction victim banta hai jiska kaam kam hua ho ya jo chhota ho, taaki nuksaan kam ho. Victim rollback hote hi uske locks chhoot jaate hain aur doosra transaction aage badh jaata hai. Neeche wala code wait-for graph ko table mein dikhata hai; code examples mein cycle dhoondhne wali query dikhayi gayi hai.`,
+          `Let us do a dry run. Step 1: T1 locked A. Step 2: T2 locked B. Step 3: T1 asked for B — B belongs to T2, so T1 started waiting. Draw an arrow in the wait-for graph: from T1 to T2, which means T1 waits for T2. Step 4: T2 asked for A — A belongs to T1, so T2 also started waiting. Draw an arrow: from T2 to T1.
+
+Step 5: look at the graph — T1 to T2 and T2 to T1 — a **cycle** is made. A cycle means there is a deadlock. Step 6: recovery — the database chooses one transaction as the **victim** and rolls it back. Usually the victim is the transaction with less work done or the smaller one, so the loss is small. The moment the victim rolls back, its locks are released and the other transaction moves ahead. The code below shows the wait-for graph in a table; the code examples show the query that finds the cycle.`
+        ),
+        code: {
+          title: t(
+            'Wait-for graph table mein: T1 -> T2 aur T2 -> T1',
+            'Wait-for graph in a table: T1 -> T2 and T2 -> T1'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS waits;
+CREATE TABLE waits (waiting_txn TEXT, holding_txn TEXT, resource TEXT);
+INSERT INTO waits VALUES ('T1', 'T2', 'B');
+INSERT INTO waits VALUES ('T2', 'T1', 'A');
+SELECT waiting_txn, holding_txn, resource FROM waits;`,
+          output: 'waiting_txn | holding_txn | resource\nT1 | T2 | B\nT2 | T1 | A'
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Deadlock aur Lock Wait ko Ek Samajhna, Victim ko Galat Chunna',
+          '4. Common Mistakes: Treating Deadlock and Lock Wait as the Same, Choosing the Wrong Victim'
+        ),
+        body: t(
+          `**Galti 1: Deadlock aur lock wait ko ek samajhna.** Lock wait mein ek transaction doosre ka wait karta hai, par doosra aage badh raha hota hai — thodi der mein lock chhoot jaayega aur wait khatam ho jaayega. Deadlock mein koi bhi aage nahi badh raha hota — wait kabhi khatam nahi hota. Farak ye hai: wait mein cycle nahi hota, deadlock mein cycle hota hai.
+
+**Galti 2: Victim ko galat chunna.** Agar bade transaction ko victim bana diya toh bahut saara kaam wapas karna padega. Isiliye database aam taur par us transaction ko victim banata hai jiska kaam kam hua ho, ya jise dobara chalana sasta ho. Victim chunna ek cost ka faisla hai — hamesha sasta wala chuno.
+
+**Galti 3: Prevention ko har jagah lagana.** Prevention ke rules — jaise saare locks ek saath maangna — system ko slow kar dete hain, kyunki transaction ko shuru mein hi sab kuch chahiye hota hai. Aam databases detection use karte hain: deadlock kabhi-kabhi banta hai, use dhoondh kar todo.`,
+          `**Mistake 1: Treating a deadlock and a lock wait as the same.** In a lock wait, one transaction waits for another, but the other is moving ahead — the lock is released in a little while and the wait ends. In a deadlock, nobody is moving ahead — the wait never ends. The difference is this: a wait has no cycle, a deadlock has a cycle.
+
+**Mistake 2: Choosing the wrong victim.** If a big transaction becomes the victim, a lot of work must be done again. That is why the database usually makes the victim the transaction with less work done, or the one that is cheap to run again. Choosing a victim is a cost decision — always choose the cheaper one.
+
+**Mistake 3: Using prevention everywhere.** The rules of prevention — like asking for all locks together — make the system slow, because a transaction needs everything at the very start. Most databases use detection: a deadlock forms sometimes, and it is found and broken.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Teen Transactions ka Cycle, Khud ka Wait',
+          '5. Edge Cases: A Cycle of Three Transactions, Waiting for Yourself'
+        ),
+        body: t(
+          `**Teen transactions ka cycle:** deadlock sirf do transactions mein nahi banta. T1, T2 ka wait kare, T2, T3 ka wait kare, aur T3, T1 ka wait kare — teen ka cycle bhi deadlock hai. Wait-for graph mein cycle kitna bhi bada ho sakta hai, detection wahi rehta hai: cycle dhoondho.
+
+**Khud ka wait:** ek transaction khud apne lock ka wait nahi kar sakta — database use turant bata deta hai. Ye deadlock nahi hai, ye galti hai. Apne hi lock ko dobara maangna hamesha turant fail hota hai.
+
+**Timeout se detection:** kuch databases wait-for graph nahi banate — woh sirf wait ka time dekhte hain. Agar wait ek limit se zyada ho jaaye, toh use deadlock maan kar ek transaction ko rollback kar dete hain. Ye tareeka simple hai, par kabhi-kabhi bina deadlock ke bhi transaction rollback ho jaata hai.`,
+          `**A cycle of three transactions:** a deadlock is not made only by two transactions. T1 waits for T2, T2 waits for T3, and T3 waits for T1 — a cycle of three is also a deadlock. A cycle in the wait-for graph can be as big as it wants; detection stays the same: find the cycle.
+
+**Waiting for yourself:** a transaction cannot wait for its own lock — the database tells it at once. That is not a deadlock; it is a mistake. Asking again for a lock you already hold always fails at once.
+
+**Detection by timeout:** some databases do not build a wait-for graph — they only watch the waiting time. If the wait crosses a limit, they treat it as a deadlock and roll back one transaction. This way is simple, but sometimes a transaction is rolled back even without a deadlock.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Wait-Die ki Jagah Wound-Wait Use Karein?',
+          '6. What If: We Use Wound-Wait Instead of Wait-Die?'
+        ),
+        body: t(
+          `**Wait-die** aur **wound-wait** dono prevention ke tareeke hain jo transaction ki umar (timestamp) par based hain. **Wait-die:** agar purana transaction naye se lock maangta hai toh wait karega, par agar naya transaction purane se maangta hai toh woh khud mar jaayega (rollback) aur baad mein phir se chalega. **Wound-wait:** iska ulta hai — purana transaction naye ko "wound" karta hai, matlab naye ko rollback kar deta hai aur lock le leta hai; naya transaction purane ka wait karta hai.
+
+Farak ye hai: wait-die mein naya transaction martaa hai, wound-wait mein naya transaction zakhmi hota hai — dono mein purana transaction jeetta hai. Dono mein starvation nahi hota, kyunki purana transaction kabhi rollback nahi hota aur aage badhta rehta hai. Interview mein ye line kaafi hai: **wait-die mein young dies, wound-wait mein young wounded hota hai — old hamesha jeetta hai**.`,
+          `**Wait-die** and **wound-wait** are both prevention methods based on the age (timestamp) of a transaction. **Wait-die:** if an old transaction asks a new one for a lock, it waits; but if a new transaction asks an old one, it dies by itself (rolls back) and runs again later. **Wound-wait:** the opposite — the old transaction "wounds" the new one, which means it rolls the new one back and takes the lock; the new transaction waits for the old one.
+
+The difference is this: in wait-die the new transaction dies, in wound-wait the new transaction is wounded — in both, the old transaction wins. Neither has starvation, because the old transaction never rolls back and keeps moving ahead. For an interview, this line is enough: **in wait-die the young dies, in wound-wait the young is wounded — the old always wins**.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Cycle Dhoondho, Victim Chuno, Aage Badho',
+          '7. Summary: Find the Cycle, Choose the Victim, Move Ahead'
+        ),
+        body: t(
+          `**Deadlock** tab banta hai jab transactions gol ghum kar ek doosre ka wait karein — chaar conditions chahiye: mutual exclusion, hold and wait, no preemption, circular wait. **Detection:** wait-for graph banao — cycle hai toh deadlock hai. **Recovery:** ek transaction ko victim chun kar rollback karo — aam taur par chhota ya kam kaam wala. **Prevention:** wait-die mein naya transaction martaa hai, wound-wait mein naya transaction zakhmi hota hai — purana hamesha jeetta hai. **Avoidance:** lock dene se pehle check karo ki deadlock banega ya nahi.
+
+Yaad rakho: lock wait deadlock nahi hota — cycle hi deadlock ki pehchan hai. Aam databases detection use karte hain, kyunki deadlock kabhi-kabhi hi banta hai aur use todna sasta hai.`,
+          `A **deadlock** is made when transactions wait for each other in a circle — four conditions are needed: mutual exclusion, hold and wait, no preemption, and circular wait. **Detection:** build the wait-for graph — a cycle means a deadlock. **Recovery:** choose one transaction as the victim and roll it back — usually the small one or the one with less work. **Prevention:** in wait-die the new transaction dies, in wound-wait the new transaction is wounded — the old one always wins. **Avoidance:** before giving a lock, check whether it will make a deadlock.
+
+Remember: a lock wait is not a deadlock — a cycle is the sign of a deadlock. Most databases use detection, because a deadlock forms only sometimes and breaking it is cheap.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'cycle',
+      title: t(
+        'Wait-for graph: T1 aur T2 ka cycle',
+        'Wait-for graph: the cycle of T1 and T2'
+      ),
+      caption: t(
+        'T1, T2 ka wait kar raha hai aur T2, T1 ka — koi aage nahi badh sakta',
+        'T1 waits for T2 and T2 waits for T1 — nobody can move ahead'
+      ),
+      nodes: [
+        {
+          t: t('T1 ke paas A hai, B chahiye', 'T1 holds A, wants B'),
+          s: t('T1 -> T2: B ke liye wait', 'T1 -> T2: waiting for B')
+        },
+        {
+          t: t('T2 ke paas B hai, A chahiye', 'T2 holds B, wants A'),
+          s: t('T2 -> T1: A ke liye wait', 'T2 -> T1: waiting for A')
+        },
+        {
+          t: t('Cycle! Deadlock hai', 'Cycle! There is a deadlock'),
+          s: t('Detection: graph mein cycle dhoondho', 'Detection: find the cycle in the graph')
+        },
+        {
+          t: t('Recovery: victim ko rollback karo', 'Recovery: roll back the victim'),
+          s: t('Chhota transaction victim banta hai, doosra aage badhta hai', 'The small transaction becomes the victim, the other moves ahead')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Cycle dhoondho: self-join se deadlock detect karo',
+          'Find the cycle: detect the deadlock with a self-join'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS waits;
+CREATE TABLE waits (waiting_txn TEXT, holding_txn TEXT, resource TEXT);
+INSERT INTO waits VALUES ('T1', 'T2', 'B');
+INSERT INTO waits VALUES ('T2', 'T1', 'A');
+SELECT w1.waiting_txn AS t1, w1.holding_txn AS t2 FROM waits w1 JOIN waits w2 ON w1.holding_txn = w2.waiting_txn AND w1.waiting_txn = w2.holding_txn;`,
+        output: 't1 | t2\nT1 | T2\nT2 | T1'
+      },
+      {
+        title: t(
+          'Prevention: dono transactions A phir B lock karein',
+          'Prevention: both transactions lock A, then B'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS lock_order;
+CREATE TABLE lock_order (txn TEXT, first_lock TEXT, second_lock TEXT);
+INSERT INTO lock_order VALUES ('T1', 'A', 'B');
+INSERT INTO lock_order VALUES ('T2', 'A', 'B');
+SELECT txn, first_lock, second_lock FROM lock_order;`,
+        output: 'txn | first_lock | second_lock\nT1 | A | B\nT2 | A | B'
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Deadlock kab banta hai?',
+          'When is a deadlock made?'
+        ),
+        opts: [
+          t('Ek transaction wait karta hai', 'One transaction waits'),
+          t('Do transactions gol ghum kar ek doosre ka wait karte hain', 'Two transactions wait for each other in a circle'),
+          t('Table khaali hoti hai', 'The table is empty'),
+          t('Index nahi hota', 'There is no index')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: deadlock mein T1, T2 ka wait karta hai aur T2, T1 ka — circular wait ki wajah se koi bhi aage nahi badh sakta.',
+          'Correct answer: in a deadlock, T1 waits for T2 and T2 waits for T1 — because of the circular wait, nobody can move ahead.'
+        )
+      },
+      {
+        q: t(
+          'Wait-for graph mein deadlock ko kaise pehchante hain?',
+          'How do you recognise a deadlock in a wait-for graph?'
+        ),
+        opts: [
+          t('Graph mein cycle hota hai', 'There is a cycle in the graph'),
+          t('Graph khaali hota hai', 'The graph is empty'),
+          t('Graph mein sirf ek arrow hota hai', 'The graph has only one arrow'),
+          t('Graph mein koi arrow nahi hota', 'The graph has no arrow')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: cycle ka matlab hai har transaction kisi na kisi ka wait kar raha hai aur koi aage nahi badh sakta — yahi deadlock ki pehchan hai.',
+          'Correct answer: a cycle means every transaction waits for someone and nobody can move ahead — that is the sign of a deadlock.'
+        )
+      },
+      {
+        q: t(
+          'Deadlock ke baad recovery mein kya hota hai?',
+          'What happens in recovery after a deadlock?'
+        ),
+        opts: [
+          t('Dono transactions ko rollback kar dete hain', 'Both transactions are rolled back'),
+          t('Ek transaction ko victim chun kar rollback karte hain', 'One transaction is chosen as the victim and rolled back'),
+          t('Database band kar dete hain', 'The database is shut down'),
+          t('Kuch nahi karte', 'Nothing is done')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek victim ko rollback karne se uske locks chhoot jaate hain aur doosra transaction aage badh jaata hai — dono ko rollback karna bekaar nuksaan hai.',
+          'Correct answer: rolling back one victim releases its locks and the other transaction moves ahead — rolling back both is a needless loss.'
+        )
+      },
+      {
+        q: t(
+          'Wait-die mein kya hota hai?',
+          'What happens in wait-die?'
+        ),
+        opts: [
+          t('Purana transaction martaa hai', 'The old transaction dies'),
+          t('Naya transaction maangne par khud rollback ho jaata hai', 'The new transaction rolls back by itself when it asks'),
+          t('Dono wait karte hain', 'Both wait'),
+          t('Koi rollback nahi hota', 'No rollback happens')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: wait-die mein purana transaction wait kar sakta hai, par naya transaction purane se lock maange toh woh khud die karta hai — rollback hokar baad mein phir chalta hai.',
+          'Correct answer: in wait-die, the old transaction may wait, but if the new transaction asks the old one for a lock, it dies by itself — it rolls back and runs again later.'
+        )
+      },
+      {
+        q: t(
+          'Wound-wait mein purana transaction kya karta hai?',
+          'What does the old transaction do in wound-wait?'
+        ),
+        opts: [
+          t('Wait karta hai', 'It waits'),
+          t('Naye transaction ko rollback karke lock le leta hai', 'It rolls back the new transaction and takes the lock'),
+          t('Khud rollback ho jaata hai', 'It rolls back by itself'),
+          t('Table delete kar deta hai', 'It deletes the table')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: wound-wait mein purana transaction naye ko wound karta hai — naye ko rollback karke uska lock le leta hai, isliye purana hamesha jeetta hai.',
+          'Correct answer: in wound-wait, the old transaction wounds the new one — it rolls the new one back and takes its lock, so the old one always wins.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Deadlock: do transactions gol ghum kar ek doosre ka wait karte hain.',
+        'Deadlock: two transactions wait for each other in a circle.'
+      ),
+      t(
+        'Wait-for graph mein cycle hai toh deadlock hai — detection ka yahi test hai.',
+        'If the wait-for graph has a cycle, there is a deadlock — that is the test for detection.'
+      ),
+      t(
+        'Recovery mein ek victim ko rollback karo — aam taur par chhota transaction.',
+        'In recovery, roll back one victim — usually the small transaction.'
+      ),
+      t(
+        'Wait-die mein naya transaction martaa hai, wound-wait mein naya zakhmi hota hai.',
+        'In wait-die the new transaction dies, in wound-wait the new one is wounded.'
+      ),
+      t(
+        'Lock wait deadlock nahi hota — cycle hi deadlock ki pehchan hai.',
+        'A lock wait is not a deadlock — a cycle is the sign of a deadlock.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Teen Transactions ka Wait-For Graph Banao',
+        'Practice: Build a Wait-For Graph of Three Transactions'
+      ),
+      task: t(
+        'Neeche diya starter chalao: ye teen transactions ka wait-for graph banata hai — T1, T2 ka wait karta hai, T2, T3 ka, aur T3, T1 ka. Done tab mano jab output expected jaisa aaye aur tum bata sako ki is graph mein cycle hai ya nahi, aur kaunsa transaction victim banega.',
+        'Run the starter below: it builds a wait-for graph of three transactions — T1 waits for T2, T2 waits for T3, and T3 waits for T1. You are done when the output matches the expected output and you can say whether this graph has a cycle, and which transaction becomes the victim.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS waits;
+CREATE TABLE waits (waiting_txn TEXT, holding_txn TEXT, resource TEXT);
+INSERT INTO waits VALUES ('T1', 'T2', 'B');
+INSERT INTO waits VALUES ('T2', 'T3', 'C');
+INSERT INTO waits VALUES ('T3', 'T1', 'A');
+SELECT waiting_txn, holding_txn FROM waits;`,
+      expected: 'waiting_txn | holding_txn\nT1 | T2\nT2 | T3\nT3 | T1'
+    },
+    readMinutes: 12
+  };
+
+const dbmsRecovery: Article = {
+    id: 'dbms-recovery',
+    subjectId: 'dbms',
+    title: t(
+      'Recovery — Crash ke Baad Database, Log, Checkpoint aur ARIES',
+      'Recovery — Bringing a Database Back After a Crash: Log, Checkpoint, and ARIES'
+    ),
+    summary: t(
+      'Database crash ke baad wapas kaise aata hai, yeh seekho: log-based recovery kya hota hai, WAL ka rule kyun hai, checkpoint recovery ko chhota kaise karta hai, shadow paging kya karta hai, aur ARIES ke Analysis, Redo aur Undo phases kaise kaam karte hain — ROLLBACK wale dry run ke saath.',
+      'Learn how a database comes back after a crash: what log-based recovery is, why the WAL rule matters, how a checkpoint shortens recovery, what shadow paging does, and how the Analysis, Redo, and Undo phases of ARIES work — with a ROLLBACK dry run.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Recovery Kya Hai? (Crash ke Baad Database Ko Wapas Kaise Laate Hain)',
+          '1. What Is Recovery? (How a Database Comes Back After a Crash)'
+        ),
+        body: t(
+          `Socho aap bank se 5,000 rupaye bhej rahe ho. Aapke account se paise cut gaye, aur usi second light chali gayi — paise dusre account mein pahunche hi nahi. Agar database wahi ruk jaaye, toh 5,000 rupaye hawa mein gayab ho jaayenge. **Recovery** ka matlab hai database ko crash ke baad ek sahi aur consistent state mein wapas laana — na aadha kaam dikhe, na committed kaam gayab ho. Yeh ACID ke **D (Durability)** ki guarantee hai: ek baar transaction commit ho gaya, toh crash ke baad bhi uska data bachna chahiye.
+
+Database yeh guarantee ek simple rule se deta hai jise **WAL (Write-Ahead Logging)** kehte hain: koi bhi change disk par data mein likhne se **pehle** log mein likha jaata hai. Log ek diary hai — har transaction ki har change ki entry, order ke saath. Crash ke baad database sabse pehle yahi diary padhta hai aur poochhta hai: kaunsa transaction commit hua tha aur kaunsa nahi? Committed transactions ko **REDO** karke dobara lagaya jaata hai, aur uncommitted transactions ko **UNDO** karke hataya jaata hai.
+
+Recovery ke teen tareeke hain. **Log-based recovery** sabse common hai — WAL aur REDO/UNDO par chalta hai. **Checkpoint** ek aisa point hai jahan saare committed changes disk par likhe ja chuke hote hain, isliye recovery ko us point se pehle ka log padhne ki zaroorat nahi padti. **Shadow paging** mein database data ki ek nayi copy (shadow) banata hai aur sirf commit par usko asli bana deta hai — crash par purani copy hi asli rehti hai. Aur **ARIES** aaj ka standard recovery algorithm hai jiske teen phases hote hain: Analysis, Redo aur Undo.`,
+          `Imagine you are sending 5,000 rupees from your bank account. The money is deducted from your account, and in that very second the power goes out — the money never reaches the other account. If the database stopped right there, 5,000 rupees would vanish into thin air. **Recovery** means bringing the database back to a correct and consistent state after a crash — no half-finished work visible, and no committed work lost. This is the guarantee of **D (Durability)** in ACID: once a transaction commits, its data must survive even a crash.
+
+The database gives this guarantee with one simple rule called **WAL (Write-Ahead Logging)**: every change is written to the log **before** it is written to the data on disk. The log is a diary — an entry for every change of every transaction, in order. After a crash, the database first reads this diary and asks: which transaction committed and which did not? Committed transactions are applied again with **REDO**, and uncommitted transactions are removed with **UNDO**.
+
+There are three recovery methods. **Log-based recovery** is the most common — it runs on WAL plus REDO and UNDO. A **checkpoint** is a point where all committed changes have already been written to disk, so recovery never needs to read the log before that point. In **shadow paging**, the database builds a new copy (a shadow) of the data and only makes it the real copy on commit — after a crash, the old copy stays real. And **ARIES** is today's standard recovery algorithm, with three phases: Analysis, Redo, and Undo.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bank Transfer, Light Jaana aur Exam Form',
+          '2. Real-Life Examples: Bank Transfers, Power Cuts, and Exam Forms'
+        ),
+        body: t(
+          `Sabse seedha example hai **bank transfer**. Paise bhejna ek transaction hai: ek account se debit, dusre mein credit. Agar light debit ke baad aur credit se pehle chali jaaye, toh database ko ya toh dono steps wapas laane hain, ya dono ko cancel karna hai. Sirf ek step wapas laana galat hoga — paise cut jaayenge par pahunchenge nahi. Recovery yahi faisla log se karta hai: agar transaction commit hua tha toh dono steps REDO karo, nahi hua tha toh dono UNDO karo.
+
+Doosra example hai **exam form bharna**. Aap form submit karte ho, server "submitted" dikhata hai, aur phir server restart ho jaata hai. Aapko dar lagta hai ki form gaya ya nahi. Agar submit ek committed transaction tha, toh recovery usko wapas laayega — form safe hai. Agar submit adhoora tha, toh recovery usko hata dega aur aap dobara bhar sakte ho. Dono cases mein database ek saaf state mein hota hai — na aadha form, na do form.
+
+Teesra example hai **railway ticket booking**. Do log ek hi seat book karne ki koshish karte hain aur beech mein system crash ho jaata hai. Recovery ke baad ya toh ek ko seat milegi ya kisi ko nahi — par ek seat do logon ko kabhi nahi milegi. Yahi consistency hai. Roz ki zindagi mein aapko recovery dikhai nahi deta, par har baar jab light jaane ke baad bhi aapka data sahi milta hai, toh peeche recovery hi kaam kar raha hota hai.`,
+          `The simplest example is a **bank transfer**. Sending money is one transaction: debit from one account, credit to another. If the power fails after the debit but before the credit, the database must either bring back both steps or cancel both. Bringing back only one step would be wrong — the money would be deducted but never arrive. Recovery makes this decision from the log: if the transaction committed, REDO both steps; if it did not, UNDO both.
+
+A second example is **filling an exam form**. You submit the form, the server shows "submitted", and then the server restarts. You worry whether the form survived. If the submit was a committed transaction, recovery brings it back — the form is safe. If the submit was incomplete, recovery removes it and you can fill it again. In both cases the database ends up in a clean state — no half form, and no double form.
+
+A third example is **railway ticket booking**. Two people try to book the same seat and the system crashes in the middle. After recovery, either one person gets the seat or nobody does — but one seat never goes to two people. That is consistency. In daily life you never see recovery working, but every time your data is still correct after a power cut, recovery is what made it so.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Transaction, Crash aur ROLLBACK ka Dry Run',
+          '3. Step-by-Step: A Transaction, a Crash, and a ROLLBACK Dry Run'
+        ),
+        body: t(
+          `Ab hum ek crash ko haath se simulate karte hain. Hamare paas \`students\` table hai jismein Rahul ke marks 85 hain. Hum ek transaction start karte hain aur Rahul ke marks 100 kar dete hain — par **commit nahi karte**. Asli zindagi mein yahi woh moment hai jab light chali jaati hai: change likha gaya, par commit nahi hua. Neeche wale code mein \`ROLLBACK\` wahi crash hai — woh uncommitted change ko hata deta hai, jaise recovery mein UNDO karta hai.
+
+Dry run, ek-ek step:
+- **Step 1: \`BEGIN TRANSACTION\`** — transaction shuru hoti hai. Ab se har change sirf is transaction ka hissa hai.
+- **Step 2: \`UPDATE students SET marks = 100 WHERE id = 1\`** — Rahul ke marks 100 ho gaye, par sirf memory mein. Log mein entry likhi gayi, commit abhi nahi hua.
+- **Step 3: \`ROLLBACK\`** — crash! Database uncommitted change ko UNDO kar deta hai. Rahul ke marks wapas 85 ho jaate hain.
+- **Step 4: \`SELECT\`** — final check. Saare students ke marks wahi hain jo pehle the: Rahul 85, Priya 92, Amit 74, Sana 88. Aadha update kahin nahi dikhta.
+
+Yahi log-based recovery ka core idea hai. Agar step 2 ke baad hum \`COMMIT\` kar dete, toh crash ke baad bhi marks 100 hi rehte — kyunki committed data ko recovery REDO se wapas laata hai. Neeche wala code run karo aur output dekho: ROLLBACK ke baad Rahul ke marks 85 hi hain, 100 nahi.`,
+          `Now let us simulate a crash by hand. We have the \`students\` table, where Rahul has 85 marks. We start a transaction and change Rahul's marks to 100 — but we **do not commit**. In real life this is the moment the power fails: the change was written, but it never committed. In the code below, \`ROLLBACK\` plays the role of that crash — it removes the uncommitted change, just as UNDO does in recovery.
+
+Dry run, step by step:
+- **Step 1: \`BEGIN TRANSACTION\`** — the transaction starts. From here on, every change belongs to this transaction only.
+- **Step 2: \`UPDATE students SET marks = 100 WHERE id = 1\`** — Rahul's marks become 100, but only in memory. An entry is written to the log; the commit has not happened yet.
+- **Step 3: \`ROLLBACK\`** — crash! The database undoes the uncommitted change with UNDO. Rahul's marks go back to 85.
+- **Step 4: \`SELECT\`** — the final check. Every student's marks are exactly as they were before: Rahul 85, Priya 92, Amit 74, Sana 88. No half-finished update is visible anywhere.
+
+That is the core idea of log-based recovery. If we had run \`COMMIT\` after step 2, the marks would still be 100 after the crash — because recovery brings committed data back with REDO. Run the code below and look at the output: after ROLLBACK, Rahul's marks are 85, not 100.`
+        ),
+        code: {
+          title: t(
+            'Crash Simulate Karo: UPDATE, ROLLBACK, phir SELECT',
+            'Simulate a Crash: UPDATE, ROLLBACK, then SELECT'
+          ),
+          language: 'sql',
+          code: `BEGIN TRANSACTION;
+UPDATE students SET marks = 100 WHERE id = 1;
+ROLLBACK;
+SELECT id, name, marks FROM students ORDER BY id;`,
+          output: `id | name | marks
+1 | Rahul | 85
+2 | Priya | 92
+3 | Amit | 74
+4 | Sana | 88`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: COMMIT Bhoolna, Log Ko Ignore Karna aur Silent Data Loss',
+          '4. Common Mistakes: Forgetting COMMIT, Ignoring the Log, and Silent Data Loss'
+        ),
+        body: t(
+          `Recovery mein sabse badi galtiyan woh hain jo crash ke din pata chalti hain — jab bahut der ho chuki hoti hai.
+
+**Galti 1: COMMIT bhool jaana.** Log aksar transaction start karke update karte hain aur \`COMMIT\` likhna bhool jaate hain. Jab tak commit nahi hota, change sirf usi session mein dikhta hai. Connection band hote hi database usko ROLLBACK kar deta hai aur change gayab ho jaata hai. Rule simple hai: har \`BEGIN TRANSACTION\` ka ek \`COMMIT\` ya \`ROLLBACK\` hona chahiye.
+
+**Galti 2: Log ko delete kar dena ya backup na lena.** Log disk bharne lage toh kuch log use delete kar dete hain. Par log hi recovery ki jaan hai — log gaya toh crash ke baad committed data bhi wapas nahi aayega. Log ko kabhi haath se delete mat karo; database khud purana log checkpoint ke baad saaf karta hai.
+
+**Galti 3: Backup ko hi recovery samajh lena.** Backup kal raat ka data deta hai, aaj subah ke transactions nahi. Recovery = backup + log. Sirf backup restore karoge toh aaj ka saara kaam gayab ho jaayega. Isi liye interview mein poochha jaata hai: backup aur recovery mein kya farak hai?
+
+**Galti 4: Recovery ko kabhi test na karna.** Bahut si teams ke paas backup hota hai, par kabhi restore karke dekha nahi hota. Jis din crash aata hai, us din pata chalta hai ki backup corrupt tha ya log missing tha. Recovery plan ko test karna utna hi zaroori hai jitna use banana.`,
+          `The biggest recovery mistakes are the ones you discover on the day of the crash — when it is already too late.
+
+**Mistake 1: Forgetting COMMIT.** People often start a transaction, run an update, and forget to write \`COMMIT\`. Until the commit happens, the change is visible only in that session. The moment the connection closes, the database rolls it back and the change disappears. The rule is simple: every \`BEGIN TRANSACTION\` needs a \`COMMIT\` or a \`ROLLBACK\`.
+
+**Mistake 2: Deleting the log or skipping backups.** When the log starts filling the disk, some people delete it by hand. But the log is the life of recovery — lose the log and even committed data cannot come back after a crash. Never delete the log by hand; the database cleans up the old log itself after a checkpoint.
+
+**Mistake 3: Thinking a backup is the same as recovery.** A backup gives you last night's data, not this morning's transactions. Recovery = backup + log. If you restore only the backup, all of today's work disappears. That is why interviews ask: what is the difference between a backup and recovery?
+
+**Mistake 4: Never testing recovery.** Many teams have backups they have never tried to restore. On the day a crash comes, they discover the backup was corrupt or the log was missing. Testing a recovery plan is as important as making one.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Crash COMMIT ke Beech mein, Khaali Log aur Do Baar Recovery',
+          '5. Edge Cases: A Crash During COMMIT, an Empty Log, and Running Recovery Twice'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein kabhi nahi aati, par interview aur real crash mein yahi phansate hain.
+
+**1. Crash COMMIT ke beech mein.** COMMIT ek hi instant mein nahi hota — pehle log mein commit record likha jaata hai, phir data disk par. Agar crash commit record likhne ke baad aaye, toh transaction committed mana jaata hai aur REDO use wapas laata hai. Agar crash commit record se pehle aaye, toh transaction uncommitted mana jaata hai aur UNDO use hata deta hai. Beech ka koi state nahi hota — yahi atomicity hai.
+
+**2. Khaali log.** Agar crash ke waqt log mein kuch nahi hai, toh recovery karne ko kuch nahi hota — database seedha consistent state mein hota hai. Yeh koi error nahi hai; nayi khaali database ke saath yahi hota hai.
+
+**3. Recovery do baar chalana.** ARIES ko is tarah banaya gaya hai ki recovery ko do baar chalana bhi safe hai — REDO aur UNDO **idempotent** hote hain, matlab unko dobara lagane se result nahi badalta. Agar recovery ke beech mein phir crash aa jaaye, toh recovery dobara chal sakta hai bina data kharab kiye.
+
+**4. Recovery ke beech mein crash.** Yahi wajah hai ki ARIES pehle Analysis phase mein log ko scan karke ek list banata hai — kaunsi transaction REDO karni hai, kaunsi UNDO. Phir bhi crash aa jaaye toh agla recovery wahi list dobara bana leta hai.
+
+**5. Shadow paging mein crash.** Shadow paging mein crash ke baad purani copy hi asli rehti hai, isliye koi UNDO chahiye hi nahi. Par iski keemat hai: har commit par poori copy badalni padti hai, jo bade database mein slow hota hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real crashes and interview traps.
+
+**1. A crash in the middle of COMMIT.** COMMIT does not happen in a single instant — first the commit record is written to the log, then the data goes to disk. If the crash comes after the commit record, the transaction counts as committed and REDO brings it back. If the crash comes before the commit record, the transaction counts as uncommitted and UNDO removes it. There is no state in between — that is atomicity.
+
+**2. An empty log.** If the log is empty at crash time, there is nothing to recover — the database is already in a consistent state. This is not an error; it is exactly what happens with a fresh empty database.
+
+**3. Running recovery twice.** ARIES is designed so that running recovery twice is still safe — REDO and UNDO are **idempotent**, which means applying them again does not change the result. If another crash hits in the middle of recovery, recovery can simply run again without corrupting data.
+
+**4. A crash during recovery itself.** This is why ARIES first scans the log in its Analysis phase and builds a list — which transactions need REDO and which need UNDO. Even if a crash comes after that, the next recovery rebuilds the same list.
+
+**5. A crash in shadow paging.** In shadow paging, the old copy stays real after a crash, so no UNDO is needed at all. But there is a price: every commit must switch the whole copy, which is slow for a large database.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Log Na Ho, Checkpoint Na Ho, ya ARIES Na Ho?',
+          '6. What If: No Log, No Checkpoint, or No ARIES?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: log hi na ho?** Bina log ke database ko crash ke baad pata hi nahi chalega ki kaunsa change commit hua tha aur kaunsa nahi. Jo data memory mein tha woh gaya, aur disk par aadha likha data reh gaya. Result ek corrupt database hoga — na backup kaam aayega, na koi UNDO. Isi liye har serious database WAL use karta hai; log optional nahi hai, recovery ki buniyaad hai.
+
+**What if: checkpoint na ho?** Checkpoint ke bina recovery ko crash ke waqt poora log shuru se padhna padega — database jitna purana, log utna bada, recovery utni slow. Checkpoint recovery ko chhota karta hai: us point se pehle ka saara committed data disk par safe hai, isliye recovery wahi se shuru hoti hai. Checkpoint na ho toh recovery kaam toh karegi, par ghanton lag sakte hain.
+
+**What if: ARIES ki jagah purana algorithm ho?** ARIES se pehle ke algorithms (jaise shadow paging ya simple UNDO/REDO) bhi kaam karte the, par unmein kami thi: shadow paging slow tha, aur simple algorithms recovery ke beech mein crash ko handle nahi karte the. ARIES ke teen phases — Analysis, Redo, Undo — isliye standard hain kyunki woh har crash ko handle karte hain, chahe crash recovery ke beech mein hi kyun na aaye.
+
+**What if: aapko sirf ek table recover karni ho?** Poora database recover karne ki jagah kuch databases table-level recovery dete hain, par concept wahi rehta hai: log se us table ke committed changes REDO karo aur uncommitted UNDO karo.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if there is no log at all?** Without a log, the database cannot tell after a crash which change committed and which did not. Whatever was in memory is gone, and half-written data stays on disk. The result is a corrupt database — no backup helps and no UNDO exists. That is why every serious database uses WAL; the log is not optional, it is the foundation of recovery.
+
+**What if there is no checkpoint?** Without a checkpoint, recovery must read the entire log from the start at crash time — the older the database, the bigger the log, the slower the recovery. A checkpoint shortens recovery: all committed data before that point is already safe on disk, so recovery starts there. Without it, recovery still works, but it can take hours.
+
+**What if an older algorithm is used instead of ARIES?** The algorithms before ARIES (like shadow paging or simple UNDO/REDO) also worked, but they had flaws: shadow paging was slow, and the simple algorithms could not handle a crash in the middle of recovery. The three phases of ARIES — Analysis, Redo, Undo — are the standard because they handle every crash, even one that strikes during recovery itself.
+
+**What if you only need to recover one table?** Some databases offer table-level recovery instead of recovering the whole database, but the concept stays the same: REDO the committed changes of that table from the log and UNDO the uncommitted ones.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Recovery ka Poora Picture',
+          '7. Summary: The Full Picture of Recovery'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Recovery** ka matlab hai crash ke baad database ko ek consistent state mein wapas laana. Iska sabse bada rule hai **WAL**: pehle log disk par, phir data. Log mein har change ki entry hoti hai, aur crash ke baad database usi log se faisla karta hai — committed transaction par **REDO**, uncommitted par **UNDO**.
+
+**Checkpoint** recovery ko chhota karta hai kyunki us point se pehle ka committed data disk par safe hota hai. **Shadow paging** mein commit par nayi copy asli ban jaati hai, par bade database mein yeh slow hota hai. **ARIES** aaj ka standard hai: pehle **Analysis** mein log scan karke list banti hai, phir **Redo** mein committed changes dobara lagte hain, phir **Undo** mein uncommitted changes hat-te hain. REDO aur UNDO idempotent hote hain, isliye recovery ko dobara chalana bhi safe hai.
+
+Interview mein yaad rakhne wali line yeh hai: "Log pehle, data baad mein; REDO committed ka, UNDO uncommitted ka." Aur practical rule yeh hai: har transaction ko \`COMMIT\` ya \`ROLLBACK\` do, log ko kabhi haath se delete mat karo, aur recovery ko ek baar test karke dekho. Agle article mein hum NoSQL dekhenge — jahan data table mein nahi, document aur key-value mein rehta hai.`,
+          `Let us tie the whole article together. **Recovery** means bringing a database back to a consistent state after a crash. Its biggest rule is **WAL**: first the log to disk, then the data. The log holds an entry for every change, and after a crash the database decides from that log — **REDO** for a committed transaction, **UNDO** for an uncommitted one.
+
+A **checkpoint** shortens recovery because all committed data before that point is already safe on disk. In **shadow paging**, the new copy becomes real on commit, but this is slow for a large database. **ARIES** is today's standard: first **Analysis** scans the log and builds a list, then **Redo** applies the committed changes again, then **Undo** removes the uncommitted changes. REDO and UNDO are idempotent, so running recovery twice is still safe.
+
+The line to remember for interviews is: "Log first, data second; REDO for committed, UNDO for uncommitted." And the practical rules are: give every transaction a \`COMMIT\` or a \`ROLLBACK\`, never delete the log by hand, and test recovery at least once. In the next article we will look at NoSQL — where data lives in documents and key-value pairs instead of tables.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Crash se Recovery Tak: Log Kaise Database Ko Bachata Hai',
+        'From Crash to Recovery: How the Log Saves the Database'
+      ),
+      caption: t(
+        'WAL rule: pehle log disk par, phir data — isi liye crash ke baad bhi committed data bach jaata hai',
+        'The WAL rule: first the log to disk, then the data — that is why committed data survives a crash'
+      ),
+      nodes: [
+        {
+          t: t('Transaction start hoti hai', 'The transaction starts'),
+          s: t(
+            'UPDATE likha jaata hai, par abhi commit nahi hua',
+            'The UPDATE is written, but it has not committed yet'
+          )
+        },
+        {
+          t: t('Log mein entry likhi jaati hai (WAL)', 'An entry is written to the log (WAL)'),
+          s: t(
+            'Pehle log disk par, phir data — yahi durability ki guarantee hai',
+            'First the log to disk, then the data — that is the durability guarantee'
+          )
+        },
+        {
+          t: t('Crash! Bijli chali gayi', 'Crash! The power goes out'),
+          s: t(
+            'Memory ka data gaya, disk ka log bacha',
+            'The data in memory is gone, the log on disk survives'
+          )
+        },
+        {
+          t: t('Recovery: log ko padho', 'Recovery: read the log'),
+          s: t(
+            'Committed changes par REDO, uncommitted par UNDO',
+            'REDO for committed changes, UNDO for uncommitted ones'
+          )
+        },
+        {
+          t: t('Database consistent state mein', 'The database is in a consistent state'),
+          s: t(
+            'Rahul ke marks wapas 85 — na 100, na aadha update',
+            'Rahul has 85 marks again — not 100, and no half-finished update'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Committed Change Bach Jaata Hai: UPDATE + COMMIT',
+          'A Committed Change Survives: UPDATE + COMMIT'
+        ),
+        language: 'sql',
+        code: `BEGIN TRANSACTION;
+UPDATE students SET marks = 95 WHERE name = 'Sana';
+COMMIT;
+SELECT id, name, marks FROM students WHERE name = 'Sana';`,
+        output: `id | name | marks
+4 | Sana | 95`
+      },
+      {
+        title: t(
+          'Log Table Kaisi Dikhti Hai: Har Change ki Entry',
+          'What a Log Table Looks Like: An Entry for Every Change'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS recovery_log;
+CREATE TABLE recovery_log (log_id INTEGER, op TEXT, student_id INTEGER, old_marks INTEGER, new_marks INTEGER);
+INSERT INTO recovery_log VALUES (1, 'UPDATE', 2, 92, 98);
+INSERT INTO recovery_log VALUES (2, 'UPDATE', 3, 74, 80);
+SELECT log_id, op, student_id, old_marks, new_marks FROM recovery_log;`,
+        output: `log_id | op | student_id | old_marks | new_marks
+1 | UPDATE | 2 | 92 | 98
+2 | UPDATE | 3 | 74 | 80`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Crash ke baad committed transaction ka data kyun bach jaata hai?',
+          'Why does the data of a committed transaction survive a crash?'
+        ),
+        opts: [
+          t('Kyunki data memory mein rehta hai', 'Because the data stays in memory'),
+          t('Kyunki change pehle log mein disk par likha jaata hai (WAL)', 'Because the change is first written to the log on disk (WAL)'),
+          t('Kyunki database crash ko rok deta hai', 'Because the database prevents the crash'),
+          t('Kyunki backup har second banta hai', 'Because a backup is made every second')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: WAL rule ke hisaab se har change pehle log mein disk par likha jaata hai, isliye crash ke baad log se REDO karke committed data wapas laaya ja sakta hai.',
+          'Correct answer: under the WAL rule, every change is first written to the log on disk, so after a crash the committed data can be brought back with REDO from the log.'
+        )
+      },
+      {
+        q: t(
+          'ROLLBACK kya karta hai?',
+          'What does ROLLBACK do?'
+        ),
+        opts: [
+          t('Database ko delete kar deta hai', 'It deletes the database'),
+          t('Uncommitted changes ko hata deta hai', 'It removes uncommitted changes'),
+          t('Committed changes ko bhi hata deta hai', 'It also removes committed changes'),
+          t('Log ko khaali kar deta hai', 'It empties the log')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ROLLBACK current transaction ke saare uncommitted changes ko UNDO kar deta hai — jaise crash ke baad recovery karti hai. Committed data ko woh chhoo nahi sakta.',
+          'Correct answer: ROLLBACK undoes all uncommitted changes of the current transaction — just like recovery does after a crash. It cannot touch committed data.'
+        )
+      },
+      {
+        q: t(
+          'Checkpoint ka kya fayda hai?',
+          'What is the benefit of a checkpoint?'
+        ),
+        opts: [
+          t('Database ko band kar deta hai', 'It shuts down the database'),
+          t('Recovery ko chhota karta hai — usse pehle ka log padhne ki zaroorat nahi', 'It shortens recovery — the log before it never needs to be read'),
+          t('Log ko delete kar deta hai hamesha ke liye', 'It deletes the log forever'),
+          t('Transactions ko slow kar deta hai', 'It slows down transactions')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: checkpoint par saare committed changes disk par likhe ja chuke hote hain, isliye recovery checkpoint se shuru hoti hai aur usse pehle ka log skip kar deti hai.',
+          'Correct answer: at a checkpoint, all committed changes have already been written to disk, so recovery starts from the checkpoint and skips the earlier log.'
+        )
+      },
+      {
+        q: t(
+          'Recovery mein REDO aur UNDO mein kya farak hai?',
+          'What is the difference between REDO and UNDO in recovery?'
+        ),
+        opts: [
+          t('REDO committed ko dobara lagata hai, UNDO uncommitted ko hatata hai', 'REDO reapplies committed work, UNDO removes uncommitted work'),
+          t('REDO uncommitted ko hatata hai, UNDO committed ko dobara lagata hai', 'REDO removes uncommitted work, UNDO reapplies committed work'),
+          t('Dono ek hi kaam karte hain', 'Both do the same thing'),
+          t('REDO sirf backup ke liye hota hai', 'REDO is only for backups')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: REDO un committed transactions ko dobara apply karta hai jo commit ho chuke the par disk par nahi pahunche, aur UNDO un transactions ko hatata hai jo commit nahi hue the.',
+          'Correct answer: REDO applies again the transactions that committed but never reached disk, and UNDO removes the transactions that never committed.'
+        )
+      },
+      {
+        q: t(
+          'ARIES ke teen phases ka sahi order kya hai?',
+          'What is the correct order of the three ARIES phases?'
+        ),
+        opts: [
+          t('Undo, Redo, Analysis', 'Undo, Redo, Analysis'),
+          t('Redo, Undo, Analysis', 'Redo, Undo, Analysis'),
+          t('Analysis, Redo, Undo', 'Analysis, Redo, Undo'),
+          t('Analysis, Undo, Redo', 'Analysis, Undo, Redo')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: ARIES pehle Analysis mein log scan karke decide karta hai ki kya REDO aur kya UNDO karna hai, phir Redo karta hai, phir Undo karta hai.',
+          'Correct answer: ARIES first scans the log in Analysis to decide what needs REDO and what needs UNDO, then runs Redo, then Undo.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Log pehle disk par likha jaata hai, data baad mein — isi ko WAL kehte hain.',
+        'The log is written to disk first and the data second — that is called WAL.'
+      ),
+      t(
+        'REDO committed transaction ko dobara lagata hai, UNDO uncommitted ko hatata hai.',
+        'REDO reapplies a committed transaction, UNDO removes an uncommitted one.'
+      ),
+      t(
+        'Checkpoint recovery ko chhota karta hai — usse pehle ka log dobara padhne ki zaroorat nahi.',
+        'A checkpoint shortens recovery — the log before it never needs to be read again.'
+      ),
+      t(
+        'ARIES ke teen phases hain: Analysis, Redo, Undo.',
+        'ARIES has three phases: Analysis, Redo, and Undo.'
+      ),
+      t(
+        'ROLLBACK ek chhota crash test hai — uncommitted change gayab ho jaata hai.',
+        'ROLLBACK is a small crash test — an uncommitted change disappears.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Crash Simulate Karo aur Recovery Check Karo',
+        'Practice: Simulate a Crash and Check the Recovery'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: Rahul ke marks ko ek transaction mein 50 karo, phir ROLLBACK se crash simulate karo, aur aakhiri SELECT se check karo ki marks wapas 85 ho gaye. Done tab mana jayega jab output mein sirf ek row aaye: 1 | Rahul | 85.',
+        'Run the starter below: change Rahul marks to 50 inside a transaction, then simulate a crash with ROLLBACK, and check with the final SELECT that the marks are back to 85. You are done when the output shows exactly one row: 1 | Rahul | 85.'
+      ),
+      language: 'sql',
+      starter: `BEGIN TRANSACTION;
+UPDATE students SET marks = 50 WHERE id = 1;
+ROLLBACK;
+SELECT id, name, marks FROM students WHERE id = 1;`,
+      expected: `id | name | marks
+1 | Rahul | 85`
+    },
+    readMinutes: 12
+  };
+
+const dbmsNosql: Article = {
+    id: 'dbms-nosql',
+    subjectId: 'dbms',
+    title: t(
+      'NoSQL — Document, Key-Value, Column aur Graph Databases, CAP Theorem',
+      'NoSQL — Document, Key-Value, Column, and Graph Databases, and the CAP Theorem'
+    ),
+    summary: t(
+      'NoSQL kya hota hai aur SQL se kab alag hota hai, yeh seekho: chaaro types — document, key-value, column-family aur graph — CAP theorem ke saath, SQL vs NoSQL ka sahi comparison, aur ek flexible schema ka worked example jismein har student ke alag fields hote hain.',
+      'Learn what NoSQL is and when it differs from SQL: all four types — document, key-value, column-family, and graph — with the CAP theorem, a fair SQL vs NoSQL comparison, and a worked example of a flexible schema where each student has different fields.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. NoSQL Kya Hai? (SQL se Alag Kyun Hai)',
+          '1. What Is NoSQL? (Why It Differs from SQL)'
+        ),
+        body: t(
+          `**NoSQL** ka matlab hai "Not Only SQL" — aise databases jo data ko fixed tables mein nahi, balki flexible formats mein store karte hain. SQL database mein pehle schema banana padta hai: table, columns, types — sab fix. Agar kal ek student ka ek naya field aaye (jaise hostel ya club), toh poori table badalni padegi. NoSQL mein aisa nahi hai: har record apne fields khud le kar chalta hai. Ek student ke paas \`city\` ho sakta hai, dusre ke paas \`city\`, \`hostel\` aur \`club\` — teeno ek hi collection mein reh sakte hain.
+
+NoSQL ke chaar main types hain. **Document database** (jaise MongoDB) data ko JSON jaisi documents mein rakhta hai — ek document mein poori detail hoti hai. **Key-value store** (jaise Redis) sabse simple hai: ek key, ek value — jaise dictionary. **Column-family store** (jaise Cassandra) bahut bade data ko columns ke groups mein rakhta hai aur bahut saare servers par faila sakta hai. **Graph database** (jaise Neo4j) relationships ko pehle rakhta hai — kaun kiska dost hai, kaun kisko follow karta hai.
+
+NoSQL ki sabse badi taakat hai **horizontal scaling**: data badhe toh naya server jod do, aur data unmein bant jaata hai. SQL database aam taur par vertical scale karta hai — ek hi server ko bada karo. Isi liye jab data bahut bada ho ya structure roz badalta ho, toh log NoSQL ki taraf dekhte hain.`,
+          `**NoSQL** means "Not Only SQL" — databases that store data in flexible formats instead of fixed tables. In a SQL database you must fix the schema first: the table, the columns, the types — all fixed. If a student gains a new field tomorrow (like a hostel or a club), the whole table must change. In NoSQL that is not needed: every record carries its own fields. One student may have \`city\`, another may have \`city\`, \`hostel\`, and \`club\` — all three can live in the same collection.
+
+There are four main types of NoSQL. A **document database** (like MongoDB) keeps data in JSON-like documents — one document holds the complete detail. A **key-value store** (like Redis) is the simplest: one key, one value — like a dictionary. A **column-family store** (like Cassandra) keeps very large data in groups of columns and can spread it across many servers. A **graph database** (like Neo4j) puts relationships first — who is friends with whom, who follows whom.
+
+The greatest strength of NoSQL is **horizontal scaling**: when data grows, add a new server and the data spreads across them. A SQL database usually scales vertically — make one server bigger. That is why people turn to NoSQL when data is very large or its structure changes every day.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Shopping Cart, Social Media Feed aur Live Location',
+          '2. Real-Life Examples: Shopping Carts, Social Media Feeds, and Live Locations'
+        ),
+        body: t(
+          `Sabse seedha example hai **shopping cart**. Aap cart mein ek phone daalte ho, phir ek cover, phir ek coupon. Har cart ka structure alag hai — kisi mein 1 item, kisi mein 20, kisi mein coupon, kisi mein nahi. Document database mein har cart ek document hota hai, aur usmein jo fields chahiye wahi hote hain. SQL mein iske liye alag-alag tables aur JOINs chahiye hote.
+
+Doosra example hai **social media feed**. Har post alag hoti hai — kisi mein photo hai, kisi mein video, kisi mein sirf text, kisi mein location. Feed ko bahut fast load hona hai aur crore logon tak pahunchna hai. Column-family aur document databases is kaam ke liye bane hain: data bahut saare servers par banta hai aur feed turant milti hai.
+
+Teesra example hai **live location aur sessions**. Cab app ko har second pata hona chahiye ki driver kahan hai, aur website ko yaad rakhna hai ki aap login ho. Yeh key-value store ka kaam hai: key hai \`driver:101\`, value hai uski location; key hai \`session:xyz\`, value hai aapka login. Lookup O(1) jaisa fast hota hai, aur data apne aap expire bhi ho jaata hai.`,
+          `The simplest example is a **shopping cart**. You add a phone to the cart, then a cover, then a coupon. Every cart has a different structure — one has 1 item, another has 20, one has a coupon, another does not. In a document database, each cart is one document, holding only the fields it needs. In SQL, this needs separate tables and JOINs.
+
+A second example is a **social media feed**. Every post is different — one has a photo, one has a video, one has only text, one has a location. The feed must load very fast and reach crores of people. Column-family and document databases are built for this: data spreads across many servers and the feed arrives instantly.
+
+A third example is **live location and sessions**. A cab app must know every second where the driver is, and a website must remember that you are logged in. That is a key-value store's job: the key is \`driver:101\` and the value is the driver's location; the key is \`session:xyz\` and the value is your login. Lookups are as fast as O(1), and the data expires on its own.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Flexible Schema ka Worked Example (EAV Table)',
+          '3. Step-by-Step: A Worked Example of a Flexible Schema (EAV Table)'
+        ),
+        body: t(
+          `NoSQL ka flexible schema SQL mein kaise dikhega, yeh samajhne ke liye hum ek **EAV table** banate hain — Entity-Attribute-Value. Ismein har row ek student ka ek field hoti hai: \`student_id\` (entity), \`attr_name\` (attribute) aur \`attr_value\` (value). Fixed columns nahi hain — jo field chahiye, woh ek row ban jaati hai.
+
+Dry run, ek-ek step:
+- **Step 1: Table banao** — \`student_attrs\` mein sirf teen columns hain. Koi fixed schema nahi: kal \`hobby\` ya \`bus_route\` bhi add ho sakta hai bina table badle.
+- **Step 2: Rahul ko ek field do** — (1, 'city', 'Delhi'). Rahul ke paas sirf city hai.
+- **Step 3: Priya ko teen fields do** — (2, 'city', 'Mumbai'), (2, 'hostel', 'Yes'), (2, 'club', 'Music'). Priya ke paas Rahul se zyada fields hain, aur koi problem nahi hui.
+- **Step 4: SELECT karo** — \`ORDER BY student_id, attr_name\` se rows sort ho kar aati hain: pehle Rahul ki city, phir Priya ki city, club aur hostel.
+
+Output dekho: 4 rows hain aur har row ek alag field hai. SQL ki fixed \`students\` table mein Priya ke extra fields ke liye naye columns chahiye hote — yahan ek bhi column add nahi karna pada. Yahi NoSQL document ka idea hai: har record apna shape khud le kar chalta hai.`,
+          `To understand how a flexible NoSQL schema looks in SQL, we build an **EAV table** — Entity-Attribute-Value. Each row is one field of one student: \`student_id\` (the entity), \`attr_name\` (the attribute), and \`attr_value\` (the value). There are no fixed columns — any field you need simply becomes a row.
+
+Dry run, step by step:
+- **Step 1: Create the table** — \`student_attrs\` has only three columns. There is no fixed schema: tomorrow \`hobby\` or \`bus_route\` can be added without changing the table.
+- **Step 2: Give Rahul one field** — (1, 'city', 'Delhi'). Rahul has only a city.
+- **Step 3: Give Priya three fields** — (2, 'city', 'Mumbai'), (2, 'hostel', 'Yes'), (2, 'club', 'Music'). Priya has more fields than Rahul, and nothing broke.
+- **Step 4: Run SELECT** — \`ORDER BY student_id, attr_name\` returns the rows sorted: first Rahul's city, then Priya's city, club, and hostel.
+
+Look at the output: there are 4 rows, and each row is a different field. In the fixed SQL \`students\` table, Priya's extra fields would need new columns — here not a single column was added. That is the NoSQL document idea: every record carries its own shape.`
+        ),
+        code: {
+          title: t(
+            'Flexible Schema: Har Student ke Alag Fields (EAV Table)',
+            'Flexible Schema: Different Fields per Student (EAV Table)'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS student_attrs;
+CREATE TABLE student_attrs (student_id INTEGER, attr_name TEXT, attr_value TEXT);
+INSERT INTO student_attrs VALUES (1, 'city', 'Delhi');
+INSERT INTO student_attrs VALUES (2, 'city', 'Mumbai');
+INSERT INTO student_attrs VALUES (2, 'hostel', 'Yes');
+INSERT INTO student_attrs VALUES (2, 'club', 'Music');
+SELECT student_id, attr_name, attr_value FROM student_attrs ORDER BY student_id, attr_name;`,
+          output: `student_id | attr_name | attr_value
+1 | city | Delhi
+2 | city | Mumbai
+2 | club | Music
+2 | hostel | Yes`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Har Jagah NoSQL, JOIN Ki Kami aur Schema-less Ka Galat Matlab',
+          '4. Common Mistakes: Using NoSQL Everywhere, Missing JOINs, and Misreading Schemaless'
+        ),
+        body: t(
+          `NoSQL mein sabse zyada galtiyan usko galat jagah use karne se hoti hain.
+
+**Galti 1: Har project mein NoSQL.** Bank ka paisa, exam ke marks, ticket booking — jahan paisa ya consistency sabse important hai, wahan SQL behtar hai kyunki ACID transactions milte hain. NoSQL wahan jeetta hai jahan data bada ho, structure badalta ho aur speed chahiye. Dono ke apne kaam hain; ek ko dusre ki jagah mat lo.
+
+**Galti 2: JOIN ki kami ko ignore karna.** NoSQL mein JOIN nahi hota ya bahut mehenga hota hai. Agar aapko har query mein do-teen collections ko jodna pad raha hai, toh aap galat database mein ho. SQL wahi kaam ek JOIN mein kar deta hai. Design se pehle poochho: meri queries mein JOIN kitna hai?
+
+**Galti 3: "Schema-less" ka matlab "bina soche data daalo" samajhna.** NoSQL mein schema database enforce nahi karta, par aapke code ko phir bhi pata hona chahiye ki document mein kya hai. Bina discipline ke ek hi collection mein 10 alag shapes ban jaate hain aur code har shape ko handle karte-karte toot jaata hai. Schema-less ka matlab hai flexible schema, no schema nahi.
+
+**Galti 4: Consistency ko halke mein lena.** Kai NoSQL databases **eventual consistency** dete hain — likhne ke baad kuch der tak purana data dikh sakta hai. Social media like ke liye yeh theek hai, par bank balance ke liye nahi.`,
+          `The most common NoSQL mistakes come from using it in the wrong place.
+
+**Mistake 1: NoSQL in every project.** Bank money, exam marks, ticket booking — wherever money or consistency matters most, SQL is better because you get ACID transactions. NoSQL wins where data is huge, the structure keeps changing, and speed matters. Each has its own job; do not put one in the other's place.
+
+**Mistake 2: Ignoring the lack of JOINs.** NoSQL has no JOIN, or a very expensive one. If every query forces you to join two or three collections, you are in the wrong database. SQL does that same work in one JOIN. Before designing, ask: how much JOINing do my queries need?
+
+**Mistake 3: Reading "schemaless" as "store data without thinking".** In NoSQL the database does not enforce a schema, but your code still needs to know what is inside a document. Without discipline, one collection ends up with 10 different shapes and the code breaks trying to handle them all. Schemaless means a flexible schema, not no schema.
+
+**Mistake 4: Taking consistency lightly.** Many NoSQL databases offer **eventual consistency** — after a write, old data can show for a while. That is fine for a social media like, but not for a bank balance.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Network Partition, Eventual Consistency aur Bada Document',
+          '5. Edge Cases: Network Partitions, Eventual Consistency, and Oversized Documents'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo demo mein kabhi nahi aati, par production mein yahi phansate hain.
+
+**1. Network partition.** Do servers ke beech connection toot jaaye toh system ko choose karna padta hai: likhna band kar de (consistency) ya likhna jaari rakhe (availability)? Yahi CAP theorem hai. Bank consistency choose karta hai, social media availability.
+
+**2. Eventual consistency.** Aapne profile photo badli, par dost ko purani dikh rahi hai. Likha hua data saare servers tak pahunchne mein time lagta hai. Kuch der baad sab sync ho jaata hai — isi ko eventual kehte hain. Interview mein poochha jaata hai: strong aur eventual consistency mein kya farak hai?
+
+**3. Bada document.** Document database mein ek document ki size limit hoti hai (MongoDB mein 16 MB). Agar ek student ke 10,000 comments ek hi document mein daal diye, toh document limit cross kar jaayega aur likhna fail ho jaayega. Bade lists ko alag documents mein todna padta hai.
+
+**4. Hot key.** Key-value store mein agar ek hi key par lakhon requests aa jaayein (jaise ek viral post), toh woh ek server overload ho jaata hai. Ise hot key kehte hain, aur iska solution hai caching ya key ko baantna.
+
+**5. Khaali result aur missing field.** Flexible schema mein kisi document mein field ho hi nahi sakta. Code ko hamesha missing field handle karna chahiye, warna \`None\` par crash aayega.`,
+          `Edge cases are the situations that never appear in a demo but cause trouble in production.
+
+**1. Network partition.** If the connection between two servers breaks, the system must choose: stop writes (consistency) or keep writing (availability)? That is the CAP theorem. A bank chooses consistency; social media chooses availability.
+
+**2. Eventual consistency.** You changed your profile photo, but your friend still sees the old one. Written data takes time to reach all servers. After a while everything syncs — that is why it is called eventual. Interviews ask: what is the difference between strong and eventual consistency?
+
+**3. An oversized document.** A document database has a size limit per document (16 MB in MongoDB). If you put 10,000 comments of one student into a single document, it crosses the limit and the write fails. Large lists must be split into separate documents.
+
+**4. A hot key.** In a key-value store, if lakhs of requests hit a single key (like a viral post), that one server overloads. This is called a hot key, and the fix is caching or splitting the key.
+
+**5. Empty results and missing fields.** In a flexible schema, a document may simply not have a field. Code must always handle a missing field, otherwise it crashes on \`None\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: CAP mein Teenon Chahiye, ya SQL se Switch Karna Ho?',
+          '6. What If: You Want All Three of CAP, or You Must Switch from SQL?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: CAP ke teenon chahiye?** CAP theorem kehta hai ki partition hone par aap **Consistency**, **Availability** aur **Partition tolerance** mein se sirf do chun sakte ho. Teenon ek saath nahi milte. Partition tolerance toh chahiye hi (network kabhi bhi toot sakta hai), isliye asli choice C aur A ke beech hoti hai. Bank C chunta hai, social media A. "Teenon chahiye" ka jawab hai: nahi milte, aur jo aisa claim kare woh galat bol raha hai.
+
+**What if: SQL se NoSQL mein switch karna ho?** Pehle poochho kyun: data bahut bada ho gaya? Structure roz badal raha hai? Agar haan, toh migrate karo — par saara data ek saath mat le jaao. Pehle ek chhota feature NoSQL par chalao, test karo, phir badhao. Aur JOIN wali queries ka dobara design karo, kyunki NoSQL mein woh mehenga hai.
+
+**What if: NoSQL se SQL mein wapas jaana ho?** Yeh bhi hota hai — jab consistency ki zaroorat badh jaaye ya queries mein JOIN badh jaaye. Tab data ko normalize karke tables mein wapas laaya jaata hai. Dono directions mein migration ek project hota hai, ek raat ka kaam nahi.
+
+**What if: dono chahiye?** Aaj kal bahut si companies dono use karti hain: SQL paisa aur orders ke liye, NoSQL feed aur logs ke liye. Ise **polyglot persistence** kehte hain — har kaam ke liye sahi database.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you want all three of CAP?** The CAP theorem says that during a partition you can pick only two of **Consistency**, **Availability**, and **Partition tolerance**. All three never come together. Partition tolerance is always needed (the network can break at any time), so the real choice is between C and A. A bank picks C; social media picks A. The answer to "I want all three" is: you cannot have them, and anyone who claims otherwise is wrong.
+
+**What if you must switch from SQL to NoSQL?** First ask why: has the data become huge? Does the structure change every day? If yes, migrate — but do not move all the data at once. First run one small feature on NoSQL, test it, then grow. And redesign the JOIN queries, because they are expensive in NoSQL.
+
+**What if you must go back from NoSQL to SQL?** This happens too — when the need for consistency grows or queries start needing more JOINs. Then the data is normalized back into tables. Migration in either direction is a project, not one night's work.
+
+**What if you need both?** Many companies today use both: SQL for money and orders, NoSQL for feeds and logs. This is called **polyglot persistence** — the right database for each job.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: SQL vs NoSQL — Kaunsa, Kab?',
+          '7. Summary: SQL vs NoSQL — Which One, and When?'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **NoSQL** ka matlab hai flexible data — fixed tables ki jagah document, key-value, column-family ya graph. Har record apna shape le kar chalta hai, aur data bahut saare servers par **horizontally scale** hota hai. **CAP theorem** yaad rakho: partition ke waqt consistency aur availability mein se ek chunna padta hai — teenon kabhi nahi milte.
+
+SQL chuno jab data structured ho, consistency sabse important ho (bank, tickets, marks) aur queries mein JOIN ho. NoSQL chuno jab data bahut bada ho, structure roz badle (feed, cart, logs) aur speed chahiye ho. Aur yaad rakho: schema-less ka matlab flexible schema hai, no schema nahi — discipline dono mein chahiye.
+
+Interview mein yaad rakhne wali line yeh hai: "SQL consistency aur JOIN ke liye, NoSQL scale aur flexibility ke liye." Agle article mein hum database design dekhenge — ER diagram se sahi tables kaise banate hain.`,
+          `Let us tie the whole article together. **NoSQL** means flexible data — documents, key-value pairs, column families, or graphs instead of fixed tables. Every record carries its own shape, and data scales **horizontally** across many servers. Remember the **CAP theorem**: during a partition you must choose between consistency and availability — you never get all three.
+
+Choose SQL when the data is structured, consistency matters most (bank, tickets, marks), and queries need JOINs. Choose NoSQL when the data is huge, the structure changes daily (feeds, carts, logs), and speed matters. And remember: schemaless means a flexible schema, not no schema — discipline is needed in both.
+
+The line to remember for interviews is: "SQL for consistency and JOINs, NoSQL for scale and flexibility." In the next article we will look at database design — how to build correct tables from an ER diagram.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'NoSQL ke Chaar Types — Kaunsa Kab Kaam Aata Hai',
+        'The Four Types of NoSQL — Which One Fits Where'
+      ),
+      caption: t(
+        'Har type ek alag problem solve karta hai — sahi type chunna hi design hai',
+        'Each type solves a different problem — picking the right type is the design'
+      ),
+      nodes: [
+        {
+          t: t('Document (MongoDB)', 'Document (MongoDB)'),
+          s: t(
+            'JSON jaisa document — shopping cart, profile, feed post',
+            'A JSON-like document — shopping cart, profile, feed post'
+          )
+        },
+        {
+          t: t('Key-Value (Redis)', 'Key-Value (Redis)'),
+          s: t(
+            'Ek key, ek value — session, cache, live location',
+            'One key, one value — session, cache, live location'
+          )
+        },
+        {
+          t: t('Column-Family (Cassandra)', 'Column-Family (Cassandra)'),
+          s: t(
+            'Bahut bada data, bahut saare servers — logs, time-series',
+            'Huge data across many servers — logs, time-series'
+          )
+        },
+        {
+          t: t('Graph (Neo4j)', 'Graph (Neo4j)'),
+          s: t(
+            'Relationships pehle — dost, follow, recommendation',
+            'Relationships first — friends, follows, recommendations'
+          )
+        },
+        {
+          t: t('CAP: sirf 2 chun sakte ho', 'CAP: you can pick only 2'),
+          s: t(
+            'Consistency, Availability, Partition tolerance — partition par ek chhodna padta hai',
+            'Consistency, Availability, Partition tolerance — during a partition one must go'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Key-Value Store: Key se Value Turant Nikaalo',
+          'Key-Value Store: Fetch a Value Instantly by Key'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS kv_store;
+CREATE TABLE kv_store (k TEXT PRIMARY KEY, v TEXT);
+INSERT INTO kv_store VALUES ('student:2', 'Priya');
+INSERT INTO kv_store VALUES ('student:2:marks', '92');
+INSERT INTO kv_store VALUES ('student:4', 'Sana');
+SELECT k, v FROM kv_store WHERE k = 'student:2:marks';`,
+        output: `k | v
+student:2:marks | 92`
+      },
+      {
+        title: t(
+          'SQL Tareeka: Marks ke Bands Ginna (GROUP BY)',
+          'The SQL Way: Counting Students by Marks Band (GROUP BY)'
+        ),
+        language: 'sql',
+        code: `SELECT CASE WHEN marks >= 90 THEN 'Topper' WHEN marks >= 80 THEN 'Good' ELSE 'Needs Work' END AS band, COUNT(*) AS total FROM students GROUP BY band ORDER BY total DESC, band ASC;`,
+        output: `band | total
+Good | 2
+Needs Work | 1
+Topper | 1`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'CAP theorem ke hisaab se network partition ke waqt kya hota hai?',
+          'According to the CAP theorem, what happens during a network partition?'
+        ),
+        opts: [
+          t('Teenon mil jaate hain: Consistency, Availability, Partition tolerance', 'You get all three: Consistency, Availability, Partition tolerance'),
+          t('Sirf do chun sakte ho — Consistency aur Availability mein se ek chhodna padta hai', 'You can pick only two — one of Consistency and Availability must go'),
+          t('Database band ho jaata hai', 'The database shuts down'),
+          t('Data hamesha ke liye delete ho jaata hai', 'The data is deleted forever')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: partition ke waqt Partition tolerance chahiye hi, isliye asli choice Consistency aur Availability ke beech hoti hai — dono ek saath nahi milte.',
+          'Correct answer: during a partition, Partition tolerance is required, so the real choice is between Consistency and Availability — both never come together.'
+        )
+      },
+      {
+        q: t(
+          'Shopping cart jaisa data jismein har cart ka structure alag ho, kis database mein best rahega?',
+          'Data like a shopping cart, where every cart has a different structure, fits best in which database?'
+        ),
+        opts: [
+          t('Document database', 'Document database'),
+          t('Sirf SQL table', 'Only a SQL table'),
+          t('Graph database', 'Graph database'),
+          t('Koi database nahi', 'No database')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: document database mein har cart ek document hota hai aur apne fields khud le kar chalta hai — fixed schema ki zaroorat nahi padti.',
+          'Correct answer: in a document database each cart is one document that carries its own fields — no fixed schema is needed.'
+        )
+      },
+      {
+        q: t(
+          'Session aur cache ke liye sabse fast option kaunsa hai?',
+          'What is the fastest option for sessions and caching?'
+        ),
+        opts: [
+          t('Graph database', 'Graph database'),
+          t('Key-value store', 'Key-value store'),
+          t('Column-family store', 'Column-family store'),
+          t('Document database', 'Document database')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: key-value store mein key se value seedha milti hai, bina scan aur bina JOIN ke — isliye session aur cache ke liye yahi sabse fast hai.',
+          'Correct answer: in a key-value store a key gives its value directly, with no scan and no JOIN — so it is the fastest choice for sessions and caching.'
+        )
+      },
+      {
+        q: t(
+          'Eventual consistency ka kya matlab hai?',
+          'What does eventual consistency mean?'
+        ),
+        opts: [
+          t('Data kabhi sync nahi hota', 'The data never syncs'),
+          t('Likhne ke baad kuch der tak purana data dikh sakta hai, phir sab sync ho jaata hai', 'Old data can show for a while after a write, then everything syncs'),
+          t('Har read par error aata hai', 'Every read gives an error'),
+          t('Sirf ek server par data likha jaata hai', 'Data is written to only one server')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: eventual consistency mein likha data saare servers tak pahunchne mein time lagta hai, isliye kuch der purana data dikh sakta hai — par aakhir mein sab sync ho jaata hai.',
+          'Correct answer: with eventual consistency, written data takes time to reach all servers, so old data can show for a while — but in the end everything syncs.'
+        )
+      },
+      {
+        q: t(
+          'Bank ke paise jaise data ke liye SQL kyun behtar hai?',
+          'Why is SQL better for data like bank money?'
+        ),
+        opts: [
+          t('Kyunki SQL fast hota hai', 'Because SQL is fast'),
+          t('Kyunki ACID transactions consistency aur safety dete hain', 'Because ACID transactions give consistency and safety'),
+          t('Kyunki SQL mein schema nahi hota', 'Because SQL has no schema'),
+          t('Kyunki SQL free hota hai', 'Because SQL is free')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: paise ke data mein ek bhi galti nahi chalti — ACID transactions guarantee karte hain ki ya toh poora transfer hoga ya kuch nahi, isliye yahan SQL behtar hai.',
+          'Correct answer: money data allows zero mistakes — ACID transactions guarantee that either the whole transfer happens or nothing does, so SQL is better here.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'NoSQL ka matlab flexible data hai — document, key-value, column-family aur graph.',
+        'NoSQL means flexible data — document, key-value, column-family, and graph.'
+      ),
+      t(
+        'CAP: partition ke waqt Consistency aur Availability mein se sirf ek milta hai.',
+        'CAP: during a partition you get only one of Consistency and Availability.'
+      ),
+      t(
+        'Key-value store session aur cache ke liye sabse fast hai — key se seedha value milti hai.',
+        'A key-value store is fastest for sessions and caching — a key gives its value directly.'
+      ),
+      t(
+        'Schema-less ka matlab flexible schema hai, no schema nahi.',
+        'Schemaless means a flexible schema, not no schema.'
+      ),
+      t(
+        'SQL consistency aur JOIN ke liye, NoSQL scale aur flexibility ke liye.',
+        'SQL for consistency and JOINs, NoSQL for scale and flexibility.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Ek Student ka Flexible Profile Banao',
+        'Practice: Build a Flexible Profile for One Student'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: Sana (student_id 4) ke liye ek flexible profile table banao jismein city, hobby aur hostel teen alag fields hon. Done tab mana jayega jab output mein teen rows aayein: city | Pune, hobby | Reading, hostel | No — field ke hisaab se sorted.',
+        'Run the starter below: build a flexible profile table for Sana (student_id 4) with three different fields — city, hobby, and hostel. You are done when the output shows three rows: city | Pune, hobby | Reading, hostel | No — sorted by field.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS student_profile;
+CREATE TABLE student_profile (student_id INTEGER, field TEXT, value TEXT);
+INSERT INTO student_profile VALUES (4, 'city', 'Pune');
+INSERT INTO student_profile VALUES (4, 'hobby', 'Reading');
+INSERT INTO student_profile VALUES (4, 'hostel', 'No');
+SELECT field, value FROM student_profile WHERE student_id = 4 ORDER BY field;`,
+      expected: `field | value
+city | Pune
+hobby | Reading
+hostel | No`
+    },
+    readMinutes: 12
+  };
+
+const dbmsDesign: Article = {
+    id: 'dbms-design',
+    subjectId: 'dbms',
+    title: t(
+      'Database Design — ER Diagram se Tables Tak, College/Library Case Study',
+      'Database Design — From ER Diagram to Tables, with a College and Library Case Study'
+    ),
+    summary: t(
+      'Sahi database design karna seekho: ER diagram mein entity, attribute aur relationship kya hote hain, woh tables, columns aur foreign keys mein kaise badalte hain, many-to-many ke liye junction table kyun chahiye, aur college/library case study se poora design haath se banana.',
+      'Learn to design a database well: what entities, attributes, and relationships are in an ER diagram, how they turn into tables, columns, and foreign keys, why many-to-many needs a junction table, and how to build a full design by hand from a college and library case study.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Database Design Kya Hai? (ER Model se Tables Tak)',
+          '1. What Is Database Design? (From the ER Model to Tables)'
+        ),
+        body: t(
+          `**Database design** ka matlab hai pehle sochna, phir table banana. Seedha table banana aasan hai — par galat design mein data duplicate hota hai, update karna mushkil hota hai, aur ek chhoti galti poora data kharab kar deti hai. Achha design woh hai jismein har fact sirf ek jagah store ho, aur har sawal ka jawab JOIN se mil jaaye.
+
+Design ki shuruaat **ER diagram** se hoti hai. **Entity** woh cheez hai jiske baare mein data rakhna hai — jaise Student, Course, Book. **Attribute** entity ki property hai — Student ka naam, Course ka title. **Relationship** do entities ke beech ka connection hai — Student ek Course mein **enroll** karta hai, Member ek Book **issue** karta hai. Har relationship ki ek type hoti hai: **one-to-one** (ek student, ek hostel room), **one-to-many** (ek department, bahut se students) ya **many-to-many** (ek student bahut se courses, ek course mein bahut se students).
+
+ER se tables banane ke rules simple hain: har entity ek table banti hai, har attribute ek column banta hai, har entity ko ek **primary key** milti hai, one-to-many mein "many" wali taraf **foreign key** jaati hai, aur many-to-many ke liye beech mein ek **junction table** banti hai. Bas — yahi poora design hai, aur aage hum isko haath se banayenge.`,
+          `**Database design** means thinking first and building tables second. Building a table directly is easy — but with a bad design, data gets duplicated, updates become hard, and one small mistake corrupts everything. A good design is one where every fact is stored in exactly one place, and every question can be answered with a JOIN.
+
+Design starts with an **ER diagram**. An **entity** is a thing you store data about — like Student, Course, or Book. An **attribute** is a property of an entity — a Student's name, a Course's title. A **relationship** is a connection between two entities — a Student **enrolls** in a Course, a Member **issues** a Book. Every relationship has a type: **one-to-one** (one student, one hostel room), **one-to-many** (one department, many students), or **many-to-many** (one student in many courses, one course with many students).
+
+The rules for turning an ER diagram into tables are simple: every entity becomes a table, every attribute becomes a column, every entity gets a **primary key**, in a one-to-many relationship the **foreign key** goes on the "many" side, and a many-to-many relationship gets a **junction table** in the middle. That is the whole design — and next we will build it by hand.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: College Admission, Library Card aur Hospital',
+          '2. Real-Life Examples: College Admission, a Library Card, and a Hospital'
+        ),
+        body: t(
+          `Sabse seedha example hai **college admission**. Admission form mein student ka naam, course, department aur fees — sab kuch ek hi form mein likha hota hai. Par database mein yeh teen tables mein bat-ta hai: \`students\`, \`courses\` aur \`departments\`. Kyun? Kyunki agar course ka naam badle toh ek jagah badlega, hazaar forms mein nahi. Aur ek student bahut se courses le sakta hai — yeh many-to-many hai, isliye beech mein \`enrollments\` table chahiye.
+
+Doosra example hai **library card**. Card par member ka naam hota hai, aur library ke register mein likha hota hai ki kisne kaunsi book kab li. Yeh teen entities hain: Member, Book aur Issue. Issue hi relationship hai — ek member bahut si books le sakta hai, ek book bahut se members ko ja sakti hai (alag-alag time par). Isliye \`issues\` table mein \`member_id\` aur \`book_id\` dono foreign keys hote hain.
+
+Teesra example hai **hospital**. Ek doctor bahut se patients dekhta hai, ek patient bahut se doctors ko dikha sakta hai, aur har visit ki apni date aur diagnosis hoti hai. Visit bhi ek relationship hai, aur uski apni attributes hain (date, diagnosis) — isliye visit apni table banti hai. Jab bhi relationship ki apni detail ho, toh woh table ban jaati hai.`,
+          `The simplest example is **college admission**. An admission form holds the student's name, course, department, and fees — all in one form. But in a database this splits into three tables: \`students\`, \`courses\`, and \`departments\`. Why? Because if a course name changes, it changes in one place, not in a thousand forms. And one student can take many courses — that is many-to-many, so an \`enrollments\` table is needed in the middle.
+
+A second example is a **library card**. The card holds the member's name, and the library register records who took which book and when. These are three entities: Member, Book, and Issue. Issue is the relationship — one member can take many books, and one book can go to many members (at different times). So the \`issues\` table holds both \`member_id\` and \`book_id\` as foreign keys.
+
+A third example is a **hospital**. One doctor sees many patients, one patient can see many doctors, and every visit has its own date and diagnosis. A visit is also a relationship, and it has its own attributes (date, diagnosis) — so a visit becomes its own table. Whenever a relationship has its own detail, it becomes a table.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: ER se Tables Banana — Students, Courses aur Enrollments',
+          '3. Step-by-Step: Turning an ER Diagram into Tables — Students, Courses, and Enrollments'
+        ),
+        body: t(
+          `Ab hum college ka ER diagram haath se tables mein badalte hain. Entities hain Student aur Course, aur relationship hai Enrolls (many-to-many). Dry run, ek-ek step:
+
+- **Step 1: Student table** — hamare paas pehle se \`students\` table hai (id, name, marks). \`id\` primary key hai.
+- **Step 2: Course table banao** — \`courses\` mein \`course_id\` primary key aur \`title\` column hai. Do courses daalte hain: 101 DBMS, 102 Python.
+- **Step 3: Junction table banao** — \`enrollments\` mein sirf do columns hain: \`student_id\` aur \`course_id\`. Dono mil kar primary key hain — ek student ek course mein do baar enroll nahi ho sakta.
+- **Step 4: Rows daalo** — Rahul (1) DBMS (101) mein, Priya (2) DBMS (101) aur Python (102) dono mein.
+- **Step 5: JOIN se sawal poochho** — "kisne kaunsa course liya?" \`students\` ko \`enrollments\` se, aur \`enrollments\` ko \`courses\` se jodo, phir naam aur title ke hisaab se sort karo.
+
+Output dekho: Priya | DBMS, Priya | Python, Rahul | DBMS. Bina junction table ke yeh sawal ek table mein possible hi nahi tha — ya toh course ka naam student row mein comma se likhna padta (galat design), ya course ko duplicate karna padta. Junction table hi sahi jawab hai.`,
+          `Now let us turn a college ER diagram into tables by hand. The entities are Student and Course, and the relationship is Enrolls (many-to-many). Dry run, step by step:
+
+- **Step 1: Student table** — we already have the \`students\` table (id, name, marks). \`id\` is the primary key.
+- **Step 2: Create the Course table** — \`courses\` has \`course_id\` as the primary key and a \`title\` column. We add two courses: 101 DBMS and 102 Python.
+- **Step 3: Create the junction table** — \`enrollments\` has only two columns: \`student_id\` and \`course_id\`. Together they form the primary key — one student cannot enroll in one course twice.
+- **Step 4: Add rows** — Rahul (1) in DBMS (101), Priya (2) in DBMS (101) and Python (102).
+- **Step 5: Ask the question with a JOIN** — "who took which course?" Join \`students\` to \`enrollments\`, and \`enrollments\` to \`courses\`, then sort by name and title.
+
+Look at the output: Priya | DBMS, Priya | Python, Rahul | DBMS. Without a junction table, this question was impossible in one table — you would have to write course names with commas in the student row (bad design) or duplicate the course. The junction table is the correct answer.`
+        ),
+        code: {
+          title: t(
+            'ER se Tables: Courses, Enrollments aur JOIN Query',
+            'From ER to Tables: Courses, Enrollments, and a JOIN Query'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (course_id INTEGER PRIMARY KEY, title TEXT);
+CREATE TABLE enrollments (student_id INTEGER, course_id INTEGER, PRIMARY KEY (student_id, course_id));
+INSERT INTO courses VALUES (101, 'DBMS');
+INSERT INTO courses VALUES (102, 'Python');
+INSERT INTO enrollments VALUES (1, 101);
+INSERT INTO enrollments VALUES (2, 101);
+INSERT INTO enrollments VALUES (2, 102);
+SELECT s.name, c.title FROM students s JOIN enrollments e ON s.id = e.student_id JOIN courses c ON c.course_id = e.course_id ORDER BY s.name, c.title;`,
+          output: `name | title
+Priya | DBMS
+Priya | Python
+Rahul | DBMS`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Comma-Separated Values, Duplicate Data aur Bina Primary Key ki Table',
+          '4. Common Mistakes: Comma-Separated Values, Duplicate Data, and Tables Without a Primary Key'
+        ),
+        body: t(
+          `Design mein sabse badi galtiyan woh hain jo pehle din sahi lagti hain aur teesre mahine mein system ko tod deti hain.
+
+**Galti 1: Ek column mein comma-separated values.** Student ke courses ko ek column mein likhna — \`courses = 'DBMS, Python'\` — sabse common galti hai. Ab "kaun DBMS mein hai?" poochhne ke liye poori table scan karni padegi aur text mein DBMS dhoondhna padega. Sahi tareeka hai junction table: har enrollment ek row.
+
+**Galti 2: Data duplicate karna.** Course ka naam har student ki row mein likhna duplicate data hai. Kal course ka naam badle toh hazaar rows update karni padengi, aur ek row chhoot gayi toh data inconsistent ho jaayega. Rule hai: har fact sirf ek jagah likho, baaki jagah uska id (foreign key) likho.
+
+**Galti 3: Bina primary key ki table.** Primary key ke bina do same rows mein farak nahi kar sakte, aur ek row ko update ya delete karna mushkil ho jaata hai. Har table ki ek primary key honi chahiye — chahe woh \`id\` ho ya do columns ka combination.
+
+**Galti 4: Har cheez ko ek hi table mein daalna.** Student, course, department, fees — sab ek table mein daal doge toh har naye course par student ka naam dobara likhna padega. Tables ko entities ke hisaab se baanto.`,
+          `The biggest design mistakes are the ones that look right on day one and break the system in month three.
+
+**Mistake 1: Comma-separated values in one column.** Writing a student's courses in one column — \`courses = 'DBMS, Python'\` — is the most common mistake. Now asking "who is in DBMS?" needs a full table scan and a text search for DBMS. The correct way is a junction table: one row per enrollment.
+
+**Mistake 2: Duplicating data.** Writing the course name in every student row is duplicated data. If the course name changes tomorrow, a thousand rows must be updated, and if one row is missed, the data becomes inconsistent. The rule is: write every fact in exactly one place, and write its id (a foreign key) everywhere else.
+
+**Mistake 3: A table without a primary key.** Without a primary key, two identical rows cannot be told apart, and updating or deleting one row becomes hard. Every table needs a primary key — whether it is an \`id\` or a combination of two columns.
+
+**Mistake 4: Putting everything in one table.** If you put student, course, department, and fees in one table, every new course forces you to write the student's name again. Split tables by entity.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Many-to-Many, Optional Relationship aur Self-Reference',
+          '5. Edge Cases: Many-to-Many, Optional Relationships, and Self-References'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo pehle design mein dikhai nahi dete, par baad mein aakar pareshan karte hain.
+
+**1. Many-to-many.** Student-Course, Member-Book, Doctor-Patient — sab many-to-many hain. Inke liye hamesha junction table chahiye. Junction table ki primary key dono foreign keys ka combination hoti hai, taaki ek hi pair do baar na aa sake.
+
+**2. Optional relationship.** Har student ke paas hostel room nahi hota. Agar hostel ko student table mein column bana diya, toh bina hostel wale students mein NULL aayega. Behtar hai hostel ko alag table banao aur sirf un students ki rows rakho jinke paas hostel hai. NULL ka matlab hamesha clear hona chahiye: "nahi hai" ya "pata nahi"?
+
+**3. Self-reference.** Employee ka manager bhi ek employee hota hai. Iske liye alag table nahi chahiye — \`employees\` table mein hi \`manager_id\` column banao jo \`id\` ko point kare. Yeh self-referencing foreign key hai.
+
+**4. Relationship ki apni attributes.** Enrollment ki date, issue ki date, visit ki diagnosis — yeh relationship ki attributes hain. Jab relationship ki apni detail ho, toh junction table mein extra columns add karo (jaise \`issues\` mein \`issue_date\`).
+
+**5. Khaali table.** Koi course aisa bhi ho sakta hai jismein abhi koi student enroll nahi hua. Uska data phir bhi \`courses\` mein rehna chahiye — isliye count karte waqt \`LEFT JOIN\` use karo, warna woh course gayab ho jaayega.`,
+          `Edge cases are the situations that do not show up in the first design but cause trouble later.
+
+**1. Many-to-many.** Student-Course, Member-Book, Doctor-Patient — all are many-to-many. They always need a junction table. The junction table's primary key is the combination of both foreign keys, so the same pair can never appear twice.
+
+**2. Optional relationships.** Not every student has a hostel room. If you make hostel a column in the student table, students without a hostel get NULL. It is better to make hostel a separate table holding rows only for students who have one. The meaning of NULL must always be clear: "does not exist" or "unknown"?
+
+**3. Self-reference.** An employee's manager is also an employee. This needs no separate table — add a \`manager_id\` column in the \`employees\` table that points to \`id\`. That is a self-referencing foreign key.
+
+**4. Attributes of a relationship.** An enrollment date, an issue date, a visit diagnosis — these are attributes of the relationship. When a relationship has its own detail, add extra columns to the junction table (like \`issue_date\` in \`issues\`).
+
+**5. An empty table.** A course may exist with no students enrolled yet. Its data must still stay in \`courses\` — so use a \`LEFT JOIN\` when counting, or that course will disappear.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Design Badalna Ho, ya Normalization Zyada Ho Jaaye?',
+          '6. What If: You Must Change the Design, or Normalization Goes Too Far?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: design badalna ho?** Design badalna normal hai — pehle ek column add karna (\`ALTER TABLE ... ADD COLUMN\`), phir table todna ya jodna. Rule hai: pehle naya structure banao, data ko migrate karo, phir purana hatao. Seedha purani table delete karne se data chala jaayega. Practice mein hum yahi karte hain: \`departments\` table banao, \`students\` mein \`dept_id\` add karo, phir JOIN karo.
+
+**What if: normalization zyada ho jaaye?** Normalization ka matlab hai data ko chhoti-chhoti tables mein todna taaki duplication khatam ho. Par zyada todne se har query mein 5-6 JOINs lagne lagte hain aur query slow ho jaati hai. Kabhi-kabhi jaan-boojh kar thoda data duplicate kiya jaata hai taaki query fast ho — ise **denormalization** kehte hain. Interview mein yeh balance poochha jaata hai.
+
+**What if: ek hi fact do jagah chahiye?** Jaise student ka naam har report mein chahiye. Ise har table mein copy mat karo — ek jagah rakho aur JOIN se nikaalo. Agar report bahut slow ho, toh ek view banao ya denormalize karo, par pehle JOIN try karo.
+
+**What if: primary key badalni ho?** Primary key badalna sabse mehenga kaam hai kyunki saari foreign keys usko point karti hain. Isi liye primary key hamesha aisi chuno jo kabhi na badle — jaise \`id\` number, naam ya email nahi.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you must change the design?** Changing a design is normal — first add a column (\`ALTER TABLE ... ADD COLUMN\`), then split or merge tables. The rule is: build the new structure first, migrate the data, then remove the old one. Deleting the old table directly loses data. In the practice task we do exactly this: create a \`departments\` table, add \`dept_id\` to \`students\`, then JOIN.
+
+**What if normalization goes too far?** Normalization means splitting data into small tables to end duplication. But splitting too much means every query needs 5-6 JOINs and becomes slow. Sometimes data is deliberately duplicated a little to make queries fast — that is called **denormalization**. Interviews ask about this balance.
+
+**What if one fact is needed in two places?** Like a student's name in every report. Do not copy it into every table — keep it in one place and fetch it with a JOIN. If the report is very slow, make a view or denormalize, but try the JOIN first.
+
+**What if the primary key must change?** Changing a primary key is the most expensive job because every foreign key points to it. That is why you always pick a primary key that never changes — like an \`id\` number, not a name or an email.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Achhe Design ke 5 Rules',
+          '7. Summary: Five Rules of Good Design'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. Achha design 5 rules se banta hai. **Rule 1:** pehle ER diagram banao — entity, attribute, relationship. **Rule 2:** har entity ek table, har attribute ek column, har table ki ek primary key. **Rule 3:** one-to-many mein foreign key "many" wali taraf jaati hai. **Rule 4:** many-to-many ke liye junction table banao, jiski primary key dono foreign keys ka combination ho. **Rule 5:** har fact sirf ek jagah likho — duplicate data se bacho.
+
+Aur do cheezein yaad rakho: comma-separated values kabhi ek column mein mat likho, aur jab relationship ki apni detail ho (jaise issue date) toh use junction table mein column banao. Design pehle din thoda slow lagta hai, par teesre mahine mein wahi design aapko bachata hai. Agle article mein hum security dekhenge — kaun kya dekh sakta hai, aur injection se kaise bachein.`,
+          `Let us tie the whole article together. Good design comes from 5 rules. **Rule 1:** draw the ER diagram first — entity, attribute, relationship. **Rule 2:** every entity is a table, every attribute is a column, every table has a primary key. **Rule 3:** in a one-to-many relationship, the foreign key goes on the "many" side. **Rule 4:** many-to-many needs a junction table whose primary key is the combination of both foreign keys. **Rule 5:** write every fact in exactly one place — avoid duplicated data.
+
+And remember two more things: never write comma-separated values in one column, and when a relationship has its own detail (like an issue date), make it a column in the junction table. Design feels a little slow on day one, but in month three that same design saves you. In the next article we will look at security — who can see what, and how to stop injection.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'ER Diagram se Tables Tak: 4 Rules',
+        'From ER Diagram to Tables: 4 Rules'
+      ),
+      caption: t(
+        'Har entity ek table, har relationship ka apna tareeka — yahi poora design hai',
+        'Every entity is a table, every relationship has its own method — that is the whole design'
+      ),
+      nodes: [
+        {
+          t: t('Entity → Table', 'Entity → Table'),
+          s: t(
+            'Student, Course, Book — har entity ek table banti hai',
+            'Student, Course, Book — every entity becomes a table'
+          )
+        },
+        {
+          t: t('Attribute → Column', 'Attribute → Column'),
+          s: t(
+            'Naam, title, author — har attribute ek column banta hai',
+            'Name, title, author — every attribute becomes a column'
+          )
+        },
+        {
+          t: t('One-to-Many → Foreign Key', 'One-to-Many → Foreign Key'),
+          s: t(
+            'Foreign key "many" wali taraf jaati hai — student mein dept_id',
+            'The foreign key goes on the "many" side — dept_id in student'
+          )
+        },
+        {
+          t: t('Many-to-Many → Junction Table', 'Many-to-Many → Junction Table'),
+          s: t(
+            'Beech mein table — enrollments mein student_id + course_id',
+            'A table in the middle — student_id + course_id in enrollments'
+          )
+        },
+        {
+          t: t('Relationship ki detail → Extra Column', 'Relationship detail → Extra Column'),
+          s: t(
+            'Issue date, enrollment date junction table mein jaate hain',
+            'Issue date and enrollment date go into the junction table'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Har Course mein Kitne Students? (LEFT JOIN + COUNT)',
+          'How Many Students per Course? (LEFT JOIN + COUNT)'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (course_id INTEGER PRIMARY KEY, title TEXT);
+CREATE TABLE enrollments (student_id INTEGER, course_id INTEGER, PRIMARY KEY (student_id, course_id));
+INSERT INTO courses VALUES (101, 'DBMS');
+INSERT INTO courses VALUES (102, 'Python');
+INSERT INTO enrollments VALUES (1, 101);
+INSERT INTO enrollments VALUES (2, 101);
+INSERT INTO enrollments VALUES (2, 102);
+SELECT c.title, COUNT(e.student_id) AS total FROM courses c LEFT JOIN enrollments e ON e.course_id = c.course_id GROUP BY c.title ORDER BY total DESC, c.title ASC;`,
+        output: `title | total
+DBMS | 2
+Python | 1`
+      },
+      {
+        title: t(
+          'Library Case Study: Kaunsi Books Ke 2 Ya Zyada Copies Hain?',
+          'Library Case Study: Which Books Have 2 or More Copies?'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS books;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT, copies INTEGER);
+INSERT INTO books VALUES (1, 'DBMS Concepts', 3);
+INSERT INTO books VALUES (2, 'Python Basics', 2);
+INSERT INTO books VALUES (3, 'Operating Systems', 1);
+SELECT book_id, title, copies FROM books WHERE copies >= 2 ORDER BY title;`,
+        output: `book_id | title | copies
+1 | DBMS Concepts | 3
+2 | Python Basics | 2`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'ER diagram mein many-to-many relationship ko tables mein kaise badalte hain?',
+          'How do you turn a many-to-many relationship in an ER diagram into tables?'
+        ),
+        opts: [
+          t('Ek column mein comma se values likh kar', 'By writing values with commas in one column'),
+          t('Beech mein ek junction table bana kar', 'By creating a junction table in the middle'),
+          t('Dono tables ko delete kar ke', 'By deleting both tables'),
+          t('Ek table mein dono entities daal kar', 'By putting both entities in one table')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: many-to-many ke liye beech mein ek junction table banti hai jismein dono entities ki foreign keys hoti hain — jaise enrollments mein student_id aur course_id.',
+          'Correct answer: a many-to-many relationship needs a junction table in the middle holding the foreign keys of both entities — like student_id and course_id in enrollments.'
+        )
+      },
+      {
+        q: t(
+          'One-to-many relationship mein foreign key kahan jaati hai?',
+          'Where does the foreign key go in a one-to-many relationship?'
+        ),
+        opts: [
+          t('"Many" wali taraf', 'On the "many" side'),
+          t('"One" wali taraf', 'On the "one" side'),
+          t('Kahin nahi jaati', 'Nowhere'),
+          t('Dono taraf', 'On both sides')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: foreign key "many" wali taraf jaati hai — jaise ek department ke bahut se students hote hain, toh student table mein dept_id hota hai.',
+          'Correct answer: the foreign key goes on the "many" side — for example, one department has many students, so the student table holds dept_id.'
+        )
+      },
+      {
+        q: t(
+          'Student ke courses ko ek column mein "DBMS, Python" likhna kyun galat design hai?',
+          'Why is writing a student courses as "DBMS, Python" in one column a bad design?'
+        ),
+        opts: [
+          t('Kyunki comma slow hota hai', 'Because a comma is slow'),
+          t('Kyunki "kaun DBMS mein hai?" poochhne ke liye text scan karna padega aur data duplicate hoga', 'Because asking "who is in DBMS?" needs a text scan, and data gets duplicated'),
+          t('Kyunki column bahut lamba ho jaata hai', 'Because the column becomes too long'),
+          t('Kyunki yeh SQL mein allowed nahi hai', 'Because SQL does not allow it')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: comma-separated values par query nahi chalti — course dhoondhne ke liye poora text scan karna padta hai. Junction table mein har enrollment ek row hoti hai aur JOIN se sawal turant milta hai.',
+          'Correct answer: you cannot query comma-separated values properly — finding a course needs a full text scan. In a junction table each enrollment is a row and a JOIN answers the question instantly.'
+        )
+      },
+      {
+        q: t(
+          'Junction table enrollments ki primary key kya honi chahiye?',
+          'What should the primary key of the junction table enrollments be?'
+        ),
+        opts: [
+          t('Sirf student_id', 'Only student_id'),
+          t('Sirf course_id', 'Only course_id'),
+          t('student_id + course_id ka combination', 'The combination of student_id + course_id'),
+          t('Koi primary key nahi', 'No primary key')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono columns ka combination primary key hota hai, taaki ek student ek course mein do baar enroll na ho sake — aur dono columns foreign keys bhi hain.',
+          'Correct answer: the combination of both columns is the primary key, so one student cannot enroll in one course twice — and both columns are also foreign keys.'
+        )
+      },
+      {
+        q: t(
+          'ER diagram mein entity ki property ko kya kehte hain?',
+          'What is a property of an entity in an ER diagram called?'
+        ),
+        opts: [
+          t('Relationship', 'Relationship'),
+          t('Attribute', 'Attribute'),
+          t('Primary key', 'Primary key'),
+          t('Junction', 'Junction')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: attribute entity ki property hoti hai — jaise Student ka naam ya Course ka title. Entity table banti hai, attribute column banta hai.',
+          'Correct answer: an attribute is a property of an entity — like a Student name or a Course title. The entity becomes a table and the attribute becomes a column.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Har entity ek table, har attribute ek column, har table ki ek primary key.',
+        'Every entity is a table, every attribute is a column, every table has a primary key.'
+      ),
+      t(
+        'One-to-many mein foreign key "many" wali taraf jaati hai.',
+        'In one-to-many, the foreign key goes on the "many" side.'
+      ),
+      t(
+        'Many-to-many ke liye junction table chahiye — uski primary key dono foreign keys ka combination hai.',
+        'Many-to-many needs a junction table — its primary key is the combination of both foreign keys.'
+      ),
+      t(
+        'Har fact sirf ek jagah likho — duplicate data se bacho.',
+        'Write every fact in exactly one place — avoid duplicated data.'
+      ),
+      t(
+        'Comma-separated values kabhi ek column mein mat likho.',
+        'Never write comma-separated values in one column.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Departments Table Banao aur Students se Jodo',
+        'Practice: Create a Departments Table and Join It to Students'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: departments table banao (1 CSE, 2 ECE), students mein dept_id column add karo, Rahul aur Priya ko CSE aur Amit aur Sana ko ECE do, phir JOIN se naam aur department nikaalo. Done tab mana jayega jab output mein 4 rows aayein: Amit | ECE, Priya | CSE, Rahul | CSE, Sana | ECE.',
+        'Run the starter below: create a departments table (1 CSE, 2 ECE), add a dept_id column to students, give CSE to Rahul and Priya and ECE to Amit and Sana, then fetch name and department with a JOIN. You are done when the output shows 4 rows: Amit | ECE, Priya | CSE, Rahul | CSE, Sana | ECE.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS departments;
+CREATE TABLE departments (dept_id INTEGER PRIMARY KEY, dept_name TEXT);
+INSERT INTO departments VALUES (1, 'CSE');
+INSERT INTO departments VALUES (2, 'ECE');
+ALTER TABLE students ADD COLUMN dept_id INTEGER;
+UPDATE students SET dept_id = 1 WHERE id IN (1, 2);
+UPDATE students SET dept_id = 2 WHERE id IN (3, 4);
+SELECT s.name, d.dept_name FROM students s JOIN departments d ON d.dept_id = s.dept_id ORDER BY s.name;`,
+      expected: `name | dept_name
+Amit | ECE
+Priya | CSE
+Rahul | CSE
+Sana | ECE`
+    },
+    readMinutes: 12
+  };
+
+const dbmsSecurity: Article = {
+    id: 'dbms-security',
+    subjectId: 'dbms',
+    title: t(
+      'Database Security — GRANT/REVOKE, Roles, Views aur SQL Injection se Bachav',
+      'Database Security — GRANT and REVOKE, Roles, Views, and Stopping SQL Injection'
+    ),
+    summary: t(
+      'Database ko secure karna seekho: GRANT aur REVOKE se kaun kya kar sakta hai, roles se permissions kaise manage karte hain, views se sensitive columns kaise chhupate hain, aur SQL injection kya hota hai aur parameterised queries se use kaise rokte hain.',
+      'Learn to secure a database: what GRANT and REVOKE allow each person to do, how roles manage permissions, how views hide sensitive columns, and what SQL injection is and how parameterised queries stop it.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Database Security Kya Hai? (Kaun, Kya Dekh Sakta Hai)',
+          '1. What Is Database Security? (Who Can See What)'
+        ),
+        body: t(
+          `**Database security** ka matlab hai: sahi log sahi data dekhein, galat log kuch na dekhein. Ek college mein student ko apne marks dekhne chahiye, teacher ko saare students ke marks dekhne chahiye, aur clerk ko sirf naam aur fees dekhne chahiye — marks nahi. Agar clerk marks dekh le ya badal de, toh woh security fail hai.
+
+Security ke teen tools hain. **GRANT** permission deta hai — jaise \`GRANT SELECT ON students TO clerk\` ka matlab hai clerk students ko dekh sakta hai. **REVOKE** permission wapas leta hai — jaise \`REVOKE SELECT ON students FROM clerk\`. **Role** permissions ka group hota hai — jaise "teacher" role ko SELECT aur UPDATE dono hain, aur jo bhi teacher banta hai use woh role mil jaata hai. Har aadmi ko alag-alag GRANT dene ki jagah role banao aur role ko aadmi ko do.
+
+Chautha tool hai **view** — ek virtual table jo sirf wahi columns dikhata hai jo aap dikhana chahte ho. Agar marks sensitive hain, toh ek view banao jismein sirf \`id\` aur \`name\` hon, aur clerk ko woh view do — asli table kabhi mat do. Yeh **least privilege** ka rule hai: har kisi ko sirf utna do jitna uske kaam ke liye chahiye, usse zyada kuch nahi.`,
+          `**Database security** means: the right people see the right data, and the wrong people see nothing. In a college, a student should see their own marks, a teacher should see all students' marks, and a clerk should see only names and fees — not marks. If the clerk can see or change marks, security has failed.
+
+There are three security tools. **GRANT** gives a permission — \`GRANT SELECT ON students TO clerk\` means the clerk can view students. **REVOKE** takes a permission back — \`REVOKE SELECT ON students FROM clerk\`. A **role** is a group of permissions — for example, the "teacher" role has both SELECT and UPDATE, and anyone who becomes a teacher gets that role. Instead of granting each person separately, make a role and give the role to the person.
+
+The fourth tool is a **view** — a virtual table that shows only the columns you want to show. If marks are sensitive, make a view with only \`id\` and \`name\`, and give the clerk that view — never the real table. This is the **least privilege** rule: give everyone only as much as their job needs, nothing more.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bank Clerk, Exam Result aur Hacked Login Form',
+          '2. Real-Life Examples: A Bank Clerk, Exam Results, and a Hacked Login Form'
+        ),
+        body: t(
+          `Sabse seedha example hai **bank clerk**. Clerk ko aapka account number aur balance dekhna hota hai, par woh aapke paise transfer nahi kar sakta. Manager transfer kar sakta hai. Yeh roles hain: clerk ko sirf SELECT, manager ko SELECT + UPDATE. Agar clerk ko UPDATE bhi mil jaaye, toh woh kisi ka bhi balance badal sakta hai — isliye permissions kaam ke hisaab se milte hain.
+
+Doosra example hai **exam result**. Result aane par student apna result dekhta hai, par dusre student ke marks nahi dekh sakta. Yeh view ya row-level rule se hota hai: har student ko sirf apni row dikhti hai. Teacher ko saari rows dikhti hain kyunki uska kaam hi wahi hai.
+
+Teesra example hai **hacked login form** — SQL injection. Login form mein username ki jagah attacker likhta hai: \`' OR '1'='1\`. Agar app is text ko seedha query mein jod de, toh query ban jaati hai: \`SELECT * FROM users WHERE name = '' OR '1'='1'\` — aur \`'1'='1'\` hamesha true hota hai, isliye bina password ke login ho jaata hai. Yahi SQL injection hai, aur isse bachne ka tareeka hai parameterised query — user ka input kabhi query ka hissa na bane, sirf value bane.`,
+          `The simplest example is a **bank clerk**. A clerk needs to see your account number and balance, but cannot transfer your money. A manager can transfer it. These are roles: the clerk gets only SELECT, the manager gets SELECT + UPDATE. If the clerk also got UPDATE, they could change anyone's balance — so permissions follow the job.
+
+A second example is an **exam result**. When results come out, a student sees their own result but not another student's marks. This happens through a view or a row-level rule: each student sees only their own row. A teacher sees all rows because that is their job.
+
+A third example is a **hacked login form** — SQL injection. In the username field, an attacker types: \`' OR '1'='1\`. If the app joins this text directly into the query, the query becomes: \`SELECT * FROM users WHERE name = '' OR '1'='1'\` — and \`'1'='1'\` is always true, so the login succeeds without a password. That is SQL injection, and the way to stop it is a parameterised query — user input must never become part of the query, only a value.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: View se Marks Chhupana (Least Privilege)',
+          '3. Step-by-Step: Hiding Marks with a View (Least Privilege)'
+        ),
+        body: t(
+          `Ab hum least privilege ko haath se karte hain. Clerk ko students ke naam chahiye, marks nahi. Hum ek view banate hain jo sirf \`id\` aur \`name\` dikhata hai — marks wali column view mein hai hi nahi, isliye clerk chahe toh bhi marks nahi dekh sakta.
+
+Dry run, ek-ek step:
+- **Step 1: View banao** — \`CREATE VIEW student_public AS SELECT id, name FROM students\`. Yeh ek virtual table hai: ismein data copy nahi hota, yeh asli table ko hi dikhata hai, par sirf woh columns jo aapne chune.
+- **Step 2: View se SELECT karo** — \`SELECT id, name FROM student_public ORDER BY id\` se saare students ke naam milte hain, marks kahin nahi dikhte.
+- **Step 3: Check karo** — output mein sirf do columns hain: \`id\` aur \`name\`. Marks column hai hi nahi, isliye leak hone ka sawal hi nahi.
+
+Asli system mein aage yeh hota: \`GRANT SELECT ON student_public TO clerk\` — clerk ko sirf view ka SELECT milta hai, asli \`students\` table ka kuch nahi. Agar kal marks ki column view mein add kar di, toh clerk ko marks dikhne lagenge — isliye view ko badalte waqt bhi sochna padta hai. Neeche wala code run karo aur output dekho: 4 rows, sirf naam, koi marks nahi.`,
+          `Now let us apply least privilege by hand. The clerk needs students' names, not their marks. We make a view that shows only \`id\` and \`name\` — the marks column is not in the view at all, so the clerk cannot see marks even if they try.
+
+Dry run, step by step:
+- **Step 1: Create the view** — \`CREATE VIEW student_public AS SELECT id, name FROM students\`. This is a virtual table: it holds no copied data, it only shows the real table — but only the columns you chose.
+- **Step 2: SELECT from the view** — \`SELECT id, name FROM student_public ORDER BY id\` gives every student's name, and marks appear nowhere.
+- **Step 3: Check** — the output has only two columns: \`id\` and \`name\`. There is no marks column at all, so nothing can leak.
+
+In a real system, the next step is: \`GRANT SELECT ON student_public TO clerk\` — the clerk gets SELECT only on the view, nothing on the real \`students\` table. If someone later adds the marks column to the view, the clerk would start seeing marks — so changing a view needs thought too. Run the code below and look at the output: 4 rows, only names, no marks.`
+        ),
+        code: {
+          title: t(
+            'View Banao: Sirf ID aur Naam Dikhao, Marks Chhupao',
+            'Create a View: Show Only ID and Name, Hide Marks'
+          ),
+          language: 'sql',
+          code: `DROP VIEW IF EXISTS student_public;
+CREATE VIEW student_public AS SELECT id, name FROM students;
+SELECT id, name FROM student_public ORDER BY id;`,
+          output: `id | name
+1 | Rahul
+2 | Priya
+3 | Amit
+4 | Sana`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Query mein Input Jodna, Sabko Admin Banana aur GRANT ka Galat Use',
+          '4. Common Mistakes: Building Queries with String Joining, Making Everyone an Admin, and Wrong GRANTs'
+        ),
+        body: t(
+          `Security mein sabse badi galtiyan woh hain jo code likhte waqt chhoti lagti hain.
+
+**Galti 1: User input ko query mein jodna.** Yeh SQL injection ki jad hai. Code aisa likha jaata hai: \`query = "SELECT * FROM users WHERE name = '" + username + "'"\`. Attacker username mein \`' OR '1'='1\` likh de toh query ka matlab badal jaata hai. Sahi tareeka hai parameterised query: \`WHERE name = ?\` aur username ko value ki tarah bhejo. Tab poora injection text ek naam ki tarah treat hota hai — koi student us naam ka nahi hai, toh zero rows aati hain.
+
+**Galti 2: Sabko admin banana.** "Kaam jaldi ho jaaye" ke liye sabko full permission de dena sabse khatarnak galti hai. Ek galti ya ek hacked account poora database delete kar sakta hai. Har user ko sirf uske kaam ki permission do — least privilege.
+
+**Galti 3: GRANT karke REVOKE bhool jaana.** Kisi ko ek kaam ke liye permission di, kaam khatam ho gaya, par permission wapas nahi li. Woh permission hamesha ke liye reh jaati hai. Jaate waqt har temporary permission ko REVOKE karo.
+
+**Galti 4: Password ko plain text mein store karna.** Password kabhi seedha database mein mat likho — uska hash store karo. Agar database leak ho jaaye toh bhi password safe rahe.`,
+          `The biggest security mistakes are the ones that look small while writing code.
+
+**Mistake 1: Joining user input into a query.** This is the root of SQL injection. Code is written like: \`query = "SELECT * FROM users WHERE name = '" + username + "'"\`. If an attacker types \`' OR '1'='1\` as the username, the meaning of the query changes. The correct way is a parameterised query: \`WHERE name = ?\` with the username sent as a value. Then the whole injection text is treated as one name — no student has that name, so zero rows come back.
+
+**Mistake 2: Making everyone an admin.** Giving everyone full permission "to get work done fast" is the most dangerous mistake. One error or one hacked account can delete the whole database. Give every user only the permission their job needs — least privilege.
+
+**Mistake 3: Granting and forgetting to REVOKE.** Someone got a permission for one job, the job ended, but the permission was never taken back. That permission stays forever. REVOKE every temporary permission when the work ends.
+
+**Mistake 4: Storing passwords in plain text.** Never write a password directly into a database — store its hash. Then even if the database leaks, the passwords stay safe.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: View ke Peeche Badla Data, Khaali Role aur Case-Sensitive Password',
+          '5. Edge Cases: Changed Data Behind a View, an Empty Role, and Case-Sensitive Passwords'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo security audit mein pakdi jaati hain.
+
+**1. View ke peeche badla data.** View data copy nahi karta — woh asli table ko dikhata hai. Agar asli table mein marks badal jaayein, toh view se bhi naye marks dikhenge (agar view mein marks column ho). View sirf columns chhupata hai, data ko freeze nahi karta.
+
+**2. Khaali role.** Ek role banao par use koi permission mat do, toh us role wale user ko kuch nahi dikhega. Yeh galti aksar hoti hai: role assign kar diya, par GRANT karna bhool gaye. Role ka matlab hi uski permissions hain.
+
+**3. Case-sensitive password.** \`'Priya'\` aur \`'priya'\` alag hain. Login mein naam ka case galat ho toh login fail hota hai — yeh security hai, bug nahi. Par search mein case ka dhyaan rakhna padta hai, warna sahi student bhi nahi milega.
+
+**4. View se update karna.** Kuch views se update kar sakte ho, kuch se nahi. Agar view mein sirf naam hai aur aap usse marks update karne ki koshish karo, toh error aayega. View security ke liye hai, update ke liye asli table aur sahi permission chahiye.
+
+**5. Injection khaali string se.** Attacker khaali string ya sirf ek quote bhej kar bhi query tod sakta hai. Parameterised query har input ko value banati hai — khaali ho ya quote se bhara — isliye woh har case mein safe hai.`,
+          `Edge cases are the situations that get caught in a security audit.
+
+**1. Changed data behind a view.** A view does not copy data — it shows the real table. If marks change in the real table, the view shows the new marks too (if the view has a marks column). A view only hides columns; it does not freeze data.
+
+**2. An empty role.** If you create a role but give it no permissions, a user with that role sees nothing. This mistake is common: the role was assigned, but the GRANT was forgotten. A role is nothing but its permissions.
+
+**3. Case-sensitive passwords.** \`'Priya'\` and \`'priya'\` are different. If the login name has the wrong case, the login fails — that is security, not a bug. But searches must watch the case too, or even the correct student will not be found.
+
+**4. Updating through a view.** Some views allow updates, some do not. If a view holds only names and you try to update marks through it, you get an error. A view is for security; updates need the real table and the right permission.
+
+**5. Injection with an empty string.** An attacker can break a query even with an empty string or a single quote. A parameterised query turns every input into a value — empty or full of quotes — so it is safe in every case.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Attacker Ko Poora Query Pata Ho, ya Admin Account Leak Ho Jaaye?',
+          '6. What If: An Attacker Knows the Full Query, or an Admin Account Leaks?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: attacker ko poora query pata ho?** Koi baat nahi. Parameterised query mein query ka structure pehle se fix hota hai — attacker sirf value badal sakta hai, structure nahi. Woh jo bhi likhe, woh ek value ki tarah treat hoga. Isi liye kehte hain: security chhupane se nahi, sahi design se aati hai.
+
+**What if: admin account leak ho jaaye?** Yeh sabse bura case hai. Admin ke paas sab kuch hota hai — isliye admin ka password sabse strong hona chahiye, admin login sirf zaroori jagah se hona chahiye, aur admin ke har kaam ka log hona chahiye. Aur ek rule: roz ke kaam ke liye admin account use mat karo — apna normal account use karo, admin sirf admin kaam ke liye.
+
+**What if: GRANT galat aadmi ko mil jaaye?** Turant REVOKE karo aur audit log check karo ki usne kya-kya kiya. Isi liye har GRANT aur REVOKE ka log rakha jaata hai — kaun, kab, kisko, kya permission di.
+
+**What if: database hi chori ho jaaye?** Agar koi poori database file chura le, toh permissions kaam nahi aayenge — isliye sensitive data ko **encrypt** karke store karte hain. Encryption ke bina backup file bhi ek leak hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if the attacker knows the full query?** It does not matter. In a parameterised query, the structure of the query is fixed in advance — the attacker can only change a value, never the structure. Whatever they type is treated as a value. That is why people say: security comes from correct design, not from hiding things.
+
+**What if an admin account leaks?** This is the worst case. An admin has everything — so the admin password must be the strongest, admin login must come only from trusted places, and every admin action must be logged. And one rule: never use the admin account for daily work — use your normal account, and the admin account only for admin work.
+
+**What if a GRANT goes to the wrong person?** REVOKE it at once and check the audit log for what they did. That is why every GRANT and REVOKE is logged — who gave what permission to whom, and when.
+
+**What if the whole database is stolen?** If someone steals the database file itself, permissions will not help — so sensitive data is stored **encrypted**. Without encryption, even a backup file is a leak.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Security ke 5 Rules',
+          '7. Summary: Five Rules of Security'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Rule 1:** least privilege — har kisi ko sirf utna do jitna uske kaam ke liye chahiye. **Rule 2:** permissions roles se do, har aadmi ko alag-alag nahi. **Rule 3:** sensitive columns ko views se chhupao — asli table kabhi mat do. **Rule 4:** user input ko kabhi query mein mat jodo — parameterised query use karo, taaki injection text sirf ek value bane. **Rule 5:** temporary permission kaam khatam hote hi REVOKE karo.
+
+Aur do cheezein yaad rakho: password ka hash store karo, plain text kabhi nahi; aur admin account roz ke kaam ke liye use mat karo. Interview mein yaad rakhne wali line yeh hai: "Injection isliye hota hai kyunki input query ban jaata hai — parameterised query mein input sirf value rehta hai." Agle article mein hum query optimization dekhenge — slow query ko fast kaise karte hain.`,
+          `Let us tie the whole article together. **Rule 1:** least privilege — give everyone only as much as their job needs. **Rule 2:** give permissions through roles, not person by person. **Rule 3:** hide sensitive columns with views — never hand out the real table. **Rule 4:** never join user input into a query — use a parameterised query, so injection text stays just a value. **Rule 5:** REVOKE a temporary permission the moment the work ends.
+
+And remember two more things: store the hash of a password, never plain text; and never use the admin account for daily work. The line to remember for interviews is: "Injection happens because input becomes the query — in a parameterised query, input stays only a value." In the next article we will look at query optimization — how to make a slow query fast.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'Security ki Layers: User se Data Tak',
+        'Layers of Security: From User to Data'
+      ),
+      caption: t(
+        'Har layer ek check hai — ek layer toote toh agli layer bachati hai',
+        'Each layer is a check — if one layer breaks, the next one saves you'
+      ),
+      nodes: [
+        {
+          t: t('User (Student / Clerk / Teacher)', 'User (Student / Clerk / Teacher)'),
+          s: t(
+            'Har user ka apna login aur apna kaam hota hai',
+            'Every user has their own login and their own job'
+          )
+        },
+        {
+          t: t('Role (student, clerk, teacher)', 'Role (student, clerk, teacher)'),
+          s: t(
+            'Permissions roles se milte hain, har aadmi ko alag-alag nahi',
+            'Permissions come through roles, not person by person'
+          )
+        },
+        {
+          t: t('GRANT / REVOKE', 'GRANT / REVOKE'),
+          s: t(
+            'GRANT permission deta hai, REVOKE wapas leta hai',
+            'GRANT gives a permission, REVOKE takes it back'
+          )
+        },
+        {
+          t: t('View (sirf wahi columns jo chahiye)', 'View (only the columns that are needed)'),
+          s: t(
+            'Marks chhupane ke liye view — asli table kabhi mat do',
+            'A view hides marks — never hand out the real table'
+          )
+        },
+        {
+          t: t('Table + Parameterised Query', 'Table + Parameterised Query'),
+          s: t(
+            'Input sirf value banta hai, query ka hissa kabhi nahi',
+            'Input becomes only a value, never part of the query'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Toppers View: Sirf 90+ Wale Students Dikhao',
+          'Toppers View: Show Only Students with 90+ Marks'
+        ),
+        language: 'sql',
+        code: `DROP VIEW IF EXISTS toppers;
+CREATE VIEW toppers AS SELECT id, name FROM students WHERE marks >= 90;
+SELECT id, name FROM toppers;`,
+        output: `id | name
+2 | Priya`
+      },
+      {
+        title: t(
+          'Injection Text Sirf Ek Value Hai: Zero Rows',
+          'Injection Text Is Only a Value: Zero Rows'
+        ),
+        language: 'sql',
+        code: `SELECT id, name, marks FROM students WHERE name = 'Rahul'' OR ''1''=''1';`,
+        output: `id | name | marks`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'GRANT ka kya kaam hai?',
+          'What does GRANT do?'
+        ),
+        opts: [
+          t('Permission wapas leta hai', 'It takes a permission back'),
+          t('Permission deta hai', 'It gives a permission'),
+          t('Table delete karta hai', 'It deletes a table'),
+          t('Password badalta hai', 'It changes a password')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: GRANT kisi user ya role ko permission deta hai — jaise GRANT SELECT ON students TO clerk. Wapas lene ke liye REVOKE hota hai.',
+          'Correct answer: GRANT gives a permission to a user or a role — like GRANT SELECT ON students TO clerk. REVOKE takes it back.'
+        )
+      },
+      {
+        q: t(
+          'SQL injection kyun hota hai?',
+          'Why does SQL injection happen?'
+        ),
+        opts: [
+          t('Kyunki database slow hota hai', 'Because the database is slow'),
+          t('Kyunki user ka input seedha query mein jod diya jaata hai', 'Because user input is joined directly into the query'),
+          t('Kyunki password chhota hota hai', 'Because the password is short'),
+          t('Kyunki table mein data zyada hota hai', 'Because the table has too much data')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jab app user ke input ko string ki tarah query mein jod deti hai, toh attacker query ka structure badal sakta hai — jaise OR 1=1 se poori table nikal sakta hai.',
+          'Correct answer: when the app joins user input into the query as a string, an attacker can change the query structure — for example, OR 1=1 can return the whole table.'
+        )
+      },
+      {
+        q: t(
+          'SQL injection se bachne ka sahi tareeka kya hai?',
+          'What is the correct way to stop SQL injection?'
+        ),
+        opts: [
+          t('Input ko chhupana', 'Hiding the input'),
+          t('Parameterised query use karna — input sirf value bane', 'Using a parameterised query — input stays only a value'),
+          t('Table ka naam badal dena', 'Renaming the table'),
+          t('Database ko band kar dena', 'Shutting down the database')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: parameterised query mein query ka structure pehle se fix hota hai aur input sirf value ki tarah jaata hai, isliye injection text query ko badal hi nahi sakta.',
+          'Correct answer: in a parameterised query the query structure is fixed in advance and input goes in only as a value, so injection text cannot change the query at all.'
+        )
+      },
+      {
+        q: t(
+          'Marks chhupane ke liye clerk ko kya dena chahiye?',
+          'What should the clerk get so that marks stay hidden?'
+        ),
+        opts: [
+          t('Poori students table', 'The whole students table'),
+          t('Ek view jismein sirf id aur name hon', 'A view with only id and name'),
+          t('Admin account', 'The admin account'),
+          t('Database ka backup', 'A backup of the database')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: view sirf wahi columns dikhata hai jo aap chune — marks wali column view mein hai hi nahi, isliye clerk chahe toh bhi marks nahi dekh sakta. Yeh least privilege hai.',
+          'Correct answer: a view shows only the columns you choose — the marks column is not in the view at all, so the clerk cannot see marks even if they try. That is least privilege.'
+        )
+      },
+      {
+        q: t(
+          'Role ka kya fayda hai?',
+          'What is the benefit of a role?'
+        ),
+        opts: [
+          t('Har aadmi ko alag-alag permission dena padta hai', 'Every person needs a separate permission'),
+          t('Permissions ka group ek baar banao aur kisi ko bhi do', 'Make a group of permissions once and give it to anyone'),
+          t('Password ki zaroorat khatam ho jaati hai', 'Passwords are no longer needed'),
+          t('Database fast ho jaata hai', 'The database becomes fast')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: role permissions ka group hota hai — "teacher" role ek baar banao, phir har teacher ko woh role do. Har aadmi ko alag GRANT dene ki zaroorat nahi padti.',
+          'Correct answer: a role is a group of permissions — make the "teacher" role once, then give it to every teacher. Nobody needs a separate GRANT.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Least privilege: har kisi ko sirf utna do jitna uske kaam ke liye chahiye.',
+        'Least privilege: give everyone only as much as their job needs.'
+      ),
+      t(
+        'GRANT permission deta hai, REVOKE wapas leta hai, role permissions ka group hai.',
+        'GRANT gives a permission, REVOKE takes it back, a role is a group of permissions.'
+      ),
+      t(
+        'View sirf chune hue columns dikhata hai — sensitive data chhupane ka tareeka hai.',
+        'A view shows only the columns you choose — the way to hide sensitive data.'
+      ),
+      t(
+        'Injection isliye hota hai kyunki input query ban jaata hai — parameterised query mein input sirf value rehta hai.',
+        'Injection happens because input becomes the query — in a parameterised query, input stays only a value.'
+      ),
+      t(
+        'Password ka hash store karo, plain text kabhi nahi.',
+        'Store the hash of a password, never plain text.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Marks Chhupane Wala View Banao',
+        'Practice: Build a View That Hides Marks'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: student_names naam ka ek view banao jismein sirf id aur name hon, phir usse SELECT karo. Done tab mana jayega jab output mein 4 rows aayein — sirf id aur name, koi marks nahi: 1 | Rahul, 2 | Priya, 3 | Amit, 4 | Sana.',
+        'Run the starter below: create a view called student_names with only id and name, then SELECT from it. You are done when the output shows 4 rows — only id and name, no marks: 1 | Rahul, 2 | Priya, 3 | Amit, 4 | Sana.'
+      ),
+      language: 'sql',
+      starter: `DROP VIEW IF EXISTS student_names;
+CREATE VIEW student_names AS SELECT id, name FROM students;
+SELECT id, name FROM student_names ORDER BY id;`,
+      expected: `id | name
+1 | Rahul
+2 | Priya
+3 | Amit
+4 | Sana`
+    },
+    readMinutes: 12
+  };
+
+const dbmsOptimization: Article = {
+    id: 'dbms-optimization',
+    subjectId: 'dbms',
+    title: t(
+      'Query Optimization — Execution Plan, Index aur Query Tuning',
+      'Query Optimization — Execution Plans, Indexes, and Query Tuning'
+    ),
+    summary: t(
+      'Slow query ko fast karna seekho: optimizer execution plan kaise banata hai, EXPLAIN QUERY PLAN se SCAN aur SEARCH ka farak kaise padhte hain, index kab kaam aata hai aur kab nahi, aur query tuning ke rules jinse har query fast hoti hai.',
+      'Learn to make a slow query fast: how the optimizer builds an execution plan, how to read SCAN vs SEARCH with EXPLAIN QUERY PLAN, when an index helps and when it does not, and the query tuning rules that speed up every query.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Query Optimization Kya Hai? (Optimizer Kya Karta Hai)',
+          '1. What Is Query Optimization? (What the Optimizer Does)'
+        ),
+        body: t(
+          `**Query optimization** ka matlab hai database ko query chalane ka sabse fast tareeka dhoondhna. Jab aap likhte ho \`SELECT name FROM students WHERE marks >= 85\`, toh database seedha table scan nahi karta — pehle **optimizer** sochta hai: marks par index hai? Kitni rows milengi? Table scan karoon ya index se dhoondhoon? Optimizer har tareeke ki cost nikaalta hai aur sabse sasta tareeka chunta hai. Is chune hue tareeke ko **execution plan** kehte hain.
+
+Plan ko dekhne ke liye SQLite mein \`EXPLAIN QUERY PLAN\` likhte hain — MySQL wala \`EXPLAIN\` yahan nahi chalta, SQLite ka apna command hai. Plan mein do words sabse important hain: **SCAN** ka matlab hai poori table ek-ek row karke padhna, aur **SEARCH** ka matlab hai index se seedha sahi rows par jaana. SCAN slow hota hai, SEARCH fast — bas yahi farak samajhna hai.
+
+**Index** ek alag chhota structure hai jo ek column ki values ko sorted order mein rakhta hai, saath mein unki row ki location. Library ki almari mein kitaabein dhoondhne ke liye index wahi kaam karta hai jo kitaab ke peeche wala index karta hai — bina poori kitaab padhe sahi page par pahunchna. Index banane se SELECT fast hota hai, par INSERT aur UPDATE thode slow hote hain kyunki index ko bhi update karna padta hai.`,
+          `**Query optimization** means finding the fastest way for the database to run a query. When you write \`SELECT name FROM students WHERE marks >= 85\`, the database does not scan the table directly — first the **optimizer** thinks: is there an index on marks? How many rows will match? Should I scan the table or search through the index? The optimizer works out the cost of each method and picks the cheapest one. That chosen method is called the **execution plan**.
+
+To see the plan in SQLite, you write \`EXPLAIN QUERY PLAN\` — MySQL's \`EXPLAIN\` does not work here, SQLite has its own command. Two words in the plan matter most: **SCAN** means reading the whole table row by row, and **SEARCH** means jumping straight to the right rows through an index. SCAN is slow, SEARCH is fast — that difference is all you need to understand.
+
+An **index** is a separate small structure that keeps one column's values in sorted order, together with each row's location. It does for a table what the index at the back of a book does for the book — reaching the right page without reading the whole book. An index makes SELECT fast, but INSERT and UPDATE a little slow, because the index must be updated too.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Library Index, Google Search aur Lambi Queue',
+          '2. Real-Life Examples: A Library Index, Google Search, and a Long Queue'
+        ),
+        body: t(
+          `Sabse seedha example hai **library**. Bina index ke librarian ko har almari ki har kitaab dekhni padegi. Par library mein ek catalogue hota hai: author ke naam se kitaab kahan hai, yeh likha hota hai. Catalogue hi index hai — librarian seedha sahi almari par jaata hai. Database ka index bhi wahi karta hai.
+
+Doosra example hai **Google search**. Google poora internet har search par scan nahi karta — uske paas pehle se ek index hai: kaunsa word kis page par hai. Isi liye search ek second mein aata hai. Agar Google har baar poora web scan karta, toh ek search mein ghante lag jaate. Database mein bhi wahi farak hai: SCAN matlab poora web padhna, SEARCH matlab index se jawab nikaalna.
+
+Teesra example hai **lambi queue**. Railway counter par agar sabko ek hi line mein khada kar diya, toh har aadmi ko poori line wait karni padegi. Par agar alag-alag counters hon — tatkal, general, ladies — toh har aadmi seedha apne counter par jaata hai. Index wahi alag counter hai: data ko sort karke rakhna, taaki dhoondhna fast ho.`,
+          `The simplest example is a **library**. Without an index, the librarian must check every book on every shelf. But a library has a catalogue: which author is on which shelf. The catalogue is the index — the librarian goes straight to the right shelf. A database index does the same thing.
+
+A second example is **Google search**. Google does not scan the whole internet on every search — it already has an index: which word is on which page. That is why a search returns in a second. If Google scanned the whole web every time, one search would take hours. A database has the same difference: SCAN means reading the whole web, SEARCH means taking the answer from the index.
+
+A third example is a **long queue**. At a railway counter, if everyone stands in one line, every person waits through the whole line. But with separate counters — tatkal, general, ladies — each person goes straight to their own counter. An index is that separate counter: keeping data sorted so that finding it is fast.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: EXPLAIN QUERY PLAN se SCAN se SEARCH Tak',
+          '3. Step-by-Step: From SCAN to SEARCH with EXPLAIN QUERY PLAN'
+        ),
+        body: t(
+          `Ab hum ek query ka plan haath se padhte hain. Query hai: 85 ya zyada marks wale students nikaalo. Dry run, ek-ek step:
+
+- **Step 1: Index banao** — \`CREATE INDEX idx_marks ON students(marks)\` se marks par ek index banta hai. Index marks ko sorted order mein rakhta hai: 74, 85, 88, 92.
+- **Step 2: Plan dekho** — \`EXPLAIN QUERY PLAN SELECT id, name, marks FROM students WHERE marks >= 85\` likho. Plan mein ek row aati hai.
+- **Step 3: Plan padho** — detail mein likha hai: \`SEARCH students USING INDEX idx_marks (marks>?)\`. **SEARCH** ka matlab hai database index se seedha 85 ya zyada wali rows par gaya — poori table scan nahi ki. \`marks>?\` ka matlab hai marks par condition index se check hui.
+
+Ab socho index na hota toh kya hota: plan mein likha hota \`SCAN students\` — matlab database ko 4 ki 4 rows padhni padti. 4 rows mein farak nahi dikhta, par 4 lakh rows mein SCAN aur SEARCH ka farak seconds se minutes ka hota hai. Neeche wala code run karo aur output dekho: plan mein SEARCH hai, SCAN nahi.`,
+          `Now let us read the plan of one query by hand. The query is: find students with 85 marks or more. Dry run, step by step:
+
+- **Step 1: Create the index** — \`CREATE INDEX idx_marks ON students(marks)\` builds an index on marks. The index keeps marks in sorted order: 74, 85, 88, 92.
+- **Step 2: Look at the plan** — write \`EXPLAIN QUERY PLAN SELECT id, name, marks FROM students WHERE marks >= 85\`. The plan returns one row.
+- **Step 3: Read the plan** — the detail says: \`SEARCH students USING INDEX idx_marks (marks>?)\`. **SEARCH** means the database jumped straight to the rows with 85 or more through the index — it never scanned the whole table. \`marks>?\` means the marks condition was checked through the index.
+
+Now imagine there was no index: the plan would say \`SCAN students\` — the database would have to read all 4 rows. With 4 rows the difference is invisible, but with 4 lakh rows the difference between SCAN and SEARCH is seconds versus minutes. Run the code below and look at the output: the plan says SEARCH, not SCAN.`
+        ),
+        code: {
+          title: t(
+            'Index Banao aur Plan Dekho: SEARCH aana chahiye',
+            'Create the Index and Read the Plan: It Should Say SEARCH'
+          ),
+          language: 'sql',
+          code: `DROP INDEX IF EXISTS idx_marks;
+CREATE INDEX idx_marks ON students(marks);
+EXPLAIN QUERY PLAN SELECT id, name, marks FROM students WHERE marks >= 85;`,
+          output: `id | parent | notused | detail
+3 | 0 | 0 | SEARCH students USING INDEX idx_marks (marks>?)`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: SELECT *, Column par Function aur Bina Index ke LIKE',
+          '4. Common Mistakes: SELECT *, Functions on Columns, and LIKE Without an Index'
+        ),
+        body: t(
+          `Optimization mein sabse zyada galtiyan woh hain jo query likhte waqt aadat se ho jaati hain.
+
+**Galti 1: SELECT *.** \`SELECT *\` har column nikaalta hai, chahe aapko sirf naam chahiye ho. Zyada data padhna, zyada data bhejna — sab slow hota hai. Hamesha sirf wahi columns likho jo chahiye: \`SELECT name, marks\`.
+
+**Galti 2: Indexed column par function lagana.** \`WHERE marks + 0 >= 85\` likhoge toh index bekaar ho jaata hai — database ko har row ka \`marks + 0\` nikaal kar check karna padta hai, isliye plan SCAN ban jaata hai. Sahi tareeka hai \`WHERE marks >= 85\` — column ko seedha likho, us par function mat lagao. Neeche wale code example mein yahi dikhaya gaya hai: function lagte hi SEARCH, SCAN ban jaata hai.
+
+**Galti 3: LIKE '%...%' se search karna.** \`WHERE name LIKE '%i%'\` mein index kaam nahi karta kyunki pattern shuru se match nahi hota. Aise search ke liye alag tareeke chahiye (jaise full-text index), ya phir yeh maan lo ki yeh query slow hogi.
+
+**Galti 4: Har column par index bana dena.** Index SELECT ko fast karta hai, par har INSERT aur UPDATE ko slow — kyunki har index ko bhi update karna padta hai. Sirf un columns par index banao jo WHERE, JOIN ya ORDER BY mein baar-baar aate hain.`,
+          `The most common optimization mistakes are the ones that happen out of habit while writing a query.
+
+**Mistake 1: SELECT *.** \`SELECT *\` fetches every column even if you only need the name. More data read, more data sent — everything gets slow. Always list only the columns you need: \`SELECT name, marks\`.
+
+**Mistake 2: Putting a function on an indexed column.** If you write \`WHERE marks + 0 >= 85\`, the index becomes useless — the database must compute \`marks + 0\` for every row, so the plan becomes SCAN. The correct way is \`WHERE marks >= 85\` — write the column directly, never wrap it in a function. The code example below shows exactly this: the moment a function appears, SEARCH turns into SCAN.
+
+**Mistake 3: Searching with LIKE '%...%'.** In \`WHERE name LIKE '%i%'\` the index cannot help because the pattern does not match from the start. Such searches need a different method (like a full-text index), or you must accept that the query will be slow.
+
+**Mistake 4: Indexing every column.** An index speeds up SELECT but slows down every INSERT and UPDATE — because each index must be updated too. Index only the columns that appear again and again in WHERE, JOIN, or ORDER BY.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Chhoti Table par Index, NULL Values aur Boht Saare Indexes',
+          '5. Edge Cases: Indexes on Tiny Tables, NULL Values, and Too Many Indexes'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo plan ko ajeeb bana deti hain.
+
+**1. Chhoti table par index.** Hamari \`students\` table mein sirf 4 rows hain. Itni chhoti table par SCAN hi fast hota hai — index kholna bhi ek kaam hai. Optimizer kabhi-kabhi chhoti table par jaan-boojh kar SCAN chunta hai. Index ka asli fayda badi table par dikhta hai.
+
+**2. NULL values.** Index mein NULL values bhi aate hain, par \`WHERE marks = NULL\` kabhi true nahi hota — NULL se compare karne ke liye \`IS NULL\` likhna padta hai. Index NULL ko dhoondh sakta hai, par sirf sahi syntax se.
+
+**3. Bahut saare indexes.** Ek table par 10 indexes bana doge toh SELECT fast hoga, par INSERT 10 guna slow ho jaayega — har index update hota hai. Interview mein poochha jaata hai: index ke nuksaan kya hain? Yahi jawab hai.
+
+**4. Low selectivity.** Agar ek column mein sirf do values hon (jaise gender), toh index se kuch fayda nahi — aadhi table hi milni hai, SCAN hi theek hai. Index tab kaam aata hai jab woh rows ko chhota sa hissa chun sake.
+
+**5. ORDER BY bina index ke.** \`ORDER BY marks DESC\` par agar marks par index hai, toh database sorted order seedha index se le sakta hai — alag se sort nahi karna padta. Neeche wale example mein top 2 students bina sort ke milte hain.`,
+          `Edge cases are the situations that make a plan look strange.
+
+**1. An index on a tiny table.** Our \`students\` table has only 4 rows. On such a tiny table, SCAN is already fast — opening the index is itself work. The optimizer sometimes deliberately picks SCAN for a small table. The real benefit of an index shows on a large table.
+
+**2. NULL values.** Indexes also hold NULL values, but \`WHERE marks = NULL\` is never true — comparing with NULL needs \`IS NULL\`. An index can find NULL, but only with the correct syntax.
+
+**3. Too many indexes.** If you build 10 indexes on one table, SELECT gets fast but INSERT becomes 10 times slower — every index must be updated. Interviews ask: what are the downsides of an index? This is the answer.
+
+**4. Low selectivity.** If a column has only two values (like gender), an index helps nothing — half the table matches anyway, so SCAN is fine. An index helps when it can pick out a small part of the rows.
+
+**5. ORDER BY without an index.** For \`ORDER BY marks DESC\`, if marks has an index, the database can take the sorted order straight from the index — no separate sort is needed. In the example below, the top 2 students come back without a sort.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Index Hone par bhi SCAN Aaye, ya Query phir bhi Slow Ho?',
+          '6. What If: You Still Get SCAN with an Index, or the Query Is Still Slow?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: index hone par bhi SCAN aaye?** Teen wajah ho sakti hain. Pehli: aapne column par function lagaya hai (\`marks + 0\`), isliye index use nahi ho sakta. Doosri: query ko table ki aadhi se zyada rows chahiye — tab SCAN hi sasta hai. Teesri: table bahut chhoti hai — optimizer ko SCAN hi behtar lagta hai. Plan padh kar wajah samjho, phir query badlo.
+
+**What if: query phir bhi slow ho?** Sirf index hi jawab nahi hai. Check karo: kya query mein \`SELECT *\` hai? Kya JOIN mein galat column jud raha hai? Kya table mein lakhon rows hain aur pagination nahi hai (LIMIT nahi lagaya)? Aksar \`LIMIT\` lagate hi query fast ho jaati hai kyunki database ko poori table nahi, sirf pehli N rows chahiye hoti hain.
+
+**What if: do indexes hon aur optimizer galat chune?** Optimizer statistics par faisla karta hai — agar statistics purane hon, toh woh galat plan chun sakta hai. Tab statistics update karne hote hain (jaise \`ANALYZE\` command). Yeh advanced topic hai, par interview mein naam yaad rakhna kaafi hai.
+
+**What if: query ko roz chalana ho?** Roz chalne wali query par index banao — ek baar ka kharcha, roz ka fayda. Ek baar chalne wali query par index mat banao.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you still get SCAN even with an index?** There are three possible reasons. First: you put a function on the column (\`marks + 0\`), so the index cannot be used. Second: the query needs more than half the table — then SCAN is cheaper. Third: the table is very small — the optimizer finds SCAN better. Read the plan to find the reason, then change the query.
+
+**What if the query is still slow?** An index is not the only answer. Check: does the query use \`SELECT *\`? Is the JOIN on the wrong column? Does the table have lakhs of rows with no pagination (no LIMIT)? Often adding a \`LIMIT\` makes the query fast at once, because the database needs only the first N rows, not the whole table.
+
+**What if there are two indexes and the optimizer picks the wrong one?** The optimizer decides from statistics — if the statistics are old, it can pick the wrong plan. Then the statistics must be refreshed (with a command like \`ANALYZE\`). This is an advanced topic, but remembering the name is enough for an interview.
+
+**What if the query runs every day?** Build an index for a query that runs daily — a one-time cost, a daily benefit. Do not build an index for a query that runs once.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Fast Query ke 5 Rules',
+          '7. Summary: Five Rules for a Fast Query'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Rule 1:** plan padho — \`EXPLAIN QUERY PLAN\` se dekho ki SCAN hai ya SEARCH. **Rule 2:** sirf wahi columns maango jo chahiye — \`SELECT *\` mat likho. **Rule 3:** WHERE, JOIN aur ORDER BY wale columns par index banao. **Rule 4:** indexed column par function mat lagao — warna SEARCH, SCAN ban jaata hai. **Rule 5:** LIMIT use karo jab sirf pehli kuch rows chahiye hon.
+
+Aur yaad rakho: index SELECT ko fast karta hai aur INSERT/UPDATE ko slow — isliye har column par index mat banao. Chhoti table par SCAN normal hai; index ka asli fayda badi table par dikhta hai. Interview mein yaad rakhne wali line yeh hai: "SCAN matlab poori table padhna, SEARCH matlab index se seedha jawab." Agle do articles mein hum yeh sab ek poore project mein use karenge — pehle library, phir e-commerce.`,
+          `Let us tie the whole article together. **Rule 1:** read the plan — use \`EXPLAIN QUERY PLAN\` to see whether it is SCAN or SEARCH. **Rule 2:** ask only for the columns you need — never write \`SELECT *\`. **Rule 3:** index the columns used in WHERE, JOIN, and ORDER BY. **Rule 4:** never put a function on an indexed column — or SEARCH turns into SCAN. **Rule 5:** use LIMIT when you only need the first few rows.
+
+And remember: an index speeds up SELECT and slows down INSERT and UPDATE — so do not index every column. SCAN is normal on a small table; the real benefit of an index shows on a large table. The line to remember for interviews is: "SCAN means reading the whole table, SEARCH means the answer straight from the index." In the next two articles we will use all of this in full projects — first a library, then e-commerce.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Query Chalne ka Rasta: SQL se Result Tak',
+        'How a Query Runs: From SQL to Result'
+      ),
+      caption: t(
+        'Optimizer sabse sasta plan chunta hai — plan mein SEARCH aaye toh samjho query fast hai',
+        'The optimizer picks the cheapest plan — if the plan says SEARCH, the query is fast'
+      ),
+      nodes: [
+        {
+          t: t('SQL query likhi jaati hai', 'The SQL query is written'),
+          s: t(
+            'SELECT name FROM students WHERE marks >= 85',
+            'SELECT name FROM students WHERE marks >= 85'
+          )
+        },
+        {
+          t: t('Parser query ko samajhta hai', 'The parser understands the query'),
+          s: t(
+            'Syntax check hoti hai, phir query ka structure banta hai',
+            'Syntax is checked, then the query structure is built'
+          )
+        },
+        {
+          t: t('Optimizer plan banata hai', 'The optimizer builds a plan'),
+          s: t(
+            'Har tareeke ki cost nikaal kar sabse sasta plan chunta hai',
+            'It works out the cost of each method and picks the cheapest plan'
+          )
+        },
+        {
+          t: t('Execution: SEARCH ya SCAN', 'Execution: SEARCH or SCAN'),
+          s: t(
+            'Index ho toh SEARCH, nahi toh poori table SCAN',
+            'SEARCH with an index, otherwise a full table SCAN'
+          )
+        },
+        {
+          t: t('Result milta hai', 'The result arrives'),
+          s: t(
+            'Sirf wahi rows jo condition match karti hain',
+            'Only the rows that match the condition'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Galti Dekho: Column par Function lagte hi SCAN',
+          'See the Mistake: A Function on the Column Turns It into SCAN'
+        ),
+        language: 'sql',
+        code: `DROP INDEX IF EXISTS idx_marks;
+CREATE INDEX idx_marks ON students(marks);
+EXPLAIN QUERY PLAN SELECT name FROM students WHERE marks + 0 >= 85;`,
+        output: `id | parent | notused | detail
+2 | 0 | 0 | SCAN students`
+      },
+      {
+        title: t(
+          'Top 2 Students: ORDER BY + LIMIT',
+          'Top 2 Students: ORDER BY + LIMIT'
+        ),
+        language: 'sql',
+        code: `DROP INDEX IF EXISTS idx_marks;
+CREATE INDEX idx_marks ON students(marks);
+SELECT name, marks FROM students ORDER BY marks DESC LIMIT 2;`,
+        output: `name | marks
+Priya | 92
+Sana | 88`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'EXPLAIN QUERY PLAN mein SEARCH ka kya matlab hai?',
+          'What does SEARCH mean in EXPLAIN QUERY PLAN?'
+        ),
+        opts: [
+          t('Database poori table scan kar raha hai', 'The database is scanning the whole table'),
+          t('Database index se seedha sahi rows par ja raha hai', 'The database is jumping straight to the right rows through the index'),
+          t('Query mein error hai', 'There is an error in the query'),
+          t('Table khaali hai', 'The table is empty')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: SEARCH ka matlab hai database index ka use karke seedha matching rows par gaya — poori table scan nahi ki. Yahi fast plan hai.',
+          'Correct answer: SEARCH means the database used the index to jump straight to the matching rows — it never scanned the whole table. That is the fast plan.'
+        )
+      },
+      {
+        q: t(
+          'Index hone par bhi WHERE marks + 0 >= 85 par SCAN kyun aata hai?',
+          'Why does WHERE marks + 0 >= 85 give SCAN even though an index exists?'
+        ),
+        opts: [
+          t('Kyunki index kharab ho gaya hai', 'Because the index is broken'),
+          t('Kyunki column par function lagne se index use nahi ho sakta', 'Because a function on the column makes the index unusable'),
+          t('Kyunki table bahut badi hai', 'Because the table is too big'),
+          t('Kyunki query galat hai', 'Because the query is wrong')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: function lagne se database ko har row ka marks + 0 nikaal kar check karna padta hai, isliye index ka sorted order kaam nahi aata aur plan SCAN ban jaata hai.',
+          'Correct answer: with a function, the database must compute marks + 0 for every row, so the sorted order of the index is useless and the plan becomes SCAN.'
+        )
+      },
+      {
+        q: t(
+          'SELECT * kyun slow hota hai?',
+          'Why is SELECT * slow?'
+        ),
+        opts: [
+          t('Kyunki woh har column padhta aur bhejta hai, chahe zaroorat ho ya nahi', 'Because it reads and sends every column, whether needed or not'),
+          t('Kyunki * ek slow operator hai', 'Because * is a slow operator'),
+          t('Kyunki usmein index nahi lagta', 'Because no index applies to it'),
+          t('Kyunki woh hamesha error deta hai', 'Because it always gives an error')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: SELECT * saare columns nikaalta hai — zyada data padhna aur bhejna dono slow hote hain. Sirf wahi columns maango jo chahiye.',
+          'Correct answer: SELECT * fetches all columns — reading more data and sending more data are both slow. Ask only for the columns you need.'
+        )
+      },
+      {
+        q: t(
+          'Index ka nuksaan kya hai?',
+          'What is the downside of an index?'
+        ),
+        opts: [
+          t('SELECT slow ho jaata hai', 'SELECT becomes slow'),
+          t('INSERT aur UPDATE slow ho jaate hain kyunki har index update hota hai', 'INSERT and UPDATE become slow because every index is updated'),
+          t('Table delete ho jaati hai', 'The table gets deleted'),
+          t('Koi nuksaan nahi hai', 'There is no downside')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har INSERT aur UPDATE par database ko index ko bhi update karna padta hai, isliye zyada indexes likhne ko slow kar dete hain. Isi liye sirf zaroori columns par index banao.',
+          'Correct answer: on every INSERT and UPDATE the database must update the index too, so too many indexes slow down writes. That is why you index only the columns that need it.'
+        )
+      },
+      {
+        q: t(
+          'SQLite mein execution plan dekhne ke liye kaunsa command use hota hai?',
+          'Which command shows the execution plan in SQLite?'
+        ),
+        opts: [
+          t('EXPLAIN (MySQL style)', 'EXPLAIN (MySQL style)'),
+          t('EXPLAIN QUERY PLAN', 'EXPLAIN QUERY PLAN'),
+          t('SHOW PLAN', 'SHOW PLAN'),
+          t('DESCRIBE QUERY', 'DESCRIBE QUERY')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: SQLite mein EXPLAIN QUERY PLAN use hota hai — MySQL wala EXPLAIN yahan nahi chalta. Yeh plan mein SCAN ya SEARCH dikhata hai.',
+          'Correct answer: SQLite uses EXPLAIN QUERY PLAN — MySQL-style EXPLAIN does not work here. It shows SCAN or SEARCH in the plan.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'EXPLAIN QUERY PLAN se dekho: SCAN matlab poori table, SEARCH matlab index se seedha jawab.',
+        'Use EXPLAIN QUERY PLAN: SCAN means the whole table, SEARCH means the answer straight from the index.'
+      ),
+      t(
+        'SELECT * mat likho — sirf wahi columns maango jo chahiye.',
+        'Never write SELECT * — ask only for the columns you need.'
+      ),
+      t(
+        'Indexed column par function mat lagao — SEARCH, SCAN ban jaata hai.',
+        'Never put a function on an indexed column — SEARCH turns into SCAN.'
+      ),
+      t(
+        'Index SELECT ko fast aur INSERT/UPDATE ko slow karta hai.',
+        'An index speeds up SELECT and slows down INSERT and UPDATE.'
+      ),
+      t(
+        'LIMIT use karo jab sirf pehli kuch rows chahiye hon.',
+        'Use LIMIT when you only need the first few rows.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Naam par Index Banao aur Plan Padho',
+        'Practice: Build an Index on Name and Read the Plan'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: name par idx_name index banao, phir EXPLAIN QUERY PLAN se dekho ki Priya ko dhoondhne par plan kya kehta hai. Done tab mana jayega jab output mein SEARCH students USING INDEX idx_name (name=?) dikhe.',
+        'Run the starter below: build an idx_name index on name, then use EXPLAIN QUERY PLAN to see what the plan says when finding Priya. You are done when the output shows SEARCH students USING INDEX idx_name (name=?).'
+      ),
+      language: 'sql',
+      starter: `DROP INDEX IF EXISTS idx_name;
+CREATE INDEX idx_name ON students(name);
+EXPLAIN QUERY PLAN SELECT id, name, marks FROM students WHERE name = 'Priya';`,
+      expected: `id | parent | notused | detail
+3 | 0 | 0 | SEARCH students USING INDEX idx_name (name=?)`
+    },
+    readMinutes: 12
+  };
+
+const dbmsProjectLibrary: Article = {
+    id: 'dbms-project-library',
+    subjectId: 'dbms',
+    title: t(
+      'Project: Library Management Database — Full Schema aur Queries',
+      'Project: Library Management Database — Full Schema and Queries'
+    ),
+    summary: t(
+      'Ek poori library management database banao: books, members aur issues ka schema, foreign keys se unka connection, "kiske paas kaunsi book hai" wali JOIN query, available copies ginna, aur overdue books nikaalna — sab kuch verified SQL ke saath.',
+      'Build a complete library management database: the schema for books, members, and issues, how foreign keys connect them, the "who has which book" JOIN query, counting available copies, and finding overdue books — all with verified SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Project Kya Hai? (Library System ka Poora Design)',
+          '1. What Is This Project? (The Full Design of a Library System)'
+        ),
+        body: t(
+          `Is project mein hum ek college library ka poora database banate hain — wohi database jo asli library software mein hota hai. Library mein teen cheezein hoti hain: **books** (kaunsi kitaab, kiski likhi, kitne copies), **members** (kaun member hai, uska email) aur **issues** (kisne kaunsi kitaab kab li). Yahi teen entities hain, aur issues hi relationship hai — ek member bahut si books le sakta hai, ek book bahut se members ko ja sakti hai.
+
+Schema aisa hai: \`books\` mein \`book_id\` primary key, \`title\`, \`author\` aur \`copies\` hain. \`members\` mein \`member_id\` primary key, \`name\` aur \`email\` hain. \`issues\` mein \`issue_id\` primary key, \`book_id\` aur \`member_id\` foreign keys, aur \`issue_date\` hai. Foreign keys hi woh dhaage hain jo teen tables ko jodte hain — bina unke yeh teen alag-alag lists hoti, ek system nahi.
+
+Is project se aapko chaar cheezein seekhne ko milengi: schema banana, tables ko foreign keys se jodna, JOIN se sawal poochhna, aur GROUP BY se ginna. Yeh wahi skills hain jo interview mein project discussion mein poochhi jaati hain — aur yahi design aap apne resume project mein bhi use kar sakte ho.`,
+          `In this project we build the complete database of a college library — the same database that real library software uses. A library has three things: **books** (which book, written by whom, how many copies), **members** (who is a member, their email), and **issues** (who took which book and when). These are the three entities, and issues is the relationship — one member can take many books, and one book can go to many members.
+
+The schema is: \`books\` has \`book_id\` as the primary key, plus \`title\`, \`author\`, and \`copies\`. \`members\` has \`member_id\` as the primary key, plus \`name\` and \`email\`. \`issues\` has \`issue_id\` as the primary key, \`book_id\` and \`member_id\` as foreign keys, and \`issue_date\`. The foreign keys are the threads that join the three tables — without them these would be three separate lists, not one system.
+
+This project teaches four things: building a schema, joining tables with foreign keys, asking questions with JOIN, and counting with GROUP BY. These are the same skills asked about in interview project discussions — and this is the same design you can use in your resume project.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Book Issue, Return aur Fine',
+          '2. Real-Life Examples: Issuing a Book, Returning It, and Fines'
+        ),
+        body: t(
+          `Sabse seedha example hai **book issue**. Rahul library jaata hai, "DBMS Concepts" maangta hai, librarian uska card scan karta hai aur register mein likhta hai: Rahul ne book 1 ko 2026-11-10 ko liya. Database mein yeh ek row hai \`issues\` table mein: (1, 1, 1, '2026-11-10'). Card scan karna matlab \`member_id\` daalna, book chunna matlab \`book_id\` daalna.
+
+Doosra example hai **return aur available copies**. "DBMS Concepts" ke 3 copies hain aur 2 issue ho chuke hain — toh available copies 1 bacha. Yeh ginna ek query hai: copies minus issues. Agar available 0 ho, toh librarian book nahi de sakta — system ko yeh check karna chahiye, librarian ki yaad par nahi chhodna chahiye.
+
+Teesra example hai **overdue aur fine**. Agar book 2026-11-10 ko li gayi aur 14 din mein wapas karni thi, toh 2026-11-24 ke baad woh overdue hai. Fine nikaalna ek query hai: aaj ki date minus issue date, agar 14 se zyada ho toh fine lagao. Asli system mein yahi query roz subah chalti hai aur fine wali list banati hai.`,
+          `The simplest example is **issuing a book**. Rahul goes to the library, asks for "DBMS Concepts", the librarian scans his card and writes in the register: Rahul took book 1 on 2026-11-10. In the database this is one row in the \`issues\` table: (1, 1, 1, '2026-11-10'). Scanning the card means entering the \`member_id\`, and picking the book means entering the \`book_id\`.
+
+A second example is **returns and available copies**. "DBMS Concepts" has 3 copies and 2 are issued — so 1 copy is available. Counting that is one query: copies minus issues. If available copies reach 0, the librarian cannot give the book — the system must check this, not the librarian's memory.
+
+A third example is **overdue books and fines**. If a book was taken on 2026-11-10 and must be returned in 14 days, it is overdue after 2026-11-24. Finding the fine is one query: today's date minus the issue date, and a fine applies if it is more than 14. In a real system this query runs every morning and builds the fine list.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Schema Banana aur "Kiske Paas Kaunsi Book Hai" Query',
+          '3. Step-by-Step: Building the Schema and the "Who Has Which Book" Query'
+        ),
+        body: t(
+          `Ab hum poora schema haath se banate hain. Dry run, ek-ek step:
+
+- **Step 1: Teen tables banao** — pehle \`books\` (book_id, title, author, copies), phir \`members\` (member_id, name, email), phir \`issues\` (issue_id, book_id, member_id, issue_date). \`book_id\` aur \`member_id\` INTEGER PRIMARY KEY hain, isliye woh apne aap badhte hain.
+- **Step 2: Data daalo** — 2 books: DBMS Concepts (3 copies) aur Python Basics (2 copies). 2 members: Rahul aur Priya. 2 issues: Rahul ne DBMS Concepts 2026-11-10 ko li, Priya ne wahi book 2026-11-11 ko li.
+- **Step 3: JOIN se sawal poochho** — "kiske paas kaunsi book hai?" \`issues\` ko \`members\` se jodo (\`member_id\` par), phir \`books\` se jodo (\`book_id\` par). Sirf naam aur title chahiye, isliye SELECT mein wahi do columns hain.
+- **Step 4: Output padho** — Priya | DBMS Concepts, Rahul | DBMS Concepts. Dono ne ek hi book li hai, alag-alag din. Sort naam ke hisaab se hai, isliye Priya pehle aayi.
+
+Yeh query hi library ka sabse important sawal hai. Bina JOIN ke aapko sirf numbers milte — book_id 1, member_id 2 — par naam aur title ke liye JOIN chahiye hi chahiye. Neeche wala code run karo aur output dekho.`,
+          `Now let us build the whole schema by hand. Dry run, step by step:
+
+- **Step 1: Create three tables** — first \`books\` (book_id, title, author, copies), then \`members\` (member_id, name, email), then \`issues\` (issue_id, book_id, member_id, issue_date). \`book_id\` and \`member_id\` are INTEGER PRIMARY KEY, so they grow on their own.
+- **Step 2: Add data** — 2 books: DBMS Concepts (3 copies) and Python Basics (2 copies). 2 members: Rahul and Priya. 2 issues: Rahul took DBMS Concepts on 2026-11-10, Priya took the same book on 2026-11-11.
+- **Step 3: Ask the question with a JOIN** — "who has which book?" Join \`issues\` to \`members\` (on \`member_id\`), then to \`books\` (on \`book_id\`). Only name and title are needed, so the SELECT lists just those two columns.
+- **Step 4: Read the output** — Priya | DBMS Concepts, Rahul | DBMS Concepts. Both took the same book on different days. The sort is by name, so Priya comes first.
+
+This query is the library's most important question. Without a JOIN you only get numbers — book_id 1, member_id 2 — but names and titles need the JOIN. Run the code below and look at the output.`
+        ),
+        code: {
+          title: t(
+            'Full Schema: Books, Members, Issues + JOIN Query',
+            'Full Schema: Books, Members, Issues + JOIN Query'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS members;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT, author TEXT, copies INTEGER);
+CREATE TABLE members (member_id INTEGER PRIMARY KEY, name TEXT, email TEXT);
+CREATE TABLE issues (issue_id INTEGER PRIMARY KEY, book_id INTEGER, member_id INTEGER, issue_date TEXT);
+INSERT INTO books VALUES (1, 'DBMS Concepts', 'Korth', 3);
+INSERT INTO books VALUES (2, 'Python Basics', 'Lutz', 2);
+INSERT INTO members VALUES (1, 'Rahul', 'rahul@mail.com');
+INSERT INTO members VALUES (2, 'Priya', 'priya@mail.com');
+INSERT INTO issues VALUES (1, 1, 1, '2026-11-10');
+INSERT INTO issues VALUES (2, 1, 2, '2026-11-11');
+SELECT m.name, b.title FROM issues i JOIN members m ON m.member_id = i.member_id JOIN books b ON b.book_id = i.book_id ORDER BY m.name;`,
+          output: `name | title
+Priya | DBMS Concepts
+Rahul | DBMS Concepts`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Copies Ghalat Count Karna, Member Delete Karna aur Date ko TEXT ki Tarah Compare Karna',
+          '4. Common Mistakes: Miscounting Copies, Deleting a Member, and Comparing Dates as Text'
+        ),
+        body: t(
+          `Library project mein sabse badi galtiyan woh hain jo register mein sahi lagti hain par system mein galat ho jaati hain.
+
+**Galti 1: Copies ghalat ginna.** Available copies ginne ke liye \`copies - COUNT(issues)\` likhna hai aur \`LEFT JOIN\` use karna hai. Agar \`JOIN\` (inner) use karoge toh woh book gayab ho jaayegi jise kisi ne issue hi nahi kiya — kyunki uski koi issue row hi nahi hai. Python Basics kabhi issue nahi hui, phir bhi available 2 dikhni chahiye — yeh sirf LEFT JOIN se aata hai.
+
+**Galti 2: Member delete karna jab uske paas book ho.** Agar Priya ke paas book hai aur aap uska member row delete kar do, toh issues table mein orphan row reh jaayegi — book_id aur member_id hain, par member nahi. Pehle book wapas lo, phir member delete karo. Ya foreign key par rule lagao ki member tabhi delete ho jab uski koi issue na ho.
+
+**Galti 3: Date ko TEXT ki tarah compare karna.** Dates \`'2026-11-10'\` format mein hain (YYYY-MM-DD), isliye text compare bhi sahi kaam karta hai — '2026-11-10' < '2026-11-11' true hai. Par agar date '10-11-2026' format mein likh di, toh compare galat ho jaayega. Hamesha YYYY-MM-DD format use karo.
+
+**Galti 4: Book ka naam har jagah likhna.** Issue table mein book ka title mat likho — sirf \`book_id\` likho. Naam badle toh ek jagah badlega, hazaar issue rows mein nahi.`,
+          `The biggest mistakes in a library project are the ones that look right in a register but go wrong in a system.
+
+**Mistake 1: Miscounting copies.** To count available copies, write \`copies - COUNT(issues)\` and use a \`LEFT JOIN\`. If you use an inner \`JOIN\`, a book nobody has issued will disappear — because it has no issue row at all. Python Basics was never issued, yet it must still show 2 available — only a LEFT JOIN gives that.
+
+**Mistake 2: Deleting a member who still has a book.** If Priya has a book and you delete her member row, the issues table keeps an orphan row — book_id and member_id exist, but the member does not. First take the book back, then delete the member. Or put a rule on the foreign key so a member can be deleted only when they have no issues.
+
+**Mistake 3: Comparing dates as text.** Dates here are in \`'2026-11-10'\` format (YYYY-MM-DD), so text comparison works — '2026-11-10' < '2026-11-11' is true. But if a date is written as '10-11-2026', the comparison breaks. Always use YYYY-MM-DD format.
+
+**Mistake 4: Writing the book name everywhere.** Do not write the book title in the issues table — write only \`book_id\`. If the name changes, it changes in one place, not in a thousand issue rows.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Zero Copies, Ek hi Book Do Baar Issue aur Bina Return ke Member',
+          '5. Edge Cases: Zero Copies, the Same Book Issued Twice, and a Member Who Never Returns a Book'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo library mein har hafte aati hain.
+
+**1. Zero copies.** Saare copies issue ho jaayein toh available 0 hota hai. System ko book dene se pehle check karna chahiye: available > 0 hai ya nahi? Yeh check query mein hona chahiye, librarian ki yaad mein nahi.
+
+**2. Ek hi book do baar issue.** Ek member ek hi book do baar le sakta hai — jaise Rahul ne DBMS Concepts li, wapas ki, phir dobara li. Issues table mein iski do rows hongi, alag issue_id ke saath. Isliye issues ki primary key \`issue_id\` hai, \`book_id + member_id\` nahi — warna dobara issue karna possible hi nahi hota.
+
+**3. Bina return ke member.** Koi member book le kar kabhi wapas na kare toh woh issue hamesha "open" rehti hai. Asli system mein \`issues\` mein \`return_date\` column bhi hota hai — jo khaali ho toh book abhi bhi member ke paas hai. Hamare chhote schema mein return_date nahi hai, par badhe project mein yeh zaroori hai.
+
+**4. Khaali library.** Koi book hi nahi ho toh bhi schema kaam karna chahiye — LEFT JOIN se saari books dikhengi, available copies ke saath. Khaali result error nahi hai.
+
+**5. Ek hi din mein do issues.** Do members ne ek hi book ek hi din li — issue_date se unmein farak nahi kar sakte. Isi liye \`issue_id\` hai: har issue ki apni pehchan hoti hai.`,
+          `Edge cases are the situations that come up in a library every week.
+
+**1. Zero copies.** When all copies are issued, available copies become 0. The system must check before giving a book: is available > 0? This check belongs in a query, not in the librarian's memory.
+
+**2. The same book issued twice.** One member can take the same book twice — Rahul takes DBMS Concepts, returns it, then takes it again. The issues table gets two rows with different issue_id values. That is why the primary key of issues is \`issue_id\`, not \`book_id + member_id\` — otherwise issuing it again would be impossible.
+
+**3. A member who never returns a book.** If a member takes a book and never returns it, that issue stays "open" forever. A real system also has a \`return_date\` column in \`issues\` — empty means the book is still with the member. Our small schema has no return_date, but a bigger project needs it.
+
+**4. An empty library.** Even with no books at all, the schema must work — a LEFT JOIN shows all books with their available copies. An empty result is not an error.
+
+**5. Two issues on the same day.** Two members take the same book on the same day — issue_date cannot tell them apart. That is why \`issue_id\` exists: every issue has its own identity.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Fine Lagana Ho, ya 10,000 Books Ho Jaayein?',
+          '6. What If: You Must Add Fines, or the Library Grows to 10,000 Books?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer project discussion mein poochhta hai.
+
+**What if: fine lagana ho?** \`issues\` mein \`return_date\` column add karo aur ek \`fines\` table banao (fine_id, issue_id, amount). Fine ki query hogi: jinki return_date khaali hai aur issue_date 14 din se purani hai, un par 10 rupaye per din. Schema badle bina fine nahi lag sakta — isliye pehle design mein return_date rakhna behtar hota hai.
+
+**What if: 10,000 books ho jaayein?** Tab index chahiye: \`books(title)\` par index taaki naam se dhoondhna fast ho, aur \`issues(book_id)\` par index taaki available copies ginna fast ho. Bina index ke har query poori table scan karegi aur system slow ho jaayega.
+
+**What if: do libraries hon?** Tab \`books\` mein \`library_id\` column add karo ya ek \`libraries\` table banao. Har table mein yeh socho: yeh data kiska hai? Multi-branch system mein har row ko apni branch pata honi chahiye.
+
+**What if: member apna email badle?** Email \`members\` mein ek jagah hai, isliye ek UPDATE kaafi hai. Agar email har issue row mein bhi likha hota, toh hazaar rows badalni padti — yahi design ka fayda hai.`,
+          `Now let us ask "what-if" questions — these are the questions interviewers ask in project discussions.
+
+**What if you must add fines?** Add a \`return_date\` column to \`issues\` and make a \`fines\` table (fine_id, issue_id, amount). The fine query is: anyone whose return_date is empty and whose issue_date is more than 14 days old pays 10 rupees per day. A fine cannot be added without changing the schema — so keeping return_date in the design from the start is better.
+
+**What if the library grows to 10,000 books?** Then indexes are needed: an index on \`books(title)\` so searching by name is fast, and an index on \`issues(book_id)\` so counting available copies is fast. Without indexes, every query scans the whole table and the system slows down.
+
+**What if there are two libraries?** Then add a \`library_id\` column to \`books\` or make a \`libraries\` table. In every table ask: whose data is this? In a multi-branch system, every row must know its branch.
+
+**What if a member changes their email?** The email lives in one place in \`members\`, so one UPDATE is enough. If the email were also written in every issue row, a thousand rows would need changing — that is the benefit of good design.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Project se Kya Seekha',
+          '7. Summary: What This Project Taught You'
+        ),
+        body: t(
+          `Chalo poora project ek jagah par bandhte hain. Library ke teen tables hain: \`books\`, \`members\` aur \`issues\`. \`issues\` junction table hai jismein \`book_id\` aur \`member_id\` foreign keys hain, aur \`issue_id\` primary key hai. "Kiske paas kaunsi book hai" — yeh sawal do JOIN se milta hai. Available copies ginne ke liye \`copies - COUNT(issues)\` aur \`LEFT JOIN\` chahiye, taaki kabhi issue na hui book bhi dikhe.
+
+Interview mein is project ko aise sunao: pehle problem batao (library ka register), phir entities batao (Book, Member, Issue), phir schema batao, phir ek query chalao. Aur what-if ke jawab taiyar rakho: fine ke liye return_date, bade data ke liye index, do branches ke liye library_id. Agle article mein hum e-commerce project banayenge — customers, orders aur totals.`,
+          `Let us tie the whole project together. The library has three tables: \`books\`, \`members\`, and \`issues\`. \`issues\` is a junction table with \`book_id\` and \`member_id\` as foreign keys, and \`issue_id\` as the primary key. "Who has which book" is answered with two JOINs. Counting available copies needs \`copies - COUNT(issues)\` and a \`LEFT JOIN\`, so that a book never issued still shows up.
+
+In an interview, present this project like this: first the problem (the library register), then the entities (Book, Member, Issue), then the schema, then run one query. And keep the what-if answers ready: return_date for fines, indexes for large data, library_id for two branches. In the next article we will build the e-commerce project — customers, orders, and totals.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Library Schema: Teen Tables aur Unke Connections',
+        'Library Schema: Three Tables and Their Connections'
+      ),
+      caption: t(
+        'Issues junction table hai — uske do foreign keys teen tables ko ek system banate hain',
+        'Issues is the junction table — its two foreign keys make three tables one system'
+      ),
+      nodes: [
+        {
+          t: t('books (book_id, title, author, copies)', 'books (book_id, title, author, copies)'),
+          s: t(
+            'book_id primary key — DBMS Concepts ke 3 copies hain',
+            'book_id is the primary key — DBMS Concepts has 3 copies'
+          )
+        },
+        {
+          t: t('members (member_id, name, email)', 'members (member_id, name, email)'),
+          s: t(
+            'member_id primary key — Rahul aur Priya members hain',
+            'member_id is the primary key — Rahul and Priya are members'
+          )
+        },
+        {
+          t: t('issues (issue_id, book_id, member_id, issue_date)', 'issues (issue_id, book_id, member_id, issue_date)'),
+          s: t(
+            'issue_id primary key, book_id aur member_id foreign keys hain',
+            'issue_id is the primary key, book_id and member_id are foreign keys'
+          )
+        },
+        {
+          t: t('JOIN: issues → members → books', 'JOIN: issues → members → books'),
+          s: t(
+            '"Kiske paas kaunsi book hai" — do JOIN se naam aur title milte hain',
+            '"Who has which book" — two JOINs give the name and the title'
+          )
+        },
+        {
+          t: t('Available = copies - COUNT(issues)', 'Available = copies - COUNT(issues)'),
+          s: t(
+            'LEFT JOIN se kabhi issue na hui book bhi dikhti hai',
+            'A LEFT JOIN also shows a book that was never issued'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Available Copies Ginna: LEFT JOIN + COUNT',
+          'Counting Available Copies: LEFT JOIN + COUNT'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS members;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT, author TEXT, copies INTEGER);
+CREATE TABLE members (member_id INTEGER PRIMARY KEY, name TEXT, email TEXT);
+CREATE TABLE issues (issue_id INTEGER PRIMARY KEY, book_id INTEGER, member_id INTEGER, issue_date TEXT);
+INSERT INTO books VALUES (1, 'DBMS Concepts', 'Korth', 3);
+INSERT INTO books VALUES (2, 'Python Basics', 'Lutz', 2);
+INSERT INTO members VALUES (1, 'Rahul', 'rahul@mail.com');
+INSERT INTO members VALUES (2, 'Priya', 'priya@mail.com');
+INSERT INTO issues VALUES (1, 1, 1, '2026-11-10');
+INSERT INTO issues VALUES (2, 1, 2, '2026-11-11');
+SELECT b.title, b.copies - COUNT(i.issue_id) AS available FROM books b LEFT JOIN issues i ON i.book_id = b.book_id GROUP BY b.book_id, b.title, b.copies ORDER BY b.title;`,
+        output: `title | available
+DBMS Concepts | 1
+Python Basics | 2`
+      },
+      {
+        title: t(
+          'Purani Issue Dhoondhna: 2026-11-11 se Pehle Ki Issues',
+          'Finding Old Issues: Issues Before 2026-11-11'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS members;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT, author TEXT, copies INTEGER);
+CREATE TABLE members (member_id INTEGER PRIMARY KEY, name TEXT, email TEXT);
+CREATE TABLE issues (issue_id INTEGER PRIMARY KEY, book_id INTEGER, member_id INTEGER, issue_date TEXT);
+INSERT INTO books VALUES (1, 'DBMS Concepts', 'Korth', 3);
+INSERT INTO books VALUES (2, 'Python Basics', 'Lutz', 2);
+INSERT INTO members VALUES (1, 'Rahul', 'rahul@mail.com');
+INSERT INTO members VALUES (2, 'Priya', 'priya@mail.com');
+INSERT INTO issues VALUES (1, 1, 1, '2026-11-10');
+INSERT INTO issues VALUES (2, 1, 2, '2026-11-11');
+SELECT m.name, b.title, i.issue_date FROM issues i JOIN members m ON m.member_id = i.member_id JOIN books b ON b.book_id = i.book_id WHERE i.issue_date < '2026-11-11' ORDER BY i.issue_date;`,
+        output: `name | title | issue_date
+Rahul | DBMS Concepts | 2026-11-10`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Library schema mein "kiske paas kaunsi book hai" jaanne ke liye kaunsi table chahiye?',
+          'In the library schema, which table is needed to know "who has which book"?'
+        ),
+        opts: [
+          t('Sirf books', 'Only books'),
+          t('Sirf members', 'Only members'),
+          t('issues — jismein book_id aur member_id dono hain', 'issues — which holds both book_id and member_id'),
+          t('Koi table nahi', 'No table')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: issues junction table hai jismein book_id aur member_id foreign keys hain — isko members aur books se JOIN karke naam aur title milte hain.',
+          'Correct answer: issues is the junction table holding book_id and member_id as foreign keys — joining it to members and books gives the name and the title.'
+        )
+      },
+      {
+        q: t(
+          'Available copies ginne ke liye LEFT JOIN kyun chahiye?',
+          'Why is a LEFT JOIN needed to count available copies?'
+        ),
+        opts: [
+          t('Kyunki LEFT JOIN fast hota hai', 'Because LEFT JOIN is fast'),
+          t('Kyunki kabhi issue na hui book bhi dikhni chahiye', 'Because a book that was never issued must still show up'),
+          t('Kyunki copies ginna mushkil hai', 'Because counting copies is hard'),
+          t('Kyunki INNER JOIN allowed nahi hai', 'Because INNER JOIN is not allowed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: INNER JOIN se woh book gayab ho jaati hai jiski koi issue row nahi hai. LEFT JOIN se saari books dikhti hain aur COUNT 0 aata hai, isliye available = copies milta hai.',
+          'Correct answer: with an INNER JOIN, a book with no issue row disappears. A LEFT JOIN shows all books and COUNT gives 0, so available = copies.'
+        )
+      },
+      {
+        q: t(
+          'Issues table ki primary key kya honi chahiye?',
+          'What should the primary key of the issues table be?'
+        ),
+        opts: [
+          t('book_id + member_id', 'book_id + member_id'),
+          t('issue_id', 'issue_id'),
+          t('issue_date', 'issue_date'),
+          t('Koi primary key nahi', 'No primary key')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek member ek hi book do baar le sakta hai (wapas karke dobara), isliye book_id + member_id primary key nahi ho sakta — har issue ki apni issue_id hoti hai.',
+          'Correct answer: one member can take the same book twice (return it and take it again), so book_id + member_id cannot be the primary key — every issue has its own issue_id.'
+        )
+      },
+      {
+        q: t(
+          'DBMS Concepts ke 3 copies hain aur 2 issue ho chuke hain. Available copies kitne hain?',
+          'DBMS Concepts has 3 copies and 2 are issued. How many copies are available?'
+        ),
+        opts: [
+          t('5', '5'),
+          t('3', '3'),
+          t('1', '1'),
+          t('0', '0')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: available = copies - issues = 3 - 2 = 1. Yahi formula code example mein use hua hai.',
+          'Correct answer: available = copies - issues = 3 - 2 = 1. This is the same formula used in the code example.'
+        )
+      },
+      {
+        q: t(
+          'Member delete karne se pehle kya karna chahiye?',
+          'What should be done before deleting a member?'
+        ),
+        opts: [
+          t('Kuch nahi, seedha delete karo', 'Nothing, just delete directly'),
+          t('Check karo ki uske paas koi book issue toh nahi hai', 'Check that they have no book issued'),
+          t('Saari books delete karo', 'Delete all the books'),
+          t('Library band kar do', 'Close the library')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: member delete karne se issues table mein orphan row reh jaayegi — book_id aur member_id honge par member nahi. Pehle book wapas lo, phir member delete karo.',
+          'Correct answer: deleting the member leaves an orphan row in issues — book_id and member_id exist but the member does not. First take the book back, then delete the member.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Library ke teen tables: books, members aur issues (junction table).',
+        'The library has three tables: books, members, and issues (a junction table).'
+      ),
+      t(
+        '"Kiske paas kaunsi book hai" — do JOIN se milta hai.',
+        '"Who has which book" is answered with two JOINs.'
+      ),
+      t(
+        'Available = copies - COUNT(issues), LEFT JOIN se.',
+        'Available = copies - COUNT(issues), with a LEFT JOIN.'
+      ),
+      t(
+        'Issues ki primary key issue_id hai — ek hi book do baar issue ho sakti hai.',
+        'The primary key of issues is issue_id — the same book can be issued twice.'
+      ),
+      t(
+        'Dates hamesha YYYY-MM-DD format mein likho.',
+        'Always write dates in YYYY-MM-DD format.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Nayi Book Add Karo aur Issue Karo',
+        'Practice: Add a New Book and Issue It'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: poora library schema banao, phir "Operating Systems" book add karo (3 copies nahi, 1 copy) aur use Priya ko 2026-11-12 ko issue karo. Aakhir mein saari issues list karo. Done tab mana jayega jab output mein 3 rows aayein: Rahul | DBMS Concepts, Priya | DBMS Concepts, Priya | Operating Systems.',
+        'Run the starter below: build the full library schema, then add the book "Operating Systems" (1 copy, not 3) and issue it to Priya on 2026-11-12. Finally, list all issues. You are done when the output shows 3 rows: Rahul | DBMS Concepts, Priya | DBMS Concepts, Priya | Operating Systems.'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS members;
+CREATE TABLE books (book_id INTEGER PRIMARY KEY, title TEXT, author TEXT, copies INTEGER);
+CREATE TABLE members (member_id INTEGER PRIMARY KEY, name TEXT, email TEXT);
+CREATE TABLE issues (issue_id INTEGER PRIMARY KEY, book_id INTEGER, member_id INTEGER, issue_date TEXT);
+INSERT INTO books VALUES (1, 'DBMS Concepts', 'Korth', 3);
+INSERT INTO books VALUES (2, 'Python Basics', 'Lutz', 2);
+INSERT INTO members VALUES (1, 'Rahul', 'rahul@mail.com');
+INSERT INTO members VALUES (2, 'Priya', 'priya@mail.com');
+INSERT INTO issues VALUES (1, 1, 1, '2026-11-10');
+INSERT INTO issues VALUES (2, 1, 2, '2026-11-11');
+INSERT INTO books VALUES (3, 'Operating Systems', 'Silberschatz', 1);
+INSERT INTO issues VALUES (3, 3, 2, '2026-11-12');
+SELECT m.name, b.title FROM issues i JOIN members m ON m.member_id = i.member_id JOIN books b ON b.book_id = i.book_id ORDER BY i.issue_id;`,
+      expected: `name | title
+Rahul | DBMS Concepts
+Priya | DBMS Concepts
+Priya | Operating Systems`
+    },
+    readMinutes: 12
+  };
+
+const dbmsProjectEcommerce: Article = {
+    id: 'dbms-project-ecommerce',
+    subjectId: 'dbms',
+    title: t(
+      'Project: E-Commerce Database Design aur Queries — Customers, Orders aur Totals',
+      'Project: E-Commerce Database Design and Queries — Customers, Orders, and Totals'
+    ),
+    summary: t(
+      'Ek poori e-commerce database banao: customers, products, orders aur order_items ka schema, har order ka total SUM se nikaalna, sabse zyada bikne wala product dhoondhna, aur woh customers nikaalna jinhone kabhi order nahi kiya — sab kuch verified SQL ke saath.',
+      'Build a complete e-commerce database: the schema for customers, products, orders, and order_items, finding every order total with SUM, finding the best-selling product, and finding customers who never ordered — all with verified SQL.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Project Kya Hai? (E-Commerce System ka Poora Design)',
+          '1. What Is This Project? (The Full Design of an E-Commerce System)'
+        ),
+        body: t(
+          `Is project mein hum ek chhoti online shop ka poora database banate hain — wohi database jo asli shopping app mein hota hai. Shop mein chaar cheezein hoti hain: **customers** (kaun khareedta hai), **products** (kya bikta hai, kitne ka), **orders** (kisne kab order kiya) aur **order_items** (order mein kaunsa product, kitni quantity). Yahi chaar entities hain, aur order_items hi relationship hai — ek order mein bahut se products, ek product bahut se orders mein.
+
+Schema aisa hai: \`customers\` mein \`customer_id\` primary key, \`name\` aur \`city\` hain. \`products\` mein \`product_id\` primary key, \`name\` aur \`price\` hain. \`orders\` mein \`order_id\` primary key, \`customer_id\` foreign key aur \`order_date\` hai. \`order_items\` mein \`order_id\` aur \`product_id\` foreign keys aur \`qty\` hai — dono mil kar primary key hain, taaki ek order mein ek product ek hi baar aaye.
+
+Is project se aapko teen cheezein seekhne ko milengi: chaar tables ko foreign keys se jodna, \`SUM(price * qty)\` se total nikaalna, aur \`LEFT JOIN\` se woh customers dhoondhna jinhone kabhi order nahi kiya. Yeh wahi skills hain jo interview mein e-commerce project discussion mein poochhi jaati hain.`,
+          `In this project we build the complete database of a small online shop — the same database that a real shopping app uses. A shop has four things: **customers** (who buys), **products** (what is sold, at what price), **orders** (who ordered and when), and **order_items** (which product is in an order, in what quantity). These are the four entities, and order_items is the relationship — one order has many products, and one product appears in many orders.
+
+The schema is: \`customers\` has \`customer_id\` as the primary key, plus \`name\` and \`city\`. \`products\` has \`product_id\` as the primary key, plus \`name\` and \`price\`. \`orders\` has \`order_id\` as the primary key, \`customer_id\` as a foreign key, and \`order_date\`. \`order_items\` has \`order_id\` and \`product_id\` as foreign keys and \`qty\` — together they form the primary key, so one product appears only once per order.
+
+This project teaches three things: joining four tables with foreign keys, finding totals with \`SUM(price * qty)\`, and finding customers who never ordered with a \`LEFT JOIN\`. These are the same skills asked about in interview discussions of e-commerce projects.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Cart, Checkout aur Best Seller',
+          '2. Real-Life Examples: Cart, Checkout, and Best Seller'
+        ),
+        body: t(
+          `Sabse seedha example hai **cart**. Aap headphones (1500) 2 daalte ho aur keyboard (2500) 1 daalte ho. Cart ka total hai 2 x 1500 + 1 x 2500 = 5500. Database mein cart hi \`order_items\` hai: har row mein product aur quantity. Total nikaalna ek query hai: \`SUM(price * qty)\`.
+
+Doosra example hai **checkout**. Checkout par order banta hai: pehle \`orders\` mein ek row (kisne, kab), phir \`order_items\` mein har product ki ek row. Dono ek hi transaction mein hone chahiye — agar order ban gaya par items nahi bane, toh paise kat jaayenge par samaan nahi milega. Isi liye checkout ko transaction mein likhte hain.
+
+Teesra example hai **best seller**. Shop ko pata karna hai ki sabse zyada kya bik raha hai — Keyboard 3 baar bika, Headphones 2 baar. Yeh query hai: \`order_items\` ko \`products\` se jodo, quantity ka SUM karo, aur sabse zyada wale ko pehle dikhao. Isi query se shop decide karti hai ki kya stock karna hai aur kya discount dena hai.`,
+          `The simplest example is the **cart**. You add headphones (1500) twice and a keyboard (2500) once. The cart total is 2 x 1500 + 1 x 2500 = 5500. In the database, the cart is \`order_items\`: each row holds a product and a quantity. Finding the total is one query: \`SUM(price * qty)\`.
+
+A second example is **checkout**. At checkout an order is created: first one row in \`orders\` (who, when), then one row per product in \`order_items\`. Both must happen in one transaction — if the order is created but the items are not, the money is deducted but nothing is delivered. That is why checkout is written as a transaction.
+
+A third example is the **best seller**. The shop must know what sells most — Keyboard sold 3 times, Headphones 2 times. That is one query: join \`order_items\` to \`products\`, SUM the quantity, and show the highest first. From this query the shop decides what to stock and what to discount.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Schema Banana aur Har Customer ka Total Nikaalna',
+          '3. Step-by-Step: Building the Schema and Finding Every Customer Total'
+        ),
+        body: t(
+          `Ab hum poora schema haath se banate hain. Dry run, ek-ek step:
+
+- **Step 1: Chaar tables banao** — \`customers\` (customer_id, name, city), \`products\` (product_id, name, price), \`orders\` (order_id, customer_id, order_date), \`order_items\` (order_id, product_id, qty). \`order_items\` ki primary key dono ids ka combination hai.
+- **Step 2: Data daalo** — 2 customers: Rahul (Delhi), Priya (Mumbai). 2 products: Headphones 1500, Keyboard 2500. 2 orders: Rahul ka order 1, Priya ka order 2, dono 2026-11-15 ko. Order items: Rahul ne 2 Headphones + 1 Keyboard liye, Priya ne 2 Keyboard liye.
+- **Step 3: Total nikaalo** — chaaro tables ko JOIN karo: orders se customers, order_items se products. Phir \`SUM(p.price * oi.qty)\` se total banao aur customer ke hisaab se GROUP BY karo. Sort total ke hisaab se, sabse zyada pehle.
+- **Step 4: Output padho** — Rahul | 5500 (2 x 1500 + 1 x 2500), Priya | 5000 (2 x 2500). Rahul ka total zyada hai kyunki usne teen items liye.
+
+Yeh query hi e-commerce ka sabse important sawal hai — har report, har bill, har dashboard isi query se banta hai. Neeche wala code run karo aur output dekho: totals bilkul wahi hain jo haath se gine the.`,
+          `Now let us build the whole schema by hand. Dry run, step by step:
+
+- **Step 1: Create four tables** — \`customers\` (customer_id, name, city), \`products\` (product_id, name, price), \`orders\` (order_id, customer_id, order_date), \`order_items\` (order_id, product_id, qty). The primary key of \`order_items\` is the combination of both ids.
+- **Step 2: Add data** — 2 customers: Rahul (Delhi), Priya (Mumbai). 2 products: Headphones 1500, Keyboard 2500. 2 orders: Rahul's order 1, Priya's order 2, both on 2026-11-15. Order items: Rahul took 2 Headphones + 1 Keyboard, Priya took 2 Keyboards.
+- **Step 3: Find the totals** — JOIN all four tables: orders to customers, order_items to products. Then build the total with \`SUM(p.price * oi.qty)\` and GROUP BY customer. Sort by total, highest first.
+- **Step 4: Read the output** — Rahul | 5500 (2 x 1500 + 1 x 2500), Priya | 5000 (2 x 2500). Rahul's total is higher because he took three items.
+
+This query is the most important question in e-commerce — every report, every bill, and every dashboard comes from it. Run the code below and look at the output: the totals are exactly the ones we calculated by hand.`
+        ),
+        code: {
+          title: t(
+            'Full Schema: Customers, Products, Orders, Order Items + Totals',
+            'Full Schema: Customers, Products, Orders, Order Items + Totals'
+          ),
+          language: 'sql',
+          code: `DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (customer_id INTEGER PRIMARY KEY, name TEXT, city TEXT);
+CREATE TABLE products (product_id INTEGER PRIMARY KEY, name TEXT, price INTEGER);
+CREATE TABLE orders (order_id INTEGER PRIMARY KEY, customer_id INTEGER, order_date TEXT);
+CREATE TABLE order_items (order_id INTEGER, product_id INTEGER, qty INTEGER, PRIMARY KEY (order_id, product_id));
+INSERT INTO customers VALUES (1, 'Rahul', 'Delhi');
+INSERT INTO customers VALUES (2, 'Priya', 'Mumbai');
+INSERT INTO products VALUES (1, 'Headphones', 1500);
+INSERT INTO products VALUES (2, 'Keyboard', 2500);
+INSERT INTO orders VALUES (1, 1, '2026-11-15');
+INSERT INTO orders VALUES (2, 2, '2026-11-15');
+INSERT INTO order_items VALUES (1, 1, 2);
+INSERT INTO order_items VALUES (1, 2, 1);
+INSERT INTO order_items VALUES (2, 2, 2);
+SELECT c.name, SUM(p.price * oi.qty) AS total FROM orders o JOIN customers c ON c.customer_id = o.customer_id JOIN order_items oi ON oi.order_id = o.order_id JOIN products p ON p.product_id = oi.product_id GROUP BY c.name ORDER BY total DESC;`,
+          output: `name | total
+Rahul | 5500
+Priya | 5000`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Total ko Store Karna, Price Badalna aur Bina Transaction ke Checkout',
+          '4. Common Mistakes: Storing the Total, Changing a Price, and Checkout Without a Transaction'
+        ),
+        body: t(
+          `E-commerce project mein sabse badi galtiyan woh hain jo billing mein paise ka farak kar deti hain.
+
+**Galti 1: Total ko orders table mein store karna.** Total ko store karne ki jagah hamesha query se nikaalo. Agar total store kar diya aur baad mein ek item badal diya, toh stored total galat ho jaayega. Rule hai: jo cheez calculate ho sakti hai, use store mat karo — query se nikaalo.
+
+**Galti 2: Product ka price badalne se purane orders badal jaana.** Agar Keyboard ka price 2500 se 3000 ho jaaye, toh purane orders ka total bhi badal jaayega — kyunki total query price table se leti hai. Asli system mein \`order_items\` mein price bhi store karte hain (us waqt ka price), taaki purana bill kabhi na badle. Hamare chhote schema mein yeh nahi hai, par badhe project mein yeh zaroori hai.
+
+**Galti 3: Bina transaction ke checkout.** Order bane aur items na bane — toh paise kat jaayenge par samaan nahi milega. Checkout ko ek transaction mein likho: \`BEGIN TRANSACTION\`, phir orders aur order_items dono, phir \`COMMIT\`. Kuch fail ho toh \`ROLLBACK\`.
+
+**Galti 4: Order_items mein product ka naam likhna.** Naam badle toh hazaar rows badalni padengi. Sirf \`product_id\` likho, naam JOIN se nikaalo.`,
+          `The biggest mistakes in an e-commerce project are the ones that change money in billing.
+
+**Mistake 1: Storing the total in the orders table.** Instead of storing the total, always calculate it with a query. If you store the total and later change one item, the stored total becomes wrong. The rule is: never store what can be calculated — fetch it with a query.
+
+**Mistake 2: Changing a product price and changing old orders.** If the Keyboard price goes from 2500 to 3000, old orders' totals change too — because the total query takes the price from the products table. A real system also stores the price in \`order_items\` (the price at that time), so an old bill never changes. Our small schema does not have this, but a bigger project needs it.
+
+**Mistake 3: Checkout without a transaction.** If the order is created but the items are not, money is deducted but nothing is delivered. Write checkout as one transaction: \`BEGIN TRANSACTION\`, then orders and order_items, then \`COMMIT\`. If anything fails, \`ROLLBACK\`.
+
+**Mistake 4: Writing the product name in order_items.** If the name changes, a thousand rows must change. Write only \`product_id\`, and fetch the name with a JOIN.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Order, Zero Quantity aur Kabhi Order Na Karne Wala Customer',
+          '5. Edge Cases: Empty Orders, Zero Quantity, and a Customer Who Never Ordered'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo shop mein har hafte aati hain.
+
+**1. Khaali order.** Order ban gaya par usmein koi item nahi hai — jaise customer ne checkout shuru kiya aur beech mein band kar diya. Total query mein aisa order dikhega hi nahi, kyunki uski koi order_items row nahi hai. Aise orders ko alag se dhoondhna padta hai (LEFT JOIN se) aur cancel karna padta hai.
+
+**2. Zero quantity.** Koi item quantity 0 ke saath aa jaaye toh total mein uska contribution 0 hota hai — galat nahi, par bekaar row hai. Order_items mein \`CHECK (qty > 0)\` lagana behtar hai, taaki zero quantity kabhi aaye hi nahi.
+
+**3. Kabhi order na karne wala customer.** Sana ne account banaya par kabhi order nahi kiya. Total wali query mein woh dikhegi hi nahi — kyunki uska koi order nahi hai. Use dhoondhne ke liye \`LEFT JOIN\` chahiye: customers ko orders se jodo aur wahi rows lo jahan \`order_id IS NULL\` ho. Neeche wale code example mein yahi dikhaya gaya hai.
+
+**4. Ek hi product do baar.** Ek order mein ek product do baar aa jaaye toh order_items ki primary key (order_id + product_id) use rok degi. Sahi tareeka hai quantity badhana, doosri row banana nahi.
+
+**5. Price zero ho.** Free product ka price 0 ho sakta hai — total mein uska contribution 0 hota hai. Yeh valid hai, par report mein free items ko alag dikhana chahiye.`,
+          `Edge cases are the situations that come up in a shop every week.
+
+**1. An empty order.** An order is created but has no items — like a customer who started checkout and closed it midway. The total query never shows such an order, because it has no order_items row. Such orders must be found separately (with a LEFT JOIN) and cancelled.
+
+**2. Zero quantity.** If an item arrives with quantity 0, its contribution to the total is 0 — not wrong, but a useless row. It is better to put \`CHECK (qty > 0)\` on order_items so zero quantity can never arrive.
+
+**3. A customer who never ordered.** Sana made an account but never ordered. The total query never shows her — because she has no order. Finding her needs a \`LEFT JOIN\`: join customers to orders and keep only the rows where \`order_id IS NULL\`. The code example below shows exactly this.
+
+**4. The same product twice.** If one product appears twice in one order, the order_items primary key (order_id + product_id) blocks it. The correct way is to increase the quantity, not to add a second row.
+
+**5. A zero price.** A free product can have price 0 — its contribution to the total is 0. That is valid, but free items should be shown separately in a report.`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Discount Lagana Ho, ya 1 Lakh Orders Ho Jaayein?',
+          '6. What If: You Must Add Discounts, or Orders Reach 1 Lakh?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer project discussion mein poochhta hai.
+
+**What if: discount lagana ho?** \`orders\` mein \`discount\` column add karo ya ek \`coupons\` table banao. Total ki query hogi: \`SUM(price * qty) - discount\`. Discount ko total mein se ghatao, price mein se nahi — taaki har item ka asli price record mein rahe.
+
+**What if: 1 lakh orders ho jaayein?** Tab index chahiye: \`orders(customer_id)\` par index taaki ek customer ke orders fast milen, aur \`order_items(order_id)\` par index taaki total ginna fast ho. Bina index ke total wali query poori tables scan karegi.
+
+**What if: product ka stock khatam ho jaaye?** \`products\` mein \`stock\` column add karo. Checkout par check karo: stock >= qty hai ya nahi? Aur stock ko transaction mein ghatao — taaki do log ek hi aakhiri item na khareed lein. Yeh race condition hai, aur transaction hi iska jawab hai.
+
+**What if: customer apna sheher badle?** City \`customers\` mein ek jagah hai, isliye ek UPDATE kaafi hai. Agar city har order mein bhi likhi hoti, toh hazaar orders badalne padte — yahi design ka fayda hai.`,
+          `Now let us ask "what-if" questions — these are the questions interviewers ask in project discussions.
+
+**What if you must add discounts?** Add a \`discount\` column to \`orders\` or make a \`coupons\` table. The total query becomes: \`SUM(price * qty) - discount\`. Subtract the discount from the total, not from the price — so each item's real price stays on record.
+
+**What if orders reach 1 lakh?** Then indexes are needed: an index on \`orders(customer_id)\` so one customer's orders come fast, and an index on \`order_items(order_id)\` so totals are fast. Without indexes, the total query scans the whole tables.
+
+**What if a product runs out of stock?** Add a \`stock\` column to \`products\`. At checkout, check: is stock >= qty? And reduce the stock inside the transaction — so two people cannot buy the same last item. This is a race condition, and a transaction is the answer.
+
+**What if a customer changes city?** The city lives in one place in \`customers\`, so one UPDATE is enough. If the city were also written in every order, a thousand orders would need changing — that is the benefit of good design.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Project se Kya Seekha',
+          '7. Summary: What This Project Taught You'
+        ),
+        body: t(
+          `Chalo poora project ek jagah par bandhte hain. E-commerce ke chaar tables hain: \`customers\`, \`products\`, \`orders\` aur \`order_items\`. \`order_items\` junction table hai jiski primary key \`order_id + product_id\` hai. Order ka total hai \`SUM(price * qty)\` — chaaro tables ko JOIN karke, customer ke hisaab se GROUP BY karke. Best seller nikaalne ke liye quantity ka SUM karo. Aur kabhi order na karne wale customers ke liye \`LEFT JOIN\` + \`IS NULL\` chahiye.
+
+Interview mein is project ko aise sunao: pehle problem batao (online shop), phir entities batao (Customer, Product, Order, OrderItem), phir schema batao, phir total wali query chalao. Aur what-if ke jawab taiyar rakho: discount ke liye discount column, bade data ke liye index, stock ke liye stock column + transaction. Agle article mein hum interview prep karenge — top questions aur 7-din revision plan.`,
+          `Let us tie the whole project together. E-commerce has four tables: \`customers\`, \`products\`, \`orders\`, and \`order_items\`. \`order_items\` is a junction table whose primary key is \`order_id + product_id\`. An order total is \`SUM(price * qty)\` — JOIN all four tables and GROUP BY customer. To find the best seller, SUM the quantity. And to find customers who never ordered, you need a \`LEFT JOIN\` + \`IS NULL\`.
+
+In an interview, present this project like this: first the problem (the online shop), then the entities (Customer, Product, Order, OrderItem), then the schema, then run the total query. And keep the what-if answers ready: a discount column for discounts, indexes for large data, a stock column plus a transaction for stock. In the next article we will do interview prep — top questions and a 7-day revision plan.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'E-Commerce Schema: Chaar Tables aur Unke Connections',
+        'E-Commerce Schema: Four Tables and Their Connections'
+      ),
+      caption: t(
+        'Order_items junction table hai — uske bina order aur product ka connection possible nahi',
+        'Order_items is the junction table — without it, orders and products cannot connect'
+      ),
+      nodes: [
+        {
+          t: t('customers (customer_id, name, city)', 'customers (customer_id, name, city)'),
+          s: t(
+            'customer_id primary key — Rahul Delhi se, Priya Mumbai se',
+            'customer_id is the primary key — Rahul from Delhi, Priya from Mumbai'
+          )
+        },
+        {
+          t: t('products (product_id, name, price)', 'products (product_id, name, price)'),
+          s: t(
+            'product_id primary key — Headphones 1500, Keyboard 2500',
+            'product_id is the primary key — Headphones 1500, Keyboard 2500'
+          )
+        },
+        {
+          t: t('orders (order_id, customer_id, order_date)', 'orders (order_id, customer_id, order_date)'),
+          s: t(
+            'customer_id foreign key — kaunsa order kis customer ka hai',
+            'customer_id is a foreign key — which order belongs to which customer'
+          )
+        },
+        {
+          t: t('order_items (order_id, product_id, qty)', 'order_items (order_id, product_id, qty)'),
+          s: t(
+            'Dono ids mil kar primary key — ek order mein ek product ek hi baar',
+            'Both ids together form the primary key — one product once per order'
+          )
+        },
+        {
+          t: t('Total = SUM(price * qty)', 'Total = SUM(price * qty)'),
+          s: t(
+            'Chaaro tables JOIN karke GROUP BY customer — Rahul 5500, Priya 5000',
+            'JOIN all four tables and GROUP BY customer — Rahul 5500, Priya 5000'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Best Seller: Kaunsa Product Sabse Zyada Bika?',
+          'Best Seller: Which Product Sold the Most?'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (customer_id INTEGER PRIMARY KEY, name TEXT, city TEXT);
+CREATE TABLE products (product_id INTEGER PRIMARY KEY, name TEXT, price INTEGER);
+CREATE TABLE orders (order_id INTEGER PRIMARY KEY, customer_id INTEGER, order_date TEXT);
+CREATE TABLE order_items (order_id INTEGER, product_id INTEGER, qty INTEGER, PRIMARY KEY (order_id, product_id));
+INSERT INTO customers VALUES (1, 'Rahul', 'Delhi');
+INSERT INTO customers VALUES (2, 'Priya', 'Mumbai');
+INSERT INTO products VALUES (1, 'Headphones', 1500);
+INSERT INTO products VALUES (2, 'Keyboard', 2500);
+INSERT INTO orders VALUES (1, 1, '2026-11-15');
+INSERT INTO orders VALUES (2, 2, '2026-11-15');
+INSERT INTO order_items VALUES (1, 1, 2);
+INSERT INTO order_items VALUES (1, 2, 1);
+INSERT INTO order_items VALUES (2, 2, 2);
+SELECT p.name, SUM(oi.qty) AS sold FROM order_items oi JOIN products p ON p.product_id = oi.product_id GROUP BY p.name ORDER BY sold DESC, p.name ASC;`,
+        output: `name | sold
+Keyboard | 3
+Headphones | 2`
+      },
+      {
+        title: t(
+          'Kabhi Order Na Karne Wale Customers (LEFT JOIN + IS NULL)',
+          'Customers Who Never Ordered (LEFT JOIN + IS NULL)'
+        ),
+        language: 'sql',
+        code: `DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (customer_id INTEGER PRIMARY KEY, name TEXT, city TEXT);
+CREATE TABLE products (product_id INTEGER PRIMARY KEY, name TEXT, price INTEGER);
+CREATE TABLE orders (order_id INTEGER PRIMARY KEY, customer_id INTEGER, order_date TEXT);
+CREATE TABLE order_items (order_id INTEGER, product_id INTEGER, qty INTEGER, PRIMARY KEY (order_id, product_id));
+INSERT INTO customers VALUES (1, 'Rahul', 'Delhi');
+INSERT INTO customers VALUES (2, 'Priya', 'Mumbai');
+INSERT INTO products VALUES (1, 'Headphones', 1500);
+INSERT INTO products VALUES (2, 'Keyboard', 2500);
+INSERT INTO orders VALUES (1, 1, '2026-11-15');
+INSERT INTO orders VALUES (2, 2, '2026-11-15');
+INSERT INTO order_items VALUES (1, 1, 2);
+INSERT INTO order_items VALUES (1, 2, 1);
+INSERT INTO order_items VALUES (2, 2, 2);
+INSERT INTO customers VALUES (3, 'Sana', 'Pune');
+SELECT c.name, c.city FROM customers c LEFT JOIN orders o ON o.customer_id = c.customer_id WHERE o.order_id IS NULL;`,
+        output: `name | city
+Sana | Pune`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Order ka total nikaalne ke liye sahi formula kya hai?',
+          'What is the correct formula to find an order total?'
+        ),
+        opts: [
+          t('SUM(price) + SUM(qty)', 'SUM(price) + SUM(qty)'),
+          t('SUM(price * qty)', 'SUM(price * qty)'),
+          t('COUNT(price)', 'COUNT(price)'),
+          t('AVG(price * qty)', 'AVG(price * qty)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har item ka total price * qty hota hai, aur order ka total un sabka SUM hota hai — Rahul ka total 2x1500 + 1x2500 = 5500 isi formula se aaya.',
+          'Correct answer: each item total is price * qty, and the order total is the SUM of all of them — Rahul total of 2x1500 + 1x2500 = 5500 comes from this formula.'
+        )
+      },
+      {
+        q: t(
+          'Order_items table kyun chahiye? Orders mein product seedha kyun nahi likh sakte?',
+          'Why is the order_items table needed? Why can products not be written directly in orders?'
+        ),
+        opts: [
+          t('Kyunki ek order mein bahut se products hote hain — many-to-many hai', 'Because one order has many products — it is many-to-many'),
+          t('Kyunki orders table chhoti hoti hai', 'Because the orders table is small'),
+          t('Kyunki product ka naam lamba hota hai', 'Because the product name is long'),
+          t('Koi zaroorat nahi, seedha likh sakte hain', 'There is no need, you can write them directly')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: ek order mein bahut se products aur ek product bahut se orders mein hota hai — yeh many-to-many hai, isliye beech mein order_items junction table chahiye.',
+          'Correct answer: one order has many products and one product appears in many orders — that is many-to-many, so a junction table order_items is needed in the middle.'
+        )
+      },
+      {
+        q: t(
+          'Kabhi order na karne wale customers kaise dhoondhte hain?',
+          'How do you find customers who never ordered?'
+        ),
+        opts: [
+          t('INNER JOIN se', 'With an INNER JOIN'),
+          t('LEFT JOIN + WHERE order_id IS NULL se', 'With a LEFT JOIN + WHERE order_id IS NULL'),
+          t('GROUP BY se', 'With GROUP BY'),
+          t('ORDER BY se', 'With ORDER BY')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: LEFT JOIN se saare customers dikhte hain, aur jinka koi order nahi hai unki order_id NULL hoti hai — WHERE order_id IS NULL se wahi customers milte hain.',
+          'Correct answer: a LEFT JOIN shows all customers, and those with no order have a NULL order_id — WHERE order_id IS NULL picks exactly those customers.'
+        )
+      },
+      {
+        q: t(
+          'Order_items ki primary key kya honi chahiye?',
+          'What should the primary key of order_items be?'
+        ),
+        opts: [
+          t('Sirf order_id', 'Only order_id'),
+          t('Sirf product_id', 'Only product_id'),
+          t('order_id + product_id ka combination', 'The combination of order_id + product_id'),
+          t('qty', 'qty')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: dono ids ka combination primary key hota hai, taaki ek order mein ek product sirf ek baar aaye — dobara chahiye toh quantity badhao, doosri row mat banao.',
+          'Correct answer: the combination of both ids is the primary key, so one product appears only once per order — if you need more, increase the quantity instead of adding a second row.'
+        )
+      },
+      {
+        q: t(
+          'Total ko orders table mein store karna kyun galat hai?',
+          'Why is it wrong to store the total in the orders table?'
+        ),
+        opts: [
+          t('Kyunki total bahut bada hota hai', 'Because the total is too big'),
+          t('Kyunki item badalne par stored total galat ho jaayega', 'Because the stored total becomes wrong when an item changes'),
+          t('Kyunki SUM slow hota hai', 'Because SUM is slow'),
+          t('Kyunki total likhna allowed nahi hai', 'Because writing the total is not allowed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jo cheez calculate ho sakti hai use store mat karo — item badalte hi stored total purana aur galat ho jaayega. Total hamesha query se nikaalo.',
+          'Correct answer: never store what can be calculated — the moment an item changes, the stored total becomes old and wrong. Always find the total with a query.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'E-commerce ke chaar tables: customers, products, orders aur order_items.',
+        'E-commerce has four tables: customers, products, orders, and order_items.'
+      ),
+      t(
+        'Order ka total = SUM(price * qty), GROUP BY customer.',
+        'An order total = SUM(price * qty), GROUP BY customer.'
+      ),
+      t(
+        'Order_items junction table hai — primary key order_id + product_id hai.',
+        'Order_items is a junction table — its primary key is order_id + product_id.'
+      ),
+      t(
+        'Kabhi order na karne wale customers LEFT JOIN + IS NULL se milte hain.',
+        'Customers who never ordered are found with a LEFT JOIN + IS NULL.'
+      ),
+      t(
+        'Jo calculate ho sakta hai use store mat karo — total hamesha query se nikaalo.',
+        'Never store what can be calculated — always find the total with a query.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Priya ka Naya Order Jodo aur Uska Total Nikaalo',
+        'Practice: Add a New Order for Priya and Find Her Total'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: poora e-commerce schema banao, phir Priya ke liye ek naya order (order 3, 2026-11-16) banao jismein 1 Headphones ho, aur phir Priya ka kul total nikaalo. Done tab mana jayega jab output mein ek row aaye: Priya | 6500 (purana 5000 + naya 1500).',
+        'Run the starter below: build the full e-commerce schema, then create a new order for Priya (order 3, 2026-11-16) with 1 Headphones, and find Priya total. You are done when the output shows one row: Priya | 6500 (old 5000 + new 1500).'
+      ),
+      language: 'sql',
+      starter: `DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (customer_id INTEGER PRIMARY KEY, name TEXT, city TEXT);
+CREATE TABLE products (product_id INTEGER PRIMARY KEY, name TEXT, price INTEGER);
+CREATE TABLE orders (order_id INTEGER PRIMARY KEY, customer_id INTEGER, order_date TEXT);
+CREATE TABLE order_items (order_id INTEGER, product_id INTEGER, qty INTEGER, PRIMARY KEY (order_id, product_id));
+INSERT INTO customers VALUES (1, 'Rahul', 'Delhi');
+INSERT INTO customers VALUES (2, 'Priya', 'Mumbai');
+INSERT INTO products VALUES (1, 'Headphones', 1500);
+INSERT INTO products VALUES (2, 'Keyboard', 2500);
+INSERT INTO orders VALUES (1, 1, '2026-11-15');
+INSERT INTO orders VALUES (2, 2, '2026-11-15');
+INSERT INTO order_items VALUES (1, 1, 2);
+INSERT INTO order_items VALUES (1, 2, 1);
+INSERT INTO order_items VALUES (2, 2, 2);
+INSERT INTO orders VALUES (3, 2, '2026-11-16');
+INSERT INTO order_items VALUES (3, 1, 1);
+SELECT c.name, SUM(p.price * oi.qty) AS total FROM orders o JOIN customers c ON c.customer_id = o.customer_id JOIN order_items oi ON oi.order_id = o.order_id JOIN products p ON p.product_id = oi.product_id WHERE c.name = 'Priya' GROUP BY c.name;`,
+      expected: `name | total
+Priya | 6500`
+    },
+    readMinutes: 12
+  };
+
+const dbmsInterview: Article = {
+    id: 'dbms-interview',
+    subjectId: 'dbms',
+    title: t(
+      'DBMS Interview Prep — Top Questions, GATE-Style MCQs aur 7-Din Revision Plan',
+      'DBMS Interview Prep — Top Questions, GATE-Style MCQs, and a 7-Day Revision Plan'
+    ),
+    summary: t(
+      'DBMS interview ki taiyari karo: sabse zyada poochhe jaane wale questions, average se upar marks aur second highest jaise classic SQL queries ka dry run, GATE-style MCQs, common mistakes, aur 7 din ka revision plan jisse interview se pehle sab revise ho jaaye.',
+      'Prepare for a DBMS interview: the most asked questions, dry runs of classic SQL queries like above-average marks and second highest, GATE-style MCQs, common mistakes, and a 7-day revision plan that covers everything before the interview.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Interview Prep Kya Hai? (Kya Poochha Jaata Hai)',
+          '1. What Is Interview Prep? (What Gets Asked)'
+        ),
+        body: t(
+          `DBMS interview mein teen tarah ke sawaal poochhe jaate hain. **Theory** — ACID kya hai, normalization kya hai, index kya karta hai, transaction kya hota hai. **SQL queries** — topper nikaalo, second highest nikaalo, average se upar wale dhoondho, duplicate hatayo. **Project aur design** — apna project samjhao, ER diagram banao, "yeh table kyun banayi" ka jawab do.
+
+Interviewer ko aapki yaad-dasht nahi, aapki soch dekhni hoti hai. Woh aksar query ke baad poochhta hai: "kyun?" — yeh JOIN kyun, yeh subquery kyun, index kyun? Isliye har query ke peeche ka reason yaad rakho, sirf syntax nahi. Is article mein hum wahi karenge: classic queries ko dry run karenge, unke "kyun" samjhenge, aur aakhir mein 7 din ka plan banayenge.
+
+Ek baat yaad rakho: interview mein galat query likhna itna bura nahi hai jitna chup rehna. Agar query yaad na aaye toh soch ko zor se bolo — "pehle average nikaalunga, phir usse compare karunga" — interviewer aapki soch se hi aapko number deta hai.`,
+          `A DBMS interview asks three kinds of questions. **Theory** — what is ACID, what is normalization, what does an index do, what is a transaction. **SQL queries** — find the topper, find the second highest, find those above average, remove duplicates. **Project and design** — explain your project, draw an ER diagram, answer "why did you make this table".
+
+The interviewer wants to see your thinking, not your memory. After a query they often ask: "why?" — why this JOIN, why this subquery, why an index? So remember the reason behind every query, not just the syntax. In this article we will do exactly that: dry-run the classic queries, understand their "why", and finish with a 7-day plan.
+
+Remember one thing: writing a wrong query in an interview is not as bad as staying silent. If you forget a query, say your thinking out loud — "first I will find the average, then I will compare with it" — the interviewer scores you on your thinking.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Topper Nikaalna, Duplicate Dhoondhna aur Average se Upar',
+          '2. Real-Life Examples: Finding Toppers, Spotting Duplicates, and Scoring Above Average'
+        ),
+        body: t(
+          `Sabse seedha example hai **topper nikaalna**. Exam ke baad teacher ko sabse zyada marks wala student chahiye. Query hai: \`SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — Priya, 92. Par interviewer phir poochhta hai: "second highest kaise nikaaloge?" Tab LIMIT kaam nahi aata — subquery chahiye.
+
+Doosra example hai **duplicate dhoondhna**. Admission list mein ek hi student do baar aa gaya ho toh kaise pakdoge? Query hai: \`GROUP BY name HAVING COUNT(*) > 1\` — jiska count 1 se zyada hai, woh duplicate hai. Hamare students table mein koi duplicate marks nahi hain, isliye yeh query zero rows deti hai — aur zero rows bhi ek jawab hai.
+
+Teesra example hai **average se upar**. Teacher ko woh students chahiye jinke marks class average se upar hon. Yeh do steps ka kaam hai: pehle average nikaalo (84.75), phir usse compare karo. Yeh subquery ka classic example hai, aur agle section mein hum iska poora dry run karenge.`,
+          `The simplest example is **finding the topper**. After an exam, the teacher wants the student with the highest marks. The query is: \`SELECT name, marks FROM students ORDER BY marks DESC LIMIT 1\` — Priya, 92. But then the interviewer asks: "how do you find the second highest?" LIMIT does not work there — a subquery is needed.
+
+A second example is **spotting duplicates**. If one student appears twice in the admission list, how do you catch it? The query is: \`GROUP BY name HAVING COUNT(*) > 1\` — anyone with a count above 1 is a duplicate. Our students table has no duplicate marks, so this query returns zero rows — and zero rows is also an answer.
+
+A third example is **above average**. The teacher wants students whose marks are above the class average. This is a two-step job: first find the average (84.75), then compare with it. This is the classic subquery example, and in the next section we will dry-run it completely.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Average se Upar Marks Wale Students (Subquery Dry Run)',
+          '3. Step-by-Step: Students Above Average Marks (a Subquery Dry Run)'
+        ),
+        body: t(
+          `Ab hum interview ka sabse classic query haath se karte hain: average se upar marks wale students. Query hai: \`SELECT id, name, marks FROM students WHERE marks > (SELECT AVG(marks) FROM students) ORDER BY marks DESC\`. Dry run, ek-ek step:
+
+- **Step 1: Average nikaalo** — andar wali subquery pehle chalti hai: \`SELECT AVG(marks) FROM students\` = (85 + 92 + 74 + 88) / 4 = 339 / 4 = 84.75. Subquery ka jawab ek number hai: 84.75.
+- **Step 2: Compare karo** — bahar wali query ban jaati hai: \`WHERE marks > 84.75\`. Ab har student ko check karo: Rahul 85 > 84.75 haan, Priya 92 > 84.75 haan, Amit 74 > 84.75 nahi, Sana 88 > 84.75 haan.
+- **Step 3: Sort karo** — \`ORDER BY marks DESC\` se sabse zyada pehle: Priya 92, Sana 88, Rahul 85.
+- **Step 4: Output padho** — 3 rows aati hain. Amit nahi aaya kyunki woh average se neeche hai.
+
+Interviewer aksar yahan poochhta hai: "subquery ki jagah JOIN se kar sakte ho?" Jawab hai: is case mein subquery hi sahi hai, kyunki average ek single value hai — JOIN ke liye do tables chahiye hote hain, yahan ek hi table hai. Neeche wala code run karo aur output dekho: 3 rows, bilkul wahi jo dry run mein gine the.`,
+          `Now let us work through the interview's most classic query by hand: students with above-average marks. The query is: \`SELECT id, name, marks FROM students WHERE marks > (SELECT AVG(marks) FROM students) ORDER BY marks DESC\`. Dry run, step by step:
+
+- **Step 1: Find the average** — the inner subquery runs first: \`SELECT AVG(marks) FROM students\` = (85 + 92 + 74 + 88) / 4 = 339 / 4 = 84.75. The subquery's answer is one number: 84.75.
+- **Step 2: Compare** — the outer query becomes: \`WHERE marks > 84.75\`. Now check every student: Rahul 85 > 84.75 yes, Priya 92 > 84.75 yes, Amit 74 > 84.75 no, Sana 88 > 84.75 yes.
+- **Step 3: Sort** — \`ORDER BY marks DESC\` puts the highest first: Priya 92, Sana 88, Rahul 85.
+- **Step 4: Read the output** — 3 rows come back. Amit is missing because he is below average.
+
+The interviewer often asks here: "can you do this with a JOIN instead of a subquery?" The answer is: in this case the subquery is right, because the average is a single value — a JOIN needs two tables, and here there is only one table. Run the code below and look at the output: 3 rows, exactly the ones we counted in the dry run.`
+        ),
+        code: {
+          title: t(
+            'Classic Query: Average se Upar Marks (Subquery)',
+            'Classic Query: Above-Average Marks (Subquery)'
+          ),
+          language: 'sql',
+          code: `SELECT id, name, marks FROM students WHERE marks > (SELECT AVG(marks) FROM students) ORDER BY marks DESC;`,
+          output: `id | name | marks
+2 | Priya | 92
+4 | Sana | 88
+1 | Rahul | 85`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Subquery ki Jagah JOIN Bhoolna, NULL se Compare Karna aur Bina ORDER BY ke Top N',
+          '4. Common Mistakes: Forgetting JOIN Instead of a Subquery, Comparing with NULL, and Top N Without ORDER BY'
+        ),
+        body: t(
+          `Interview mein sabse zyada galtiyan woh hain jo pressure mein hoti hain.
+
+**Galti 1: Har jagah subquery likhna.** Subquery har problem ka jawab nahi hai. Jab do tables ko jodna ho toh JOIN likho — subquery se query slow ho jaati hai aur padhna mushkil. Rule hai: do tables hain toh JOIN, ek value chahiye toh subquery.
+
+**Galti 2: NULL se compare karna.** \`WHERE marks = NULL\` kabhi true nahi hota — NULL ka matlab hai "pata nahi", aur "pata nahi" se koi compare true nahi hota. Sahi tareeka hai \`WHERE marks IS NULL\`. Interview mein yeh sabse zyada poochha jaane wala trap hai.
+
+**Galti 3: Bina ORDER BY ke Top N.** \`SELECT name FROM students LIMIT 2\` likhoge toh kaunsi 2 rows aayengi, yeh guarantee nahi hai — database jis order mein chahe de sakta hai. Top 2 chahiye toh hamesha \`ORDER BY marks DESC LIMIT 2\` likho. ORDER BY ke bina LIMIT ka matlab nahi hai.
+
+**Galti 4: HAVING ki jagah WHERE.** \`WHERE COUNT(*) > 1\` likhoge toh error aayega — WHERE row par chalta hai, aggregate par nahi. Aggregate par condition ke liye \`HAVING\` chahiye: \`GROUP BY marks HAVING COUNT(*) > 1\`.
+
+**Galti 5: Chup rehna.** Query yaad na aaye toh chup mat raho — soch ko zor se bolo. Interviewer soch par number deta hai, sirf final query par nahi.`,
+          `The most common interview mistakes are the ones that happen under pressure.
+
+**Mistake 1: Writing a subquery everywhere.** A subquery is not the answer to every problem. When two tables must be joined, write a JOIN — a subquery makes the query slow and hard to read. The rule is: two tables means JOIN, one value means subquery.
+
+**Mistake 2: Comparing with NULL.** \`WHERE marks = NULL\` is never true — NULL means "unknown", and no comparison with "unknown" is true. The correct way is \`WHERE marks IS NULL\`. This is the most asked trap in interviews.
+
+**Mistake 3: Top N without ORDER BY.** If you write \`SELECT name FROM students LIMIT 2\`, there is no guarantee which 2 rows come back — the database can return them in any order. For the top 2, always write \`ORDER BY marks DESC LIMIT 2\`. LIMIT means nothing without ORDER BY.
+
+**Mistake 4: WHERE instead of HAVING.** Writing \`WHERE COUNT(*) > 1\` gives an error — WHERE works on rows, not on aggregates. A condition on an aggregate needs \`HAVING\`: \`GROUP BY marks HAVING COUNT(*) > 1\`.
+
+**Mistake 5: Staying silent.** If you forget a query, do not go quiet — say your thinking out loud. The interviewer scores your thinking, not just the final query.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Tie for Top Marks, Khaali Table aur Ek hi Student',
+          '5. Edge Cases: A Tie for Top Marks, an Empty Table, and a Single Student'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo interviewer jaan-boojh kar poochhta hai — "aur agar aisa ho toh?"
+
+**1. Tie for top marks.** Agar Priya aur Sana dono ke 92 marks hon, toh topper kaun hai? \`ORDER BY marks DESC LIMIT 1\` sirf ek ko dega — kaunsi, yeh guarantee nahi hai. Sahi jawab hai: dono toppers hain. Query hogi: \`WHERE marks = (SELECT MAX(marks) FROM students)\` — isse tie wale saare students milte hain.
+
+**2. Second highest jab tie ho.** Agar do students ke 92 hon, toh second highest kya hai? 88 — kyunki second highest ka matlab hai MAX se chhota sabse bada number. Hamari query \`MAX(marks) WHERE marks < (SELECT MAX(marks))\` yahi deti hai: 88. Tie se yeh nahi badalta.
+
+**3. Khaali table.** Table mein koi row nahi ho toh \`AVG(marks)\` NULL deta hai, aur \`marks > NULL\` kabhi true nahi hota — isliye zero rows aati hain. Yeh error nahi hai, sahi jawab hai: khaali table par koi student average se upar nahi hai.
+
+**4. Ek hi student.** Sirf ek student ho toh woh khud hi average hai — uske marks average ke barabar hain, upar nahi. Isliye above-average query zero rows degi. Aur second highest bhi zero rows dega, kyunki MAX se chhota kuch nahi hai.
+
+**5. Saare marks barabar hon.** Saare students ke 85 hon toh average 85 hai aur koi bhi average se upar nahi — zero rows. Interviewer yahi check karta hai: kya aapne boundary sochi?`,
+          `Edge cases are the situations an interviewer asks about on purpose — "and what if this happens?"
+
+**1. A tie for top marks.** If Priya and Sana both have 92 marks, who is the topper? \`ORDER BY marks DESC LIMIT 1\` returns only one — and which one is not guaranteed. The correct answer is: both are toppers. The query is: \`WHERE marks = (SELECT MAX(marks) FROM students)\` — it returns all tied students.
+
+**2. Second highest with a tie.** If two students have 92, what is the second highest? 88 — because second highest means the largest number smaller than MAX. Our query \`MAX(marks) WHERE marks < (SELECT MAX(marks))\` gives exactly that: 88. A tie does not change it.
+
+**3. An empty table.** With no rows, \`AVG(marks)\` gives NULL, and \`marks > NULL\` is never true — so zero rows come back. This is not an error, it is the correct answer: in an empty table, no student is above average.
+
+**4. A single student.** With only one student, they are the average themselves — their marks equal the average, not above it. So the above-average query gives zero rows. And the second highest also gives zero rows, because nothing is smaller than MAX.
+
+**5. All marks equal.** If every student has 85, the average is 85 and nobody is above average — zero rows. This is what the interviewer checks: did you think about the boundary?`
+        )
+      },
+      {
+        heading: t(
+          '6. What If: Interviewer "Kyun" Poochhe, ya Query Yaad Na Aaye?',
+          '6. What If: The Interviewer Asks "Why", or You Forget the Query?'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interview ke din kaam aate hain.
+
+**What if: interviewer "kyun" poochhe?** Har "kyun" ka jawab reason se do. "JOIN kyun?" — "kyunki do tables ko jodna hai." "Index kyun?" — "kyunki WHERE wale column par search fast karna hai." "Subquery kyun?" — "kyunki average ek single value hai." Reason yaad rakho, definition nahi.
+
+**What if: query yaad na aaye?** Pehle soch ko zor se bolo: "pehle average nikaalunga, phir compare karunga." Phir query ko tukdon mein likho: pehle subquery likho, test karo, phir bahar wali query likho. Interviewer ko aapka process dekhna hai, final answer nahi.
+
+**What if: query galat ho jaaye?** Ghabrao mat — galti ko khud pakdo aur theek karo. "Ruko, yahan ORDER BY chahiye tha" kehna galat query se behtar hai. Interviewer ko yeh pasand hai: jo apni galti khud pakad le, woh production mein bhi pakad lega.
+
+**What if: GATE-style MCQ aaye?** GATE mein query ka output poochha jaata hai, query nahi. Isliye dry run ki aadat rakho: chhota data lo, haath se chalao, phir option chuno. Is article ke MCQs GATE style mein hi hain — pehle khud solve karo, phir explanation padho.`,
+          `Now let us ask "what-if" questions — these are the ones that matter on interview day.
+
+**What if the interviewer asks "why"?** Answer every "why" with a reason. "Why JOIN?" — "because two tables must be joined." "Why an index?" — "because search on the WHERE column must be fast." "Why a subquery?" — "because the average is a single value." Remember reasons, not definitions.
+
+**What if you forget the query?** First say your thinking out loud: "first I will find the average, then I will compare." Then write the query in pieces: write the subquery first, test it, then write the outer query. The interviewer wants to see your process, not the final answer.
+
+**What if the query goes wrong?** Do not panic — catch the mistake yourself and fix it. Saying "wait, I needed an ORDER BY here" is better than a wrong query. Interviewers like this: someone who catches their own mistake will catch it in production too.
+
+**What if a GATE-style MCQ comes?** GATE asks for the output of a query, not the query itself. So keep the habit of dry runs: take small data, run it by hand, then pick the option. The MCQs in this article are GATE-style — solve them yourself first, then read the explanation.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 7-Din Revision Plan',
+          '7. Summary: The 7-Day Revision Plan'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain — aur interview se pehle ka plan bana lete hain.
+
+**Day 1-2: Basics.** DBMS kya hai, ER diagram, keys (primary, foreign, candidate), ACID. Har topic ki ek line ki definition aur ek example yaad karo.
+**Day 3-4: SQL queries.** SELECT, WHERE, JOIN, GROUP BY + HAVING, subquery, ORDER BY + LIMIT. Classic queries ka dry run karo: topper, second highest, above average, duplicate.
+**Day 5: Design + Transactions.** Normalization (1NF, 2NF, 3NF), ER se tables, transaction, lock, recovery (REDO/UNDO, checkpoint, ARIES).
+**Day 6: Optimization + Security.** Index, EXPLAIN QUERY PLAN (SCAN vs SEARCH), GRANT/REVOKE, views, SQL injection aur parameterised query.
+**Day 7: Mock test + Revision.** Is batch ke saare MCQs dobara solve karo, apna library ya e-commerce project zor se samjhao, aur 5 key notes har article ke ek baar padh lo.
+
+Interview mein yaad rakhne wali line yeh hai: "Soch zor se bolo, query tukdon mein likho, aur galti khud pakdo." All the best — aur yaad rakho, DBMS interview mein jeetne ka tareeka hai dry run, ratta nahi.`,
+          `Let us tie the whole article together — and build the plan for the week before the interview.
+
+**Day 1-2: Basics.** What is a DBMS, ER diagrams, keys (primary, foreign, candidate), ACID. Remember a one-line definition and one example for each topic.
+**Day 3-4: SQL queries.** SELECT, WHERE, JOIN, GROUP BY + HAVING, subqueries, ORDER BY + LIMIT. Dry-run the classic queries: topper, second highest, above average, duplicates.
+**Day 5: Design + Transactions.** Normalization (1NF, 2NF, 3NF), ER to tables, transactions, locks, recovery (REDO/UNDO, checkpoint, ARIES).
+**Day 6: Optimization + Security.** Indexes, EXPLAIN QUERY PLAN (SCAN vs SEARCH), GRANT/REVOKE, views, SQL injection and parameterised queries.
+**Day 7: Mock test + Revision.** Solve all the MCQs in this batch again, explain your library or e-commerce project out loud, and read the 5 key notes of every article once.
+
+The line to remember for interviews is: "Say your thinking out loud, write the query in pieces, and catch your own mistakes." All the best — and remember, the way to win a DBMS interview is dry runs, not memorization.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'timeline',
+      title: t(
+        '7-Din Revision Plan: Interview se Pehle Kya, Kab Padhein',
+        '7-Day Revision Plan: What to Study, and When, Before the Interview'
+      ),
+      caption: t(
+        'Har din ek topic, aakhiri din mock test — ratta nahi, dry run',
+        'One topic per day, a mock test on the last day — dry runs, not memorization'
+      ),
+      nodes: [
+        {
+          t: t('Day 1-2: Basics', 'Day 1-2: Basics'),
+          s: t(
+            'DBMS, ER diagram, keys, ACID — ek line definition + ek example',
+            'DBMS, ER diagrams, keys, ACID — a one-line definition plus one example'
+          )
+        },
+        {
+          t: t('Day 3-4: SQL Queries', 'Day 3-4: SQL Queries'),
+          s: t(
+            'JOIN, GROUP BY + HAVING, subquery — topper, second highest, above average ka dry run',
+            'JOIN, GROUP BY + HAVING, subqueries — dry runs of topper, second highest, above average'
+          )
+        },
+        {
+          t: t('Day 5: Design + Transactions', 'Day 5: Design + Transactions'),
+          s: t(
+            'Normalization, ER se tables, transaction, recovery (REDO/UNDO, ARIES)',
+            'Normalization, ER to tables, transactions, recovery (REDO/UNDO, ARIES)'
+          )
+        },
+        {
+          t: t('Day 6: Optimization + Security', 'Day 6: Optimization + Security'),
+          s: t(
+            'Index, EXPLAIN QUERY PLAN, GRANT/REVOKE, views, SQL injection',
+            'Indexes, EXPLAIN QUERY PLAN, GRANT/REVOKE, views, SQL injection'
+          )
+        },
+        {
+          t: t('Day 7: Mock Test + Revision', 'Day 7: Mock Test + Revision'),
+          s: t(
+            'Saare MCQs dobara, project zor se samjhao, key notes padho',
+            'Solve all MCQs again, explain your project out loud, read the key notes'
+          )
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Second Highest Marks: MAX ke Neeche MAX',
+          'Second Highest Marks: MAX Below MAX'
+        ),
+        language: 'sql',
+        code: `SELECT MAX(marks) AS second_highest FROM students WHERE marks < (SELECT MAX(marks) FROM students);`,
+        output: `second_highest
+88`
+      },
+      {
+        title: t(
+          'Duplicate Marks Dhoondhna: GROUP BY + HAVING (Zero Rows)',
+          'Finding Duplicate Marks: GROUP BY + HAVING (Zero Rows)'
+        ),
+        language: 'sql',
+        code: `SELECT marks, COUNT(*) AS total FROM students GROUP BY marks HAVING COUNT(*) > 1;`,
+        output: `marks | total`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Average se upar marks wale kitne students hain? (Average = 84.75)',
+          'How many students have above-average marks? (Average = 84.75)'
+        ),
+        opts: [
+          t('2 students', '2 students'),
+          t('4 students', '4 students'),
+          t('1 student', '1 student'),
+          t('3 students', '3 students')
+        ],
+        ans: 3,
+        expl: t(
+          'Sahi jawab: 85, 92 aur 88 — teeno 84.75 se upar hain. Sirf Amit (74) average se neeche hai, isliye 3 students aate hain: Priya, Sana aur Rahul.',
+          'Correct answer: 85, 92, and 88 — all three are above 84.75. Only Amit (74) is below average, so 3 students qualify: Priya, Sana, and Rahul.'
+        )
+      },
+      {
+        q: t(
+          'Second highest marks kitne hain?',
+          'What are the second highest marks?'
+        ),
+        opts: [
+          t('92', '92'),
+          t('85', '85'),
+          t('88', '88'),
+          t('74', '74')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: sabse zyada 92 hai, usse chhota sabse bada number 88 hai. Query MAX(marks) WHERE marks < (SELECT MAX(marks)) yahi deti hai.',
+          'Correct answer: the highest is 92, and the largest number smaller than it is 88. The query MAX(marks) WHERE marks < (SELECT MAX(marks)) gives exactly that.'
+        )
+      },
+      {
+        q: t(
+          'ACID mein A ka kya matlab hai?',
+          'What does A stand for in ACID?'
+        ),
+        opts: [
+          t('Availability', 'Availability'),
+          t('Atomicity — transaction ya toh poori hogi ya bilkul nahi', 'Atomicity — a transaction either fully happens or not at all'),
+          t('Accuracy', 'Accuracy'),
+          t('Authentication', 'Authentication')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: Atomicity ka matlab hai transaction ek unit hai — ya toh uske saare steps honge ya koi nahi. Bank transfer mein debit aur credit dono honge ya dono nahi.',
+          'Correct answer: Atomicity means a transaction is one unit — either all its steps happen or none do. In a bank transfer, both the debit and the credit happen, or neither does.'
+        )
+      },
+      {
+        q: t(
+          'WHERE marks = NULL kyun galat hai?',
+          'Why is WHERE marks = NULL wrong?'
+        ),
+        opts: [
+          t('Kyunki NULL ek number hai', 'Because NULL is a number'),
+          t('Kyunki NULL se koi compare true nahi hota — IS NULL likhna padta hai', 'Because no comparison with NULL is true — you must write IS NULL'),
+          t('Kyunki marks kabhi NULL nahi hota', 'Because marks is never NULL'),
+          t('Kyunki WHERE mein = allowed nahi hai', 'Because = is not allowed in WHERE')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: NULL ka matlab hai "pata nahi", aur "pata nahi" se koi bhi compare (barabar bhi) true nahi hota. NULL check karne ke liye IS NULL likho.',
+          'Correct answer: NULL means "unknown", and no comparison with "unknown" (not even equality) is true. To check for NULL, write IS NULL.'
+        )
+      },
+      {
+        q: t(
+          'Top 2 students nikaalne ke liye kya chahiye?',
+          'What is needed to find the top 2 students?'
+        ),
+        opts: [
+          t('Sirf LIMIT 2', 'Only LIMIT 2'),
+          t('ORDER BY marks DESC LIMIT 2', 'ORDER BY marks DESC LIMIT 2'),
+          t('Sirf ORDER BY marks', 'Only ORDER BY marks'),
+          t('GROUP BY marks', 'GROUP BY marks')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ORDER BY ke bina LIMIT ki koi guarantee nahi hai — database koi bhi 2 rows de sakta hai. Top 2 ke liye ORDER BY marks DESC LIMIT 2 likho: Priya 92, Sana 88.',
+          'Correct answer: without ORDER BY, LIMIT has no guarantee — the database can return any 2 rows. For the top 2, write ORDER BY marks DESC LIMIT 2: Priya 92, Sana 88.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Average se upar: pehle subquery se AVG nikaalo, phir compare karo — 3 students aate hain.',
+        'Above average: first find AVG with a subquery, then compare — 3 students qualify.'
+      ),
+      t(
+        'Second highest = MAX(marks) WHERE marks < (SELECT MAX(marks)) = 88.',
+        'Second highest = MAX(marks) WHERE marks < (SELECT MAX(marks)) = 88.'
+      ),
+      t(
+        'NULL se compare kabhi true nahi hota — IS NULL likho.',
+        'No comparison with NULL is ever true — write IS NULL.'
+      ),
+      t(
+        'Top N ke liye hamesha ORDER BY + LIMIT likho.',
+        'For Top N, always write ORDER BY + LIMIT.'
+      ),
+      t(
+        'Soch zor se bolo, query tukdon mein likho, galti khud pakdo.',
+        'Say your thinking out loud, write the query in pieces, and catch your own mistakes.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Top 2 Students Nikaalo',
+        'Practice: Find the Top 2 Students'
+      ),
+      task: t(
+        'Neeche diya gaya starter run karo: marks ke hisaab se top 2 students nikaalo. Done tab mana jayega jab output mein 2 rows aayein: Priya | 92, Sana | 88 — isi order mein.',
+        'Run the starter below: find the top 2 students by marks. You are done when the output shows 2 rows: Priya | 92, Sana | 88 — in this order.'
+      ),
+      language: 'sql',
+      starter: `SELECT name, marks FROM students ORDER BY marks DESC LIMIT 2;`,
+      expected: `name | marks
+Priya | 92
+Sana | 88`
+    },
+    readMinutes: 12
+  };
+
 export const dbms: Subject = {
   id: 'dbms',
   name: t(
@@ -1287,5 +12970,39 @@ export const dbms: Subject = {
     dbmsJoins,
     dbmsNormalization,
     dbmsTransactions,
+    dbmsErModel,
+    dbmsRelationalAlgebra,
+    dbmsSqlDdl,
+    dbmsConstraints,
+    dbmsSqlDml,
+    dbmsWhereOperators,
+    dbmsOrderGroup,
+    dbmsAggregates,
+    dbmsDatesStrings,
+    dbmsCase,
+    dbmsSubqueries,
+    dbmsJoinsAdvanced,
+    dbmsSetOperations,
+    dbmsWindow,
+    dbmsCte,
+    dbmsKeys,
+    dbmsFd,
+    dbmsNormalizationAdvanced,
+    dbmsIndexes,
+    dbmsViews,
+    dbmsTriggers,
+    dbmsProcedures,
+    dbmsAcid,
+    dbmsConcurrency,
+    dbmsSchedules,
+    dbmsDeadlock,
+    dbmsRecovery,
+    dbmsNosql,
+    dbmsDesign,
+    dbmsSecurity,
+    dbmsOptimization,
+    dbmsProjectLibrary,
+    dbmsProjectEcommerce,
+    dbmsInterview,
   ],
 };
