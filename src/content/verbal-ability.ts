@@ -12340,6 +12340,30 @@ export const verbalAbility: Subject = {
             hindi: '"सही नहीं है" उल्टा सवाल है — तीन विकल्प सही होंगे, एक गलत। तुम्हें वही एक गलत वाला चुनना है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Passage me likha hai: "Nandpur library me 3,000 kitabein ho gayin." Sawaal: "Do saal me library me kitni kitabein ho gayin?" Ye kaun se type ka sawaal hai?',
+            english: 'The passage says: "In two years the library had 3,000 books." Question: "How many books did the library have in two years?" What kind of question is this?',
+          },
+          opts: [
+            { hinglish: 'Inference sawaal — jawab chhupa hai', english: 'An inference question — the answer is hidden' },
+            { hinglish: 'Vocabulary sawaal — shabd ka matlab poocha hai', english: 'A vocabulary question — the meaning of a word is asked' },
+            { hinglish: 'Direct sawaal — jawab passage me seedha likha hai', english: 'A direct question — the answer is written plainly in the passage' },
+            { hinglish: 'Grammar sawaal — tense check karna hai', english: 'A grammar question — the tense must be checked' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: '"3,000 kitabein" seedha passage me likha hai, isliye ye direct sawaal hai. Inference me jawab chhupa hota hai, yahan nahi.',
+            english: '"3,000 books" is written plainly in the passage, so this is a direct question. In an inference question the answer is hidden; here it is not.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Pehle sawaal padho, phir passage padho — jawab dhoondhna aasan ho jata hai.', english: 'Read the questions first, then read the passage — finding the answers becomes easy.' },
+        { hinglish: 'Direct sawaal ka jawab passage me seedha likha hota hai; inference sawaal ka jawab actions aur lines se nikalta hai.', english: 'A direct question is answered plainly in the passage; an inference question is answered from actions and lines.' },
+        { hinglish: 'Har jawab ko passage ki line se prove karo — "sab" aur "hamesha" jaise extreme shabdon wale options aksar galat hote hain.', english: 'Prove every answer with a line from the passage — options with extreme words like "all" and "always" are often wrong.' },
+        { hinglish: '"NOT true" wale sawaal me teen options sahi hote hain, ek galat — galat wala chuno.', english: 'In a "NOT true" question, three options are true and one is false — pick the false one.' },
+        { hinglish: 'Roz ek passage ki practice karo — 15 din me accuracy 3 se badh kar 5 ho jayegi.', english: 'Practise one passage every day — in 15 days your accuracy will rise from 3 to 5.' },
       ],
       practice: {
         title: {
@@ -12354,7 +12378,7 @@ export const verbalAbility: Subject = {
         },
         language: 'python',
         starter: '# Task: apna passage aur 3 sawaal yahan string me likho, phir print karo.\npassage = "Yahan apna 8-10 lines ka passage likho."\nprint(passage)\nprint("Q1 (direct): ")\nprint("Q2 (inference): ")\nprint("Q3 (NOT true): ")\n',
-        expected: 'Passage ke saath 3 sawaal (direct, inference, NOT true) aur har jawab ke saath uski proof-line print honi chahiye.',
+        expected: 'Yahan apna 8-10 lines ka passage likho.\nQ1 (direct): \nQ2 (inference): \nQ3 (NOT true): ',
       },
       readMinutes: 10,
     },
@@ -12415,6 +12439,24 @@ export const verbalAbility: Subject = {
           "याद रखो: समय शब्द काल बताता है ('yesterday' = भूत, 'every day' = वर्तमान साधारण, 'tomorrow' = भविष्य), और कर्ता क्रिया की संख्या बताता है (एकवचन कर्ता = एकवचन क्रिया)। 'Since' समय-बिंदु, 'for' अवधि। 'Each', 'neither', 'news', 'mathematics' एकवचन हैं। अवस्था क्रियाओं का निरंतर रूप नहीं बनता। रोज़ 10 वाक्य लिखो — 5 भूत, 5 वर्तमान — और हर वाक्य में कर्ता को रेखांकित करो। एक हफ़्ते में काल और SVA तुम्हारी आदत बन जाएँगे।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'Tense aur SVA check karne ka order',
+          english: 'The order for checking tense and SVA',
+        },
+        caption: {
+          hinglish: 'Subject dhoondho, time dhoondho, phir verb chuno',
+          english: 'Find the subject, find the time, then choose the verb',
+        },
+        nodes: [
+          { t: { hinglish: 'Step 1: Subject dhoondho', english: 'Step 1: Find the subject' }, s: { hinglish: 'Kaun ya kya kaam kar raha hai?', english: 'Who or what is doing the action?' } },
+          { t: { hinglish: 'Step 2: Time shabd dhoondho', english: 'Step 2: Find the time word' }, s: { hinglish: '"Yesterday", "every day", "tomorrow" jaise shabd', english: 'Words like "yesterday", "every day", "tomorrow"' } },
+          { t: { hinglish: 'Step 3: Tense chuno', english: 'Step 3: Choose the tense' }, s: { hinglish: 'Time ke hisaab se past, present ya future', english: 'Past, present, or future by the time' } },
+          { t: { hinglish: 'Step 4: Verb ka number chuno', english: 'Step 4: Choose the number of the verb' }, s: { hinglish: 'Singular subject = singular verb', english: 'Singular subject means a singular verb' } },
+          { t: { hinglish: 'Step 5: Zor se padh kar suno', english: 'Step 5: Read it aloud and listen' }, s: { hinglish: 'Galat verb kaan ko khatakta hai', english: 'A wrong verb sounds wrong to the ear' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -12492,6 +12534,30 @@ export const verbalAbility: Subject = {
             hindi: '"Know" एक अवस्था क्रिया है — उसका निरंतर रूप नहीं बनता। सही है "I know the answer." बाकी तीनों वाक्य सही हैं।',
           },
         },
+        {
+          q: {
+            hinglish: 'Sahi sentence chuno: "Each of the students ___ present."',
+            english: 'Choose the correct sentence: "Each of the students ___ present."',
+          },
+          opts: [
+            { hinglish: 'is', english: 'is' },
+            { hinglish: 'are', english: 'are' },
+            { hinglish: 'were', english: 'were' },
+            { hinglish: 'have been', english: 'have been' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: '"Each" hamesha singular hota hai, isliye verb bhi singular hoga: "is". "Are", "were" aur "have been" plural hain.',
+            english: '"Each" is always singular, so the verb is singular too: "is". "Are", "were" and "have been" are plural.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Time shabd tense batata hai: "yesterday" = past, "every day" = present simple, "tomorrow" = future.', english: 'The time word tells the tense: "yesterday" = past, "every day" = present simple, "tomorrow" = future.' },
+        { hinglish: 'Pehle subject dhoondho, phir verb chuno — subject singular ho to verb singular.', english: 'Find the subject first, then choose the verb — a singular subject takes a singular verb.' },
+        { hinglish: '"Since" point of time ke saath aata hai, "for" duration ke saath.', english: '"Since" goes with a point of time; "for" goes with a duration.' },
+        { hinglish: '"Each", "neither", "news" aur "mathematics" hamesha singular hote hain.', english: '"Each", "neither", "news" and "mathematics" are always singular.' },
+        { hinglish: 'State verbs (know, like, love, believe) ka continuous form nahi banta.', english: 'State verbs (know, like, love, believe) do not take the continuous form.' },
       ],
       practice: {
         title: {
@@ -12506,7 +12572,7 @@ export const verbalAbility: Subject = {
         },
         language: 'python',
         starter: '# Task: apne 10 sentences yahan likho, subject CAPITAL me.\nsentences = [\n    "SHE goes to school every day.",\n]\nfor s in sentences:\n    print(s)\nprint("Total sentences:", len(sentences))\n',
-        expected: '10 sentences print hone chahiye — 4 present, 3 past, 3 future — har ek me subject capital letters me.',
+        expected: 'SHE goes to school every day.\nTotal sentences: 1',
       },
       readMinutes: 10,
     },
@@ -12567,6 +12633,23 @@ export const verbalAbility: Subject = {
           "शब्दावली का शॉर्टकट है मूल: 'dict' बोलना, 'port' ले जाना, 'scrib' लिखना, 'tele' दूर, 'bio' ज़िंदगी। समानार्थी हमेशा बिल्कुल समान नहीं होता — वाक्य देखो। विलोम में उपसर्ग हर बार समान नहीं लगता। हर नया शब्द एक वाक्य में लिखो, और पैसेज में नए शब्द का अर्थ उसके आस-पास से निकालो। रोज़ 2 मूल और 5 नए शब्द — 30 दिन में 150 शब्द तुम्हारे होंगे, और नए शब्दों से डर ख़त्म हो जाएगा।",
         ),
       ],
+      diagram: {
+        kind: 'layers',
+        title: {
+          hinglish: 'Vocabulary kaise banti hai',
+          english: 'How vocabulary is built',
+        },
+        caption: {
+          hinglish: 'Root se shabd, shabd se sentence',
+          english: 'From root to word, from word to sentence',
+        },
+        nodes: [
+          { t: { hinglish: 'Root: "dict" = bolna', english: 'Root: "dict" means to speak' }, s: { hinglish: 'Predict, dictate, dictionary — teeno me "dict"', english: 'Predict, dictate, dictionary — all carry "dict"' } },
+          { t: { hinglish: 'Word: root + tukda', english: 'Word: root plus a piece' }, s: { hinglish: '"Port" + "able" = portable — jise le jaya ja sake', english: '"Port" plus "able" makes portable — something that can be carried' } },
+          { t: { hinglish: 'Sentence: word ko kaam me lao', english: 'Sentence: put the word to work' }, s: { hinglish: 'Har naya shabd ek sentence me likho', english: 'Write every new word in a sentence' } },
+          { t: { hinglish: 'Context: aas-paas se matlab nikaalo', english: 'Context: work out the meaning from the words around it' }, s: { hinglish: '"Tedious" — aadhi class so gayi, matlab boring', english: '"Tedious" — half the class slept, so it means boring' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -12644,6 +12727,30 @@ export const verbalAbility: Subject = {
             hindi: '"Affect" क्रिया है (असर करना) — "The rain affected the match" सही है। "Effect" संज्ञा है (असर), इसलिए "effected" यहाँ गलत है।',
           },
         },
+        {
+          q: {
+            hinglish: '"Television" shabd me root "tele" ka matlab kya hai?',
+            english: 'What does the root "tele" mean in the word "television"?',
+          },
+          opts: [
+            { hinglish: 'Likhna', english: 'To write' },
+            { hinglish: 'Bolna', english: 'To speak' },
+            { hinglish: 'Dekhna', english: 'To see' },
+            { hinglish: 'Door', english: 'Far' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: '"Tele" ka matlab hai door — television door ki cheez dikhata hai. "Scrib" likhna hota hai aur "dict" bolna.',
+            english: '"Tele" means far — a television shows things from far away. "Scrib" means to write and "dict" means to speak.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Root seekho, word-list mat rato: ek root se 10 words samajh aate hain.', english: 'Learn roots, do not memorise word lists: one root explains 10 words.' },
+        { hinglish: '"Dict" = bolna, "port" = le jana, "scrib" = likhna, "tele" = door, "bio" = zindagi.', english: '"Dict" means to speak, "port" means to carry, "scrib" means to write, "tele" means far, "bio" means life.' },
+        { hinglish: 'Synonym hamesha exact same nahi hota — sentence dekho, phir chuno.', english: 'A synonym is never exactly the same — look at the sentence, then choose.' },
+        { hinglish: 'Antonym ka prefix har shabd ke saath same nahi lagta: "unhappy" sahi hai, "unhonest" shabd hi nahi hai.', english: 'An antonym does not take the same prefix every time: "unhappy" is right, but "unhonest" is not a word at all.' },
+        { hinglish: 'Har naya shabd ek sentence me likho — tabhi woh tumhara hoga.', english: 'Write every new word in a sentence — only then does it become yours.' },
       ],
       practice: {
         title: {
@@ -12658,7 +12765,7 @@ export const verbalAbility: Subject = {
         },
         language: 'python',
         starter: '# Task: har word ke liye root + matlab + apna sentence likho.\nwords = ["predict", "transport", "describe", "telephone", "biology",\n         "photograph", "microphone", "chronology", "inspector", "benefit"]\nfor w in words:\n    print(w, "-> root: , matlab: , sentence: ")\n',
-        expected: '10 lines print honi chahiye, har line me ek word ka root, matlab aur ek sahi sentence.',
+        expected: 'predict -> root: , matlab: , sentence: \ntransport -> root: , matlab: , sentence: \ndescribe -> root: , matlab: , sentence: \ntelephone -> root: , matlab: , sentence: \nbiology -> root: , matlab: , sentence: \nphotograph -> root: , matlab: , sentence: \nmicrophone -> root: , matlab: , sentence: \nchronology -> root: , matlab: , sentence: \ninspector -> root: , matlab: , sentence: \nbenefit -> root: , matlab: , sentence: ',
       },
       readMinutes: 10,
     },
@@ -12719,6 +12826,24 @@ export const verbalAbility: Subject = {
           "त्रुटि पहचान का सूत्र: बाँटो, फिर जाँचो — कर्ता-क्रिया, काल, आर्टिकल/संबंधबोधक, सर्वनाम। 'One of' के बाद एकवचन क्रिया। 'More' और 'er' दोनों एक साथ नहीं। आर्टिकल आवाज़ से लगता है, अक्षर से नहीं। 'There/their/they are' अलग हैं। और अगर कुछ न मिले तो 'No error' चुनो। रोज़ 10 वाक्यों का अभ्यास करो — 2 हफ़्ते में तुम 30 सेकंड में गलती पकड़ने लगोगे।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'Error dhoondhne ke 5 steps',
+          english: '5 steps to find the error',
+        },
+        caption: {
+          hinglish: 'Baanto, phir check karo — hissa-dar-hissa',
+          english: 'Split, then check — part by part',
+        },
+        nodes: [
+          { t: { hinglish: 'Step 1: 4 hisso me baanto', english: 'Step 1: Split into 4 parts' }, s: { hinglish: 'Har hisse ko alag padho', english: 'Read each part separately' } },
+          { t: { hinglish: 'Step 2: Subject-verb check karo', english: 'Step 2: Check subject-verb' }, s: { hinglish: 'Verb subject se match karta hai?', english: 'Does the verb match the subject?' } },
+          { t: { hinglish: 'Step 3: Tense check karo', english: 'Step 3: Check the tense' }, s: { hinglish: 'Time shabd aur verb ka tense ek hai?', english: 'Do the time word and the verb tense agree?' } },
+          { t: { hinglish: 'Step 4: Article aur preposition check karo', english: 'Step 4: Check article and preposition' }, s: { hinglish: 'Awaaz se article, fixed pair se preposition', english: 'Article by sound, preposition by its fixed pair' } },
+          { t: { hinglish: 'Step 5: Pronoun check karo', english: 'Step 5: Check the pronoun' }, s: { hinglish: '"He/she/they" sahi person ke liye hai?', english: 'Is "he/she/they" used for the right person?' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -12796,6 +12921,30 @@ export const verbalAbility: Subject = {
             hindi: '"Along with" कर्ता नहीं बदलता — कर्ता अभी भी "The boys" (बहुवचन) है, इसलिए क्रिया "are" होगी।',
           },
         },
+        {
+          q: {
+            hinglish: 'Sahi article chuno: "___ hour"',
+            english: 'Choose the correct article: "___ hour"',
+          },
+          opts: [
+            { hinglish: 'A hour', english: 'A hour' },
+            { hinglish: 'An hours', english: 'An hours' },
+            { hinglish: 'An hour', english: 'An hour' },
+            { hinglish: 'No article', english: 'No article' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: '"Hour" ki awaaz "a" se shuru hoti hai, isliye "an" aayega. "An hours" galat hai kyunki "hour" singular hai.',
+            english: '"Hour" starts with an "a" sound, so it takes "an". "An hours" is wrong because "hour" is singular.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Sentence ko 4 hisso me baanto aur har hisse ko alag se check karo.', english: 'Split the sentence into 4 parts and check each part separately.' },
+        { hinglish: 'Pehle subject-verb, phir tense, phir article/preposition, phir pronoun check karo.', english: 'Check subject-verb first, then tense, then article and preposition, then pronoun.' },
+        { hinglish: '"One of" ke baad hamesha singular verb aata hai.', english: 'After "one of", the verb is always singular.' },
+        { hinglish: 'Article awaaz se lagta hai, akshar se nahi: "an hour", "a university".', english: 'The article follows the sound, not the letter: "an hour", "a university".' },
+        { hinglish: 'Agar kuch na mile to "No error" chuno — har sentence me galti nahi hoti.', english: 'If you find nothing, choose "No error" — not every sentence has an error.' },
       ],
       practice: {
         title: {
@@ -12810,7 +12959,7 @@ export const verbalAbility: Subject = {
         },
         language: 'python',
         starter: '# Task: apne 10 sentences yahan likho — galti, hissa, sahi version.\nsentences = [\n    ("He play football every day.", "error part: verb", "He plays football every day."),\n]\nfor wrong, part, right in sentences:\n    print("Wrong:", wrong)\n    print("Part:", part)\n    print("Right:", right)\n    print()\n',
-        expected: '10 sentences print hone chahiye, har ek ke saath galti wala hissa aur sahi version.',
+        expected: 'Wrong: He play football every day.\nPart: error part: verb\nRight: He plays football every day.\n',
       },
       readMinutes: 10,
     },
@@ -12871,6 +13020,23 @@ export const verbalAbility: Subject = {
           "वाक्य सुधार में हर विकल्प को वाक्य में डालकर पढ़ो — जो सबसे स्वाभाविक लगे, वही सही है। सरल और छोटे संस्करण को पहले देखो। पैरा जंबल में पहले परिचय वाला वाक्य खोजो, फिर सर्वनाम शृंखला से जोड़ो, फिर संयोजक से क्रम पक्का करो, और आख़िर में पूरा पैराग्राफ़ पढ़कर प्रवाह जाँचो। रोज़ एक जंबल और 5 वाक्य सुधार करो — 2 हफ़्ते में यह सेक्शन तुम्हारा सबसे मज़बूत बन जाएगा।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'Para jumble solve karne ka order',
+          english: 'The order for solving a para jumble',
+        },
+        caption: {
+          hinglish: 'Pehla sentence dhoondho, chain banao, flow check karo',
+          english: 'Find the first sentence, build the chain, check the flow',
+        },
+        nodes: [
+          { t: { hinglish: 'Step 1: Pehla sentence dhoondho', english: 'Step 1: Find the first sentence' }, s: { hinglish: 'Introduction wala — naam ho, pronoun na ho', english: 'The introduction — it carries a name, not a pronoun' } },
+          { t: { hinglish: 'Step 2: Pronoun chain banao', english: 'Step 2: Build the pronoun chain' }, s: { hinglish: '"He" kis "Ravi" ko refer kar raha hai?', english: 'Which "Ravi" does "he" refer to?' } },
+          { t: { hinglish: 'Step 3: Connector se order pakka karo', english: 'Step 3: Fix the order with connectors' }, s: { hinglish: '"Therefore" = result, "however" = contrast, "then" = sequence', english: '"Therefore" means a result, "however" a contrast, "then" a sequence' } },
+          { t: { hinglish: 'Step 4: Poora paragraph padh kar flow check karo', english: 'Step 4: Read the whole paragraph to check the flow' }, s: { hinglish: 'Flow tootta hai to order galat hai', english: 'If the flow breaks, the order is wrong' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -12948,6 +13114,30 @@ export const verbalAbility: Subject = {
             hindi: 'परीक्षा में सरल और छोटा संस्करण अक्सर सही होता है — लंबा संस्करण अतिरिक्त शब्दों से भरा होता है। प्रवाह को सुनो, लंबाई को नहीं।',
           },
         },
+        {
+          q: {
+            hinglish: 'Jumble: (A) "He became the headmaster of the school." (B) "Rahul joined the school as a teacher in 2010." (C) "In ten years, he changed the school completely." Sahi order kya hai?',
+            english: 'Jumble: (A) "He became the headmaster of the school." (B) "Rahul joined the school as a teacher in 2010." (C) "In ten years, he changed the school completely." What is the correct order?',
+          },
+          opts: [
+            { hinglish: 'B-A-C', english: 'B-A-C' },
+            { hinglish: 'A-B-C', english: 'A-B-C' },
+            { hinglish: 'C-A-B', english: 'C-A-B' },
+            { hinglish: 'A-C-B', english: 'A-C-B' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: 'B pehle aata hai (Rahul ka introduction), phir A (headmaster bana), phir C (result). A me "He" B ke Rahul ko refer karta hai.',
+            english: 'B comes first (introducing Rahul), then A (he became headmaster), then C (the result). "He" in A refers to Rahul in B.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Behtar version chuno, galat version mat dhoondho — jo natural lage, wahi sahi hai.', english: 'Choose the better version; do not hunt for the wrong one — the one that feels natural is right.' },
+        { hinglish: 'Do options sahi lagain to chhota aur simple wala chuno.', english: 'If two options look right, pick the shorter and simpler one.' },
+        { hinglish: 'Para jumble me pehla sentence introduction deta hai — usme naam hota hai, pronoun nahi.', english: 'In a para jumble, the first sentence introduces — it carries a name, not a pronoun.' },
+        { hinglish: 'Pronoun chain se order banao: "he" kis noun ko refer kar raha hai?', english: 'Build the order from the pronoun chain: which noun does "he" refer to?' },
+        { hinglish: 'Order milne ke baad poora paragraph ek baar padho — flow tootta hai to order galat hai.', english: 'After finding the order, read the whole paragraph once — if the flow breaks, the order is wrong.' },
       ],
       practice: {
         title: {
@@ -12962,7 +13152,7 @@ export const verbalAbility: Subject = {
         },
         language: 'python',
         starter: '# Task: apna 4-sentence paragraph yahan likho, phir shuffled order.\npara = [\n    "Sentence 1 (introduction): ",\n    "Sentence 2: ",\n    "Sentence 3: ",\n    "Sentence 4 (result): ",\n]\nfor s in para:\n    print(s)\nprint("Sahi order: ")\n',
-        expected: '4 sentences print hone chahiye, saath me sahi order aur har sentence ki wajah (pronoun chain ya connector).',
+        expected: 'Sentence 1 (introduction): \nSentence 2: \nSentence 3: \nSentence 4 (result): \nSahi order: ',
       },
       readMinutes: 10,
     },
