@@ -12846,6 +12846,30 @@ export const placement: Subject = {
             hindi: 'PDF हर डिवाइस पर एक जैसा दिखता है, और अपने नाम वाली फ़ाइल भर्ती करने वाले को तुरंत मिल जाती है। Word फ़ाइल का फ़ॉर्मैट बिगड़ सकता है।',
           },
         },
+        {
+          q: {
+            hinglish: 'CGPA kam ho (6.5 se neeche) to resume me kya karna chahiye?',
+            english: 'What should you do in a resume if your CGPA is low (below 6.5)?',
+          },
+          opts: [
+            { hinglish: 'CGPA ko chhupa do — likho hi mat', english: 'Hide the CGPA — do not write it at all' },
+            { hinglish: 'CGPA ko bada karke likho', english: 'Write a bigger CGPA' },
+            { hinglish: 'CGPA likho, lekin projects ko upar aur CGPA ko education me neeche rakho', english: 'Write the CGPA, but put projects above and the CGPA below in education' },
+            { hinglish: 'Resume 2 page ka bana do taaki CGPA peeche chhup jaye', english: 'Make the resume 2 pages so the CGPA hides at the back' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: 'CGPA chhupana ya badhana dono galat hain — recruiter pehle projects dekhta hai, isliye CGPA likh kar use education me neeche rakho.',
+            english: 'Hiding the CGPA or inflating it are both wrong — the recruiter looks at projects first, so write the CGPA and keep it below in education.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Resume 1 page ka hota hai — recruiter use 6 second me scan karta hai.', english: 'A resume is one page — a recruiter scans it in 6 seconds.' },
+        { hinglish: 'Har project me 3 cheezein likho: kya banaya, kis tool se, kya result mila — ek number ke saath.', english: 'Every project needs 3 things: what you built, with which tool, and what result it gave — with one number.' },
+        { hinglish: 'Jo skill interview me prove nahi kar sakte, woh resume me mat likho.', english: 'Never list a skill you cannot prove in the interview.' },
+        { hinglish: 'Har bullet action verb se shuru karo — Built, Created, Designed — aur number daalo.', english: 'Start every bullet with an action verb — Built, Created, Designed — and add a number.' },
+        { hinglish: 'Resume PDF me bhejo, file ka naam apne naam par rakho.', english: 'Send the resume as a PDF, named after yourself.' },
       ],
       practice: {
         title: {
@@ -12860,7 +12884,7 @@ export const placement: Subject = {
         },
         language: 'python',
         starter: '# Task: apna resume yahan likho — har line ek string.\nresume = [\n    "NAME: ",\n    "SUMMARY: ",\n    "SKILLS: ",\n    "PROJECT 1: Built ... (tool) ... (number/result)",\n    "PROJECT 2: Built ... (tool) ... (number/result)",\n    "EDUCATION: ",\n]\nfor line in resume:\n    print(line)\n',
-        expected: 'Resume ki saari lines print honi chahiye — header, summary, skills, 2 projects (har ek me number ke saath), education.',
+expected: 'NAME: \nSUMMARY: \nSKILLS: \nPROJECT 1: Built ... (tool) ... (number/result)\nPROJECT 2: Built ... (tool) ... (number/result)\nEDUCATION: ',
       },
       readMinutes: 12,
     },
@@ -12921,6 +12945,20 @@ export const placement: Subject = {
           "'Tell me about yourself' — 1 मिनट, 4 हिस्से: वर्तमान, अतीत, कौशल, भविष्य। हर उत्तर में एक उदाहरण डालो। कमज़ोरी सच्ची बताओ, और उस पर क्या काम कर रहे हो, वह भी बताओ। कंपनी के बारे में पहले पढ़ो, फिर 'Why this company?' का उत्तर दो। वेतन की संख्या पहले मत बोलो। आख़िर में हमेशा 1-2 सवाल पूछो। मॉडल उत्तरों को रट्टो मत — अपने शब्दों में, अपने उदाहरण के साथ बोलो।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'HR round ka flow — shuru se aakhir tak',
+          english: 'HR round flow — start to finish',
+        },
+        nodes: [
+          { t: { hinglish: '"Tell me about yourself": 1 minute, 4 hisse', english: '"Tell me about yourself": 1 minute, 4 parts' } },
+          { t: { hinglish: 'Strengths aur weakness: example ke saath', english: 'Strengths and weakness: with an example' } },
+          { t: { hinglish: 'Why this company: website padh kar', english: 'Why this company: after reading the website' } },
+          { t: { hinglish: '5-year plan aur relocation: imaandaari se', english: '5-year plan and relocation: honestly' } },
+          { t: { hinglish: 'Aakhir me 1-2 sawaal poocho', english: 'Ask 1 or 2 questions at the end' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -12998,6 +13036,30 @@ export const placement: Subject = {
             hindi: 'बेहतर उत्तर में प्रमाण है — कौशल, प्रोजेक्ट, और सीखने की गति। "ज़रूरत है" और "मेहनती हूँ" में कोई प्रमाण नहीं है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Interviewer Hindi me bole to kya karna chahiye?',
+            english: 'What should you do if the interviewer speaks in Hindi?',
+          },
+          opts: [
+            { hinglish: 'Hindi me jawab do, technical shabd English me rakho', english: 'Answer in Hindi, and keep technical words in English' },
+            { hinglish: 'Sirf English me bolo, chahe interviewer Hindi bole', english: 'Speak only in English, even if the interviewer speaks Hindi' },
+            { hinglish: 'Chup raho aur kuch mat bolo', english: 'Stay silent and say nothing' },
+            { hinglish: 'Interviewer se kaho ki woh English me bole', english: 'Tell the interviewer to speak in English' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: 'Interviewer ki bhasha me jawab dena respect dikhata hai; technical shabd English me rakhne se matlab saaf rehta hai.',
+            english: 'Answering in the language the interviewer uses shows respect, and keeping technical words in English keeps the meaning clear.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: '"Tell me about yourself" — 1 minute, 4 hisse: present, past, skills, future.', english: '"Tell me about yourself" — 1 minute, 4 parts: present, past, skills, future.' },
+        { hinglish: 'Har jawab me ek example daalo — daava nahi, kahani sunao.', english: 'Put one example in every answer — tell a story, not a claim.' },
+        { hinglish: 'Weakness sachchi batao, aur us par kya kaam kar rahe ho, woh bhi batao.', english: 'Tell a real weakness, and also say what you are doing about it.' },
+        { hinglish: 'Salary ka number pehle mat bolo — company ko bolne do.', english: 'Never say a salary number first — let the company speak.' },
+        { hinglish: 'Aakhir me hamesha 1-2 sawaal poocho — "No, sir" bolna matlab interest nahi hai.', english: 'Always ask 1 or 2 questions at the end — saying "No, sir" shows you have no interest.' },
       ],
       practice: {
         title: {
@@ -13012,7 +13074,7 @@ export const placement: Subject = {
         },
         language: 'python',
         starter: '# Task: apna "Tell me about yourself" jawab yahan likho (4 hisse).\nanswer = """Present: My name is ... I completed ...\nPast: I built ...\nSkills: I can ...\nFuture: I want ...\n"""\nprint(answer)\nprint("Words:", len(answer.split()))\n',
-        expected: 'Jawab print hona chahiye — 4 hisse, lagbhag 120-150 words (1 minute ke liye), apne projects ke naam ke saath.',
+expected: 'Present: My name is ... I completed ...\nPast: I built ...\nSkills: I can ...\nFuture: I want ...\n\nWords: 20',
       },
       readMinutes: 12,
     },
@@ -13073,6 +13135,19 @@ export const placement: Subject = {
           "तकनीकी इंटरव्यू का सूत्र: सवाल दोबारा बोलो, approach बोलो, उदाहरण पर चलाओ, फिर कोड लिखो। हर theory उत्तर में 3 चीज़ें: परिभाषा, उदाहरण, समझौता। 'मुझे नहीं पता' बोलकर रुको मत — जो पता है, वह बोलो। अपने प्रोजेक्ट का हर हिस्सा समझकर जाओ, क्योंकि इंटरव्यू लेने वाला वहीं से सवाल पूछता है। रोज़ एक कोडिंग सवाल बोलकर हल करो — बोलना ही अभ्यास है।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'Coding sawaal ka method — 4 steps',
+          english: 'The coding question method — 4 steps',
+        },
+        nodes: [
+          { t: { hinglish: 'Sawaal ko apne shabdon me dobara bolo', english: 'Repeat the question in your own words' } },
+          { t: { hinglish: 'Approach bolo: brute force, phir optimize', english: 'Say the approach: brute force, then optimise' } },
+          { t: { hinglish: 'Example par chala kar dikhao', english: 'Run it on an example' } },
+          { t: { hinglish: 'Code likho, phir test karo', english: 'Write the code, then test it' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -13150,6 +13225,30 @@ export const placement: Subject = {
             hindi: 'इंटरव्यू लेने वाले को तुम्हारी approach देखनी है, perfect answer नहीं। सोचकर बोलना तुम्हारी problem-solving दिखाता है; रुक जाना कुछ नहीं दिखाता।',
           },
         },
+        {
+          q: {
+            hinglish: 'Do interviewer alag sawaal poochain to kya karna chahiye?',
+            english: 'What should you do if two interviewers ask different questions?',
+          },
+          opts: [
+            { hinglish: 'Sirf pehle interviewer ko jawab do, doosre ko ignore karo', english: 'Answer only the first interviewer and ignore the other' },
+            { hinglish: 'Dono ko ek saath jawab do', english: 'Answer both at the same time' },
+            { hinglish: 'Chup ho jao', english: 'Stay silent' },
+            { hinglish: 'Ek ko jawab do, phir doosre ki taraf mudo', english: 'Answer one, then turn to the other' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Dono ko ignore karna ya ek saath jawab dena galat hai — ek ko jawab do, phir doosre ki taraf mudo, taaki dono ko lage ki tum unhe sun rahe ho.',
+            english: 'Ignoring either one or answering both at once is wrong — answer one, then turn to the other, so both feel heard.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Formula: sawaal dobara bolo, approach bolo, example par chalao, phir code likho.', english: 'The formula: repeat the question, say the approach, run it on an example, then write the code.' },
+        { hinglish: 'Har theory answer me 3 cheezein: definition, example, trade-off.', english: 'Every theory answer has 3 things: a definition, an example, a trade-off.' },
+        { hinglish: '"Mujhe nahi pata" bol kar ruko mat — jo pata hai, woh bolo.', english: 'Do not stop at "I do not know" — say what you do know.' },
+        { hinglish: 'Code likhne ke baad ek chhote example par chala kar test karo.', english: 'After writing code, test it on a small example.' },
+        { hinglish: 'Apne project ka har hissa samajh kar jao — interviewer wahin se sawaal poochta hai.', english: 'Understand every part of your project — the interviewer asks questions from there.' },
       ],
       practice: {
         title: {
@@ -13164,7 +13263,7 @@ export const placement: Subject = {
         },
         language: 'python',
         starter: 'def reverse_string(s):\n    chars = list(s)\n    left, right = 0, len(chars) - 1\n    while left < right:\n        chars[left], chars[right] = chars[right], chars[left]\n        left += 1\n        right -= 1\n    return "".join(chars)\n\nprint(reverse_string("hello"))\n',
-        expected: '"olleh" print hona chahiye.',
+expected: 'olleh',
       },
       readMinutes: 12,
     },
@@ -13225,6 +13324,20 @@ export const placement: Subject = {
           "मॉक इंटरव्यू = नेट अभ्यास। अकेले: रोज़ 20 मिनट, 5 सवाल, फ़ोन पर रिकॉर्ड, फिर फ़ीडबैक शीट। साथी के साथ: हफ़्ते में 2 बार, 30 मिनट, 1-5 की स्कोरिंग, फिर भूमिकाएँ बदलो। हर मॉक के बाद 3 चीज़ें लिखो: क्या अच्छा था, क्या ख़राब था, अगली बार क्या बदलेगा। कम से कम 5 मॉक करो — पहला मॉक घबराहट का है, 5वाँ मॉक आत्मविश्वास का।",
         ),
       ],
+      diagram: {
+        kind: 'timeline',
+        title: {
+          hinglish: '5 mock ka safar — ghabrahat se confidence tak',
+          english: 'The 5-mock journey — from nervousness to confidence',
+        },
+        nodes: [
+          { t: { hinglish: 'Mock 1: ghabrahat, bolna atakna', english: 'Mock 1: nervousness, speaking gets stuck' } },
+          { t: { hinglish: 'Mock 2: feedback sheet se pehli galti fix', english: 'Mock 2: first mistake fixed from the feedback sheet' } },
+          { t: { hinglish: 'Mock 3: har jawab me example', english: 'Mock 3: an example in every answer' } },
+          { t: { hinglish: 'Mock 4: jawab 1 minute me', english: 'Mock 4: answers within 1 minute' } },
+          { t: { hinglish: 'Mock 5: flow me, confidence ke saath', english: 'Mock 5: in flow, with confidence' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -13302,6 +13415,30 @@ export const placement: Subject = {
             hindi: 'मुश्किल सवाल से भागना मतलब असली इंटरव्यू में उनसे हार जाना। मॉक में उन्हें जीत लो, तो असली इंटरव्यू में वह तुम्हें घबरा नहीं सकते।',
           },
         },
+        {
+          q: {
+            hinglish: 'Interview kal hai aur time nahi hai — kya karna chahiye?',
+            english: 'The interview is tomorrow and there is no time — what should you do?',
+          },
+          opts: [
+            { hinglish: 'Ek chhota mock karo — "Tell me about yourself" + 2 technical sawaal — aur feedback sheet bharo', english: 'Do one short mock — "Tell me about yourself" plus 2 technical questions — and fill the feedback sheet' },
+            { hinglish: 'Mock chhodo, seedha interview me jao', english: 'Skip the mock and go straight to the interview' },
+            { hinglish: 'Poori raat jaag kar 10 mock karo', english: 'Stay up all night and do 10 mocks' },
+            { hinglish: 'Sirf resume padho, bolne ki practice mat karo', english: 'Only read the resume, do not practise speaking' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: 'Ek chhota mock bhi zero se behtar hai — sirf bolne ki practice aur feedback sheet se kal ka interview aasan ho jata hai.',
+            english: 'Even one short mock is better than zero — speaking practice and a feedback sheet make the interview tomorrow easier.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Mock interview = net practice — bolna hi asli taiyari hai, padhna nahi.', english: 'A mock interview is net practice — speaking is the real preparation, not reading.' },
+        { hinglish: 'Har mock ke baad feedback sheet bharo: kya achha tha, kya kharab tha, agle baar kya badlega.', english: 'After every mock, fill the feedback sheet: what was good, what was bad, what will change next time.' },
+        { hinglish: 'Kam se kam 5 mock karo — pehla mock ghabrahat ka, 5th mock confidence ka.', english: 'Do at least 5 mocks — the first mock is about nervousness, the fifth about confidence.' },
+        { hinglish: 'Partner wale mock me scoring 1-5 hoti hai: clarity, confidence, examples, time.', english: 'In a partner mock, you are scored 1 to 5 on clarity, confidence, examples, and time.' },
+        { hinglish: 'Mushkil sawaal (failure, weakness) ki practice pehle karo — unse bhaago mat.', english: 'Practise the hard questions (failure, weakness) first — do not run away from them.' },
       ],
       practice: {
         title: {
@@ -13316,7 +13453,7 @@ export const placement: Subject = {
         },
         language: 'python',
         starter: '# Task: apni mock feedback sheet yahan likho.\nfeedback = [\n    ("Tell me about yourself", "achha: ", "kharab: ", "agle baar: ", "clarity /5, confidence /5, examples /5, time /5"),\n]\nfor q, good, bad, nxt, score in feedback:\n    print("Q:", q)\n    print("Good:", good)\n    print("Bad:", bad)\n    print("Next:", nxt)\n    print("Score:", score)\n    print()\n',
-        expected: '5 sawaal ki feedback sheet print honi chahiye — har sawaal ke saath achha, kharab, agle baar, aur 1-5 scoring.',
+expected: 'Q: Tell me about yourself\nGood: achha: \nBad: kharab: \nNext: agle baar: \nScore: clarity /5, confidence /5, examples /5, time /5\n',
       },
       readMinutes: 10,
     },
@@ -13377,6 +13514,19 @@ export const placement: Subject = {
           "4 राउंड याद रखो: योग्यता, कोडिंग, तकनीकी इंटरव्यू, HR इंटरव्यू। हर राउंड एक फ़िल्टर है — एक भी असफल हो तो चयन नहीं। रोज़ 20 योग्यता सवाल, 2 कोडिंग सवाल, 1 तकनीकी विषय का उदाहरण, और 1 HR उत्तर का अभ्यास करो। कंपनी का पैटर्न आधिकारिक भर्ती पेज से जाँचो — पुराने पैटर्न पर भरोसा मत करो। इंटरव्यू से पहले कंपनी की वेबसाइट पढ़ो। हर राउंड की थोड़ी तैयारी, रोज़ — यही प्लेसमेंट का सूत्र है।",
         ),
       ],
+      diagram: {
+        kind: 'flow',
+        title: {
+          hinglish: 'Placement ke 4 rounds — filter ke baad filter',
+          english: 'The 4 placement rounds — filter after filter',
+        },
+        nodes: [
+          { t: { hinglish: 'Round 1: Aptitude test — quant, reasoning, verbal', english: 'Round 1: Aptitude test — quant, reasoning, verbal' } },
+          { t: { hinglish: 'Round 2: Coding test — 1-2 easy/medium sawaal', english: 'Round 2: Coding test — 1 or 2 easy/medium questions' } },
+          { t: { hinglish: 'Round 3: Technical interview — DSA, DBMS, OS, projects', english: 'Round 3: Technical interview — DSA, DBMS, OS, projects' } },
+          { t: { hinglish: 'Round 4: HR interview — kahani aur company fit', english: 'Round 4: HR interview — your story and company fit' } },
+        ],
+      },
       mcqs: [
         {
           q: {
@@ -13454,6 +13604,30 @@ export const placement: Subject = {
             hindi: 'हर राउंड एक फ़िल्टर है, इसलिए हर राउंड की थोड़ी-थोड़ी तैयारी रोज़ चाहिए। सिर्फ़ एक राउंड की तैयारी से बाकी राउंड में असफल हो जाओगे।',
           },
         },
+        {
+          q: {
+            hinglish: 'Ek hi din me do companies ke test hon to kya karna chahiye?',
+            english: 'What should you do if two companies have tests on the same day?',
+          },
+          opts: [
+            { hinglish: 'Dono test bina break ke do', english: 'Take both tests without a break' },
+            { hinglish: 'Pehle test ko chhodo, sirf doosre par dhyaan do', english: 'Skip the first test and focus only on the second' },
+            { hinglish: 'Dono test ek saath do', english: 'Take both tests at the same time' },
+            { hinglish: 'Pehle test ke baad 30 minute break lo, dimaag ko rest do, phir doosre ki taiyari karo', english: 'Take a 30-minute break after the first test, rest your mind, then prepare for the second one' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Bina break ke dimaag thak jata hai aur doosra test kharab hota hai — 30 minute ka rest doosre test ki taiyari hai.',
+            english: 'Without a break, your mind gets tired and the second test suffers — a 30-minute rest is preparation for the second test.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: '4 rounds yaad rakho: aptitude, coding, technical interview, HR interview.', english: 'Remember the 4 rounds: aptitude, coding, technical interview, HR interview.' },
+        { hinglish: 'Har round ek filter hai — ek bhi fail ho to selection nahi.', english: 'Every round is a filter — failing even one ends the selection.' },
+        { hinglish: 'Roz: 20 aptitude sawaal, 2 coding sawaal, 1 technical example, 1 HR jawab.', english: 'Every day: 20 aptitude questions, 2 coding questions, 1 technical example, 1 HR answer.' },
+        { hinglish: 'Company ka pattern official hiring page se check karo — purane pattern par bharosa mat karo.', english: 'Check the company pattern on the official hiring page — do not trust the old pattern.' },
+        { hinglish: 'Interview se pehle company ki website padho — "Why this company?" ka jawab pehle se hoga.', english: 'Read the company website before the interview — you will already have the answer to "Why this company?"' },
       ],
       practice: {
         title: {
@@ -13468,7 +13642,7 @@ export const placement: Subject = {
         },
         language: 'python',
         starter: '# Task: apna 30-din ka plan yahan likho.\nplan = {\n    "daily": "20 aptitude + 2 coding + 1 technical example + 1 HR answer",\n    "weekly": "2 mock interviews + 1 full mock test",\n    "companies": ["Company 1: ", "Company 2: ", "Company 3: "],\n}\nfor key, value in plan.items():\n    print(key, "->", value)\n',
-        expected: 'Plan print hona chahiye — daily ke 4 kaam, weekly mocks, aur target companies ke naam.',
+expected: 'daily -> 20 aptitude + 2 coding + 1 technical example + 1 HR answer\nweekly -> 2 mock interviews + 1 full mock test\ncompanies -> [\'Company 1: \', \'Company 2: \', \'Company 3: \']',
       },
       readMinutes: 12,
     },
