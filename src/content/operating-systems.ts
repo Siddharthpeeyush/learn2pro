@@ -12944,6 +12944,45 @@ export const operatingSystems: Subject = {
             hindi: 'वॉशिंग मशीन, ATM और कार डैशबोर्ड में भी छोटे OS होते हैं — OS सिर्फ़ लैपटॉप की चीज़ नहीं है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Gallery khulne se pehle OS kya karta hai?',
+            english: 'What does the OS do before the gallery opens?',
+          },
+          opts: [
+            { hinglish: 'Sirf wallpaper badal deta hai', english: 'It only changes the wallpaper' },
+            { hinglish: 'Gallery ko seedha printer par bhej deta hai', english: 'It sends the gallery straight to the printer' },
+            { hinglish: 'Phone ko band kar deta hai', english: 'It switches the phone off' },
+            { hinglish: 'App ka code disk se memory mein load karke uske liye process banata hai', english: 'It loads the app code from disk into memory and creates a process for it' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Article ke step 2 aur 4 mein yahi likha hai — OS pehle app ka code disk se memory mein load karta hai, phir uske liye process banakar use CPU time deta hai.',
+            english: 'Steps 2 and 4 of the article say exactly this — the OS first loads the app code from disk into memory, then creates a process for it and gives it CPU time.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'OS hardware aur apps ke beech ka manager hai — CPU, memory, files aur devices baant-ta hai.',
+          english: 'The OS is the manager between hardware and apps — it shares the CPU, memory, files, and devices.',
+        },
+        {
+          hinglish: 'Kernel OS ka dil hai — wahi hardware se seedha baat karta hai.',
+          english: 'The kernel is the heart of the OS — it is the part that talks directly to the hardware.',
+        },
+        {
+          hinglish: 'OS ke chaar kaam: process chalana, memory baantna, files sambhalna, devices control karna.',
+          english: 'The four jobs of the OS: running processes, sharing memory, managing files, and controlling devices.',
+        },
+        {
+          hinglish: 'Zyada RAM hamesha phone tez nahi karti — CPU ya disk bhi slow hone ki wajah ho sakti hai.',
+          english: 'More RAM does not always make a phone fast — the CPU or the disk can also be the reason it is slow.',
+        },
+        {
+          hinglish: 'Boot ke waqt bootloader aur BIOS/UEFI hardware jagate hain, phir OS ko bulate hain.',
+          english: 'At boot time the bootloader and BIOS/UEFI wake the hardware, then call the OS.',
+        },
       ],
       practice: {
         title: {
@@ -12958,7 +12997,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'total = 6.0\nos_use = 1.0\ngame = 2.5\nbrowser = 1.5\nleft = total - os_use - game - browser\nprint("RAM bachi:", left, "GB")\nprint("Video editor (1.5 GB) khulega?", left >= 1.5)\nprint("Game band karne par bachegi:", left + game, "GB")\n',
-        expected: 'RAM bachi: 1.0 GB. Video editor nahi khulega (1.0 < 1.5). Game band karne par 3.5 GB bachegi.',
+        expected: 'RAM bachi: 1.0 GB\nVideo editor (1.5 GB) khulega? False\nGame band karne par bachegi: 3.5 GB',
       },
       readMinutes: 10,
     },
@@ -13153,6 +13192,45 @@ export const operatingSystems: Subject = {
             hindi: 'Single-core पर सिर्फ़ एक थ्रेड एक समय पर चलता है — OS उन्हें बारी-बारी चलाता है, यह parallelism नहीं, concurrency है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Ek thread crash ho jaye to kya hota hai?',
+            english: 'What happens if one thread crashes?',
+          },
+          opts: [
+            { hinglish: 'Poora process khatm ho jata hai, kyunki memory shared hoti hai', english: 'The whole process dies, because the memory is shared' },
+            { hinglish: 'Sirf wahi thread rukta hai, baaki threads chalte rehte hain', english: 'Only that thread stops; the other threads keep running' },
+            { hinglish: 'OS turant ek naya process bana deta hai', english: 'The OS at once creates a new process' },
+            { hinglish: 'Kuch nahi hota — thread apne aap theek ho jata hai', english: 'Nothing happens — the thread fixes itself' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: 'Article ke edge case 3 mein yahi hai — thread process ki shared memory use karta hai, isliye ek thread ke crash se poora process khatm ho jata hai.',
+            english: 'Edge case 3 of the article says this — a thread uses memory shared with the whole process, so one thread crashing kills the whole process.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'Program disk par pada code hai; process chalta hua program hai — apni memory aur PID ke saath.',
+          english: 'A program is code lying on disk; a process is a program in execution, with its own memory and PID.',
+        },
+        {
+          hinglish: 'n baar fork() = 2^n processes — har fork process ki ginti double kar deta hai.',
+          english: 'n forks = 2^n processes — every fork doubles the number of processes.',
+        },
+        {
+          hinglish: 'Threads memory share karte hain, isliye halke hote hain — par ek thread ka crash poora process gira deta hai.',
+          english: 'Threads share memory, so they are light — but one thread crashing brings down the whole process.',
+        },
+        {
+          hinglish: 'Zyada threads hamesha tez nahi karte — ek CPU par 100 threads sirf switching ka kharcha badhate hain.',
+          english: 'More threads are not always faster — 100 threads on one CPU only raise the switching cost.',
+        },
+        {
+          hinglish: 'Process ke states: New → Ready → Running → Waiting → Terminated.',
+          english: 'Process states: New → Ready → Running → Waiting → Terminated.',
+        },
       ],
       practice: {
         title: {
@@ -13167,7 +13245,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'print("Processes after 4 forks:", 2 ** 4)\nprint("4 processes x 80 MB:", 4 * 80, "MB")\nprint("4 threads: 80 + 4 x 2 =", 80 + 4 * 2, "MB")\n',
-        expected: '(a) 16 processes. (b) 320 MB. (c) 88 MB.',
+        expected: 'Processes after 4 forks: 16\n4 processes x 80 MB: 320 MB\n4 threads: 80 + 4 x 2 = 88 MB',
       },
       readMinutes: 11,
     },
@@ -13363,6 +13441,45 @@ export const operatingSystems: Subject = {
             hindi: 'सही फॉर्मूला: Waiting = Turnaround − Burst। Plus करने से उल्टा जवाब आएगा।',
           },
         },
+        {
+          q: {
+            hinglish: 'SJN mein bada process bhooka reh jaye to use kaise bachaya jata hai?',
+            english: 'In SJN, how is a big process saved from starving?',
+          },
+          opts: [
+            { hinglish: 'Round Robin ka quantum aur chhota kar do', english: 'Make the Round Robin quantum even smaller' },
+            { hinglish: 'Sab processes ko ek saath chala do', english: 'Run all processes at the same time' },
+            { hinglish: 'Bade process ko hamesha pehle chala do', english: 'Always run the big process first' },
+            { hinglish: 'Aging — lambi wait karne wale process ki priority badhao', english: 'Aging — raise the priority of the process that has waited long' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Edge case 1 mein yahi hai — SJN mein chhote processes aate rahein to bada process kabhi nahi chalta; aging uski priority badha kar use mauka deti hai.',
+            english: 'Edge case 1 says this — in SJN, if small processes keep arriving, the big process never runs; aging raises its priority and gives it a turn.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'Turnaround = Completion − Arrival; Waiting = Turnaround − Burst.',
+          english: 'Turnaround = Completion − Arrival; Waiting = Turnaround − Burst.',
+        },
+        {
+          hinglish: 'SJN sabse kam average waiting deta hai, par bada process bhooka reh sakta hai (starvation).',
+          english: 'SJN gives the lowest average waiting, but a big process can starve.',
+        },
+        {
+          hinglish: 'Round Robin har process ko baari deta hai — response tez, par average waiting thodi zyada ho sakti hai.',
+          english: 'Round Robin gives every process a turn — fast response, but average waiting can be a little higher.',
+        },
+        {
+          hinglish: 'Arrival time bhoolna sabse aam galti hai — jo process abhi aaya hi nahi, woh schedule nahi ho sakta.',
+          english: 'Forgetting the arrival time is the most common mistake — a process that has not arrived yet cannot be scheduled.',
+        },
+        {
+          hinglish: 'Quantum bahut chhota ho to CPU switching mein hi busy rehta hai; bahut bada ho to Round Robin FCFS ban jata hai.',
+          english: 'If the quantum is too small, the CPU stays busy switching; if it is too large, Round Robin becomes FCFS.',
+        },
       ],
       practice: {
         title: {
@@ -13377,7 +13494,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'procs = [("A", 0, 5), ("B", 2, 3), ("C", 4, 6)]\nt = 0\nwaits = []\nfor name, arr, burst in procs:\n    t = max(t, arr) + burst\n    tat = t - arr\n    wt = tat - burst\n    waits.append(wt)\n    print(name, "completion:", t, "turnaround:", tat, "waiting:", wt)\nprint("Average waiting:", sum(waits) / len(waits))\n',
-        expected: 'A completion 5, turnaround 5, waiting 0. B completion 8, turnaround 6, waiting 3. C completion 14, turnaround 10, waiting 4. Average waiting 7/3 = 2.33.',
+        expected: 'A completion: 5 turnaround: 5 waiting: 0\nB completion: 8 turnaround: 6 waiting: 3\nC completion: 14 turnaround: 10 waiting: 4\nAverage waiting: 2.3333333333333335',
       },
       readMinutes: 13,
     },
@@ -13570,6 +13687,45 @@ export const operatingSystems: Subject = {
             hindi: 'Paging external fragmentation खत्म करता है, internal नहीं — आखिरी page की खाली जगह waste रहती है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Logical address 19986, page 4, frame 7 — physical address mein offset kya hoga?',
+            english: 'Logical address 19986, page 4, frame 7 — what is the offset in the physical address?',
+          },
+          opts: [
+            { hinglish: '0', english: '0' },
+            { hinglish: '3602 — offset dono addresses mein same rehta hai', english: '3602 — the offset stays the same in both addresses' },
+            { hinglish: '4096', english: '4096' },
+            { hinglish: '32274', english: '32274' },
+          ],
+          ans: 1,
+          expl: {
+            hinglish: 'Article mein yahi sikhaya hai — page number frame number se badal jata hai, par offset dono jagah same rehta hai: 19986 − 16384 = 3602.',
+            english: 'The article teaches exactly this — the page number is replaced by the frame number, but the offset stays the same in both places: 19986 − 16384 = 3602.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'Page program ka tukda hai (logical), frame RAM ka tukda hai (physical) — dono ka size same hota hai.',
+          english: 'A page is a piece of the program (logical); a frame is a piece of RAM (physical) — both have the same size.',
+        },
+        {
+          hinglish: 'Physical address = frame number × page size + offset; offset kabhi nahi badalta.',
+          english: 'Physical address = frame number × page size + offset; the offset never changes.',
+        },
+        {
+          hinglish: 'Page table batati hai kaunsa page kis frame mein hai.',
+          english: 'The page table says which page is in which frame.',
+        },
+        {
+          hinglish: 'Page fault matlab page RAM mein nahi, disk par hai — zyada page faults system ko slow kar dete hain.',
+          english: 'A page fault means the page is on disk, not in RAM — too many page faults slow the system down.',
+        },
+        {
+          hinglish: 'Aakhri page mein bachi khaali jagah internal fragmentation hai.',
+          english: 'The empty space left in the last page is internal fragmentation.',
+        },
       ],
       practice: {
         title: {
@@ -13584,7 +13740,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'addr = 12345\npage_size = 4096\npage = addr // page_size\noffset = addr % page_size\nframe = 3\nphysical = frame * page_size + offset\nprint("Page:", page, "Offset:", offset)\nprint("Physical address:", physical)\n',
-        expected: 'Page 3 (3 × 4096 = 12288), offset 57. Physical = 3 × 4096 + 57 = 12345.',
+        expected: 'Page: 3 Offset: 57\nPhysical address: 12345',
       },
       readMinutes: 12,
     },
@@ -13777,6 +13933,45 @@ export const operatingSystems: Subject = {
             hindi: 'Contiguous में फ़ाइल बढ़े और पास में जगह न हो तो पूरी फ़ाइल को कहीं और कॉपी करना पड़ता है — यह उसकी सबसे बड़ी कमज़ोरी है।',
           },
         },
+        {
+          q: {
+            hinglish: '0 bytes ki file ko kitne blocks chahiye?',
+            english: 'How many blocks does a 0-byte file need?',
+          },
+          opts: [
+            { hinglish: '0 blocks — sirf inode aur directory entry chahiye', english: '0 blocks — only an inode and a directory entry are needed' },
+            { hinglish: '1 block', english: '1 block' },
+            { hinglish: '4 blocks', english: '4 blocks' },
+            { hinglish: 'Utne hi jitne file ka naam lamba hai', english: 'As many as the file name is long' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: 'Edge case 3 mein yahi hai — 0 bytes ki file mein data hi nahi hota, isliye use koi block nahi chahiye, sirf inode aur directory entry kaafi hai.',
+            english: 'Edge case 3 says this — a 0-byte file has no data, so it needs no block at all; only an inode and a directory entry are enough.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'File = naam (directory) + metadata (inode) + data (blocks).',
+          english: 'A file = name (directory) + metadata (inode) + data (blocks).',
+        },
+        {
+          hinglish: 'Blocks ginne ke liye hamesha round up karo — 102 KB, 4 KB blocks = 26 blocks.',
+          english: 'Always round up when counting blocks — 102 KB with 4 KB blocks = 26 blocks.',
+        },
+        {
+          hinglish: 'Delete karne se sirf directory entry hat-ti hai — data tab tak rehta hai jab tak naya data us par na likh de.',
+          english: 'Deleting removes only the directory entry — the data stays until new data is written over it.',
+        },
+        {
+          hinglish: 'Contiguous tez padhta hai, linked kahin bhi jagah leta hai, indexed kisi bhi block par seedha kood sakta hai.',
+          english: 'Contiguous reads fast, linked takes space anywhere, indexed jumps straight to any block.',
+        },
+        {
+          hinglish: 'Journaling file system pehle diary (journal) mein likhta hai, phir kaam karta hai — bijli jaane par file surakshit rehti hai.',
+          english: 'A journaling file system first writes in a diary (journal), then does the work — so a file stays safe when the power goes out.',
+        },
       ],
       practice: {
         title: {
@@ -13791,7 +13986,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'import math\nblock = 4\nprint("50 KB file:", math.ceil(50 / block), "blocks")\nprint("2 MB file:", math.ceil(2048 / block), "blocks")\nprint("10 KB file, last block empty:", 3 * block - 10, "KB")\n',
-        expected: '(a) 13 blocks (12.5 round up). (b) 512 blocks. (c) 2 KB empty (3 blocks = 12 KB, 12 − 10 = 2).',
+        expected: '50 KB file: 13 blocks\n2 MB file: 512 blocks\n10 KB file, last block empty: 2 KB',
       },
       readMinutes: 11,
     },
@@ -13986,6 +14181,45 @@ export const operatingSystems: Subject = {
             hindi: 'Starvation में एक प्रोसेस इंतज़ार करता है जबकि दूसरे चलते हैं; deadlock में सब अटक जाते हैं — दोनों अलग हैं।',
           },
         },
+        {
+          q: {
+            hinglish: 'Ek process aur ek resource ho to deadlock hoga?',
+            english: 'With one process and one resource, will there be a deadlock?',
+          },
+          opts: [
+            { hinglish: 'Haan, hamesha hoga', english: 'Yes, always' },
+            { hinglish: 'Haan, agar resource slow ho', english: 'Yes, if the resource is slow' },
+            { hinglish: 'Sirf tab jab process bada ho', english: 'Only if the process is big' },
+            { hinglish: 'Nahi — circular wait ke liye kam se kam do processes chahiye', english: 'No — a circular wait needs at least two processes' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Edge case 1 mein yahi hai — ek process aur ek resource mein circular wait ban hi nahi sakta, kyunki wait ka circle banane ke liye kam se kam do processes chahiye.',
+            english: 'Edge case 1 says this — with one process and one resource a circular wait cannot form, because a circle needs at least two processes.',
+          },
+        },
+      ],
+      keyNotes: [
+        {
+          hinglish: 'Deadlock ke chaar conditions: mutual exclusion, hold and wait, no preemption, circular wait — ek bhi toote to deadlock nahi.',
+          english: 'Deadlock needs four conditions: mutual exclusion, hold and wait, no preemption, and circular wait — break even one and there is no deadlock.',
+        },
+        {
+          hinglish: 'Need = Max − Allocation — ulta hisaab sabse aam galti hai.',
+          english: 'Need = Max − Allocation — working it out backwards is the most common mistake.',
+        },
+        {
+          hinglish: 'Banker algorithm deadlock ko rokta nahi, avoid karta hai — safe state mein reh kar.',
+          english: 'The Banker’s algorithm does not prevent deadlock, it avoids it — by staying in a safe state.',
+        },
+        {
+          hinglish: 'Deadlock aur starvation alag hain — deadlock mein koi aage nahi badh sakta, starvation mein ek process intezar karta hai jabki dusre chalte hain.',
+          english: 'Deadlock and starvation are different — in deadlock nobody can move forward; in starvation one process waits while others run.',
+        },
+        {
+          hinglish: 'Safe sequence mil jaye to system safe hai — is example mein P1, P3, P4, P0, P2.',
+          english: 'If a safe sequence is found, the system is safe — in this example P1, P3, P4, P0, P2.',
+        },
       ],
       practice: {
         title: {
@@ -14000,7 +14234,7 @@ export const operatingSystems: Subject = {
         },
         language: 'python',
         starter: 'avail = [2, 1, 0]\nneed0 = [2 - 0, 1 - 0, 0 - 0]\nneed1 = [2 - 1, 1 - 0, 1 - 0]\nprint("P0 need:", need0)\nprint("P1 need:", need1)\nprint("P0 chal sakta hai?", all(n <= a for n, a in zip(need0, avail)))\nprint("P1 chal sakta hai?", all(n <= a for n, a in zip(need1, avail)))\n',
-        expected: 'P0 need (2,1,0), P1 need (1,1,1). P0 chal sakta hai (need <= available). P1 nahi (teensra resource 1 > 0). Safe sequence: P0, phir P1.',
+        expected: 'P0 need: [2, 1, 0]\nP1 need: [1, 1, 1]\nP0 chal sakta hai? True\nP1 chal sakta hai? False',
       },
       readMinutes: 12,
     },
