@@ -12770,6 +12770,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Series solve karne ka pehla kadam hamesha fark likhna hai — pehle fark, phir fark ka fark.',
+          english: 'The first step in any series is always to write the differences — first the differences, then the difference of the differences.',
+        },
+        {
+          hinglish: 'Agar fark barabar badhta hai to second difference constant hota hai — wahi rule pakka karta hai.',
+          english: 'If the difference grows evenly, the second difference stays constant — that is what confirms the rule.',
+        },
+        {
+          hinglish: 'Ek fark dekh kar rule mat maano — kam se kam 3 fark check karo, warna trap mein phasoge.',
+          english: 'Never accept a rule from a single difference — check at least 3 differences, or you will fall into the trap.',
+        },
+        {
+          hinglish: 'Fark se kaam na bane to ratio dekho, phir squares aur cubes check karo.',
+          english: 'If differences do not work, check the ratio, then squares and cubes.',
+        },
+        {
+          hinglish: 'Letter series mein pehle positions likho (A = 1 ... Z = 26) — phir wohi number series ban jaati hai.',
+          english: 'In a letter series, first write the positions (A = 1 ... Z = 26) — then it becomes a number series.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Series ki practice',
@@ -12787,7 +12809,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, None]\ncorrect = [112, 17, 37]\nfor i in range(3):\n    if answers[i] == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 112\nQ2: abhi sahi answer nahi mila. Sahi answer: 17\nQ3: abhi sahi answer nahi mila. Sahi answer: 37',
       },
       readMinutes: 10,
     },
@@ -13054,6 +13076,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Family tree banao — parents upar, children neeche, shaadi ki line beech mein.',
+          english: 'Draw a family tree — parents on top, children below, a marriage line in between.',
+        },
+        {
+          hinglish: 'My ka matlab hamesha bolne wala hota hai — his ya her aate hi speaker badal jaata hai.',
+          english: 'My always means the speaker — the moment his or her appears, the speaker changes.',
+        },
+        {
+          hinglish: 'Lamba rishta tod kar chhote hisso mein samjho — grandmother ka only son matlab father.',
+          english: 'Break a long relation into small parts — the only son of the grandmother means father.',
+        },
+        {
+          hinglish: 'Sawal ko peeche se padho — aakhri hisse se shuru karo, jawab aasan ho jaata hai.',
+          english: 'Read the question backwards — start from the last part and the answer gets easy.',
+        },
+        {
+          hinglish: 'Only shabd ko kabhi ignore mat karo — woh sister aur cousin ke beech ka fark batata hai.',
+          english: 'Never ignore the word only — it is the difference between a sister and a cousin.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Blood relation ki practice',
@@ -13071,7 +13115,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho (chhote akshar mein), phir Run dabao.\nanswers = ["", "", ""]\ncorrect = ["paternal aunt", "mother", "brother"]\nfor i in range(3):\n    if answers[i].strip().lower() == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: paternal aunt\nQ2: abhi sahi answer nahi mila. Sahi answer: mother\nQ3: abhi sahi answer nahi mila. Sahi answer: brother',
       },
       readMinutes: 10,
     },
@@ -13338,6 +13382,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Pehle har letter ka shift nikaalo — sirf pehla letter dekh kar rule mat maano.',
+          english: 'First work out the shift of every letter — never accept a rule from the first letter alone.',
+        },
+        {
+          hinglish: 'Pehla aur aakhri letter ka shift barabar ho to rule simple shift hai.',
+          english: 'If the first and last letters shift by the same amount, the rule is a simple shift.',
+        },
+        {
+          hinglish: 'Z ke baad A aata hai — shift karte waqt alphabet gol ghumta hai.',
+          english: 'After Z comes A — the alphabet goes around in a circle when you shift.',
+        },
+        {
+          hinglish: 'Code ulta dikhe to reversal rule try karo — A ko Z, B ko Y.',
+          english: 'If the code looks reversed, try the reversal rule — A becomes Z, B becomes Y.',
+        },
+        {
+          hinglish: 'Number code mein har letter ki position ka jod check karo — A = 1 se Z = 26 tak.',
+          english: 'In a number code, check the sum of the letter positions — A = 1 to Z = 26.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Coding ki practice',
@@ -13355,7 +13421,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = ["", None, ""]\ncorrect = ["DBU", 6, "YALP"]\nfor i in range(3):\n    a = answers[i]\n    if isinstance(a, str):\n        a = a.strip().upper()\n    if a == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: DBU\nQ2: abhi sahi answer nahi mila. Sahi answer: 6\nQ3: abhi sahi answer nahi mila. Sahi answer: YALP',
       },
       readMinutes: 10,
     },
@@ -13622,6 +13688,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Pehle facing padho — row mein north, circle mein centre ki taraf.',
+          english: 'First read the facing — north in a row, towards the centre in a circle.',
+        },
+        {
+          hinglish: 'Fixed clue se shuru karo — jo jagah pakki hai, pehle woh bharo.',
+          english: 'Start with the fixed clue — fill the certain place first.',
+        },
+        {
+          hinglish: 'Immediately matlab bilkul bagal mein, second matlab ek ko chhod kar.',
+          english: 'Immediately means right next to, second means skipping one person.',
+        },
+        {
+          hinglish: 'Circle mein left-right ulta padta hai — upar wale ka left tumhare right taraf hota hai.',
+          english: 'In a circle, left and right flip — the left of the person at the top is on your right side.',
+        },
+        {
+          hinglish: 'Row mein left se position di ho to right se position = total − left + 1.',
+          english: 'In a row, if a position from the left is given, the position from the right is total minus left plus 1.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Seating ki practice',
@@ -13639,7 +13727,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = ["", None, ""]\ncorrect = ["E", 6, "D"]\nfor i in range(3):\n    a = answers[i]\n    if isinstance(a, str):\n        a = a.strip().upper()\n    if a == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: E\nQ2: abhi sahi answer nahi mila. Sahi answer: 6\nQ3: abhi sahi answer nahi mila. Sahi answer: D',
       },
       readMinutes: 10,
     },
@@ -13906,6 +13994,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Hamesha table banao — 5, 4, 3, 2, 1 upar se neeche likho aur har clue se ek naam bharo.',
+          english: 'Always draw a table — write 5, 4, 3, 2, 1 from top to bottom and fill one name per clue.',
+        },
+        {
+          hinglish: 'Floor 1 sabse neeche hota hai — use top samajhna sabse badi galti hai.',
+          english: 'Floor 1 is the lowest floor — treating it as the top is the biggest mistake.',
+        },
+        {
+          hinglish: 'Fixed clue pehle lagao, phir relative clues se baaki jagah bharo.',
+          english: 'Place the fixed clue first, then fill the rest with the relative clues.',
+        },
+        {
+          hinglish: 'Above matlab kahin bhi upar, immediately above matlab bilkul upar wali manzil.',
+          english: 'Above means anywhere higher, immediately above means the floor just above.',
+        },
+        {
+          hinglish: 'Clash ho jaaye to wahi clue galat jagah laga hai — peeche jaa kar dobara rakho.',
+          english: 'If two names clash on one floor, that clue was placed wrong — go back and place it again.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Puzzles ki practice',
@@ -13923,7 +14033,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho, phir Run dabao.\nanswers = [None, None, ""]\ncorrect = [1, 3, "T"]\nfor i in range(3):\n    a = answers[i]\n    if isinstance(a, str):\n        a = a.strip().upper()\n    if a == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: 1\nQ2: abhi sahi answer nahi mila. Sahi answer: 3\nQ3: abhi sahi answer nahi mila. Sahi answer: T',
       },
       readMinutes: 10,
     },
@@ -14190,6 +14300,28 @@ export const logicalReasoning: Subject = {
           },
         },
       ],
+      keyNotes: [
+        {
+          hinglish: 'Pehle facing likho, phir har turn ek-ek karke lagao — north se right matlab east, left matlab west.',
+          english: 'First write the facing, then apply every turn one by one — from north, right means east and left means west.',
+        },
+        {
+          hinglish: 'Chali hui doori aur seedhi doori alag hain — 3 km north + 4 km east matlab seedha 5 km.',
+          english: 'The distance walked and the straight distance are different — 3 km north plus 4 km east means 5 km straight.',
+        },
+        {
+          hinglish: 'Seedhi doori ke liye Pythagoras use karo — 3-4-5, 5-12-13, 6-8-10 yaad rakho.',
+          english: 'Use Pythagoras for the straight distance — remember 3-4-5, 5-12-13, and 6-8-10.',
+        },
+        {
+          hinglish: 'Chaar turn ke baad wahi direction wapas aata hai — chaar right ya chaar left matlab koi badlav nahi.',
+          english: 'After four turns the same direction returns — four rights or four lefts mean no change.',
+        },
+        {
+          hinglish: 'Direction badle to doori wahi rehti hai — north-east aur north-west dono mein seedha 5 km hi hota hai.',
+          english: 'When the direction changes, the distance stays the same — north-east and north-west both give 5 km straight.',
+        },
+      ],
       practice: {
         title: {
           hinglish: 'Direction ki practice',
@@ -14207,7 +14339,7 @@ export const logicalReasoning: Subject = {
         language: 'python',
         starter:
           '# Apne 3 answers yahan likho (chhote akshar mein), phir Run dabao.\nanswers = ["", None, ""]\ncorrect = ["south", 13, "south"]\nfor i in range(3):\n    a = answers[i]\n    if isinstance(a, str):\n        a = a.strip().lower()\n    if a == correct[i]:\n        print(f"Q{i+1}: sahi hai!")\n    else:\n        print(f"Q{i+1}: abhi sahi answer nahi mila. Sahi answer: {correct[i]}")\n',
-        expected: 'Teeno sahi hone par script har sawal ke saamne "sahi hai!" print karega.',
+        expected: 'Q1: abhi sahi answer nahi mila. Sahi answer: south\nQ2: abhi sahi answer nahi mila. Sahi answer: 13\nQ3: abhi sahi answer nahi mila. Sahi answer: south',
       },
       readMinutes: 10,
     },
