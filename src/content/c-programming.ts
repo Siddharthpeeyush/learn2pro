@@ -13128,6 +13128,30 @@ int main() {
             hindi: 'return 0 ऑपरेटिंग सिस्टम को बताता है कि प्रोग्राम बिना समस्या के खत्म हुआ।',
           },
         },
+        {
+          q: {
+            hinglish: 'Program mein #include <stdio.h> likhne ka kaam kya hai?',
+            english: 'What is the job of #include <stdio.h> in a program?',
+          },
+          opts: [
+            { hinglish: 'Screen par Hello, World print karna', english: 'Printing Hello, World on the screen' },
+            { hinglish: 'Program ko khatm karna', english: 'Ending the program' },
+            { hinglish: 'Input-output ke tools laana', english: 'Bringing in the tools for input and output' },
+            { hinglish: 'Ek naya variable banana', english: 'Creating a new variable' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: 'stdio.h mein printf jaise tools hote hain; is line ke bina compiler ko pata hi nahi hota ki printf kya hai.',
+            english: 'stdio.h holds tools like printf; without this line the compiler does not even know what printf is.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Har C program main() se shuru hota hai.', english: 'Every C program starts at main().' },
+        { hinglish: 'printf() screen par likhta hai; semicolon ; har statement ko khatm karta hai.', english: 'printf() writes on the screen; a semicolon ; ends every statement.' },
+        { hinglish: '#include <stdio.h> ke bina printf kaam nahi karega.', english: 'Without #include <stdio.h>, printf will not work.' },
+        { hinglish: 'C case-sensitive hai — printf aur Printf do alag naam hain.', english: 'C is case-sensitive — printf and Printf are two different names.' },
+        { hinglish: 'return 0 ka matlab hai program theek se khatm hua.', english: 'return 0 means the program finished fine.' },
       ],
       practice: {
         title: {
@@ -13391,6 +13415,30 @@ int main() {
             hindi: 'सी डिब्बा बनाते वक्त उसे खाली नहीं करता — अंदर जो पुराना डेटा पड़ा था, वही दिख सकता है।',
           },
         },
+        {
+          q: {
+            hinglish: '49.99 jaise price ko store karne ke liye kaun si declaration sahi hai?',
+            english: 'Which declaration is correct for storing a price like 49.99?',
+          },
+          opts: [
+            { hinglish: 'int price = 49.99;', english: 'int price = 49.99;' },
+            { hinglish: 'float price = 49.99;', english: 'float price = 49.99;' },
+            { hinglish: 'char price = 49.99;', english: 'char price = 49.99;' },
+            { hinglish: 'int price = "49.99";', english: 'int price = "49.99";' },
+          ],
+          ans: 1,
+          expl: {
+            hinglish: 'int decimal hissa kaat deta hai, isliye 49.99 ban jata 49; char mein ek akshar aata hai, aur text ko int mein nahi rakh sakte.',
+            english: 'int drops the decimal part, so 49.99 would become 49; a char holds one character, and text cannot go into an int.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'int poore numbers ke liye, float decimal ke liye, char ek akshar ke liye.', english: 'int is for whole numbers, float for decimals, char for one character.' },
+        { hinglish: 'Variable use karne se pehle use value dena zaroori hai, warna andar purana data dikh sakta hai.', english: 'Give a variable a value before you use it, or old data lying inside may show up.' },
+        { hinglish: 'float print karne ke liye %f, int ke liye %d, char ke liye %c use hota hai.', english: 'Use %f to print a float, %d for an int, and %c for a char.' },
+        { hinglish: 'char mein single quotes lagte hain, jaise \'A\', double quotes se nahi.', english: 'A char uses single quotes, like \'A\', not double quotes.' },
+        { hinglish: 'Variable ki value baad mein badli ja sakti hai — marks = marks + 5 bilkul sahi hai.', english: 'A variable value can be changed later — marks = marks + 5 is perfectly fine.' },
       ],
       practice: {
         title: {
@@ -13681,6 +13729,30 @@ int main() {
             hindi: '17 को 5 से भाग दो तो 3 बार पूरा जाता है (15), और 2 बचता है — % वही बचा हुआ 2 देता है।',
           },
         },
+        {
+          q: {
+            hinglish: '10 % 3 ka result kya hoga?',
+            english: 'What is the result of 10 % 3?',
+          },
+          opts: [
+            { hinglish: '3', english: '3' },
+            { hinglish: '3.33', english: '3.33' },
+            { hinglish: '0', english: '0' },
+            { hinglish: '1', english: '1' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: '10 ko 3 se bhaag do to 3 baar poora jata hai (9), aur 1 bachta hai — % wahi bacha hua 1 deta hai.',
+            english: 'Divide 10 by 3 and it goes 3 times fully (9), with 1 left over — % gives that leftover 1.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'int division mein decimal hissa kat jata hai — 7 / 2 ka answer 3 hota hai.', english: 'In integer division the decimal part is dropped — 7 / 2 gives 3.' },
+        { hinglish: '% (modulo) bhaag ke baad bacha hua hissa deta hai.', english: '% (modulo) gives what is left over after division.' },
+        { hinglish: 'Multiplication aur division addition se pehle hote hain — 2 + 3 * 4 ka answer 14 hota hai.', english: 'Multiplication and division happen before addition — 2 + 3 * 4 gives 14.' },
+        { hinglish: 'x++ pehle purani value deta hai, phir value badhata hai.', english: 'x++ gives the old value first, then increases it.' },
+        { hinglish: 'Brackets se order badla ja sakta hai — (2 + 3) * 4 ka answer 20 hota hai.', english: 'Brackets can change the order — (2 + 3) * 4 gives 20.' },
       ],
       practice: {
         title: {
@@ -13986,6 +14058,30 @@ int main() {
             hindi: 'दोनों कंडीशन एक साथ सच होनी चाहिए, इसलिए && इस्तेमाल होता है। || से तो हर age पास हो जाती, और 18 < age < 60 सी में ऐसे काम नहीं करता।',
           },
         },
+        {
+          q: {
+            hinglish: 'Is code ka output kya hoga? int marks = 45; if (marks >= 50) { printf("Pass"); } else { printf("Fail"); }',
+            english: 'What will this code print? int marks = 45; if (marks >= 50) { printf("Pass"); } else { printf("Fail"); }',
+          },
+          opts: [
+            { hinglish: 'Pass', english: 'Pass' },
+            { hinglish: 'Fail', english: 'Fail' },
+            { hinglish: 'PassFail', english: 'PassFail' },
+            { hinglish: 'Error', english: 'Error' },
+          ],
+          ans: 1,
+          expl: {
+            hinglish: '45, 50 se chhota hai, isliye pehli condition false hai aur else wala block chalta hai.',
+            english: '45 is smaller than 50, so the first condition is false and the else block runs.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'if ke andar ki condition hamesha true ya false hoti hai.', english: 'The condition inside an if is always either true or false.' },
+        { hinglish: 'Condition check karne ke liye == use karo, = nahi — = value deta hai, check nahi karta.', english: 'Use == to check a condition, not = — = gives a value, it does not check.' },
+        { hinglish: 'else if se ek se zyada conditions ko order mein check kar sakte ho.', english: 'else if lets you check more than one condition in order.' },
+        { hinglish: 'switch mein har case ke baad break likhna mat bhoolo, warna agla case bhi chal jayega.', english: 'Do not forget break after every case in a switch, or the next case will run too.' },
+        { hinglish: 'Do conditions ko ek saath check karne ke liye && use karo.', english: 'Use && to check two conditions together.' },
       ],
       practice: {
         title: {
@@ -14280,6 +14376,30 @@ int main() {
             hindi: 'do-while में पहले body चलती है, फिर कंडीशन जाँच होती है — इसलिए body कम से कम एक बार चलती ही है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Ye loop kitni baar chalega? for (int i = 0; i < 3; i++) { printf("Hi"); }',
+            english: 'How many times will this loop run? for (int i = 0; i < 3; i++) { printf("Hi"); }',
+          },
+          opts: [
+            { hinglish: '2 baar', english: '2 times' },
+            { hinglish: '4 baar', english: '4 times' },
+            { hinglish: '3 baar', english: '3 times' },
+            { hinglish: 'Ek baar bhi nahi', english: 'Not even once' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: 'i ki values 0, 1, 2 hoti hain — i = 3 par condition false ho jati hai, isliye loop 3 baar chalta hai.',
+            english: 'i takes the values 0, 1, 2 — at i = 3 the condition becomes false, so the loop runs 3 times.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Loop ka kaam hai ek hi kaam baar-baar karna, bina code dobara likhe.', english: 'A loop does the same job again and again without writing the code again.' },
+        { hinglish: 'for loop tab best hai jab pata ho ki kaam kitni baar karna hai.', english: 'A for loop is best when you know how many times the job must be done.' },
+        { hinglish: 'while loop mein condition false hote hi loop ruk jata hai.', english: 'A while loop stops as soon as its condition becomes false.' },
+        { hinglish: 'do-while ki body kam se kam ek baar chalti hi hai, kyunki condition baad mein check hoti hai.', english: 'A do-while body runs at least once, because the condition is checked afterwards.' },
+        { hinglish: 'Loop ke andar update bhoolna infinite loop ki sabse common wajah hai.', english: 'Forgetting the update inside a loop is the most common cause of an infinite loop.' },
       ],
       practice: {
         title: {
@@ -14575,6 +14695,30 @@ int main() {
             hindi: 'void का मतलब है "कुछ नहीं" — ऐसा function सिर्फ काम करता है, जैसे print करना, लेकिन कोई वैल्यू वापस नहीं देता।',
           },
         },
+        {
+          q: {
+            hinglish: 'Is code ka output kya hoga? int square(int n) { return n * n; } int main() { printf("%d", square(5)); }',
+            english: 'What will this code print? int square(int n) { return n * n; } int main() { printf("%d", square(5)); }',
+          },
+          opts: [
+            { hinglish: '10', english: '10' },
+            { hinglish: '25.0', english: '25.0' },
+            { hinglish: '5', english: '5' },
+            { hinglish: '25', english: '25' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'square(5) mein n ki value 5 hoti hai, aur 5 * 5 = 25 return hota hai.',
+            english: 'In square(5) the value of n is 5, and 5 * 5 = 25 is returned.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Function ek kaam ko ek naam dekar baar-baar use karne ka tareeka hai.', english: 'A function is a way to give one job a name and use it again and again.' },
+        { hinglish: 'Function call karte waqt jo values bhejte ho, unhe arguments kehte hain.', english: 'The values you send when you call a function are called arguments.' },
+        { hinglish: 'return function ko khatm karta hai aur ek value wapas bhejta hai.', english: 'return ends a function and sends back a value.' },
+        { hinglish: 'void function koi value wapas nahi deta — wo sirf kaam karta hai.', english: 'A void function gives back no value — it only does a job.' },
+        { hinglish: 'Function ke andar banaya gaya variable bahar se use nahi ho sakta.', english: 'A variable made inside a function cannot be used outside it.' },
       ],
       practice: {
         title: {
