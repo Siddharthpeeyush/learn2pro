@@ -3,6 +3,12881 @@
 // used for facts only, never for wording or examples.
 import type { Subject } from '../lib/types';
 
+import type { Article, LText } from '../lib/types';
+
+const t = (hinglish: string, english: string): LText => ({ hinglish, english });
+
+
+const cDataTypes: Article = {
+    id: 'c-data-types',
+    subjectId: 'c-programming',
+    title: t(
+      'Data Types aur sizeof — int, char, float, double',
+      'Data Types and sizeof — int, char, float, double'
+    ),
+    summary: t(
+      'C mein har value ka ek type hota hai: int poore numbers ke liye, char ek akshar ke liye, float aur double decimal numbers ke liye. Is article mein aap sizeof se har type ka size nikaalna, signed aur unsigned ka farak, aur galat type chunne par kya bigadta hai — ye sab seekhoge.',
+      'In C every value has a type: int for whole numbers, char for a single character, float and double for decimal numbers. In this article you will learn to find the size of every type with sizeof, the difference between signed and unsigned, and what goes wrong when you pick the wrong type.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. Data Type Kya Hota Hai?',
+          '1. What Is a Data Type?'
+        ),
+        body: t(
+          `Computer ki memory mein har cheez numbers ke roop mein store hoti hai, lekin C ko ye batana padta hai ki ek number ka matlab kya hai. **Data type** wahi batata hai — ek variable mein kis tarah ki value rahegi aur woh memory mein kitni jagah legi. \`int\` ka matlab hai poora number (jaise 21 ya -5), \`char\` ka matlab hai ek akshar (jaise 'A'), \`float\` aur \`double\` ka matlab hai decimal wala number (jaise 3.14). Type chunna isliye zaroori hai kyunki computer us hisaab se memory deta hai aur us hisaab se calculation karta hai.
+
+C ke basic types ye hain: \`char\` (1 byte), \`int\` (aam taur par 4 bytes), \`float\` (4 bytes), \`double\` (8 bytes), \`short\` (2 bytes) aur \`long\` (8 bytes). Har type ke saath \`signed\` ya \`unsigned\` lag sakta hai. **Signed** ka matlab hai value negative bhi ho sakti hai, **unsigned** ka matlab hai sirf zero ya positive values. Ek \`unsigned char\` 0 se 255 tak ja sakta hai, jabki ek signed \`char\` -128 se 127 tak jaata hai. Type ka size har computer par ek jaisa nahi hota, isliye andaze se mat likho — \`sizeof\` operator se check karo.
+
+Type sirf size nahi, calculation ka tareeka bhi badal deta hai. \`10 / 3\` int division hai aur answer 3 deta hai, jabki \`10.0 / 3\` decimal division hai aur answer 3.333 deta hai. Isi liye type ko halke mein mat lo: sahi type chunna sahi answer ki pehli shart hai.`,
+          `Everything in the memory of a computer is stored as numbers, but C needs to be told what a number means. A **data type** tells it exactly that — what kind of value a variable will hold and how much memory it will take. \`int\` means a whole number (like 21 or -5), \`char\` means one character (like 'A'), and \`float\` and \`double\` mean numbers with a decimal point (like 3.14). Choosing a type matters because the computer gives memory and does calculations based on it.
+
+The basic types in C are: \`char\` (1 byte), \`int\` (usually 4 bytes), \`float\` (4 bytes), \`double\` (8 bytes), \`short\` (2 bytes), and \`long\` (8 bytes). Every type can be \`signed\` or \`unsigned\`. **Signed** means the value can be negative, and **unsigned** means only zero or positive values are allowed. An \`unsigned char\` can go from 0 to 255, while a signed \`char\` goes from -128 to 127. The size of a type is not the same on every computer, so do not guess — check it with the \`sizeof\` operator.
+
+A type changes more than size; it also changes how a calculation works. \`10 / 3\` is integer division and gives 3, while \`10.0 / 3\` is decimal division and gives 3.333. So never treat the type lightly: picking the right type is the first step to getting the right answer.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Dabbe, Bottle aur Tanki',
+          '2. Real-Life Examples: Boxes, Bottles, and Tanks'
+        ),
+        body: t(
+          `Data type ko ek dabbe ki tarah samjho. Aapko ek chhota sa dabba chahiye ek angoothi rakhne ke liye, aur ek badi tanki chahiye paani bharne ke liye. Agar aap angoothi ko tanki mein rakhoge toh jagah barbaad hogi, aur agar paani ko chhote dabbe mein bharoge toh woh bahar beh jayega. C mein bhi aisa hi hai: ek akshar rakhne ke liye \`char\` ka chhota dabba kaafi hai, aur bade decimal number ke liye \`double\` ki badi tanki chahiye.
+
+Doosra example hai paise ka hisaab. Dukaan mein rate likhne ke liye aapko decimal chahiye — 49.99 ko \`int\` mein rakhoge toh woh 49 ban jayega aur 99 paise gayab ho jayenge. Isi liye rate ke liye \`float\` ya \`double\` use hota hai. Teesra example hai umar: umar kabhi negative nahi hoti aur kabhi 200 se upar nahi jaati, isliye uske liye \`unsigned char\` bhi kaafi hota, lekin aam taur par hum \`int\` use karte hain kyunki woh simple hai.
+
+Aakhri example hai temperature: -5 degree bhi hota hai, isliye yahan signed type chahiye. Agar aap temperature ko \`unsigned int\` mein rakho toh -5 ko store hi nahi kar paoge. Har real-life value ko dekh kar pehle ye poochho: kya ismein decimal hoga? Kya ye negative ho sakta hai? Kitna bada ho sakta hai? In teeno sawalon ke jawab se sahi type mil jaata hai.`,
+          `Think of a data type as a box. You need a small box to keep a ring, and a big tank to store water. If you put the ring in the tank, you waste space, and if you pour water into the small box, it overflows. C works the same way: the small box of a \`char\` is enough for one character, and the big tank of a \`double\` is needed for a large decimal number.
+
+A second example is money. To write a price in a shop you need decimals — if you store 49.99 in an \`int\`, it becomes 49 and the 99 paise disappear. That is why prices use \`float\` or \`double\`. A third example is age: age is never negative and never goes above 200, so even an \`unsigned char\` would be enough for it, but we usually use \`int\` because it is simple.
+
+A last example is temperature: it can be -5 degrees, so here you need a signed type. If you store temperature in an \`unsigned int\`, you cannot store -5 at all. For every real-life value, first ask three questions: will it have a decimal point? Can it be negative? How big can it get? The answers to these three questions give you the right type.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: sizeof se Har Type ka Size Nikaalna',
+          '3. Step-by-Step: Finding the Size of Every Type with sizeof'
+        ),
+        body: t(
+          `Neeche wala program har basic type ka size print karta hai. \`sizeof\` ek operator hai, function nahi — ye compile time par batata hai ki type memory mein kitne bytes leta hai. Size print karne ke liye \`%zu\` format specifier use hota hai, kyunki \`sizeof\` ka result \`size_t\` type ka hota hai. Program ko line by line trace karo.
+
+Dry run: pehli line \`sizeof(char)\` — char hamesha 1 byte hota hai, isliye output hai "char: 1 byte". Dusri line \`sizeof(int)\` — is computer par int 4 bytes hai. Teesri aur chauthi line: \`float\` 4 bytes aur \`double\` 8 bytes. Paanchvi line \`short\` 2 bytes, chhathi line \`long\` 8 bytes, aur saatvi line \`long long\` 8 bytes. Ye sizes is machine ke hain — kisi aur computer par \`long\` 4 bytes bhi ho sakta hai, isliye apne computer par khud chala kar dekho.
+
+Ek khaas baat: \`sizeof(char)\` hamesha 1 hota hai, ye C standard ki guarantee hai. Baaki types ke liye sirf ye guarantee hai ki \`char\` <= \`short\` <= \`int\` <= \`long\` <= \`long long\`. Matlab int kabhi short se chhota nahi hoga, lekin uska exact size machine par depend karta hai.`,
+          `The program below prints the size of every basic type. \`sizeof\` is an operator, not a function — it tells you at compile time how many bytes a type takes in memory. To print a size, use the \`%zu\` format specifier, because the result of \`sizeof\` has the type \`size_t\`. Trace the program line by line.
+
+Dry run: the first line, \`sizeof(char)\` — a char is always 1 byte, so the output is "char: 1 byte". The second line, \`sizeof(int)\` — on this computer an int is 4 bytes. The third and fourth lines: \`float\` is 4 bytes and \`double\` is 8 bytes. The fifth line, \`short\`, is 2 bytes, the sixth line, \`long\`, is 8 bytes, and the seventh line, \`long long\`, is 8 bytes. These sizes belong to this machine — on another computer \`long\` could be 4 bytes, so run it on your own computer and check.
+
+One special point: \`sizeof(char)\` is always 1; the C standard guarantees that. For the other types the only guarantee is \`char\` <= \`short\` <= \`int\` <= \`long\` <= \`long long\`. That means an int is never smaller than a short, but its exact size depends on the machine.`
+        ),
+        code: {
+          title: t(
+            'sizeof se Types ka Size Print Karna',
+            'Printing the Size of Types with sizeof'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    printf("char: %zu byte\\n", sizeof(char));
+    printf("int: %zu bytes\\n", sizeof(int));
+    printf("float: %zu bytes\\n", sizeof(float));
+    printf("double: %zu bytes\\n", sizeof(double));
+    printf("short: %zu bytes\\n", sizeof(short));
+    printf("long: %zu bytes\\n", sizeof(long));
+    printf("long long: %zu bytes\\n", sizeof(long long));
+    return 0;
+}`,
+          output: `char: 1 byte
+int: 4 bytes
+float: 4 bytes
+double: 8 bytes
+short: 2 bytes
+long: 8 bytes
+long long: 8 bytes`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Galat Type, Bina Value aur Overflow',
+          '4. Common Mistakes: Wrong Type, No Value, and Overflow'
+        ),
+        body: t(
+          `**Galti 1: Decimal ke liye int use karna.** \`int avg = 87 / 2;\` likhoge toh avg mein 43 aayega, 43.5 nahi — kyunki int division mein decimal hissa kat jaata hai. Average ya rate hamesha \`float\` ya \`double\` mein rakho.
+
+**Galti 2: Bina value ke variable use karna.** \`int x; printf("%d", x);\` mein x ki value kuch bhi ho sakti hai — use karne se pehle value dena zaroori hai. C aapko khud se zero nahi deta.
+
+**Galti 3: Chhote type mein bada number dalna.** \`char c = 1000;\` mein 1000 char mein sama hi nahi sakta, isliye value kat kar kuch aur ban jayegi. Isi ko **overflow** kehte hain. Hamesha check karo ki value type ki range mein aati hai ya nahi.
+
+**Galti 4: float ko paise ke liye use karna.** \`float\` mein sirf lagbhag 7 decimal digits sahi hote hain, isliye paise jaise exact hisaab ke liye \`double\` behtar hai. Aur bank wale hisaab mein toh paise ko paise ki unit mein \`int\` (jaise 4999 paise) rakhna sabse safe hota hai.`,
+          `**Mistake 1: Using int for a decimal value.** If you write \`int avg = 87 / 2;\`, avg becomes 43, not 43.5 — because integer division drops the decimal part. Always store an average or a price in a \`float\` or a \`double\`.
+
+**Mistake 2: Using a variable without giving it a value.** In \`int x; printf("%d", x);\`, x can hold anything — you must give it a value before you use it. C does not set it to zero for you.
+
+**Mistake 3: Putting a big number in a small type.** In \`char c = 1000;\`, 1000 cannot fit in a char, so the value gets cut and becomes something else. This is called **overflow**. Always check that the value fits in the range of the type.
+
+**Mistake 4: Using float for money.** A \`float\` keeps only about 7 decimal digits correct, so \`double\` is better for exact amounts like money. For bank calculations, the safest choice is to store money in paise as an \`int\` (like 4999 paise).`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Signed Overflow, Unsigned Wrap aur char ka Sign',
+          '5. Edge Cases: Signed Overflow, Unsigned Wrap, and the Sign of char'
+        ),
+        body: t(
+          `**Signed overflow undefined hota hai.** \`int\` ki sabse badi value \`INT_MAX\` (2147483647) hai. Usmein 1 jodne par kya hoga, ye C standard nahi batata — aam taur par woh negative number ban jaata hai, lekin is par bharosa mat karo. Bade numbers ke liye \`long long\` use karo.
+
+**Unsigned wrap-around defined hota hai.** \`unsigned char\` mein 255 ke baad 1 jodne par value 0 ban jaati hai — jaise ghadi mein 12 ke baad 1 bajta hai. Ye behaviour pakka hai, lekin iska matlab ye nahi ki aapko is par code likhna chahiye. Neeche wale pehle example mein yehi dikhaya gaya hai.
+
+**char ka sign machine par depend karta hai.** Kuch computers par \`char\` signed hota hai (-128 se 127), kuch par unsigned (0 se 255). Isliye agar aapko sign se matlab hai toh saaf likho: \`signed char\` ya \`unsigned char\`. Sirf \`char\` ko text ke liye use karo, numbers ke liye nahi.
+
+**float ki galti chhoti lekin real hoti hai.** 0.1 ko binary mein bilkul sahi likha hi nahi ja sakta, isliye \`0.1 + 0.2\` ka answer 0.3 ke bahut kareeb hota hai lekin bilkul 0.3 nahi. Isi liye \`float\` values ko kabhi \`==\` se compare mat karo.`,
+          `**Signed overflow is undefined.** The largest \`int\` value is \`INT_MAX\` (2147483647). What happens when you add 1 to it is not defined by the C standard — it usually becomes a negative number, but do not rely on that. Use \`long long\` for big numbers.
+
+**Unsigned wrap-around is defined.** In an \`unsigned char\`, adding 1 to 255 gives 0 — just like a clock goes from 12 to 1. This behaviour is guaranteed, but that does not mean you should write code that depends on it. The first example below shows exactly this.
+
+**The sign of char depends on the machine.** On some computers \`char\` is signed (-128 to 127), and on others it is unsigned (0 to 255). So if the sign matters to you, write it clearly: \`signed char\` or \`unsigned char\`. Use plain \`char\` only for text, not for numbers.
+
+**The error in a float is small but real.** 0.1 cannot be written exactly in binary, so \`0.1 + 0.2\` is very close to 0.3 but not exactly 0.3. That is why you should never compare \`float\` values with \`==\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: float ki jagah double, int ki jagah long long',
+          '6. What-If: double Instead of float, long long Instead of int'
+        ),
+        body: t(
+          `**What if: har decimal ke liye double use kar lein?** Ye aam taur par sahi faisla hai. \`double\` mein lagbhag 15 decimal digits sahi hote hain, jabki \`float\` mein sirf 7. Aaj ke computers par double ki extra memory se koi farak nahi padta, isliye beginners ko seedha \`double\` use karna chahiye. \`float\` sirf tab use karo jab aapko lakhon numbers store karne hon aur memory bachani ho.
+
+**What if: bade count ke liye int ki jagah long long use kar lein?** Duniya ki aabadi ya ek bade sheher ke log ginne ho toh \`int\` kaafi hai, lekin agar aap bytes gin rahe ho ya bade hisaab kar rahe ho toh \`long long\` chahiye. \`long long\` lagbhag 9 x 10^18 tak ja sakta hai.
+
+**What if: har cheez ke liye sabse bada type use kar lein?** Ye kaam toh kar jayega, lekin ye buri aadat hai. Type se pata chalta hai ki value kya hai — \`char grade\` padh kar samajh aata hai ki ye ek akshar hai, jabki \`long long grade\` padh kar kuch samajh nahi aata. Sahi size ka type chunna code ko padhne layak banata hai.`,
+          `**What if we use double for every decimal?** That is usually the right decision. A \`double\` keeps about 15 decimal digits correct, while a \`float\` keeps only 7. On modern computers the extra memory of a double does not matter, so beginners should use \`double\` directly. Use \`float\` only when you must store lakhs of numbers and save memory.
+
+**What if we use long long instead of int for a big count?** An \`int\` is enough for the population of the world or a big city, but if you are counting bytes or doing big calculations you need \`long long\`. A \`long long\` can go up to about 9 x 10^18.
+
+**What if we use the biggest type for everything?** It would work, but it is a bad habit. The type tells the reader what a value is — reading \`char grade\` makes it clear that it is one character, while reading \`long long grade\` tells you nothing. Picking the right-sized type makes code readable.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sahi Type, Sahi Size, Sahi Answer',
+          '7. Summary: Right Type, Right Size, Right Answer'
+        ),
+        body: t(
+          `Is article mein aapne seekha: har value ka ek **data type** hota hai jo uski memory aur uske calculation ka tareeka tay karta hai. \`char\` 1 byte, \`int\` 4 bytes, \`float\` 4 bytes, \`double\` 8 bytes, \`short\` 2 bytes aur \`long\` 8 bytes lete hain — aur ye sizes \`sizeof\` se check kiye jaate hain, andaze se nahi. **Signed** types negative values le sakte hain, **unsigned** sirf zero ya positive.
+
+Yaad rakhne wali teen baatein: decimal ke liye \`int\` kabhi mat use karo, variable ko use karne se pehle value do, aur value hamesha type ki range ke andar rakho. \`float\` mein lagbhag 7 digits aur \`double\` mein lagbhag 15 digits sahi hote hain, isliye aam taur par \`double\` behtar hai. Agle article mein hum \`printf\` aur \`scanf\` ko gehrai se dekhenge — values ko screen par dikhana aur user se lena.`,
+          `In this article you learned: every value has a **data type** that decides its memory and how it is calculated. \`char\` takes 1 byte, \`int\` 4 bytes, \`float\` 4 bytes, \`double\` 8 bytes, \`short\` 2 bytes, and \`long\` 8 bytes — and these sizes are checked with \`sizeof\`, never guessed. **Signed** types can hold negative values, while **unsigned** types hold only zero or positive values.
+
+Remember three things: never use \`int\` for a decimal value, always give a variable a value before you use it, and always keep a value inside the range of its type. A \`float\` keeps about 7 digits correct and a \`double\` about 15 digits, so \`double\` is usually the better choice. In the next article we will look at \`printf\` and \`scanf\` in depth — showing values on the screen and reading them from the user.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('Limits aur Unsigned Wrap-Around', 'Limits and Unsigned Wrap-Around'),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+    printf("INT_MAX = %d\\n", INT_MAX);
+    printf("INT_MIN = %d\\n", INT_MIN);
+    printf("CHAR_MAX = %d\\n", CHAR_MAX);
+    printf("UCHAR_MAX = %d\\n", UCHAR_MAX);
+    unsigned char c = 255;
+    c = c + 1;
+    printf("255 + 1 in unsigned char = %d\\n", c);
+    return 0;
+}`,
+        output: `INT_MAX = 2147483647
+INT_MIN = -2147483648
+CHAR_MAX = 127
+UCHAR_MAX = 255
+255 + 1 in unsigned char = 0`
+      },
+      {
+        title: t('float vs double: Precision ka Farak', 'float vs double: The Precision Difference'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    float f = 1.0f / 3.0f;
+    double d = 1.0 / 3.0;
+    printf("float 1/3 = %.7f\\n", f);
+    printf("double 1/3 = %.15f\\n", d);
+    printf("float 0.1 + 0.2 = %.7f\\n", 0.1f + 0.2f);
+    printf("double 0.1 + 0.2 = %.15f\\n", 0.1 + 0.2);
+    return 0;
+}`,
+        output: `float 1/3 = 0.3333333
+double 1/3 = 0.333333333333333
+float 0.1 + 0.2 = 0.3000000
+double 0.1 + 0.2 = 0.300000000000000`
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t('C ke Basic Data Types aur Unke Size', 'Basic C Data Types and Their Sizes'),
+      caption: t(
+        'Size is machine ke hain; apne computer par sizeof se check karo',
+        'These sizes are for this machine; check them on your own computer with sizeof'
+      ),
+      nodes: [],
+      headers: [t('Type', 'Type'), t('Size', 'Size'), t('Kis kaam ke liye', 'Used for')],
+      rows: [
+        [t('char', 'char'), t('1 byte', '1 byte'), t('Ek akshar', 'One character')],
+        [t('int', 'int'), t('4 bytes', '4 bytes'), t('Poore numbers', 'Whole numbers')],
+        [t('float', 'float'), t('4 bytes', '4 bytes'), t('Decimal (7 digits)', 'Decimal (7 digits)')],
+        [t('double', 'double'), t('8 bytes', '8 bytes'), t('Decimal (15 digits)', 'Decimal (15 digits)')],
+        [t('short', 'short'), t('2 bytes', '2 bytes'), t('Chhote poore numbers', 'Small whole numbers')],
+        [t('long', 'long'), t('8 bytes', '8 bytes'), t('Bade poore numbers', 'Big whole numbers')]
+      ]
+    },
+    mcqs: [
+      {
+        q: t('Is computer par sizeof(int) kitna hai?', 'What is sizeof(int) on this computer?'),
+        opts: [t('1 byte', '1 byte'), t('2 bytes', '2 bytes'), t('4 bytes', '4 bytes'), t('8 bytes', '8 bytes')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: is computer par int 4 bytes leta hai, jo sizeof wale program ke output mein dikha.',
+          'Correct answer: on this computer an int takes 4 bytes, as shown in the output of the sizeof program.'
+        )
+      },
+      {
+        q: t('Decimal number 3.14 store karne ke liye sabse sahi type kaunsa hai?', 'Which type is best for storing the decimal number 3.14?'),
+        opts: [t('int', 'int'), t('char', 'char'), t('double', 'double'), t('unsigned int', 'unsigned int')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: double decimal numbers ke liye hota hai aur float se zyada precision deta hai; int decimal hissa kaat dega.',
+          'Correct answer: double is made for decimal numbers and gives more precision than float; int would cut off the decimal part.'
+        )
+      },
+      {
+        q: t('unsigned char mein 255 + 1 ka answer kya hoga?', 'What is the result of 255 + 1 in an unsigned char?'),
+        opts: [t('256', '256'), t('0', '0'), t('-1', '-1'), t('Error', 'Error')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: unsigned char 0 se 255 tak jaata hai, isliye 255 ke baad value 0 par wrap ho jaati hai.',
+          'Correct answer: an unsigned char goes from 0 to 255, so after 255 the value wraps around to 0.'
+        )
+      },
+      {
+        q: t('sizeof ka result print karne ke liye kaunsa format specifier use hota hai?', 'Which format specifier is used to print the result of sizeof?'),
+        opts: [t('%d', '%d'), t('%zu', '%zu'), t('%f', '%f'), t('%c', '%c')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sizeof size_t type deta hai, isliye uske liye %zu use hota hai, %d nahi.',
+          'Correct answer: sizeof gives a value of type size_t, so %zu is used for it, not %d.'
+        )
+      },
+      {
+        q: t('Kaunsi baat sahi hai?', 'Which statement is correct?'),
+        opts: [
+          t('float mein double se zyada precision hoti hai', 'float has more precision than double'),
+          t('sizeof(char) hamesha 1 hota hai', 'sizeof(char) is always 1'),
+          t('int mein decimal store ho jaata hai', 'An int can store a decimal value'),
+          t('signed int negative nahi ho sakta', 'A signed int cannot be negative')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C standard guarantee karta hai ki char hamesha 1 byte hota hai; double ki precision float se zyada hoti hai.',
+          'Correct answer: the C standard guarantees that a char is always 1 byte; double has more precision than float.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('char 1 byte, int 4 bytes, float 4 bytes, double 8 bytes — size hamesha sizeof se check karo.', 'char is 1 byte, int 4 bytes, float 4 bytes, double 8 bytes — always check sizes with sizeof.'),
+      t('Signed types negative values le sakte hain, unsigned sirf zero ya positive.', 'Signed types can hold negative values; unsigned types hold only zero or positive values.'),
+      t('Decimal ke liye int kabhi mat use karo — int division decimal hissa kaat deta hai.', 'Never use int for a decimal value — integer division drops the decimal part.'),
+      t('double mein lagbhag 15 digits sahi hote hain, float mein sirf 7.', 'A double keeps about 15 digits correct, a float only 7.'),
+      t('float values ko kabhi == se compare mat karo, kyunki 0.1 bilkul sahi store nahi hota.', 'Never compare float values with ==, because 0.1 cannot be stored exactly.')
+    ],
+    practice: {
+      title: t('Practice: Apne Variables ke Type aur Size Print Karo', 'Practice: Print the Types and Sizes of Your Variables'),
+      task: t(
+        'Ek program likho jo int marks = 87, char grade = A, float avg = 87.5 aur double precise = 87.54321 store kare, phir har variable ka size aur value print kare, aur aakhir mein INT_MAX print kare. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that stores int marks = 87, char grade = A, float avg = 87.5, and double precise = 87.54321, then prints the size and value of every variable, and finally prints INT_MAX. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+    int marks = 87;
+    char grade = 'A';
+    float avg = 87.5f;
+    double precise = 87.54321;
+    printf("marks (%zu bytes) = %d\\n", sizeof(marks), marks);
+    printf("grade (%zu byte) = %c\\n", sizeof(grade), grade);
+    printf("avg (%zu bytes) = %.1f\\n", sizeof(avg), avg);
+    printf("precise (%zu bytes) = %.5f\\n", sizeof(precise), precise);
+    printf("INT_MAX = %d\\n", INT_MAX);
+    return 0;
+}`,
+      expected: `marks (4 bytes) = 87
+grade (1 byte) = A
+avg (4 bytes) = 87.5
+precise (8 bytes) = 87.54321
+INT_MAX = 2147483647`
+    }
+  };
+
+const cInputOutput: Article = {
+    id: 'c-input-output',
+    subjectId: 'c-programming',
+    title: t(
+      'scanf aur printf Gehrai se — Format Specifiers, getchar, putchar',
+      'scanf and printf in Depth — Format Specifiers, getchar, putchar'
+    ),
+    summary: t(
+      'printf screen par likhta hai aur scanf user se padhta hai, lekin dono ka asli kaam format specifiers mein chhupa hai. Is article mein aap %d, %f, %c, %s, %x, width aur precision ko detail mein seekhoge, aur getchar/putchar se ek-ek akshar padhna aur likhna bhi.',
+      'printf writes on the screen and scanf reads from the user, but the real work of both hides in the format specifiers. In this article you will learn %d, %f, %c, %s, %x, width, and precision in detail, and also how to read and write one character at a time with getchar and putchar.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. printf aur scanf Kya Karte Hain?',
+          '1. What Do printf and scanf Do?'
+        ),
+        body: t(
+          `\`printf\` ka matlab hai print formatted — ye values ko ek format ke hisaab se screen par likhta hai. \`scanf\` ka matlab hai scan formatted — ye user se values padh kar variables mein bharta hai. Dono ke beech mein **format specifier** hota hai, jo batata hai ki value kis type ki hai: \`%d\` int ke liye, \`%f\` float ke liye, \`%c\` char ke liye, \`%s\` string ke liye aur \`%x\` hexadecimal ke liye. Format specifier galat hua toh output bhi galat hoga, isliye ye article isi par hai.
+
+Dono functions \`stdio.h\` mein rehte hain. \`printf("Age = %d", age);\` mein pehla hissa format string hai aur baaki hisse values hain — har \`%\` ke liye ek value honi chahiye, aur uska type specifier se match karna chahiye. \`scanf("%d", &age);\` mein \`&\` bahut zaroori hai: ye age ka address deta hai, taaki scanf value ko us jagah par rakh sake. \`&\` bhoolna beginners ki sabse badi galti hai.
+
+Ek aur zaroori farak: \`printf\` apne aap new line nahi deta. Agar aapko agli line chahiye toh format string mein \`\\n\` likhna padta hai. \`scanf\` mein \`\\n\` likhne ki zaroorat nahi hoti — woh space aur enter ko khud handle kar leta hai.`,
+          `\`printf\` means print formatted — it writes values on the screen according to a format. \`scanf\` means scan formatted — it reads values from the user and fills variables with them. Between them sits the **format specifier**, which says what type a value is: \`%d\` for int, \`%f\` for float, \`%c\` for char, \`%s\` for string, and \`%x\` for hexadecimal. If the format specifier is wrong, the output will be wrong too, which is why this article focuses on it.
+
+Both functions live in \`stdio.h\`. In \`printf("Age = %d", age);\`, the first part is the format string and the rest are values — every \`%\` needs one value, and its type must match the specifier. In \`scanf("%d", &age);\`, the \`&\` is very important: it gives the address of age, so that scanf can place the value there. Forgetting the \`&\` is the biggest beginner mistake.
+
+One more important difference: \`printf\` does not add a new line by itself. If you want the next line, you must write \`\\n\` in the format string. In \`scanf\` you do not need to write \`\\n\` — it handles spaces and the enter key by itself.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Bill, Form aur Ticket',
+          '2. Real-Life Examples: Bills, Forms, and Tickets'
+        ),
+        body: t(
+          `Sabse seedha example hai **bill**. Dukaan ka bill hamesha ek hi format mein chhapta hai: naam left side, rate right side, total neeche. \`printf\` ka width aur precision wahi kaam karta hai — \`%-10s\` naam ko 10 jagah mein left side rakhta hai aur \`%8.2f\` rate ko 8 jagah mein 2 decimal ke saath right side. Bina format ke bill tedha-medha dikhega.
+
+Doosra example hai **form bharna**. Jab aap exam form bharte ho toh har khaane mein ek hi tarah ki cheez jaati hai: naam wale khaane mein naam, umar wale mein number. \`scanf\` bhi aisa hi hai — \`%d\` wale khaane mein number, \`%c\` wale mein akshar. Galat khaane mein galat cheez bharoge toh form reject ho jayega, bilkul waise hi jaise galat specifier se scanf gadbad karta hai.
+
+Teesra example hai **ticket counter**. Counter par ek-ek karke log aate hain aur clerk ek-ek karke naam likhta hai. \`getchar\` aur \`putchar\` wahi kaam karte hain — ek baar mein sirf ek akshar. Jab poora sentence nahi, sirf ek akshar chahiye, toh ye dono sabse simple tareeka hain.`,
+          `The simplest example is a **bill**. A shop bill is always printed in the same format: the name on the left, the price on the right, and the total at the bottom. The width and precision of \`printf\` do exactly that work — \`%-10s\` puts a name on the left in 10 spaces, and \`%8.2f\` puts a price on the right in 8 spaces with 2 decimals. Without formatting, the bill would look crooked.
+
+A second example is **filling a form**. When you fill an exam form, each box takes only one kind of thing: a name in the name box, a number in the age box. \`scanf\` works the same way — a number in the \`%d\` box, a character in the \`%c\` box. If you put the wrong thing in a box, the form is rejected, just like scanf goes wrong with a wrong specifier.
+
+A third example is a **ticket counter**. People come one by one, and the clerk writes one name at a time. \`getchar\` and \`putchar\` do the same work — only one character at a time. When you need a single character and not a whole sentence, these two are the simplest way.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Program mein Saare Specifiers',
+          '3. Step-by-Step: All Specifiers in One Program'
+        ),
+        body: t(
+          `Neeche wala program ek hi jagah par saare basic specifiers dikhata hai. Dry run karo: \`age\` mein 21 hai, isliye \`%d\` se "Age = 21" chhapta hai. \`price\` mein 49.99 hai, \`%.2f\` use do decimal tak dikhata hai — "Price = 49.99". \`grade\` mein 'A' hai, \`%c\` se "Grade = A" chhapta hai. Phir \`%x\` 21 ko hexadecimal mein dikhata hai: 21 ka hex 15 hota hai, aur \`%o\` octal mein dikhata hai: 21 ka octal 25 hota hai.
+
+Aakhri do lines dhyaan se dekho. \`printf("100%% complete")\` mein \`%%\` ka matlab hai ek asli percent sign — kyunki ek akela \`%\` specifier samjha jaata hai. Aur \`putchar('X')\` sirf ek akshar chhapta hai, phir \`putchar('\\n')\` new line deta hai. \`putchar\` ka use tab karo jab sirf ek akshar chhapna ho; poora sentence chhapne ke liye \`printf\` behtar hai.
+
+Is program mein \`scanf\` nahi hai kyunki hum fixed values se seekh rahe hain. \`scanf\` ka use practice task mein hai, jahan aapko input dena hai.`,
+          `The program below shows all the basic specifiers in one place. Trace it: \`age\` holds 21, so \`%d\` prints "Age = 21". \`price\` holds 49.99, and \`%.2f\` shows it with two decimals — "Price = 49.99". \`grade\` holds 'A', and \`%c\` prints "Grade = A". Then \`%x\` shows 21 in hexadecimal: 21 in hex is 15, and \`%o\` shows it in octal: 21 in octal is 25.
+
+Look carefully at the last two lines. In \`printf("100%% complete")\`, \`%%\` means one real percent sign — because a single \`%\` would be read as a specifier. And \`putchar('X')\` prints only one character, then \`putchar('\\n')\` gives a new line. Use \`putchar\` when you must print only one character; for a whole sentence, \`printf\` is better.
+
+This program has no \`scanf\` because we are learning with fixed values. \`scanf\` is used in the practice task, where you have to give input.`
+        ),
+        code: {
+          title: t(
+            'printf ke Saare Basic Format Specifiers',
+            'All Basic Format Specifiers of printf'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int age = 21;
+    float price = 49.99f;
+    char grade = 'A';
+    printf("Age = %d\\n", age);
+    printf("Price = %.2f\\n", price);
+    printf("Grade = %c\\n", grade);
+    printf("Age in hex = %x, in octal = %o\\n", age, age);
+    printf("100%% complete\\n");
+    putchar('X');
+    putchar('\\n');
+    return 0;
+}`,
+          output: `Age = 21
+Price = 49.99
+Grade = A
+Age in hex = 15, in octal = 25
+100% complete
+X`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: & Bhoolna, Galat Specifier aur %s ka Overflow',
+          '4. Common Mistakes: Forgetting &, Wrong Specifier, and %s Overflow'
+        ),
+        body: t(
+          `**Galti 1: scanf mein & bhoolna.** \`scanf("%d", age);\` likhne par scanf ko pata hi nahi chalega ki value kahan rakhni hai, aur program crash bhi ho sakta hai. Hamesha \`scanf("%d", &age);\` likho. (String ke liye \`&\` nahi lagta, kyunki array ka naam khud uska address hota hai.)
+
+**Galti 2: Galat specifier.** \`float x = 3.5;\` ko \`printf("%d", x);\` se chhapoge toh kachra dikhega. \`float\` ke liye \`%f\`, \`double\` ke liye bhi \`%f\`, \`int\` ke liye \`%d\` aur \`long\` ke liye \`%ld\` use karo. \`scanf\` mein \`double\` ke liye \`%lf\` chahiye — ye farak yaad rakho, kyunki printf mein \`%f\` double ke liye bhi chal jaata hai.
+
+**Galti 3: %s se bada input lena.** \`char name[10]; scanf("%s", name);\` mein agar user 20 akshar likh de toh aas-paas ki memory kharab ho jayegi. Safe tareeka hai \`scanf("%9s", name);\` — 9 ka matlab hai zyada se zyada 9 akshar, taaki \`\\0\` ke liye ek jagah bachi rahe. Strings wale article mein iska safe tareeka \`fgets\` se bhi dekhenge.
+
+**Galti 4: scanf ke baad %c padhna.** \`scanf("%d", &age);\` ke baad enter dabane par newline input mein reh jaata hai, aur agla \`scanf("%c", &ch);\` wahi newline padh leta hai. Iska hal hai format mein space likhna: \`scanf(" %c", &ch);\` — aage wala space purane whitespace ko kha leta hai.`,
+          `**Mistake 1: Forgetting & in scanf.** If you write \`scanf("%d", age);\`, scanf will not know where to put the value, and the program can even crash. Always write \`scanf("%d", &age);\`. (A string does not need \`&\`, because the name of an array is its address by itself.)
+
+**Mistake 2: Wrong specifier.** If you print \`float x = 3.5;\` with \`printf("%d", x);\`, you will see garbage. Use \`%f\` for \`float\`, \`%f\` for \`double\` too, \`%d\` for \`int\`, and \`%ld\` for \`long\`. In \`scanf\` you need \`%lf\` for \`double\` — remember this difference, because in printf \`%f\` also works for double.
+
+**Mistake 3: Reading a big input with %s.** In \`char name[10]; scanf("%s", name);\`, if the user types 20 characters, the nearby memory gets damaged. The safe way is \`scanf("%9s", name);\` — 9 means at most 9 characters, so one space stays free for \`\\0\`. In the strings article we will also see the safe way with \`fgets\`.
+
+**Mistake 4: Reading %c after scanf.** After \`scanf("%d", &age);\`, the newline from pressing enter stays in the input, and the next \`scanf("%c", &ch);\` reads that newline. The fix is a space in the format: \`scanf(" %c", &ch);\` — the leading space eats the old whitespace.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: printf ka Return, getchar ka EOF aur Khali Input',
+          '5. Edge Cases: The Return of printf, EOF of getchar, and Empty Input'
+        ),
+        body: t(
+          `**printf kuch return karta hai.** \`printf\` chhape hue aksharon ki ginti wapas deta hai. \`printf("Hi\\n");\` 3 return karta hai — H, i aur newline. Ye aam taur par kaam nahi aata, lekin pehla example isey dikhata hai, taaki aapko pata rahe ki printf sirf chhapta nahi, kuch batata bhi hai.
+
+**getchar EOF deta hai.** Jab input khatm ho jaaye toh \`getchar\` ek khaas value deta hai jise \`EOF\` kehte hain. Isi liye \`getchar\` ka result \`int\` mein store karte hain, \`char\` mein nahi — kyunki \`char\` mein EOF aur ek asli akshar mein farak karna mushkil ho sakta hai. \`while ((ch = getchar()) != EOF)\` wala pattern aap aage bahut dekhenge.
+
+**scanf fail ho sakta hai.** Agar user number ki jagah akshar likh de toh \`scanf("%d", &n);\` 0 return karta hai aur n mein purani value rehti hai. \`scanf\` ka return value batata hai kitne items sahi se padhe gaye — serious programs mein ise check karna chahiye.
+
+**%s space par rukta hai.** \`scanf("%s", name);\` mein "Rahul Kumar" likhoge toh sirf "Rahul" milega, kyunki \`%s\` pehle space par ruk jaata hai. Poori line padhne ke liye \`fgets\` use karo.`,
+          `**printf returns something.** \`printf\` returns the count of the characters it printed. \`printf("Hi\\n");\` returns 3 — H, i, and the newline. You rarely need this, but the first example shows it so that you know printf does not only print, it also reports something.
+
+**getchar gives EOF.** When the input ends, \`getchar\` gives a special value called \`EOF\`. That is why the result of \`getchar\` is stored in an \`int\`, not a \`char\` — because in a \`char\` it can be hard to tell EOF apart from a real character. You will see the pattern \`while ((ch = getchar()) != EOF)\` a lot later.
+
+**scanf can fail.** If the user types a letter where a number was expected, \`scanf("%d", &n);\` returns 0 and n keeps its old value. The return value of \`scanf\` tells you how many items were read correctly — serious programs should check it.
+
+**%s stops at a space.** In \`scanf("%s", name);\`, typing "Rahul Kumar" gives only "Rahul", because \`%s\` stops at the first space. To read a whole line, use \`fgets\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Width, Precision aur getchar/putchar',
+          '6. What-If: Width, Precision, and getchar/putchar'
+        ),
+        body: t(
+          `**What if: numbers ko table ki tarah sajana ho?** \`%5d\` number ko 5 jagah mein right side rakhta hai, \`%-5d\` left side, aur \`%05d\` khaali jagah ko zero se bharta hai. Doosra example yehi dikhata hai: 42 ko \`|   42|\`, \`|42   |\` aur \`|00042|\` ki tarah chhapna. Bills aur tables banane mein yehi kaam aata hai.
+
+**What if: decimal ko gol karna ho?** \`%.2f\` hamesha 2 decimal dikhata hai, \`%.1f\` sirf 1. Ye value ko badalta nahi, sirf dikhane ka tareeka badalta hai — andar wali value wahi rehti hai. \`%8.3f\` mein 8 total width hai aur 3 decimal hain.
+
+**What if: sirf ek akshar chahiye?** \`getchar\` ek akshar padhta hai aur \`putchar\` ek akshar likhta hai. Inka use tab karo jab aapko poora format nahi chahiye — jaise ek-ek akshar karke ek file copy karna. \`printf("%c", ch);\` bhi wahi kaam karta hai, lekin \`putchar(ch)\` chhota aur seedha hai.`,
+          `**What if you must arrange numbers like a table?** \`%5d\` puts a number on the right in 5 spaces, \`%-5d\` on the left, and \`%05d\` fills the empty space with zeros. The second example shows exactly this: printing 42 as \`|   42|\`, \`|42   |\`, and \`|00042|\`. This is what you use to make bills and tables.
+
+**What if you must round a decimal?** \`%.2f\` always shows 2 decimals, and \`%.1f\` shows only 1. It does not change the value, only the way it is shown — the value inside stays the same. In \`%8.3f\`, 8 is the total width and 3 is the number of decimals.
+
+**What if you need only one character?** \`getchar\` reads one character and \`putchar\` writes one character. Use them when you do not need a full format — for example, copying a file one character at a time. \`printf("%c", ch);\` does the same work, but \`putchar(ch)\` is shorter and simpler.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sahi Specifier, Sahi Output',
+          '7. Summary: Right Specifier, Right Output'
+        ),
+        body: t(
+          `Is article mein aapne seekha: \`printf\` likhta hai, \`scanf\` padhta hai, aur dono ka dil **format specifier** hai. \`%d\` int, \`%f\` float aur double (printf mein), \`%lf\` double (scanf mein), \`%c\` char, \`%s\` string aur \`%x\` hex ke liye. \`scanf\` mein variable ka address dene ke liye \`&\` zaroori hai.
+
+Width aur precision se output ko table ki tarah sajaya ja sakta hai: \`%5d\` right side, \`%-5d\` left side, \`%.2f\` 2 decimal. \`%%\` se asli percent sign chhapta hai, \`printf\` chhape aksharon ki ginti return karta hai, aur \`getchar\`/\`putchar\` ek-ek akshar ka kaam karte hain. Aakhri baat: \`scanf\` ke baad \`%c\` padhne se pehle format mein space likhna mat bhoolna. Agle article mein hum arrays dekhenge — ek hi naam se bahut saari values rakhna.`,
+          `In this article you learned: \`printf\` writes, \`scanf\` reads, and the heart of both is the **format specifier**. \`%d\` is for int, \`%f\` for float and double (in printf), \`%lf\` for double (in scanf), \`%c\` for char, \`%s\` for string, and \`%x\` for hex. In \`scanf\` the \`&\` is needed to give the address of a variable.
+
+Width and precision can arrange output like a table: \`%5d\` on the right, \`%-5d\` on the left, and \`%.2f\` with 2 decimals. \`%%\` prints a real percent sign, \`printf\` returns the count of printed characters, and \`getchar\` and \`putchar\` handle one character at a time. One last point: before reading \`%c\` after \`scanf\`, do not forget the space in the format. In the next article we will look at arrays — keeping many values under one name.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('printf Kitne Akshar Chhapta Hai?', 'How Many Characters Does printf Print?'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int n = printf("Hi\\n");
+    printf("printf returned %d\\n", n);
+    int m = printf("Hello");
+    printf("\\nprintf returned %d\\n", m);
+    return 0;
+}`,
+        output: `Hi
+printf returned 3
+Hello
+printf returned 5`
+      },
+      {
+        title: t('Width aur Precision se Table Banana', 'Making a Table with Width and Precision'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    printf("|%5d|\\n", 42);
+    printf("|%-5d|\\n", 42);
+    printf("|%05d|\\n", 42);
+    printf("|%8.3f|\\n", 3.14159);
+    printf("|%-8.3f|\\n", 3.14159);
+    printf("|%.1f|\\n", 3.14159);
+    return 0;
+}`,
+        output: `|   42|
+|42   |
+|00042|
+|   3.142|
+|3.142   |
+|3.1|`
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t('Input se Output Tak ka Flow', 'The Flow from Input to Output'),
+      caption: t(
+        'scanf padhta hai, program calculate karta hai, printf dikhata hai',
+        'scanf reads, the program calculates, printf shows'
+      ),
+      nodes: [
+        {
+          t: t('User input deta hai', 'The user gives input'),
+          s: t('Keyboard se number ya text', 'A number or text from the keyboard')
+        },
+        {
+          t: t('scanf padhta hai', 'scanf reads it'),
+          s: t('Format specifier ke hisaab se variable mein bharta hai', 'Fills the variable as per the format specifier')
+        },
+        {
+          t: t('Program calculate karta hai', 'The program calculates'),
+          s: t('Values par hisaab hota hai', 'Calculations happen on the values')
+        },
+        {
+          t: t('printf dikhata hai', 'printf shows it'),
+          s: t('Width aur precision ke saath screen par', 'On the screen, with width and precision')
+        },
+        {
+          t: t('getchar / putchar', 'getchar / putchar'),
+          s: t('Ek-ek akshar padhna aur likhna', 'Reading and writing one character at a time')
+        }
+      ]
+    },
+    mcqs: [
+      {
+        q: t('float value print karne ke liye kaunsa specifier use hota hai?', 'Which specifier is used to print a float value?'),
+        opts: [t('%d', '%d'), t('%c', '%c'), t('%f', '%f'), t('%s', '%s')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: %f float aur double (printf mein) dono ke liye use hota hai; %d sirf int ke liye hai.',
+          'Correct answer: %f is used for both float and double (in printf); %d is only for int.'
+        )
+      },
+      {
+        q: t('scanf("%d", &age) mein & ka kya kaam hai?', 'What is the job of & in scanf("%d", &age)?'),
+        opts: [
+          t('Ye age ko print karta hai', 'It prints age'),
+          t('Ye age ka address deta hai taaki scanf value rakh sake', 'It gives the address of age so scanf can store the value'),
+          t('Ye age ko double karta hai', 'It doubles age'),
+          t('Iska koi kaam nahi hai', 'It does nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: scanf ko value rakhne ke liye jagah ka address chahiye, aur & wahi address deta hai.',
+          'Correct answer: scanf needs the address of the place where the value goes, and & gives that address.'
+        )
+      },
+      {
+        q: t('printf("Hi\\n") kitna return karega?', 'What will printf("Hi\\n") return?'),
+        opts: [t('2', '2'), t('3', '3'), t('0', '0'), t('Hi', 'Hi')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: printf chhape aksharon ki ginti deta hai — H, i aur newline, kul 3.',
+          'Correct answer: printf returns the count of printed characters — H, i, and the newline, 3 in total.'
+        )
+      },
+      {
+        q: t('%.2f ka kya matlab hai?', 'What does %.2f mean?'),
+        opts: [
+          t('2 jagah mein number', 'A number in 2 spaces'),
+          t('2 decimal tak dikhana', 'Show up to 2 decimals'),
+          t('2 baar print karna', 'Print 2 times'),
+          t('2 ka square', 'The square of 2')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: .2 ka matlab hai decimal ke baad 2 digits dikhana, jaise 49.99.',
+          'Correct answer: .2 means show 2 digits after the decimal point, like 49.99.'
+        )
+      },
+      {
+        q: t('scanf("%d", &n) ke baad %c padhne se pehle kya karna chahiye?', 'What should you do before reading %c after scanf("%d", &n)?'),
+        opts: [
+          t('Kuch nahi, seedha padho', 'Nothing, read it directly'),
+          t('Format mein space likho: scanf(" %c", &ch)', 'Write a space in the format: scanf(" %c", &ch)'),
+          t('Program band kar do', 'Close the program'),
+          t('%d ki jagah %s use karo', 'Use %s instead of %d')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: enter dabane ka newline input mein reh jaata hai; format ke aage wala space use kha leta hai.',
+          'Correct answer: the newline from pressing enter stays in the input; the leading space in the format eats it.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('printf likhta hai, scanf padhta hai — dono ka dil format specifier hai.', 'printf writes, scanf reads — the format specifier is the heart of both.'),
+      t('scanf mein & zaroori hai, kyunki scanf ko value rakhne ke liye address chahiye.', 'The & is needed in scanf, because scanf needs an address to store the value.'),
+      t('%d int, %f float/double, %c char, %s string, %x hex ke liye.', '%d is for int, %f for float/double, %c for char, %s for string, %x for hex.'),
+      t('scanf mein double ke liye %lf chahiye, printf mein %f kaafi hai.', 'In scanf, double needs %lf; in printf, %f is enough.'),
+      t('%.2f 2 decimal dikhata hai, %5d right side aur %-5d left side rakhta hai.', '%.2f shows 2 decimals, %5d puts a value on the right, and %-5d on the left.')
+    ],
+    practice: {
+      title: t('Practice: scanf se Umar aur Height Padho', 'Practice: Read Age and Height with scanf'),
+      task: t(
+        'Ek program likho jo scanf se ek int age aur ek float height padhe, phir unhe "Age = ..." aur "Height = ... m" ke roop mein print kare. Input ke roop mein 25 1.75 do. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that reads an int age and a float height with scanf, then prints them as "Age = ..." and "Height = ... m". Give 25 1.75 as the input. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int age;
+    float height;
+    scanf("%d %f", &age, &height);
+    printf("Age = %d\\n", age);
+    printf("Height = %.2f m\\n", height);
+    return 0;
+}`,
+      expected: `Age = 25
+Height = 1.75 m`
+    }
+  };
+
+const cArrays: Article = {
+    id: 'c-arrays',
+    subjectId: 'c-programming',
+    title: t(
+      'Arrays — Ek Naam se Bahut Saari Values',
+      'Arrays — Many Values Under One Name'
+    ),
+    summary: t(
+      'Ek-ek variable banana mushkil hota hai jab 100 marks store karne hon. Array ek hi naam se bahut saari values ko ek line mein rakh deta hai. Is article mein aap 1D array banana, index se values padhna, loop se unpar kaam karna, aur arrays ko functions mein bhejna seekhoge.',
+      'Making one variable at a time is hard when you must store 100 marks. An array keeps many values in a line under one name. In this article you will learn to make a 1D array, read values by index, work on them with a loop, and pass arrays to functions.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. Array Kya Hota Hai?',
+          '1. What Is an Array?'
+        ),
+        body: t(
+          `**Array** ek hi type ki bahut saari values ka group hai, jo memory mein ek ke baad ek rakhi hoti hain. \`int marks[5];\` ka matlab hai: 5 int ki jagah banao, aur un sabka naam \`marks\` hai. Har value ki apni jagah hoti hai jise **index** kehte hain — pehli value ka index 0, dusri ka 1, aur aakhri ka 4. Ye 0 se shuru hona beginners ko ajeeb lagta hai, lekin ye C ka rule hai: index hamesha 0 se shuru hota hai.
+
+Array banane ke do tareeke hain. Pehla: \`int marks[5];\` — sirf jagah banao, values baad mein bharo. Dusra: \`int marks[5] = {78, 85, 90, 66, 92};\` — jagah banao aur values ek saath bharo. Agar aap size nahi likhte, toh C values gin kar size nikaal leta hai: \`int marks[] = {78, 85, 90};\` mein size khud 3 ban jaata hai.
+
+Array ki sabse badi taakat hai loop ke saath uska use. \`marks[0]\`, \`marks[1]\` alag-alag likhne ki jagah aap \`for (int i = 0; i < 5; i++)\` likh kar \`marks[i]\` se saari values ko ek-ek karke chhoo sakte ho. Bina array ke 100 marks ka sum nikaalna 100 lines ka kaam hota; array se wohi kaam 3 lines mein ho jaata hai.`,
+          `An **array** is a group of many values of the same type, kept one after another in memory. \`int marks[5];\` means: make space for 5 ints, and call all of them \`marks\`. Every value has its own place called an **index** — the first value has index 0, the second has index 1, and the last has index 4. Starting from 0 feels strange to beginners, but it is the rule of C: an index always starts at 0.
+
+There are two ways to make an array. First: \`int marks[5];\` — only make the space, and fill the values later. Second: \`int marks[5] = {78, 85, 90, 66, 92};\` — make the space and fill the values together. If you do not write the size, C counts the values and finds the size itself: in \`int marks[] = {78, 85, 90};\` the size becomes 3 by itself.
+
+The greatest strength of an array is using it with a loop. Instead of writing \`marks[0]\`, \`marks[1]\` one by one, you can write \`for (int i = 0; i < 5; i++)\` and touch every value one by one with \`marks[i]\`. Without an array, finding the sum of 100 marks would take 100 lines; with an array the same work takes 3 lines.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Class ke Marks aur Train ki Seats',
+          '2. Real-Life Examples: Class Marks and Train Seats'
+        ),
+        body: t(
+          `Sabse seedha example hai **class ke marks**. Ek class mein 30 students hain, aur har ek ke marks rakhne hain. Alag-alag variable banoge toh \`marks1\`, \`marks2\` ... \`marks30\` likhna padega, aur average nikaalna mushkil ho jayega. Array mein sab ek hi naam \`marks\` ke neeche rehte hain, aur ek loop se sum aur average nikal jaata hai.
+
+Doosra example hai **train ki seats**. Ek coach mein seats ek line mein hoti hain: seat 0, seat 1, seat 2... Har seat par ek passenger baithta hai. Array bhi aisa hi hai — har index par ek value baithi hoti hai. Seat number se passenger mil jaata hai, waise hi index se value mil jaati hai.
+
+Teesra example hai **hafte ka temperature**. 7 din ka temperature rakhna ho toh 7 alag variables banane ki jagah \`float temp[7]\` banao. Phir loop se sabse garam din dhoondhna ya hafte ka average nikaalna bahut aasan ho jaata hai.`,
+          `The simplest example is **class marks**. A class has 30 students, and you must keep the marks of each one. With separate variables you would write \`marks1\`, \`marks2\` ... \`marks30\`, and finding the average would be hard. In an array they all live under one name, \`marks\`, and one loop finds the sum and the average.
+
+A second example is **train seats**. In a coach, seats sit in a line: seat 0, seat 1, seat 2, and so on. One passenger sits on each seat. An array is the same — one value sits at each index. The seat number finds the passenger, just as the index finds the value.
+
+A third example is the **temperature of a week**. To keep 7 days of temperature, make \`float temp[7]\` instead of 7 separate variables. Then a loop can easily find the hottest day or the average of the week.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Marks ka Sum aur Average',
+          '3. Step-by-Step: Sum and Average of Marks'
+        ),
+        body: t(
+          `Neeche wala program 5 marks ka sum aur average nikaalta hai. Dry run karo: \`marks[5] = {78, 85, 90, 66, 92}\` mein values index 0 se 4 tak rakhi hain. \`sum\` 0 se shuru hota hai. Loop pehli baar chalta hai: \`i = 0\`, \`sum += marks[0]\` se sum 78 ban jaata hai. Dusri baar: \`i = 1\`, sum 78 + 85 = 163. Teesri baar: \`i = 2\`, sum 163 + 90 = 253. Chauthi baar: \`i = 3\`, sum 253 + 66 = 319. Paanchvi baar: \`i = 4\`, sum 319 + 92 = 411. Phir \`i = 5\` ho jaata hai, condition \`i < 5\` false hoti hai aur loop ruk jaata hai.
+
+Average ke liye \`sum / 5.0\` likha hai, \`sum / 5\` nahi. Kyunki \`sum / 5\` int division hota aur 82 deta, jabki \`sum / 5.0\` decimal division hai aur 82.2 deta hai. Aakhri line mein \`marks[0]\` pehli value 78 aur \`marks[4]\` aakhri value 92 dikhata hai — yaad rakho, 5 size wale array ka aakhri index 4 hota hai, 5 nahi.`,
+          `The program below finds the sum and average of 5 marks. Trace it: in \`marks[5] = {78, 85, 90, 66, 92}\` the values sit at index 0 to 4. \`sum\` starts at 0. The loop runs the first time: \`i = 0\`, and \`sum += marks[0]\` makes sum 78. The second time: \`i = 1\`, sum becomes 78 + 85 = 163. The third time: \`i = 2\`, sum becomes 163 + 90 = 253. The fourth time: \`i = 3\`, sum becomes 253 + 66 = 319. The fifth time: \`i = 4\`, sum becomes 319 + 92 = 411. Then \`i\` becomes 5, the condition \`i < 5\` is false, and the loop stops.
+
+For the average, the code writes \`sum / 5.0\`, not \`sum / 5\`. This is because \`sum / 5\` is integer division and would give 82, while \`sum / 5.0\` is decimal division and gives 82.2. The last line shows \`marks[0]\`, the first value 78, and \`marks[4]\`, the last value 92 — remember, in an array of size 5 the last index is 4, not 5.`
+        ),
+        code: {
+          title: t(
+            'Array ka Sum aur Average Nikaalna',
+            'Finding the Sum and Average of an Array'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int marks[5] = {78, 85, 90, 66, 92};
+    int sum = 0;
+    for (int i = 0; i < 5; i++) {
+        sum += marks[i];
+    }
+    printf("Sum = %d\\n", sum);
+    printf("Average = %.1f\\n", sum / 5.0);
+    printf("First = %d, Last = %d\\n", marks[0], marks[4]);
+    return 0;
+}`,
+          output: `Sum = 411
+Average = 82.2
+First = 78, Last = 92`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Index Bahar, = se Compare aur Array Copy',
+          '4. Common Mistakes: Index Out of Range, Comparing with =, and Copying an Array'
+        ),
+        body: t(
+          `**Galti 1: Array ke bahar jaana.** \`int a[5]\` mein \`a[5]\` likhna galat hai — valid index 0 se 4 tak hain. C aapko rokta nahi, woh aas-paas ki memory ko chhoo lega aur program ajeeb behave karega. Loop mein hamesha \`i < n\` likho, \`i <= n\` nahi.
+
+**Galti 2: = aur == mein confusion.** \`if (marks[i] = 90)\` mein \`=\` value set karta hai, compare nahi — condition hamesha true ban jayegi. Compare karne ke liye \`==\` likho.
+
+**Galti 3: Array ko = se copy karna.** \`int b[5] = a;\` ya \`b = a;\` C mein nahi chalta — array ko ek-ek element karke loop se copy karna padta hai. Ye C ka rule hai: array ka naam uska address hota hai, value nahi.
+
+**Galti 4: Bina value ke array padhna.** \`int a[5];\` banane ke baad uski values kachra hoti hain. Use karne se pehle ya toh initializer do, ya loop se values bharo.`,
+          `**Mistake 1: Going outside the array.** In \`int a[5]\`, writing \`a[5]\` is wrong — the valid indexes are 0 to 4. C does not stop you; it will touch the nearby memory and the program will behave strangely. In a loop always write \`i < n\`, not \`i <= n\`.
+
+**Mistake 2: Confusing = and ==.** In \`if (marks[i] = 90)\`, the \`=\` sets the value, it does not compare — the condition becomes true always. To compare, write \`==\`.
+
+**Mistake 3: Copying an array with =.** \`int b[5] = a;\` or \`b = a;\` does not work in C — you must copy an array element by element with a loop. This is the rule of C: the name of an array is its address, not its value.
+
+**Mistake 4: Reading an array without values.** After making \`int a[5];\`, its values are garbage. Before you use it, either give an initializer or fill the values with a loop.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Size 0, Function mein Size Kho Jana aur Khaali Jagah',
+          '5. Edge Cases: Size 0, Losing the Size in a Function, and Empty Space'
+        ),
+        body: t(
+          `**Function mein size kho jaata hai.** Jab aap array ko function mein bhejte ho, toh function ko sirf uska address milta hai, size nahi. Isi liye function mein \`sizeof(arr)\` se size nahi nikalta — aapko size alag se bhejna padta hai, jaise \`print_array(arr, 5)\`. Dusra example yehi pattern dikhata hai.
+
+**Initializer kam ho toh baaki zero hote hain.** \`int a[5] = {1, 2};\` mein \`a[2]\`, \`a[3]\` aur \`a[4]\` khud 0 ban jaate hain. Ye C ki guarantee hai. Lekin bina initializer ke \`int a[5];\` mein values kachra hoti hain — dono mein farak hai.
+
+**Size variable se nahi, constant se banta hai (purane C mein).** C ke purane standard mein \`int a[n];\` jahan n variable hai, allowed nahi tha. C99 ke baad variable-length arrays allowed hain, lekin aam taur par size ke liye constant ya \`#define N 5\` use karna behtar hai.
+
+**Ek hi naam, ek hi type.** Array ki saari values ek hi type ki hoti hain. \`int\` aur \`float\` ko ek hi array mein nahi rakh sakte — alag types ke liye alag arrays chahiye, ya struct (jo aap aage seekhoge).`,
+          `**The size is lost in a function.** When you pass an array to a function, the function only gets its address, not its size. That is why \`sizeof(arr)\` inside a function does not give the size — you must pass the size separately, like \`print_array(arr, 5)\`. The second example shows exactly this pattern.
+
+**If the initializer is short, the rest become zero.** In \`int a[5] = {1, 2};\`, \`a[2]\`, \`a[3]\`, and \`a[4]\` become 0 by themselves. C guarantees this. But without an initializer, \`int a[5];\` holds garbage values — there is a difference between the two.
+
+**The size comes from a constant, not a variable (in old C).** In the old standard of C, \`int a[n];\` where n is a variable was not allowed. Variable-length arrays are allowed since C99, but it is usually better to use a constant or \`#define N 5\` for the size.
+
+**One name, one type.** All values in an array have the same type. You cannot keep an \`int\` and a \`float\` in the same array — different types need different arrays, or a struct (which you will learn later).`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Array ko Function mein Bhejna aur Ulta Karna',
+          '6. What-If: Passing an Array to a Function and Reversing It'
+        ),
+        body: t(
+          `**What if: array ko function mein bhej dein?** Array hamesha address ke roop mein jaata hai, isliye function ke andar badli hui values bahar bhi dikhti hain. Dusre example mein \`print_array\` sirf print karta hai, lekin agar woh values badalta toh \`main\` wale array mein bhi badal jaati. Isi ko **pass by reference** jaisa behaviour kehte hain — haalaanki C mein asal mein address pass hota hai.
+
+**What if: array ko ulta karna ho?** Do index lo — ek shuru se (\`i = 0\`), ek aakhir se (\`j = 4\`) — aur jab tak woh mil na jaayein, unki values ko \`temp\` se swap karo. Dusra example yehi karta hai: {1, 2, 3, 4, 5} ban jaata hai {5, 4, 3, 2, 1}. Ye **two-pointer** pattern interview mein bahut aata hai.
+
+**What if: sabse bada element dhoondhna ho?** Pehle element ko \`max\` maan lo, phir baaki sab se compare karo — jo bada mile, use \`max\` bana lo. Pehla example yehi karta hai aur saath mein uska index bhi batata hai.`,
+          `**What if we pass an array to a function?** An array always goes as an address, so values changed inside the function are also visible outside. In the second example, \`print_array\` only prints, but if it changed the values, they would change in the array in \`main\` too. This behaviour is like **pass by reference** — although in C what is really passed is the address.
+
+**What if you must reverse an array?** Take two indexes — one from the start (\`i = 0\`) and one from the end (\`j = 4\`) — and swap their values with a \`temp\` until they meet. The second example does exactly this: {1, 2, 3, 4, 5} becomes {5, 4, 3, 2, 1}. This **two-pointer** pattern appears a lot in interviews.
+
+**What if you must find the biggest element?** Assume the first element is the \`max\`, then compare it with all the rest — whenever you find a bigger one, make it the \`max\`. The first example does exactly this and also reports its index.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Ek Naam, Bahut Values, Ek Loop',
+          '7. Summary: One Name, Many Values, One Loop'
+        ),
+        body: t(
+          `Is article mein aapne seekha: **array** ek hi type ki bahut saari values ko ek line mein rakh deta hai, aur har value ko **index** se chhoote hain — pehla index 0 hota hai, aakhri \`n - 1\`. Loop ke saath array ki taakat dugni ho jaati hai: sum, average, max aur reverse — sab kuch 3-4 lines mein ho jaata hai.
+
+Yaad rakhne wali baatein: loop mein hamesha \`i < n\` likho, array ko \`=\` se copy mat karo, aur function mein array ke saath uska size bhi bhejo kyunki function ko size nahi milta. Agle article mein hum 2D arrays dekhenge — table aur matrix ki tarah values rakhna.`,
+          `In this article you learned: an **array** keeps many values of the same type in one line, and every value is reached by an **index** — the first index is 0 and the last is \`n - 1\`. With a loop, the power of an array doubles: sum, average, max, and reverse — all of it happens in 3-4 lines.
+
+Remember these points: always write \`i < n\` in a loop, never copy an array with \`=\`, and always pass the size along with an array to a function, because the function does not get the size. In the next article we will look at 2D arrays — keeping values like a table or a matrix.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('Sabse Bada Element aur Uska Index', 'The Biggest Element and Its Index'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int arr[6] = {12, 45, 7, 89, 23, 56};
+    int max = arr[0];
+    int pos = 0;
+    for (int i = 1; i < 6; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+            pos = i;
+        }
+    }
+    printf("Max = %d at index %d\\n", max, pos);
+    return 0;
+}`,
+        output: `Max = 89 at index 3`
+      },
+      {
+        title: t('Function mein Array Bhejna aur Ulta Karna', 'Passing an Array to a Function and Reversing It'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void print_array(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+    printf("\\n");
+}
+
+int main(void) {
+    int arr[5] = {1, 2, 3, 4, 5};
+    print_array(arr, 5);
+    for (int i = 0, j = 4; i < j; i++, j--) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    print_array(arr, 5);
+    return 0;
+}`,
+        output: `1 2 3 4 5 
+5 4 3 2 1 `
+      }
+    ],
+    diagram: {
+      kind: 'memory',
+      title: t('marks Array Memory mein Kaisa Dikhta Hai', 'How the marks Array Looks in Memory'),
+      caption: t(
+        '5 int ek ke baad ek, index 0 se 4 tak',
+        '5 ints one after another, index 0 to 4'
+      ),
+      nodes: [
+        {
+          t: t('marks[0] = 78', 'marks[0] = 78'),
+          s: t('Pehla element', 'First element')
+        },
+        {
+          t: t('marks[1] = 85', 'marks[1] = 85'),
+          s: t('Dusra element', 'Second element')
+        },
+        {
+          t: t('marks[2] = 90', 'marks[2] = 90'),
+          s: t('Teesra element', 'Third element')
+        },
+        {
+          t: t('marks[3] = 66', 'marks[3] = 66'),
+          s: t('Chautha element', 'Fourth element')
+        },
+        {
+          t: t('marks[4] = 92', 'marks[4] = 92'),
+          s: t('Aakhri element — index 4, 5 nahi', 'Last element — index 4, not 5')
+        }
+      ]
+    },
+    mcqs: [
+      {
+        q: t('int a[5] mein pehle element ka index kya hai?', 'What is the index of the first element in int a[5]?'),
+        opts: [t('1', '1'), t('0', '0'), t('5', '5'), t('-1', '-1')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C mein array ka index hamesha 0 se shuru hota hai, isliye pehla element a[0] hai.',
+          'Correct answer: in C an array index always starts at 0, so the first element is a[0].'
+        )
+      },
+      {
+        q: t('int a[5] mein aakhri valid index kaunsa hai?', 'What is the last valid index in int a[5]?'),
+        opts: [t('5', '5'), t('6', '6'), t('4', '4'), t('0', '0')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: size 5 ke array mein index 0 se 4 tak hote hain, isliye aakhri valid index 4 hai.',
+          'Correct answer: an array of size 5 has indexes 0 to 4, so the last valid index is 4.'
+        )
+      },
+      {
+        q: t('Array ko function mein bhejte waqt kya bhejna zaroori hai?', 'What must you pass along with an array to a function?'),
+        opts: [
+          t('Sirf array ka naam', 'Only the name of the array'),
+          t('Array ka naam aur uska size', 'The name of the array and its size'),
+          t('Sirf size', 'Only the size'),
+          t('Kuch nahi', 'Nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: function ko sirf address milta hai, size nahi, isliye size alag se bhejna padta hai.',
+          'Correct answer: the function only gets the address, not the size, so the size must be passed separately.'
+        )
+      },
+      {
+        q: t('int a[5] = {1, 2}; mein a[4] ki value kya hogi?', 'What will be the value of a[4] in int a[5] = {1, 2};?'),
+        opts: [t('Kachra', 'Garbage'), t('0', '0'), t('2', '2'), t('Error', 'Error')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: initializer chhota ho toh baaki elements khud 0 ban jaate hain, ye C ki guarantee hai.',
+          'Correct answer: when the initializer is short, the remaining elements become 0 by themselves; C guarantees this.'
+        )
+      },
+      {
+        q: t('Array ko ulta karne mein kaunsa pattern use hota hai?', 'Which pattern is used to reverse an array?'),
+        opts: [
+          t('Ek pointer', 'One pointer'),
+          t('Two-pointer (shuru aur aakhir se swap)', 'Two-pointer (swap from start and end)'),
+          t('Sirf ek loop bina temp ke', 'Only one loop without temp'),
+          t('Array ko dobara banana', 'Making the array again')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: ek index shuru se aur ek aakhir se lete hain, aur temp se swap karte hue beech mein milte hain.',
+          'Correct answer: take one index from the start and one from the end, and swap with temp until they meet in the middle.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('Array ka index 0 se shuru hota hai; size n ke array ka aakhri index n - 1 hota hai.', 'An array index starts at 0; the last index of a size n array is n - 1.'),
+      t('Loop mein hamesha i < n likho, i <= n nahi — warna array se bahar chale jaoge.', 'Always write i < n in a loop, never i <= n — otherwise you go outside the array.'),
+      t('Array ko = se copy nahi kar sakte; loop se ek-ek element copy karo.', 'You cannot copy an array with =; copy it element by element with a loop.'),
+      t('Function mein array ke saath uska size bhi bhejo, kyunki function ko size nahi milta.', 'Pass the size along with an array to a function, because the function does not get the size.'),
+      t('Initializer chhota ho toh baaki elements 0 ban jaate hain.', 'When the initializer is short, the remaining elements become 0.')
+    ],
+    practice: {
+      title: t('Practice: Even aur Odd Ginna', 'Practice: Counting Even and Odd Numbers'),
+      task: t(
+        'Ek program likho jo array {3, 8, 15, 22, 7, 10, 31, 40} mein kitne even aur kitne odd numbers hain, ye gine aur print kare. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that counts how many even and how many odd numbers are in the array {3, 8, 15, 22, 7, 10, 31, 40} and prints the counts. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int arr[8] = {3, 8, 15, 22, 7, 10, 31, 40};
+    int even = 0;
+    int odd = 0;
+    for (int i = 0; i < 8; i++) {
+        if (arr[i] % 2 == 0) {
+            even++;
+        } else {
+            odd++;
+        }
+    }
+    printf("Even = %d\\n", even);
+    printf("Odd = %d\\n", odd);
+    return 0;
+}`,
+      expected: `Even = 4
+Odd = 4`
+    }
+  };
+
+const cMultidim: Article = {
+    id: 'c-multidim',
+    subjectId: 'c-programming',
+    title: t(
+      '2D Arrays aur Matrices — Table ki Tarah Data',
+      '2D Arrays and Matrices — Data Like a Table'
+    ),
+    summary: t(
+      'Ek line mein values rakhne ke liye 1D array kaafi hai, lekin table, chessboard ya photo ke pixels ke liye rows aur columns chahiye. 2D array wahi deta hai. Is article mein aap 2D array banana, nested loops se uspar kaam karna, transpose aur matrix addition seekhoge.',
+      'A 1D array is enough for values in one line, but a table, a chessboard, or the pixels of a photo need rows and columns. A 2D array gives you that. In this article you will learn to make a 2D array, work on it with nested loops, and do transpose and matrix addition.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. 2D Array Kya Hota Hai?',
+          '1. What Is a 2D Array?'
+        ),
+        body: t(
+          `**2D array** arrays ka array hai — rows aur columns wala table. \`int mat[3][3];\` ka matlab hai 3 rows aur 3 columns, kul 9 int. Har value ko do index se chhoote hain: pehla row, dusra column. \`mat[1][2]\` ka matlab hai row 1, column 2 — dusri row ka teesra element. Dono index 0 se shuru hote hain, jaise 1D array mein.
+
+2D array banate waqt values curly braces ke andar rows ke hisaab se likhte hain: \`int mat[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\` — pehla group pehli row hai, dusra dusri row, teesra teesri row. Andar wale braces se samajhna aasan hota hai, isliye hamesha likho.
+
+Memory mein 2D array bhi ek hi line mein store hota hai — pehle poori pehli row, phir dusri row, phir teesri. Ise **row-major order** kehte hain. Aapko ye andar ki baat isliye jaanni chahiye kyunki function mein 2D array bhejte waqt column ka size batana zaroori hota hai, taaki compiler ko pata rahe ki ek row kahan khatm hoti hai.`,
+          `A **2D array** is an array of arrays — a table with rows and columns. \`int mat[3][3];\` means 3 rows and 3 columns, 9 ints in total. Every value is reached with two indexes: the first is the row, the second is the column. \`mat[1][2]\` means row 1, column 2 — the third element of the second row. Both indexes start at 0, just like in a 1D array.
+
+When you make a 2D array, write the values in braces by rows: \`int mat[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};\` — the first group is the first row, the second is the second row, and the third is the third row. The inner braces make it easy to read, so always write them.
+
+In memory, a 2D array is also stored in one line — first the whole first row, then the second row, then the third. This is called **row-major order**. You should know this inner detail because when you pass a 2D array to a function, you must tell it the column size, so that the compiler knows where one row ends.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Classroom, Chessboard aur Photo',
+          '2. Real-Life Examples: Classroom, Chessboard, and Photo'
+        ),
+        body: t(
+          `Sabse seedha example hai **classroom**. Class mein benches rows aur columns mein lage hote hain: row 2, column 3 par ek student baithta hai. 2D array bhi aisa hi hai — \`seats[2][3]\` se us student tak pahuncha ja sakta hai. Ek line wala array yahan kaam nahi karega, kyunki usmein row aur column ka farak hi nahi hai.
+
+Doosra example hai **chessboard**. Board 8x8 ka hota hai, aur har khaane ki position row aur column se batayi jaati hai. Computer games mein board ko 2D array mein hi rakha jaata hai — \`board[0][0]\` ek kona hai, \`board[7][7]\` dusra kona.
+
+Teesra example hai **photo**. Ek photo chhote-chhote pixels ka grid hoti hai — har pixel ki apni row aur column hoti hai, aur usmein uska rang store hota hai. Photo ko edit karna matlab us grid ki values ko badalna hai. Spreadsheet bhi aisa hi hai: har cell ki row aur column hoti hai.`,
+          `The simplest example is a **classroom**. Benches in a class sit in rows and columns: a student sits at row 2, column 3. A 2D array is the same — \`seats[2][3]\` reaches that student. A one-line array would not work here, because it has no difference between a row and a column.
+
+A second example is a **chessboard**. The board is 8x8, and the position of every square is told by its row and column. In computer games the board is kept in a 2D array — \`board[0][0]\` is one corner and \`board[7][7]\` is the other corner.
+
+A third example is a **photo**. A photo is a grid of tiny pixels — every pixel has its own row and column, and its colour is stored there. Editing a photo means changing the values of that grid. A spreadsheet is the same: every cell has a row and a column.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Matrix Print Karna aur Row ka Sum',
+          '3. Step-by-Step: Printing a Matrix and the Sum of Each Row'
+        ),
+        body: t(
+          `Neeche wala program 3x3 matrix ko print karta hai aur har row ka sum bhi dikhata hai. Ismein **nested loops** hain — bahar wala loop rows par chalta hai, andar wala columns par. Dry run karo: \`i = 0\` (pehli row) par andar wala loop \`j = 0, 1, 2\` chal kar 1, 2, 3 print karta hai, aur \`row_sum\` 0 + 1 + 2 + 3 = 6 ban jaata hai. Phir pehli row khatm hone par "| row sum = 6" chhapta hai aur new line aati hai.
+
+Dusri row (\`i = 1\`) mein 4, 5, 6 chhapte hain aur row sum 15 banta hai. Teesri row (\`i = 2\`) mein 7, 8, 9 chhapte hain aur row sum 24 banta hai. Dhyaan do: \`row_sum\` ko har row ke shuru mein 0 karna padta hai, warna pehli row ka sum dusri row mein jud jaata. Aakhri line \`mat[1][2]\` ko dikhati hai — row 1, column 2, jiska matlab hai dusri row ka teesra element, jo 6 hai.`,
+          `The program below prints a 3x3 matrix and also shows the sum of each row. It has **nested loops** — the outer loop runs over rows and the inner loop runs over columns. Trace it: at \`i = 0\` (first row), the inner loop runs \`j = 0, 1, 2\`, prints 1, 2, 3, and \`row_sum\` becomes 0 + 1 + 2 + 3 = 6. Then, when the first row ends, "| row sum = 6" is printed and a new line comes.
+
+In the second row (\`i = 1\`), 4, 5, 6 are printed and the row sum becomes 15. In the third row (\`i = 2\`), 7, 8, 9 are printed and the row sum becomes 24. Notice: \`row_sum\` must be set to 0 at the start of every row, otherwise the sum of the first row would get added to the second row. The last line shows \`mat[1][2]\` — row 1, column 2, which means the third element of the second row, which is 6.`
+        ),
+        code: {
+          title: t(
+            'Matrix Print Karna aur Har Row ka Sum',
+            'Printing a Matrix and the Sum of Each Row'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int mat[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    for (int i = 0; i < 3; i++) {
+        int row_sum = 0;
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", mat[i][j]);
+            row_sum += mat[i][j];
+        }
+        printf("| row sum = %d\\n", row_sum);
+    }
+    printf("mat[1][2] = %d\\n", mat[1][2]);
+    return 0;
+}`,
+          output: `1 2 3 | row sum = 6
+4 5 6 | row sum = 15
+7 8 9 | row sum = 24
+mat[1][2] = 6`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Row-Column Ulta, Bounds aur Braces Bhoolna',
+          '4. Common Mistakes: Swapping Row and Column, Bounds, and Forgetting Braces'
+        ),
+        body: t(
+          `**Galti 1: Row aur column ulta likhna.** \`mat[2][1]\` aur \`mat[1][2]\` do alag jagah hain — pehla teesri row ka dusra element hai (8), dusra dusri row ka teesra element hai (6). Hamesha pehle row, phir column likho, aur soch kar likho ki kaunsa kya hai.
+
+**Galti 2: Loop ki bounds galat likhna.** 3x3 matrix mein dono loops \`i < 3\` aur \`j < 3\` hone chahiye. Agar ek loop mein \`i < 2\` likh diya toh ek row chhoot jayegi, aur \`i <= 3\` likha toh array se bahar chale jaoge.
+
+**Galti 3: Initializer mein braces bhoolna.** \`int mat[3][3] = {1, 2, 3, 4, 5, 6, 7, 8, 9};\` bhi chal jaata hai, lekin padhne mein mushkil hota hai — kahan ek row khatm hoti hai, pata nahi chalta. Rows ke liye andar wale braces hamesha likho.
+
+**Galti 4: row_sum ko bahar initialize karna.** Agar \`row_sum = 0\` bahar wale loop se pehle ek baar likha, toh har row ka sum pichhli rows ke sum mein judta jayega. Use har row ke shuru mein 0 karna hota hai — andar wale loop se pehle, bahar wale loop ke andar.`,
+          `**Mistake 1: Swapping row and column.** \`mat[2][1]\` and \`mat[1][2]\` are two different places — the first is the second element of the third row (8), and the second is the third element of the second row (6). Always write the row first, then the column, and think about which is which.
+
+**Mistake 2: Wrong loop bounds.** In a 3x3 matrix, both loops must be \`i < 3\` and \`j < 3\`. If you write \`i < 2\` in one loop, a row will be missed, and if you write \`i <= 3\`, you will go outside the array.
+
+**Mistake 3: Forgetting braces in the initializer.** \`int mat[3][3] = {1, 2, 3, 4, 5, 6, 7, 8, 9};\` also works, but it is hard to read — you cannot tell where one row ends. Always write the inner braces for rows.
+
+**Mistake 4: Initializing row_sum outside.** If you write \`row_sum = 0\` once before the outer loop, every row's sum will keep adding to the previous rows' sums. It must be set to 0 at the start of every row — before the inner loop, inside the outer loop.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Alag Size, Function mein Column aur Jagged Array',
+          '5. Edge Cases: Different Sizes, Column in a Function, and Jagged Arrays'
+        ),
+        body: t(
+          `**Row aur column alag ho sakte hain.** Matrix hamesha square nahi hoti — \`int a[2][3]\` mein 2 rows aur 3 columns hain. Pehla example isi ko transpose karta hai: 2x3 matrix 3x2 ban jaati hai. Loops ki bounds har direction ke hisaab se alag likhni padti hain.
+
+**Function mein column size batana zaroori hai.** \`void print(int a[][3], int rows)\` mein column ka size (3) likhna padta hai, row ka nahi. Kyunki compiler ko ye jaanna hota hai ki ek row mein kitne elements hain, taaki woh agle row tak sahi se pahunche. Sirf \`int a[][]\` likhna error deta hai.
+
+**Jagged array C mein nahi hota.** Java mein har row ki length alag ho sakti hai, lekin C mein har row ki length ek jaisi hoti hai — ye 2D array ka rule hai. Alag length chahiye toh pointers ka array banana padta hai, jo aage ka topic hai.
+
+**Khali jagah bhi memory leti hai.** \`int mat[100][100]\` 10,000 int ki jagah leta hai, chahe aap sirf 10 values bharo. Bade 2D arrays ko function ke andar local variable ki tarah banane se stack bhar sakta hai — bade arrays ke liye static ya heap use hota hai, jo aap aage seekhoge.`,
+          `**Rows and columns can differ.** A matrix is not always square — \`int a[2][3]\` has 2 rows and 3 columns. The first example transposes exactly this: a 2x3 matrix becomes 3x2. The loop bounds must be written separately for each direction.
+
+**You must tell a function the column size.** In \`void print(int a[][3], int rows)\`, the column size (3) must be written, not the row size. This is because the compiler must know how many elements are in one row, so that it can reach the next row correctly. Writing only \`int a[][]\` gives an error.
+
+**C has no jagged arrays.** In Java, every row can have a different length, but in C every row has the same length — that is the rule of a 2D array. If you need different lengths, you must make an array of pointers, which is a later topic.
+
+**Empty space also takes memory.** \`int mat[100][100]\` takes space for 10,000 ints, even if you fill only 10 values. Making big 2D arrays as local variables inside a function can fill the stack — for big arrays, static or heap memory is used, which you will learn later.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Transpose, Addition aur 3D Array',
+          '6. What-If: Transpose, Addition, and 3D Arrays'
+        ),
+        body: t(
+          `**What if: matrix ko transpose karna ho?** Transpose ka matlab hai rows ko columns bana dena: \`a[i][j]\` ban jaata hai \`a[j][i]\`. Pehla example 2x3 matrix ko 3x2 mein badalta hai — loop pehle columns par chalta hai, phir rows par. Square matrix ko usi jagah par transpose karne ke liye sirf diagonal ke upar wale elements ko swap karte hain.
+
+**What if: do matrices ko jodna ho?** Dono ka size ek jaisa hona chahiye, phir har position par \`c[i][j] = a[i][j] + b[i][j]\` karte hain. Dusra example 2x2 matrices ko jodta hai: 1+5=6, 2+6=8, 3+7=10, 4+8=12. Multiplication isse zyada mushkil hai — usmein teesra loop chahiye hota hai.
+
+**What if: 3D array chahiye?** \`int cube[2][3][4]\` mein 2 layers, har layer mein 3 rows aur 4 columns hote hain. Ye tab kaam aata hai jab data ke teen hisse hon — jaise ek building mein floor, row aur seat. Rule wahi hai: har dimension ka index 0 se shuru hota hai.`,
+          `**What if you must transpose a matrix?** Transpose means turning rows into columns: \`a[i][j]\` becomes \`a[j][i]\`. The first example changes a 2x3 matrix into 3x2 — the loop runs over columns first, then rows. To transpose a square matrix in place, you only swap the elements above the diagonal.
+
+**What if you must add two matrices?** Both must have the same size, and then at every position you do \`c[i][j] = a[i][j] + b[i][j]\`. The second example adds two 2x2 matrices: 1+5=6, 2+6=8, 3+7=10, 4+8=12. Multiplication is harder than this — it needs a third loop.
+
+**What if you need a 3D array?** In \`int cube[2][3][4]\` there are 2 layers, with 3 rows and 4 columns in each layer. This is useful when data has three parts — like floor, row, and seat in a building. The rule stays the same: the index of every dimension starts at 0.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Row, Column aur Nested Loop',
+          '7. Summary: Row, Column, and Nested Loop'
+        ),
+        body: t(
+          `Is article mein aapne seekha: **2D array** rows aur columns wala table hai, jahan har value ko \`mat[row][column]\` se chhoote hain. Uspar kaam karne ke liye **nested loops** chahiye — bahar wala rows par, andar wala columns par. Memory mein ye row-major order mein store hota hai, isliye function mein column ka size batana zaroori hai.
+
+Yaad rakhne wali baatein: pehle row, phir column; har row ka sum nikaalne se pehle use 0 karo; transpose mein \`a[i][j]\` aur \`a[j][i]\` badal jaate hain; aur addition ke liye dono matrices ka size ek jaisa hona chahiye. Agle article mein hum strings dekhenge — aksharon ka array jo text banata hai.`,
+          `In this article you learned: a **2D array** is a table of rows and columns, where every value is reached as \`mat[row][column]\`. To work on it you need **nested loops** — the outer loop over rows and the inner loop over columns. In memory it is stored in row-major order, which is why you must tell a function the column size.
+
+Remember these points: row first, then column; set a row sum to 0 before finding it; in a transpose, \`a[i][j]\` and \`a[j][i]\` swap places; and for addition, both matrices must have the same size. In the next article we will look at strings — an array of characters that makes text.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('Transpose: 2x3 Matrix ko 3x2 Banana', 'Transpose: Turning a 2x3 Matrix into 3x2'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int a[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 2; i++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\\n");
+    }
+    return 0;
+}`,
+        output: `1 4 
+2 5 
+3 6 `
+      },
+      {
+        title: t('Do Matrices ko Jodna', 'Adding Two Matrices'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int a[2][2] = {{1, 2}, {3, 4}};
+    int b[2][2] = {{5, 6}, {7, 8}};
+    int c[2][2];
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            c[i][j] = a[i][j] + b[i][j];
+            printf("%d ", c[i][j]);
+        }
+        printf("\\n");
+    }
+    return 0;
+}`,
+        output: `6 8 
+10 12 `
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t('3x3 Matrix: Row aur Column ka Map', '3x3 Matrix: Map of Rows and Columns'),
+      caption: t(
+        'mat[1][2] = 6 — dusri row, teesra column',
+        'mat[1][2] = 6 — second row, third column'
+      ),
+      nodes: [],
+      headers: [t('Row / Col', 'Row / Col'), t('Col 0', 'Col 0'), t('Col 1', 'Col 1'), t('Col 2', 'Col 2')],
+      rows: [
+        [t('Row 0', 'Row 0'), t('1', '1'), t('2', '2'), t('3', '3')],
+        [t('Row 1', 'Row 1'), t('4', '4'), t('5', '5'), t('6', '6')],
+        [t('Row 2', 'Row 2'), t('7', '7'), t('8', '8'), t('9', '9')]
+      ]
+    },
+    mcqs: [
+      {
+        q: t('int mat[3][3] mein mat[1][2] ka matlab kya hai?', 'What does mat[1][2] mean in int mat[3][3]?'),
+        opts: [
+          t('Pehli row, dusra column', 'First row, second column'),
+          t('Dusri row, teesra column', 'Second row, third column'),
+          t('Teesri row, dusra column', 'Third row, second column'),
+          t('Dusri row, dusra column', 'Second row, second column')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehla index row hai aur dusra column hai, aur dono 0 se shuru hote hain — isliye mat[1][2] dusri row ka teesra element hai, jo 6 hai.',
+          'Correct answer: the first index is the row and the second is the column, and both start at 0 — so mat[1][2] is the third element of the second row, which is 6.'
+        )
+      },
+      {
+        q: t('2D array memory mein kis order mein store hota hai?', 'In which order is a 2D array stored in memory?'),
+        opts: [t('Column-major', 'Column-major'), t('Row-major', 'Row-major'), t('Random', 'Random'), t('Diagonal', 'Diagonal')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C mein pehle poori pehli row store hoti hai, phir dusri row — ise row-major order kehte hain.',
+          'Correct answer: in C the whole first row is stored first, then the second row — this is called row-major order.'
+        )
+      },
+      {
+        q: t('Function mein 2D array bhejte waqt kya batana zaroori hai?', 'What must you tell a function when passing a 2D array to it?'),
+        opts: [
+          t('Sirf row ka size', 'Only the row size'),
+          t('Column ka size', 'The column size'),
+          t('Kuch nahi', 'Nothing'),
+          t('Sirf array ka naam', 'Only the name of the array')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: compiler ko ye jaanna hota hai ki ek row mein kitne elements hain, isliye column ka size likhna padta hai.',
+          'Correct answer: the compiler must know how many elements are in one row, so the column size must be written.'
+        )
+      },
+      {
+        q: t('Transpose mein kya badalta hai?', 'What changes in a transpose?'),
+        opts: [
+          t('Kuch nahi badalta', 'Nothing changes'),
+          t('a[i][j] aur a[j][i] badal jaate hain', 'a[i][j] and a[j][i] swap places'),
+          t('Sirf pehli row badalti hai', 'Only the first row changes'),
+          t('Values double ho jaati hain', 'The values double')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: transpose mein rows columns ban jaati hain, isliye har element apni row aur column ki jagah badal leta hai.',
+          'Correct answer: in a transpose, rows become columns, so every element swaps its row and column places.'
+        )
+      },
+      {
+        q: t('Do matrices ko jodne ke liye kya zaroori hai?', 'What is needed to add two matrices?'),
+        opts: [
+          t('Dono ka size ek jaisa hona chahiye', 'Both must have the same size'),
+          t('Ek square aur ek rectangle honi chahiye', 'One must be square and one rectangle'),
+          t('Dono mein sirf 0 hone chahiye', 'Both must hold only 0'),
+          t('Kuch bhi zaroori nahi', 'Nothing is needed')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: addition har position par hoti hai, isliye dono matrices ki har row aur column ek jaisi honi chahiye.',
+          'Correct answer: addition happens at every position, so both matrices must have the same rows and columns.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('2D array mein pehla index row hai, dusra column — dono 0 se shuru hote hain.', 'In a 2D array the first index is the row and the second is the column — both start at 0.'),
+      t('Nested loops chahiye: bahar wala rows par, andar wala columns par.', 'Nested loops are needed: the outer loop over rows, the inner loop over columns.'),
+      t('C mein 2D array row-major order mein store hota hai.', 'In C a 2D array is stored in row-major order.'),
+      t('Function mein 2D array bhejte waqt column ka size likhna padta hai.', 'When passing a 2D array to a function, the column size must be written.'),
+      t('Transpose mein a[i][j] aur a[j][i] badal jaate hain; addition ke liye size ek jaisa chahiye.', 'In a transpose, a[i][j] and a[j][i] swap; addition needs the same size.')
+    ],
+    practice: {
+      title: t('Practice: Matrix ka Trace Nikaalo', 'Practice: Find the Trace of a Matrix'),
+      task: t(
+        'Ek program likho jo 3x3 matrix {{2, 5, 1}, {4, 9, 3}, {7, 6, 8}} ka trace nikaale — trace ka matlab hai diagonal ke elements ka sum (mat[0][0] + mat[1][1] + mat[2][2]) — aur diagonal ke teeno elements bhi print kare. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that finds the trace of the 3x3 matrix {{2, 5, 1}, {4, 9, 3}, {7, 6, 8}} — the trace is the sum of the diagonal elements (mat[0][0] + mat[1][1] + mat[2][2]) — and also prints the three diagonal elements. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int mat[3][3] = {{2, 5, 1}, {4, 9, 3}, {7, 6, 8}};
+    int trace = 0;
+    for (int i = 0; i < 3; i++) {
+        trace += mat[i][i];
+    }
+    printf("Trace = %d\\n", trace);
+    printf("Diagonal: %d %d %d\\n", mat[0][0], mat[1][1], mat[2][2]);
+    return 0;
+}`,
+      expected: `Trace = 19
+Diagonal: 2 9 8`
+    }
+  };
+
+const cStrings: Article = {
+    id: 'c-strings',
+    subjectId: 'c-programming',
+    title: t(
+      'Strings — Aksharon ka Array, fgets aur Null Terminator',
+      'Strings — An Array of Characters, fgets, and the Null Terminator'
+    ),
+    summary: t(
+      'C mein string ka koi alag type nahi hota — string sirf aksharon ka array hai, jiske aakhir mein ek khaas akshar \\0 hota hai. Is article mein aap string aur char ka farak, strlen aur sizeof ka farak, aur space wali line padhne ke liye fgets seekhoge.',
+      'In C there is no separate string type — a string is only an array of characters, with a special character \\0 at the end. In this article you will learn the difference between a string and a char, the difference between strlen and sizeof, and fgets for reading a line with spaces.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. String Kya Hoti Hai? (char Array aur \\0)',
+          '1. What Is a String? (char Array and \\0)'
+        ),
+        body: t(
+          `C mein **string** aksharon ka ek array hai, jiske aakhir mein ek khaas akshar hota hai jise **null terminator** kehte hain aur \`'\\0'\` likhte hain. Iska number 0 hota hai. \`char name[10] = "Rahul";\` mein memory mein ye rakha hota hai: R, a, h, u, l, \`\\0\`, aur baaki 4 jagah khaali. \`\\0\` batata hai ki string yahin khatm hoti hai — bina iske C ko pata hi nahi chalega ki naam kahan khatm hua.
+
+String banane ke do tareeke hain. Pehla: \`char name[10] = "Rahul";\` — size 10 ki jagah banao aur "Rahul" bharo. Dusra: \`char name[] = "Rahul";\` — size khud 6 ban jaata hai (5 akshar + 1 null terminator). Double quotes \`" "\` se string banti hai, single quotes \`' '\` se ek akshar banta hai — ye farak bahut zaroori hai. \`'A'\` ek char hai, \`"A"\` ek string hai jismein A aur \`\\0\` dono hain.
+
+\`strlen\` function string ki lambai batata hai — \`\\0\` ko ginne bina. "Rahul" ki lambai 5 hai, lekin uska array 6 ya 10 jagah leta hai. \`sizeof\` aur \`strlen\` ka farak samajhna hi string ko samajhna hai: \`sizeof\` array ki kul jagah batata hai, \`strlen\` string ke aksharon ki ginti.`,
+          `In C a **string** is an array of characters, with a special character at the end called the **null terminator**, written as \`'\\0'\`. Its number is 0. In \`char name[10] = "Rahul";\`, the memory holds: R, a, h, u, l, \`\\0\`, and 4 empty places. The \`\\0\` tells where the string ends — without it, C would not know where the name ends.
+
+There are two ways to make a string. First: \`char name[10] = "Rahul";\` — make space of size 10 and fill it with "Rahul". Second: \`char name[] = "Rahul";\` — the size becomes 6 by itself (5 characters + 1 null terminator). Double quotes \`" "\` make a string, and single quotes \`' '\` make one character — this difference matters a lot. \`'A'\` is one char, while \`"A"\` is a string holding both A and \`\\0\`.
+
+The \`strlen\` function tells the length of a string — without counting \`\\0\`. The length of "Rahul" is 5, but its array takes 6 or 10 places. Understanding the difference between \`sizeof\` and \`strlen\` is understanding strings: \`sizeof\` tells the total space of the array, and \`strlen\` tells the count of characters in the string.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Naam ki Patti, Sentence aur Password',
+          '2. Real-Life Examples: Name Tags, Sentences, and Passwords'
+        ),
+        body: t(
+          `Sabse seedha example hai **naam ki patti**. Shaadi mein har mehman ke seene par ek patti lagti hai jismein uska naam likha hota hai. Naam ke akshar ek ke baad ek likhe hote hain, aur aakhri akshar ke baad patti khatm ho jaati hai. String bhi aisi hi hai — akshar ek ke baad ek, aur aakhir mein \`\\0\` batata hai ki patti yahin khatm hoti hai.
+
+Doosra example hai **sentence**. "Mera naam Rahul hai" ek sentence hai — ismein aksharon ke beech mein spaces bhi hain. Space bhi ek akshar hi hai, isliye woh bhi string ke andar store hota hai. \`scanf\` se sentence nahi padha ja sakta kyunki woh pehle space par ruk jaata hai — iske liye \`fgets\` chahiye.
+
+Teesra example hai **password**. Password bhi ek string hi hai. Jab aap password type karte ho, toh computer use akshar-dar-akshar compare karta hai, aur aakhri mein \`\\0\` se pata chalta hai ki password khatm ho gaya. Ek akshar ka farak bhi password ko galat bana deta hai.`,
+          `The simplest example is a **name tag**. At a wedding, every guest wears a tag on the chest with their name on it. The letters of the name sit one after another, and the tag ends after the last letter. A string is the same — characters one after another, and \`\\0\` at the end tells where the tag ends.
+
+A second example is a **sentence**. "Mera naam Rahul hai" is a sentence — it also has spaces between the characters. A space is also a character, so it is stored inside the string too. A sentence cannot be read with \`scanf\` because it stops at the first space — for that you need \`fgets\`.
+
+A third example is a **password**. A password is also a string. When you type a password, the computer compares it character by character, and the \`\\0\` at the end tells it that the password is over. A difference of even one character makes the password wrong.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: "Rahul" ko Andar se Dekhna',
+          '3. Step-by-Step: Looking Inside "Rahul"'
+        ),
+        body: t(
+          `Neeche wala program "Rahul" string ko andar se dikhata hai. Dry run karo: \`char name[10] = "Rahul";\` mein 10 jagah banti hai, pehle 5 mein R, a, h, u, l aur chhathi mein \`\\0\` rakha jaata hai. Pehli line "name = Rahul" chhapti hai — \`%s\` string ko \`\\0\` tak chhapta hai. Dusri line \`strlen(name)\` se 5 deti hai, kyunki \`\\0\` gina nahi jaata.
+
+Teesri line \`sizeof(name)\` se 10 deti hai — ye array ki kul jagah hai, string ki lambai nahi. Chauthi line dikhati hai ki \`name[0]\` 'R' hai aur \`name[5]\` 0 hai — wahi null terminator, jo number ke roop mein 0 hota hai. Aakhri loop ek-ek akshar ko space ke saath chhapta hai: R a h u l. Loop ki condition \`name[i] != '\\0'\` hai — jab \`\\0\` milta hai, loop ruk jaata hai. Ye pattern strings par kaam karne ka sabse basic tareeka hai.`,
+          `The program below shows the string "Rahul" from the inside. Trace it: in \`char name[10] = "Rahul";\`, 10 places are made, the first 5 hold R, a, h, u, l, and the sixth holds \`\\0\`. The first line prints "name = Rahul" — \`%s\` prints the string up to \`\\0\`. The second line gives 5 from \`strlen(name)\`, because \`\\0\` is not counted.
+
+The third line gives 10 from \`sizeof(name)\` — that is the total space of the array, not the length of the string. The fourth line shows that \`name[0]\` is 'R' and \`name[5]\` is 0 — that same null terminator, which is 0 as a number. The last loop prints every character one by one with a space: R a h u l. The loop condition is \`name[i] != '\\0'\` — when \`\\0\` is found, the loop stops. This pattern is the most basic way to work on strings.`
+        ),
+        code: {
+          title: t(
+            '"Rahul" String ko Andar se Dekhna',
+            'Looking Inside the String "Rahul"'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char name[10] = "Rahul";
+    printf("name = %s\\n", name);
+    printf("length = %zu\\n", strlen(name));
+    printf("size of array = %zu\\n", sizeof(name));
+    printf("name[0] = %c, name[5] = %d\\n", name[0], name[5]);
+    for (int i = 0; name[i] != '\\0'; i++) {
+        printf("%c ", name[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+          output: `name = Rahul
+length = 5
+size of array = 10
+name[0] = R, name[5] = 0
+R a h u l `
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: == se Compare, Chhota Buffer aur \\0 Bhoolna',
+          '4. Common Mistakes: Comparing with ==, Small Buffer, and Forgetting \\0'
+        ),
+        body: t(
+          `**Galti 1: Strings ko == se compare karna.** \`if (name == "Rahul")\` galat hai — ye do addresses ko compare karta hai, do strings ko nahi. Strings compare karne ke liye \`strcmp\` use karo, jo agle article mein detail mein hai.
+
+**Galti 2: Chhota buffer banana.** \`char name[5] = "Rahul";\` mein "Rahul" ke liye 6 jagah chahiye (5 akshar + \`\\0\`), lekin array sirf 5 ka hai. Compiler warning dega aur \`\\0\` ke liye jagah nahi bachegi. Hamesha naam se ek zyada jagah rakho, ya size khud C ko nikaalne do: \`char name[] = "Rahul";\`.
+
+**Galti 3: \\0 ko bhoolna.** Agar aap string ko ek-ek akshar karke khud bharte ho, toh aakhir mein \`\\0\` lagana mat bhoolo. Bina \`\\0\` ke \`printf("%s")\` aage ki memory ko bhi chhapne lagega, jab tak use kahin \`\\0\` na mil jaaye.
+
+**Galti 4: scanf se poora naam padhna.** \`scanf("%s", name);\` mein "Rahul Kumar" likhoge toh sirf "Rahul" milega. Poori line ke liye \`fgets(name, 10, stdin)\` use karo — ye spaces bhi padhta hai aur size se zyada nahi padhta.`,
+          `**Mistake 1: Comparing strings with ==.** \`if (name == "Rahul")\` is wrong — it compares two addresses, not two strings. To compare strings, use \`strcmp\`, which is covered in detail in the next article.
+
+**Mistake 2: Making a small buffer.** In \`char name[5] = "Rahul";\`, "Rahul" needs 6 places (5 characters + \`\\0\`), but the array is only 5. The compiler will warn you, and there will be no space left for \`\\0\`. Always keep one extra place, or let C find the size itself: \`char name[] = "Rahul";\`.
+
+**Mistake 3: Forgetting \\0.** If you fill a string character by character yourself, do not forget to put \`\\0\` at the end. Without \`\\0\`, \`printf("%s")\` will keep printing the memory ahead until it finds a \`\\0\` somewhere.
+
+**Mistake 4: Reading a full name with scanf.** In \`scanf("%s", name);\`, typing "Rahul Kumar" gives only "Rahul". For a whole line, use \`fgets(name, 10, stdin)\` — it also reads spaces and never reads more than the size.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali String, fgets ka Newline aur sizeof vs strlen',
+          '5. Edge Cases: Empty String, the Newline of fgets, and sizeof vs strlen'
+        ),
+        body: t(
+          `**Khaali string.** \`char s[10] = "";\` mein sirf \`\\0\` hota hai, pehli hi jagah par. \`strlen(s)\` 0 deta hai, lekin \`sizeof(s)\` phir bhi 10 deta hai. Khaali string ka matlab hai lambai zero, jagah zero nahi.
+
+**fgets newline bhi rakhta hai.** \`fgets\` se "Rahul" padhoge toh usmein enter dabane ka \`\\n\` bhi aa jayega — string ban jayegi "Rahul\\n". Is newline ko hatane ke liye aam taur par ye line likhte hain: \`name[strcspn(name, "\\n")] = '\\0';\` — ye pehle \`\\n\` ko \`\\0\` se badal deta hai.
+
+**sizeof vs strlen.** \`char a[] = "Hello";\` mein \`sizeof(a)\` 6 hai aur \`strlen(a)\` 5 hai. \`char b[20] = "Hello";\` mein \`sizeof(b)\` 20 hai aur \`strlen(b)\` phir bhi 5 hai. Pehla example yehi farak dikhata hai — size array par depend karta hai, lambai string par.
+
+**String literal badla nahi ja sakta.** \`char *s = "Hello"; s[0] = 'h';\` likhna galat hai — string literal read-only memory mein rehta hai. Badalne wali string chahiye toh array banao: \`char s[] = "Hello";\`.`,
+          `**Empty string.** In \`char s[10] = "";\`, there is only \`\\0\`, at the very first place. \`strlen(s)\` gives 0, but \`sizeof(s)\` still gives 10. An empty string means the length is zero, not the space.
+
+**fgets also keeps the newline.** If you read "Rahul" with \`fgets\`, the \`\\n\` from pressing enter also comes in — the string becomes "Rahul\\n". To remove this newline, people usually write this line: \`name[strcspn(name, "\\n")] = '\\0';\` — it replaces the first \`\\n\` with \`\\0\`.
+
+**sizeof vs strlen.** In \`char a[] = "Hello";\`, \`sizeof(a)\` is 6 and \`strlen(a)\` is 5. In \`char b[20] = "Hello";\`, \`sizeof(b)\` is 20 and \`strlen(b)\` is still 5. The first example shows exactly this difference — the size depends on the array, and the length depends on the string.
+
+**A string literal cannot be changed.** Writing \`char *s = "Hello"; s[0] = 'h';\` is wrong — a string literal lives in read-only memory. If you need a string you can change, make an array: \`char s[] = "Hello";\`.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: char vs String, scanf vs fgets',
+          '6. What-If: char vs String, scanf vs fgets'
+        ),
+        body: t(
+          `**What if: char aur string mein confuse ho jaayein?** Dusra example yehi farak dikhata hai. \`char c = 'A';\` mein sirf ek akshar hai, size 1 byte. \`char s[] = "A";\` mein A aur \`\\0\` — size 2 bytes. \`c == 65\` true hai kyunki 'A' ka ASCII number 65 hai, aur \`s[1] == 0\` true hai kyunki dusri jagah null terminator hai.
+
+**What if: scanf ki jagah fgets use kar lein?** \`fgets(name, 20, stdin)\` 19 akshar tak padhta hai, spaces ke saath, aur hamesha aakhir mein \`\\0\` lagata hai. Ye scanf se safe hai, kyunki ye size se zyada kabhi nahi padhta. Ek hi kami hai: ye newline bhi rakh leta hai, jise hatana padta hai.
+
+**What if: string ko ulta karna ho?** Array wale article ka two-pointer pattern yahan bhi chalega: pehla akshar aakhri se swap karo, aur beech mein milo — lekin \`\\0\` ko chhedo mat, woh aakhir mein hi rehna chahiye. Agle article ke practice mein aap isi pattern se palindrome check karoge.`,
+          `**What if you confuse char and string?** The second example shows exactly this difference. In \`char c = 'A';\` there is only one character, size 1 byte. In \`char s[] = "A";\` there are A and \`\\0\` — size 2 bytes. \`c == 65\` is true because the ASCII number of 'A' is 65, and \`s[1] == 0\` is true because the second place holds the null terminator.
+
+**What if we use fgets instead of scanf?** \`fgets(name, 20, stdin)\` reads up to 19 characters, with spaces, and always puts \`\\0\` at the end. It is safer than scanf, because it never reads more than the size. It has only one drawback: it also keeps the newline, which must be removed.
+
+**What if you must reverse a string?** The two-pointer pattern from the arrays article works here too: swap the first character with the last one and meet in the middle — but do not touch the \`\\0\`, it must stay at the end. In the practice of the next article you will check a palindrome with this same pattern.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: String = char Array + \\0',
+          '7. Summary: String = char Array + \\0'
+        ),
+        body: t(
+          `Is article mein aapne seekha: C mein string ka koi alag type nahi hota — ye **char ka array** hai, jiske aakhir mein **null terminator \`\\0\`** hota hai. \`strlen\` aksharon ki ginti deta hai, \`sizeof\` array ki kul jagah. Double quotes se string banti hai, single quotes se ek akshar.
+
+Yaad rakhne wali baatein: string ko \`==\` se compare mat karo, buffer mein \`\\0\` ke liye ek extra jagah rakho, space wali line ke liye \`scanf\` ki jagah \`fgets\` use karo, aur \`fgets\` ke baad newline hatana mat bhoolo. Agle article mein hum string library ke functions dekhenge — \`strlen\`, \`strcpy\`, \`strcat\` aur \`strcmp\` — aur unke apne versions bhi likhenge.`,
+          `In this article you learned: in C there is no separate string type — a string is an **array of char**, with a **null terminator \`\\0\`** at the end. \`strlen\` gives the count of characters, and \`sizeof\` gives the total space of the array. Double quotes make a string, and single quotes make one character.
+
+Remember these points: never compare strings with \`==\`, keep one extra place in the buffer for \`\\0\`, use \`fgets\` instead of \`scanf\` for a line with spaces, and do not forget to remove the newline after \`fgets\`. In the next article we will look at the string library functions — \`strlen\`, \`strcpy\`, \`strcat\`, and \`strcmp\` — and also write our own versions of them.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('sizeof vs strlen: "Hello" ke Do Arrays', 'sizeof vs strlen: Two Arrays of "Hello"'),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char a[] = "Hello";
+    char b[20] = "Hello";
+    printf("sizeof(a) = %zu\\n", sizeof(a));
+    printf("sizeof(b) = %zu\\n", sizeof(b));
+    printf("strlen(a) = %zu\\n", strlen(a));
+    printf("strlen(b) = %zu\\n", strlen(b));
+    return 0;
+}`,
+        output: `sizeof(a) = 6
+sizeof(b) = 20
+strlen(a) = 5
+strlen(b) = 5`
+      },
+      {
+        title: t('char vs String: A aur "A" mein Farak', 'char vs String: The Difference Between A and "A"'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    char c = 'A';
+    char s[] = "A";
+    printf("char c = %c, size = %zu\\n", c, sizeof(c));
+    printf("string s = %s, size = %zu\\n", s, sizeof(s));
+    printf("c == 65 ? %d\\n", c == 65);
+    printf("s[0] == c ? %d\\n", s[0] == c);
+    printf("s[1] == 0 ? %d\\n", s[1] == 0);
+    return 0;
+}`,
+        output: `char c = A, size = 1
+string s = A, size = 2
+c == 65 ? 1
+s[0] == c ? 1
+s[1] == 0 ? 1`
+      }
+    ],
+    diagram: {
+      kind: 'memory',
+      title: t('char name[10] = "Rahul" Memory mein', 'char name[10] = "Rahul" in Memory'),
+      caption: t(
+        '5 akshar, phir \\0, phir 4 khaali jagah',
+        '5 characters, then \\0, then 4 empty places'
+      ),
+      nodes: [
+        {
+          t: t('name[0] = R', 'name[0] = R'),
+          s: t('Pehla akshar', 'First character')
+        },
+        {
+          t: t('name[1] = a, name[2] = h', 'name[1] = a, name[2] = h'),
+          s: t('Beech ke akshar', 'Middle characters')
+        },
+        {
+          t: t('name[3] = u, name[4] = l', 'name[3] = u, name[4] = l'),
+          s: t('Aakhri akshar', 'Last character')
+        },
+        {
+          t: t('name[5] = \\0 (0)', 'name[5] = \\0 (0)'),
+          s: t('Null terminator — string yahin khatm', 'Null terminator — the string ends here')
+        },
+        {
+          t: t('name[6] se name[9] khaali', 'name[6] to name[9] empty'),
+          s: t('Array ki bachi hui jagah, strlen mein nahi gini jaati', 'Leftover space of the array, not counted by strlen')
+        }
+      ]
+    },
+    mcqs: [
+      {
+        q: t('String ke aakhir mein kaunsa khaas akshar hota hai?', 'Which special character sits at the end of a string?'),
+        opts: [t("'\\n'", "'\\n'"), t("'\\0'", "'\\0'"), t("' '", "' '"), t("';'", "';'")],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har string ke aakhir mein null terminator \\0 hota hai, jo batata hai ki string khatm ho gayi.',
+          'Correct answer: every string ends with the null terminator \\0, which tells where the string ends.'
+        )
+      },
+      {
+        q: t('char name[10] = "Rahul"; mein strlen(name) kitna hoga?', 'What will strlen(name) be in char name[10] = "Rahul";?'),
+        opts: [t('10', '10'), t('6', '6'), t('5', '5'), t('0', '0')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: strlen sirf akshar ginta hai, \\0 ko nahi — Rahul mein 5 akshar hain, jabki sizeof 10 deta hai.',
+          'Correct answer: strlen counts only the characters, not \\0 — Rahul has 5 characters, while sizeof gives 10.'
+        )
+      },
+      {
+        q: t('Strings ko compare karne ka sahi tareeka kaunsa hai?', 'What is the right way to compare strings?'),
+        opts: [t('== se', 'With =='), t('strcmp se', 'With strcmp'), t('= se', 'With ='), t('sizeof se', 'With sizeof')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: == addresses ko compare karta hai, strings ko nahi; strings compare karne ke liye strcmp use hota hai.',
+          'Correct answer: == compares addresses, not strings; strcmp is used to compare strings.'
+        )
+      },
+      {
+        q: t('Space wali poori line padhne ke liye kya use karte hain?', 'What do you use to read a whole line with spaces?'),
+        opts: [t('scanf %s', 'scanf %s'), t('scanf %d', 'scanf %d'), t('fgets', 'fgets'), t('putchar', 'putchar')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: scanf %s pehle space par ruk jaata hai, jabki fgets poori line padhta hai aur size se zyada nahi padhta.',
+          'Correct answer: scanf %s stops at the first space, while fgets reads the whole line and never reads more than the size.'
+        )
+      },
+      {
+        q: t("'A' aur \"A\" mein kya farak hai?", 'What is the difference between \'A\' and "A"?'),
+        opts: [
+          t('Koi farak nahi', 'No difference'),
+          t("'A' ek char hai, \"A\" ek string hai jismein A aur \\0 hain", "'A' is one char, \"A\" is a string holding A and \\0"),
+          t("'A' ek string hai, \"A\" ek char hai", "'A' is a string, \"A\" is one char"),
+          t('Dono int hain', 'Both are int')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: single quotes se ek char banta hai (size 1), double quotes se string banti hai jismein akshar ke saath \\0 bhi hota hai (size 2).',
+          'Correct answer: single quotes make one char (size 1), and double quotes make a string that also holds \\0 with the character (size 2).'
+        )
+      }
+    ],
+    keyNotes: [
+      t('String char ka array hai, jiske aakhir mein null terminator \\0 hota hai.', 'A string is an array of char, with a null terminator \\0 at the end.'),
+      t('strlen akshar ginta hai, sizeof array ki kul jagah batata hai.', 'strlen counts the characters; sizeof tells the total space of the array.'),
+      t('Strings ko == se compare mat karo — strcmp use karo.', 'Never compare strings with == — use strcmp.'),
+      t('Buffer mein \\0 ke liye ek extra jagah rakho.', 'Keep one extra place in the buffer for \\0.'),
+      t('Space wali line ke liye fgets use karo, aur uske baad newline hatao.', 'Use fgets for a line with spaces, and remove the newline after it.')
+    ],
+    practice: {
+      title: t('Practice: Ek Word mein Vowels Ginna', 'Practice: Counting Vowels in a Word'),
+      task: t(
+        'Ek program likho jo word "education" mein vowels (a, e, i, o, u) gine aur word ke saath count print kare. Loop ki condition name[i] != \'\\0\' jaisi honi chahiye. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that counts the vowels (a, e, i, o, u) in the word "education" and prints the word with the count. The loop condition should be like name[i] != \'\\0\'. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    char word[] = "education";
+    int vowels = 0;
+    for (int i = 0; word[i] != '\\0'; i++) {
+        char ch = word[i];
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+            vowels++;
+        }
+    }
+    printf("word = %s\\n", word);
+    printf("Vowels = %d\\n", vowels);
+    return 0;
+}`,
+      expected: `word = education
+Vowels = 5`
+    }
+  };
+
+const cStringLibrary: Article = {
+    id: 'c-string-library',
+    subjectId: 'c-programming',
+    title: t(
+      'String Library — strlen, strcpy, strcat, strcmp aur Apne Versions',
+      'String Library — strlen, strcpy, strcat, strcmp, and Your Own Versions'
+    ),
+    summary: t(
+      'Strings par haath se loop likhna har baar mushkil hota hai, isliye C ki string.h library mein taiyaar functions hain: strlen lambai deta hai, strcpy copy karta hai, strcat jodta hai aur strcmp compare karta hai. Is article mein aap in chaaro ko use karna aur khud likhna seekhoge.',
+      'Writing a loop by hand for strings is hard every time, so the string.h library of C has ready-made functions: strlen gives the length, strcpy copies, strcat joins, and strcmp compares. In this article you will learn to use all four and to write them yourself.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. string.h mein Kya-Kya Hai?',
+          '1. What Is Inside string.h?'
+        ),
+        body: t(
+          `**string.h** C ki woh header file hai jismein strings par kaam karne wale taiyaar functions hain. Chaar sabse zaroori functions ye hain: \`strlen(s)\` string ki lambai deta hai, \`strcpy(dest, src)\` ek string ko dusri mein copy karta hai, \`strcat(dest, src)\` dusri string ko pehli ke aakhir mein jod deta hai, aur \`strcmp(a, b)\` do strings ko compare karta hai. In chaaro ko use karne ke liye file ke upar \`#include <string.h>\` likhna padta hai.
+
+\`strcpy\` aur \`strcat\` mein pehla argument **destination** hota hai — jahan value jaani hai — aur dusra **source** hota hai — jahan se value aani hai. Order ulta likhoge toh galat jagah par likh jaayega. \`strcmp\` ka result samajhna sabse zaroori hai: dono strings barabar hon toh 0 milta hai, pehli chhoti ho toh negative number, aur pehli badi ho toh positive number. Exact number kitna hoga, ye pakka nahi hota — isliye hamesha \`== 0\`, \`< 0\` ya \`> 0\` se check karo, kabhi \`== -1\` ya \`== 1\` se nahi.
+
+Ye functions aapka kaam aasan karte hain, lekin inke peeche bhi wahi loop aur \`\\0\` wala logic hai jo aapne pichle article mein seekha. Is article mein hum pehle inhe use karenge, phir khud likh kar dekhenge ki andar kya hota hai.`,
+          `**string.h** is the header file of C that holds ready-made functions for working on strings. The four most important functions are: \`strlen(s)\` gives the length of a string, \`strcpy(dest, src)\` copies one string into another, \`strcat(dest, src)\` joins the second string at the end of the first, and \`strcmp(a, b)\` compares two strings. To use all four, you must write \`#include <string.h>\` at the top of the file.
+
+In \`strcpy\` and \`strcat\`, the first argument is the **destination** — where the value goes — and the second is the **source** — where the value comes from. If you write the order backwards, it will write to the wrong place. Understanding the result of \`strcmp\` matters most: if both strings are equal, you get 0; if the first is smaller, you get a negative number; and if the first is bigger, you get a positive number. The exact number is not guaranteed — so always check with \`== 0\`, \`< 0\`, or \`> 0\`, never with \`== -1\` or \`== 1\`.
+
+These functions make your work easy, but behind them is the same loop and \`\\0\` logic you learned in the last article. In this article we will first use them, and then write them ourselves to see what happens inside.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Copy-Paste, Naam Jodna aur Dictionary',
+          '2. Real-Life Examples: Copy-Paste, Joining Names, and Dictionary'
+        ),
+        body: t(
+          `Sabse seedha example hai **copy-paste**. Computer par aap text ko copy karke dusri jagah paste karte ho — \`strcpy\` wahi karta hai: source string ko destination mein bilkul waisa hi chipka deta hai. Farq sirf itna hai ki computer par purana text bacha rehta hai, lekin \`strcpy\` destination ka purana text mita deta hai.
+
+Doosra example hai **naam jodna**. Form mein pehla naam aur aakhri naam alag khaanon mein hote hain, lekin poora naam ek hi line mein chahiye hota hai. \`strcat\` pehle naam ke aakhir mein dusra naam jod deta hai: "Rahul" + " Kumar" ban jaata hai "Rahul Kumar". Isi liye \`strcat\` se pehle pehli string mein jagah khaali honi chahiye.
+
+Teesra example hai **dictionary**. Dictionary mein words alphabet ke order mein hote hain: "apple" "banana" se pehle aata hai kyunki 'a' 'b' se chhota hai. \`strcmp\` wahi order batata hai — "apple" aur "banana" ko compare karne par negative number milta hai, kyunki pehla word chhota hai. Sorting karte waqt computer yahi function use karta hai.`,
+          `The simplest example is **copy-paste**. On a computer you copy text and paste it in another place — \`strcpy\` does the same: it pastes the source string into the destination exactly as it is. The only difference is that on a computer the old text stays, while \`strcpy\` erases the old text of the destination.
+
+A second example is **joining names**. In a form, the first name and the last name sit in separate boxes, but the full name is needed in one line. \`strcat\` joins the second name at the end of the first: "Rahul" + " Kumar" becomes "Rahul Kumar". That is why there must be free space in the first string before you use \`strcat\`.
+
+A third example is a **dictionary**. In a dictionary, words sit in the order of the alphabet: "apple" comes before "banana" because 'a' is smaller than 'b'. \`strcmp\` tells you that same order — comparing "apple" and "banana" gives a negative number, because the first word is smaller. When a computer sorts, it uses this same function.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Chaaro Functions ek Program mein',
+          '3. Step-by-Step: All Four Functions in One Program'
+        ),
+        body: t(
+          `Neeche wala program chaaro functions ko ek saath dikhata hai. Dry run karo: \`dest[20] = "Hello"\` mein "Hello" hai, isliye \`strlen(dest)\` 5 deta hai. Phir \`strcat(dest, " World")\` " World" ko "Hello" ke aakhir mein jod deta hai — dest ban jaata hai "Hello World". Dhyaan do: dest ka size 20 hai, isliye 11 akshar ke liye jagah kaafi hai.
+
+Phir \`strcpy(copy, dest)\` "Hello World" ko \`copy\` mein copy karta hai, aur "copy: Hello World" chhapta hai. Aakhir mein \`strcmp\` ke teen cases hain. \`strcmp("Hello", "Hello")\` 0 deta hai kyunki dono barabar hain. \`strcmp("apple", "banana")\` negative hota hai, kyunki 'a' (97) 'b' (98) se chhota hai — program use ternary operator se -1 mein badal kar dikhata hai. \`strcmp("banana", "apple")\` positive hota hai, aur program use 1 mein badal kar dikhata hai. Ye ternary isliye hai kyunki strcmp ka exact number pakka nahi hota, sirf uska sign pakka hota hai.`,
+          `The program below shows all four functions together. Trace it: in \`dest[20] = "Hello"\` there is "Hello", so \`strlen(dest)\` gives 5. Then \`strcat(dest, " World")\` joins " World" at the end of "Hello" — dest becomes "Hello World". Notice: dest has size 20, so there is enough space for 11 characters.
+
+Then \`strcpy(copy, dest)\` copies "Hello World" into \`copy\`, and "copy: Hello World" is printed. At the end there are three cases of \`strcmp\`. \`strcmp("Hello", "Hello")\` gives 0 because both are equal. \`strcmp("apple", "banana")\` is negative, because 'a' (97) is smaller than 'b' (98) — the program turns it into -1 with the ternary operator. \`strcmp("banana", "apple")\` is positive, and the program turns it into 1. This ternary is there because the exact number of strcmp is not guaranteed, only its sign is.`
+        ),
+        code: {
+          title: t(
+            'strlen, strcpy, strcat aur strcmp ek Saath',
+            'strlen, strcpy, strcat, and strcmp Together'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char dest[20] = "Hello";
+    char src[] = " World";
+    printf("strlen = %zu\\n", strlen(dest));
+    strcat(dest, src);
+    printf("after strcat: %s\\n", dest);
+    char copy[20];
+    strcpy(copy, dest);
+    printf("copy: %s\\n", copy);
+    printf("strcmp(Hello, Hello) = %d\\n", strcmp("Hello", "Hello"));
+    printf("strcmp(apple, banana) = %d\\n", strcmp("apple", "banana") < 0 ? -1 : 1);
+    printf("strcmp(banana, apple) = %d\\n", strcmp("banana", "apple") > 0 ? 1 : -1);
+    return 0;
+}`,
+          output: `strlen = 5
+after strcat: Hello World
+copy: Hello World
+strcmp(Hello, Hello) = 0
+strcmp(apple, banana) = -1
+strcmp(banana, apple) = 1`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Overflow, strcmp == 1 aur string.h Bhoolna',
+          '4. Common Mistakes: Overflow, strcmp == 1, and Forgetting string.h'
+        ),
+        body: t(
+          `**Galti 1: Chhote destination mein copy karna.** \`char d[5]; strcpy(d, "Hello World");\` mein destination mein sirf 5 jagah hai, lekin string 12 jagah maangti hai. Aas-paas ki memory kharab ho jayegi aur program crash ho sakta hai. Hamesha check karo ki destination mein source + \`\\0\` ke liye jagah hai ya nahi. Safe version hai \`strncpy\`, lekin uske baad khud \`\\0\` lagana padta hai.
+
+**Galti 2: strcmp ka result == 1 se check karna.** \`strcmp\` positive ka matlab hai "pehli badi hai", lekin number 1 hi hoga, ye pakka nahi. Kuch systems par woh 32 bhi de sakta hai. Isliye hamesha \`> 0\` likho, \`== 1\` nahi. Barabari ke liye \`== 0\` sahi hai, kyunki barabar ka result hamesha 0 hota hai.
+
+**Galti 3: string.h include karna bhoolna.** Bina \`#include <string.h>\` ke compiler ko nahi pata hoga ki \`strlen\` kya hai, aur warning ya error aayegi. Har library function ke liye uski header file likhni padti hai.
+
+**Galti 4: strcat se pehle destination khaali rakhna.** \`char d[20]; strcat(d, "Hi");\` mein \`d\` mein kachra hai, isliye \`strcat\` ko pata hi nahi chalega ki string kahan se shuru hoti hai. Pehle \`d[0] = '\\0';\` likho, ya \`strcpy\` se shuru karo.`,
+          `**Mistake 1: Copying into a small destination.** In \`char d[5]; strcpy(d, "Hello World");\`, the destination has only 5 places, but the string needs 12. The nearby memory gets damaged and the program can crash. Always check that the destination has space for the source plus \`\\0\`. The safe version is \`strncpy\`, but after it you must put \`\\0\` yourself.
+
+**Mistake 2: Checking the result of strcmp with == 1.** A positive result of \`strcmp\` means "the first is bigger", but the number will be 1 — that is not guaranteed. On some systems it can give 32. So always write \`> 0\`, not \`== 1\`. For equality, \`== 0\` is right, because the result of equal strings is always 0.
+
+**Mistake 3: Forgetting to include string.h.** Without \`#include <string.h>\`, the compiler will not know what \`strlen\` is, and you will get a warning or an error. Every library function needs its header file.
+
+**Mistake 4: Keeping the destination empty before strcat.** In \`char d[20]; strcat(d, "Hi");\`, \`d\` holds garbage, so \`strcat\` will not even know where the string starts. First write \`d[0] = '\\0';\`, or start with \`strcpy\`.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Strings, Overlapping aur strncpy ka \\0',
+          '5. Edge Cases: Empty Strings, Overlapping, and the \\0 of strncpy'
+        ),
+        body: t(
+          `**Khaali strings.** \`strlen("")\` 0 deta hai, \`strcpy(d, "")\` destination ko khaali string bana deta hai (sirf \`\\0\` rakhta hai), aur \`strcmp("", "")\` 0 deta hai. Khaali string par bhi functions sahi kaam karte hain, bas \`\\0\` ko mat bhoolo.
+
+**Overlapping strings.** \`strcpy\` mein source aur destination ek hi jagah par nahi hone chahiye — jaise \`strcpy(s + 1, s)\`. Aisa karne ka result undefined hota hai. Overlapping ke liye \`memmove\` use hota hai, \`strcpy\` nahi.
+
+**strncpy \\0 nahi lagata (kabhi-kabhi).** \`strncpy(d, src, 5)\` mein agar source 5 ya zyada akshar ka hai, toh \`d\` mein \`\\0\` nahi aayega. Isliye strncpy ke baad hamesha \`d[5] = '\\0';\` likhna chahiye. Ye C ki sabse mashhoor jaal hai — safe function bhi tabhi safe hai jab aap \`\\0\` khud lagao.
+
+**strcmp case-sensitive hota hai.** "Apple" aur "apple" barabar nahi hain, kyunki 'A' (65) aur 'a' (97) alag hain. Case ignore karke compare karna ho toh \`strcasecmp\` (Linux par) use hota hai, jo standard C mein nahi hai.`,
+          `**Empty strings.** \`strlen("")\` gives 0, \`strcpy(d, "")\` makes the destination an empty string (it keeps only \`\\0\`), and \`strcmp("", "")\` gives 0. The functions work correctly on empty strings too, as long as you do not forget \`\\0\`.
+
+**Overlapping strings.** In \`strcpy\`, the source and the destination must not be in the same place — like \`strcpy(s + 1, s)\`. Doing that gives an undefined result. For overlapping, \`memmove\` is used, not \`strcpy\`.
+
+**strncpy does not put \\0 (sometimes).** In \`strncpy(d, src, 5)\`, if the source has 5 or more characters, \`d\` will not get a \`\\0\`. So after strncpy you should always write \`d[5] = '\\0';\`. This is the most famous trap of C — even the safe function is safe only when you put \`\\0\` yourself.
+
+**strcmp is case-sensitive.** "Apple" and "apple" are not equal, because 'A' (65) and 'a' (97) are different. To compare while ignoring case, \`strcasecmp\` (on Linux) is used, which is not in standard C.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Apne Versions Likhna — my_strlen, my_strcpy, my_strcmp',
+          '6. What-If: Writing Your Own Versions — my_strlen, my_strcpy, my_strcmp'
+        ),
+        body: t(
+          `**What if: library ke bina khud likhna ho?** Pehla example \`my_strlen\` hai: \`\\0\` milne tak ginna, bas. \`while (s[len] != '\\0')\` wala loop wahi karta hai jo library karti hai. Khud likhne se samajh aata hai ki library koi jaadu nahi hai — woh bhi wahi loop hai.
+
+**What if: my_strcpy likhna ho?** Dusra example dikhata hai: source ka har akshar destination mein copy karo, jab \`\\0\` mile toh ruk jao — aur aakhir mein destination mein bhi \`\\0\` lagana mat bhoolo. Ye aakhri line sabse zaroori hai; bina iske copy adhuri rehti hai.
+
+**What if: my_strcmp likhna ho?** Jab tak dono akshar barabar hon aur \`\\0\` na aaya ho, aage badhte raho. Phir pehle alag akshar ka farak wapas karo. \`unsigned char\` mein cast karna zaroori hai, taaki 127 se bade akshar galat tareeke se negative na ban jaayein. Interview mein aksar poochha jaata hai: "strcpy khud likh kar dikhao" — ab aap dikha sakte ho.`,
+          `**What if you must write it yourself without the library?** The first example is \`my_strlen\`: count until \`\\0\` is found, nothing more. The loop \`while (s[len] != '\\0')\` does what the library does. Writing it yourself shows that the library is no magic — it is the same loop.
+
+**What if you must write my_strcpy?** The second example shows it: copy every character of the source into the destination, stop when \`\\0\` is found — and do not forget to put \`\\0\` in the destination at the end. That last line matters most; without it, the copy stays incomplete.
+
+**What if you must write my_strcmp?** Keep moving ahead while both characters are equal and \`\\0\` has not come. Then return the difference of the first different characters. Casting to \`unsigned char\` is needed, so that characters above 127 do not wrongly become negative. In interviews people often ask: "write strcpy yourself" — now you can show it.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Chaar Functions, Ek Pattern',
+          '7. Summary: Four Functions, One Pattern'
+        ),
+        body: t(
+          `Is article mein aapne seekha: \`strlen\` lambai deta hai, \`strcpy\` copy karta hai, \`strcat\` jodta hai aur \`strcmp\` compare karta hai — aur chaaro ke peeche wahi \`\\0\` tak chalne wala loop hai. \`strcmp\` ka result 0 matlab barabar, negative matlab pehli chhoti, positive matlab pehli badi — exact number par bharosa mat karo, sirf sign par karo.
+
+Yaad rakhne wali baatein: destination mein hamesha jagah check karo, \`strcat\` se pehle destination mein \`\\0\` hona chahiye, \`string.h\` include karna mat bhoolo, aur interview ke liye \`my_strlen\` aur \`my_strcpy\` khud likhna aana chahiye. Agle article mein hum operators ko gehrai se dekhenge — precedence, associativity, ternary aur comma.`,
+          `In this article you learned: \`strlen\` gives the length, \`strcpy\` copies, \`strcat\` joins, and \`strcmp\` compares — and behind all four is the same loop that runs until \`\\0\`. The result of \`strcmp\` means: 0 is equal, negative is first smaller, positive is first bigger — do not trust the exact number, only the sign.
+
+Remember these points: always check the space in the destination, the destination must hold \`\\0\` before \`strcat\`, do not forget to include \`string.h\`, and for interviews you should know how to write \`my_strlen\` and \`my_strcpy\` yourself. In the next article we will look at operators in depth — precedence, associativity, ternary, and comma.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('Apna strlen Likhna: my_strlen', 'Writing Your Own strlen: my_strlen'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int my_strlen(const char *s) {
+    int len = 0;
+    while (s[len] != '\\0') {
+        len++;
+    }
+    return len;
+}
+
+int main(void) {
+    printf("my_strlen(Hello) = %d\\n", my_strlen("Hello"));
+    printf("my_strlen(empty) = %d\\n", my_strlen(""));
+    printf("my_strlen(Learn2Pro) = %d\\n", my_strlen("Learn2Pro"));
+    return 0;
+}`,
+        output: `my_strlen(Hello) = 5
+my_strlen(empty) = 0
+my_strlen(Learn2Pro) = 9`
+      },
+      {
+        title: t('Apna strcpy aur strcmp Likhna', 'Writing Your Own strcpy and strcmp'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void my_strcpy(char *dest, const char *src) {
+    int i = 0;
+    while (src[i] != '\\0') {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\\0';
+}
+
+int my_strcmp(const char *a, const char *b) {
+    int i = 0;
+    while (a[i] != '\\0' && a[i] == b[i]) {
+        i++;
+    }
+    return (unsigned char)a[i] - (unsigned char)b[i];
+}
+
+int main(void) {
+    char buf[20];
+    my_strcpy(buf, "Nova");
+    printf("buf = %s\\n", buf);
+    printf("my_strcmp(cat, cat) = %d\\n", my_strcmp("cat", "cat"));
+    printf("my_strcmp(cat, dog) is negative: %d\\n", my_strcmp("cat", "dog") < 0);
+    printf("my_strcmp(dog, cat) is positive: %d\\n", my_strcmp("dog", "cat") > 0);
+    return 0;
+}`,
+        output: `buf = Nova
+my_strcmp(cat, cat) = 0
+my_strcmp(cat, dog) is negative: 1
+my_strcmp(dog, cat) is positive: 1`
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t('String Library ka Kaam: Copy, Join, Compare', 'The Work of the String Library: Copy, Join, Compare'),
+      caption: t(
+        'Har function \\0 tak chalta hai — wahi ek pattern',
+        'Every function runs until \\0 — the same one pattern'
+      ),
+      nodes: [
+        {
+          t: t('strlen(s)', 'strlen(s)'),
+          s: t('Akshar gino jab tak \\0 na mile', 'Count characters until \\0 is found')
+        },
+        {
+          t: t('strcpy(dest, src)', 'strcpy(dest, src)'),
+          s: t('Source ka har akshar destination mein, \\0 ke saath', 'Every character of the source into the destination, with \\0')
+        },
+        {
+          t: t('strcat(dest, src)', 'strcat(dest, src)'),
+          s: t('Pehle dest ka \\0 dhoondho, phir source jodo', 'First find the \\0 of dest, then join the source')
+        },
+        {
+          t: t('strcmp(a, b)', 'strcmp(a, b)'),
+          s: t('0 = barabar, negative = pehli chhoti, positive = pehli badi', '0 = equal, negative = first smaller, positive = first bigger')
+        },
+        {
+          t: t('Apne versions', 'Your own versions'),
+          s: t('my_strlen, my_strcpy, my_strcmp — wahi loop, khud likha', 'my_strlen, my_strcpy, my_strcmp — the same loop, written by you')
+        }
+      ]
+    },
+    mcqs: [
+      {
+        q: t('strcpy(dest, src) mein pehla argument kya hota hai?', 'What is the first argument in strcpy(dest, src)?'),
+        opts: [
+          t('Source string', 'Source string'),
+          t('Destination string', 'Destination string'),
+          t('Dono ki lambai', 'The length of both'),
+          t('Kuch nahi', 'Nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: pehla argument destination hota hai — jahan value jaani hai — aur dusra source hota hai.',
+          'Correct answer: the first argument is the destination — where the value goes — and the second is the source.'
+        )
+      },
+      {
+        q: t('strcmp("apple", "banana") ka result kaisa hoga?', 'What will be the result of strcmp("apple", "banana")?'),
+        opts: [t('0', '0'), t('Positive', 'Positive'), t('Negative', 'Negative'), t('Error', 'Error')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: apple banana se chhota hai kyunki a (97) b (98) se chhota hai, isliye strcmp negative number deta hai.',
+          'Correct answer: apple is smaller than banana because a (97) is smaller than b (98), so strcmp gives a negative number.'
+        )
+      },
+      {
+        q: t('strcmp ka result check karne ka sahi tareeka kaunsa hai?', 'What is the right way to check the result of strcmp?'),
+        opts: [
+          t('== 1 se', 'With == 1'),
+          t('> 0, < 0 ya == 0 se', 'With > 0, < 0, or == 0'),
+          t('== -1 se hamesha', 'Always with == -1'),
+          t('sizeof se', 'With sizeof')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: strcmp ka exact number pakka nahi hota, sirf uska sign pakka hota hai — isliye > 0, < 0 ya == 0 se check karo.',
+          'Correct answer: the exact number of strcmp is not guaranteed, only its sign is — so check with > 0, < 0, or == 0.'
+        )
+      },
+      {
+        q: t('strcat se pehle destination mein kya hona chahiye?', 'What must the destination hold before strcat?'),
+        opts: [
+          t('Kachra values', 'Garbage values'),
+          t('Ek sahi string jismein \\0 ho', 'A correct string with \\0'),
+          t('Sirf numbers', 'Only numbers'),
+          t('Kuch nahi, khaali jagah', 'Nothing, empty space')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: strcat pehle destination ka \\0 dhoondhta hai; bina \\0 ke use pata hi nahi chalega ki jodna kahan se hai.',
+          'Correct answer: strcat first finds the \\0 of the destination; without \\0 it will not know where to join from.'
+        )
+      },
+      {
+        q: t('my_strlen mein loop kab rukta hai?', 'When does the loop in my_strlen stop?'),
+        opts: [
+          t('Jab array ka size khatm ho', 'When the size of the array ends'),
+          t('Jab \\0 mil jaaye', 'When \\0 is found'),
+          t('Jab pehla akshar mile', 'When the first character is found'),
+          t('Kabhi nahi rukta', 'It never stops')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: my_strlen \\0 milne tak ginta hai — \\0 hi string ke khatm hone ka nishan hai.',
+          'Correct answer: my_strlen counts until \\0 is found — \\0 is the mark of the end of the string.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('strlen lambai deta hai, strcpy copy karta hai, strcat jodta hai, strcmp compare karta hai.', 'strlen gives the length, strcpy copies, strcat joins, and strcmp compares.'),
+      t('strcmp: 0 = barabar, negative = pehli chhoti, positive = pehli badi — exact number par bharosa mat karo.', 'strcmp: 0 = equal, negative = first smaller, positive = first bigger — do not trust the exact number.'),
+      t('Destination mein hamesha jagah check karo, warna memory kharab ho jayegi.', 'Always check the space in the destination, otherwise the memory gets damaged.'),
+      t('strcpy/strcat mein pehla argument destination aur dusra source hota hai.', 'In strcpy/strcat the first argument is the destination and the second is the source.'),
+      t('Library functions ke peeche wahi \\0 tak chalne wala loop hai — my_strlen aur my_strcpy khud likhna aana chahiye.', 'Behind the library functions is the same loop that runs until \\0 — you should know how to write my_strlen and my_strcpy yourself.')
+    ],
+    practice: {
+      title: t('Practice: Palindrome Check Karo', 'Practice: Checking a Palindrome'),
+      task: t(
+        'Ek program likho jo word "level" ko aage aur peeche se compare karke bataye ki woh palindrome hai ya nahi. Palindrome ka matlab hai word ulta bhi waisa hi dikhe. strlen se lambai nikalo, phir pehle aur aakhri akshar ko compare karo. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that compares the word "level" from the front and the back and tells whether it is a palindrome. A palindrome is a word that looks the same backwards. Find the length with strlen, then compare the first and last characters. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char word[] = "level";
+    int len = (int)strlen(word);
+    int ok = 1;
+    for (int i = 0; i < len / 2; i++) {
+        if (word[i] != word[len - 1 - i]) {
+            ok = 0;
+        }
+    }
+    printf("word = %s\\n", word);
+    printf("Palindrome? %d\\n", ok);
+    return 0;
+}`,
+      expected: `word = level
+Palindrome? 1`
+    }
+  };
+
+const cOperatorsDeep: Article = {
+    id: 'c-operators-deep',
+    subjectId: 'c-programming',
+    title: t(
+      'Operator Precedence aur Associativity — Ternary, Comma, sizeof',
+      'Operator Precedence and Associativity — Ternary, Comma, sizeof'
+    ),
+    summary: t(
+      '2 + 3 * 4 ka answer 20 hai ya 14? Ye precedence tay karta hai — kaunsa operator pehle chalega. Is article mein aap precedence table, left-to-right aur right-to-left associativity, ternary operator, comma operator aur sizeof ko gehrai se seekhoge.',
+      'Is the answer of 2 + 3 * 4 equal to 20 or 14? Precedence decides that — which operator runs first. In this article you will learn the precedence table, left-to-right and right-to-left associativity, the ternary operator, the comma operator, and sizeof in depth.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. Precedence aur Associativity Kya Hote Hain?',
+          '1. What Are Precedence and Associativity?'
+        ),
+        body: t(
+          `Jab ek hi expression mein bahut saare operators hon, toh C ko ye tay karna padta hai ki pehle kaunsa chalega. **Precedence** wahi order hai: \`*\` aur \`/\` ki precedence \`+\` aur \`-\` se zyada hoti hai, isliye \`2 + 3 * 4\` mein pehle \`3 * 4 = 12\` hota hai, phir \`2 + 12 = 14\`. Ye wahi BODMAS hai jo aapne maths mein seekha tha, bas C mein operators zyada hain.
+
+**Associativity** batata hai ki jab do operators ki precedence barabar ho, toh kaunsa pehle chalega. Zyada tar operators **left-to-right** hote hain: \`10 - 4 - 3\` mein pehle \`10 - 4 = 6\`, phir \`6 - 3 = 3\`. Lekin kuch operators **right-to-left** hote hain, jaise \`=\` (assignment) aur unary operators: \`a = b = 5\` mein pehle \`b = 5\` hota hai, phir \`a = 5\`.
+
+Precedence yaad rakhne ka sabse aasan tareeka hai brackets lagana. Agar aapko doubt ho toh brackets laga do — \`2 + (3 * 4)\` likhna bilkul sahi hai aur padhne mein bhi saaf hai. Brackets ki precedence sabse zyada hoti hai, isliye woh hamesha pehle chalte hain.`,
+          `When one expression has many operators, C must decide which one runs first. **Precedence** is that order: \`*\` and \`/\` have higher precedence than \`+\` and \`-\`, so in \`2 + 3 * 4\`, first \`3 * 4 = 12\` happens, then \`2 + 12 = 14\`. This is the same BODMAS you learned in maths, only C has more operators.
+
+**Associativity** tells which one runs first when two operators have equal precedence. Most operators are **left-to-right**: in \`10 - 4 - 3\`, first \`10 - 4 = 6\`, then \`6 - 3 = 3\`. But some operators are **right-to-left**, like \`=\` (assignment) and unary operators: in \`a = b = 5\`, first \`b = 5\` happens, then \`a = 5\`.
+
+The easiest way to remember precedence is to use brackets. If you have any doubt, add brackets — writing \`2 + (3 * 4)\` is fully correct and also clear to read. Brackets have the highest precedence, so they always run first.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: BODMAS, Line aur Kaam Baantna',
+          '2. Real-Life Examples: BODMAS, Queues, and Sharing Work'
+        ),
+        body: t(
+          `Sabse seedha example hai **BODMAS**. School mein aapne seekha tha ki pehle guna-bhaag, phir jod-ghata. C mein bhi wahi rule hai, bas operators ke naam alag hain. \`2 + 3 * 4\` ka answer 14 hai, 20 nahi — kyunki guna pehle hota hai. Jo student BODMAS bhool jaata hai, wohi galti programmer precedence bhool kar karta hai.
+
+Doosra example hai **line (queue)**. Jab do logon ka kaam barabar zaroori ho, toh pehle aaya hua pehle jaata hai — ye left-to-right associativity hai. \`10 - 4 - 3\` mein pehla minus pehle chalta hai, kyunki woh pehle aaya. Lekin assignment mein ulta hota hai: \`a = b = 5\` mein pehle \`b\` ko value milti hai, phir \`a\` ko — jaise boss pehle manager ko kaam deta hai, manager phir team ko.
+
+Teesra example hai **ternary operator** — ek chhota sa if-else. "Agar baarish ho rahi hai toh chhata lo, warna nahi" — ek line mein faisla. C mein ye \`condition ? value1 : value2\` hota hai: \`max = (a > b) ? a : b;\` ka matlab hai agar a bada hai toh a, warna b.`,
+          `The simplest example is **BODMAS**. In school you learned that multiplication and division come first, then addition and subtraction. C has the same rule, only the operators have different names. The answer of \`2 + 3 * 4\` is 14, not 20 — because multiplication comes first. The mistake a student makes by forgetting BODMAS is the same mistake a programmer makes by forgetting precedence.
+
+A second example is a **queue**. When the work of two people is equally urgent, the one who came first goes first — this is left-to-right associativity. In \`10 - 4 - 3\`, the first minus runs first, because it came first. But in assignment it is the opposite: in \`a = b = 5\`, first \`b\` gets the value, then \`a\` — like a boss first gives work to the manager, and the manager then gives it to the team.
+
+A third example is the **ternary operator** — a small if-else. "If it is raining, take an umbrella, otherwise do not" — a decision in one line. In C it is \`condition ? value1 : value2\`: \`max = (a > b) ? a : b;\` means if a is bigger, take a, otherwise take b.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Ek Program mein Saare Rules',
+          '3. Step-by-Step: All the Rules in One Program'
+        ),
+        body: t(
+          `Neeche wala program precedence ke saare zaroori rules ko ek saath dikhata hai. Dry run karo: \`2 + 3 * 4\` mein \`*\` ki precedence zyada hai, isliye pehle \`3 * 4 = 12\`, phir \`2 + 12 = 14\`. Brackets wali line mein pehle brackets chalte hain: \`(2 + 3) * 4\` mein pehle \`2 + 3 = 5\`, phir \`5 * 4 = 20\`. \`10 - 4 - 3\` left-to-right hai: pehle \`10 - 4 = 6\`, phir \`6 - 3 = 3\`.
+
+\`2 * 3 % 4\` mein \`*\` aur \`%\` ki precedence barabar hai, isliye left-to-right: pehle \`2 * 3 = 6\`, phir \`6 % 4 = 2\`. \`10 / 3 * 3\` mein bhi wahi: pehle \`10 / 3 = 3\` (int division), phir \`3 * 3 = 9\` — isliye answer 10 nahi, 9 hai. \`!0 && 1\` mein \`!\` pehle chalta hai: \`!0 = 1\`, phir \`1 && 1 = 1\`. \`1 || (0 && 0)\` mein \`&&\` ki precedence \`||\` se zyada hai: \`0 && 0 = 0\`, phir \`1 || 0 = 1\`. Aakhri line ternary hai: 10, 20 se bada nahi hai, isliye max 20 banta hai.`,
+          `The program below shows all the important rules of precedence together. Trace it: in \`2 + 3 * 4\`, \`*\` has higher precedence, so first \`3 * 4 = 12\`, then \`2 + 12 = 14\`. In the line with brackets, the brackets run first: in \`(2 + 3) * 4\`, first \`2 + 3 = 5\`, then \`5 * 4 = 20\`. \`10 - 4 - 3\` is left-to-right: first \`10 - 4 = 6\`, then \`6 - 3 = 3\`.
+
+In \`2 * 3 % 4\`, \`*\` and \`%\` have equal precedence, so it goes left-to-right: first \`2 * 3 = 6\`, then \`6 % 4 = 2\`. In \`10 / 3 * 3\` it is the same: first \`10 / 3 = 3\` (integer division), then \`3 * 3 = 9\` — so the answer is 9, not 10. In \`!0 && 1\`, the \`!\` runs first: \`!0 = 1\`, then \`1 && 1 = 1\`. In \`1 || (0 && 0)\`, \`&&\` has higher precedence than \`||\`: \`0 && 0 = 0\`, then \`1 || 0 = 1\`. The last line is a ternary: 10 is not bigger than 20, so max becomes 20.`
+        ),
+        code: {
+          title: t(
+            'Precedence aur Ternary ka Dry Run',
+            'Dry Run of Precedence and Ternary'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    printf("2 + 3 * 4 = %d\\n", 2 + 3 * 4);
+    printf("(2 + 3) * 4 = %d\\n", (2 + 3) * 4);
+    printf("10 - 4 - 3 = %d\\n", 10 - 4 - 3);
+    printf("2 * 3 %% 4 = %d\\n", 2 * 3 % 4);
+    printf("10 / 3 * 3 = %d\\n", 10 / 3 * 3);
+    printf("!0 && 1 = %d\\n", !0 && 1);
+    printf("1 || (0 && 0) = %d\\n", 1 || (0 && 0));
+    int a = 10, b = 20;
+    int max = (a > b) ? a : b;
+    printf("max = %d\\n", max);
+    return 0;
+}`,
+          output: `2 + 3 * 4 = 14
+(2 + 3) * 4 = 20
+10 - 4 - 3 = 3
+2 * 3 % 4 = 2
+10 / 3 * 3 = 9
+!0 && 1 = 1
+1 || (0 && 0) = 1
+max = 20`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: = vs ==, a++ ka UB aur && vs ||',
+          '4. Common Mistakes: = vs ==, the UB of a++, and && vs ||'
+        ),
+        body: t(
+          `**Galti 1: = aur == mein confusion.** \`if (a = 5)\` mein \`=\` value set karta hai aur hamesha true hota hai (jab tak value 0 na ho). Compare karne ke liye \`==\` likho. Ye C ki sabse purani aur sabse aam galti hai.
+
+**Galti 2: Ek hi statement mein a++ aur a ko dobara use karna.** \`printf("%d %d", a++, a);\` galat hai — ismein \`a\` ko ek hi statement mein badla bhi ja raha hai aur padha bhi ja raha hai, aur C standard iska result nahi batata. Ise **undefined behaviour (UB)** kehte hain: compiler kuch bhi kar sakta hai. Pehla example dikhata hai ki sahi tareeka kya hai — pehle \`int v = a++;\` likho, phir \`v\` aur \`a\` ko alag se print karo.
+
+**Galti 3: && aur || ki precedence bhoolna.** \`a || b && c\` ka matlab hai \`a || (b && c)\`, kyunki \`&&\` ki precedence zyada hai. Agar aapko \` (a || b) && c\` chahiye toh brackets likhne padenge.
+
+**Galti 4: int division ko decimal samajhna.** \`10 / 3 * 3\` ka answer 9 hai, 10 nahi — kyunki \`10 / 3\` int division mein 3 deta hai. Decimal chahiye toh \`10.0 / 3\` likho.`,
+          `**Mistake 1: Confusing = and ==.** In \`if (a = 5)\`, the \`=\` sets the value and is always true (unless the value is 0). To compare, write \`==\`. This is the oldest and most common mistake in C.
+
+**Mistake 2: Using a++ and a again in the same statement.** \`printf("%d %d", a++, a);\` is wrong — in it, \`a\` is both changed and read in the same statement, and the C standard does not say what the result is. This is called **undefined behaviour (UB)**: the compiler can do anything. The first example shows the right way — first write \`int v = a++;\`, then print \`v\` and \`a\` separately.
+
+**Mistake 3: Forgetting the precedence of && and ||.** \`a || b && c\` means \`a || (b && c)\`, because \`&&\` has higher precedence. If you want \`(a || b) && c\`, you must write brackets.
+
+**Mistake 4: Thinking integer division is decimal.** The answer of \`10 / 3 * 3\` is 9, not 10 — because \`10 / 3\` in integer division gives 3. If you want a decimal, write \`10.0 / 3\`.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Negative %, Division by Zero aur sizeof(char)',
+          '5. Edge Cases: Negative %, Division by Zero, and sizeof(char)'
+        ),
+        body: t(
+          `**Negative % ka sign.** C mein \`-5 % 3\` ka answer -2 hota hai — result ka sign pehle number (dividend) jaisa hota hai. \`5 % -3\` ka answer 1 hota hai. Ye rule har language mein ek jaisa nahi hota, isliye negative numbers par \`%\` use karte waqt dhyaan rakho.
+
+**Division by zero.** \`int x = 5 / 0;\` likhne par program crash ho jaata hai — ye undefined behaviour hai. \`float\` division mein \`5.0 / 0\` infinity deta hai, lekin int mein aisa nahi hota. Divide karne se pehle hamesha check karo ki divisor zero toh nahi hai.
+
+**sizeof('A') = 4.** C mein character literal \`'A'\` ka type \`int\` hota hai, \`char\` nahi — isliye \`sizeof('A')\` 4 deta hai, jabki \`sizeof(char)\` 1 deta hai. Dusra example yehi dikhata hai. Ye C aur C++ ka farak hai; C++ mein \`sizeof('A')\` 1 hota hai.
+
+**sizeof kabhi value ko evaluate nahi karta.** \`sizeof(a++)\` mein \`a++\` chalta hi nahi — sizeof sirf type ka size dekhta hai. Isliye \`sizeof\` ke andar side-effect wala code likhna bekaar hai.`,
+          `**The sign of negative %.** In C, the answer of \`-5 % 3\` is -2 — the sign of the result is like the first number (the dividend). The answer of \`5 % -3\` is 1. This rule is not the same in every language, so be careful when you use \`%\` on negative numbers.
+
+**Division by zero.** Writing \`int x = 5 / 0;\` crashes the program — this is undefined behaviour. In \`float\` division, \`5.0 / 0\` gives infinity, but in int it does not. Before you divide, always check that the divisor is not zero.
+
+**sizeof('A') = 4.** In C, the character literal \`'A'\` has the type \`int\`, not \`char\` — so \`sizeof('A')\` gives 4, while \`sizeof(char)\` gives 1. The second example shows exactly this. This is a difference between C and C++; in C++ \`sizeof('A')\` is 1.
+
+**sizeof never evaluates the value.** In \`sizeof(a++)\`, the \`a++\` never runs at all — sizeof only looks at the size of the type. So writing code with a side effect inside \`sizeof\` is useless.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Ternary ki Chain, Comma Operator aur sizeof',
+          '6. What-If: Ternary Chains, the Comma Operator, and sizeof'
+        ),
+        body: t(
+          `**What if: ternary ko chain karna ho?** \`grade = (m >= 90) ? 'A' : (m >= 80) ? 'B' : 'C';\` likh sakte ho — ye if-else-if jaisa kaam karta hai. Lekin zyada lambi chain padhne mein mushkil hoti hai, isliye 2 se zyada ternary ko chain mat karo; uske liye if-else ya switch behtar hai.
+
+**What if: comma operator use karna ho?** Comma operator \` (a, b) \` mein pehle a chalta hai, phir b, aur poori expression ki value b hoti hai. Dusre example mein \` (p++, q++, p + q) \` mein pehle p 2 banta hai, phir q 3, aur aakhir mein \`p + q = 5\` value banti hai. Comma ka sabse aam use for loop mein hota hai: \`for (i = 0, j = 10; i < j; i++, j--)\` — yahan comma se do kaam ek saath hote hain.
+
+**What if: array ka size nikaalna ho?** \`sizeof(arr) / sizeof(arr[0])\` se array mein kitne elements hain, ye nikal jaata hai: 16 / 4 = 4. Ye trick sirf usi jagah kaam karti hai jahan array bana hai — function mein array address ban jaata hai, isliye wahan ye trick fail ho jaati hai.`,
+          `**What if you must chain ternaries?** You can write \`grade = (m >= 90) ? 'A' : (m >= 80) ? 'B' : 'C';\` — it works like if-else-if. But a very long chain is hard to read, so do not chain more than 2 ternaries; for that, if-else or switch is better.
+
+**What if you must use the comma operator?** In the comma operator \` (a, b) \`, first a runs, then b, and the value of the whole expression is b. In the second example, in \` (p++, q++, p + q) \`, first p becomes 2, then q becomes 3, and finally the value \`p + q = 5\` is made. The most common use of comma is in a for loop: \`for (i = 0, j = 10; i < j; i++, j--)\` — here comma does two jobs together.
+
+**What if you must find the size of an array?** \`sizeof(arr) / sizeof(arr[0])\` tells how many elements are in the array: 16 / 4 = 4. This trick works only where the array was made — inside a function the array becomes an address, so this trick fails there.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Pehle Precedence, Phir Associativity',
+          '7. Summary: Precedence First, Then Associativity'
+        ),
+        body: t(
+          `Is article mein aapne seekha: **precedence** tay karta hai ki kaunsa operator pehle chalega — \`*\` aur \`/\` pehle, \`+\` aur \`-\` baad mein, \`&&\` pehle, \`||\` baad mein. **Associativity** batata hai ki barabar precedence par kaunsa pehle chalega — zyada tar left-to-right, assignment aur unary right-to-left. Brackets ki precedence sabse zyada hoti hai, isliye doubt ho toh brackets laga do.
+
+Yaad rakhne wali baatein: \`=\` aur \`==\` alag hain; ek hi statement mein \`a++\` aur \`a\` ko dobara mat use karo (undefined behaviour); \`strcmp\` ki tarah hi \`sizeof('A')\` 4 hota hai kyunki char literal int hota hai; aur \`sizeof(arr) / sizeof(arr[0])\` se array ki length nikalti hai. Agle article mein hum control flow ko gehrai se dekhenge — switch, goto, break, continue aur nested loops.`,
+          `In this article you learned: **precedence** decides which operator runs first — \`*\` and \`/\` first, \`+\` and \`-\` later, \`&&\` first, \`||\` later. **Associativity** tells which one runs first at equal precedence — most go left-to-right, while assignment and unary go right-to-left. Brackets have the highest precedence, so when in doubt, add brackets.
+
+Remember these points: \`=\` and \`==\` are different; never use \`a++\` and \`a\` again in the same statement (undefined behaviour); \`sizeof('A')\` is 4 because a char literal is an int; and \`sizeof(arr) / sizeof(arr[0])\` gives the length of an array. In the next article we will look at control flow in depth — switch, goto, break, continue, and nested loops.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('a++ aur ++a ka Sahi Tareeka', 'The Right Way to Use a++ and ++a'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int a = 5;
+    printf("a = %d\\n", a);
+    int v1 = a++;
+    printf("a++ gives %d, then a = %d\\n", v1, a);
+    int v2 = ++a;
+    printf("++a gives %d, then a = %d\\n", v2, a);
+    int v3 = a--;
+    printf("a-- gives %d, then a = %d\\n", v3, a);
+    int v4 = --a;
+    printf("--a gives %d, then a = %d\\n", v4, a);
+    return 0;
+}`,
+        output: `a = 5
+a++ gives 5, then a = 6
+++a gives 7, then a = 7
+a-- gives 7, then a = 6
+--a gives 5, then a = 5`
+      },
+      {
+        title: t('Comma Operator aur sizeof ki Tricks', 'Comma Operator and sizeof Tricks'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int p = 1, q = 2;
+    int x = (p++, q++, p + q);
+    printf("comma (p++, q++, p + q) = %d\\n", x);
+    printf("p = %d, q = %d\\n", p, q);
+    int arr[4] = {10, 20, 30, 40};
+    printf("sizeof(arr) = %zu\\n", sizeof(arr));
+    printf("sizeof(arr[0]) = %zu\\n", sizeof(arr[0]));
+    printf("elements = %zu\\n", sizeof(arr) / sizeof(arr[0]));
+    printf("sizeof(3.14) = %zu\\n", sizeof(3.14));
+    printf("sizeof('A') = %zu\\n", sizeof('A'));
+    return 0;
+}`,
+        output: `comma (p++, q++, p + q) = 5
+p = 2, q = 3
+sizeof(arr) = 16
+sizeof(arr[0]) = 4
+elements = 4
+sizeof(3.14) = 8
+sizeof('A') = 4`
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t('Precedence Table: Upar se Neeche (Zyada se Kam)', 'Precedence Table: Top to Bottom (High to Low)'),
+      caption: t(
+        'Upar wala operator pehle chalta hai; brackets sabse upar hain',
+        'The operator above runs first; brackets are at the very top'
+      ),
+      nodes: [],
+      headers: [t('Precedence', 'Precedence'), t('Operators', 'Operators'), t('Associativity', 'Associativity')],
+      rows: [
+        [t('Sabse zyada', 'Highest'), t('() []', '() []'), t('Left to right', 'Left to right')],
+        [t('Unary', 'Unary'), t('! - ++ -- sizeof', '! - ++ -- sizeof'), t('Right to left', 'Right to left')],
+        [t('Guna-bhaag', 'Multiply-divide'), t('* / %', '* / %'), t('Left to right', 'Left to right')],
+        [t('Jod-ghata', 'Add-subtract'), t('+ -', '+ -'), t('Left to right', 'Left to right')],
+        [t('Compare', 'Compare'), t('< > <= >=', '< > <= >='), t('Left to right', 'Left to right')],
+        [t('Barabari', 'Equality'), t('== !=', '== !='), t('Left to right', 'Left to right')],
+        [t('AND / OR', 'AND / OR'), t('&& ||', '&& ||'), t('Left to right', 'Left to right')],
+        [t('Ternary', 'Ternary'), t('? :', '? :'), t('Right to left', 'Right to left')],
+        [t('Sabse kam', 'Lowest'), t('= ,', '= ,'), t('Right to left / left to right', 'Right to left / left to right')]
+      ]
+    },
+    mcqs: [
+      {
+        q: t('2 + 3 * 4 ka answer kya hai?', 'What is the answer of 2 + 3 * 4?'),
+        opts: [t('20', '20'), t('14', '14'), t('24', '24'), t('9', '9')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: * ki precedence + se zyada hai, isliye pehle 3 * 4 = 12, phir 2 + 12 = 14.',
+          'Correct answer: * has higher precedence than +, so first 3 * 4 = 12, then 2 + 12 = 14.'
+        )
+      },
+      {
+        q: t('10 - 4 - 3 ka answer kya hai?', 'What is the answer of 10 - 4 - 3?'),
+        opts: [t('9', '9'), t('3', '3'), t('11', '11'), t('-1', '-1')],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: - left-to-right hai, isliye pehle 10 - 4 = 6, phir 6 - 3 = 3.',
+          'Correct answer: - is left-to-right, so first 10 - 4 = 6, then 6 - 3 = 3.'
+        )
+      },
+      {
+        q: t('a++ aur ++a mein kya farak hai?', 'What is the difference between a++ and ++a?'),
+        opts: [
+          t('Koi farak nahi', 'No difference'),
+          t('a++ pehle purani value deta hai, ++a pehle badha kar nayi value deta hai', 'a++ first gives the old value, ++a first increases and gives the new value'),
+          t('a++ tez hai', 'a++ is faster'),
+          t('++a sirf loop mein chalta hai', '++a works only in a loop')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: a++ pehle purani value deta hai phir badhata hai, jabki ++a pehle badhata hai phir nayi value deta hai.',
+          'Correct answer: a++ first gives the old value and then increases, while ++a first increases and then gives the new value.'
+        )
+      },
+      {
+        q: t("sizeof('A') kitna hota hai?", "What is sizeof('A')?"),
+        opts: [t('1', '1'), t('2', '2'), t('4', '4'), t('8', '8')],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: C mein char literal ka type int hota hai, isliye sizeof(\'A\') 4 hota hai, jabki sizeof(char) 1 hota hai.',
+          'Correct answer: in C a char literal has the type int, so sizeof(\'A\') is 4, while sizeof(char) is 1.'
+        )
+      },
+      {
+        q: t('printf("%d %d", a++, a) kyun galat hai?', 'Why is printf("%d %d", a++, a) wrong?'),
+        opts: [
+          t('Ye hamesha error deta hai', 'It always gives an error'),
+          t('Ye undefined behaviour hai — a ek hi statement mein badla aur padha ja raha hai', 'It is undefined behaviour — a is changed and read in the same statement'),
+          t('Ye bahut slow hai', 'It is very slow'),
+          t('Ismein %d galat hai', 'The %d in it is wrong')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C standard iska result nahi batata, isliye compiler kuch bhi kar sakta hai — pehle alag variable mein value lo, phir print karo.',
+          'Correct answer: the C standard does not say what the result is, so the compiler can do anything — first take the value in a separate variable, then print it.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('* aur / ki precedence + aur - se zyada hoti hai; && ki precedence || se zyada hoti hai.', '* and / have higher precedence than + and -; && has higher precedence than ||.'),
+      t('Zyada tar operators left-to-right hote hain, lekin = aur unary right-to-left hote hain.', 'Most operators are left-to-right, but = and unary operators are right-to-left.'),
+      t('Doubt ho toh brackets laga do — brackets ki precedence sabse zyada hoti hai.', 'When in doubt, add brackets — brackets have the highest precedence.'),
+      t('Ek hi statement mein a++ aur a ko dobara mat use karo — ye undefined behaviour hai.', 'Never use a++ and a again in the same statement — it is undefined behaviour.'),
+      t("sizeof('A') = 4 hai kyunki C mein char literal int hota hai.", "sizeof('A') is 4 because in C a char literal is an int.")
+    ],
+    practice: {
+      title: t('Practice: Precedence ke Expressions Evaluate Karo', 'Practice: Evaluating Precedence Expressions'),
+      task: t(
+        'Ek program likho jo a = 8 aur b = 3 ke liye a + b * 2, (a + b) * 2, a % b + 1, ternary se a > b ? 100 : 200, aur a / b aur a % b ko print kare. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that prints a + b * 2, (a + b) * 2, a % b + 1, the ternary a > b ? 100 : 200, and a / b and a % b for a = 8 and b = 3. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int a = 8, b = 3;
+    printf("a + b * 2 = %d\\n", a + b * 2);
+    printf("(a + b) * 2 = %d\\n", (a + b) * 2);
+    printf("a %% b + 1 = %d\\n", a % b + 1);
+    printf("a > b ? 100 : 200 = %d\\n", a > b ? 100 : 200);
+    printf("a / b = %d, a %% b = %d\\n", a / b, a % b);
+    return 0;
+}`,
+      expected: `a + b * 2 = 14
+(a + b) * 2 = 22
+a % b + 1 = 3
+a > b ? 100 : 200 = 100
+a / b = 2, a % b = 2`
+    }
+  };
+
+const cControlDeep: Article = {
+    id: 'c-control-deep',
+    subjectId: 'c-programming',
+    title: t(
+      'Control Flow Gehrai se — switch, goto, break, continue, Nested Loops',
+      'Control Flow in Depth — switch, goto, break, continue, Nested Loops'
+    ),
+    summary: t(
+      'if-else se kaam chal jaata hai, lekin jab choices bahut saari hon toh switch behtar hai, aur jab loop ke beech se nikalna ho toh break aur continue kaam aate hain. Is article mein aap switch aur fall-through, goto ka sahi use, aur nested loops ke patterns seekhoge.',
+      'if-else is enough for simple work, but when there are many choices, switch is better, and when you must leave the middle of a loop, break and continue help. In this article you will learn switch and fall-through, the right use of goto, and nested loop patterns.'
+    ),
+    readMinutes: 12,
+    sections: [
+      {
+        heading: t(
+          '1. switch, break, continue aur goto Kya Hain?',
+          '1. What Are switch, break, continue, and goto?'
+        ),
+        body: t(
+          `**switch** ek hi value ko bahut saari choices se compare karta hai. \`switch (marks / 10)\` mein value ke hisaab se ek \`case\` chalta hai: 9 ya 10 ho toh grade A, 8 ho toh B, aur kuch aur ho toh \`default\` chalta hai. Bahut saare if-else ki jagah switch likhna saaf aur tez hota hai — lekin switch sirf int aur char jaisi values par chalta hai, float ya string par nahi.
+
+**break** ka matlab hai "yahan se bahar niklo" — switch mein ye agle case mein jaane se rokta hai, aur loop mein ye loop ko turant khatm kar deta hai. **continue** ka matlab hai "is baar ko chhodo, agli baar par jao" — loop ke baaki hisse ko skip karke agla iteration shuru kar deta hai. Dono ka farak samajhna bahut zaroori hai: break loop ko khatm karta hai, continue sirf ek baar ko chhodta hai.
+
+**goto** ek label par seedha kood jaata hai: \`goto done;\` likhne par program \`done:\` wali line par pahunch jaata hai. Ye purana tareeka hai aur zyada use karne se code ulajh jaata hai, lekin ek jagah ye bahut kaam ka hai — nested loops se ek saath bahar nikalna, jo break se nahi hota.`,
+          `**switch** compares one value with many choices. In \`switch (marks / 10)\`, one \`case\` runs as per the value: if it is 9 or 10, the grade is A; if it is 8, the grade is B; and for anything else, the \`default\` runs. Writing a switch instead of many if-else statements is cleaner and faster — but switch works only on values like int and char, not on float or string.
+
+**break** means "leave from here" — in a switch it stops the flow from going to the next case, and in a loop it ends the loop at once. **continue** means "skip this time, go to the next time" — it skips the rest of the loop body and starts the next iteration. Understanding the difference between the two matters a lot: break ends the loop, while continue only skips one time.
+
+**goto** jumps straight to a label: writing \`goto done;\` takes the program to the line marked \`done:\`. This is an old way, and using it too much makes code tangled, but in one place it is very useful — leaving nested loops together, which break cannot do.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Menu, Lift aur Kamre Dhoondhna',
+          '2. Real-Life Examples: Menus, Lifts, and Finding Rooms'
+        ),
+        body: t(
+          `Sabse seedha example hai **restaurant ka menu**. Menu mein 1 dabao toh daal, 2 dabao toh sabzi, 3 dabao toh roti — ek hi choice se ek kaam hota hai. \`switch\` wahi karta hai: user ki choice ke hisaab se ek case chalta hai. Agar koi galat number dabaye toh default mein "galat choice" dikhta hai.
+
+Doosra example hai **lift**. Lift mein aap jis floor ka button dabate ho, lift wahi jaati hai. \`break\` wahi hai — lift sahi floor par ruk jaati hai, aage nahi badhti. Bina break ke lift har floor par rukti jayegi, bilkul waise hi jaise bina break ke switch har case mein ghusta chala jaata hai.
+
+Teesra example hai **kamre dhoondhna**. Ek building mein har floor par 10 kamre hain, aur aapko ek khaas kamra dhoondhna hai. Har floor par jaana outer loop hai, har kamra check karna inner loop hai. Kamra milte hi aapko dono loops se bahar nikalna hai — sirf \`break\` se sirf andar wala loop rukega, isliye yahan \`goto\` ya ek flag kaam aata hai.`,
+          `The simplest example is a **restaurant menu**. In a menu, press 1 for dal, 2 for sabzi, and 3 for roti — one choice does one job. \`switch\` does the same: one case runs as per the choice of the user. If someone presses a wrong number, the default shows "wrong choice".
+
+A second example is a **lift**. In a lift, you press the button of a floor, and the lift goes there. \`break\` is the same — the lift stops at the right floor and does not go ahead. Without break, the lift would stop at every floor, just like a switch without break keeps falling into every case.
+
+A third example is **finding a room**. In a building, every floor has 10 rooms, and you must find one special room. Going to every floor is the outer loop, and checking every room is the inner loop. As soon as you find the room, you must leave both loops — only \`break\` stops just the inner loop, so here \`goto\` or a flag helps.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Marks se Grade — switch ka Dry Run',
+          '3. Step-by-Step: Grade from Marks — Dry Run of switch'
+        ),
+        body: t(
+          `Neeche wala program marks se grade nikaalta hai. Dry run karo: \`marks = 82\` hai, isliye \`marks / 10\` int division mein 8 deta hai. \`switch (8)\` case 8 ko dhoondhta hai. Case 10 aur case 9 skip hote hain, case 8 milta hai — \`grade = 'B'\` set hota hai, phir \`break\` switch se bahar nikaal deta hai. Case 7 aur default chalte hi nahi.
+
+Do baatein dhyaan se dekho. Pehli: \`case 10:\` aur \`case 9:\` ke beech mein koi break nahi hai — dono ek hi kaam karte hain (grade A), isliye inhe ek saath likha gaya hai. Ise **fall-through** kehte hain: bina break ke control agle case mein gir jaata hai. Dusri: \`default\` aakhir mein hai aur usmein bhi break hai — aadat ke roop mein default mein bhi break likhna achhi baat hai.
+
+Agar marks 95 hote toh \`marks / 10\` 9 deta, case 9 chalta aur grade A banta. Agar marks 65 hote toh \`marks / 10\` 6 deta, koi case nahi milta aur default chal kar grade F banata.`,
+          `The program below finds the grade from marks. Trace it: \`marks = 82\`, so \`marks / 10\` in integer division gives 8. \`switch (8)\` looks for case 8. Case 10 and case 9 are skipped, case 8 is found — \`grade = 'B'\` is set, and then \`break\` takes the flow out of the switch. Case 7 and default never run at all.
+
+Look at two things carefully. First: there is no break between \`case 10:\` and \`case 9:\` — both do the same work (grade A), so they are written together. This is called **fall-through**: without break, the control falls into the next case. Second: the \`default\` is at the end and it also has a break — as a habit, writing break in the default too is a good thing.
+
+If marks were 95, \`marks / 10\` would give 9, case 9 would run, and the grade would be A. If marks were 65, \`marks / 10\` would give 6, no case would match, and the default would run and make the grade F.`
+        ),
+        code: {
+          title: t(
+            'switch se Marks ka Grade Nikaalna',
+            'Finding the Grade from Marks with switch'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int marks = 82;
+    char grade;
+    switch (marks / 10) {
+        case 10:
+        case 9:
+            grade = 'A';
+            break;
+        case 8:
+            grade = 'B';
+            break;
+        case 7:
+            grade = 'C';
+            break;
+        default:
+            grade = 'F';
+            break;
+    }
+    printf("Marks = %d\\n", marks);
+    printf("Grade = %c\\n", grade);
+    return 0;
+}`,
+          output: `Marks = 82
+Grade = B`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: break Bhoolna, break ka Scope aur switch par float',
+          '4. Common Mistakes: Forgetting break, the Scope of break, and float in switch'
+        ),
+        body: t(
+          `**Galti 1: switch mein break bhoolna.** Bina break ke case ke baad agla case bhi chal jaata hai — ye fall-through kabhi-kabhi jaan-boojh kar use hota hai (jaise case 10 aur 9), lekin aksar ye galti hoti hai. Har case ke aakhir mein break likho, jab tak aapko fall-through khaas taur par nahi chahiye.
+
+**Galti 2: break sirf andar wale loop ko rokta hai.** Nested loops mein \`break\` likhoge toh sirf andar wala loop rukega, bahar wala chalta rahega. Dono se bahar nikalna ho toh flag use karo ya \`goto\` — dusra example wahi dikhata hai.
+
+**Galti 3: switch mein float ya string use karna.** \`switch (price)\` jahan price float hai, error deta hai. Switch sirf int, char aur enum par chalta hai. Float ke liye if-else use karo, string ke liye \`strcmp\` ke saath if-else.
+
+**Galti 4: case mein variable ya range likhna.** \`case x:\` jahan x variable hai, ya \`case 80 ... 90:\` jaisi range, C mein nahi chalti — case mein sirf constant value likh sakte ho. Range chahiye toh marks / 10 jaisi trick use karo, jaise is article ke program mein hai.`,
+          `**Mistake 1: Forgetting break in a switch.** Without break, the next case also runs after a case — this fall-through is sometimes used on purpose (like case 10 and 9), but most of the time it is a mistake. Write break at the end of every case, unless you specially want fall-through.
+
+**Mistake 2: break stops only the inner loop.** In nested loops, writing \`break\` stops only the inner loop; the outer loop keeps running. To leave both, use a flag or \`goto\` — the second example shows exactly that.
+
+**Mistake 3: Using a float or a string in a switch.** \`switch (price)\` where price is a float gives an error. Switch works only on int, char, and enum. For a float, use if-else; for a string, use if-else with \`strcmp\`.
+
+**Mistake 4: Writing a variable or a range in a case.** \`case x:\` where x is a variable, or a range like \`case 80 ... 90:\`, does not work in C — a case can hold only a constant value. If you need a range, use a trick like marks / 10, as in the program of this article.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: default Missing, Duplicate case aur Khali Loop',
+          '5. Edge Cases: Missing default, Duplicate case, and Empty Loop'
+        ),
+        body: t(
+          `**default missing ho toh kuch nahi hota.** Agar koi case match nahi karta aur default bhi nahi hai, toh switch bas chupchaap khatm ho jaata hai — koi error nahi aata. Isliye default likhna hamesha achhi aadat hai, taaki galat input par bhi kuch toh ho.
+
+**Duplicate case error deta hai.** Do baar \`case 8:\` likhoge toh compiler error dega — har case ki value alag honi chahiye. Ye galti aksar copy-paste se hoti hai.
+
+**Khali loop (infinite loop).** \`for (;;)\` ya \`while (1)\` kabhi khatm nahi hota, jab tak andar se \`break\` na mile. Aise loop kaam ke hote hain — jaise menu wala program jo tab tak chalta hai jab tak user exit na dabaye — lekin bina break ke ye program ko hamesha ke liye atka deta hai.
+
+**continue ka asar for loop mein.** \`for\` loop mein \`continue\` pehle increment (\`i++\`) chalata hai, phir condition check karta hai. \`while\` loop mein \`continue\` seedha condition par jaata hai — agar increment loop ke andar tha, toh woh skip ho jayega aur loop infinite ban sakta hai. Ye farak interview mein poochha jaata hai.`,
+          `**If default is missing, nothing happens.** If no case matches and there is no default either, the switch just ends quietly — no error comes. So writing a default is always a good habit, so that something happens even on a wrong input.
+
+**A duplicate case gives an error.** If you write \`case 8:\` twice, the compiler gives an error — every case value must be different. This mistake often happens through copy-paste.
+
+**Empty loop (infinite loop).** \`for (;;)\` or \`while (1)\` never ends, unless a \`break\` is found inside. Such loops are useful — like a menu program that runs until the user presses exit — but without break they freeze the program forever.
+
+**The effect of continue in a for loop.** In a \`for\` loop, \`continue\` first runs the increment (\`i++\`), then checks the condition. In a \`while\` loop, \`continue\` goes straight to the condition — if the increment was inside the loop, it gets skipped and the loop can become infinite. This difference is asked about in interviews.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: goto se Nested Loops se Nikalna aur Patterns Banana',
+          '6. What-If: Leaving Nested Loops with goto and Making Patterns'
+        ),
+        body: t(
+          `**What if: nested loops se ek saath bahar nikalna ho?** Dusre example ka pehla hissa yehi dikhata hai. Target (i=1, j=2) milte hi \`goto done;\` program ko seedha \`done:\` label par le jaata hai — dono loops ek saath khatm ho jaate hain. Sirf break se ye nahi hota. Goto ka yehi ek sahi use hai; baaki jagah if-else aur loops hi kaafi hain.
+
+**What if: multiplication table chhapni ho?** Dusre example ka dusra hissa nested loops se 3x3 table banata hai: bahar wala loop row badalta hai, andar wala column. \`i * j\` har cell ki value hai. Yahi pattern se star wale patterns bhi bante hain — bas \`printf("%d ", i * j);\` ki jagah \`printf("* ");\` likh do.
+
+**What if: continue aur break ek saath use karne hon?** Pehla example dono ko ek saath dikhata hai: 1 se 10 tak numbers mein 3 ke multiples skip hote hain (continue), aur 8 aate hi loop ruk jaata hai (break). Output hai 1 2 4 5 7 — 3 aur 6 skip hue, aur 8 par loop ruk gaya, isliye 9 aur 10 kabhi chhape hi nahi.`,
+          `**What if you must leave nested loops together?** The first part of the second example shows exactly this. As soon as the target (i=1, j=2) is found, \`goto done;\` takes the program straight to the label \`done:\` — both loops end together. Only break cannot do this. This is the one right use of goto; elsewhere, if-else and loops are enough.
+
+**What if you must print a multiplication table?** The second part of the second example makes a 3x3 table with nested loops: the outer loop changes the row, and the inner loop changes the column. \`i * j\` is the value of every cell. Star patterns are made with the same pattern — just write \`printf("* ");\` instead of \`printf("%d ", i * j);\`.
+
+**What if you must use continue and break together?** The first example shows both together: in the numbers 1 to 10, multiples of 3 are skipped (continue), and the loop stops as soon as 8 comes (break). The output is 1 2 4 5 7 — 3 and 6 were skipped, and the loop stopped at 8, so 9 and 10 were never printed at all.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sahi Tool, Sahi Jagah',
+          '7. Summary: Right Tool, Right Place'
+        ),
+        body: t(
+          `Is article mein aapne seekha: **switch** bahut saari choices ke liye hai, lekin sirf int aur char par chalta hai aur har case mein **break** chahiye. **break** loop ya switch ko khatm karta hai, **continue** sirf ek baar ko chhodta hai, aur **goto** nested loops se ek saath bahar nikalne ka ek tareeka hai. **Nested loops** mein bahar wala loop rows par aur andar wala columns par chalta hai.
+
+Yaad rakhne wali baatein: default likhna mat bhoolo, case mein sirf constant likh sakte ho, break sirf andar wale loop ko rokta hai, aur while loop mein continue se increment skip ho sakta hai. Agle article mein hum functions ko gehrai se dekhenge — lekin pehle in 8 articles ko revise karo: data types, I/O, arrays, matrices, strings, string library, operators aur control flow — ye C ki neev hai.`,
+          `In this article you learned: **switch** is for many choices, but it works only on int and char, and every case needs a **break**. **break** ends a loop or a switch, **continue** skips only one time, and **goto** is one way to leave nested loops together. In **nested loops**, the outer loop runs over rows and the inner loop over columns.
+
+Remember these points: do not forget to write a default, a case can hold only a constant, break stops only the inner loop, and in a while loop continue can skip the increment. In the next article we will look at functions in depth — but first revise these 8 articles: data types, I/O, arrays, matrices, strings, string library, operators, and control flow — this is the foundation of C.`
+        )
+      }
+    ],
+    codeExamples: [
+      {
+        title: t('break aur continue ek Saath', 'break and continue Together'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    for (int i = 1; i <= 10; i++) {
+        if (i % 3 == 0) {
+            continue;
+        }
+        if (i == 8) {
+            break;
+        }
+        printf("%d ", i);
+    }
+    printf("\\n");
+    return 0;
+}`,
+        output: `1 2 4 5 7 `
+      },
+      {
+        title: t('goto se Nested Loops se Nikalna aur Table Banana', 'Leaving Nested Loops with goto and Making a Table'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int found = 0;
+    for (int i = 0; i < 3 && !found; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (i == 1 && j == 2) {
+                found = 1;
+                goto done;
+            }
+        }
+    }
+done:
+    printf("found target at i=1, j=2: %d\\n", found);
+    for (int i = 1; i <= 3; i++) {
+        for (int j = 1; j <= 3; j++) {
+            printf("%d ", i * j);
+        }
+        printf("\\n");
+    }
+    return 0;
+}`,
+        output: `found target at i=1, j=2: 1
+1 2 3 
+2 4 6 
+3 6 9 `
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t('switch ka Flow: Case se break Tak', 'The Flow of switch: From Case to break'),
+      caption: t(
+        'Match hua case chalta hai, break bahar nikaalta hai, warna default',
+        'The matching case runs, break takes you out, otherwise default'
+      ),
+      nodes: [
+        {
+          t: t('switch (value)', 'switch (value)'),
+          s: t('Value ko cases se milao', 'Match the value with the cases')
+        },
+        {
+          t: t('case 9 / case 10: grade A', 'case 9 / case 10: grade A'),
+          s: t('Fall-through: dono ek hi kaam karte hain', 'Fall-through: both do the same work')
+        },
+        {
+          t: t('case 8: grade B', 'case 8: grade B'),
+          s: t('Match hua, kaam hua', 'Matched, work done')
+        },
+        {
+          t: t('break', 'break'),
+          s: t('Switch se bahar niklo, agle case mein mat giro', 'Leave the switch, do not fall into the next case')
+        },
+        {
+          t: t('default: grade F', 'default: grade F'),
+          s: t('Koi case match na kare toh ye chalta hai', 'This runs when no case matches')
+        }
+      ]
+    },
+    mcqs: [
+      {
+        q: t('switch mein break bhoolne par kya hota hai?', 'What happens if you forget break in a switch?'),
+        opts: [
+          t('Program crash ho jaata hai', 'The program crashes'),
+          t('Control agle case mein gir jaata hai (fall-through)', 'The control falls into the next case (fall-through)'),
+          t('Kuch nahi hota', 'Nothing happens'),
+          t('Loop shuru ho jaata hai', 'A loop starts')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina break ke switch agle case mein chala jaata hai — ise fall-through kehte hain, aur ye aksar galti hoti hai.',
+          'Correct answer: without break, a switch goes into the next case — this is called fall-through, and most of the time it is a mistake.'
+        )
+      },
+      {
+        q: t('break aur continue mein kya farak hai?', 'What is the difference between break and continue?'),
+        opts: [
+          t('Dono ek jaise hain', 'Both are the same'),
+          t('break loop khatm karta hai, continue sirf ek baar ko chhodta hai', 'break ends the loop, continue skips only one time'),
+          t('break sirf switch mein chalta hai', 'break works only in a switch'),
+          t('continue loop khatm karta hai', 'continue ends the loop')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: break loop ko turant khatm kar deta hai, jabki continue baaki hisse ko skip karke agla iteration shuru karta hai.',
+          'Correct answer: break ends the loop at once, while continue skips the rest and starts the next iteration.'
+        )
+      },
+      {
+        q: t('switch kis type ki values par chalta hai?', 'On which types of values does switch work?'),
+        opts: [
+          t('Sirf float', 'Only float'),
+          t('Sirf string', 'Only string'),
+          t('int aur char', 'int and char'),
+          t('Har type par', 'On every type')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: switch sirf int, char aur enum par chalta hai; float ya string ke liye if-else use karna padta hai.',
+          'Correct answer: switch works only on int, char, and enum; for a float or a string you must use if-else.'
+        )
+      },
+      {
+        q: t('Nested loops mein break kya karta hai?', 'What does break do in nested loops?'),
+        opts: [
+          t('Dono loops ko rokta hai', 'It stops both loops'),
+          t('Sirf andar wale loop ko rokta hai', 'It stops only the inner loop'),
+          t('Sirf bahar wale loop ko rokta hai', 'It stops only the outer loop'),
+          t('Program ko band karta hai', 'It closes the program')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: break sirf us loop ko rokta hai jiske andar woh likha hai — dono se bahar nikalne ke liye flag ya goto chahiye.',
+          'Correct answer: break stops only the loop it is written in — to leave both, you need a flag or goto.'
+        )
+      },
+      {
+        q: t('case mein kya likh sakte hain?', 'What can you write in a case?'),
+        opts: [
+          t('Sirf constant value', 'Only a constant value'),
+          t('Variable', 'A variable'),
+          t('Range jaise 80 ... 90', 'A range like 80 ... 90'),
+          t('Koi bhi expression', 'Any expression')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: case mein sirf constant value likh sakte hain; range ke liye marks / 10 jaisi trick use karni padti hai.',
+          'Correct answer: a case can hold only a constant value; for a range you must use a trick like marks / 10.'
+        )
+      }
+    ],
+    keyNotes: [
+      t('switch sirf int aur char par chalta hai; har case ke aakhir mein break likho.', 'switch works only on int and char; write break at the end of every case.'),
+      t('break loop ya switch ko khatm karta hai, continue sirf ek baar ko chhodta hai.', 'break ends a loop or a switch; continue skips only one time.'),
+      t('Bina break ke control agle case mein gir jaata hai — ise fall-through kehte hain.', 'Without break, the control falls into the next case — this is called fall-through.'),
+      t('break sirf andar wale loop ko rokta hai; dono se bahar nikalne ke liye goto ya flag use karo.', 'break stops only the inner loop; use goto or a flag to leave both.'),
+      t('case mein sirf constant value likh sakte ho; default likhna hamesha achhi aadat hai.', 'A case can hold only a constant value; writing a default is always a good habit.')
+    ],
+    practice: {
+      title: t('Practice: switch se Calculator Banao', 'Practice: Making a Calculator with switch'),
+      task: t(
+        'Ek program likho jo a = 12, b = 4 aur op = \'*\' ke liye switch se sahi operation chune aur result print kare. Switch mein +, -, * aur / ke cases aur ek default hona chahiye. Starter code ko run karo — output bilkul expected jaisa aana chahiye.',
+        'Write a program that uses a switch to pick the right operation for a = 12, b = 4, and op = \'*\' and prints the result. The switch must have cases for +, -, *, and /, and a default. Run the starter code — the output must match the expected output exactly.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int a = 12, b = 4;
+    char op = '*';
+    int result = 0;
+    switch (op) {
+        case '+':
+            result = a + b;
+            break;
+        case '-':
+            result = a - b;
+            break;
+        case '*':
+            result = a * b;
+            break;
+        case '/':
+            result = a / b;
+            break;
+        default:
+            printf("Unknown operator\\n");
+            return 0;
+    }
+    printf("%d %c %d = %d\\n", a, op, b, result);
+    return 0;
+}`,
+      expected: `12 * 4 = 48`
+    }
+  };
+
+const cPointers: Article = {
+    id: 'c-pointers',
+    subjectId: 'c-programming',
+    title: t(
+      'Pointers — Address, Dereference aur Pointer Arithmetic',
+      'Pointers — Address, Dereference, and Pointer Arithmetic'
+    ),
+    summary: t(
+      'Pointer ek aisa variable hai jo kisi aur variable ka address store karta hai. Is article mein seekho ki & se address kaise milta hai, * se value kaise padhte aur badalte hain, aur pointer arithmetic se array ke andar kaise chalte hain.',
+      'A pointer is a variable that stores the address of another variable. In this article you will learn how & gives you an address, how * reads and changes a value, and how pointer arithmetic moves through an array.'
+    ),
+    sections: [
+      {
+        heading: t('1. Pointer Kya Hai? (Address aur Dereference)', '1. What Is a Pointer? (Address and Dereference)'),
+        body: t(
+          `Computer ki memory ko ek badi almari samjho jismein hazaaron chhote dabbe hain, aur har dabbe par ek number likha hai — use number ko **address** kehte hain. Jab aap \`int x = 10;\` likhte ho, toh computer ek dabba chun kar usmein 10 rakh deta hai, aur us dabbe ka address yaad rakhta hai. **Pointer** ek aisa khaas variable hai jo kisi dabbe ka number (address) apne andar store karta hai, value nahi. \`int *p = &x;\` mein \`p\` ek pointer hai jo \`x\` ka address rakhta hai, aur \`&\` ko **address-of operator** kehte hain.
+
+Pointer ke saath do kaam sabse zaroori hain. Pehla, \`*\` se pointer ke peeche chhupi value ko padhna ya badalna — ise **dereference** kehte hain. \`printf("%d", *p);\` likhne par \`p\` mein rakhe address par jaakar value padhi jaati hai, isliye \`x\` aur \`*p\` dono 10 chhapte hain. Doosra, \`*p = 20;\` likhne par usi address par nayi value likh di jaati hai, isliye \`x\` khud badal kar 20 ho jaata hai. Pointer khud ek alag dabba hai, par woh doosre dabbe ki taraf ishaara karta hai.
+
+Pointer ka type us value ke type se match karna chahiye jisko woh point karta hai: \`int\` ko point karne ke liye \`int *\`, \`char\` ke liye \`char *\`, aur \`float\` ke liye \`float *\`. Agar aap \`int *p\` ko \`char\` variable ka address de doge, toh compiler warning dega, kyunki woh address par kitne bytes padhne hain, yeh type se decide hota hai. \`int\` aam taur par 4 bytes ka hota hai aur \`char\` 1 byte ka, isliye galat type ka pointer galat value padh sakta hai. Isi liye pointer declare karte waqt \`*\` aur type dono par dhyaan do.`,
+          `Think of the computer memory as a large cupboard with thousands of small boxes, and every box has a number written on it — that number is called an **address**. When you write \`int x = 10;\`, the computer picks one box, puts 10 inside it, and remembers the address of that box. A **pointer** is a special variable that stores the number (address) of a box, not a value. In \`int *p = &x;\`, \`p\` is a pointer that holds the address of \`x\`, and \`&\` is called the **address-of operator**.
+
+Two jobs matter most with a pointer. First, use \`*\` to read or change the value hidden behind the pointer — this is called **dereference**. Writing \`printf("%d", *p);\` goes to the address stored in \`p\` and reads the value there, so both \`x\` and \`*p\` print 10. Second, writing \`*p = 20;\` writes a new value at that same address, so \`x\` itself changes to 20. The pointer is a separate box, but it points at another box.
+
+The type of a pointer must match the type of the value it points to: \`int *\` for an \`int\`, \`char *\` for a \`char\`, and \`float *\` for a \`float\`. If you give an \`int *p\` the address of a \`char\` variable, the compiler will warn you, because how many bytes to read from that address is decided by the type. An \`int\` is usually 4 bytes and a \`char\` is 1 byte, so a pointer of the wrong type can read a wrong value. That is why you must watch both the \`*\` and the type when you declare a pointer.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Ghar ka Pata aur Locker ki Chaabi', '2. Real-Life Examples: A Home Address and a Locker Key'),
+        body: t(
+          `Pointer ko samajhne ka sabse aasan tareeka hai **ghar ka pata**. Maan lo aapke dost ka ghar hai aur aapke paas sirf uska pata likha hai, ghar khud nahi. Pata ek kagaz par likha hai — woh kagaz pointer hai, aur ghar woh variable hai. Kagaz ko dekh kar aap ghar tak pahunch sakte ho, ghar ke andar jaakar cheezein dekh sakte ho, aur ghar ke andar kuch badal bhi sakte ho. Kagaz khud ghar nahi hai, par woh ghar tak pahunchne ka rasta hai. Bilkul waise hi pointer mein value nahi hoti, sirf us jagah ka address hota hai jahan value rakhi hai.
+
+Doosra example hai **locker ki chaabi**. Bank ke locker mein aapka samaan rakha hai, aur chaabi aapke paas hai. Chaabi samaan nahi hai, par chaabi se locker khulta hai. Agar aap chaabi kisi aur ko de do, toh woh bhi locker khol kar samaan dekh ya badal sakta hai. C mein jab aap pointer ko function mein bhejte ho, toh wahi hota hai — function ko chaabi mil jaati hai, aur woh original variable ko badal sakta hai. Isi liye pointers ko C ki sabse taakatwar cheez kehte hain.
+
+Teesra example roz ki zindagi mein hai: **school ki attendance list**. Teacher ke paas har student ka roll number hai, aur roll number se woh student ko dhoondh leti hai. Roll number student nahi hai, par woh student tak pahunchne ka tareeka hai. Pointer arithmetic bhi isi tarah kaam karta hai: agar \`p\` pehle dabbe ki taraf ishaara karta hai, toh \`p + 1\` agle dabbe ki taraf, \`p + 2\` uske agle dabbe ki taraf. Har step mein pointer utne bytes aage badhta hai jitna uske type ka size hai — \`int *\` ke liye 4 bytes, \`char *\` ke liye 1 byte.`,
+          `The easiest way to understand a pointer is a **home address**. Suppose your friend has a house, and you only have its address written down, not the house itself. The address is written on a piece of paper — that paper is the pointer, and the house is the variable. Looking at the paper, you can reach the house, go inside and look at things, and even change something inside the house. The paper itself is not the house, but it is the way to reach the house. In the same way, a pointer does not hold a value, only the address of the place where the value is kept.
+
+A second example is a **locker key**. Your things are kept in a bank locker, and the key is with you. The key is not the things, but the key opens the locker. If you give the key to someone else, that person can also open the locker and look at or change the things inside. That is exactly what happens in C when you pass a pointer to a function — the function gets the key, and it can change the original variable. That is why pointers are called the most powerful thing in C.
+
+A third everyday example is a **school attendance list**. The teacher has the roll number of every student, and with the roll number she can find any student. The roll number is not the student, but it is the way to reach the student. Pointer arithmetic works in the same way: if \`p\` points at the first box, then \`p + 1\` points at the next box and \`p + 2\` at the one after that. Each step moves the pointer forward by as many bytes as the size of its type — 4 bytes for an \`int *\` and 1 byte for a \`char *\`.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Address Lena, Value Padhna aur Badalna (Dry Run)', '3. Step-by-Step: Taking an Address, Reading a Value, and Changing It (Dry Run)'),
+        body: t(
+          `Neeche wale program ko line by line trace karte hain. Maan lo \`x\` memory ke address 1000 par rakha hai — asal address har baar alag hota hai, isliye hum is example mein koi address print nahi karte, sirf values dekhte hain. Pehli line \`int x = 10;\` address 1000 wale dabbe mein 10 rakhti hai. Doosri line \`int *p = &x;\` ek naya dabba \`p\` banati hai aur usmein 1000 likh deti hai, matlab \`p\` ab \`x\` ki taraf ishaara karta hai.
+
+Teesri line \`printf("x = %d\\n", x);\` seedha \`x\` ko padh kar 10 chhapti hai. Chauthi line \`printf("*p = %d\\n", *p);\` pehle \`p\` mein rakha address 1000 padhti hai, phir us address par jaakar wahan rakhi value 10 padhti hai, aur 10 chhapti hai. Yahan dhyaan do: \`p\` chhapne par address milta, \`*p\` chhapne par value milti hai — beginners aksar in dono ko mila dete hain.
+
+Paanchvi line \`*p = 20;\` sabse important hai: yeh \`p\` ko nahi badalti, yeh \`p\` ke address par rakhi value ko badalti hai. Matlab address 1000 wale dabbe mein ab 20 aa gaya. Isliye aakhri do lines mein \`x\` bhi 20 chhapta hai aur \`*p\` bhi 20 chhapta hai, kyunki dono ek hi dabbe ko dekh rahe hain. Yahi pointer ki jaadui baat hai: ek hi memory ko do naam se chhua ja sakta hai — seedha naam \`x\` se, aur pointer \`*p\` se.`,
+          `Let us trace the program below line by line. Suppose \`x\` is kept at memory address 1000 — the real address is different every time, so in this example we print no address, only values. The first line, \`int x = 10;\`, puts 10 into the box at address 1000. The second line, \`int *p = &x;\`, creates a new box \`p\` and writes 1000 inside it, which means \`p\` now points at \`x\`.
+
+The third line, \`printf("x = %d\\n", x);\`, reads \`x\` directly and prints 10. The fourth line, \`printf("*p = %d\\n", *p);\`, first reads the address 1000 stored in \`p\`, then goes to that address and reads the value 10 kept there, and prints 10. Notice this: printing \`p\` gives the address, while printing \`*p\` gives the value — beginners often mix these two up.
+
+The fifth line, \`*p = 20;\`, is the most important: it does not change \`p\`, it changes the value kept at the address inside \`p\`. That means the box at address 1000 now holds 20. So in the last two lines, \`x\` prints 20 and \`*p\` also prints 20, because both are looking at the same box. That is the magic of a pointer: the same memory can be touched by two names — directly by the name \`x\`, and through the pointer \`*p\`.`
+        ),
+        code: {
+          title: t('Pointer se Value Padhna aur Badalna', 'Reading and Changing a Value Through a Pointer'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int x = 10;
+    int *p = &x;
+
+    printf("x = %d\\n", x);
+    printf("*p = %d\\n", *p);
+
+    *p = 20;
+    printf("After *p = 20, x = %d\\n", x);
+    printf("*p = %d\\n", *p);
+
+    return 0;
+}`,
+          output: `x = 10
+*p = 10
+After *p = 20, x = 20
+*p = 20`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Bina Init ke Pointer, Galat Type aur * bhoolna', '4. Common Mistakes: Uninitialised Pointer, Wrong Type, and Forgetting *'),
+        body: t(
+          `Pointer mein sabse khatarnaak galti hai **bina initialise kiye pointer use karna**. \`int *p;\` likh kar turant \`*p = 10;\` likh dena matlab hai kisi anjaan address par value likhna — \`p\` mein kachra bhara hota hai, aur woh kachra address aapke program ki kisi bhi jagah ko bigaad sakta hai, ya program crash kar sakta hai. Hamesha pointer ko ya toh kisi variable ka address do (\`int *p = &x;\`), ya \`NULL\` do (\`int *p = NULL;\`) jab tak koi address na ho. \`NULL\` ka matlab hai "kahi nahi point karta", aur usse pehchan kar aap galti se likhne se bach sakte ho.
+
+Doosri galti hai **type mismatch**: \`int *p\` mein \`float\` variable ka address daalna. Compiler warning dega, aur agar aap warning ko ignore kar doge toh \`p\` sirf 4 bytes padhega jabki float ka layout alag hota hai, isliye value galat milegi. Teesri galti hai **\* bhoolna**: \`p = 20;\` likhne se pointer khud badal jaata hai aur woh kisi anjaan address ki taraf point karne lagta hai, jabki aapka matlab tha \`*p = 20;\`. Pointer aur value ke beech ka farak hamesha yaad rakho: \`p\` address hai, \`*p\` value hai.
+
+Chauthi galti hai **NULL pointer ko dereference karna**: \`int *p = NULL; printf("%d", *p);\` program ko turant crash kar dega, kyunki address 0 par koi value nahi hoti. Isliye kisi bhi pointer ko use karne se pehle check karo ki woh \`NULL\` toh nahi hai, khaas taur par jab pointer kisi function se aaya ho ya \`malloc\` se mila ho.`,
+          `The most dangerous pointer mistake is **using a pointer without initialising it**. Writing \`int *p;\` and then at once \`*p = 10;\` means writing a value at some unknown address — \`p\` holds garbage, and that garbage address can damage any part of your program or crash it. Always give a pointer either the address of a variable (\`int *p = &x;\`) or \`NULL\` (\`int *p = NULL;\`) until you have an address. \`NULL\` means "points nowhere", and recognising it saves you from writing by mistake.
+
+The second mistake is a **type mismatch**: putting the address of a \`float\` variable into an \`int *p\`. The compiler will warn you, and if you ignore the warning, \`p\` will read only 4 bytes while a float has a different layout, so you will get a wrong value. The third mistake is **forgetting the \***: writing \`p = 20;\` changes the pointer itself, so it starts pointing at some unknown address, while you meant \`*p = 20;\`. Always remember the difference between a pointer and a value: \`p\` is the address, and \`*p\` is the value.
+
+The fourth mistake is **dereferencing a NULL pointer**: \`int *p = NULL; printf("%d", *p);\` will crash the program at once, because there is no value at address 0. So before using any pointer, check that it is not \`NULL\`, especially when the pointer came from a function or from \`malloc\`.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: NULL Pointer, Dangling Pointer aur Array ka Naam', '5. Edge Cases: NULL Pointer, Dangling Pointer, and the Name of an Array'),
+        body: t(
+          `**NULL pointer** ka matlab hai pointer kahi nahi point karta. \`int *p = NULL;\` bilkul safe hai jab tak aap \`*p\` ko chhoote nahi. Function se pointer wapas lete waqt aksar \`NULL\` milta hai jab kaam fail ho jaaye — jaise \`malloc\` memory na de paaye — isliye return value ko check karna ek achhi aadat hai. **Dangling pointer** us pointer ko kehte hain jo aisi memory ki taraf point karta hai jo ab free ho chuki hai ya khatm ho chuki hai. Jaise, ek function ke andar ka local variable function khatm hote hi gayab ho jaata hai, aur uska address bahar le jaakar use karna galat hai.
+
+**Array ka naam** ek khaas case hai: \`int arr[5] = {10, 20, 30, 40, 50};\` mein \`arr\` khud pehle element ka address hota hai, isliye \`arr == &arr[0]\` sach hai aur \`*arr\` ka matlab 10 hai. Lekin \`arr\` ek pointer variable nahi hai — aap \`arr = arr + 1;\` nahi likh sakte, kyunki array ka naam badla nahi ja sakta. Iske ulta, \`int *p = arr;\` likh kar aap \`p\` ko aage-peeche ghuma sakte ho. Yeh farak interview mein bahut poochha jaata hai.
+
+**Pointer arithmetic ki limit** bhi ek edge case hai: \`p + 1\` hamesha agle element ki taraf jaata hai, agle byte ki taraf nahi. \`int *\` ke liye ek step 4 bytes ka hota hai, \`char *\` ke liye 1 byte ka. Aur array ki hadd se bahar pointer ko badhana — jaise 5 size wale array mein \`*(arr + 5)\` padhna — **undefined behaviour** hai: kabhi kachra milega, kabhi crash hoga. Pointer ko hamesha array ki hadd ke andar rakho.`,
+          `A **NULL pointer** means the pointer points nowhere. \`int *p = NULL;\` is completely safe as long as you never touch \`*p\`. A function often returns \`NULL\` when its work fails — for example, when \`malloc\` cannot give memory — so checking the return value is a good habit. A **dangling pointer** is a pointer that points at memory which has already been freed or has gone away. For example, a local variable inside a function disappears when the function ends, and using its address outside the function is wrong.
+
+The **name of an array** is a special case: in \`int arr[5] = {10, 20, 30, 40, 50};\`, \`arr\` itself is the address of the first element, so \`arr == &arr[0]\` is true and \`*arr\` means 10. But \`arr\` is not a pointer variable — you cannot write \`arr = arr + 1;\`, because the name of an array cannot be changed. In contrast, after \`int *p = arr;\` you can move \`p\` forwards and backwards. This difference is asked very often in interviews.
+
+The **limit of pointer arithmetic** is another edge case: \`p + 1\` always moves to the next element, not to the next byte. One step is 4 bytes for an \`int *\` and 1 byte for a \`char *\`. And moving a pointer beyond the end of an array — for example, reading \`*(arr + 5)\` in an array of size 5 — is **undefined behaviour**: sometimes you get garbage, sometimes a crash. Always keep a pointer inside the bounds of the array.`
+        ),
+      },
+      {
+        heading: t('6. What If: Pointer ki Jagah Seedha Variable, aur & ke Bina Kaam?', '6. What If: A Plain Variable Instead of a Pointer, and Working Without &?'),
+        body: t(
+          `**What if: pointer ki jagah sirf variable use kar lein?** Bahut se kaam bina pointer ke bhi ho jaate hain — simple hisaab, print karna, aur chhote programs mein pointer ki zaroorat nahi padti. Lekin teen kaam aise hain jo bina pointer ke nahi hote. Pehla, function se ek se zyada values wapas dena: function sirf ek value \`return\` kar sakta hai, par pointer se woh kai variables badal sakta hai. Doosra, bada data copy kiye bina function ko dena: 1000 size wale array ko copy karna mehenga hai, par uska address dena sasta hai. Teesra, dynamic memory: \`malloc\` se mili memory ka koi naam nahi hota, us tak sirf pointer se pahuncha ja sakta hai.
+
+**What if: \`&\` bhool jaayein?** \`int *p = x;\` likhne par compiler warning dega, kyunki \`x\` ek value hai, address nahi. Pointer mein value daalne se woh value ko address samajh kar us anjaan jagah par jaayega, aur crash ya galat result milega. \`&\` hi woh operator hai jo value se address banata hai — iske bina pointer ko sahi address mil hi nahi sakta.
+
+**What if: pointer ko \`int\` mein store kar lein?** \`int addr = (int)p;\` kuch systems par chal bhi sakta hai, par yeh galat tareeka hai, kyunki 64-bit system par address 8 bytes ka hota hai aur \`int\` sirf 4 bytes ka — aadha address kho jaayega. Address ko hamesha pointer type mein hi rakho, number mein nahi. Agar address ko print karna ho, toh \`%p\` format use karo, \`%d\` nahi.`,
+          `**What if we use only a plain variable instead of a pointer?** Many jobs can be done without a pointer — simple maths, printing, and small programs do not need one. But there are three jobs that cannot be done without a pointer. First, returning more than one value from a function: a function can \`return\` only one value, but through pointers it can change many variables. Second, giving large data to a function without copying it: copying an array of size 1000 is costly, but giving its address is cheap. Third, dynamic memory: memory from \`malloc\` has no name, and it can only be reached through a pointer.
+
+**What if we forget \`&\`?** Writing \`int *p = x;\` makes the compiler warn you, because \`x\` is a value, not an address. Putting a value into a pointer makes it treat that value as an address and go to that unknown place, giving a crash or a wrong result. \`&\` is the operator that turns a value into an address — without it, a pointer can never get the right address.
+
+**What if we store a pointer in an \`int\`?** \`int addr = (int)p;\` may even run on some systems, but it is the wrong way, because on a 64-bit system an address is 8 bytes while an \`int\` is only 4 bytes — half the address would be lost. Always keep an address in a pointer type, never in a number. If you must print an address, use the \`%p\` format, not \`%d\`.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Pointer ka Poora Picture', '7. Summary: The Full Picture of Pointers'),
+        body: t(
+          `Pointer ek variable hai jo address store karta hai. \`&\` se address milta hai, aur \`*p\` se us address par rakhi value padhi ya badli jaati hai. Pointer ka type us value ke type se match karna chahiye, warna compiler warning dega aur value galat padhi ja sakti hai. Pointer arithmetic mein \`p + 1\` agle element ki taraf jaata hai, agle byte ki taraf nahi — step ka size pointer ke type par depend karta hai.
+
+Yaad rakhne wali chaar baatein: pointer ko hamesha initialise karo — ya kisi variable ka address do, ya \`NULL\` do. \`NULL\` pointer ko kabhi dereference mat karo. Array ka naam pehle element ka address hota hai, par woh badla nahi ja sakta. Aur array ki hadd se bahar pointer ko mat le jaao, warna undefined behaviour milega. Pointer bina dare use karo, par in rules ke saath — yahi C mein pointer ko safe banata hai.
+
+Agle article mein hum dekhenge ki pointer function ke saath kaise kaam karta hai — pass by reference kya hota hai, aur array ko function mein bhejne par andar kya hota hai. Pointer ki yeh samajh wahan seedha kaam aayegi, isliye aaj ka dry run ek baar khud haath se dobara trace karo: \`x = 10\`, \`p = &x\`, phir \`*p = 20\` — aur batao ki aakhir mein \`x\` kya hoga.`,
+          `A pointer is a variable that stores an address. \`&\` gives the address, and \`*p\` reads or changes the value kept at that address. The type of a pointer must match the type of the value, otherwise the compiler will warn you and the value may be read wrongly. In pointer arithmetic, \`p + 1\` moves to the next element, not to the next byte — the size of the step depends on the type of the pointer.
+
+Remember four things: always initialise a pointer — either give it the address of a variable or give it \`NULL\`. Never dereference a \`NULL\` pointer. The name of an array is the address of its first element, but it cannot be changed. And never take a pointer beyond the bounds of an array, or you will get undefined behaviour. Use pointers without fear, but with these rules — that is what makes pointers safe in C.
+
+In the next article we will see how a pointer works with a function — what pass by reference is, and what happens inside when an array is passed to a function. The understanding of pointers from today will be directly useful there, so trace today's dry run once more by hand: \`x = 10\`, \`p = &x\`, then \`*p = 20\` — and say what \`x\` will be at the end.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'memory',
+      title: t('Memory mein x aur Pointer p', 'x and Pointer p in Memory'),
+      caption: t('p mein x ka address hai; *p se usi dabbe ki value milti hai', 'p holds the address of x; *p gives the value of that same box'),
+      nodes: [
+        { t: t('x — address 1000, value 10', 'x — address 1000, value 10'), s: t('int x = 10; — ek dabba, usmein 10', 'int x = 10; — one box, holding 10') },
+        { t: t('p — value 1000', 'p — value 1000'), s: t('int *p = &x; — p mein x ka address', 'int *p = &x; — p holds the address of x') },
+        { t: t('*p — value 10 padhta hai', '*p — reads the value 10'), s: t('p ke address par jaakar value padho', 'Go to the address in p and read the value') },
+        { t: t('*p = 20 — x bhi 20 ho gaya', '*p = 20 — x also becomes 20'), s: t('Dono ek hi dabbe ko dekhte hain', 'Both look at the same box') },
+        { t: t('p + 1 — agla int, 4 bytes aage', 'p + 1 — the next int, 4 bytes ahead'), s: t('Pointer arithmetic element ke hisaab se chalti hai', 'Pointer arithmetic moves by element, not by byte') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Pointer Arithmetic se Array Chalna', 'Walking an Array with Pointer Arithmetic'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int *p = arr;
+
+    printf("*p = %d\\n", *p);
+    printf("*(p + 1) = %d\\n", *(p + 1));
+    printf("*(p + 2) = %d\\n", *(p + 2));
+    printf("*(p + 4) = %d\\n", *(p + 4));
+
+    return 0;
+}`,
+        output: `*p = 10
+*(p + 1) = 20
+*(p + 2) = 30
+*(p + 4) = 50`,
+      },
+      {
+        title: t('Do Numbers ka Sum Pointer se', 'Sum of Two Numbers Through Pointers'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int a = 5;
+    int b = 7;
+    int *pa = &a;
+    int *pb = &b;
+
+    printf("Sum = %d\\n", *pa + *pb);
+    printf("Product = %d\\n", *pa * *pb);
+
+    return 0;
+}`,
+        output: `Sum = 12
+Product = 35`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('int x = 10; int *p = &x; likhne ke baad *p ki value kya hogi?', 'After int x = 10; int *p = &x; what is the value of *p?'),
+        opts: [t('x ka address', 'The address of x'), t('10', '10'), t('p ka address', 'The address of p'), t('0', '0')],
+        ans: 1,
+        expl: t('Sahi jawab: *p pointer ke address par rakhi value deta hai, aur p mein x ka address hai, isliye *p = 10.', 'Correct answer: *p gives the value kept at the address in the pointer, and p holds the address of x, so *p = 10.'),
+      },
+      {
+        q: t('int *p = &x; ke baad *p = 20; likhne par kya hoga?', 'After int *p = &x; what happens when you write *p = 20;?'),
+        opts: [t('Sirf p badlega', 'Only p will change'), t('x ki value 20 ho jayegi', 'The value of x will become 20'), t('Kuch nahi hoga', 'Nothing will happen'), t('Program crash hoga', 'The program will crash')],
+        ans: 1,
+        expl: t('Sahi jawab: *p = 20 usi memory par 20 likhta hai jahan x rakha hai, isliye x bhi 20 ho jata hai.', 'Correct answer: *p = 20 writes 20 into the same memory where x is kept, so x also becomes 20.'),
+      },
+      {
+        q: t('int arr[5] mein p = arr; ke baad *(p + 2) kya deta hai?', 'In int arr[5], after p = arr; what does *(p + 2) give?'),
+        opts: [t('arr[0]', 'arr[0]'), t('arr[1]', 'arr[1]'), t('arr[2]', 'arr[2]'), t('arr ka address', 'The address of arr')],
+        ans: 2,
+        expl: t('Sahi jawab: p + 2 do int aage jata hai, isliye *(p + 2) teesre element arr[2] ki value deta hai.', 'Correct answer: p + 2 moves two ints ahead, so *(p + 2) gives the value of the third element, arr[2].'),
+      },
+      {
+        q: t('Bina initialise kiye pointer ko use karna kyun khatarnaak hai?', 'Why is it dangerous to use a pointer without initialising it?'),
+        opts: [t('Compiler error deta hai', 'The compiler gives an error'), t('Pointer mein kachra address hota hai, galat jagah likh sakta hai', 'The pointer holds a garbage address and may write to the wrong place'), t('Program slow ho jata hai', 'The program becomes slow'), t('Koi farak nahi padta', 'It makes no difference')],
+        ans: 1,
+        expl: t('Sahi jawab: bina init ke pointer mein kachra address hota hai, aur *p se us anjaan jagah par likhna memory bigaad sakta hai ya crash kar sakta hai.', 'Correct answer: without initialisation the pointer holds a garbage address, and writing through *p can damage memory or crash the program.'),
+      },
+      {
+        q: t('NULL pointer ka matlab kya hai?', 'What does a NULL pointer mean?'),
+        opts: [t('Pointer ki value 0 hai', 'The pointer value is 0'), t('Pointer kahi nahi point karta', 'The pointer points nowhere'), t('Pointer khaali memory par hai', 'The pointer is on empty memory'), t('Pointer delete ho gaya', 'The pointer is deleted')],
+        ans: 1,
+        expl: t('Sahi jawab: NULL ka matlab hai pointer kisi bhi valid jagah ki taraf nahi point karta; use dereference karna crash karega.', 'Correct answer: NULL means the pointer does not point at any valid place; dereferencing it will crash the program.'),
+      },
+    ],
+    keyNotes: [
+      t('Pointer address store karta hai; & address deta hai aur *p us address ki value deta hai.', 'A pointer stores an address; & gives the address and *p gives the value at that address.'),
+      t('Pointer ka type value ke type se match karna chahiye, warna warning aur galat value milegi.', 'The type of a pointer must match the type of the value, or you get a warning and a wrong value.'),
+      t('p + 1 agle element par jata hai, agle byte par nahi — step type ke size ke barabar hota hai.', 'p + 1 moves to the next element, not the next byte — the step equals the size of the type.'),
+      t('Pointer ko hamesha initialise karo — &x do ya NULL do; bina init ke pointer khatarnaak hai.', 'Always initialise a pointer — give it &x or NULL; an uninitialised pointer is dangerous.'),
+      t('Array ka naam pehle element ka address hota hai, par use badla nahi ja sakta.', 'The name of an array is the address of its first element, but it cannot be changed.'),
+    ],
+    practice: {
+      title: t('Practice: Array ko Pointer se Print Karo', 'Practice: Print an Array Using a Pointer'),
+      task: t('Ek array {3, 6, 9, 12} banao aur use pointer se print karo — index ke bina, sirf pointer arithmetic se. Done tab hoga jab output mein chaaro numbers alag-alag line par dikhein, bilkul expected output jaisa.', 'Create an array {3, 6, 9, 12} and print it with a pointer — without any index, only with pointer arithmetic. You are done when all four numbers appear on separate lines, exactly like the expected output.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int arr[4] = {3, 6, 9, 12};
+    int *p = arr;
+
+    for (p = arr; p < arr + 4; p++) {
+        printf("%d\\n", *p);
+    }
+
+    return 0;
+}`,
+      expected: `3
+6
+9
+12`,
+    },
+    readMinutes: 12,
+  };
+
+const cPointersFunctions: Article = {
+    id: 'c-pointers-functions',
+    subjectId: 'c-programming',
+    title: t(
+      'Pointers aur Functions — Pass by Reference aur Array Passing',
+      'Pointers and Functions — Pass by Reference and Passing Arrays'
+    ),
+    summary: t(
+      'C mein function ko value dene par sirf copy jaati hai, par pointer dene par original variable badla ja sakta hai. Is article mein swap, array passing aur function se value badalna seekho.',
+      'In C, passing a value to a function sends only a copy, but passing a pointer lets the function change the original variable. In this article you will learn swap, passing arrays, and changing values from inside a function.'
+    ),
+    sections: [
+      {
+        heading: t('1. Pass by Value vs Pass by Reference Kya Hai?', '1. What Are Pass by Value and Pass by Reference?'),
+        body: t(
+          `C mein jab aap function ko variable bhejte ho, toh by default **pass by value** hota hai — matlab function ko variable ki ek **copy** milti hai, original nahi. \`swap(a, b)\` mein agar function ke andar \`a\` aur \`b\` badal bhi diye jaayein, toh bahar wale \`a\` aur \`b\` waise ke waise rehte hain, kyunki function ne sirf copy par kaam kiya tha. Yeh bilkul usi tarah hai jaise aap kisi ko apne notes ki photocopy de do — woh photocopy par kuch bhi likh le, aapke original notes par koi farak nahi padta.
+
+**Pass by reference** mein aap function ko variable ki copy nahi, uska **address** bhejte ho. \`swap(&a, &b)\` likhne par function ko \`a\` aur \`b\` ke address mil jaate hain, aur pointer se woh original variables ko seedha badal sakta hai. Yeh photocopy dene ki jagah original notebook dene jaisa hai — jo bhi likha jaayega, woh original par hi likha jaayega. C mein asli reference nahi hota, isliye hum pointer ko hi reference ki tarah use karte hain — isiliye ise pass by reference kehte hain, jabki andar se yeh pointer passing hai.
+
+Farq ko yaad rakhne ka tareeka simple hai: agar function ko sirf value chahiye — jaise sum nikaalna — toh pass by value kaafi hai. Agar function ko original variable ko **badalna** hai — jaise swap karna, ya ek se zyada values wapas dena — toh pointer bhejna padega. Interview mein yeh sawaal seedha poochha jaata hai: "C mein pass by reference kaise hota hai?" Answer hai — address bhej kar, pointer parameter se.`,
+          `In C, when you pass a variable to a function, the default is **pass by value** — the function gets a **copy** of the variable, not the original. In \`swap(a, b)\`, even if the function changes \`a\` and \`b\` inside, the \`a\` and \`b\` outside stay exactly as they were, because the function worked only on the copy. It is like giving someone a photocopy of your notes — whatever they write on the photocopy, your original notes stay unchanged.
+
+In **pass by reference**, you do not pass a copy of the variable to the function, you pass its **address**. Writing \`swap(&a, &b)\` gives the function the addresses of \`a\` and \`b\`, and through pointers it can change the original variables directly. It is like handing over the original notebook instead of a photocopy — whatever is written goes onto the original itself. C has no real reference, so we use a pointer as a reference — that is why it is called pass by reference, even though inside it is pointer passing.
+
+The way to remember the difference is simple: if the function only needs a value — for example, to find a sum — pass by value is enough. If the function must **change** the original variable — for example, to swap, or to return more than one value — you must pass a pointer. In interviews this question is asked directly: "How does pass by reference work in C?" The answer is — by passing the address, with a pointer parameter.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Photocopy, Original Notebook aur Courier', '2. Real-Life Examples: Photocopy, Original Notebook, and Courier'),
+        body: t(
+          `**Photocopy vs original notebook** wala example pehle section mein aa chuka hai, aur wahi is poore article ki jaan hai. Jab teacher aapke homework ki photocopy lekar us par correction karti hai, toh aapka original homework waisa ka waisa rehta hai — yeh pass by value hai. Jab teacher aapka original notebook lekar usi par correction karti hai, toh aapka homework badal jaata hai — yeh pass by reference hai. C mein function bhi bilkul aise hi kaam karta hai.
+
+Doosra example hai **courier wala address**. Maan lo aapko apne dost ke ghar par ek parcel bhejna hai. Aap courier wale ko parcel ki photocopy nahi dete, aap use ghar ka pata dete ho, aur woh parcel seedha usi ghar par pahuncha deta hai. Pointer bhi wahi pata hai — function ko address milte hi woh original variable tak pahunch jaata hai. Aur jaise courier wale ko pata dene ke liye aapko \`&\` likhna padta hai, waise hi function ko address bhejte waqt \`&\` lagta hai.
+
+Teesra example hai **array ka passing**. Jab aap poora array function ko bhejte ho, toh C array ki copy nahi banata — woh sirf pehle element ka address bhejta hai. Iska matlab hai array hamesha pass by reference ki tarah behave karta hai: function ke andar array badla, toh bahar wala array bhi badal jaata hai. Yeh C ka ek khaas rule hai jo beginners ko hairaan karta hai, par yahi wajah hai ki bade arrays ko function mein bhejna sasta hota hai — copy banane mein time aur memory dono lagte.`,
+          `The example of a **photocopy versus the original notebook** already appeared in the first section, and it is the heart of this whole article. When a teacher takes a photocopy of your homework and corrects that copy, your original homework stays exactly as it was — that is pass by value. When the teacher takes your original notebook and corrects that itself, your homework changes — that is pass by reference. A function in C works in exactly the same way.
+
+A second example is a **courier address**. Suppose you must send a parcel to your friend's house. You do not give the courier a photocopy of the parcel, you give the courier the address of the house, and the courier delivers the parcel straight to that house. A pointer is that same address — as soon as the function gets the address, it reaches the original variable. And just as you must write the address to give it to the courier, you must write \`&\` when you pass an address to a function.
+
+A third example is **passing an array**. When you pass a whole array to a function, C does not make a copy of the array — it only passes the address of the first element. That means an array always behaves like pass by reference: if the array changes inside the function, the array outside also changes. This is a special rule of C that surprises beginners, but it is also why passing a large array to a function is cheap — making a copy would cost both time and memory.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Swap ka Dry Run — Copy se Address Tak', '3. Step-by-Step: A Swap Dry Run — From Copy to Address'),
+        body: t(
+          `Pehle dekhte hain ki **bina pointer ke swap kyun fail hota hai**. Maan lo \`a = 5\` aur \`b = 9\` hai. Aap \`swap(a, b)\` bulate ho jahan function hai \`void swap(int x, int y)\`. Function ko \`x = 5\` aur \`y = 9\` ki copy milti hai. Function ke andar temp se \`x\` aur \`y\` badal jaate hain — \`x = 9\`, \`y = 5\`. Lekin function khatm hote hi \`x\` aur \`y\` gayab ho jaate hain, aur bahar wale \`a\` aur \`b\` ab bhi 5 aur 9 rehte hain. Swap hua hi nahi — kyunki function ne sirf copy ko chhua tha.
+
+Ab **pointer wala swap** trace karte hain, jo neeche wale code mein hai. \`main\` mein \`a = 5\`, \`b = 9\`. \`swap(&a, &b)\` bulane par function ko \`a\` aur \`b\` ke address milte hain. Function ke andar parameter hain \`int *a\` aur \`int *b\` — dhyaan do, yeh naam bahar wale \`a\` aur \`b\` se alag hain, yeh pointer hain. Pehli line \`int temp = *a;\` mein \`temp = 5\` hota hai. Doosri line \`*a = *b;\` mein \`a\` wale address par 9 likh diya jaata hai, matlab bahar wala \`a\` ab 9 hai. Teesri line \`*b = temp;\` mein \`b\` wale address par 5 likh diya jaata hai, matlab bahar wala \`b\` ab 5 hai.
+
+Function khatm hone ke baad \`main\` mein print hota hai: \`After swap: a = 9, b = 5\`. Swap ho gaya, kyunki function ne copy ko nahi, original variables ko badla tha. Yahi pass by reference ka poora matlab hai, aur yahi pattern aapko har jagah milega — function se value badalni ho, toh address bhejo.`,
+          `First, let us see **why a swap fails without a pointer**. Suppose \`a = 5\` and \`b = 9\`. You call \`swap(a, b)\` where the function is \`void swap(int x, int y)\`. The function gets copies, \`x = 5\` and \`y = 9\`. Inside the function, \`x\` and \`y\` are swapped with a temp variable — \`x = 9\`, \`y = 5\`. But as soon as the function ends, \`x\` and \`y\` disappear, and the \`a\` and \`b\` outside are still 5 and 9. The swap never happened — because the function touched only the copy.
+
+Now trace the **pointer swap** in the code below. In \`main\`, \`a = 5\` and \`b = 9\`. Calling \`swap(&a, &b)\` gives the function the addresses of \`a\` and \`b\`. Inside the function, the parameters are \`int *a\` and \`int *b\` — note that these names are different from the \`a\` and \`b\` outside; these are pointers. In the first line, \`int temp = *a;\`, \`temp\` becomes 5. In the second line, \`*a = *b;\`, 9 is written at the address of \`a\`, so the \`a\` outside is now 9. In the third line, \`*b = temp;\`, 5 is written at the address of \`b\`, so the \`b\` outside is now 5.
+
+After the function ends, \`main\` prints: \`After swap: a = 9, b = 5\`. The swap worked, because the function changed the original variables, not copies. That is the whole meaning of pass by reference, and you will meet this pattern everywhere — when a function must change a value, pass the address.`
+        ),
+        code: {
+          title: t('Swap — Pass by Reference se Do Variables Badalna', 'Swap — Changing Two Variables with Pass by Reference'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main(void) {
+    int a = 5;
+    int b = 9;
+
+    printf("Before swap: a = %d, b = %d\\n", a, b);
+    swap(&a, &b);
+    printf("After swap: a = %d, b = %d\\n", a, b);
+
+    return 0;
+}`,
+          output: `Before swap: a = 5, b = 9
+After swap: a = 9, b = 5`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: & Bhoolna, * Bhoolna aur NULL Bhejna', '4. Common Mistakes: Forgetting &, Forgetting *, and Passing NULL'),
+        body: t(
+          `Sabse aam galti hai **call karte waqt \`&\` bhoolna**: \`swap(a, b)\` likhne par compiler error dega, kyunki function ko \`int *\` chahiye aur aap \`int\` de rahe ho. Compiler bolega "expected int * but argument is of type int" — yeh error dekhte hi samajh jaao ki \`&\` missing hai. Doosri galti hai **function ke andar \`*\` bhoolna**: \`a = b;\` likhne se pointer khud badal jaata hai, value nahi. Function ke andar hamesha \`*a\` aur \`*b\` se value ko chhoona hai, seedha \`a\` se nahi.
+
+Teesri galti hai **NULL pointer bhejna**: \`swap(NULL, &b)\` likhne par function ke andar \`*a\` crash kar dega. Jab bhi function pointer leta hai, toh uske andar check karna achhi aadat hai: \`if (a == NULL || b == NULL) return;\`. Chauthi galti hai **array ko value samajhna**: \`void f(int arr[5])\` mein \`arr\` asal mein \`int *\` hota hai, isliye function ke andar \`sizeof(arr)\` poore array ka size nahi dega, sirf pointer ka size dega. Isi liye array ke saath hamesha uska size alag se bhejna chahiye, jaise \`sum_array(arr, 4)\`.
+
+Paanchvi galti hai **local variable ka address wapas dena**: function ke andar banaya gaya \`int x\` function khatm hote hi gayab ho jaata hai, isliye \`return &x;\` karke uska address bahar dena galat hai. Bahar wala code us address ko use karega, par wahan ab koi valid value nahi hogi. Agar function se pointer wapas dena hai, toh ya toh \`malloc\` se memory lo, ya caller se mila hua pointer hi wapas do.`,
+          `The most common mistake is **forgetting \`&\` when calling**: writing \`swap(a, b)\` makes the compiler give an error, because the function wants an \`int *\` and you are giving an \`int\`. The compiler will say "expected int * but argument is of type int" — as soon as you see this error, understand that \`&\` is missing. The second mistake is **forgetting \`*\` inside the function**: writing \`a = b;\` changes the pointer itself, not the value. Inside the function you must always touch the value with \`*a\` and \`*b\`, never with plain \`a\`.
+
+The third mistake is **passing a NULL pointer**: \`swap(NULL, &b)\` will crash at \`*a\` inside the function. Whenever a function takes a pointer, it is a good habit to check inside: \`if (a == NULL || b == NULL) return;\`. The fourth mistake is **thinking of an array as a value**: in \`void f(int arr[5])\`, \`arr\` is really an \`int *\`, so \`sizeof(arr)\` inside the function will not give the size of the whole array, only the size of a pointer. That is why you should always pass the size of an array separately, like \`sum_array(arr, 4)\`.
+
+The fifth mistake is **returning the address of a local variable**: an \`int x\` created inside a function disappears when the function ends, so \`return &x;\` to give its address outside is wrong. The code outside will use that address, but no valid value lives there any more. If a function must return a pointer, either take memory from \`malloc\`, or return a pointer that the caller gave you.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Array Size, Ek hi Variable aur Khaali Array', '5. Edge Cases: Array Size, the Same Variable, and an Empty Array'),
+        body: t(
+          `**Array ka size** sabse bada edge case hai. Function ko sirf array ka address milta hai, uska size nahi. Isliye \`int sum(int *arr, int n)\` mein \`n\` alag se bhejna padta hai. Agar aap galat \`n\` bhej doge — jaise array 4 ka hai aur aapne 10 bhej diya — toh function array ki hadd se bahar padhega aur kachra jod dega. Hamesha size ko array ke saath bhejo, aur function ke andar loop ko \`n\` se band karo.
+
+**Ek hi variable do baar bhejna** ek ajeeb edge case hai: \`swap(&a, &a)\` bulane par kya hoga? Trace karo: \`temp = *a\` (5), \`*a = *b\` (dono ek hi address, toh 5 hi likha), \`*b = temp\` (phir 5). Result: \`a\` ab bhi 5 hai, jo sahi hai — swap khud se karne par kuch badalna nahi chahiye. Yeh swap ka code is case mein safe hai, par har function aisa safe nahi hota, isliye aise calls se bacho.
+
+**Khaali array** ka matlab hai size 0. \`sum_array(arr, 0)\` mein loop ek baar bhi nahi chalega aur sum 0 milega — yeh sahi hai, par function ko \`n == 0\` par bhi crash nahi karna chahiye. Aur agar \`n\` negative ho, toh bhi loop ko chalna nahi chahiye. Achha function pehle \`n\` ko check karta hai, phir loop chalata hai.`,
+          `The **size of an array** is the biggest edge case. A function only gets the address of the array, not its size. That is why in \`int sum(int *arr, int n)\` you must pass \`n\` separately. If you pass a wrong \`n\` — for example, the array has 4 elements and you pass 10 — the function will read beyond the end of the array and add garbage. Always pass the size together with the array, and bound the loop inside the function by \`n\`.
+
+**Passing the same variable twice** is a strange edge case: what happens on \`swap(&a, &a)\`? Trace it: \`temp = *a\` (5), \`*a = *b\` (both are the same address, so 5 is written again), \`*b = temp\` (5 again). The result: \`a\` is still 5, which is correct — swapping a thing with itself should change nothing. This swap code is safe in this case, but not every function is so safe, so avoid such calls.
+
+An **empty array** means size 0. In \`sum_array(arr, 0)\` the loop never runs even once and the sum is 0 — that is correct, but the function must not crash when \`n == 0\`. And if \`n\` is negative, the loop should not run either. A good function checks \`n\` first, then runs the loop.`
+        ),
+      },
+      {
+        heading: t('6. What If: Pointer ki Jagah Return Value, aur Global Variable?', '6. What If: A Return Value Instead of a Pointer, and a Global Variable?'),
+        body: t(
+          `**What if: pointer ki jagah sirf return value use kar lein?** Ek value ke liye return kaafi hai — \`int square(int n)\` mein \`return n * n;\` se kaam ho jaata hai. Lekin jab function ko **do values** deni hon, toh return se kaam nahi chalega. Tab do raaste hain: pointer se dono variables badal do, ya ek struct return kar do. Swap ke liye pointer wala raasta sabse seedha hai, kyunki swap ka kaam hi variables ko badalna hai, koi nayi value banana nahi.
+
+**What if: global variable use kar lein?** Aap \`a\` aur \`b\` ko global bana kar function se seedha badal sakte ho, bina pointer ke. Lekin yeh buri aadat hai: global variable ko koi bhi function badal sakta hai, isliye bug dhoondhna mushkil ho jaata hai, aur function ko dobara use karna mushkil ho jaata hai. Pointer wala tareeka behtar hai, kyunki function sirf wahi variables badalta hai jinke address use diye gaye hain — baaki sab safe rehta hai.
+
+**What if: array ko copy karke bhej dein?** C mein array ki copy banane ka seedha tareeka nahi hai — function parameter mein \`int arr[5]\` likhne par bhi woh pointer ban jaata hai. Agar aapko sach mein copy chahiye, toh function ke andar ek naya array banao aur loop se values copy karo. Yeh tab karo jab original array ko bilkul nahi badalna ho.`,
+          `**What if we use only a return value instead of a pointer?** For one value, a return is enough — in \`int square(int n)\`, \`return n * n;\` does the job. But when a function must give **two values**, a return cannot do it. Then there are two ways: change both variables through pointers, or return a struct. For a swap, the pointer way is the most direct, because the job of a swap is to change variables, not to create a new value.
+
+**What if we use a global variable?** You can make \`a\` and \`b\` global and change them directly from the function, without any pointer. But this is a bad habit: any function can change a global variable, so finding a bug becomes hard, and reusing the function becomes hard. The pointer way is better, because the function changes only the variables whose addresses were given to it — everything else stays safe.
+
+**What if we pass a copy of the array?** In C there is no direct way to copy an array — even writing \`int arr[5]\` as a function parameter turns it into a pointer. If you really need a copy, create a new array inside the function and copy the values with a loop. Do that when the original array must not be changed at all.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Pass by Reference ka Poora Picture', '7. Summary: The Full Picture of Pass by Reference'),
+        body: t(
+          `C mein function ko value dene par sirf copy jaati hai, isliye function bahar wale variable ko nahi badal sakta. Address dene par — matlab pointer parameter se — function original variable ko badal sakta hai, aur yahi pass by reference hai. Swap iska sabse saaf example hai: \`swap(&a, &b)\` ke baad \`a\` aur \`b\` ki values badal jaati hain. Array function mein hamesha address ki tarah jaata hai, isliye function ke andar array badalne par bahar wala array bhi badal jaata hai.
+
+Yaad rakhne wali baatein: call karte waqt \`&\` lagao, function ke andar \`*p\` se value chhoo, aur array ke saath uska size alag se bhejo. Function ke andar pointer ko use karne se pehle \`NULL\` check karo, aur local variable ka address kabhi wapas mat do. Yeh chaar rules aapko pointer wale functions mein hone wali 90% galtiyon se bacha lenge.
+
+Agle article mein hum pointers ko ek level aur aage le jaayenge — double pointer, array of pointers, aur function pointer. Wahan yahi pass by reference wali samajh kaam aayegi, bas pointer ke peeche ek aur pointer hoga.`,
+          `In C, passing a value to a function sends only a copy, so the function cannot change the variable outside. Passing the address — with a pointer parameter — lets the function change the original variable, and that is pass by reference. A swap is the clearest example: after \`swap(&a, &b)\`, the values of \`a\` and \`b\` are exchanged. An array always goes to a function as an address, so changing the array inside the function also changes the array outside.
+
+Remember these points: put \`&\` when you call, touch the value with \`*p\` inside the function, and pass the size of an array separately. Check a pointer for \`NULL\` before using it inside a function, and never return the address of a local variable. These four rules will save you from 90% of the mistakes in pointer functions.
+
+In the next article we will take pointers one level further — double pointers, arrays of pointers, and function pointers. The same pass by reference understanding will be useful there, only with one more pointer behind the pointer.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t('Pass by Value vs Pass by Reference', 'Pass by Value vs Pass by Reference'),
+      caption: t('Copy jaati hai toh original safe; address jaata hai toh original badalta hai', 'When a copy goes, the original stays safe; when the address goes, the original changes'),
+      nodes: [
+        { t: t('main: a = 5, b = 9', 'main: a = 5, b = 9'), s: t('Original variables main mein hain', 'The original variables live in main') },
+        { t: t('Pass by value: swap(a, b)', 'Pass by value: swap(a, b)'), s: t('Function ko copy milti hai — original nahi badalta', 'The function gets a copy — the original does not change') },
+        { t: t('Pass by reference: swap(&a, &b)', 'Pass by reference: swap(&a, &b)'), s: t('Function ko address milta hai — original badal jaata hai', 'The function gets the address — the original changes') },
+        { t: t('Function ke andar: *a aur *b', 'Inside the function: *a and *b'), s: t('Pointer se original memory par likho', 'Write to the original memory through the pointer') },
+        { t: t('Result: a = 9, b = 5', 'Result: a = 9, b = 5'), s: t('Swap ho gaya — main mein values badal gayi', 'The swap worked — the values in main changed') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Pointer se Score Badhana', 'Increasing a Score Through a Pointer'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void add_ten(int *n) {
+    *n = *n + 10;
+}
+
+int main(void) {
+    int score = 50;
+
+    printf("Score before: %d\\n", score);
+    add_ten(&score);
+    printf("Score after: %d\\n", score);
+
+    return 0;
+}`,
+        output: `Score before: 50
+Score after: 60`,
+      },
+      {
+        title: t('Array ka Sum Function mein', 'Sum of an Array Inside a Function'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int sum_array(int *arr, int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+int main(void) {
+    int marks[4] = {80, 90, 70, 85};
+
+    printf("Total = %d\\n", sum_array(marks, 4));
+
+    return 0;
+}`,
+        output: `Total = 325`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('C mein swap(a, b) — bina pointer ke — kyun fail hota hai?', 'Why does swap(a, b) — without a pointer — fail in C?'),
+        opts: [t('Function copy par kaam karta hai, original par nahi', 'The function works on a copy, not on the original'), t('Compiler swap ko allow nahi karta', 'The compiler does not allow swap'), t('temp variable kaam nahi karta', 'The temp variable does not work'), t('a aur b badle nahi ja sakte', 'a and b cannot be changed')],
+        ans: 0,
+        expl: t('Sahi jawab: pass by value mein function ko sirf copy milti hai, isliye andar badli values function khatm hote hi gayab ho jati hain.', 'Correct answer: in pass by value the function only gets a copy, so the changed values disappear when the function ends.'),
+      },
+      {
+        q: t('swap ko sahi tareeke se call kaise karte hain?', 'How do you call swap correctly?'),
+        opts: [t('swap(a, b)', 'swap(a, b)'), t('swap(&a, &b)', 'swap(&a, &b)'), t('swap(*a, *b)', 'swap(*a, *b)'), t('swap(a, &b)', 'swap(a, &b)')],
+        ans: 1,
+        expl: t('Sahi jawab: function ko int * chahiye, isliye address bhejne ke liye &a aur &b likhna padta hai.', 'Correct answer: the function wants int *, so you must write &a and &b to pass the addresses.'),
+      },
+      {
+        q: t('Function ko array bhejne par andar kya milta hai?', 'What does a function get inside when you pass an array to it?'),
+        opts: [t('Poore array ki copy', 'A copy of the whole array'), t('Sirf pehla element', 'Only the first element'), t('Pehle element ka address (pointer)', 'The address of the first element (a pointer)'), t('Array ka size', 'The size of the array')],
+        ans: 2,
+        expl: t('Sahi jawab: C array ki copy nahi banata, woh sirf pehle element ka address bhejta hai, isliye function ke andar badlav bahar bhi dikhta hai.', 'Correct answer: C does not copy the array, it only passes the address of the first element, so changes inside the function show up outside too.'),
+      },
+      {
+        q: t('Function ke andar pointer use karne se pehle kya check karna chahiye?', 'What should you check before using a pointer inside a function?'),
+        opts: [t('Pointer NULL toh nahi hai', 'Whether the pointer is NULL'), t('Pointer ka size', 'The size of the pointer'), t('Pointer ka naam', 'The name of the pointer'), t('Kuch check nahi karna', 'Nothing needs checking')],
+        ans: 0,
+        expl: t('Sahi jawab: NULL pointer ko dereference karna crash karega, isliye pehle if (p == NULL) check karo.', 'Correct answer: dereferencing a NULL pointer will crash, so first check with if (p == NULL).'),
+      },
+      {
+        q: t('Function ke andar sizeof(arr) array ka size kyun nahi deta?', 'Why does sizeof(arr) inside a function not give the size of the array?'),
+        opts: [t('arr wahan pointer ban jata hai', 'arr becomes a pointer there'), t('sizeof kaam nahi karta', 'sizeof does not work'), t('Array khaali hota hai', 'The array is empty'), t('Compiler bug hai', 'It is a compiler bug')],
+        ans: 0,
+        expl: t('Sahi jawab: function parameter mein array pointer mein badal jata hai, isliye sizeof sirf pointer ka size deta hai — size alag se bhejna padta hai.', 'Correct answer: an array parameter turns into a pointer, so sizeof only gives the size of a pointer — the size must be passed separately.'),
+      },
+    ],
+    keyNotes: [
+      t('Pass by value mein copy jati hai — original nahi badalta; pass by reference mein address jata hai — original badalta hai.', 'In pass by value a copy goes — the original does not change; in pass by reference the address goes — the original changes.'),
+      t('Function ko pointer chahiye toh call karte waqt & lagao, aur andar * se value chhoo.', 'When a function wants a pointer, put & when you call it, and touch the value with * inside.'),
+      t('Array function mein hamesha address ki tarah jata hai — size alag se bhejna padta hai.', 'An array always goes to a function as an address — its size must be passed separately.'),
+      t('Pointer use karne se pehle NULL check karo; local variable ka address kabhi wapas mat do.', 'Check a pointer for NULL before using it; never return the address of a local variable.'),
+      t('Ek value ke liye return kaafi hai; do ya zyada values badalni hon toh pointer bhejo.', 'A return is enough for one value; to change two or more values, pass pointers.'),
+    ],
+    practice: {
+      title: t('Practice: Array ko Function se Reverse Karo', 'Practice: Reverse an Array from a Function'),
+      task: t('Ek function reverse likho jo array aur uska size lekar array ko ulta kar de. Starter mein array {1, 2, 3, 4, 5} hai. Done tab hoga jab output mein pehle Before wali line aur phir After wali line expected output jaisi dikhe.', 'Write a function reverse that takes an array and its size and reverses the array. The starter has the array {1, 2, 3, 4, 5}. You are done when the output shows the Before line first and then the After line, exactly like the expected output.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+void reverse(int *arr, int n) {
+    for (int i = 0; i < n / 2; i++) {
+        int temp = arr[i];
+        arr[i] = arr[n - 1 - i];
+        arr[n - 1 - i] = temp;
+    }
+}
+
+int main(void) {
+    int arr[5] = {1, 2, 3, 4, 5};
+
+    printf("Before: %d %d %d %d %d\\n", arr[0], arr[1], arr[2], arr[3], arr[4]);
+    reverse(arr, 5);
+    printf("After: %d %d %d %d %d\\n", arr[0], arr[1], arr[2], arr[3], arr[4]);
+
+    return 0;
+}`,
+      expected: `Before: 1 2 3 4 5
+After: 5 4 3 2 1`,
+    },
+    readMinutes: 12,
+  };
+
+const cPointersAdvanced: Article = {
+    id: 'c-pointers-advanced',
+    subjectId: 'c-programming',
+    title: t(
+      'Advanced Pointers — Double Pointer, Array of Pointers aur Function Pointer',
+      'Advanced Pointers — Double Pointer, Array of Pointers, and Function Pointer'
+    ),
+    summary: t(
+      'Pointer ke peeche ek aur pointer, pointers ka array, aur function ko point karne wala pointer — yeh teen advanced tools C ko bahut taakat dete hain. Har ek ko ek simple example se samjho.',
+      'Another pointer behind a pointer, an array of pointers, and a pointer that points at a function — these three advanced tools give C great power. Learn each one with a simple example.'
+    ),
+    sections: [
+      {
+        heading: t('1. Double Pointer, Array of Pointers aur Function Pointer Kya Hain?', '1. What Are Double Pointers, Arrays of Pointers, and Function Pointers?'),
+        body: t(
+          `**Double pointer** ka matlab hai pointer ka pointer: \`int **pp\` ek aisa variable hai jo ek \`int *\` ka address store karta hai. \`int x = 42;\` ke baad \`int *p = &x;\` aur \`int **pp = &p;\` likhne par chain banti hai — \`pp\` se \`p\` milta hai, \`p\` se \`x\` ka address milta hai, aur \`*p\` se value milti hai. \`**pp\` likhne par do baar dereference hota hai, isliye \`**pp\` seedha \`x\` ki value 42 deta hai. Double pointer tab kaam aata hai jab function ko khud pointer ko badalna ho — jaise \`malloc\` se memory lekar pointer ko set karna.
+
+**Array of pointers** ka matlab hai pointers ka array: \`char *names[3] = {"Asha", "Ravi", "Meena"};\` mein har element ek string ki taraf point karta hai. Yeh ek hi type ke kai pointers ko ek saath rakhne ka tareeka hai, aur command-line arguments (\`argv\`) bhi bilkul isi tarah kaam karte hain. **Function pointer** ka matlab hai function ka address store karne wala pointer: \`int (*op)(int, int)\` ek aisa pointer hai jo do \`int\` lekar \`int\` dene wale kisi bhi function ki taraf point kar sakta hai — jaise \`add\` ya \`subtract\`. Function pointer se aap function ko variable ki tarah bhej sakte ho, aur runtime par decide kar sakte ho ki kaunsa function chalana hai.
+
+Teeno ka ek hi idea hai: pointer sirf variable ka address nahi, kisi bhi cheez ka address store kar sakta hai — pointer ka, string ka, ya function ka. Jab aap yeh samajh jaate ho, toh C ki advanced cheezein jaise linked list, callback aur dynamic 2D array aasan lagne lagti hain.`,
+          `A **double pointer** means a pointer to a pointer: \`int **pp\` is a variable that stores the address of an \`int *\`. After \`int x = 42;\`, writing \`int *p = &x;\` and \`int **pp = &p;\` builds a chain — \`pp\` gives \`p\`, \`p\` gives the address of \`x\`, and \`*p\` gives the value. Writing \`**pp\` dereferences twice, so \`**pp\` directly gives the value of \`x\`, 42. A double pointer is used when a function must change the pointer itself — for example, to take memory from \`malloc\` and set the pointer.
+
+An **array of pointers** means an array of pointers: in \`char *names[3] = {"Asha", "Ravi", "Meena"};\`, every element points at a string. This is a way to keep many pointers of one type together, and command-line arguments (\`argv\`) work in exactly this way. A **function pointer** means a pointer that stores the address of a function: \`int (*op)(int, int)\` is a pointer that can point at any function which takes two \`int\` values and returns an \`int\` — like \`add\` or \`subtract\`. With a function pointer you can pass a function around like a variable, and decide at run time which function to run.
+
+All three share one idea: a pointer can store the address of anything — not only a variable, but a pointer, a string, or a function. Once you understand this, advanced C things like linked lists, callbacks, and dynamic 2D arrays start to feel easy.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Chaabi ka Dabba, Naam ki List aur Remote Button', '2. Real-Life Examples: A Box of Keys, a List of Names, and a Remote Button'),
+        body: t(
+          `**Double pointer** ko samjho **chaabi ke dabbe** se. Aapke paas ek dabba hai jismein locker ki chaabi rakhi hai. Dabba khud chaabi nahi hai, woh chaabi ki jagah hai. Agar aapko chaabi badalni hai, toh aapko dabbe tak pahunchna padega — matlab pointer ke pointer tak. Function ko jab pointer badalna hota hai, toh use pointer ka address chahiye hota hai, aur wahi double pointer hai. \`malloc\` wale code mein aap yahi pattern dekhoge: function ke andar pointer ko nayi memory se set karna ho, toh double pointer bhejna padta hai.
+
+**Array of pointers** ko samjho **naam ki list** se. School ki class mein har student ka naam ek alag kagaz par likha hai, aur teacher ke paas un kagazon ki list hai. List mein kagaz nahi, kagazon tak pahunchne ka rasta hai. \`char *names[3]\` bhi wahi list hai — har element ek string tak pahunchne ka rasta hai. Yeh 2D array se behtar hai, kyunki har naam alag length ka ho sakta hai aur memory bhi utni hi lagti hai jitni zaroorat hai.
+
+**Function pointer** ko samjho **TV ke remote** se. Remote par ek button hai, aur button dabane par TV par kuch hota hai. Button khud kaam nahi karta, woh ek function ko bulata hai. Agar aap button ko kisi aur function se jod do, toh wahi button kuch aur karne lagega. C mein function pointer bhi wahi button hai — aap use \`add\` se jod do toh woh jod karega, \`subtract\` se jod do toh woh ghataayega. Calculator aur menu wale programs mein yahi pattern use hota hai.`,
+          `Understand a **double pointer** with a **box of keys**. You have a box in which the locker key is kept. The box itself is not the key, it is the place of the key. If you must change the key, you must reach the box — that is, the pointer to the pointer. When a function must change a pointer, it needs the address of the pointer, and that is a double pointer. You will see this pattern in \`malloc\` code: to set a pointer to new memory inside a function, you must pass a double pointer.
+
+Understand an **array of pointers** with a **list of names**. In a school class, the name of every student is written on a separate paper, and the teacher has a list of those papers. The list does not hold the papers, it holds the way to reach them. \`char *names[3]\` is that same list — every element is a way to reach a string. It is better than a 2D array, because every name can have a different length and it uses only as much memory as needed.
+
+Understand a **function pointer** with a **TV remote button**. There is a button on the remote, and pressing the button does something on the TV. The button itself does no work, it calls a function. If you connect the button to another function, the same button will start doing something else. In C, a function pointer is that same button — connect it to \`add\` and it will add, connect it to \`subtract\` and it will subtract. Calculator and menu programs use this very pattern.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Double Pointer ka Dry Run (pp se x Tak)', '3. Step-by-Step: A Double Pointer Dry Run (From pp to x)'),
+        body: t(
+          `Neeche wale program ko step by step trace karte hain. Pehli line \`int x = 42;\` ek variable banati hai jismein 42 hai. Doosri line \`int *p = &x;\` ek pointer banati hai jo \`x\` ka address rakhta hai. Teesri line \`int **pp = &p;\` ek double pointer banati hai jo \`p\` ka address rakhta hai. Ab chain poori hai: \`pp\` se \`p\` milta hai, \`p\` se \`x\` ka address milta hai, aur \`*p\` se 42 milta hai.
+
+Pehla print \`printf("x = %d\\n", x);\` seedha 42 chhapta hai. Doosra print \`printf("*p = %d\\n", *p);\` ek baar dereference karta hai — \`p\` ke address par jaakar value 42 padhta hai. Teesra print \`printf("**pp = %d\\n", **pp);\` do baar dereference karta hai — pehle \`pp\` se \`p\` milta hai, phir \`p\` se \`x\` ki value 42 milti hai. Teeno print mein 42 hi aata hai, kyunki teeno ek hi value ki taraf jaate hain, bas alag-alag raaste se.
+
+Aakhri line \`**pp = 99;\` sabse interesting hai: yeh do baar dereference karke \`x\` wali memory par 99 likh deta hai. Isliye uske baad \`x\` print karne par 99 milta hai. Yeh wahi kaam hai jo double pointer function ke andar karta hai — bahar wale pointer ya variable ko badalna, bina use seedha chhooe.`,
+          `Let us trace the program below step by step. The first line, \`int x = 42;\`, creates a variable holding 42. The second line, \`int *p = &x;\`, creates a pointer that holds the address of \`x\`. The third line, \`int **pp = &p;\`, creates a double pointer that holds the address of \`p\`. Now the chain is complete: \`pp\` gives \`p\`, \`p\` gives the address of \`x\`, and \`*p\` gives 42.
+
+The first print, \`printf("x = %d\\n", x);\`, directly prints 42. The second print, \`printf("*p = %d\\n", *p);\`, dereferences once — it goes to the address in \`p\` and reads the value 42. The third print, \`printf("**pp = %d\\n", **pp);\`, dereferences twice — first \`pp\` gives \`p\`, then \`p\` gives the value of \`x\`, 42. All three prints show 42, because all three reach the same value, only by different routes.
+
+The last line, \`**pp = 99;\`, is the most interesting: it dereferences twice and writes 99 into the memory of \`x\`. That is why printing \`x\` after it gives 99. This is the same job a double pointer does inside a function — changing a pointer or variable outside, without touching it directly.`
+        ),
+        code: {
+          title: t('Double Pointer se Value Padhna aur Badalna', 'Reading and Changing a Value Through a Double Pointer'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int x = 42;
+    int *p = &x;
+    int **pp = &p;
+
+    printf("x = %d\\n", x);
+    printf("*p = %d\\n", *p);
+    printf("**pp = %d\\n", **pp);
+
+    **pp = 99;
+    printf("After **pp = 99, x = %d\\n", x);
+
+    return 0;
+}`,
+          output: `x = 42
+*p = 42
+**pp = 42
+After **pp = 99, x = 99`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: * ki Ginti, Bracket Bhoolna aur Galat Dereference', '4. Common Mistakes: Counting the *, Forgetting Brackets, and Wrong Dereference'),
+        body: t(
+          `Double pointer mein sabse aam galti hai **\* ki ginti galat karna**: \`int **pp\` ke liye value chahiye toh \`**pp\` likhna hai, sirf \`*pp\` likhne par aapko \`int *\` milega, value nahi. \`printf("%d", *pp);\` likhne par compiler warning dega, kyunki aap pointer ko \`%d\` se chhapne ki koshish kar rahe ho. Har level ke liye ek \`*\` chahiye — ek level ke liye \`*p\`, do level ke liye \`**pp\`.
+
+Function pointer mein sabse aam galti hai **bracket bhoolna**: \`int *op(int, int)\` ka matlab hai "ek function jo \`int *\` return karta hai", jabki \`int (*op)(int, int)\` ka matlab hai "ek pointer jo function ki taraf point karta hai". Bracket ke bina matlab poora badal jaata hai, aur compiler ajeeb error dega. Function pointer declare karte waqt hamesha \`(*name)\` wala bracket likho.
+
+Array of pointers mein galti hai **string ko badalne ki koshish**: \`char *names[3] = {"Asha", "Ravi", "Meena"};\` mein strings read-only memory mein hoti hain, isliye \`names[0][0] = 'B';\` likhna crash kar sakta hai. Agar string badalni hai, toh \`char names[3][20]\` jaisa 2D array use karo, ya \`malloc\` se memory lo.`,
+          `In a double pointer, the most common mistake is **counting the \* wrong**: for \`int **pp\`, to get the value you must write \`**pp\`; writing only \`*pp\` gives you an \`int *\`, not a value. Writing \`printf("%d", *pp);\` makes the compiler warn you, because you are trying to print a pointer with \`%d\`. Every level needs one \`*\` — \`*p\` for one level, \`**pp\` for two levels.
+
+In a function pointer, the most common mistake is **forgetting the brackets**: \`int *op(int, int)\` means "a function that returns an \`int *\`", while \`int (*op)(int, int)\` means "a pointer that points at a function". Without the brackets the meaning changes completely, and the compiler will give a strange error. When you declare a function pointer, always write the brackets in \`(*name)\`.
+
+In an array of pointers, the mistake is **trying to change a string**: in \`char *names[3] = {"Asha", "Ravi", "Meena"};\`, the strings live in read-only memory, so writing \`names[0][0] = 'B';\` can crash the program. If you must change a string, use a 2D array like \`char names[3][20]\`, or take memory from \`malloc\`.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: NULL Double Pointer, Khaali String List aur Galat Function', '5. Edge Cases: NULL Double Pointer, Empty String List, and the Wrong Function'),
+        body: t(
+          `**NULL double pointer** ka matlab hai \`pp\` khud \`NULL\` hai, ya \`p\` \`NULL\` hai. Dono case mein \`**pp\` crash karega, par alag jagah par. Isliye double pointer ko use karne se pehle dono level check karo: \`if (pp == NULL || *pp == NULL) return;\`. Yeh check khaas taur par tab zaroori hai jab pointer kisi function se aaya ho.
+
+**Khaali string list** ka matlab hai array of pointers mein koi element \`NULL\` ho. \`printf("%s", names[1]);\` mein agar \`names[1]\` \`NULL\` hai, toh program crash karega. List ko print karne se pehle har element ko check karo. **Galat function assign karna** bhi ek edge case hai: \`int (*op)(int, int) = add;\` mein \`add\` ka signature match karna chahiye — do \`int\` lekar \`int\` dene wala. Agar aap \`float\` lene wale function ko assign kar doge, toh compiler warning dega aur result galat milega. Function pointer ka signature hamesha match karo.
+
+**Double pointer se 2D array** banana ek aur edge case hai: \`int **matrix\` ko pehle rows ke liye \`malloc\` chahiye, phir har row ke liye alag \`malloc\` chahiye. Sirf ek \`malloc\` se 2D array nahi banta, aur har row ko alag se free karna padta hai. Yeh pattern aage linked list aur dynamic array wale articles mein kaam aayega.`,
+          `A **NULL double pointer** means either \`pp\` itself is \`NULL\` or \`p\` is \`NULL\`. In both cases \`**pp\` will crash, but at a different place. So before using a double pointer, check both levels: \`if (pp == NULL || *pp == NULL) return;\`. This check is especially needed when the pointer came from a function.
+
+An **empty string list** means some element in the array of pointers is \`NULL\`. In \`printf("%s", names[1]);\`, if \`names[1]\` is \`NULL\`, the program will crash. Check every element before printing the list. **Assigning the wrong function** is another edge case: in \`int (*op)(int, int) = add;\`, the signature of \`add\` must match — taking two \`int\` values and returning an \`int\`. If you assign a function that takes a \`float\`, the compiler will warn you and the result will be wrong. Always match the signature of a function pointer.
+
+Making a **2D array with a double pointer** is one more edge case: \`int **matrix\` first needs a \`malloc\` for the rows, and then a separate \`malloc\` for every row. One \`malloc\` alone does not make a 2D array, and every row must be freed separately. This pattern will be useful later in linked list and dynamic array articles.`
+        ),
+      },
+      {
+        heading: t('6. What If: Double Pointer ki Jagah Single Pointer, aur Switch ki Jagah Function Pointer?', '6. What If: A Single Pointer Instead of a Double Pointer, and a Function Pointer Instead of a Switch?'),
+        body: t(
+          `**What if: double pointer ki jagah single pointer use kar lein?** Agar function ko sirf value badalni hai, toh single pointer kaafi hai — \`swap(&a, &b)\` mein single pointer hi chahiye. Double pointer tab chahiye jab function ko **pointer ko khud badalna** ho. Jaise, function ke andar \`malloc\` se memory leni ho aur caller ke pointer ko us memory se set karna ho — single pointer se woh pointer nahi badlega, kyunki function ko sirf uski copy milegi. Isi liye \`malloc\` helper functions mein double pointer use hota hai.
+
+**What if: function pointer ki jagah if-else ya switch use kar lein?** Chhote calculator ke liye if-else kaafi hai — \`if (choice == 1) add(a, b);\` se kaam ho jaata hai. Lekin jab choices bahut zyada hon, ya function ko parameter ki tarah bhejna ho — jaise sorting mein comparison function — toh function pointer behtar hai. \`qsort\` function bhi function pointer leta hai, kyunki use nahi pata hota ki aap kis type ko sort kar rahe ho. Function pointer code ko chhota aur flexible banata hai.
+
+**What if: array of pointers ki jagah 2D array use kar lein?** \`char names[3][20]\` mein har naam ke liye 20 bytes fix hote hain, chahe naam 4 letters ka ho ya 15 ka — memory waste hoti hai. Array of pointers mein har naam ke liye sirf utni memory lagti hai jitni uski length hai. Lambi aur alag-alag length wali strings ke liye array of pointers behtar hai, aur fix size wali strings ke liye 2D array simple hai.`,
+          `**What if we use a single pointer instead of a double pointer?** If a function only has to change a value, a single pointer is enough — \`swap(&a, &b)\` needs only a single pointer. A double pointer is needed when the function must change the **pointer itself**. For example, to take memory from \`malloc\` inside a function and set the caller's pointer to that memory — a single pointer cannot change that pointer, because the function only gets a copy of it. That is why \`malloc\` helper functions use a double pointer.
+
+**What if we use if-else or a switch instead of a function pointer?** For a small calculator, if-else is enough — \`if (choice == 1) add(a, b);\` does the job. But when there are very many choices, or when a function must be passed as a parameter — like a comparison function in sorting — a function pointer is better. The \`qsort\` function also takes a function pointer, because it does not know which type you are sorting. A function pointer makes code shorter and more flexible.
+
+**What if we use a 2D array instead of an array of pointers?** In \`char names[3][20]\`, every name gets a fixed 20 bytes, whether the name has 4 letters or 15 — memory is wasted. In an array of pointers, every name uses only as much memory as its length. An array of pointers is better for long strings of different lengths, and a 2D array is simpler for strings of a fixed size.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Advanced Pointers ka Poora Picture', '7. Summary: The Full Picture of Advanced Pointers'),
+        body: t(
+          `Double pointer \`int **pp\` pointer ka pointer hai — \`**pp\` se original value milti hai, aur \`**pp = 99;\` se original value badal jaati hai. Yeh tab kaam aata hai jab function ko pointer ko khud badalna ho. Array of pointers \`char *names[3]\` kai strings ko ek saath rakhne ka tareeka hai, aur function pointer \`int (*op)(int, int)\` kisi bhi matching function ki taraf point kar sakta hai.
+
+Yaad rakhne wali baatein: har level ke liye ek \`*\` chahiye, function pointer mein \`(*name)\` wala bracket mat bhoolo, aur string literals ko badalne ki koshish mat karo. Double pointer ko use karne se pehle dono level par \`NULL\` check karo, aur function pointer ka signature hamesha match karo. Yeh teen tools aapko C ke advanced topics — linked list, callback aur dynamic memory — ke liye taiyaar karte hain.
+
+Agle article mein hum structures dekhenge — kai alag type ki values ko ek hi naam ke neeche kaise rakhte hain. Pointer ki yeh samajh wahan bhi kaam aayegi, kyunki struct ke saath pointer ka use bahut aam hai.`,
+          `A double pointer, \`int **pp\`, is a pointer to a pointer — \`**pp\` gives the original value, and \`**pp = 99;\` changes the original value. It is used when a function must change the pointer itself. An array of pointers, \`char *names[3]\`, is a way to keep many strings together, and a function pointer, \`int (*op)(int, int)\`, can point at any matching function.
+
+Remember these points: every level needs one \`*\`, never forget the \`(*name)\` brackets in a function pointer, and never try to change a string literal. Before using a double pointer, check for \`NULL\` at both levels, and always match the signature of a function pointer. These three tools prepare you for advanced C topics — linked lists, callbacks, and dynamic memory.
+
+In the next article we will look at structures — how to keep many values of different types under one name. This understanding of pointers will be useful there too, because using a pointer with a struct is very common.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t('Double Pointer Chain: pp -> p -> x', 'Double Pointer Chain: pp -> p -> x'),
+      caption: t('Har * ek level kholta hai; **pp seedha x ki value deta hai', 'Each * opens one level; **pp directly gives the value of x'),
+      nodes: [
+        { t: t('x = 42', 'x = 42'), s: t('Asal value — int x', 'The real value — int x') },
+        { t: t('p = &x', 'p = &x'), s: t('int *p — x ka address rakhta hai', 'int *p — holds the address of x') },
+        { t: t('pp = &p', 'pp = &p'), s: t('int **pp — p ka address rakhta hai', 'int **pp — holds the address of p') },
+        { t: t('**pp = 42', '**pp = 42'), s: t('Do baar dereference — seedha x ki value', 'Dereference twice — directly the value of x') },
+        { t: t('Function pointer: int (*op)(int, int)', 'Function pointer: int (*op)(int, int)'), s: t('op = add ya subtract — runtime par chunao', 'op = add or subtract — chosen at run time') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Array of Pointers se Naam Print Karna', 'Printing Names with an Array of Pointers'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    char *fruits[3] = {"Apple", "Banana", "Mango"};
+
+    for (int i = 0; i < 3; i++) {
+        printf("%s\\n", fruits[i]);
+    }
+
+    return 0;
+}`,
+        output: `Apple
+Banana
+Mango`,
+      },
+      {
+        title: t('Function Pointer se Add aur Subtract', 'Add and Subtract with a Function Pointer'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int subtract(int a, int b) {
+    return a - b;
+}
+
+int main(void) {
+    int (*op)(int, int) = add;
+
+    printf("add(10, 4) = %d\\n", op(10, 4));
+
+    op = subtract;
+    printf("sub(10, 4) = %d\\n", op(10, 4));
+
+    return 0;
+}`,
+        output: `add(10, 4) = 14
+sub(10, 4) = 6`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('int x = 42; int *p = &x; int **pp = &p; mein **pp ki value kya hai?', 'In int x = 42; int *p = &x; int **pp = &p; what is the value of **pp?'),
+        opts: [t('42', '42'), t('x ka address', 'The address of x'), t('p ka address', 'The address of p'), t('0', '0')],
+        ans: 0,
+        expl: t('Sahi jawab: **pp do baar dereference karta hai — pehle p milta hai, phir x ki value 42 milti hai.', 'Correct answer: **pp dereferences twice — first it gives p, then the value of x, 42.'),
+      },
+      {
+        q: t('Double pointer kab zaroori hota hai?', 'When is a double pointer needed?'),
+        opts: [t('Jab value padhni ho', 'When you must read a value'), t('Jab function ko pointer ko khud badalna ho', 'When a function must change the pointer itself'), t('Jab array print karna ho', 'When you must print an array'), t('Kabhi nahi', 'Never')],
+        ans: 1,
+        expl: t('Sahi jawab: single pointer se sirf value badalti hai; pointer ko khud badalne ke liye uska address chahiye, matlab double pointer.', 'Correct answer: a single pointer only changes the value; to change the pointer itself you need its address, that is, a double pointer.'),
+      },
+      {
+        q: t('char *names[3] mein har element kya hai?', 'In char *names[3], what is every element?'),
+        opts: [t('Ek char', 'One char'), t('Ek string ki taraf point karne wala pointer', 'A pointer pointing at a string'), t('Ek int', 'One int'), t('Ek 2D array', 'A 2D array')],
+        ans: 1,
+        expl: t('Sahi jawab: names ek array hai jiska har element char * hai, matlab har element ek string ki taraf point karta hai.', 'Correct answer: names is an array whose every element is a char *, so every element points at a string.'),
+      },
+      {
+        q: t('Function pointer declare karne ka sahi tareeka kaunsa hai?', 'Which is the correct way to declare a function pointer?'),
+        opts: [t('int *op(int, int)', 'int *op(int, int)'), t('int (*op)(int, int)', 'int (*op)(int, int)'), t('int op(int, int)', 'int op(int, int)'), t('int **op(int, int)', 'int **op(int, int)')],
+        ans: 1,
+        expl: t('Sahi jawab: int (*op)(int, int) ek pointer hai jo function ki taraf point karta hai; bracket ke bina woh function declaration ban jata hai.', 'Correct answer: int (*op)(int, int) is a pointer that points at a function; without the brackets it becomes a function declaration.'),
+      },
+      {
+        q: t('names[0][0] = \'B\' kyun khatarnaak ho sakta hai?', 'Why can names[0][0] = \'B\' be dangerous?'),
+        opts: [t('String literal read-only memory mein hota hai', 'A string literal lives in read-only memory'), t('Compiler error deta hai', 'The compiler gives an error'), t('Naam badal nahi sakta', 'A name cannot be changed'), t('Array khaali hai', 'The array is empty')],
+        ans: 0,
+        expl: t('Sahi jawab: char * se point ki gayi string literal read-only memory mein hoti hai, use badalne ki koshish crash kar sakti hai.', 'Correct answer: a string literal pointed to by a char * lives in read-only memory, and trying to change it can crash the program.'),
+      },
+    ],
+    keyNotes: [
+      t('**pp do baar dereference karta hai; har level ke liye ek * chahiye.', '**pp dereferences twice; every level needs one *.'),
+      t('Double pointer tab chahiye jab function ko pointer ko khud badalna ho.', 'A double pointer is needed when a function must change the pointer itself.'),
+      t('Array of pointers har string ki taraf point karta hai; argv bhi aisa hi hota hai.', 'An array of pointers points at each string; argv works the same way.'),
+      t('Function pointer mein (*name) bracket zaroori hai, warna matlab badal jata hai.', 'In a function pointer the (*name) brackets are essential, or the meaning changes.'),
+      t('String literal ko badalne ki koshish mat karo — woh read-only memory mein hota hai.', 'Never try to change a string literal — it lives in read-only memory.'),
+    ],
+    practice: {
+      title: t('Practice: Function Pointers ka Array — Calculator', 'Practice: An Array of Function Pointers — Calculator'),
+      task: t('Add aur multiply functions banao, phir unke pointers ka array banao aur dono ko 6 aur 3 par chalao. Done tab hoga jab output mein dono answers expected output jaise dikhein.', 'Create add and multiply functions, then make an array of their pointers and run both on 6 and 3. You are done when both answers in the output look exactly like the expected output.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+int main(void) {
+    int (*ops[2])(int, int) = {add, multiply};
+
+    printf("6 + 3 = %d\\n", ops[0](6, 3));
+    printf("6 * 3 = %d\\n", ops[1](6, 3));
+
+    return 0;
+}`,
+      expected: `6 + 3 = 9
+6 * 3 = 18`,
+    },
+    readMinutes: 12,
+  };
+
+const cStructures: Article = {
+    id: 'c-structures',
+    subjectId: 'c-programming',
+    title: t(
+      'Structures aur Typedef — Alag Types ko Ek Naam ke Neeche',
+      'Structures and Typedef — Different Types Under One Name'
+    ),
+    summary: t(
+      'Array ek hi type ki values rakhta hai, par struct alag-alag type ki values ko ek saath rakhta hai — naam, roll number aur marks ek hi dabbe mein. Is article mein struct, typedef aur nested struct seekho.',
+      'An array holds values of one type, but a struct holds values of different types together — a name, a roll number, and marks in one box. In this article you will learn struct, typedef, and nested structs.'
+    ),
+    sections: [
+      {
+        heading: t('1. Structure Kya Hai? (Members aur Typedef)', '1. What Is a Structure? (Members and Typedef)'),
+        body: t(
+          `Array mein sirf ek hi type ki values rakhi ja sakti hain — ya toh saare \`int\`, ya saare \`char\`. Lekin real life mein ek student ki jaankari mein naam (string), roll number (\`int\`) aur marks (\`float\`) — teeno alag type ke hote hain. **Structure** (struct) ek aisa dabba hai jismein alag-alag type ki values ek saath rakhi ja sakti hain. \`struct Student { char name[20]; int roll; float marks; };\` mein \`Student\` ek naya type hai, aur \`name\`, \`roll\`, \`marks\` uske **members** hain.
+
+Struct ka variable banane ke liye likhte hain \`struct Student s1 = {"Asha", 101, 87.5f};\` aur members ko chhoone ke liye **dot operator** (\`.\`) use hota hai: \`s1.name\`, \`s1.roll\`, \`s1.marks\`. Yeh dot hi batata hai ki aap kis dabbe ke andar kis cheez ko chhoo rahe ho. Struct ke members memory mein ek ke baad ek rakhe jaate hain, aur poora struct ek hi unit ki tarah copy bhi ho sakta hai — \`s2 = s1;\` likhne par saare members ek saath copy ho jaate hain, jo array mein nahi hota.
+
+**Typedef** struct ko chhota naam dene ka tareeka hai. \`struct Student\` har baar likhna lamba lagta hai, isliye \`typedef struct { char name[20]; int roll; float marks; } Student;\` likh kar aap seedha \`Student s1;\` likh sakte ho. Typedef koi naya type nahi banata, woh sirf purane type ko ek naya naam deta hai — compiler ke liye dono ek hi cheez hain.`,
+          `In an array you can keep values of only one type — either all \`int\` or all \`char\`. But in real life, the details of a student include a name (a string), a roll number (an \`int\`), and marks (a \`float\`) — three different types. A **structure** (struct) is a box in which values of different types can be kept together. In \`struct Student { char name[20]; int roll; float marks; };\`, \`Student\` is a new type, and \`name\`, \`roll\`, and \`marks\` are its **members**.
+
+To create a variable of a struct, write \`struct Student s1 = {"Asha", 101, 87.5f};\`, and to touch its members use the **dot operator** (\`.\`): \`s1.name\`, \`s1.roll\`, \`s1.marks\`. This dot tells you which thing inside which box you are touching. The members of a struct are kept in memory one after another, and the whole struct can be copied as one unit — writing \`s2 = s1;\` copies all the members together, which does not happen with an array.
+
+**Typedef** is a way to give a struct a short name. Writing \`struct Student\` every time feels long, so after \`typedef struct { char name[20]; int roll; float marks; } Student;\` you can write \`Student s1;\` directly. Typedef does not create a new type, it only gives an old type a new name — for the compiler, both are the same thing.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Student ka Form, Aadhaar Card aur Dabba', '2. Real-Life Examples: A Student Form, an ID Card, and a Box'),
+        body: t(
+          `**Student ka form** struct ka sabse seedha example hai. Form mein naam, roll number, class aur marks — sab alag-alag type ki jaankari ek hi kagaz par hoti hai. Ek form ek student hai, aur form ke khaane uske members hain. Agar aapko 30 students ki jaankari rakhni hai, toh aapko 30 forms chahiye — matlab struct ka array. Har form ko alag se rakhne ki jagah, ek hi type ke forms ka dabba banana zyada aasan hai.
+
+**Aadhaar card** bhi ek struct hai: naam, number, janm-tithi aur pata — sab ek hi card par. Card ko dekh kar aap kisi bhi ek cheez ko nikaal sakte ho, aur card ko poora bhi copy kar sakte ho. **Dabba** wala example bhi yahi kehta hai: ek bade dabbe ke andar chhote-chhote khaane hote hain, har khaane mein alag cheez rakhi hoti hai, par dabba ek hi hai. Struct bhi wahi bada dabba hai, aur members uske andar ke khaane hain.
+
+**Nested struct** ka example hai **pata** (address): student ke form mein pata khud ek chhota form hai — gali, sheher aur pincode. Isliye \`struct Student\` ke andar \`struct Address\` rakha jaata hai. Bade dabbe ke andar chhota dabba — yahi nested struct hai, aur yeh real programs mein bahut aam hai.`,
+          `A **student form** is the simplest example of a struct. A form holds a name, a roll number, a class, and marks — details of different types on one paper. One form is one student, and the boxes on the form are its members. If you must keep the details of 30 students, you need 30 forms — that is, an array of structs. Keeping a box of forms of one type is easier than keeping each form separately.
+
+An **ID card** is also a struct: a name, a number, a date of birth, and an address — all on one card. Looking at the card, you can take out any one detail, and you can also copy the whole card. The **box** example says the same thing: a big box has small compartments inside, each holding a different thing, but the box is one. A struct is that big box, and its members are the compartments inside it.
+
+An example of a **nested struct** is an **address**: on a student form, the address is itself a small form — a street, a city, and a pincode. So a \`struct Address\` is kept inside a \`struct Student\`. A small box inside a big box — that is a nested struct, and it is very common in real programs.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Ek Student ka Struct Banana aur Print Karna (Dry Run)', '3. Step-by-Step: Making and Printing One Student Struct (Dry Run)'),
+        body: t(
+          `Neeche wale program ko line by line trace karte hain. Pehli lines mein \`struct Student\` define hota hai — yeh sirf ek design hai, isse abhi koi memory nahi milti. Design mein teen members hain: \`char name[20]\` (20 letters tak ka naam), \`int roll\` aur \`float marks\`. Struct define karna matlab hai ek naya dabba design karna, use banana nahi.
+
+Doosri step mein \`main\` ke andar \`struct Student s1 = {"Asha", 101, 87.5f};\` likha hai — yahan asal mein ek dabba banta hai aur usmein values bhar jaati hain: \`name\` mein "Asha", \`roll\` mein 101, aur \`marks\` mein 87.5. Values usi order mein bharti hain jis order mein members define hue hain, isliye order galat karne par values galat jagah chali jaayengi.
+
+Teesri step mein teen \`printf\` lines dot operator se members ko padhti hain: \`s1.name\` se "Asha", \`s1.roll\` se 101, aur \`s1.marks\` se 87.5. \`%.1f\` ka matlab hai float ko sirf ek decimal tak chhapna, isliye 87.5 bilkul waise hi chhapta hai jaisa likha tha. Output mein teeno lines alag-alag aati hain, aur har line ek member ko dikhati hai.`,
+          `Let us trace the program below line by line. In the first lines, \`struct Student\` is defined — this is only a design, and it takes no memory yet. The design has three members: \`char name[20]\` (a name of up to 20 letters), \`int roll\`, and \`float marks\`. Defining a struct means designing a new box, not making one.
+
+In the second step, inside \`main\`, \`struct Student s1 = {"Asha", 101, 87.5f};\` is written — here a real box is made and filled with values: "Asha" in \`name\`, 101 in \`roll\`, and 87.5 in \`marks\`. The values fill in the same order in which the members were defined, so if you get the order wrong, the values will go to the wrong places.
+
+In the third step, three \`printf\` lines read the members with the dot operator: \`s1.name\` gives "Asha", \`s1.roll\` gives 101, and \`s1.marks\` gives 87.5. \`%.1f\` means printing the float with only one decimal, so 87.5 prints exactly as it was written. In the output, all three lines come separately, and each line shows one member.`
+        ),
+        code: {
+          title: t('Ek Student ka Struct Banana aur Print Karna', 'Making and Printing One Student Struct'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+struct Student {
+    char name[20];
+    int roll;
+    float marks;
+};
+
+int main(void) {
+    struct Student s1 = {"Asha", 101, 87.5f};
+
+    printf("Name: %s\\n", s1.name);
+    printf("Roll: %d\\n", s1.roll);
+    printf("Marks: %.1f\\n", s1.marks);
+
+    return 0;
+}`,
+          output: `Name: Asha
+Roll: 101
+Marks: 87.5`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Semicolon Bhoolna, Galat Order aur == se Compare', '4. Common Mistakes: Forgetting the Semicolon, Wrong Order, and Comparing with =='),
+        body: t(
+          `Struct mein sabse aam galti hai **closing brace ke baad semicolon bhoolna**: \`struct Student { ... }\` ke baad \`;\` lagana zaroori hai, warna compiler error dega. Yeh semicolon isliye chahiye kyunki struct definition ek declaration hai, aur har declaration semicolon se khatm hoti hai. Doosri galti hai **initialiser mein galat order**: \`{"Asha", 101, 87.5f}\` mein values members ke order mein honi chahiye — agar aap \`{101, "Asha", 87.5f}\` likh doge, toh compiler warning dega aur values galat jagah chali jaayengi.
+
+Teesri galti hai **do structs ko \`==\` se compare karna**: C mein \`s1 == s2\` likhna allowed nahi hai, compiler error dega. Struct ko compare karna ho, toh members ko ek-ek karke compare karo, jaise \`s1.roll == s2.roll && s1.marks == s2.marks\`. Lekin struct ko assign karna allowed hai — \`s2 = s1;\` poora struct copy kar deta hai, jo array mein nahi hota. Chauthi galti hai **string ko \`=\` se assign karna**: \`s1.name = "Ravi";\` nahi chalega, kyunki \`name\` ek array hai. Naam badalna ho, toh \`strcpy(s1.name, "Ravi");\` likho, aur \`string.h\` include karna mat bhoolo.`,
+          `The most common mistake in a struct is **forgetting the semicolon after the closing brace**: after \`struct Student { ... }\` you must put a \`;\`, or the compiler will give an error. This semicolon is needed because a struct definition is a declaration, and every declaration ends with a semicolon. The second mistake is a **wrong order in the initialiser**: in \`{"Asha", 101, 87.5f}\` the values must be in the order of the members — if you write \`{101, "Asha", 87.5f}\`, the compiler will warn you and the values will go to the wrong places.
+
+The third mistake is **comparing two structs with \`==\`**: in C, writing \`s1 == s2\` is not allowed, and the compiler will give an error. To compare structs, compare the members one by one, like \`s1.roll == s2.roll && s1.marks == s2.marks\`. But assigning a struct is allowed — \`s2 = s1;\` copies the whole struct, which does not happen with an array. The fourth mistake is **assigning a string with \`=\`**: \`s1.name = "Ravi";\` will not work, because \`name\` is an array. To change the name, write \`strcpy(s1.name, "Ravi");\`, and do not forget to include \`string.h\`.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Khaali Struct, Padding aur Bada Naam', '5. Edge Cases: Empty Struct, Padding, and a Long Name'),
+        body: t(
+          `**Padding** ek chhupa hua edge case hai: struct ke members memory mein hamesha ek ke baad ek chipke hue nahi hote. Compiler members ke beech mein khaali jagah (padding) daal sakta hai taaki har member apne sahi address par aaye. Jaise, \`char\` ke baad \`int\` aaye toh beech mein 3 khaali bytes aa sakte hain. Isliye \`sizeof(struct Student)\` members ke sizes ka sum nahi hota, usse bada ho sakta hai. Yeh samajhna zaroori hai jab aap struct ko file mein likhte ho ya network par bhejte ho.
+
+**Bada naam** ek aur edge case hai: \`char name[20]\` mein 20 letters tak ka naam aa sakta hai, par 20 se bada naam likhne par memory ke aage wale hisse par likh diya jaayega — yeh **buffer overflow** hai aur program ko crash kar sakta hai. \`strcpy\` ki jagah \`strncpy\` use karo, ya naam ki length ko pehle check karo. **Nested struct** mein bhi dhyaan do: andar wale struct ko pehle define karna padta hai, warna compiler use pehchanega nahi. \`struct Address\` ko \`struct Student\` se pehle likho, phir \`Student\` ke andar \`struct Address addr;\` rakho.`,
+          `**Padding** is a hidden edge case: the members of a struct are not always packed tightly in memory one after another. The compiler may put empty space (padding) between members so that every member lands on its correct address. For example, if an \`int\` comes after a \`char\`, there may be 3 empty bytes in between. So \`sizeof(struct Student)\` is not the sum of the sizes of the members, it can be larger. This matters when you write a struct to a file or send it over a network.
+
+A **long name** is another edge case: \`char name[20]\` can hold a name of up to 20 letters, but writing a longer name will write over the memory after it — this is a **buffer overflow** and it can crash the program. Use \`strncpy\` instead of \`strcpy\`, or check the length of the name first. In a **nested struct**, also be careful: the inner struct must be defined first, or the compiler will not recognise it. Write \`struct Address\` before \`struct Student\`, then put \`struct Address addr;\` inside \`Student\`.`
+        ),
+      },
+      {
+        heading: t('6. What If: Struct ki Jagah Alag Variables, ya Array?', '6. What If: Separate Variables Instead of a Struct, or an Array?'),
+        body: t(
+          `**What if: struct ki jagah alag-alag variables use kar lein?** Ek student ke liye \`char name[20]; int roll; float marks;\` alag se bhi likha ja sakta hai. Lekin 30 students ke liye aapko 90 alag variables chahiye honge, aur function ko 90 values bhejni padengi. Struct se aap ek hi variable mein poori jaankari rakhte ho, aur function ko sirf ek struct bhejna padta hai. Struct kaam ko organise karta hai — jaankari ek jagah, naam ek jagah.
+
+**What if: struct ki jagah array use kar lein?** Array mein sirf ek hi type rakha ja sakta hai, isliye naam, roll aur marks ko ek array mein nahi rakha ja sakta. Aap teen alag arrays bana sakte ho — \`names[30]\`, \`rolls[30]\`, \`marks[30]\` — par phir har student ki jaankari teen jagah bikhri hogi, aur ek student ko hatane par teeno arrays ko badalna padega. Struct ka array — \`struct Student class[30];\` — isse bahut saaf hai, kyunki har student ki poori jaankari ek hi jagah hai.
+
+**What if: typedef na use karein?** Typedef ke bina bhi kaam chal jaata hai, bas har jagah \`struct Student\` likhna padta hai. Typedef sirf code ko chhota aur padhne mein aasan banata hai. Bade programs mein typedef bahut use hota hai, kyunki struct ka naam lamba ho sakta hai aur har jagah likhna thaka dene wala hota hai.`,
+          `**What if we use separate variables instead of a struct?** For one student, \`char name[20]; int roll; float marks;\` can also be written separately. But for 30 students you would need 90 separate variables, and you would have to pass 90 values to a function. With a struct you keep all the details in one variable, and you only have to pass one struct to a function. A struct organises the work — the details in one place, under one name.
+
+**What if we use an array instead of a struct?** An array can hold only one type, so a name, a roll number, and marks cannot be kept in one array. You could make three separate arrays — \`names[30]\`, \`rolls[30]\`, \`marks[30]\` — but then the details of every student would be scattered in three places, and removing one student would mean changing all three arrays. An array of structs — \`struct Student class[30];\` — is much cleaner, because the complete details of every student live in one place.
+
+**What if we do not use typedef?** The work still gets done without typedef, only you must write \`struct Student\` everywhere. Typedef only makes the code shorter and easier to read. In large programs typedef is used a lot, because the name of a struct can be long and writing it everywhere becomes tiring.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Structures ka Poora Picture', '7. Summary: The Full Picture of Structures'),
+        body: t(
+          `Struct alag-alag type ki values ko ek hi naam ke neeche rakhta hai. Members ko dot operator (\`.\`) se chhoote hain, struct ko \`s2 = s1;\` se poora copy kiya ja sakta hai, aur \`typedef\` se struct ko chhota naam diya ja sakta hai. Struct define karne ke baad semicolon lagana mat bhoolo, aur initialiser mein values ko members ke order mein likho.
+
+Yaad rakhne wali baatein: struct ko \`==\` se compare nahi kar sakte, string member ko \`=\` se nahi badal sakte — \`strcpy\` use karo. Struct ke andar struct (nested struct) rakh sakte ho, par andar wale ko pehle define karo. Aur \`sizeof(struct)\` members ke sum se bada ho sakta hai, kyunki compiler padding daalta hai.
+
+Agle article mein hum structures ko pointers ke saath dekhenge — struct pointer, arrow operator, aur self-referential struct jisse linked list banti hai. Struct ki yeh samajh wahan seedha kaam aayegi.`,
+          `A struct keeps values of different types under one name. Members are touched with the dot operator (\`.\`), a struct can be copied whole with \`s2 = s1;\`, and \`typedef\` gives a struct a short name. Do not forget the semicolon after defining a struct, and write the values in the initialiser in the order of the members.
+
+Remember these points: you cannot compare structs with \`==\`, and you cannot change a string member with \`=\` — use \`strcpy\`. You can put a struct inside a struct (a nested struct), but define the inner one first. And \`sizeof(struct)\` can be larger than the sum of its members, because the compiler adds padding.
+
+In the next article we will look at structures together with pointers — struct pointers, the arrow operator, and self-referential structs, from which a linked list is built. This understanding of structs will be directly useful there.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t('struct Student: Ek Dabba, Teen Khaane', 'struct Student: One Box, Three Compartments'),
+      caption: t('Har member alag type ka hai, par dabba ek hi hai', 'Every member has a different type, but the box is one'),
+      nodes: [
+        { t: t('name: char[20] — "Asha"', 'name: char[20] — "Asha"'), s: t('String member — 20 letters tak', 'String member — up to 20 letters') },
+        { t: t('roll: int — 101', 'roll: int — 101'), s: t('Number member — dot se padho: s1.roll', 'Number member — read with a dot: s1.roll') },
+        { t: t('marks: float — 87.5', 'marks: float — 87.5'), s: t('Decimal member — %.1f se chhapo', 'Decimal member — print with %.1f') },
+        { t: t('typedef Student', 'typedef Student'), s: t('struct Student ki jagah seedha Student likho', 'Write Student directly instead of struct Student') },
+        { t: t('Nested: struct Address andar', 'Nested: struct Address inside'), s: t('Bade dabbe ke andar chhota dabba', 'A small box inside the big box') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Typedef se Point aur Distance Squared', 'Point with Typedef and Distance Squared'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+int main(void) {
+    Point p1 = {0, 0};
+    Point p2 = {3, 4};
+    int dx = p2.x - p1.x;
+    int dy = p2.y - p1.y;
+
+    printf("Distance squared = %d\\n", dx * dx + dy * dy);
+
+    return 0;
+}`,
+        output: `Distance squared = 25`,
+      },
+      {
+        title: t('Students ka Array — Teen Students Print Karo', 'Array of Students — Print Three Students'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+struct Student {
+    char name[20];
+    int marks;
+};
+
+int main(void) {
+    struct Student class1[3] = {
+        {"Ravi", 85},
+        {"Meena", 92},
+        {"Arjun", 78}
+    };
+
+    for (int i = 0; i < 3; i++) {
+        printf("%s - %d\\n", class1[i].name, class1[i].marks);
+    }
+
+    return 0;
+}`,
+        output: `Ravi - 85
+Meena - 92
+Arjun - 78`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Struct ke members ko kaise chhoote hain?', 'How do you access the members of a struct?'),
+        opts: [t('Arrow operator -> se', 'With the arrow operator ->'), t('Dot operator . se', 'With the dot operator .'), t('Brackets [] se', 'With brackets []'), t('Ampersand & se', 'With the ampersand &')],
+        ans: 1,
+        expl: t('Sahi jawab: struct variable ke members ko dot operator se chhoote hain, jaise s1.roll; -> sirf struct pointer ke liye hota hai.', 'Correct answer: members of a struct variable are accessed with the dot operator, like s1.roll; -> is only for a struct pointer.'),
+      },
+      {
+        q: t('Struct define karne ke baad kya lagana zaroori hai?', 'What must you put after defining a struct?'),
+        opts: [t('Comma ,', 'A comma ,'), t('Semicolon ;', 'A semicolon ;'), t('Colon :', 'A colon :'), t('Kuch nahi', 'Nothing')],
+        ans: 1,
+        expl: t('Sahi jawab: struct definition ek declaration hai, isliye closing brace ke baad semicolon lagana zaroori hai, warna compiler error dega.', 'Correct answer: a struct definition is a declaration, so a semicolon after the closing brace is essential, or the compiler will give an error.'),
+      },
+      {
+        q: t('Typedef kya karta hai?', 'What does typedef do?'),
+        opts: [t('Naya type banata hai', 'It creates a new type'), t('Purane type ko naya naam deta hai', 'It gives an old type a new name'), t('Struct ko delete karta hai', 'It deletes the struct'), t('Memory allocate karta hai', 'It allocates memory')],
+        ans: 1,
+        expl: t('Sahi jawab: typedef koi naya type nahi banata, woh sirf purane type ko ek naya naam deta hai, jaise struct Student ki jagah Student.', 'Correct answer: typedef does not create a new type, it only gives an old type a new name, like Student instead of struct Student.'),
+      },
+      {
+        q: t('Do structs ko == se compare karne par kya hoga?', 'What happens if you compare two structs with ==?'),
+        opts: [t('Sahi compare hoga', 'It will compare correctly'), t('Compiler error dega', 'The compiler will give an error'), t('Hamesha true milega', 'It will always give true'), t('Hamesha false milega', 'It will always give false')],
+        ans: 1,
+        expl: t('Sahi jawab: C mein struct ko == se compare karna allowed nahi hai; members ko ek-ek karke compare karna padta hai.', 'Correct answer: in C, comparing structs with == is not allowed; you must compare the members one by one.'),
+      },
+      {
+        q: t('s1.name = "Ravi"; kyun nahi chalega?', 'Why will s1.name = "Ravi"; not work?'),
+        opts: [t('name ek array hai, use = se assign nahi kar sakte', 'name is an array, and it cannot be assigned with ='), t('Ravi galat naam hai', 'Ravi is a wrong name'), t('String double quotes mein nahi likhte', 'A string is not written in double quotes'), t('Struct mein string nahi hoti', 'A struct has no string')],
+        ans: 0,
+        expl: t('Sahi jawab: name char array hai, aur array ko = se assign nahi kar sakte; naam badalne ke liye strcpy use karo.', 'Correct answer: name is a char array, and an array cannot be assigned with =; use strcpy to change the name.'),
+      },
+    ],
+    keyNotes: [
+      t('Struct alag-alag type ki values ko ek naam ke neeche rakhta hai; members ko . se chhoote hain.', 'A struct keeps values of different types under one name; members are accessed with .'),
+      t('Struct define karne ke baad ; lagana zaroori hai, warna compiler error dega.', 'A semicolon after defining a struct is essential, or the compiler will give an error.'),
+      t('Struct ko s2 = s1 se poora copy kar sakte ho, par == se compare nahi kar sakte.', 'You can copy a whole struct with s2 = s1, but you cannot compare structs with ==.'),
+      t('Typedef purane type ko naya naam deta hai, naya type nahi banata.', 'Typedef gives an old type a new name; it does not create a new type.'),
+      t('String member ko = se nahi, strcpy se badlo; naam ki length array se zyada mat karo.', 'Change a string member with strcpy, not with =; never make a name longer than the array.'),
+    ],
+    practice: {
+      title: t('Practice: Teen Students ka Average Marks Nikaalo', 'Practice: Find the Average Marks of Three Students'),
+      task: t('struct Student ka array banao jismein teen students ke marks 80, 90 aur 70 hon, phir unka average nikaal kar print karo. Done tab hoga jab output expected output jaisa dikhe — Average = 80.0.', 'Make an array of struct Student with three students whose marks are 80, 90, and 70, then find their average and print it. You are done when the output looks like the expected output — Average = 80.0.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+struct Student {
+    char name[20];
+    int marks;
+};
+
+int main(void) {
+    struct Student class1[3] = {
+        {"Ravi", 80},
+        {"Meena", 90},
+        {"Arjun", 70}
+    };
+    int total = 0;
+
+    for (int i = 0; i < 3; i++) {
+        total += class1[i].marks;
+    }
+
+    printf("Average = %.1f\\n", total / 3.0);
+
+    return 0;
+}`,
+      expected: `Average = 80.0`,
+    },
+    readMinutes: 12,
+  };
+
+const cStructuresAdvanced: Article = {
+    id: 'c-structures-advanced',
+    subjectId: 'c-programming',
+    title: t(
+      'Advanced Structures — Struct Pointer, Arrow Operator aur Linked List',
+      'Advanced Structures — Struct Pointers, Arrow Operator, and Linked List'
+    ),
+    summary: t(
+      'Struct ko pointer se chhoona, arrow operator se member padhna, aur khud ko point karne wala struct — yahi se linked list banti hai. Is article mein malloc ke saath struct aur self-referential struct seekho.',
+      'Touching a struct through a pointer, reading a member with the arrow operator, and a struct that points at itself — that is where a linked list comes from. In this article you will learn structs with malloc and self-referential structs.'
+    ),
+    sections: [
+      {
+        heading: t('1. Struct Pointer aur Arrow Operator Kya Hai?', '1. What Are a Struct Pointer and the Arrow Operator?'),
+        body: t(
+          `Jab struct bada hota hai, toh use function ko copy karke bhejna mehenga hota hai — isliye hum struct ka **pointer** bhejte hain. \`struct Employee *e;\` ek aisa pointer hai jo \`Employee\` struct ki taraf point karta hai. Pointer se member ko chhoone ke liye dot nahi, **arrow operator** (\`->\`) use hota hai: \`e->salary\` ka matlab hai "e jis struct ki taraf point karta hai, uska salary member". Yeh \`(*e).salary\` ka chhota roop hai — dono ka matlab ek hi hai, par arrow likhna aasan hai.
+
+Struct pointer tab aur zaroori ho jaata hai jab struct **malloc** se banta hai. \`malloc(sizeof(struct Employee))\` memory deta hai, par us memory ka koi naam nahi hota — sirf pointer se us tak pahuncha ja sakta hai. \`struct Employee *e = malloc(sizeof(*e));\` likhne par \`e\` us nayi memory ki taraf point karta hai, aur phir \`e->id = 201;\` se usmein value bhari jaati hai. Kaam khatm hone par \`free(e);\` se memory wapas deni chahiye, warna memory leak hoga.
+
+**Self-referential struct** woh struct hai jiske andar khud ke type ka pointer hota hai: \`struct Node { int data; struct Node *next; };\`. Yahan \`next\` ek pointer hai jo kisi aur \`Node\` ki taraf point kar sakta hai. Isi se **linked list** banti hai — har node agle node ki taraf ishaara karta hai, aur aakhri node ka \`next\` \`NULL\` hota hai. Yeh C ki sabse important data structure hai, aur interview mein bahut poochhi jaati hai.`,
+          `When a struct is large, passing it to a function by copying is costly — so we pass a **pointer** to the struct. \`struct Employee *e;\` is a pointer that points at an \`Employee\` struct. To touch a member through a pointer, you do not use a dot, you use the **arrow operator** (\`->\`): \`e->salary\` means "the salary member of the struct that e points at". It is a short form of \`(*e).salary\` — both mean the same thing, but the arrow is easier to write.
+
+A struct pointer becomes even more needed when a struct is made with **malloc**. \`malloc(sizeof(struct Employee))\` gives memory, but that memory has no name — it can only be reached through a pointer. Writing \`struct Employee *e = malloc(sizeof(*e));\` makes \`e\` point at that new memory, and then \`e->id = 201;\` fills a value into it. When the work is done, the memory should be given back with \`free(e);\`, or there will be a memory leak.
+
+A **self-referential struct** is a struct that holds a pointer of its own type inside: \`struct Node { int data; struct Node *next; };\`. Here \`next\` is a pointer that can point at another \`Node\`. From this a **linked list** is built — every node points at the next node, and the \`next\` of the last node is \`NULL\`. This is the most important data structure in C, and it is asked very often in interviews.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Train ke Dabbe, Treasure Hunt aur Office File', '2. Real-Life Examples: Train Coaches, a Treasure Hunt, and an Office File'),
+        body: t(
+          `**Train ke dabbe** linked list ka sabse accha example hai. Train mein har dabba agle dabbe se juda hota hai, aur aap ek dabbe se agle dabbe mein ja sakte ho. Har dabbe ko yeh nahi pata hota ki poori train mein kitne dabbe hain, use sirf agle dabbe ka pata hota hai. Linked list mein bhi har node ko sirf agle node ka address pata hota hai — \`next\` pointer. Aakhri dabbe ke baad kuch nahi hota, bilkul waise hi jaise aakhri node ka \`next\` \`NULL\` hota hai.
+
+**Treasure hunt** wala example bhi yahi kehta hai: har clue aapko agle clue ki jagah batata hai, aur aakhri clue par khazana milta hai. Aapko saare clues ek saath nahi milte, aap ek se doosre tak chalte ho. Linked list ko traverse karna bhi wahi hai — pehle node se shuru karo, \`next\` se agle par jaao, aur jab \`NULL\` mile toh ruk jaao.
+
+**Office file** struct pointer ka example hai: file ek almari mein rakhi hai, aur aapke paas sirf uska number hai. Number se aap file tak pahunchte ho, aur file ke andar ki jaankari ko padhte ya badalte ho. Function ko struct pointer dena bhi wahi hai — function ko file ka number milta hai, aur woh original file ko badal sakta hai, bina poori file ki copy banaye.`,
+          `**Train coaches** are the best example of a linked list. In a train, every coach is joined to the next coach, and you can go from one coach to the next. No coach knows how many coaches are in the whole train, it only knows the next coach. In a linked list, too, every node only knows the address of the next node — the \`next\` pointer. After the last coach there is nothing, just as the \`next\` of the last node is \`NULL\`.
+
+The **treasure hunt** example says the same thing: every clue tells you the place of the next clue, and at the last clue you find the treasure. You do not get all the clues together, you walk from one to the next. Traversing a linked list is the same — start from the first node, go to the next one with \`next\`, and stop when you meet \`NULL\`.
+
+An **office file** is an example of a struct pointer: the file is kept in a cupboard, and you only have its number. With the number you reach the file, and you read or change the details inside it. Giving a struct pointer to a function is the same — the function gets the number of the file, and it can change the original file without making a copy of the whole file.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: malloc se Employee Banana aur Arrow se Bharna (Dry Run)', '3. Step-by-Step: Making an Employee with malloc and Filling It with the Arrow (Dry Run)'),
+        body: t(
+          `Neeche wale program ko line by line trace karte hain. Pehle \`struct Employee\` define hota hai — teen members: \`char name[20]\`, \`int id\`, aur \`int salary\`. Phir \`main\` mein \`struct Employee *e = malloc(sizeof(*e));\` likha hai. \`sizeof(*e)\` ka matlab hai Employee struct ka size, aur \`malloc\` utni memory deta hai. \`e\` ab us nayi memory ki taraf point karta hai — us memory ka koi naam nahi hai, sirf \`e\` se us tak pahuncha ja sakta hai.
+
+Doosri step mein \`if (e == NULL) return 1;\` check karta hai ki \`malloc\` ne memory di ya nahi. Agar memory nahi mili, toh program 1 return karke ruk jaata hai — yeh check likhna achhi aadat hai, kyunki bina memory ke aage badhna crash karega. Teesri step mein arrow operator se members bhare jaate hain: \`strcpy(e->name, "Riya");\` se naam, \`e->id = 201;\` se id, aur \`e->salary = 50000;\` se salary. Dhyaan do — \`e\` pointer hai, isliye dot nahi, arrow use hua hai.
+
+Aakhri step mein teen \`printf\` lines arrow se members ko padh kar chhapti hain, aur phir \`free(e);\` se memory wapas di jaati hai. \`free\` ke baad \`e\` ko use nahi karna chahiye — woh ab dangling pointer ban jaata hai. Output mein teeno lines dikhti hain: naam Riya, id 201, aur salary 50000.`,
+          `Let us trace the program below line by line. First, \`struct Employee\` is defined — three members: \`char name[20]\`, \`int id\`, and \`int salary\`. Then in \`main\`, \`struct Employee *e = malloc(sizeof(*e));\` is written. \`sizeof(*e)\` means the size of the Employee struct, and \`malloc\` gives that much memory. \`e\` now points at that new memory — that memory has no name, it can only be reached through \`e\`.
+
+In the second step, \`if (e == NULL) return 1;\` checks whether \`malloc\` gave memory or not. If no memory was given, the program stops by returning 1 — writing this check is a good habit, because going ahead without memory will crash. In the third step, the members are filled with the arrow operator: \`strcpy(e->name, "Riya");\` for the name, \`e->id = 201;\` for the id, and \`e->salary = 50000;\` for the salary. Notice — \`e\` is a pointer, so the arrow is used, not the dot.
+
+In the last step, three \`printf\` lines read the members with the arrow and print them, and then \`free(e);\` gives the memory back. After \`free\`, \`e\` should not be used — it has become a dangling pointer. In the output, all three lines appear: the name Riya, the id 201, and the salary 50000.`
+        ),
+        code: {
+          title: t('malloc se Employee Banana aur Arrow se Bharna', 'Making an Employee with malloc and Filling It with the Arrow'),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Employee {
+    char name[20];
+    int id;
+    int salary;
+};
+
+int main(void) {
+    struct Employee *e = malloc(sizeof(*e));
+    if (e == NULL) {
+        return 1;
+    }
+
+    strcpy(e->name, "Riya");
+    e->id = 201;
+    e->salary = 50000;
+
+    printf("Name: %s\\n", e->name);
+    printf("ID: %d\\n", e->id);
+    printf("Salary: %d\\n", e->salary);
+
+    free(e);
+    return 0;
+}`,
+          output: `Name: Riya
+ID: 201
+Salary: 50000`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Dot ki Jagah Arrow, free Bhoolna aur NULL Check', '4. Common Mistakes: Arrow Instead of Dot, Forgetting free, and the NULL Check'),
+        body: t(
+          `Struct pointer ke saath sabse aam galti hai **dot ki jagah arrow bhoolna**: \`e.name\` likhne par compiler error dega, kyunki \`e\` pointer hai, struct nahi. Pointer ke saath hamesha \`e->name\` likho, aur struct variable ke saath \`s.name\` likho. Doosri galti hai **malloc ke baad NULL check bhoolna**: agar memory nahi mili aur aapne \`e->id = 201;\` likh diya, toh program crash karega. Har \`malloc\` ke baad \`if (e == NULL)\` check likho.
+
+Teesri galti hai **free bhoolna**: \`malloc\` se li hui memory ko wapas dena bhool jaane par **memory leak** hota hai — program chalta rehta hai, par memory khatm hoti jaati hai. Chhote program mein farak nahi dikhta, par lambe chalne wale program mein memory khatm ho jaati hai. Chauthi galti hai **free ke baad pointer use karna**: \`free(e);\` ke baad \`e->id\` padhna dangling pointer use karna hai, aur yeh undefined behaviour hai. Free ke baad \`e = NULL;\` likh do, taaki galti se use karne par bhi crash se pehle pehchan ho jaaye.`,
+          `With a struct pointer, the most common mistake is **forgetting the arrow instead of the dot**: writing \`e.name\` makes the compiler give an error, because \`e\` is a pointer, not a struct. With a pointer, always write \`e->name\`, and with a struct variable write \`s.name\`. The second mistake is **forgetting the NULL check after malloc**: if no memory was given and you write \`e->id = 201;\`, the program will crash. After every \`malloc\`, write an \`if (e == NULL)\` check.
+
+The third mistake is **forgetting free**: if you forget to give back the memory taken from \`malloc\`, a **memory leak** happens — the program keeps running, but the memory keeps running out. In a small program the difference does not show, but in a program that runs for a long time, the memory runs out. The fourth mistake is **using a pointer after free**: reading \`e->id\` after \`free(e);\` uses a dangling pointer, and that is undefined behaviour. After free, write \`e = NULL;\`, so that even if you use it by mistake, it can be recognised before a crash.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Self-Referential Struct, Aakhri Node aur Khaali List', '5. Edge Cases: Self-Referential Struct, the Last Node, and an Empty List'),
+        body: t(
+          `**Self-referential struct** mein ek khaas baat hai: struct ke andar khud ka **pointer** ho sakta hai, par khud ka **variable** nahi. \`struct Node { int data; struct Node next; };\` nahi chalega, kyunki Node ke andar Node rakhne ke liye pehle Node ka size chahiye, aur woh kabhi khatm nahi hoga. Lekin \`struct Node *next;\` chalega, kyunki pointer ka size hamesha fix hota hai. Yeh farak interview mein bahut poochha jaata hai.
+
+**Aakhri node** ka \`next\` hamesha \`NULL\` hona chahiye, warna traverse karne wala loop kabhi nahi rukega. Linked list banate waqt aakhri node ka \`next = NULL;\` likhna mat bhoolo. **Khaali list** ka matlab hai head pointer \`NULL\` hai — traverse karne wala loop \`while (curr != NULL)\` pehli hi baar mein ruk jaayega aur kuch print nahi karega. Yeh sahi hai, par function ko head \`NULL\` hone par crash nahi karna chahiye. Har linked list function mein pehle head ko check karo.`,
+          `In a **self-referential struct**, one special point matters: a struct can hold a **pointer** of its own type inside, but not a **variable** of its own type. \`struct Node { int data; struct Node next; };\` will not work, because to put a Node inside a Node you first need the size of a Node, and that never ends. But \`struct Node *next;\` works, because the size of a pointer is always fixed. This difference is asked very often in interviews.
+
+The \`next\` of the **last node** must always be \`NULL\`, or the loop that traverses the list will never stop. When you make a linked list, do not forget to write \`next = NULL;\` for the last node. An **empty list** means the head pointer is \`NULL\` — the traversing loop, \`while (curr != NULL)\`, will stop on the very first check and print nothing. That is correct, but the function must not crash when the head is \`NULL\`. In every linked list function, check the head first.`
+        ),
+      },
+      {
+        heading: t('6. What If: Struct Pointer ki Jagah Copy, aur Array ki Jagah Linked List?', '6. What If: A Copy Instead of a Struct Pointer, and a Linked List Instead of an Array?'),
+        body: t(
+          `**What if: struct pointer ki jagah struct ki copy bhej dein?** Chhote struct ke liye copy kaafi hai — \`void print(struct Student s)\` mein struct copy hokar jaata hai aur function use padh sakta hai. Lekin bade struct ke liye copy mehenga hota hai, aur copy se original ko badla bhi nahi ja sakta. Agar function ko struct ko badalna hai — jaise salary badhana — toh pointer bhejna hi padega. Rule simple hai: padhne ke liye copy chalegi, badalne ke liye pointer chahiye.
+
+**What if: linked list ki jagah array use kar lein?** Array mein beech mein element daalna mehenga hai — saare aage wale elements ko khisakana padta hai. Linked list mein beech mein node daalna sasta hai — sirf do pointers badalne padte hain. Lekin array mein kisi bhi element tak turant pahuncha ja sakta hai (\`arr[5]\`), jabki linked list mein 5th node tak pahunchne ke liye pehle 4 nodes se guzarna padta hai. Isliye random access ke liye array behtar hai, aur beech mein insert-delete ke liye linked list behtar hai.
+
+**What if: malloc ki jagah stack par struct bana lein?** \`struct Employee e;\` stack par banta hai aur function khatm hote hi gayab ho jaata hai. \`malloc\` se bana struct tab tak rehta hai jab tak \`free\` na kiya jaaye, isliye use function se bahar bhi use kiya ja sakta hai. Linked list ke nodes isi liye \`malloc\` se bante hain — woh function se bahar bhi zinda rehne chahiye.`,
+          `**What if we pass a copy of a struct instead of a struct pointer?** For a small struct, a copy is enough — in \`void print(struct Student s)\`, the struct goes by copy and the function can read it. But for a large struct, a copy is costly, and a copy cannot change the original either. If the function must change the struct — for example, to increase a salary — you must pass a pointer. The rule is simple: a copy will do for reading, but a pointer is needed for changing.
+
+**What if we use an array instead of a linked list?** Putting an element in the middle of an array is costly — all the elements after it must be shifted. Putting a node in the middle of a linked list is cheap — only two pointers must be changed. But in an array you can reach any element at once (\`arr[5]\`), while in a linked list you must pass through the first 4 nodes to reach the 5th node. So an array is better for random access, and a linked list is better for inserting and deleting in the middle.
+
+**What if we make a struct on the stack instead of with malloc?** \`struct Employee e;\` is made on the stack and disappears when the function ends. A struct made with \`malloc\` lives until it is freed with \`free\`, so it can be used outside the function too. That is why the nodes of a linked list are made with \`malloc\` — they must stay alive outside the function.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Advanced Structures ka Poora Picture', '7. Summary: The Full Picture of Advanced Structures'),
+        body: t(
+          `Struct pointer se bade struct ko bina copy kiye function mein bheja ja sakta hai, aur arrow operator (\`->\`) se uske members ko chhooa jaata hai. \`malloc\` se bana struct sirf pointer se milta hai, isliye \`NULL\` check aur \`free\` dono zaroori hain. Self-referential struct — jiske andar khud ke type ka pointer ho — se linked list banti hai, jahan har node agle node ki taraf point karta hai aur aakhri node ka \`next\` \`NULL\` hota hai.
+
+Yaad rakhne wali baatein: pointer ke saath arrow, variable ke saath dot. \`malloc\` ke baad \`NULL\` check karo, kaam ke baad \`free\` karo, aur free ke baad pointer ko \`NULL\` kar do. Struct ke andar khud ka variable nahi, sirf pointer ho sakta hai. Yeh chaar rules aapko advanced struct wale programs mein safe rakhenge.
+
+Agle article mein hum unions aur enums dekhenge — ek hi memory ko kai tareekon se kaise use karte hain, aur naam wale constants kaise banate hain.`,
+          `A struct pointer lets a large struct be passed to a function without copying it, and the arrow operator (\`->\`) touches its members. A struct made with \`malloc\` can only be reached through a pointer, so both a \`NULL\` check and a \`free\` are needed. A self-referential struct — one that holds a pointer of its own type inside — builds a linked list, where every node points at the next node and the \`next\` of the last node is \`NULL\`.
+
+Remember these points: the arrow with a pointer, the dot with a variable. Check for \`NULL\` after \`malloc\`, call \`free\` after the work, and set the pointer to \`NULL\` after freeing it. Inside a struct there can be a pointer of its own type, not a variable of its own type. These four rules will keep you safe in advanced struct programs.
+
+In the next article we will look at unions and enums — how to use the same memory in many ways, and how to make named constants.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t('Linked List: Node -> Node -> Node -> NULL', 'Linked List: Node -> Node -> Node -> NULL'),
+      caption: t('Har node mein data aur agle node ka address hota hai', 'Every node holds data and the address of the next node'),
+      nodes: [
+        { t: t('Node 1: data 10, next -> Node 2', 'Node 1: data 10, next -> Node 2'), s: t('Pehla node — head yahin se shuru hota hai', 'First node — the head starts here') },
+        { t: t('Node 2: data 20, next -> Node 3', 'Node 2: data 20, next -> Node 3'), s: t('Beech wala node — agle ki taraf ishaara', 'Middle node — points at the next one') },
+        { t: t('Node 3: data 30, next = NULL', 'Node 3: data 30, next = NULL'), s: t('Aakhri node — NULL ka matlab list khatm', 'Last node — NULL means the list ends') },
+        { t: t('Arrow: e->salary', 'Arrow: e->salary'), s: t('Pointer se member — dot nahi, -> use karo', 'Member through a pointer — use ->, not a dot') },
+        { t: t('malloc + free', 'malloc + free'), s: t('Memory lo, kaam karo, phir wapas do', 'Take memory, do the work, then give it back') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Teen Nodes ki Linked List Traverse Karna', 'Traversing a Linked List of Three Nodes'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node n1 = {10, NULL};
+    struct Node n2 = {20, NULL};
+    struct Node n3 = {30, NULL};
+
+    n1.next = &n2;
+    n2.next = &n3;
+
+    for (struct Node *curr = &n1; curr != NULL; curr = curr->next) {
+        printf("Node: %d\\n", curr->data);
+    }
+
+    return 0;
+}`,
+        output: `Node: 10
+Node: 20
+Node: 30`,
+      },
+      {
+        title: t('Struct Pointer se Salary Badhana', 'Increasing a Salary Through a Struct Pointer'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+struct Employee {
+    char name[20];
+    int salary;
+};
+
+void give_raise(struct Employee *e, int amount) {
+    e->salary += amount;
+}
+
+int main(void) {
+    struct Employee emp = {"Riya", 40000};
+
+    printf("Before: %d\\n", emp.salary);
+    give_raise(&emp, 5000);
+    printf("After: %d\\n", emp.salary);
+
+    return 0;
+}`,
+        output: `Before: 40000
+After: 45000`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Struct pointer se member ko kaise chhoote hain?', 'How do you access a member through a struct pointer?'),
+        opts: [t('Dot . se', 'With the dot .'), t('Arrow -> se', 'With the arrow ->'), t('Brackets [] se', 'With brackets []'), t('Ampersand & se', 'With the ampersand &')],
+        ans: 1,
+        expl: t('Sahi jawab: pointer ke saath arrow operator use hota hai, jaise e->salary; dot sirf struct variable ke liye hota hai.', 'Correct answer: with a pointer you use the arrow operator, like e->salary; the dot is only for a struct variable.'),
+      },
+      {
+        q: t('e->salary ka matlab kya hai?', 'What does e->salary mean?'),
+        opts: [t('(*e).salary', '(*e).salary'), t('e.salary', 'e.salary'), t('e ka address', 'The address of e'), t('salary ka address', 'The address of salary')],
+        ans: 0,
+        expl: t('Sahi jawab: e->salary bilkul (*e).salary jaisa hai — pehle pointer ko dereference karo, phir member ko chhoo.', 'Correct answer: e->salary is exactly like (*e).salary — first dereference the pointer, then touch the member.'),
+      },
+      {
+        q: t('Struct ke andar khud ka variable kyun nahi ho sakta?', 'Why can a struct not hold a variable of its own type inside?'),
+        opts: [t('Compiler allow nahi karta', 'The compiler does not allow it'), t('Size kabhi khatm nahi hoga — infinite size', 'The size would never end — infinite size'), t('Pointer chahiye hota hai', 'A pointer is needed'), t('Memory kam hoti hai', 'Memory is low')],
+        ans: 1,
+        expl: t('Sahi jawab: Node ke andar Node rakhne ke liye Node ka size chahiye, jo kabhi khatm nahi hoga; isliye sirf pointer allowed hai, jiska size fix hota hai.', 'Correct answer: to put a Node inside a Node you need the size of a Node, which would never end; so only a pointer is allowed, because its size is fixed.'),
+      },
+      {
+        q: t('Linked list mein aakhri node ka next kya hota hai?', 'In a linked list, what is the next of the last node?'),
+        opts: [t('Pehle node ka address', 'The address of the first node'), t('NULL', 'NULL'), t('0', '0'), t('Kuch bhi', 'Anything')],
+        ans: 1,
+        expl: t('Sahi jawab: aakhri node ka next NULL hota hai, aur traverse karne wala loop NULL dekh kar rukta hai.', 'Correct answer: the next of the last node is NULL, and the traversing loop stops when it sees NULL.'),
+      },
+      {
+        q: t('malloc ke baad pehla kaam kya karna chahiye?', 'What is the first thing to do after malloc?'),
+        opts: [t('free karna', 'Call free'), t('NULL check karna', 'Check for NULL'), t('printf karna', 'Call printf'), t('Kuch nahi', 'Nothing')],
+        ans: 1,
+        expl: t('Sahi jawab: malloc memory na de paaye toh NULL deta hai, isliye use karne se pehle if (p == NULL) check karna zaroori hai.', 'Correct answer: malloc returns NULL when it cannot give memory, so you must check with if (p == NULL) before using it.'),
+      },
+    ],
+    keyNotes: [
+      t('Struct pointer ke saath arrow -> use karo, struct variable ke saath dot . use karo.', 'Use the arrow -> with a struct pointer and the dot . with a struct variable.'),
+      t('e->salary ka matlab (*e).salary hai — pehle dereference, phir member.', 'e->salary means (*e).salary — first dereference, then the member.'),
+      t('malloc ke baad NULL check karo, kaam ke baad free karo, free ke baad pointer ko NULL karo.', 'Check for NULL after malloc, call free after the work, and set the pointer to NULL after free.'),
+      t('Self-referential struct mein khud ka pointer ho sakta hai, khud ka variable nahi.', 'A self-referential struct can hold a pointer of its own type, not a variable of its own type.'),
+      t('Linked list mein aakhri node ka next NULL hota hai — wahi list ka end hai.', 'In a linked list the next of the last node is NULL — that is the end of the list.'),
+    ],
+    practice: {
+      title: t('Practice: Linked List ke Nodes ka Sum aur Count', 'Practice: Sum and Count of Linked List Nodes'),
+      task: t('Teen nodes (5, 15, 25) ki linked list banao, phir use traverse karke nodes ki ginti aur unka sum print karo. Done tab hoga jab output mein Count = 3 aur Sum = 45 dikhe.', 'Make a linked list of three nodes (5, 15, 25), then traverse it and print the count of nodes and their sum. You are done when the output shows Count = 3 and Sum = 45.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node n1 = {5, NULL};
+    struct Node n2 = {15, NULL};
+    struct Node n3 = {25, NULL};
+
+    n1.next = &n2;
+    n2.next = &n3;
+
+    int count = 0;
+    int sum = 0;
+    for (struct Node *curr = &n1; curr != NULL; curr = curr->next) {
+        count++;
+        sum += curr->data;
+    }
+
+    printf("Count = %d\\n", count);
+    printf("Sum = %d\\n", sum);
+
+    return 0;
+}`,
+      expected: `Count = 3
+Sum = 45`,
+    },
+    readMinutes: 12,
+  };
+
+const cUnionsEnums: Article = {
+    id: 'c-unions-enums',
+    subjectId: 'c-programming',
+    title: t(
+      'Unions aur Enums — Ek Memory, Kai Roop aur Naam wale Constants',
+      'Unions and Enums — One Memory, Many Forms, and Named Constants'
+    ),
+    summary: t(
+      'Union mein saare members ek hi memory share karte hain, isliye ek waqt par sirf ek value safe rehti hai. Enum numbers ko naam deta hai, jaise RED = 0, GREEN = 2. Dono ko simple examples se samjho.',
+      'In a union, all members share the same memory, so only one value is safe at a time. An enum gives names to numbers, like RED = 0 and GREEN = 2. Learn both with simple examples.'
+    ),
+    sections: [
+      {
+        heading: t('1. Union aur Enum Kya Hain? (Shared Memory aur Named Constants)', '1. What Are a Union and an Enum? (Shared Memory and Named Constants)'),
+        body: t(
+          `**Union** struct jaisa dikhta hai, par kaam bilkul ulta hai. Struct mein har member ki apni alag memory hoti hai, par union mein **saare members ek hi memory share karte hain**. \`union Data { int i; float f; char c; };\` mein union ka size sirf sabse bade member ke barabar hota hai — yahan 4 bytes, kyunki \`int\` aur \`float\` dono 4 bytes ke hain. Iska matlab hai ek waqt par sirf ek member ki value safe rehti hai: agar aapne \`d.i = 65;\` likha aur phir \`d.f = 2.5f;\` likh diya, toh \`i\` ki value khatm ho jaayegi, kyunki dono ne ek hi memory par likha hai.
+
+**Enum** numbers ko naam dene ka tareeka hai. \`enum Day { MONDAY, TUESDAY, WEDNESDAY };\` mein \`MONDAY\` ka matlab 0, \`TUESDAY\` ka matlab 1, aur \`WEDNESDAY\` ka matlab 2 hai — compiler khud ginti karta hai, 0 se shuru karke. Aap shuruwaat bhi badal sakte ho: \`enum Light { RED, YELLOW, GREEN };\` mein RED 0, YELLOW 1, GREEN 2 hai. Enum se code padhne mein aasan ho jaata hai, kyunki \`if (signal == GREEN)\` likhna \`if (signal == 2)\` se zyada saaf hai.
+
+Union aur enum dono ka ek hi maksad hai: code ko saaf aur memory ko bachat wala banana. Union memory bachata hai jab ek waqt par sirf ek value chahiye hoti hai, aur enum numbers ki jagah naam dekar code ko samajhne layak banata hai.`,
+          `A **union** looks like a struct, but it works in the opposite way. In a struct, every member has its own separate memory, but in a union **all members share the same memory**. In \`union Data { int i; float f; char c; };\`, the size of the union is only as large as its biggest member — here 4 bytes, because both \`int\` and \`float\` are 4 bytes. That means only one member's value is safe at a time: if you write \`d.i = 65;\` and then write \`d.f = 2.5f;\`, the value of \`i\` is gone, because both wrote to the same memory.
+
+An **enum** is a way to give names to numbers. In \`enum Day { MONDAY, TUESDAY, WEDNESDAY };\`, \`MONDAY\` means 0, \`TUESDAY\` means 1, and \`WEDNESDAY\` means 2 — the compiler counts by itself, starting from 0. You can also change the start: in \`enum Light { RED, YELLOW, GREEN };\`, RED is 0, YELLOW is 1, and GREEN is 2. An enum makes code easy to read, because writing \`if (signal == GREEN)\` is clearer than writing \`if (signal == 2)\`.
+
+A union and an enum share one goal: to make code clean and memory saving. A union saves memory when only one value is needed at a time, and an enum makes code understandable by giving names instead of numbers.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Ek Kamra, Kai Kaam aur Traffic Light', '2. Real-Life Examples: One Room, Many Jobs, and a Traffic Light'),
+        body: t(
+          `**Union** ko samjho **ek kamre** se. Ek kamre mein ek waqt par ya toh bed laga ho, ya toh study table, ya toh almari — teeno ek saath nahi aa sakte, kyunki jagah ek hi hai. Kamra ek hi hai, par use alag-alag kaam ke liye use kiya ja sakta hai. Union bhi wahi kamra hai: memory ek hi hai, par use kabhi \`int\` ki tarah, kabhi \`float\` ki tarah, aur kabhi \`char\` ki tarah use kiya ja sakta hai. Ek waqt par sirf ek hi roop safe rehta hai.
+
+**Enum** ko samjho **traffic light** se. Traffic light mein teen rang hote hain — laal, peela, hara — aur har rang ka ek matlab hota hai: ruko, taiyaar raho, chalo. Aap rangon ko number se bhi bula sakte the — 0, 1, 2 — par naam se bulana zyada saaf hai. \`enum Light { RED, YELLOW, GREEN };\` bhi wahi hai: numbers ko naam dekar code ko insaan ke padhne layak banana. Jab bhi code mein 0, 1, 2 jaise magic numbers dikhein, toh enum use karne ka waqt hai.
+
+**Week ke din** bhi enum ka example hai: \`MONDAY\` se \`SUNDAY\` tak saat naam, aur har naam ke peeche ek number. Program mein din ko number se compare karne ki jagah naam se compare karo — code khud bolne lagega ki woh kya kar raha hai.`,
+          `Understand a **union** with **one room**. In one room, at one time there can be either a bed, or a study table, or a cupboard — all three cannot fit together, because the space is one. The room is one, but it can be used for different jobs. A union is that same room: the memory is one, but it can be used sometimes as an \`int\`, sometimes as a \`float\`, and sometimes as a \`char\`. Only one form is safe at a time.
+
+Understand an **enum** with a **traffic light**. A traffic light has three colours — red, yellow, green — and every colour has a meaning: stop, get ready, go. You could also have called the colours by numbers — 0, 1, 2 — but calling them by name is clearer. \`enum Light { RED, YELLOW, GREEN };\` is the same thing: giving names to numbers to make code readable for a human. Whenever you see magic numbers like 0, 1, 2 in code, it is time to use an enum.
+
+The **days of the week** are also an example of an enum: seven names from \`MONDAY\` to \`SUNDAY\`, and a number behind every name. In a program, compare a day by its name instead of by its number — the code will start speaking for itself about what it is doing.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Union mein Value Likhna aur Enum se Din Chunnna (Dry Run)', '3. Step-by-Step: Writing a Value in a Union and Picking a Day with an Enum (Dry Run)'),
+        body: t(
+          `Neeche wale program ko line by line trace karte hain. Pehle \`union Data { int i; float f; char c; };\` define hota hai. Union ka size 4 bytes hai, kyunki sabse bada member (\`int\` ya \`float\`) 4 bytes ka hai. Phir \`main\` mein \`union Data d;\` ek union variable banata hai — iski poori memory sirf 4 bytes ki hai, aur \`i\`, \`f\`, \`c\` teeno usi 4 bytes ko share karte hain.
+
+Pehli step mein \`d.i = 65;\` likha hai — 4 bytes wali memory mein number 65 likh diya gaya. Doosri line \`printf("i = %d, c = %c\\n", d.i, d.c);\` mein \`d.i\` se 65 milta hai, aur \`d.c\` se wahi memory ka pehla byte \`char\` ki tarah padha jaata hai — 65 ka matlab ASCII mein 'A' hota hai, isliye output hai \`i = 65, c = A\`. Yeh union ki khaasiyat hai: ek hi memory ko do tareekon se padha ja sakta hai.
+
+Teesri step mein \`d.f = 2.5f;\` likha hai — ab wahi 4 bytes wali memory par float 2.5 likh diya gaya, aur purana 65 khatm ho gaya. Isliye uske baad \`d.i\` padhna galat hoga. Aakhri line \`printf("Size of union = %zu\\n", sizeof(union Data));\` union ka size chhapti hai — 4. Struct hota toh size 9 hota (4 + 4 + 1), par union mein sirf 4 hai, kyunki memory share hoti hai.`,
+          `Let us trace the program below line by line. First, \`union Data { int i; float f; char c; };\` is defined. The size of the union is 4 bytes, because its biggest member (\`int\` or \`float\`) is 4 bytes. Then in \`main\`, \`union Data d;\` creates a union variable — its whole memory is only 4 bytes, and \`i\`, \`f\`, and \`c\` all share those same 4 bytes.
+
+In the first step, \`d.i = 65;\` is written — the number 65 is written into the 4-byte memory. In the second line, \`printf("i = %d, c = %c\\n", d.i, d.c);\`, \`d.i\` gives 65, and \`d.c\` reads the first byte of that same memory as a \`char\` — 65 means 'A' in ASCII, so the output is \`i = 65, c = A\`. This is the special quality of a union: the same memory can be read in two ways.
+
+In the third step, \`d.f = 2.5f;\` is written — now the float 2.5 is written onto the same 4-byte memory, and the old 65 is gone. So reading \`d.i\` after this would be wrong. The last line, \`printf("Size of union = %zu\\n", sizeof(union Data));\`, prints the size of the union — 4. If it were a struct, the size would be 9 (4 + 4 + 1), but in a union it is only 4, because the memory is shared.`
+        ),
+        code: {
+          title: t('Union: Ek Memory, Teen Roop', 'Union: One Memory, Three Forms'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+union Data {
+    int i;
+    float f;
+    char c;
+};
+
+int main(void) {
+    union Data d;
+
+    d.i = 65;
+    printf("i = %d, c = %c\\n", d.i, d.c);
+
+    d.f = 2.5f;
+    printf("f = %.1f\\n", d.f);
+    printf("Size of union = %zu\\n", sizeof(union Data));
+
+    return 0;
+}`,
+          output: `i = 65, c = A
+f = 2.5
+Size of union = 4`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Union mein Do Values, Enum ko String Samajhna', '4. Common Mistakes: Two Values in a Union, and Thinking an Enum Is a String'),
+        body: t(
+          `Union mein sabse badi galti hai **do members ki values ek saath safe samajhna**: \`d.i = 65; d.f = 2.5f;\` ke baad \`d.i\` padhna galat hai, kyunki \`f\` ne \`i\` ki memory par likh diya hai. Union mein hamesha sirf aakhri likhi hui value hi safe rehti hai. Agar aapko do values ek saath chahiye, toh union nahi, struct use karo. Union use karne se pehle hamesha ek **tag** rakho — ek alag variable jo bataye ki union mein abhi kaunsi value hai, jaise \`int type;\` jismein 0 ka matlab int aur 1 ka matlab float ho.
+
+Enum mein sabse aam galti hai **enum ko string samajhna**: \`printf("%s", MONDAY);\` nahi chalega, kyunki \`MONDAY\` ek string nahi, ek number (0) hai. Enum ka naam print karne ke liye \`switch\` use karo, ya ek array of strings banao. Doosri galti hai **enum ki value badalna**: \`MONDAY = 5;\` nahi chalega, kyunki enum ke naam constants hote hain. Teesri galti hai **enum ko sirf int samajh kar usmein koi bhi number daalna**: \`enum Day d = 10;\` compiler ko rokega nahi, par 10 koi valid din nahi hai. Enum variable mein sirf wahi values daalo jo enum mein define hain.`,
+          `The biggest mistake in a union is **thinking that the values of two members are safe together**: after \`d.i = 65; d.f = 2.5f;\`, reading \`d.i\` is wrong, because \`f\` wrote over the memory of \`i\`. In a union, only the last written value is safe. If you need two values together, use a struct, not a union. Before using a union, always keep a **tag** — a separate variable that tells which value is in the union now, like an \`int type;\` where 0 means int and 1 means float.
+
+In an enum, the most common mistake is **thinking an enum is a string**: \`printf("%s", MONDAY);\` will not work, because \`MONDAY\` is not a string, it is a number (0). To print the name of an enum, use a \`switch\`, or make an array of strings. The second mistake is **changing the value of an enum**: \`MONDAY = 5;\` will not work, because the names of an enum are constants. The third mistake is **treating an enum as a plain int and putting any number into it**: \`enum Day d = 10;\` will not stop the compiler, but 10 is not a valid day. Put only the values defined in the enum into an enum variable.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Union ka Size, Enum ki Shuruwaat aur Negative Value', '5. Edge Cases: Size of a Union, Start of an Enum, and a Negative Value'),
+        body: t(
+          `**Union ka size** hamesha sabse bade member ke barabar hota hai, par kabhi-kabhi usse bada bhi ho sakta hai, kyunki compiler alignment ke liye padding daal sakta hai. \`union Data\` mein \`int\` aur \`float\` dono 4 bytes ke hain, isliye size 4 hai. Lekin agar union mein \`double\` (8 bytes) hota, toh size 8 hota. Union ka size jaanne ke liye hamesha \`sizeof\` use karo, guess mat karo.
+
+**Enum ki shuruwaat** badli ja sakti hai: \`enum Day { MONDAY = 1, TUESDAY, WEDNESDAY };\` mein MONDAY 1, TUESDAY 2, aur WEDNESDAY 3 hai — compiler MONDAY ke baad se ginti karta hai. Beech mein bhi value badli ja sakti hai: \`enum Code { OK = 0, ERROR = -1 };\` mein ERROR -1 hai. **Negative enum value** bilkul allowed hai, kyunki enum ke peeche asal mein \`int\` hota hai. Yeh pattern error codes mein bahut use hota hai — 0 ka matlab success, -1 ka matlab error.
+
+**Enum ka naam aur variable ka naam** alag hona chahiye: \`enum Day { MONDAY };\` ke baad \`enum Day MONDAY;\` nahi likh sakte, kyunki \`MONDAY\` pehle se ek constant hai. Naam dene mein dhyaan rakho, warna compiler "redefinition" error dega.`,
+          `The **size of a union** is always equal to its biggest member, but sometimes it can be larger, because the compiler may add padding for alignment. In \`union Data\`, both \`int\` and \`float\` are 4 bytes, so the size is 4. But if the union had a \`double\` (8 bytes), the size would be 8. To know the size of a union, always use \`sizeof\`, never guess.
+
+The **start of an enum** can be changed: in \`enum Day { MONDAY = 1, TUESDAY, WEDNESDAY };\`, MONDAY is 1, TUESDAY is 2, and WEDNESDAY is 3 — the compiler counts on from MONDAY. A value can also be changed in the middle: in \`enum Code { OK = 0, ERROR = -1 };\`, ERROR is -1. A **negative enum value** is completely allowed, because behind an enum there is really an \`int\`. This pattern is used a lot in error codes — 0 means success and -1 means error.
+
+The **name of an enum and the name of a variable** must be different: after \`enum Day { MONDAY };\` you cannot write \`enum Day MONDAY;\`, because \`MONDAY\` is already a constant. Be careful when giving names, or the compiler will give a "redefinition" error.`
+        ),
+      },
+      {
+        heading: t('6. What If: Union ki Jagah Struct, aur Enum ki Jagah #define?', '6. What If: A Struct Instead of a Union, and #define Instead of an Enum?'),
+        body: t(
+          `**What if: union ki jagah struct use kar lein?** Struct mein saare members ki values ek saath safe rehti hain, isliye jab do ya zyada values ek saath chahiye hon, toh struct hi sahi hai. Union tab use karo jab ek waqt par sirf ek value chahiye ho aur memory bachani ho — jaise ek variable jo kabhi int hota hai aur kabhi float. Struct memory zyada leta hai, par safe hai; union memory kam leta hai, par sirf ek value safe rehti hai. Yeh trade-off samajhna hi union ko samajhna hai.
+
+**What if: enum ki jagah #define use kar lein?** \`#define RED 0\` bhi kaam karta hai, aur purane code mein bahut use hota tha. Lekin enum behtar hai, kyunki enum ka ek **type** hota hai — compiler jaanta hai ki \`enum Light\` sirf RED, YELLOW, GREEN mein se ek ho sakta hai, aur galat value dene par warning de sakta hai. \`#define\` mein sirf text replace hota hai, compiler ko type ka pata nahi hota. Debugger mein bhi enum ka naam dikhta hai, jabki \`#define\` ka sirf number dikhta hai. Naye code mein enum ko prefer karo.
+
+**What if: union mein struct rakh dein?** Union ke andar struct bhi ho sakta hai, aur struct ke andar union bhi. Jaise, ek message jo kabhi text hota hai aur kabhi number — use union mein rakha ja sakta hai, aur uske saath ek tag rakha ja sakta hai jo bataye ki abhi kaunsa roop hai. Yeh pattern real programs mein bahut use hota hai, khaas taur par network aur file format wale code mein.`,
+          `**What if we use a struct instead of a union?** In a struct, the values of all members are safe together, so when two or more values are needed together, a struct is the right choice. Use a union when only one value is needed at a time and memory must be saved — like a variable that is sometimes an int and sometimes a float. A struct takes more memory but is safe; a union takes less memory, but only one value is safe. Understanding this trade-off is understanding a union.
+
+**What if we use #define instead of an enum?** \`#define RED 0\` also works, and it was used a lot in old code. But an enum is better, because an enum has a **type** — the compiler knows that an \`enum Light\` can only be one of RED, YELLOW, or GREEN, and it can warn you if you give a wrong value. In a \`#define\`, only text is replaced, and the compiler does not know the type. In a debugger, too, the name of an enum is shown, while a \`#define\` shows only a number. In new code, prefer an enum.
+
+**What if we put a struct inside a union?** A union can hold a struct inside, and a struct can hold a union inside. For example, a message that is sometimes text and sometimes a number can be kept in a union, together with a tag that tells which form it is in now. This pattern is used a lot in real programs, especially in network and file-format code.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Unions aur Enums ka Poora Picture', '7. Summary: The Full Picture of Unions and Enums'),
+        body: t(
+          `Union mein saare members ek hi memory share karte hain, isliye union ka size sabse bade member ke barabar hota hai aur ek waqt par sirf ek value safe rehti hai. Union use karte waqt ek tag rakho jo bataye ki abhi kaunsi value hai. Enum numbers ko naam deta hai — compiler 0 se ginti karta hai, par aap shuruwaat aur beech ki values badal sakte ho, negative bhi.
+
+Yaad rakhne wali baatein: do values ek saath chahiye toh struct lo, ek value aur kam memory chahiye toh union lo. Enum ka naam print karne ke liye switch use karo, kyunki enum number hota hai, string nahi. Aur magic numbers ki jagah hamesha enum use karo — code khud bolne lagega.
+
+Agle article mein hum functions ko gehraai se dekhenge — recursion, scope, static variables aur function declarations. Enum aur union ki yeh samajh wahan bhi kaam aayegi, kyunki functions mein inka use bahut hota hai.`,
+          `In a union, all members share the same memory, so the size of a union equals its biggest member and only one value is safe at a time. When you use a union, keep a tag that tells which value is in it now. An enum gives names to numbers — the compiler counts from 0, but you can change the start and the values in the middle, even to negative numbers.
+
+Remember these points: if you need two values together, take a struct; if you need one value and less memory, take a union. To print the name of an enum, use a switch, because an enum is a number, not a string. And always use an enum instead of magic numbers — the code will start speaking for itself.
+
+In the next article we will look at functions in depth — recursion, scope, static variables, and function declarations. This understanding of enums and unions will be useful there too, because they are used a lot inside functions.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'table',
+      title: t('Struct vs Union vs Enum — Ek Nazar mein', 'Struct vs Union vs Enum — At a Glance'),
+      caption: t('Struct mein sab alag, union mein sab ek, enum mein naam wale numbers', 'In a struct everything is separate, in a union everything is one, in an enum numbers have names'),
+      nodes: [],
+      headers: [t('Cheez', 'Thing'), t('Memory', 'Memory'), t('Ek waqt par', 'At one time')],
+      rows: [
+        [t('struct', 'struct'), t('Har member ki alag memory', 'Separate memory for every member'), t('Saari values safe', 'All values safe')],
+        [t('union', 'union'), t('Saare members ek hi memory share karte hain', 'All members share the same memory'), t('Sirf ek value safe', 'Only one value safe')],
+        [t('enum', 'enum'), t('Int ke barabar', 'Same as an int'), t('Ek naam = ek number', 'One name = one number')],
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Enum se Din ka Naam Print Karna', 'Printing the Name of a Day with an Enum'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+enum Day { MONDAY, TUESDAY, WEDNESDAY };
+
+int main(void) {
+    enum Day today = WEDNESDAY;
+
+    printf("Today code: %d\\n", today);
+    switch (today) {
+        case MONDAY:
+            printf("Today is Monday\\n");
+            break;
+        case TUESDAY:
+            printf("Today is Tuesday\\n");
+            break;
+        case WEDNESDAY:
+            printf("Today is Wednesday\\n");
+            break;
+        default:
+            printf("Unknown day\\n");
+            break;
+    }
+
+    return 0;
+}`,
+        output: `Today code: 2
+Today is Wednesday`,
+      },
+      {
+        title: t('Struct vs Union ka Size Compare Karna', 'Comparing the Size of a Struct and a Union'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+struct Pair {
+    int a;
+    float b;
+};
+
+union PairU {
+    int a;
+    float b;
+};
+
+int main(void) {
+    printf("Size of struct = %zu\\n", sizeof(struct Pair));
+    printf("Size of union = %zu\\n", sizeof(union PairU));
+
+    return 0;
+}`,
+        output: `Size of struct = 8
+Size of union = 4`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Union mein saare members kya share karte hain?', 'What do all members share in a union?'),
+        opts: [t('Ek hi memory', 'The same memory'), t('Ek hi naam', 'The same name'), t('Ek hi type', 'The same type'), t('Kuch nahi', 'Nothing')],
+        ans: 0,
+        expl: t('Sahi jawab: union ke saare members ek hi memory share karte hain, isliye ek waqt par sirf ek value safe rehti hai.', 'Correct answer: all members of a union share the same memory, so only one value is safe at a time.'),
+      },
+      {
+        q: t('union Data { int i; float f; char c; } ka size kitna hoga?', 'What is the size of union Data { int i; float f; char c; }?'),
+        opts: [t('9 bytes', '9 bytes'), t('4 bytes', '4 bytes'), t('1 byte', '1 byte'), t('8 bytes', '8 bytes')],
+        ans: 1,
+        expl: t('Sahi jawab: union ka size sabse bade member ke barabar hota hai — int aur float dono 4 bytes ke hain, isliye size 4 hai.', 'Correct answer: the size of a union equals its biggest member — both int and float are 4 bytes, so the size is 4.'),
+      },
+      {
+        q: t('enum Day { MONDAY, TUESDAY, WEDNESDAY } mein WEDNESDAY ki value kya hai?', 'In enum Day { MONDAY, TUESDAY, WEDNESDAY }, what is the value of WEDNESDAY?'),
+        opts: [t('0', '0'), t('1', '1'), t('2', '2'), t('3', '3')],
+        ans: 2,
+        expl: t('Sahi jawab: enum ki ginti 0 se shuru hoti hai — MONDAY 0, TUESDAY 1, WEDNESDAY 2.', 'Correct answer: an enum counts from 0 — MONDAY is 0, TUESDAY is 1, and WEDNESDAY is 2.'),
+      },
+      {
+        q: t('d.i = 65; d.f = 2.5f; ke baad d.i padhne par kya hoga?', 'What happens if you read d.i after d.i = 65; d.f = 2.5f;?'),
+        opts: [t('65 milega', 'You get 65'), t('Galat value milegi, kyunki f ne i ki memory par likh diya', 'You get a wrong value, because f wrote over the memory of i'), t('Compiler error dega', 'The compiler gives an error'), t('Program crash hoga', 'The program will crash')],
+        ans: 1,
+        expl: t('Sahi jawab: union mein sirf aakhri likhi value safe rehti hai; f likhne ke baad i ki purani value khatm ho jati hai.', 'Correct answer: in a union only the last written value is safe; after writing f, the old value of i is gone.'),
+      },
+      {
+        q: t('Enum ka naam print karne ke liye kya use karte hain?', 'What do you use to print the name of an enum?'),
+        opts: [t('printf("%s", MONDAY)', 'printf("%s", MONDAY)'), t('switch se naam chhapna', 'Printing the name with a switch'), t('printf("%d", MONDAY)', 'printf("%d", MONDAY)'), t('Enum ko string mein badalna', 'Changing the enum into a string')],
+        ans: 1,
+        expl: t('Sahi jawab: enum ek number hota hai, string nahi, isliye uska naam print karne ke liye switch ya string array use karna padta hai.', 'Correct answer: an enum is a number, not a string, so to print its name you must use a switch or an array of strings.'),
+      },
+    ],
+    keyNotes: [
+      t('Union mein saare members ek hi memory share karte hain — ek waqt par sirf ek value safe rehti hai.', 'In a union, all members share the same memory — only one value is safe at a time.'),
+      t('Union ka size sabse bade member ke barabar hota hai; hamesha sizeof se jaano.', 'The size of a union equals its biggest member; always find it with sizeof.'),
+      t('Enum numbers ko naam deta hai; ginti 0 se shuru hoti hai, par badli ja sakti hai.', 'An enum gives names to numbers; counting starts at 0, but it can be changed.'),
+      t('Do values ek saath chahiye toh struct lo; ek value aur kam memory chahiye toh union lo.', 'If you need two values together, take a struct; if you need one value and less memory, take a union.'),
+      t('Magic numbers ki jagah enum use karo — code padhne mein aasan ho jata hai.', 'Use an enum instead of magic numbers — the code becomes easy to read.'),
+    ],
+    practice: {
+      title: t('Practice: Traffic Light Enum se Signal Batana', 'Practice: Showing a Signal with a Traffic Light Enum'),
+      task: t('enum Light { RED, YELLOW, GREEN } banao, signal ko GREEN par set karo, phir uska code aur switch se "Go!" print karo. Done tab hoga jab output expected output jaisa dikhe.', 'Make enum Light { RED, YELLOW, GREEN }, set the signal to GREEN, then print its code and "Go!" with a switch. You are done when the output looks like the expected output.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+enum Light { RED, YELLOW, GREEN };
+
+int main(void) {
+    enum Light signal = GREEN;
+
+    printf("Signal code: %d\\n", signal);
+    switch (signal) {
+        case RED:
+            printf("Stop!\\n");
+            break;
+        case YELLOW:
+            printf("Get ready!\\n");
+            break;
+        case GREEN:
+            printf("Go!\\n");
+            break;
+        default:
+            printf("Unknown!\\n");
+            break;
+    }
+
+    return 0;
+}`,
+      expected: `Signal code: 2
+Go!`,
+    },
+    readMinutes: 12,
+  };
+
+const cFunctionsAdvanced: Article = {
+    id: 'c-functions-advanced',
+    subjectId: 'c-programming',
+    title: t(
+      'Advanced Functions — Recursion, Scope, Static aur Declaration',
+      'Advanced Functions — Recursion, Scope, Static, and Declaration'
+    ),
+    summary: t(
+      'Function sirf code ko baantne ka tareeka nahi hai — scope batata hai variable kahan tak zinda hai, static batata hai value kaise yaad rehti hai, aur declaration batata hai function ko pehle se kaise pehchana jata hai. Yeh chaaro ek saath samjho.',
+      'A function is not only a way to split code — scope tells you how far a variable lives, static tells you how a value is remembered, and a declaration tells you how a function is known in advance. Learn all four together.'
+    ),
+    sections: [
+      {
+        heading: t('1. Recursion, Scope, Static aur Declaration Kya Hain?', '1. What Are Recursion, Scope, Static, and Declaration?'),
+        body: t(
+          `**Recursion** ka matlab hai function ka khud ko bulana. \`int factorial(int n)\` ke andar \`return n * factorial(n - 1);\` likha ho, toh function khud ko chhote input ke saath bulata hai, aur ek base case par rukta hai — jaise \`n <= 1\` par 1 dena. Recursion se factorial, Fibonacci aur Tower of Hanoi jaise problems bahut chhote code mein likhe jaate hain, par har recursive call stack par jagah leti hai, isliye base case bhoolna matlab infinite recursion aur crash.
+
+**Scope** ka matlab hai variable kahan tak dikhta hai aur kahan tak zinda rehta hai. Function ke andar bana variable **local** hota hai — woh sirf us function mein dikhta hai. Function ke bahar bana variable **global** hota hai — woh poori file mein dikhta hai. Curly brackets ke andar bana variable **block scope** mein hota hai — woh sirf us block mein dikhta hai. Scope samajhna isliye zaroori hai, kyunki galat jagah variable use karne par compiler "undeclared identifier" error dega.
+
+**Static variable** ek aisa local variable hai jo function khatm hone ke baad bhi apni value yaad rakhta hai. \`static int count = 0;\` sirf pehli baar initialise hota hai, aur agle call par purani value se aage badhta hai. **Function declaration** (prototype) function ko use karne se pehle compiler ko uska naam, parameters aur return type batata hai — jaise \`int square(int n);\` — taaki \`main\` use pehle bula sake, chahe definition baad mein ho.`,
+          `**Recursion** means a function calling itself. If \`int factorial(int n)\` holds \`return n * factorial(n - 1);\`, the function calls itself with a smaller input, and stops at a base case — like returning 1 when \`n <= 1\`. With recursion, problems like factorial, Fibonacci, and the Tower of Hanoi are written in very short code, but every recursive call takes space on the stack, so forgetting the base case means infinite recursion and a crash.
+
+**Scope** means how far a variable is visible and how long it lives. A variable made inside a function is **local** — it is visible only in that function. A variable made outside a function is **global** — it is visible in the whole file. A variable made inside curly brackets lives in **block scope** — it is visible only in that block. Understanding scope matters, because using a variable in the wrong place makes the compiler give an "undeclared identifier" error.
+
+A **static variable** is a local variable that remembers its value even after the function ends. \`static int count = 0;\` is initialised only the first time, and on the next call it continues from its old value. A **function declaration** (prototype) tells the compiler the name, parameters, and return type of a function before it is used — like \`int square(int n);\` — so that \`main\` can call it earlier, even if the definition comes later.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Sheesha, Kamra aur Guest List', '2. Real-Life Examples: A Mirror, a Room, and a Guest List'),
+        body: t(
+          `**Recursion** ko samjho **sheeshe ke saamne sheesha** rakhne se. Ek sheeshe ke saamne doosra sheesha rakh do, toh usmein pehle sheeshe ki image dikhti hai, usmein doosre ki, aur aise hi aage — har image pehle wali se chhoti hoti jaati hai, aur aakhir mein ek chhoti si image par ruk jaati hai. Recursive function bhi aise hi kaam karta hai — har call pehle wali se chhota input leti hai, aur base case par ruk jaati hai. Agar base case na ho, toh sheeshe ki tarah images kabhi khatm nahi hongi.
+
+**Scope** ko samjho **kamre** se. Aapke kamre mein rakhi cheez sirf aapko dikhti hai, ghar ke bahar wale ko nahi. Ghar ke hall mein rakhi cheez ghar ke sabhi logon ko dikhti hai. C mein bhi local variable sirf apne function ko dikhta hai, aur global variable poori file ko dikhta hai. **Static variable** ko samjho **guest list** se: har baar jab koi guest aata hai, toh list mein ek naam aur jud jaata hai, aur agle guest ke aane par purani list wahi rehti hai — count badhta rehta hai, reset nahi hota.
+
+**Function declaration** ko samjho **shaadi ke card** se. Card par pehle se likha hota hai ki kaun aa raha hai, kab aa raha hai, aur kahan aa raha hai — isliye aapko pehle se pata hota hai. Compiler ko bhi function ka card chahiye hota hai, taaki woh pehle se jaan sake ki function kya leta hai aur kya deta hai.`,
+          `Understand **recursion** by placing a **mirror in front of a mirror**. Put a second mirror in front of the first one, and in it you see the image of the first mirror, inside that the second one, and so on — every image gets smaller than the one before, and at the end it stops at one tiny image. A recursive function works in the same way — every call takes a smaller input than the one before, and it stops at the base case. If there is no base case, the images will never end, like the mirrors.
+
+Understand **scope** with a **room**. A thing kept in your room is visible only to you, not to someone outside the house. A thing kept in the hall of the house is visible to everyone in the house. In C, too, a local variable is visible only to its own function, and a global variable is visible to the whole file. Understand a **static variable** with a **guest list**: every time a guest comes, one more name is added to the list, and when the next guest comes, the old list stays as it is — the count keeps growing, it never resets.
+
+Understand a **function declaration** with a **wedding card**. The card already says who is coming, when they are coming, and where they are coming — so you know in advance. The compiler also needs the card of a function, so that it knows in advance what the function takes and what it gives.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Static Counter ka Dry Run — Teen Calls', '3. Step-by-Step: A Static Counter Dry Run — Three Calls'),
+        body: t(
+          `Neeche wale program mein \`visit\` function ke andar \`static int count = 0;\` hai. Pehli baar jab \`visit\` bulaya jaata hai, toh \`count\` 0 se shuru hota hai, phir \`count++\` se 1 ho jaata hai, aur print hota hai "Visit 1". Function khatm hone par normal local variable gayab ho jaata, par **static** variable apni value yaad rakhta hai — \`count\` ab bhi 1 hai, kahin chhupa hua.
+
+Doosri baar jab \`visit\` bulaya jaata hai, toh \`static int count = 0;\` wali line **dobara nahi chalti** — initialisation sirf pehli baar hoti hai. \`count\` ab bhi 1 hai, phir \`count++\` se 2 ho jaata hai, aur print hota hai "Visit 2". Teesri baar phir wahi hota hai: \`count\` 2 se 3 hota hai, aur print hota hai "Visit 3". Agar \`static\` na hota, toh har baar \`count\` 0 se shuru hota aur har baar "Visit 1" chhapta — yahi farak static banata hai.
+
+Static variable ka use tab hota hai jab function ko apni purani yaad rakhni ho — jaise kitni baar function bulaya gaya, ya pichhli baar kya value thi. Lekin static ko zyada use karna bhi buri aadat hai, kyunki function ka behaviour uski purani calls par depend karne lagta hai, aur testing mushkil ho jaati hai.`,
+          `In the program below, the \`visit\` function holds \`static int count = 0;\`. The first time \`visit\` is called, \`count\` starts at 0, then becomes 1 with \`count++\`, and prints "Visit 1". When the function ends, a normal local variable would disappear, but a **static** variable remembers its value — \`count\` is still 1, hidden somewhere.
+
+The second time \`visit\` is called, the line \`static int count = 0;\` **does not run again** — the initialisation happens only the first time. \`count\` is still 1, then becomes 2 with \`count++\`, and prints "Visit 2". The third time the same thing happens: \`count\` goes from 2 to 3, and prints "Visit 3". If there were no \`static\`, \`count\` would start at 0 every time and print "Visit 1" every time — that is the difference static makes.
+
+A static variable is used when a function must remember its past — like how many times the function was called, or what the value was last time. But using static too much is also a bad habit, because the behaviour of the function starts to depend on its earlier calls, and testing becomes hard.`
+        ),
+        code: {
+          title: t('Static Counter — Function Kitni Baar Bulaaya Gaya', 'Static Counter — How Many Times the Function Was Called'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+void visit(void) {
+    static int count = 0;
+    count++;
+    printf("Visit %d\\n", count);
+}
+
+int main(void) {
+    visit();
+    visit();
+    visit();
+
+    return 0;
+}`,
+          output: `Visit 1
+Visit 2
+Visit 3`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Base Case Bhoolna, Shadowing aur Declaration Bhoolna', '4. Common Mistakes: Forgetting the Base Case, Shadowing, and Forgetting the Declaration'),
+        body: t(
+          `Recursion mein sabse badi galti hai **base case bhoolna**: \`int f(int n) { return n * f(n - 1); }\` mein rukne ki shart nahi hai, isliye function khud ko hamesha bulata rahega, stack bhar jaayega, aur program crash karega. Har recursive function mein pehle base case likho, phir recursive step. Doosri galti hai **base case galat likhna**: factorial mein \`n == 0\` par 1 dena sahi hai, par \`n == 1\` par 0 dena galat hai — poora answer 0 ho jaayega.
+
+**Shadowing** ka matlab hai local variable ka naam global variable ke naam jaisa rakhna. \`int x = 10;\` global hai aur \`main\` mein \`int x = 20;\` local hai, toh \`main\` ke andar \`x\` ka matlab 20 hoga, 10 nahi — local ne global ko chhupa diya hai. Yeh compiler ko error nahi deta, par code ko confuse kar deta hai. Isliye local aur global ke naam alag rakho.
+
+**Declaration bhoolna** bhi aam galti hai: agar \`main\` ke neeche define kiya hua function \`main\` se pehle bulaya jaaye aur upar prototype na ho, toh purane C mein compiler guess karta tha, aur naye C mein error dega. Hamesha ya toh function ko pehle define karo, ya upar prototype likho.`,
+          `In recursion, the biggest mistake is **forgetting the base case**: in \`int f(int n) { return n * f(n - 1); }\` there is no condition to stop, so the function will keep calling itself forever, the stack will fill up, and the program will crash. In every recursive function, write the base case first, then the recursive step. The second mistake is **writing the base case wrong**: in a factorial, returning 1 when \`n == 0\` is correct, but returning 0 when \`n == 1\` is wrong — the whole answer will become 0.
+
+**Shadowing** means giving a local variable the same name as a global variable. If \`int x = 10;\` is global and \`int x = 20;\` is local inside \`main\`, then inside \`main\`, \`x\` means 20, not 10 — the local one has hidden the global one. This does not give the compiler an error, but it makes the code confusing. So keep the names of local and global variables different.
+
+**Forgetting the declaration** is also a common mistake: if a function defined below \`main\` is called from \`main\` and there is no prototype above, old C used to make the compiler guess, and new C will give an error. Always either define the function first, or write a prototype above.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Recursion ki Depth, Static ki Initialisation aur Global ka Naam', '5. Edge Cases: Depth of Recursion, Initialisation of Static, and the Name of a Global'),
+        body: t(
+          `**Recursion ki depth** ek edge case hai: \`factorial(100000)\` likhne par lakhon calls stack par aa jaayengi aur program crash karega — ise **stack overflow** kehte hain. Har recursive call stack par jagah leti hai, isliye recursion ko sirf chhote ya medium size ke problems mein use karo. Bade input ke liye loop behtar hai. **Tail recursion** mein recursive call aakhri statement hoti hai, aur kuch compilers use loop mein badal dete hain, par is par bharosa mat karo.
+
+**Static ki initialisation** sirf ek baar hoti hai, aur woh constant se hi ho sakti hai: \`static int count = 0;\` chalega, par \`static int count = n;\` nahi chalega, kyunki \`n\` har call par badal sakta hai. **Global variable** ka naam bhi dhyaan se rakho: agar do files mein ek hi naam ka global ho, toh linker error dega. Global ko \`static\` bana kar sirf ek file tak seemit kiya ja sakta hai — yahi \`static\` ka doosra use hai, jo agle article mein aur saaf hoga.`,
+          `The **depth of recursion** is an edge case: writing \`factorial(100000)\` puts hundreds of thousands of calls on the stack and the program crashes — this is called a **stack overflow**. Every recursive call takes space on the stack, so use recursion only for small or medium problems. For a large input, a loop is better. In **tail recursion**, the recursive call is the last statement, and some compilers turn it into a loop, but do not rely on that.
+
+The **initialisation of a static** happens only once, and it can only be with a constant: \`static int count = 0;\` works, but \`static int count = n;\` will not work, because \`n\` can change on every call. Be careful with the **name of a global variable** too: if two files have a global with the same name, the linker will give an error. A global can be limited to one file by making it \`static\` — that is the second use of \`static\`, which will become clearer in the next article.`
+        ),
+      },
+      {
+        heading: t('6. What If: Recursion ki Jagah Loop, aur Static ki Jagah Global?', '6. What If: A Loop Instead of Recursion, and a Global Instead of Static?'),
+        body: t(
+          `**What if: recursion ki jagah loop use kar lein?** Factorial ko loop se bhi likha ja sakta hai, aur loop stack par jagah nahi leta, isliye bade input par bhi safe hai. Recursion tab behtar hai jab problem khud recursive ho — jaise tree ko traverse karna, ya Tower of Hanoi. Loop tab behtar hai jab kaam seedha hai aur input bada ho sakta hai. Dono ko aana chahiye, aur har problem mein sahi tool chunna chahiye.
+
+**What if: static ki jagah global use kar lein?** Global variable se bhi count yaad rakha ja sakta hai, par global ko koi bhi function badal sakta hai, isliye bug dhoondhna mushkil ho jaata hai. Static variable sirf apne function ke andar dikhta hai, isliye use bahar se koi nahi badal sakta — yeh zyada safe hai. Rule simple hai: yaad rakhne wali cheez ko jitna chhota scope do, utna behtar.
+
+**What if: declaration ki jagah function ko pehle define kar dein?** Yeh bilkul chalega — agar \`square\` ki definition \`main\` se pehle hai, toh prototype ki zaroorat nahi hai. Prototype tab chahiye jab do functions ek doosre ko bulate hon, ya definition baad mein ho. Bade programs mein header file mein prototypes rakhe jaate hain, taaki har file ko pata ho ki kaunsa function kya karta hai.`,
+          `**What if we use a loop instead of recursion?** A factorial can also be written with a loop, and a loop takes no space on the stack, so it is safe even for a large input. Recursion is better when the problem itself is recursive — like traversing a tree, or the Tower of Hanoi. A loop is better when the work is simple and the input can be large. You should know both, and choose the right tool for every problem.
+
+**What if we use a global instead of static?** A count can also be remembered with a global variable, but any function can change a global, so finding a bug becomes hard. A static variable is visible only inside its own function, so nobody outside can change it — that is safer. The rule is simple: give a thing that must be remembered the smallest scope possible.
+
+**What if we define the function first instead of writing a declaration?** That works completely — if the definition of \`square\` is before \`main\`, no prototype is needed. A prototype is needed when two functions call each other, or when the definition comes later. In large programs, prototypes are kept in a header file, so that every file knows what each function does.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Advanced Functions ka Poora Picture', '7. Summary: The Full Picture of Advanced Functions'),
+        body: t(
+          `Recursion mein function khud ko bulata hai aur base case par rukta hai — base case bhoolna matlab crash. Scope batata hai variable kahan tak dikhta hai: local sirf function mein, global poori file mein, aur block variable sirf us block mein. Static local variable apni value calls ke beech mein yaad rakhta hai, aur initialisation sirf pehli baar hoti hai. Function declaration (prototype) compiler ko pehle se batata hai ki function kya leta hai aur kya deta hai.
+
+Yaad rakhne wali baatein: har recursive function mein pehle base case likho. Local aur global ke naam alag rakho, warna shadowing hogi. Yaad rakhne wali cheez ke liye static use karo, global nahi. Aur function ko use karne se pehle ya toh define karo, ya prototype likho. Agle article mein hum recursion ko gehraai se dekhenge — factorial, Fibonacci aur Tower of Hanoi ke saath.`,
+          `In recursion, a function calls itself and stops at the base case — forgetting the base case means a crash. Scope tells you how far a variable is visible: a local one only in its function, a global one in the whole file, and a block variable only in that block. A static local variable remembers its value between calls, and its initialisation happens only the first time. A function declaration (prototype) tells the compiler in advance what a function takes and what it gives.
+
+Remember these points: in every recursive function, write the base case first. Keep the names of local and global variables different, or there will be shadowing. For a thing that must be remembered, use static, not a global. And before using a function, either define it or write a prototype. In the next article we will look at recursion in depth — with factorial, Fibonacci, and the Tower of Hanoi.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t('Scope ki Layers: Block, Function, File', 'Layers of Scope: Block, Function, File'),
+      caption: t('Chhota scope andar, bada scope bahar — andar wala bahar ko chhupa sakta hai', 'Small scope inside, large scope outside — the inner one can hide the outer one'),
+      nodes: [
+        { t: t('Block scope — { } ke andar', 'Block scope — inside { }'), s: t('Sirf us block mein dikhta hai', 'Visible only in that block') },
+        { t: t('Local scope — function ke andar', 'Local scope — inside a function'), s: t('Sirf us function mein dikhta hai', 'Visible only in that function') },
+        { t: t('Global scope — poori file', 'Global scope — the whole file'), s: t('File ke sab functions mein dikhta hai', 'Visible in all functions of the file') },
+        { t: t('Static local — value yaad rehti hai', 'Static local — the value is remembered'), s: t('Scope function ka, life program ki', 'Scope of a function, life of a program') },
+        { t: t('Prototype — int square(int n);', 'Prototype — int square(int n);'), s: t('Definition se pehle compiler ko batana', 'Telling the compiler before the definition') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Function Declaration — Definition Baad mein', 'Function Declaration — Definition Later'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int square(int n);
+
+int main(void) {
+    printf("Square of 7 = %d\\n", square(7));
+
+    return 0;
+}
+
+int square(int n) {
+    return n * n;
+}`,
+        output: `Square of 7 = 49`,
+      },
+      {
+        title: t('Scope aur Shadowing — Kaunsa x Dikhega?', 'Scope and Shadowing — Which x Is Visible?'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int x = 10;
+
+void print_global(void) {
+    printf("Global: %d\\n", x);
+}
+
+int main(void) {
+    int x = 20;
+
+    print_global();
+    printf("Inside main: %d\\n", x);
+    {
+        int x = 30;
+        printf("Inside block: %d\\n", x);
+    }
+    printf("After block: %d\\n", x);
+
+    return 0;
+}`,
+        output: `Global: 10
+Inside main: 20
+Inside block: 30
+After block: 20`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Recursive function mein base case kyun zaroori hai?', 'Why is a base case needed in a recursive function?'),
+        opts: [t('Code chhota karne ke liye', 'To make the code shorter'), t('Rukne ki shart dene ke liye, warna infinite recursion hoga', 'To give a stopping condition, or there will be infinite recursion'), t('Compiler ko khush karne ke liye', 'To please the compiler'), t('Speed badhane ke liye', 'To increase speed')],
+        ans: 1,
+        expl: t('Sahi jawab: base case ke bina function khud ko hamesha bulata rahega, stack bhar jayega aur program crash karega.', 'Correct answer: without a base case the function will keep calling itself forever, the stack will fill up, and the program will crash.'),
+      },
+      {
+        q: t('Static local variable ki khaasiyat kya hai?', 'What is special about a static local variable?'),
+        opts: [t('Woh har call par reset hota hai', 'It resets on every call'), t('Woh apni value calls ke beech mein yaad rakhta hai', 'It remembers its value between calls'), t('Woh global ban jata hai', 'It becomes global'), t('Woh kabhi initialise nahi hota', 'It is never initialised')],
+        ans: 1,
+        expl: t('Sahi jawab: static variable sirf pehli baar initialise hota hai aur function khatm hone ke baad bhi apni value yaad rakhta hai.', 'Correct answer: a static variable is initialised only the first time and remembers its value even after the function ends.'),
+      },
+      {
+        q: t('Function declaration (prototype) ka kaam kya hai?', 'What is the job of a function declaration (prototype)?'),
+        opts: [t('Function ko define karna', 'To define the function'), t('Compiler ko pehle se batana ki function kya leta aur deta hai', 'To tell the compiler in advance what the function takes and gives'), t('Function ko call karna', 'To call the function'), t('Function ko delete karna', 'To delete the function')],
+        ans: 1,
+        expl: t('Sahi jawab: prototype se compiler ko function ka naam, parameters aur return type pehle se pata chal jata hai, isliye use definition se pehle bulaya ja sakta hai.', 'Correct answer: a prototype tells the compiler the name, parameters, and return type of a function in advance, so it can be called before its definition.'),
+      },
+      {
+        q: t('main mein int x = 20; hone par global x = 10 ka kya hoga?', 'When main has int x = 20;, what happens to the global x = 10?'),
+        opts: [t('Global x badal jayega', 'The global x will change'), t('Local x global ko chhupa dega (shadowing)', 'The local x will hide the global one (shadowing)'), t('Compiler error dega', 'The compiler will give an error'), t('Dono mil jayenge', 'Both will merge')],
+        ans: 1,
+        expl: t('Sahi jawab: main ke andar x ka matlab local x (20) hoga, global x chhupa rahega — ise shadowing kehte hain.', 'Correct answer: inside main, x means the local x (20), and the global x stays hidden — this is called shadowing.'),
+      },
+      {
+        q: t('Recursion ki sabse badi limit kya hai?', 'What is the biggest limit of recursion?'),
+        opts: [t('Code lamba hota hai', 'The code is long'), t('Har call stack par jagah leti hai — zyada depth par stack overflow', 'Every call takes space on the stack — too much depth causes a stack overflow'), t('Recursion slow hoti hai', 'Recursion is slow'), t('Recursion mein loop nahi hota', 'There is no loop in recursion')],
+        ans: 1,
+        expl: t('Sahi jawab: har recursive call stack par jagah leti hai, isliye bahut gehra recursion stack overflow karke program ko crash kar dega.', 'Correct answer: every recursive call takes space on the stack, so very deep recursion causes a stack overflow and crashes the program.'),
+      },
+    ],
+    keyNotes: [
+      t('Har recursive function mein pehle base case likho, warna infinite recursion hoga.', 'In every recursive function, write the base case first, or there will be infinite recursion.'),
+      t('Static local variable apni value calls ke beech mein yaad rakhta hai; initialisation sirf pehli baar hoti hai.', 'A static local variable remembers its value between calls; it is initialised only the first time.'),
+      t('Local variable sirf apne function mein dikhta hai; global poori file mein dikhta hai.', 'A local variable is visible only in its own function; a global is visible in the whole file.'),
+      t('Local naam global naam ko chhupa deta hai — ise shadowing kehte hain, isse bacho.', 'A local name hides a global name — this is called shadowing, avoid it.'),
+      t('Function ko use karne se pehle ya toh define karo, ya prototype likho.', 'Before using a function, either define it or write a prototype.'),
+    ],
+    practice: {
+      title: t('Practice: Static se Hello Kitni Baar Bola Gaya', 'Practice: Counting How Many Times Hello Was Said with Static'),
+      task: t('Ek function greet banao jismein static counter ho, aur use main se teen baar bulao. Har call par "Call 1: Hello!" jaisi line print honi chahiye. Done tab hoga jab output expected output jaisa dikhe.', 'Make a function greet with a static counter, and call it three times from main. Every call should print a line like "Call 1: Hello!". You are done when the output looks like the expected output.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+void greet(void) {
+    static int count = 0;
+    count++;
+    printf("Call %d: Hello!\\n", count);
+}
+
+int main(void) {
+    greet();
+    greet();
+    greet();
+
+    return 0;
+}`,
+      expected: `Call 1: Hello!
+Call 2: Hello!
+Call 3: Hello!`,
+    },
+    readMinutes: 12,
+  };
+
+const cRecursion: Article = {
+    id: 'c-recursion',
+    subjectId: 'c-programming',
+    title: t(
+      'Recursion Gehrai se — Factorial, Fibonacci aur Tower of Hanoi',
+      'Recursion in Depth — Factorial, Fibonacci, and the Tower of Hanoi'
+    ),
+    summary: t(
+      'Recursion mein badi problem ko chhoti problem mein todte hain, aur base case par rukte hain. Factorial, Fibonacci aur Tower of Hanoi — teeno ko dry run ke saath samjho, aur recursion vs iteration ka farak jaano.',
+      'In recursion, a big problem is broken into a smaller problem, and it stops at a base case. Learn factorial, Fibonacci, and the Tower of Hanoi with dry runs, and know the difference between recursion and iteration.'
+    ),
+    sections: [
+      {
+        heading: t('1. Recursion Kya Hai? (Base Case aur Recursive Step)', '1. What Is Recursion? (Base Case and Recursive Step)'),
+        body: t(
+          `**Recursion** ka matlab hai function ka khud ko bulana. Har recursive function ke do hisse hote hain: **base case** — woh sabse chhota case jiska answer seedha pata ho, aur **recursive step** — badi problem ko chhoti problem mein tod kar khud ko bulana. Factorial mein base case hai \`n <= 1\` par 1 dena, aur recursive step hai \`n * factorial(n - 1)\`. Bina base case ke recursion kabhi nahi rukega, aur bina recursive step ke woh aage nahi badhega.
+
+Recursion ko samajhne ka tareeka hai **stack** ko samajhna. Jab function khud ko bulata hai, toh har call stack par ek naya frame banati hai, aur jab base case milta hai, toh frames ek-ek karke wapas aate hain, apna answer lekar. \`factorial(5)\` mein pehle \`5 * factorial(4)\` rukta hai, phir \`4 * factorial(3)\`, aur aise hi \`factorial(1) = 1\` tak. Phir wapas aate waqt answers milte hain: \`2 * 1 = 2\`, \`3 * 2 = 6\`, \`4 * 6 = 24\`, \`5 * 24 = 120\`. Yahi recursion ka flow hai — neeche jaana, phir wapas aana.
+
+Recursion tab use karo jab problem khud ko chhote roop mein dohraye — jaise factorial, Fibonacci, tree traverse, aur Tower of Hanoi. Jab kaam seedha ho, toh loop use karo — recursion mein har call stack par jagah leti hai, isliye bade input par stack overflow ho sakta hai.`,
+          `**Recursion** means a function calling itself. Every recursive function has two parts: the **base case** — the smallest case whose answer is known directly, and the **recursive step** — breaking a big problem into a smaller problem and calling itself. In a factorial, the base case is returning 1 when \`n <= 1\`, and the recursive step is \`n * factorial(n - 1)\`. Without a base case, recursion will never stop, and without a recursive step, it will never move forward.
+
+The way to understand recursion is to understand the **stack**. When a function calls itself, every call creates a new frame on the stack, and when the base case is reached, the frames return one by one, carrying their answers. In \`factorial(5)\`, first \`5 * factorial(4)\` waits, then \`4 * factorial(3)\`, and so on until \`factorial(1) = 1\`. Then, on the way back, the answers come: \`2 * 1 = 2\`, \`3 * 2 = 6\`, \`4 * 6 = 24\`, \`5 * 24 = 120\`. That is the flow of recursion — going down, then coming back.
+
+Use recursion when a problem repeats itself in a smaller form — like factorial, Fibonacci, tree traversal, and the Tower of Hanoi. When the work is simple, use a loop — every call in recursion takes space on the stack, so a large input can cause a stack overflow.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Russian Doll, Sheesha aur Kahani ke Andar Kahani', '2. Real-Life Examples: Russian Doll, Mirror, and a Story Inside a Story'),
+        body: t(
+          `**Russian doll** (Matryoshka) recursion ka sabse accha example hai. Badi doll ke andar chhoti doll, uske andar usse chhoti doll, aur aakhir mein sabse chhoti doll jiske andar kuch nahi hai. Har doll ko kholna matlab hai problem ko chhota karna, aur sabse chhoti doll matlab hai base case — wahan ruk jaao, phir ek-ek karke doll band karte hue wapas aao. Factorial bhi aise hi khulta hai — 5 ke andar 4, 4 ke andar 3, aur 1 par ruk jaata hai.
+
+**Sheeshe ke saamne sheesha** wala example pichhle article mein aa chuka hai: har image pehle wali se chhoti hoti jaati hai, aur aakhir mein ek chhoti si image par ruk jaati hai. **Kahani ke andar kahani** bhi recursion hai: ek kahani mein ek character doosri kahani sunata hai, usmein teesri kahani, aur aakhir mein sabse chhoti kahani khatm hoti hai, phir ek-ek karke saari kahaniyan khatm hoti hain. Tower of Hanoi bhi aise hi hai — 3 disks ko move karna matlab hai 2 disks ko move karna, aur 2 disks ko move karna matlab hai 1 disk ko move karna.
+
+**Fibonacci** nature mein dikhta hai: phool ki pattiyon ki ginti, aur khargoshon ki aabadi — har number pichhle do numbers ka sum hota hai. Yeh recursion ka sabse mashhoor example hai, par yeh sabse slow bhi hai, kyunki wohi hisaab baar-baar hota hai. Isi liye Fibonacci ko recursion se seekhna achha hai, par real code mein use loop ya memoization se likhna chahiye.`,
+          `A **Russian doll** (Matryoshka) is the best example of recursion. Inside a big doll there is a smaller doll, inside that an even smaller doll, and at the end the smallest doll, inside which there is nothing. Opening every doll means making the problem smaller, and the smallest doll means the base case — stop there, then come back by closing the dolls one by one. A factorial opens in the same way — 4 inside 5, 3 inside 4, and it stops at 1.
+
+The example of a **mirror in front of a mirror** already appeared in the last article: every image gets smaller than the one before, and at the end it stops at one tiny image. A **story inside a story** is also recursion: in one story, a character tells a second story, inside that a third story, and at the end the smallest story finishes, then all the stories finish one by one. The Tower of Hanoi is the same — moving 3 disks means moving 2 disks, and moving 2 disks means moving 1 disk.
+
+**Fibonacci** appears in nature: the count of petals on a flower, and the population of rabbits — every number is the sum of the previous two numbers. This is the most famous example of recursion, but it is also the slowest, because the same maths is done again and again. That is why Fibonacci is good to learn with recursion, but in real code it should be written with a loop or with memoization.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Factorial(5) ka Dry Run — Neeche Jaana, Wapas Aana', '3. Step-by-Step: A Dry Run of Factorial(5) — Going Down, Coming Back'),
+        body: t(
+          `Neeche wale program mein \`factorial\` function hai. \`main\` se \`factorial(5)\` bulaya jaata hai. Trace karte hain, step by step. **Neeche jaane ka phase:** \`factorial(5)\` mein \`n = 5\` hai, jo 1 se bada hai, isliye \`return 5 * factorial(4);\` hota hai — 5 rukta hai aur \`factorial(4)\` bulaya jaata hai. \`factorial(4)\` mein \`return 4 * factorial(3);\` hota hai. Phir \`factorial(3)\` mein \`return 3 * factorial(2);\`, phir \`factorial(2)\` mein \`return 2 * factorial(1);\`. Ab \`factorial(1)\` mein \`n <= 1\` sach hai, isliye **base case** mil gaya aur woh seedha 1 return karta hai — yahi rukne ki jagah hai.
+
+**Wapas aane ka phase:** ab answers ek-ek karke milte hain. \`factorial(2)\` ko 1 mila, toh woh \`2 * 1 = 2\` return karta hai. \`factorial(3)\` ko 2 mila, toh woh \`3 * 2 = 6\` return karta hai. \`factorial(4)\` ko 6 mila, toh woh \`4 * 6 = 24\` return karta hai. \`factorial(5)\` ko 24 mila, toh woh \`5 * 24 = 120\` return karta hai. \`main\` mein print hota hai "5! = 120". Yahi recursion ka poora flow hai — pehle calls stack par chadhti hain, phir base case par rukti hain, aur phir answers lekar wapas aati hain.`,
+          `In the program below there is a \`factorial\` function. \`main\` calls \`factorial(5)\`. Let us trace it, step by step. **The going-down phase:** in \`factorial(5)\`, \`n = 5\`, which is greater than 1, so it does \`return 5 * factorial(4);\` — 5 waits and \`factorial(4)\` is called. In \`factorial(4)\` it does \`return 4 * factorial(3);\`. Then in \`factorial(3)\` it does \`return 3 * factorial(2);\`, then in \`factorial(2)\` it does \`return 2 * factorial(1);\`. Now in \`factorial(1)\`, \`n <= 1\` is true, so the **base case** is reached and it directly returns 1 — this is the stopping place.
+
+**The coming-back phase:** now the answers come one by one. \`factorial(2)\` got 1, so it returns \`2 * 1 = 2\`. \`factorial(3)\` got 2, so it returns \`3 * 2 = 6\`. \`factorial(4)\` got 6, so it returns \`4 * 6 = 24\`. \`factorial(5)\` got 24, so it returns \`5 * 24 = 120\`. In \`main\`, "5! = 120" is printed. That is the whole flow of recursion — first the calls climb onto the stack, then they stop at the base case, and then they return carrying their answers.`
+        ),
+        code: {
+          title: t('Factorial — Recursion se 5! Nikaalna', 'Factorial — Finding 5! with Recursion'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int factorial(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+int main(void) {
+    printf("5! = %d\\n", factorial(5));
+
+    return 0;
+}`,
+          output: `5! = 120`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: Base Case Bhoolna, Galat Base aur Fibonacci ki Slow Speed', '4. Common Mistakes: Forgetting the Base Case, Wrong Base, and the Slow Speed of Fibonacci'),
+        body: t(
+          `Sabse badi galti hai **base case bhoolna**: \`int f(int n) { return n * f(n - 1); }\` kabhi nahi rukega, stack bhar jaayega, aur program crash karega. Har recursive function mein pehle base case likho. Doosri galti hai **galat base case**: factorial mein \`n == 0\` par 0 dena galat hai — poora answer 0 ho jaayega, kyunki har step mein 0 se multiply hoga. Sahi base hai \`n <= 1\` par 1 dena.
+
+Teesri galti hai **Fibonacci ko bina soche recursion se likhna**: \`fib(6)\` mein \`fib(4)\` do baar, \`fib(3)\` teen baar, aur \`fib(2)\` paanch baar calculate hota hai — wahi hisaab baar-baar hota hai. \`fib(40)\` likhne par program bahut slow ho jaayega, kyunki calls exponential badhti hain. Iska solution hai **memoization** — ek baar calculate ki hui value ko save kar lo, dobara calculate mat karo — ya loop use karo. Chauthi galti hai **recursion ko har jagah use karna**: simple sum ya array traverse karne ke liye loop behtar hai, recursion nahi.`,
+          `The biggest mistake is **forgetting the base case**: \`int f(int n) { return n * f(n - 1); }\` will never stop, the stack will fill up, and the program will crash. In every recursive function, write the base case first. The second mistake is a **wrong base case**: in a factorial, returning 0 when \`n == 0\` is wrong — the whole answer will become 0, because every step multiplies by 0. The correct base is returning 1 when \`n <= 1\`.
+
+The third mistake is **writing Fibonacci with recursion without thinking**: in \`fib(6)\`, \`fib(4)\` is calculated twice, \`fib(3)\` three times, and \`fib(2)\` five times — the same maths is done again and again. Writing \`fib(40)\` will make the program very slow, because the calls grow exponentially. The fix is **memoization** — save a value once it is calculated, do not calculate it again — or use a loop. The fourth mistake is **using recursion everywhere**: for a simple sum or for traversing an array, a loop is better, not recursion.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Factorial(0), Fibonacci(0) aur Hanoi ke 0 Disks', '5. Edge Cases: Factorial(0), Fibonacci(0), and 0 Disks in Hanoi'),
+        body: t(
+          `**Factorial(0)** ka answer 1 hota hai — ganit mein 0! = 1 define kiya gaya hai. Isi liye base case \`n <= 1\` likha jaata hai, sirf \`n == 1\` nahi — taaki \`factorial(0)\` bhi 1 de. **Negative input** ka kya hoga? \`factorial(-3)\` mein \`n <= 1\` sach hai, isliye woh bhi 1 dega — yeh galat nahi hai, par misleading hai. Achha code negative input ko pehle check karke error dega, ya 0 return karega.
+
+**Fibonacci(0)** ka answer 0 hota hai, aur **Fibonacci(1)** ka answer 1 hota hai — isliye Fibonacci mein **do base cases** chahiye hote hain: \`n == 0\` par 0, aur \`n == 1\` par 1. Sirf ek base case likhne par recursion kabhi nahi rukega. **Tower of Hanoi mein 0 disks** ka matlab hai kuch nahi karna — \`hanoi(0, ...)\` mein koi move print nahi hona chahiye. Neeche wale Hanoi code mein base case \`n == 1\` hai, jo 1 disk ko move karta hai; 0 disks ke liye alag se check karna achhi aadat hai.`,
+          `The answer of **Factorial(0)** is 1 — in maths, 0! = 1 is defined that way. That is why the base case is written as \`n <= 1\`, not only \`n == 1\` — so that \`factorial(0)\` also gives 1. What happens with a **negative input**? In \`factorial(-3)\`, \`n <= 1\` is true, so it will also give 1 — this is not wrong, but it is misleading. Good code will first check a negative input and give an error, or return 0.
+
+The answer of **Fibonacci(0)** is 0, and the answer of **Fibonacci(1)** is 1 — so Fibonacci needs **two base cases**: 0 when \`n == 0\`, and 1 when \`n == 1\`. With only one base case, the recursion will never stop. **0 disks in the Tower of Hanoi** means doing nothing — \`hanoi(0, ...)\` should print no move. In the Hanoi code below, the base case is \`n == 1\`, which moves 1 disk; checking separately for 0 disks is a good habit.`
+        ),
+      },
+      {
+        heading: t('6. What If: Recursion vs Iteration — Kaunsa Behtar?', '6. What If: Recursion vs Iteration — Which Is Better?'),
+        body: t(
+          `**What if: har recursive problem ko loop se likh dein?** Har recursive problem ko loop se likha ja sakta hai, aur loop stack par jagah nahi leta, isliye bade input par safe hai. Factorial ko loop se likhna aasan hai aur fast bhi hai. Lekin Tower of Hanoi ko loop se likhna bahut mushkil hai, jabki recursion se woh 10 lines mein likha jaata hai. Isliye rule hai: jab problem recursive ho, toh recursion likho; jab kaam seedha ho, toh loop likho.
+
+**What if: recursion ko memoization ke saath likh dein?** Fibonacci ko memoization ke saath likhne par woh exponential se linear ho jaata hai, kyunki har value sirf ek baar calculate hoti hai. Yeh dynamic programming ki pehli seedhi hai, aur interview mein bahut poochhi jaati hai. Memoization ka matlab hai ek array mein purane answers ko save karna, aur dobara calculate karne ki jagah wahan se nikaal lena.
+
+**What if: recursion mein global variable use kar lein?** Recursion mein global variable se count ya sum rakhna possible hai, par yeh buri aadat hai, kyunki function ka answer uski calls par depend karne lagta hai. Behtar hai ki har recursive call apna answer return kare, aur caller use jod le — jaise factorial mein \`n * factorial(n - 1)\`. Yahi clean recursion hai.`,
+          `**What if we write every recursive problem with a loop?** Every recursive problem can be written with a loop, and a loop takes no space on the stack, so it is safe for a large input. Writing a factorial with a loop is easy and fast too. But writing the Tower of Hanoi with a loop is very hard, while with recursion it is written in 10 lines. So the rule is: when a problem is recursive, write recursion; when the work is simple, write a loop.
+
+**What if we write recursion with memoization?** Writing Fibonacci with memoization turns it from exponential to linear, because every value is calculated only once. This is the first step of dynamic programming, and it is asked very often in interviews. Memoization means saving old answers in an array, and taking them from there instead of calculating them again.
+
+**What if we use a global variable in recursion?** Keeping a count or a sum in a global variable inside recursion is possible, but it is a bad habit, because the answer of the function starts to depend on its calls. It is better that every recursive call returns its own answer, and the caller adds it up — like \`n * factorial(n - 1)\` in a factorial. That is clean recursion.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Recursion ka Poora Picture', '7. Summary: The Full Picture of Recursion'),
+        body: t(
+          `Recursion mein badi problem ko chhoti problem mein todo, aur base case par ruko. Factorial mein base case \`n <= 1\` par 1 hai, Fibonacci mein do base cases hain (0 par 0, 1 par 1), aur Tower of Hanoi mein base case 1 disk ko move karna hai. Har recursive call stack par jagah leti hai, isliye depth zyada hone par stack overflow ho sakta hai.
+
+Yaad rakhne wali baatein: base case pehle likho, aur woh sahi hona chahiye. Fibonacci ko bina memoization ke bade input par mat chalao — woh exponential hai. Recursion tab use karo jab problem khud recursive ho; seedhe kaam ke liye loop behtar hai. Aur recursion vs iteration ka farak interview mein zaroor poochha jaata hai — recursion chhota aur saaf code deta hai, iteration fast aur safe hota hai.
+
+Agle article mein hum storage classes dekhenge — auto, register, static aur extern — matlab variable kahan rehta hai, kitne time tak rehta hai, aur kaun use dekh sakta hai.`,
+          `In recursion, break a big problem into a smaller problem, and stop at the base case. In a factorial, the base case is 1 when \`n <= 1\`; in Fibonacci there are two base cases (0 at 0, and 1 at 1); and in the Tower of Hanoi the base case is moving 1 disk. Every recursive call takes space on the stack, so too much depth can cause a stack overflow.
+
+Remember these points: write the base case first, and it must be correct. Do not run Fibonacci on a large input without memoization — it is exponential. Use recursion when the problem itself is recursive; for simple work, a loop is better. And the difference between recursion and iteration is surely asked in interviews — recursion gives short and clean code, while iteration is fast and safe.
+
+In the next article we will look at storage classes — auto, register, static, and extern — that is, where a variable lives, how long it lives, and who can see it.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t('Factorial(5) ka Call Tree — Neeche Jaana, Wapas Aana', 'Call Tree of Factorial(5) — Going Down, Coming Back'),
+      caption: t('Har call chhota input leti hai; base case par ruk kar answers wapas aate hain', 'Every call takes a smaller input; at the base case it stops and the answers come back'),
+      nodes: [
+        { t: t('factorial(5) = 5 * factorial(4)', 'factorial(5) = 5 * factorial(4)'), s: t('5 rukta hai, 4 ko bulata hai', '5 waits, calls 4') },
+        { t: t('factorial(4) = 4 * factorial(3)', 'factorial(4) = 4 * factorial(3)'), s: t('4 rukta hai, 3 ko bulata hai', '4 waits, calls 3') },
+        { t: t('factorial(3) = 3 * factorial(2)', 'factorial(3) = 3 * factorial(2)'), s: t('3 rukta hai, 2 ko bulata hai', '3 waits, calls 2') },
+        { t: t('factorial(2) = 2 * factorial(1)', 'factorial(2) = 2 * factorial(1)'), s: t('2 rukta hai, 1 ko bulata hai', '2 waits, calls 1') },
+        { t: t('factorial(1) = 1 — base case', 'factorial(1) = 1 — base case'), s: t('Rukne ki jagah; phir 2, 6, 24, 120 wapas aate hain', 'The stopping place; then 2, 6, 24, 120 come back') },
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('Fibonacci — Recursion se fib(6)', 'Fibonacci — fib(6) with Recursion'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int fib(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+int main(void) {
+    printf("fib(6) = %d\\n", fib(6));
+
+    return 0;
+}`,
+        output: `fib(6) = 8`,
+      },
+      {
+        title: t('Tower of Hanoi — 3 Disks, 7 Moves', 'Tower of Hanoi — 3 Disks, 7 Moves'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void hanoi(int n, char from, char to, char aux) {
+    if (n == 1) {
+        printf("Move disk 1 from %c to %c\\n", from, to);
+        return;
+    }
+    hanoi(n - 1, from, aux, to);
+    printf("Move disk %d from %c to %c\\n", n, from, to);
+    hanoi(n - 1, aux, to, from);
+}
+
+int main(void) {
+    hanoi(3, 'A', 'C', 'B');
+
+    return 0;
+}`,
+        output: `Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Recursive function ke do zaroori hisse kaunse hain?', 'What are the two essential parts of a recursive function?'),
+        opts: [t('Loop aur condition', 'A loop and a condition'), t('Base case aur recursive step', 'A base case and a recursive step'), t('Return aur printf', 'A return and a printf'), t('Header aur footer', 'A header and a footer')],
+        ans: 1,
+        expl: t('Sahi jawab: base case rukne ki shart deta hai aur recursive step problem ko chhota karke khud ko bulata hai — dono ke bina recursion kaam nahi karega.', 'Correct answer: the base case gives the stopping condition and the recursive step makes the problem smaller and calls itself — without both, recursion will not work.'),
+      },
+      {
+        q: t('factorial(5) ka answer kya hai?', 'What is the answer of factorial(5)?'),
+        opts: [t('25', '25'), t('60', '60'), t('120', '120'), t('720', '720')],
+        ans: 2,
+        expl: t('Sahi jawab: 5! = 5 x 4 x 3 x 2 x 1 = 120.', 'Correct answer: 5! = 5 x 4 x 3 x 2 x 1 = 120.'),
+      },
+      {
+        q: t('Fibonacci mein base cases kaunse hain?', 'What are the base cases in Fibonacci?'),
+        opts: [t('Sirf fib(0) = 0', 'Only fib(0) = 0'), t('fib(0) = 0 aur fib(1) = 1', 'fib(0) = 0 and fib(1) = 1'), t('Sirf fib(1) = 1', 'Only fib(1) = 1'), t('Koi base case nahi', 'There is no base case')],
+        ans: 1,
+        expl: t('Sahi jawab: Fibonacci mein do base cases chahiye — fib(0) = 0 aur fib(1) = 1 — warna recursion kabhi nahi rukega.', 'Correct answer: Fibonacci needs two base cases — fib(0) = 0 and fib(1) = 1 — or the recursion will never stop.'),
+      },
+      {
+        q: t('Tower of Hanoi mein 3 disks ke liye kitne moves chahiye?', 'How many moves are needed for 3 disks in the Tower of Hanoi?'),
+        opts: [t('3', '3'), t('5', '5'), t('7', '7'), t('9', '9')],
+        ans: 2,
+        expl: t('Sahi jawab: n disks ke liye 2^n - 1 moves chahiye; 3 disks ke liye 2^3 - 1 = 7 moves.', 'Correct answer: for n disks, 2^n - 1 moves are needed; for 3 disks, 2^3 - 1 = 7 moves.'),
+      },
+      {
+        q: t('Recursion vs iteration mein sabse bada farak kya hai?', 'What is the biggest difference between recursion and iteration?'),
+        opts: [t('Recursion hamesha fast hoti hai', 'Recursion is always fast'), t('Recursion har call par stack jagah leti hai; iteration nahi leti', 'Recursion takes stack space on every call; iteration does not'), t('Iteration mein base case hota hai', 'Iteration has a base case'), t('Koi farak nahi hai', 'There is no difference')],
+        ans: 1,
+        expl: t('Sahi jawab: har recursive call stack par ek frame banati hai, isliye gehra recursion stack overflow kar sakta hai; loop mein aisa nahi hota.', 'Correct answer: every recursive call creates a frame on the stack, so deep recursion can cause a stack overflow; a loop does not do that.'),
+      },
+    ],
+    keyNotes: [
+      t('Har recursive function mein pehle base case likho, phir recursive step.', 'In every recursive function, write the base case first, then the recursive step.'),
+      t('Factorial mein base case n <= 1 par 1 hai; Fibonacci mein do base cases hain.', 'In a factorial the base case is 1 when n <= 1; in Fibonacci there are two base cases.'),
+      t('Tower of Hanoi mein n disks ke liye 2^n - 1 moves chahiye.', 'In the Tower of Hanoi, n disks need 2^n - 1 moves.'),
+      t('Fibonacci recursion exponential hai — bade input par memoization ya loop use karo.', 'Fibonacci recursion is exponential — for a large input use memoization or a loop.'),
+      t('Recursion tab use karo jab problem khud recursive ho; seedhe kaam ke liye loop behtar hai.', 'Use recursion when the problem itself is recursive; for simple work a loop is better.'),
+    ],
+    practice: {
+      title: t('Practice: Digits ka Sum Recursion se', 'Practice: Sum of Digits with Recursion'),
+      task: t('Ek recursive function sum_digits likho jo number ke digits ka sum nikale — jaise 1234 ka sum 10 hai. Done tab hoga jab output mein "Sum of digits of 1234 = 10" dikhe.', 'Write a recursive function sum_digits that finds the sum of the digits of a number — for example, the sum for 1234 is 10. You are done when the output shows "Sum of digits of 1234 = 10".'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int sum_digits(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    return n % 10 + sum_digits(n / 10);
+}
+
+int main(void) {
+    printf("Sum of digits of 1234 = %d\\n", sum_digits(1234));
+
+    return 0;
+}`,
+      expected: `Sum of digits of 1234 = 10`,
+    },
+    readMinutes: 12,
+  };
+
+const cStorageClasses: Article = {
+    id: 'c-storage-classes',
+    subjectId: 'c-programming',
+    title: t(
+      'Storage Classes — auto, register, static aur extern',
+      'Storage Classes — auto, register, static, and extern'
+    ),
+    summary: t(
+      'Storage class batati hai variable kahan rehta hai, kitne time tak rehta hai, aur kaun use dekh sakta hai. auto local hota hai, register fast hota hai, static yaad rakhta hai, aur extern doosri file se aata hai.',
+      'A storage class tells you where a variable lives, how long it lives, and who can see it. auto is local, register is fast, static remembers, and extern comes from another file.'
+    ),
+    sections: [
+      {
+        heading: t('1. Storage Class Kya Hai? (auto, register, static, extern)', '1. What Is a Storage Class? (auto, register, static, extern)'),
+        body: t(
+          `Har variable ke baare mein chaar sawaal poochhe ja sakte hain: woh **kahan** rehta hai (memory ya register), **kitne time tak** rehta hai (function tak ya program tak), **kahan tak dikhta** hai (function mein ya poori file mein), aur uski **starting value** kya hoti hai. In chaaro sawaalon ka jawab **storage class** deti hai. C mein chaar storage classes hain: \`auto\`, \`register\`, \`static\`, aur \`extern\`.
+
+**auto** default storage class hai — function ke andar bana har variable by default \`auto\` hota hai. \`auto int x = 5;\` ka matlab hai "x ek local variable hai, jo function ke andar rehta hai aur function khatm hote hi gayab ho jaata hai". **register** ka matlab hai "variable ko CPU ke register mein rakhne ki koshish karo" — register memory se bahut fast hota hai, isliye loop counter jaise baar-baar use hone wale variables ke liye \`register\` likha jaata tha. Aaj ke compilers khud decide karte hain, isliye \`register\` sirf ek hint hai.
+
+**static** ka matlab hai "variable ki life program bhar ki hai, par scope chhota hai". Local static function ke beech mein value yaad rakhta hai, aur global static sirf apni file mein dikhta hai. **extern** ka matlab hai "variable kahin aur define hai" — doosri file mein ya isi file mein pehle se. \`extern int shared;\` likhne par compiler samajh jaata hai ki \`shared\` kahin aur bana hai, use yahan banana nahi hai.`,
+          `Four questions can be asked about every variable: **where** it lives (memory or a register), **how long** it lives (until the function ends or until the program ends), **how far** it is visible (in a function or in the whole file), and what its **starting value** is. The **storage class** answers all four questions. C has four storage classes: \`auto\`, \`register\`, \`static\`, and \`extern\`.
+
+**auto** is the default storage class — every variable made inside a function is \`auto\` by default. \`auto int x = 5;\` means "x is a local variable, it lives inside the function and disappears when the function ends". **register** means "try to keep the variable in a CPU register" — a register is much faster than memory, so \`register\` used to be written for variables used again and again, like a loop counter. Today's compilers decide by themselves, so \`register\` is only a hint.
+
+**static** means "the life of the variable is the whole program, but its scope is small". A local static remembers its value between function calls, and a global static is visible only in its own file. **extern** means "the variable is defined somewhere else" — in another file, or earlier in this file. Writing \`extern int shared;\` tells the compiler that \`shared\` is made somewhere else, and it should not be made here.`
+        ),
+      },
+      {
+        heading: t('2. Real-Life Examples: Hotel Room, Fast Lane, Diary aur Padosi ka Samaan', '2. Real-Life Examples: A Hotel Room, a Fast Lane, a Diary, and a Neighbour Thing'),
+        body: t(
+          `**auto** ko samjho **hotel room** se. Aap hotel mein ek raat ke liye room lete ho, subah check-out karte hi room wapas ho jaata hai. Function ke andar ka \`auto\` variable bhi aisa hi hai — function chalte waqt rehta hai, function khatm hote hi gayab ho jaata hai. Agli baar function bulane par naya room milta hai, purana samaan nahi milta.
+
+**register** ko samjho **fast lane** se. Highway par fast lane mein gaadi tez chalti hai, par jagah kam hoti hai — sirf kuch gaadiyan hi fast lane mein aa sakti hain. CPU ke register bhi aise hi hain — bahut fast, par bahut kam. Isliye sirf baar-baar use hone wale variables ko register mein rakhne ki koshish ki jaati hai. **static** ko samjho **diary** se: aap har din diary mein ek line likhte ho, aur agle din purani lines wahi rehti hain — diary yaad rakhti hai. Static variable bhi aise hi apni value yaad rakhta hai.
+
+**extern** ko samjho **padosi ka samaan** se. Aapke padosi ke paas ek cheez hai, aur aap use apne ghar mein use karna chahte ho — aap use khareedte nahi, aap sirf kehte ho "woh cheez padosi ke paas hai, main wahi use karunga". \`extern\` bhi wahi kehta hai — variable kahin aur hai, main wahi use karunga, naya nahi banaunga.`,
+          `Understand **auto** with a **hotel room**. You take a room in a hotel for one night, and in the morning at check-out the room goes back. An \`auto\` variable inside a function is the same — it lives while the function runs, and it disappears when the function ends. The next time the function is called, you get a new room, not the old things.
+
+Understand **register** with a **fast lane**. On a highway, a car in the fast lane moves fast, but there is little space — only a few cars can be in the fast lane. CPU registers are the same — very fast, but very few. So only variables used again and again are tried to be kept in a register. Understand **static** with a **diary**: every day you write one line in the diary, and the next day the old lines stay there — the diary remembers. A static variable remembers its value in the same way.
+
+Understand **extern** with a **neighbour's thing**. Your neighbour has a thing, and you want to use it in your house — you do not buy it, you only say "that thing is with the neighbour, I will use that same one". \`extern\` says the same thing — the variable is somewhere else, I will use that one, I will not make a new one.`
+        ),
+      },
+      {
+        heading: t('3. Step-by-Step: Static Counter aur Global ka Dry Run', '3. Step-by-Step: A Dry Run of a Static Counter and a Global'),
+        body: t(
+          `Neeche wale program ko line by line trace karte hain. Pehli line \`int global_count = 0;\` file ke bahar hai — yeh **global** variable hai, jo program ke shuru se aakhir tak rehta hai aur poori file mein dikhta hai. Phir \`increment\` function hai, jiske andar \`static int calls = 0;\` hai — yeh **static local** hai, jo sirf is function mein dikhta hai, par program bhar yaad rehta hai.
+
+Pehli baar \`increment\` bulane par \`calls\` 0 se 1 hota hai, aur \`global_count\` 0 se 1 hota hai. Print hota hai "calls = 1, global = 1". Function khatm hone par \`calls\` gayab nahi hota — woh apni value 1 yaad rakhta hai. Doosri baar \`increment\` bulane par \`calls\` 1 se 2 hota hai, \`global_count\` 1 se 2 hota hai, aur print hota hai "calls = 2, global = 2". Teesri baar phir wahi: "calls = 3, global = 3".
+
+\`main\` ke andar \`auto int x = 5;\` hai — yeh ek normal local variable hai, jo \`main\` ke andar rehta hai. Loop mein \`register int i;\` hai — yeh ek hint hai ki \`i\` ko register mein rakhne ki koshish karo. Loop teen baar chalta hai aur har baar \`increment\` bulata hai. Aakhir mein \`printf("x = %d\\n", x);\` se 5 chhapta hai. Output mein chaar lines dikhti hain, aur har line static aur global ki yaad ko dikhati hai.`,
+          `Let us trace the program below line by line. The first line, \`int global_count = 0;\`, is outside the file's functions — this is a **global** variable, which lives from the start of the program to the end and is visible in the whole file. Then there is the \`increment\` function, inside which \`static int calls = 0;\` is written — this is a **static local**, which is visible only in this function, but remembers for the whole program.
+
+The first time \`increment\` is called, \`calls\` goes from 0 to 1, and \`global_count\` goes from 0 to 1. It prints "calls = 1, global = 1". When the function ends, \`calls\` does not disappear — it remembers its value 1. The second time \`increment\` is called, \`calls\` goes from 1 to 2, \`global_count\` goes from 1 to 2, and it prints "calls = 2, global = 2". The third time the same thing happens: "calls = 3, global = 3".
+
+Inside \`main\` there is \`auto int x = 5;\` — this is a normal local variable, which lives inside \`main\`. In the loop there is \`register int i;\` — this is a hint to try to keep \`i\` in a register. The loop runs three times and calls \`increment\` each time. At the end, \`printf("x = %d\\n", x);\` prints 5. In the output there are four lines, and every line shows the memory of the static and the global.`
+        ),
+        code: {
+          title: t('Static, Global, auto aur register — Ek Saath', 'Static, Global, auto, and register — Together'),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int global_count = 0;
+
+void increment(void) {
+    static int calls = 0;
+    calls++;
+    global_count++;
+    printf("calls = %d, global = %d\\n", calls, global_count);
+}
+
+int main(void) {
+    auto int x = 5;
+    register int i;
+
+    for (i = 0; i < 3; i++) {
+        increment();
+    }
+    printf("x = %d\\n", x);
+
+    return 0;
+}`,
+          output: `calls = 1, global = 1
+calls = 2, global = 2
+calls = 3, global = 3
+x = 5`,
+        },
+      },
+      {
+        heading: t('4. Common Mistakes: register ka Address, extern bina Definition aur Static ka Galat Use', '4. Common Mistakes: Address of a register, extern Without a Definition, and Wrong Use of Static'),
+        body: t(
+          `**register variable ka address** nahi liya ja sakta: \`register int i; int *p = &i;\` likhne par compiler error dega, kyunki register ki memory mein koi address nahi hota. Yeh rule yaad rakho — register variable ko pointer se kabhi mat chhoo. Doosri galti hai **extern likhna par definition bhoolna**: \`extern int shared;\` sirf declaration hai, definition nahi. Agar kisi bhi file mein \`int shared = 100;\` nahi hai, toh linker error dega — "undefined reference to shared". Extern use karne se pehle hamesha check karo ki definition kahin hai.
+
+Teesri galti hai **static ko har jagah use karna**: static variable function ko stateful bana deta hai, isliye function ka answer uski purani calls par depend karne lagta hai. Testing mein yeh bahut pareshan karta hai, kyunki pehli test ke baad static ki value badal jaati hai aur doosri test galat ho jaati hai. Static ko sirf wahan use karo jahan value yaad rakhna zaroori ho — jaise counter, ya file-scope variable ko chhupana. Chauthi galti hai **auto ko function ke bahar likhna**: \`auto\` sirf function ke andar allowed hai, file ke bahar likhne par compiler error dega.`,
+          `The **address of a register variable** cannot be taken: writing \`register int i; int *p = &i;\` makes the compiler give an error, because a register has no address in memory. Remember this rule — never touch a register variable with a pointer. The second mistake is **writing extern but forgetting the definition**: \`extern int shared;\` is only a declaration, not a definition. If no file has \`int shared = 100;\`, the linker will give an error — "undefined reference to shared". Before using extern, always check that the definition exists somewhere.
+
+The third mistake is **using static everywhere**: a static variable makes a function stateful, so the answer of the function starts to depend on its earlier calls. This troubles testing a lot, because after the first test the value of the static changes and the second test goes wrong. Use static only where remembering a value is needed — like a counter, or hiding a file-scope variable. The fourth mistake is **writing auto outside a function**: \`auto\` is allowed only inside a function, and writing it outside a file's functions makes the compiler give an error.`
+        ),
+      },
+      {
+        heading: t('5. Edge Cases: Static Global, Bina Init ke Static aur Do Files mein Extern', '5. Edge Cases: Static Global, Static Without Init, and Extern in Two Files'),
+        body: t(
+          `**Static global** ka matlab hai global variable sirf apni file mein dikhta hai. \`static int total_calls = 0;\` file ke bahar hai, par doosri file se use nahi dekha ja sakta — yeh file ko apni private cheez rakhne ka tareeka hai. Bade programs mein yeh bahut use hota hai, taaki ek file ka variable doosri file se takraaye nahi. **Bina init ke static** hamesha 0 se shuru hota hai: \`static int count;\` likhne par count 0 hoga, jabki bina init ke \`auto\` variable mein kachra hota hai. Yeh farak yaad rakho — static aur global hamesha 0 se shuru hote hain, auto nahi.
+
+**Do files mein extern** ka matlab hai ek file mein definition aur doosri file mein declaration. File A mein \`int shared = 100;\` hai, aur file B mein \`extern int shared;\` hai — dono ek hi variable ko dekhte hain. Agar dono files mein definition likh di, toh linker error dega — "multiple definition". Definition sirf ek jagah honi chahiye, baaki jagah sirf extern declaration.`,
+          `A **static global** means a global variable is visible only in its own file. \`static int total_calls = 0;\` is outside the functions, but it cannot be seen from another file — this is a way for a file to keep its own private thing. In large programs this is used a lot, so that a variable of one file does not clash with another file. A **static without init** always starts at 0: writing \`static int count;\` makes count 0, while an \`auto\` variable without init holds garbage. Remember this difference — static and global always start at 0, auto does not.
+
+**Extern in two files** means a definition in one file and a declaration in the other. File A has \`int shared = 100;\`, and file B has \`extern int shared;\` — both look at the same variable. If you write a definition in both files, the linker will give an error — "multiple definition". The definition must be in only one place, and everywhere else only an extern declaration.`
+        ),
+      },
+      {
+        heading: t('6. What If: Sab Kuch Global Kar Dein, ya Sab Kuch Static?', '6. What If: Make Everything Global, or Everything Static?'),
+        body: t(
+          `**What if: sab kuch global kar dein?** Global variable ko koi bhi function badal sakta hai, isliye bug dhoondhna bahut mushkil ho jaata hai — kis function ne value badli, yeh pata nahi chalta. Bade programs mein global ko kam se kam use karna chahiye, aur sirf wahi cheez global rakho jo sach mein poori file ko chahiye. Chhote scope mein variable rakhna hamesha behtar hai.
+
+**What if: sab kuch static kar dein?** Static local se function stateful ho jaata hai, aur static global se variable sirf ek file mein dikhta hai. Dono ka apna use hai, par har variable ko static banana galat hai. Rule simple hai: variable ko jitna chhota scope aur jitni chhoti life do, utna behtar — sirf tab bada scope do jab zaroorat ho.
+
+**What if: register ko har variable par laga dein?** Register ki jagah bahut kam hoti hai, isliye compiler aapki hint ko ignore kar dega agar registers khatm ho gaye. Aaj ke compilers khud decide karte hain ki kaunsa variable register mein rakha jaaye, isliye \`register\` likhna zaroori nahi hai. Yeh keyword ab sirf purane code mein dikhta hai, aur naye code mein iski zaroorat nahi padti.`,
+          `**What if we make everything global?** Any function can change a global variable, so finding a bug becomes very hard — you cannot tell which function changed the value. In large programs, globals should be used as little as possible, and only the thing that the whole file really needs should be global. Keeping a variable in the smallest scope is always better.
+
+**What if we make everything static?** A static local makes a function stateful, and a static global makes a variable visible in only one file. Both have their own use, but making every variable static is wrong. The rule is simple: give a variable the smallest scope and the shortest life possible — give it a larger scope only when needed.
+
+**What if we put register on every variable?** There is very little space in registers, so the compiler will ignore your hint if the registers run out. Today's compilers decide by themselves which variable to keep in a register, so writing \`register\` is not needed. This keyword now appears only in old code, and new code does not need it.`
+        ),
+      },
+      {
+        heading: t('7. Summary: Storage Classes ka Poora Picture', '7. Summary: The Full Picture of Storage Classes'),
+        body: t(
+          `Storage class batati hai variable kahan rehta hai, kitne time tak rehta hai, aur kaun use dekh sakta hai. \`auto\` local hai aur function ke saath khatm ho jaata hai — yeh default hai. \`register\` CPU ke register mein rakhne ki hint hai, par aaj ke compilers khud decide karte hain. \`static\` local variable ki value yaad rakhta hai, aur global static sirf apni file mein dikhta hai. \`extern\` ka matlab hai variable kahin aur define hai.
+
+Yaad rakhne wali baatein: static aur global bina init ke 0 se shuru hote hain, auto mein kachra hota hai. Register variable ka address nahi liya ja sakta. Extern sirf declaration hai — definition kahin ek jagah honi chahiye. Aur variable ko hamesha sabse chhota scope do — global aur static ko sirf tab use karo jab zaroorat ho. Is article ke saath C batch 2 poora hota hai — pointers se lekar storage classes tak, aapne C ke advanced topics ki neev bana li hai.`,
+          `A storage class tells you where a variable lives, how long it lives, and who can see it. \`auto\` is local and ends with the function — this is the default. \`register\` is a hint to keep it in a CPU register, but today's compilers decide by themselves. A \`static\` local variable remembers its value, and a global static is visible only in its own file. \`extern\` means the variable is defined somewhere else.
+
+Remember these points: static and global start at 0 without init, while auto holds garbage. The address of a register variable cannot be taken. Extern is only a declaration — the definition must exist in one place. And always give a variable the smallest scope — use global and static only when needed. With this article, C batch 2 is complete — from pointers to storage classes, you have built the base of the advanced topics of C.`
+        ),
+      },
+    ],
+    diagram: {
+      kind: 'table',
+      title: t('Storage Classes — Ek Nazar mein', 'Storage Classes — At a Glance'),
+      caption: t('Kahan rehta hai, kitne time tak rehta hai, aur kaun dekh sakta hai', 'Where it lives, how long it lives, and who can see it'),
+      nodes: [],
+      headers: [t('Class', 'Class'), t('Kahan rehta hai', 'Where it lives'), t('Life aur Scope', 'Life and Scope')],
+      rows: [
+        [t('auto', 'auto'), t('Stack (memory)', 'Stack (memory)'), t('Function tak; sirf function mein dikhta hai', 'Until the function ends; visible only in the function')],
+        [t('register', 'register'), t('CPU register (hint)', 'CPU register (a hint)'), t('Function tak; address nahi liya ja sakta', 'Until the function ends; address cannot be taken')],
+        [t('static', 'static'), t('Data segment', 'Data segment'), t('Program bhar; local ya file tak seemit', 'Whole program; limited to a function or a file')],
+        [t('extern', 'extern'), t('Doosri file mein', 'In another file'), t('Program bhar; kahin aur define hai', 'Whole program; defined somewhere else')],
+      ],
+    },
+    codeExamples: [
+      {
+        title: t('extern se Shared Variable Padhna aur Badalna', 'Reading and Changing a Shared Variable with extern'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int shared = 100;
+
+int main(void) {
+    extern int shared;
+
+    printf("shared = %d\\n", shared);
+    shared = 150;
+    printf("shared = %d\\n", shared);
+
+    return 0;
+}`,
+        output: `shared = 100
+shared = 150`,
+      },
+      {
+        title: t('Static Global — File ke Andar Counter', 'Static Global — A Counter Inside the File'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+static int total_calls = 0;
+
+void tick(void) {
+    total_calls++;
+    printf("Total calls = %d\\n", total_calls);
+}
+
+int main(void) {
+    tick();
+    tick();
+
+    return 0;
+}`,
+        output: `Total calls = 1
+Total calls = 2`,
+      },
+    ],
+    mcqs: [
+      {
+        q: t('Function ke andar bana variable by default kaunsi storage class ka hota hai?', 'By default, which storage class does a variable made inside a function have?'),
+        opts: [t('static', 'static'), t('extern', 'extern'), t('auto', 'auto'), t('register', 'register')],
+        ans: 2,
+        expl: t('Sahi jawab: function ke andar bana har variable by default auto hota hai — woh function ke saath khatm ho jata hai.', 'Correct answer: every variable made inside a function is auto by default — it ends with the function.'),
+      },
+      {
+        q: t('Static local variable ki khaasiyat kya hai?', 'What is special about a static local variable?'),
+        opts: [t('Woh har call par reset hota hai', 'It resets on every call'), t('Woh apni value calls ke beech mein yaad rakhta hai', 'It remembers its value between calls'), t('Woh global ban jata hai', 'It becomes global'), t('Woh register mein rehta hai', 'It lives in a register')],
+        ans: 1,
+        expl: t('Sahi jawab: static local variable ki life program bhar ki hoti hai, isliye woh apni value yaad rakhta hai, jabki uska scope sirf function tak hota hai.', 'Correct answer: a static local variable lives for the whole program, so it remembers its value, while its scope is only the function.'),
+      },
+      {
+        q: t('Register variable ke saath kya nahi kar sakte?', 'What can you not do with a register variable?'),
+        opts: [t('Use badal nahi sakte', 'You cannot change it'), t('Uska address nahi le sakte', 'You cannot take its address'), t('Use print nahi kar sakte', 'You cannot print it'), t('Use loop mein nahi use kar sakte', 'You cannot use it in a loop')],
+        ans: 1,
+        expl: t('Sahi jawab: register ki memory mein koi address nahi hota, isliye &i likhne par compiler error dega.', 'Correct answer: a register has no address in memory, so writing &i makes the compiler give an error.'),
+      },
+      {
+        q: t('extern int shared; ka matlab kya hai?', 'What does extern int shared; mean?'),
+        opts: [t('shared ko yahan define karo', 'Define shared here'), t('shared kahin aur define hai, wahi use karo', 'shared is defined somewhere else, use that one'), t('shared ko delete karo', 'Delete shared'), t('shared ek static hai', 'shared is a static')],
+        ans: 1,
+        expl: t('Sahi jawab: extern sirf declaration hai — woh batata hai ki variable kahin aur define hai, isliye yahan naya variable nahi banta.', 'Correct answer: extern is only a declaration — it tells you the variable is defined somewhere else, so no new variable is made here.'),
+      },
+      {
+        q: t('Bina init ke static variable ki starting value kya hoti hai?', 'What is the starting value of a static variable without init?'),
+        opts: [t('Kachra value', 'A garbage value'), t('0', '0'), t('1', '1'), t('Undefined', 'Undefined')],
+        ans: 1,
+        expl: t('Sahi jawab: static aur global variables bina init ke 0 se shuru hote hain, jabki auto variable mein kachra hota hai.', 'Correct answer: static and global variables start at 0 without init, while an auto variable holds garbage.'),
+      },
+    ],
+    keyNotes: [
+      t('auto default hai — local variable function ke saath khatm ho jata hai.', 'auto is the default — a local variable ends with the function.'),
+      t('register CPU register ki hint hai; uska address nahi liya ja sakta.', 'register is a hint for a CPU register; its address cannot be taken.'),
+      t('Static local value yaad rakhta hai; static global sirf apni file mein dikhta hai.', 'A static local remembers its value; a static global is visible only in its own file.'),
+      t('extern sirf declaration hai — definition kahin ek jagah honi chahiye.', 'extern is only a declaration — the definition must exist in one place.'),
+      t('Static aur global bina init ke 0 se shuru hote hain; auto mein kachra hota hai.', 'Static and global start at 0 without init; auto holds garbage.'),
+    ],
+    practice: {
+      title: t('Practice: auto vs static — Kaun Yaad Rakhta Hai?', 'Practice: auto vs static — Who Remembers?'),
+      task: t('Ek function demo banao jismein ek auto variable aur ek static variable ho, dono ko har call par badhao aur print karo. Function ko teen baar bulao. Done tab hoga jab output mein temp har baar 1 dikhe aur kept 1, 2, 3 badhe.', 'Make a function demo with one auto variable and one static variable, increase both on every call and print them. Call the function three times. You are done when the output shows temp as 1 every time and kept growing as 1, 2, 3.'),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+void demo(void) {
+    auto int temp = 0;
+    static int kept = 0;
+    temp++;
+    kept++;
+    printf("temp = %d, kept = %d\\n", temp, kept);
+}
+
+int main(void) {
+    demo();
+    demo();
+    demo();
+
+    return 0;
+}`,
+      expected: `temp = 1, kept = 1
+temp = 1, kept = 2
+temp = 1, kept = 3`,
+    },
+    readMinutes: 12,
+  };
+
+const cBitwise: Article = {
+    id: 'c-bitwise',
+    subjectId: 'c-programming',
+    title: t(
+      'Bitwise Operators — Bits, Masks aur Bit Manipulation',
+      'Bitwise Operators — Bits, Masks, and Bit Manipulation'
+    ),
+    summary: t(
+      'Bitwise operators ko zero se samjho: AND, OR, XOR, NOT aur shifts bits par kaise kaam karte hain, masks se kisi bit ko set, clear aur toggle kaise karte hain, aur bit tricks se swap, set bits ginna aur power of 2 check karna kaise hota hai.',
+      'Learn bitwise operators from scratch: how AND, OR, XOR, NOT, and shifts work on bits, how masks set, clear, and toggle a single bit, and how bit tricks swap two numbers, count set bits, and test whether a number is a power of 2.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Bitwise Operators Kya Hain? (Bits aur Binary)',
+          '1. What Are Bitwise Operators? (Bits and Binary)'
+        ),
+        body: t(
+          `Computer ke andar har number binary mein store hota hai — sirf 0 aur 1 ke roop mein. Jaise 12 ka binary hai \`1100\` aur 10 ka binary hai \`1010\`. **Bitwise operators** woh operators hain jo number par ek-ek bit par kaam karte hain, poore number par ek saath nahi. C mein chhah bitwise operators hain: \`&\` (AND), \`|\` (OR), \`^\` (XOR), \`~\` (NOT), \`<<\` (left shift) aur \`>>\` (right shift). Inka kaam samajhne ke liye aapko binary likhna aana chahiye — bas itna yaad rakho: 12 matlab \`1100\`, 10 matlab \`1010\`, aur har operator in do rows ko column by column jodta hai.
+
+**AND (\`&\`)** tab 1 deta hai jab dono bits 1 hon, warna 0. **OR (\`|\`)** tab 1 deta hai jab kam se kam ek bit 1 ho. **XOR (\`^\`)** tab 1 deta hai jab dono bits alag-alag hon — ek 1 aur ek 0. **NOT (\`~\`)** ek hi number par kaam karta hai aur har bit ko ulta kar deta hai: 0 ko 1 aur 1 ko 0. **Left shift (\`<<\`)** bits ko left ki taraf khiskata hai aur right side par 0 bhar deta hai, jisse number 2 se multiply ho jaata hai. **Right shift (\`>>\`)** bits ko right ki taraf khiskata hai, jisse number 2 se divide ho jaata hai. Yeh operators fast hote hain kyunki CPU inhe ek hi instruction mein kar deta hai.
+
+Bitwise operators ko **logical operators** (\`&&\`, \`||\`, \`!\`) se confuse mat karo. Logical operators poore number ko sirf true ya false maante hain — \`12 && 10\` ka answer 1 hota hai (kyunki dono non-zero hain), jabki \`12 & 10\` ka answer 8 hota hai kyunki yeh bit by bit kaam karta hai. Interview mein yeh farak baar-baar poochha jaata hai, isliye \`&\` aur \`&&\` ka antar pakka kar lo.`,
+          `Inside the computer, every number is stored in binary — only 0s and 1s. For example, 12 in binary is \`1100\` and 10 in binary is \`1010\`. **Bitwise operators** are operators that work on a number one bit at a time, not on the whole number at once. C has six bitwise operators: \`&\` (AND), \`|\` (OR), \`^\` (XOR), \`~\` (NOT), \`<<\` (left shift), and \`>>\` (right shift). To understand them, you only need to write numbers in binary — just remember: 12 means \`1100\`, 10 means \`1010\`, and each operator combines these two rows column by column.
+
+**AND (\`&\`)** gives 1 only when both bits are 1, otherwise 0. **OR (\`|\`)** gives 1 when at least one bit is 1. **XOR (\`^\`)** gives 1 when the two bits are different — one 1 and one 0. **NOT (\`~\`)** works on a single number and flips every bit: 0 becomes 1 and 1 becomes 0. **Left shift (\`<<\`)** moves bits to the left and fills the right side with 0, which multiplies the number by 2. **Right shift (\`>>\`)** moves bits to the right, which divides the number by 2. These operators are fast because the CPU does each of them in a single instruction.
+
+Do not confuse bitwise operators with **logical operators** (\`&&\`, \`||\`, \`!\`). Logical operators treat a whole number as simply true or false — \`12 && 10\` gives 1 (because both numbers are non-zero), while \`12 & 10\` gives 8 because it works bit by bit. Interviews ask about this difference again and again, so make sure you know the difference between \`&\` and \`&&\`.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Permissions, Flags aur Settings',
+          '2. Real-Life Examples: Permissions, Flags, and Settings'
+        ),
+        body: t(
+          `Bitwise operators roz ki zindagi mein har jagah chhupe hote hain. Sabse seedha example hai **file permissions**. Linux mein har file ke teen permissions hote hain — read (4), write (2) aur execute (1). Permission \`7\` matlab \`111\` — read + write + execute, aur permission \`5\` matlab \`101\` — read + execute, write nahi. Poora permission system sirf 3 bits par chalta hai, aur OR se permission jodi jaati hai, AND se check ki jaati hai. Jab aap \`chmod 755\` likhte ho, toh aap asal mein bits set kar rahe hote ho.
+
+Doosra example hai **flags aur settings**. Maan lo ek game mein player ki settings ek hi number mein store karni hain: sound on/off, music on/off, vibration on/off. Teen alag variables banane ki jagah ek number ke teen bits use karo — bit 0 sound, bit 1 music, bit 2 vibration. Sound on karna matlab bit 0 set karna (\`settings | 1\`), music off karna matlab bit 1 clear karna (\`settings & ~2\`). Ek hi integer mein 32 settings store ho jaati hain, aur yeh tareeka embedded systems aur game engines mein bahut use hota hai.
+
+Teesra example hai **networking aur graphics**. IP address ke saath subnet mask AND karke network ka pata lagaya jaata hai. Graphics mein ek pixel ka rang bhi bits mein pack hota hai — red, green aur blue ke 8-8 bits ek hi 32-bit number mein. XOR ka use **encryption** aur **checksums** mein hota hai: do baar XOR karne par original value wapas mil jaati hai, isi liye XOR se swap bhi hota hai aur simple data hide bhi hota hai.`,
+          `Bitwise operators are hidden everywhere in daily life. The simplest example is **file permissions**. In Linux, every file has three permissions — read (4), write (2), and execute (1). Permission \`7\` means \`111\` — read + write + execute, and permission \`5\` means \`101\` — read + execute, but no write. The whole permission system runs on just 3 bits: OR adds a permission and AND checks one. When you type \`chmod 755\`, you are really setting bits.
+
+A second example is **flags and settings**. Suppose a game must store a player's settings in a single number: sound on/off, music on/off, vibration on/off. Instead of three separate variables, use three bits of one number — bit 0 for sound, bit 1 for music, bit 2 for vibration. Turning sound on means setting bit 0 (\`settings | 1\`), and turning music off means clearing bit 1 (\`settings & ~2\`). One integer can hold 32 settings, and this method is used a lot in embedded systems and game engines.
+
+A third example is **networking and graphics**. An IP address is combined with a subnet mask using AND to find the network. In graphics, the colour of a pixel is also packed into bits — 8 bits each for red, green, and blue inside a single 32-bit number. XOR is used in **encryption** and **checksums**: XOR-ing twice returns the original value, which is why XOR can swap two numbers and also hide simple data.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 12 aur 10 par AND, OR, XOR aur Shifts ka Dry Run',
+          '3. Step-by-Step: A Dry Run of AND, OR, XOR, and Shifts on 12 and 10'
+        ),
+        body: t(
+          `Ab hum haath se dry run karte hain. Pehle dono numbers ko binary mein likho: 12 = \`1100\` aur 10 = \`1010\`. Ab har operator ko column by column lagao, right se left.
+
+**AND (\`12 & 10\`):** columns hain (1,1), (1,0), (0,1), (0,0). AND sirf pehle column mein 1 deta hai, baaki mein 0. Result \`1000\` = 8. **OR (\`12 | 10\`):** kisi bhi column mein ek 1 ho toh result 1. Result \`1110\` = 14. **XOR (\`12 ^ 10\`):** jahan bits alag hain wahan 1. Columns (1,0) aur (0,1) mein 1, baaki mein 0. Result \`0110\` = 6. **NOT (\`~12\`):** 12 ke bits \`...00001100\` ko ulta karo toh \`...11110011\` milta hai, jo two's complement mein -13 hota hai. Isiliye \`~12\` ka answer -13 aata hai, 3 nahi — yeh beginners ko hamesha chaunkata hai.
+
+**Shifts:** \`12 << 2\` mein \`1100\` ke peeche do 0 jud jaate hain — \`110000\` = 48. Matlab 12 x 4 = 48, kyunki 2 bit left shift matlab 4 se multiply. \`12 >> 2\` mein right se do bits gir jaate hain — \`11\` = 3. Matlab 12 / 4 = 3. Neeche wala code yeh saare results print karta hai. Ise line-by-line padho aur har output ko apne haath ke dry run se milao — agar ek bhi mismatch lage toh binary dobara likho.`,
+          `Now let us do a dry run by hand. First write both numbers in binary: 12 = \`1100\` and 10 = \`1010\`. Now apply each operator column by column, from right to left.
+
+**AND (\`12 & 10\`):** the columns are (1,1), (1,0), (0,1), (0,0). AND gives 1 only in the first column and 0 elsewhere. The result is \`1000\` = 8. **OR (\`12 | 10\`):** any column with a 1 gives 1. The result is \`1110\` = 14. **XOR (\`12 ^ 10\`):** a 1 appears where the bits differ. Columns (1,0) and (0,1) give 1, the rest give 0. The result is \`0110\` = 6. **NOT (\`~12\`):** flipping the bits of 12, \`...00001100\`, gives \`...11110011\`, which in two's complement is -13. That is why \`~12\` gives -13, not 3 — this always surprises beginners.
+
+**Shifts:** in \`12 << 2\`, two 0s are added behind \`1100\` — \`110000\` = 48. That means 12 x 4 = 48, because a 2-bit left shift means multiplying by 4. In \`12 >> 2\`, two bits fall off the right side — \`11\` = 3. That means 12 / 4 = 3. The code below prints all of these results. Read it line by line and match every output against your hand dry run — if any value looks wrong, write the binary out again.`
+        ),
+        code: {
+          title: t(
+            '12 aur 10 par Saare Bitwise Operators',
+            'All Bitwise Operators on 12 and 10'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int a = 12;  /* 1100 in binary */
+    int b = 10;  /* 1010 in binary */
+    printf("a & b = %d\\n", a & b);
+    printf("a | b = %d\\n", a | b);
+    printf("a ^ b = %d\\n", a ^ b);
+    printf("~a = %d\\n", ~a);
+    printf("a << 2 = %d\\n", a << 2);
+    printf("a >> 2 = %d\\n", a >> 2);
+    return 0;
+}`,
+          output: `a & b = 8
+a | b = 14
+a ^ b = 6
+~a = -13
+a << 2 = 48
+a >> 2 = 3`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Logical vs Bitwise, Precedence aur Signed Shift',
+          '4. Common Mistakes: Logical vs Bitwise, Precedence, and Signed Shifts'
+        ),
+        body: t(
+          `Bitwise operators mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: \`&\` ki jagah \`&&\` likhna.** \`if (x & 1)\` ka matlab hai "x ka last bit 1 hai kya" — yeh odd/even check karta hai. \`if (x && 1)\` ka matlab hai "x non-zero hai kya" — yeh hamesha true hota hai jab x non-zero ho. Dono ka matlab bilkul alag hai, par code mein ek character ka farak dikhta hai. Mask check karte waqt hamesha single \`&\` use karo.
+
+**Galti 2: Precedence bhool jaana.** C mein \`&\`, \`|\` aur \`^\` ki precedence comparison operators (\`==\`, \`<\`) se neeche hoti hai. Isliye \`if (x & 1 == 1)\` woh nahi karta jo aap sochte ho — pehle \`1 == 1\` evaluate hota hai (jo 1 hai), phir \`x & 1\` hota hai. Hamesha brackets lagao: \`if ((x & 1) == 1)\`. Mask wale expressions mein brackets lagana aadat bana lo, warna bug dhoondhne mein ghante lag jaayenge.
+
+**Galti 3: Negative number par right shift.** Positive number par \`>>\` simple divide jaisa hai, par negative number par result implementation-defined hota hai — zyadatar compilers sign bit ko copy karte hain (arithmetic shift), par standard iski guarantee nahi deta. Negative numbers par shift karne se bacho, ya pehle \`unsigned int\` mein convert karo.
+
+**Galti 4: \`~x\` ko negative samajhna.** Beginners sochte hain \`~5\` matlab -5 hota hai, par asal mein \`~5\` = -6 hota hai, kyunki two's complement mein \`~x\` = \`-x - 1\`. Agar aapko -5 chahiye toh \`-\` use karo, \`~\` nahi.`,
+          `The most common bitwise mistakes come from four things.
+
+**Mistake 1: Writing \`&&\` instead of \`&\`.** \`if (x & 1)\` means "is the last bit of x equal to 1?" — it checks odd or even. \`if (x && 1)\` means "is x non-zero?" — it is always true when x is non-zero. The two meanings are completely different, but the code differs by only one character. Always use a single \`&\` when you check a mask.
+
+**Mistake 2: Forgetting precedence.** In C, \`&\`, \`|\`, and \`^\` have lower precedence than comparison operators (\`==\`, \`<\`). So \`if (x & 1 == 1)\` does not do what you think — first \`1 == 1\` is evaluated (which is 1), and then \`x & 1\` runs. Always add brackets: \`if ((x & 1) == 1)\`. Make brackets a habit in mask expressions, or you will spend hours hunting the bug.
+
+**Mistake 3: Right-shifting a negative number.** On a positive number, \`>>\` behaves like a simple divide, but on a negative number the result is implementation-defined — most compilers copy the sign bit (arithmetic shift), but the standard does not guarantee it. Avoid shifting negative numbers, or convert to \`unsigned int\` first.
+
+**Mistake 4: Thinking \`~x\` means negative.** Beginners think \`~5\` means -5, but in fact \`~5\` = -6, because in two's complement \`~x\` = \`-x - 1\`. If you want -5, use \`-\`, not \`~\`.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Negative Numbers, Shift Limits aur Zero',
+          '5. Edge Cases: Negative Numbers, Shift Limits, and Zero'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Zero par NOT.** \`~0\` ka answer -1 hota hai, kyunki saare 0 bits 1 ban jaate hain aur two's complement mein saare 1 bits matlab -1. Agar aap mask ke liye \`~0\` use karte ho, toh aapko saare bits 1 milte hain — yeh ek useful trick hai, par pehli baar dekhne par ajeeb lagta hai.
+
+**2. Shift count zyada hona.** 32-bit \`int\` ko 32 ya usse zyada shift karna **undefined behaviour** hai — matlab compiler kuch bhi kar sakta hai. \`x << 32\` likhna galat hai, chahe aapko lage ki answer 0 aana chahiye. Shift hamesha 0 se 31 ke beech rakho (32-bit int ke liye). Yahi rule \`1 << 31\` par bhi lagta hai — signed int mein yeh overflow kar sakta hai, isliye bade masks ke liye \`1u << 31\` ya \`1LL << 40\` use karo.
+
+**3. Negative number ka right shift.** Upar bataya gaya — \`(-8) >> 1\` zyadatar systems par -4 deta hai, par standard iski guarantee nahi deta. Portable code mein negative numbers ko shift mat karo.
+
+**4. XOR swap jab dono same hon.** XOR swap trick mein agar dono variables ek hi memory location hon (jaise \`swap(&a, &a)\`), toh result 0 ho jaata hai aur original value kho jaati hai. Isi liye XOR swap sirf interview trick hai — real code mein simple \`temp\` variable use karo, jo safe aur readable hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. NOT on zero.** \`~0\` gives -1, because every 0 bit becomes 1, and in two's complement all 1 bits mean -1. If you use \`~0\` as a mask, you get all bits set to 1 — this is a useful trick, but it looks strange the first time you see it.
+
+**2. Shifting too far.** Shifting a 32-bit \`int\` by 32 or more is **undefined behaviour** — the compiler may do anything. Writing \`x << 32\` is wrong, even if you expect the answer to be 0. Always keep the shift between 0 and 31 (for a 32-bit int). The same rule applies to \`1 << 31\` — it can overflow a signed int, so use \`1u << 31\` or \`1LL << 40\` for large masks.
+
+**3. Right-shifting a negative number.** As explained above, \`(-8) >> 1\` gives -4 on most systems, but the standard does not guarantee it. In portable code, never shift negative numbers.
+
+**4. XOR swap when both are the same.** In the XOR swap trick, if both variables are the same memory location (for example \`swap(&a, &a)\`), the result becomes 0 and the original value is lost. That is why XOR swap is only an interview trick — in real code, use a simple \`temp\` variable, which is safe and readable.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Mask ke Bina Bit Change, Shift vs Multiply aur XOR Swap',
+          '6. What-If: Changing a Bit Without a Mask, Shift vs Multiply, and XOR Swap'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: mask ke bina bit change karna ho?** Maan lo number 10 (\`1010\`) ka bit 2 set karna hai. Bina mask ke aapko poora number dobara likhna padega. Mask se ek line kaafi hai: \`n | (1 << 2)\` bit set karta hai, \`n & ~(1 << 3)\` bit clear karta hai, aur \`n ^ (1 << 1)\` bit toggle karta hai. Teenon ke liye formula ek jaisa hai — bas operator badalta hai. Neeche wala code in teenon ko ek hi number par karke dikhata hai; isko run karo aur har step ka binary haath se verify karo.
+
+**What if: shift ki jagah multiply use kar lein?** \`x << 3\` aur \`x * 8\` ka answer ek jaisa hota hai, par shift zyada fast hota hai kyunki CPU ke liye shift ek sasta operation hai. Phir bhi aaj ke compilers \`x * 8\` ko khud shift mein badal dete hain, isliye readability ke liye \`x * 8\` likhna behtar hai — sirf tab shift likho jab aap asal mein bits ke baare mein soch rahe ho, jaise mask banate waqt. Interview mein dono ka antar poochha jaata hai, isliye dono likhna aana chahiye.
+
+**What if: XOR se swap karna ho?** \`a = a ^ b; b = a ^ b; a = a ^ b;\` se do numbers bina temp ke swap ho jaate hain. Kaam aise karta hai: pehli line mein \`a\` mein dono ka XOR store hota hai, doosri line usse \`b\` nikaal leti hai, teesri line \`a\` nikaal leti hai. Yeh trick interview mein impressive lagti hai, par real code mein \`temp\` use karo — woh fast bhi hai aur koi edge case bhi nahi hai.
+
+**What if: set bits ginne hon?** \`n & 1\` se last bit check karo, phir \`n >> 1\` se ek bit khiskao, aur repeat karo. Number 29 (\`11101\`) mein 4 set bits hain. Yeh loop O(number of bits) mein chalta hai aur Brian Kernighan ka algorithm (\`n = n & (n - 1)\`) isse bhi fast hai kyunki woh sirf set bits par loop karta hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you must change a bit without a mask?** Suppose you must set bit 2 of the number 10 (\`1010\`). Without a mask, you would have to rewrite the whole number. With a mask, one line is enough: \`n | (1 << 2)\` sets a bit, \`n & ~(1 << 3)\` clears a bit, and \`n ^ (1 << 1)\` toggles a bit. The formula is the same for all three — only the operator changes. The code below shows all three on the same number; run it and verify each step's binary by hand.
+
+**What if you use multiply instead of shift?** \`x << 3\` and \`x * 8\` give the same answer, but a shift is faster because it is a cheap operation for the CPU. Even so, modern compilers turn \`x * 8\` into a shift themselves, so writing \`x * 8\` is better for readability — only write a shift when you are really thinking about bits, such as when you build a mask. Interviews ask about the difference between the two, so you should know how to write both.
+
+**What if you swap with XOR?** \`a = a ^ b; b = a ^ b; a = a ^ b;\` swaps two numbers without a temp variable. It works like this: the first line stores the XOR of both numbers in \`a\`, the second line pulls \`b\` out of it, and the third line pulls \`a\` out. This trick looks impressive in an interview, but in real code use a \`temp\` variable — it is just as fast and has no edge cases.
+
+**What if you must count set bits?** Check the last bit with \`n & 1\`, then shift one bit away with \`n >> 1\`, and repeat. The number 29 (\`11101\`) has 4 set bits. This loop runs in O(number of bits), and Brian Kernighan's algorithm (\`n = n & (n - 1)\`) is even faster because it only loops over the set bits.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Bitwise se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Bitwise to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Bitwise operators** bits par kaam karte hain: \`&\` dono 1 hon par 1 deta hai, \`|\` koi ek 1 ho par 1 deta hai, \`^\` bits alag hon par 1 deta hai, \`~\` har bit ko ulta kar deta hai, \`<<\` 2 se multiply karta hai aur \`>>\` 2 se divide karta hai. Inka sabse bada use **masks** mein hai — \`1 << k\` se k-th bit ka mask banta hai, OR se bit set hoti hai, AND + NOT se bit clear hoti hai, aur XOR se bit toggle hoti hai.
+
+Yaad rakhne wali teen baatein: pehli, \`&\` aur \`&&\` alag hain — ek bit check karta hai, doosra true/false check karta hai. Doosri, mask wale expressions mein hamesha **brackets** lagao kyunki \`&\` ki precedence \`==\` se neeche hoti hai. Teesri, shift hamesha 0 se 31 ke beech rakho aur negative numbers ko shift mat karo, warna undefined behaviour milega.
+
+Interview mein bitwise ke sawaal aksar ek hi pattern mein aate hain: "k-th bit set hai kya?", "set bits ginno", "number power of 2 hai kya?", "bina temp ke swap karo". Har ek ka answer ek hi hai: mask banao, \`&\` se check karo, \`|\` se set karo, \`^\` se toggle karo. Agar aapko yeh pattern dikhne lag gaya hai, toh bitwise aapko aa gaya hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle 12 aur 10 ka dry run haath se karo — AND, OR, XOR aur shifts ke answers nikaalo. Phir mask wale teen formulas ko bina dekhe likho. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum dynamic memory dekhenge — jahan \`malloc\` se memory maangni hoti hai aur \`free\` se wapas karni hoti hai.`,
+          `Let us tie the whole article together. **Bitwise operators** work on bits: \`&\` gives 1 when both bits are 1, \`|\` gives 1 when any bit is 1, \`^\` gives 1 when the bits differ, \`~\` flips every bit, \`<<\` multiplies by 2, and \`>>\` divides by 2. Their biggest use is in **masks** — \`1 << k\` builds a mask for the k-th bit, OR sets a bit, AND with NOT clears a bit, and XOR toggles a bit.
+
+Remember three things: first, \`&\` and \`&&\` are different — one checks a bit, the other checks true or false. Second, always use **brackets** in mask expressions because \`&\` has lower precedence than \`==\`. Third, always keep shifts between 0 and 31 and never shift negative numbers, or you will get undefined behaviour.
+
+Interview questions on bitwise operators usually follow one pattern: "is the k-th bit set?", "count the set bits", "is the number a power of 2?", "swap without a temp variable". The answer to every one is the same: build a mask, check with \`&\`, set with \`|\`, toggle with \`^\`. Once you start seeing that pattern, you know bitwise operators.
+
+To revise, read this article once more in this order: first do the dry run of 12 and 10 by hand — find the answers for AND, OR, XOR, and the shifts. Then write the three mask formulas without looking. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at dynamic memory — where you ask for memory with \`malloc\` and return it with \`free\`.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'table',
+      title: t(
+        'Bitwise Operators ki Table: 12 aur 10 par Results',
+        'Bitwise Operator Table: Results on 12 and 10'
+      ),
+      caption: t(
+        '12 = 1100 aur 10 = 1010 — har operator column by column kaam karta hai',
+        '12 = 1100 and 10 = 1010 — every operator works column by column'
+      ),
+      nodes: [],
+      headers: [t('Operator', 'Operator'), t('Example', 'Example'), t('Result', 'Result')],
+      rows: [
+        [t('AND (&)', 'AND (&)'), t('12 & 10', '12 & 10'), t('8 (1000)', '8 (1000)')],
+        [t('OR (|)', 'OR (|)'), t('12 | 10', '12 | 10'), t('14 (1110)', '14 (1110)')],
+        [t('XOR (^)', 'XOR (^)'), t('12 ^ 10', '12 ^ 10'), t('6 (0110)', '6 (0110)')],
+        [t('NOT (~)', 'NOT (~)'), t('~12', '~12'), t('-13', '-13')],
+        [t('Left shift', 'Left shift'), t('12 << 2', '12 << 2'), t('48 (x4)', '48 (x4)')],
+        [t('Right shift', 'Right shift'), t('12 >> 2', '12 >> 2'), t('3 (/4)', '3 (/4)')]
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Mask se Bit Set, Clear aur Toggle Karna',
+          'Setting, Clearing, and Toggling a Bit with a Mask'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int n = 10;  /* 1010 */
+    n = n | (1 << 2);   /* set bit 2 */
+    printf("after set bit 2: %d\\n", n);
+    n = n & ~(1 << 3);  /* clear bit 3 */
+    printf("after clear bit 3: %d\\n", n);
+    n = n ^ (1 << 1);   /* toggle bit 1 */
+    printf("after toggle bit 1: %d\\n", n);
+    printf("bit 2 of n is: %d\\n", (n >> 2) & 1);
+    return 0;
+}`,
+        output: `after set bit 2: 14
+after clear bit 3: 6
+after toggle bit 1: 4
+bit 2 of n is: 1`
+      },
+      {
+        title: t(
+          'Set Bits Ginna aur XOR se Swap Karna',
+          'Counting Set Bits and Swapping with XOR'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int count_set_bits(int n) {
+    int count = 0;
+    while (n > 0) {
+        count += n & 1;
+        n = n >> 1;
+    }
+    return count;
+}
+
+int main(void) {
+    int a = 5, b = 9;
+    printf("set bits in 29: %d\\n", count_set_bits(29));
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    printf("after swap: a = %d, b = %d\\n", a, b);
+    return 0;
+}`,
+        output: `set bits in 29: 4
+after swap: a = 9, b = 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '12 & 10 ka answer kya hai? (12 = 1100, 10 = 1010)',
+          'What is the value of 12 & 10? (12 = 1100, 10 = 1010)'
+        ),
+        opts: [
+          t('14', '14'),
+          t('6', '6'),
+          t('8', '8'),
+          t('10', '10')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: AND sirf wahan 1 deta hai jahan dono bits 1 hon — 1100 aur 1010 mein sirf pehla bit dono mein 1 hai, isliye result 1000 = 8 hota hai.',
+          'Correct answer: AND gives 1 only where both bits are 1 — in 1100 and 1010 only the first bit is 1 in both, so the result is 1000 = 8.'
+        )
+      },
+      {
+        q: t(
+          '~12 ka answer kya hota hai?',
+          'What is the value of ~12?'
+        ),
+        opts: [
+          t('-12', '-12'),
+          t('3', '3'),
+          t('-13', '-13'),
+          t('13', '13')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: two\'s complement mein ~x = -x - 1 hota hai, isliye ~12 = -13. NOT har bit ko ulta karta hai, sign change nahi karta.',
+          'Correct answer: in two\'s complement, ~x = -x - 1, so ~12 = -13. NOT flips every bit; it does not just change the sign.'
+        )
+      },
+      {
+        q: t(
+          'Number n ka bit 2 set karne ke liye kaunsa expression sahi hai?',
+          'Which expression correctly sets bit 2 of a number n?'
+        ),
+        opts: [
+          t('n & (1 << 2)', 'n & (1 << 2)'),
+          t('n | (1 << 2)', 'n | (1 << 2)'),
+          t('n ^ (1 << 2)', 'n ^ (1 << 2)'),
+          t('n >> 2', 'n >> 2')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: OR se bit set hoti hai — n | (1 << 2) bit 2 ko 1 kar deta hai aur baaki bits ko chhoota bhi nahi. AND se check hota hai, XOR se toggle hota hai.',
+          'Correct answer: OR sets a bit — n | (1 << 2) makes bit 2 equal to 1 and leaves the other bits untouched. AND checks a bit, XOR toggles it.'
+        )
+      },
+      {
+        q: t(
+          '12 << 2 ka answer kya hai?',
+          'What is the value of 12 << 2?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('24', '24'),
+          t('48', '48'),
+          t('6', '6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 2 bit left shift matlab 4 se multiply — 12 x 4 = 48. Binary mein 1100 ke peeche do 0 jud jaate hain aur 110000 = 48 banta hai.',
+          'Correct answer: a 2-bit left shift means multiplying by 4 — 12 x 4 = 48. In binary, two 0s are added behind 1100 to make 110000 = 48.'
+        )
+      },
+      {
+        q: t(
+          '32-bit int ko 32 ya usse zyada shift karna kya hota hai?',
+          'What happens when you shift a 32-bit int by 32 or more?'
+        ),
+        opts: [
+          t('Answer hamesha 0 hota hai', 'The answer is always 0'),
+          t('Undefined behaviour', 'Undefined behaviour'),
+          t('Compiler error aata hai', 'A compiler error occurs'),
+          t('Number double ho jaata hai', 'The number doubles')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: shift count int ki width ke barabar ya usse zyada ho toh undefined behaviour hota hai — compiler kuch bhi kar sakta hai, isliye shift hamesha 0 se 31 ke beech rakho.',
+          'Correct answer: when the shift count is equal to or greater than the width of the int, it is undefined behaviour — the compiler may do anything, so always keep shifts between 0 and 31.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'AND (&) dono bits 1 hon par 1 deta hai, OR (|) koi ek 1 ho par 1 deta hai, XOR (^) bits alag hon par 1 deta hai.',
+        'AND (&) gives 1 when both bits are 1, OR (|) gives 1 when any bit is 1, and XOR (^) gives 1 when the bits differ.'
+      ),
+      t(
+        'Mask: bit set karne ke liye |, clear karne ke liye & ~, toggle karne ke liye ^ — mask hamesha (1 << k) se banta hai.',
+        'Masks: use | to set a bit, & ~ to clear a bit, and ^ to toggle a bit — a mask is always built as (1 << k).'
+      ),
+      t(
+        'Left shift 2 se multiply karta hai, right shift 2 se divide karta hai; ~x = -x - 1 hota hai.',
+        'A left shift multiplies by 2, a right shift divides by 2, and ~x = -x - 1.'
+      ),
+      t(
+        'Mask wale expressions mein hamesha brackets lagao, kyunki & ki precedence == se neeche hoti hai.',
+        'Always use brackets in mask expressions, because & has lower precedence than ==.'
+      ),
+      t(
+        'Shift hamesha 0 se 31 ke beech rakho aur negative numbers ko shift mat karo — warna undefined behaviour milega.',
+        'Always keep shifts between 0 and 31 and never shift negative numbers, or you will get undefined behaviour.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Power of 2 Check Karo',
+        'Practice: Test Whether a Number Is a Power of 2'
+      ),
+      task: t(
+        'Neeche diya gaya program bitwise trick se check karta hai ki number 2 ki power hai ya nahi. Ise run karke verify karo ki output expected jaisa aata hai, phir x aur y ki values badal kar (jaise 32 aur 20) dobara run karo aur naya output khud haath se verify karo.',
+        'The program below uses a bitwise trick to test whether a number is a power of 2. Run it and verify the output matches the expected output, then change the values of x and y (for example to 32 and 20), run it again, and verify the new output by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <stdbool.h>
+
+bool is_power_of_two(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+
+int main(void) {
+    int x = 16, y = 18;
+    printf("16 is a power of 2: %s\\n", is_power_of_two(x) ? "yes" : "no");
+    printf("18 is a power of 2: %s\\n", is_power_of_two(y) ? "yes" : "no");
+    return 0;
+}`,
+      expected: `16 is a power of 2: yes
+18 is a power of 2: no`
+    },
+    readMinutes: 12
+  };
+
+const cMemory: Article = {
+    id: 'c-memory',
+    subjectId: 'c-programming',
+    title: t(
+      'Dynamic Memory — malloc, calloc, realloc, free aur Memory Leaks',
+      'Dynamic Memory — malloc, calloc, realloc, free, and Memory Leaks'
+    ),
+    summary: t(
+      'Dynamic memory ko zero se samjho: malloc aur calloc se heap par memory kaise maangte hain, realloc se size kaise badhate hain, free se memory wapas kaise karte hain, aur leaks aur dangling pointers se kaise bachte hain.',
+      'Learn dynamic memory from scratch: how to ask the heap for memory with malloc and calloc, how to grow it with realloc, how to return it with free, and how to avoid leaks and dangling pointers.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Dynamic Memory Kya Hai? (Stack vs Heap)',
+          '1. What Is Dynamic Memory? (Stack vs Heap)'
+        ),
+        body: t(
+          `C mein jab aap \`int arr[5];\` likhte ho, toh memory **stack** par banti hai aur size pehle se fixed hota hai — program chalne se pehle hi pata hona chahiye ki kitne numbers chahiye. Par agar size tabhi pata chale jab program chal raha ho — jaise user kitne marks daalega, yeh pehle se kaun jaane? — toh stack kaam nahi aata. Yahan **dynamic memory** aati hai: program chalte waqt **heap** se memory maangna. Heap memory ka woh bada hissa hai jise program kabhi bhi maang sakta hai aur jab chaahe wapas kar sakta hai.
+
+Heap se memory maangne ke liye chaar functions hain: \`malloc\` (memory allocate), \`calloc\` (contiguous allocate), \`realloc\` (re-allocate) aur \`free\`. \`malloc(5 * sizeof(int))\` heap se 5 integers ke liye jagah maangta hai aur us jagah ka **address** deta hai — isliye iska return ek pointer hota hai. \`calloc(4, sizeof(int))\` bhi wahi karta hai, par saari memory ko 0 se bhar deta hai. \`realloc\` pehle se mili memory ka size badhata ya ghataata hai. \`free\` memory ko heap ko wapas kar deta hai.
+
+Sabse important baat: heap ki memory khud se khatm nahi hoti. Stack wali memory function khatm hote hi apne aap free ho jaati hai, par heap wali memory tab tak rehti hai jab tak aap khud \`free\` na karo. Agar aap \`free\` bhool gaye, toh woh memory **leak** ho jaati hai — program band hone tak wapas nahi milti. Isi liye C mein memory ki zimmedari programmer ki hoti hai, computer ki nahi.`,
+          `In C, when you write \`int arr[5];\`, the memory is created on the **stack** and its size is fixed in advance — you must know before the program runs how many numbers you need. But what if the size is only known while the program is running — for example, who knows in advance how many marks the user will enter? The stack cannot help there. That is where **dynamic memory** comes in: asking the **heap** for memory while the program runs. The heap is the large part of memory that a program can request at any time and return whenever it likes.
+
+Four functions request memory from the heap: \`malloc\` (memory allocate), \`calloc\` (contiguous allocate), \`realloc\` (re-allocate), and \`free\`. \`malloc(5 * sizeof(int))\` asks the heap for space for 5 integers and returns the **address** of that space — which is why it returns a pointer. \`calloc(4, sizeof(int))\` does the same thing, but it fills all the memory with 0. \`realloc\` grows or shrinks memory you already have. \`free\` returns memory to the heap.
+
+The most important point: heap memory does not clean itself up. Stack memory is freed automatically when the function ends, but heap memory stays until you call \`free\` yourself. If you forget \`free\`, that memory **leaks** — it is not returned until the program ends. That is why in C the programmer is responsible for memory, not the computer.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Photo App, Browser Tabs aur Playlist',
+          '2. Real-Life Examples: A Photo App, Browser Tabs, and a Playlist'
+        ),
+        body: t(
+          `Dynamic memory roz ki zindagi mein har jagah hai. Sabse seedha example hai **photo app**. Jab aap gallery kholte ho, toh app ko nahi pata hota ki aapke phone mein 100 photos hain ya 10,000. App har photo ke liye pehle se fixed array nahi bana sakta — woh jitni photos milti hain, utni memory heap se maangta hai. Photo delete karo toh memory free hoti hai, nayi photo aaye toh \`realloc\` se jagah badhti hai. Yahi dynamic memory hai.
+
+Doosra example hai **browser tabs**. Har naya tab ek nayi jagah maangta hai — tab ka content, uska history, uske images. Browser ko pehle se nahi pata hota ki aap 2 tabs khologe ya 50. Har tab ke liye heap se memory allocate hoti hai, aur tab band karte hi \`free\` hoti hai. Agar browser \`free\` bhool jaaye, toh memory leak hota hai aur browser dheere-dheere slow ho jaata hai — aapne kabhi notice kiya hoga ki bahut tabs kholne par browser bhaari ho jaata hai.
+
+Teesra example hai **music playlist**. Playlist mein gaane add aur remove hote rehte hain. Fixed array mein yeh mushkil hai — size pehle se tay karna padta hai. Dynamic array mein \`realloc\` se jagah badhti hai jab gaana add ho, aur shrink hoti hai jab gaana delete ho. Isi pattern ko agle article mein poora detail mein dekhenge.`,
+          `Dynamic memory is everywhere in daily life. The simplest example is a **photo app**. When you open the gallery, the app does not know whether your phone has 100 photos or 10,000. It cannot create a fixed array in advance for every photo — it asks the heap for as much memory as there are photos. Delete a photo and the memory is freed; add a new photo and \`realloc\` grows the space. That is dynamic memory.
+
+A second example is **browser tabs**. Every new tab needs new space — the tab content, its history, its images. The browser does not know in advance whether you will open 2 tabs or 50. Memory is allocated from the heap for each tab, and freed as soon as the tab closes. If the browser forgets to \`free\`, memory leaks and the browser slowly becomes heavy — you may have noticed that a browser feels slow after opening many tabs.
+
+A third example is a **music playlist**. Songs are added and removed all the time. A fixed array makes this hard — the size must be decided in advance. In a dynamic array, \`realloc\` grows the space when a song is added and shrinks it when a song is removed. We will look at this pattern in full detail in the next article.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: malloc se 5 Squares Banana aur Free Karna (Dry Run)',
+          '3. Step-by-Step: Making 5 Squares with malloc and Freeing Them (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek program ko line-by-line dry run karte hain. Kaam hai: heap se 5 integers ke liye memory maango, unmein 0, 1, 4, 9, 16 (squares) bharo, print karo, aur phir \`free\` karo.
+
+**Step 1:** \`int *arr = malloc(5 * sizeof(int));\` — \`sizeof(int)\` aam taur par 4 hota hai, isliye \`malloc\` 20 bytes maangta hai. Agar heap mein jagah hai, toh \`malloc\` us block ka address deta hai aur \`arr\` mein store hota hai. **Step 2:** NULL check — agar memory nahi mili, toh \`malloc\` \`NULL\` deta hai. \`if (arr == NULL)\` likhna hamesha zaroori hai, kyunki NULL pointer ko use karna crash karta hai. **Step 3:** loop se \`arr[i] = i * i\` bharo. Dhyaan do — \`arr[i]\` bilkul normal array jaisa kaam karta hai, kyunki pointer aur array ka access ek jaisa hota hai.
+
+**Step 4:** doosra loop values print karta hai: \`0 1 4 9 16\`. **Step 5:** \`free(arr);\` — memory heap ko wapas ho jaati hai. Iske baad \`arr\` ko use karna galat hai — woh **dangling pointer** ban jaata hai. Neeche wala code yeh saare steps karta hai. Ise run karo aur output ko apne dry run se milao.`,
+          `Now let us dry-run a program line by line. The task is: ask the heap for memory for 5 integers, fill it with 0, 1, 4, 9, 16 (the squares), print them, and then call \`free\`.
+
+**Step 1:** \`int *arr = malloc(5 * sizeof(int));\` — \`sizeof(int)\` is usually 4, so \`malloc\` asks for 20 bytes. If the heap has space, \`malloc\` returns the address of that block and it is stored in \`arr\`. **Step 2:** the NULL check — if no memory is available, \`malloc\` returns \`NULL\`. Writing \`if (arr == NULL)\` is always essential, because using a NULL pointer crashes the program. **Step 3:** fill the block with a loop, \`arr[i] = i * i\`. Note that \`arr[i]\` works exactly like a normal array, because pointer and array access work the same way.
+
+**Step 4:** a second loop prints the values: \`0 1 4 9 16\`. **Step 5:** \`free(arr);\` — the memory goes back to the heap. After this, using \`arr\` is wrong — it has become a **dangling pointer**. The code below performs all of these steps. Run it and match the output against your dry run.`
+        ),
+        code: {
+          title: t(
+            'malloc se 5 Squares: Allocate, Bharo, Print, Free',
+            '5 Squares with malloc: Allocate, Fill, Print, Free'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *arr = malloc(5 * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    for (int i = 0; i < 5; i++) {
+        arr[i] = i * i;
+    }
+    for (int i = 0; i < 5; i++) {
+        printf("%d", arr[i]);
+        if (i < 4) {
+            printf(" ");
+        }
+    }
+    printf("\\n");
+    free(arr);
+    return 0;
+}`,
+          output: `0 1 4 9 16`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Leak, Double Free, Dangling Pointer aur NULL Check',
+          '4. Common Mistakes: Leaks, Double Free, Dangling Pointers, and Missing NULL Checks'
+        ),
+        body: t(
+          `Dynamic memory mein sabse zyada galtiyan chaar cheezon par hoti hain, aur teeno ke peeche ek hi wajah hai — memory ki zimmedari bhool jaana.
+
+**Galti 1: \`free\` bhool jaana (memory leak).** Har \`malloc\` ka ek \`free\` hona chahiye. Agar aap loop mein baar-baar \`malloc\` karte ho aur \`free\` nahi karte, toh memory khatm ho jaati hai aur program slow ya crash ho jaata hai. Rule yaad rakho: jis function ne memory allocate ki, wahi use free kare — ya saaf likho ki free kiski zimmedari hai.
+
+**Galti 2: Double free.** Ek hi pointer ko do baar \`free\` karna **undefined behaviour** hai — program crash kar sakta hai. Isse bachne ke liye \`free\` ke baad pointer ko \`NULL\` par set kar do: \`free(arr); arr = NULL;\`. \`free(NULL)\` safe hota hai, kuch nahi karta, isliye yeh aadat double free se bacha leti hai.
+
+**Galti 3: Dangling pointer use karna.** \`free(arr)\` ke baad \`arr\` mein purana address pada rehta hai, par woh memory ab heap ki hai aur kisi aur ko mil sakti hai. Us address par likhna ya padhna **use-after-free** hai — kabhi chal jaata hai, kabhi crash karta hai, aur kabhi galat data deta hai. Yeh C ke sabse khatarnaak bugs mein se ek hai.
+
+**Galti 4: NULL check bhoolna aur galat size dena.** \`malloc\` fail ho sakta hai — hamesha NULL check karo. Aur size hamesha \`n * sizeof(type)\` likho, sirf \`n\` nahi: \`malloc(5)\` sirf 5 bytes deta hai, 5 integers nahi. \`sizeof\` bhoolna beginners ki sabse common galti hai.`,
+          `The most common dynamic memory mistakes come from four things, and all of them trace back to one cause — forgetting that memory is your responsibility.
+
+**Mistake 1: Forgetting \`free\` (a memory leak).** Every \`malloc\` needs a matching \`free\`. If you call \`malloc\` again and again in a loop without \`free\`, memory runs out and the program slows down or crashes. Remember the rule: the function that allocated the memory should free it — or write clearly whose job freeing is.
+
+**Mistake 2: Double free.** Calling \`free\` twice on the same pointer is **undefined behaviour** — the program may crash. To avoid it, set the pointer to \`NULL\` after freeing: \`free(arr); arr = NULL;\`. \`free(NULL)\` is safe and does nothing, so this habit protects you from a double free.
+
+**Mistake 3: Using a dangling pointer.** After \`free(arr)\`, the old address still sits in \`arr\`, but that memory now belongs to the heap and may be given to someone else. Reading or writing through that address is **use-after-free** — sometimes it works, sometimes it crashes, and sometimes it gives wrong data. It is one of the most dangerous bugs in C.
+
+**Mistake 4: Skipping the NULL check and using the wrong size.** \`malloc\` can fail — always check for NULL. And always write the size as \`n * sizeof(type)\`, not just \`n\`: \`malloc(5)\` gives only 5 bytes, not 5 integers. Forgetting \`sizeof\` is the most common beginner mistake.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: malloc(0), realloc(NULL), realloc Fail aur calloc vs malloc',
+          '5. Edge Cases: malloc(0), realloc(NULL), realloc Failure, and calloc vs malloc'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. \`malloc(0)\`.** Zero bytes maangne par \`malloc\` ya toh NULL deta hai ya ek aisa pointer deta hai jise dereference nahi kar sakte. Is par bharosa mat karo — size 0 ke liye allocate hi mat karo, ya pehle check karo ki size 0 se bada hai.
+
+**2. \`realloc\` fail hona.** \`realloc\` fail ho sakta hai aur tab woh NULL deta hai — par purana block ab bhi valid rehta hai! Agar aap \`arr = realloc(arr, naya_size)\` likhte ho aur realloc fail ho jaaye, toh \`arr\` NULL ho jaata hai aur purana block leak ho jaata hai. Sahi tareeka hai temp pointer use karna: \`int *tmp = realloc(arr, naya_size); if (tmp == NULL) { /* purana arr ab bhi safe hai */ }\` — neeche wale realloc example mein yahi pattern hai.
+
+**3. \`realloc(NULL, size)\` aur \`realloc(p, 0)\`.** \`realloc(NULL, size)\` bilkul \`malloc(size)\` jaisa kaam karta hai. \`realloc(p, 0)\` ka behaviour implementation-defined hai — use \`free(p)\` ki jagah mat likho, seedha \`free\` karo.
+
+**4. \`calloc\` vs \`malloc\`.** \`calloc\` memory ko 0 se bhar deta hai, \`malloc\` nahi — \`malloc\` wali memory mein kachra (garbage values) hoti hain. Agar aap \`malloc\` ke baad values ko bina set kiye padhoge, toh kachra milega. Jab zero-initialised memory chahiye ho, toh \`calloc\` use karo; jab aap turant saari values set karne wale ho, toh \`malloc\` kaafi hai aur thoda fast bhi hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. \`malloc(0)\`.** Asking for zero bytes may return NULL or a pointer you must not dereference. Do not rely on it — never allocate for size 0, or check first that the size is greater than 0.
+
+**2. \`realloc\` failing.** \`realloc\` can fail, and when it does it returns NULL — but the old block is still valid! If you write \`arr = realloc(arr, new_size)\` and realloc fails, \`arr\` becomes NULL and the old block leaks. The correct way is to use a temp pointer: \`int *tmp = realloc(arr, new_size); if (tmp == NULL) { /* the old arr is still safe */ }\` — the realloc example below uses exactly this pattern.
+
+**3. \`realloc(NULL, size)\` and \`realloc(p, 0)\`.** \`realloc(NULL, size)\` works exactly like \`malloc(size)\`. \`realloc(p, 0)\` is implementation-defined — never write it instead of \`free(p)\`; just call \`free\` directly.
+
+**4. \`calloc\` vs \`malloc\`.** \`calloc\` fills memory with 0, \`malloc\` does not — memory from \`malloc\` holds garbage values. If you read values from \`malloc\` memory without setting them first, you get garbage. When you need zero-initialised memory, use \`calloc\`; when you are about to set every value right away, \`malloc\` is enough and slightly faster.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Stack ki Jagah Heap, realloc ka Temp Pointer aur free ke Baad NULL',
+          '6. What-If: Heap Instead of Stack, the realloc Temp Pointer, and NULL After free'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: stack ki jagah hamesha heap use kar lein?** Heap har kaam ke liye nahi hai. Stack fast hota hai aur apne aap clean hota hai — chhoti, fixed-size cheezon ke liye stack behtar hai. Heap tab use karo jab size runtime par pata chale, ya memory ko function se bahar bhi zinda rakhna ho. Har chhoti cheez ke liye \`malloc\` karna slow bhi hota hai aur leak ka risk bhi badhata hai. Rule simple hai: size fixed hai toh stack, size pata nahi toh heap.
+
+**What if: \`realloc\` seedha \`arr\` mein assign kar dein?** Upar bataya gaya — fail hone par purana block leak ho jaata hai. Hamesha temp pointer use karo aur NULL check ke baad hi \`arr = tmp\` likho. Neeche wala code yahi karta hai: 3 numbers se shuru karke 5 tak badhata hai aur saari values print karta hai.
+
+**What if: \`free\` ke baad pointer ko NULL na karein?** Pointer dangling rehta hai aur galti se use hone par use-after-free bug aata hai. \`free(arr); arr = NULL;\` ek line ki aadat hai jo is poore class ke bugs ko khatm kar deti hai. Interview mein yeh aadat batana achha impression deta hai.
+
+**What if: \`calloc\` ki jagah \`malloc\` + loop use kar lein?** Kar sakte ho, par \`calloc\` ek hi call mein kaam kar deta hai aur kabhi-kabhi OS se zeroed pages lekar fast bhi hota hai. Counting arrays aur frequency tables ke liye \`calloc\` natural choice hai — neeche wala example 4 zeros se shuru karke do values set karta hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you always use the heap instead of the stack?** The heap is not for everything. The stack is fast and cleans itself up — for small, fixed-size things the stack is better. Use the heap when the size is only known at run time, or when the memory must live on after the function returns. Calling \`malloc\` for every small thing is slow and increases the risk of leaks. The rule is simple: fixed size means stack, unknown size means heap.
+
+**What if you assign \`realloc\` straight into \`arr\`?** As explained above, if it fails, the old block leaks. Always use a temp pointer and only write \`arr = tmp\` after the NULL check. The code below does exactly this: it starts with 3 numbers, grows to 5, and prints all the values.
+
+**What if you do not set the pointer to NULL after \`free\`?** The pointer stays dangling, and using it by mistake causes a use-after-free bug. \`free(arr); arr = NULL;\` is a one-line habit that kills this whole class of bugs. Mentioning this habit in an interview makes a good impression.
+
+**What if you use \`malloc\` plus a loop instead of \`calloc\`?** You can, but \`calloc\` does the job in a single call and is sometimes faster because it takes zeroed pages from the OS. For counting arrays and frequency tables, \`calloc\` is the natural choice — the example below starts with 4 zeros and then sets two values.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Dynamic Memory se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Dynamic Memory to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Dynamic memory** heap se runtime par maangi jaati hai: \`malloc\` bytes maangta hai, \`calloc\` zero-filled memory deta hai, \`realloc\` size badhata ya ghataata hai, aur \`free\` memory wapas karta hai. Stack apne aap clean hota hai, heap nahi — isliye har \`malloc\` ka ek \`free\` hona chahiye.
+
+Yaad rakhne wali chaar baatein: pehli, hamesha **NULL check** karo — \`malloc\` fail ho sakta hai. Doosri, size hamesha \`n * sizeof(type)\` likho. Teesri, \`realloc\` ka result hamesha **temp pointer** mein lo, warna fail hone par purana block leak ho jaata hai. Chauthi, \`free\` ke baad pointer ko **NULL** par set kar do — isse double free aur dangling pointer dono khatm ho jaate hain.
+
+Interview mein dynamic memory ke sawaal aksar ek hi pattern mein aate hain: "array ka size runtime par pata chale toh kya karoge?", "memory leak kya hai?", "dangling pointer kya hai?", "realloc fail ho toh kya hota hai?" — har ek ka answer ek hi hai: heap se maango, NULL check karo, temp pointer se realloc karo, aur free ke baad NULL set karo. Agar aapko yeh pattern dikhne lag gaya hai, toh dynamic memory aapko aa gayi hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle malloc wale squares ka dry run haath se karo — 20 bytes, 5 values, phir free. Phir realloc wale example mein temp pointer ka pattern dobara dekho. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum dynamic arrays dekhenge — \`realloc\` se growing array kaise banate hain, jismein size aur capacity dono track hote hain.`,
+          `Let us tie the whole article together. **Dynamic memory** is requested from the heap at run time: \`malloc\` asks for bytes, \`calloc\` gives zero-filled memory, \`realloc\` grows or shrinks it, and \`free\` returns it. The stack cleans itself up; the heap does not — so every \`malloc\` needs a matching \`free\`.
+
+Remember four things: first, always do a **NULL check** — \`malloc\` can fail. Second, always write the size as \`n * sizeof(type)\`. Third, always take the result of \`realloc\` in a **temp pointer**, or the old block leaks when it fails. Fourth, set the pointer to **NULL** after \`free\` — this kills both double free and dangling pointers.
+
+Interview questions on dynamic memory usually follow one pattern: "what do you do when the array size is only known at run time?", "what is a memory leak?", "what is a dangling pointer?", "what happens when realloc fails?" — the answer to every one is the same: ask the heap, check for NULL, realloc through a temp pointer, and set NULL after free. Once you start seeing that pattern, you know dynamic memory.
+
+To revise, read this article once more in this order: first dry-run the malloc squares by hand — 20 bytes, 5 values, then free. Then look again at the temp pointer pattern in the realloc example. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at dynamic arrays — how to build a growing array with \`realloc\`, tracking both size and capacity.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'memory',
+      title: t(
+        'Heap Memory ka Safar: malloc se free Tak',
+        'The Journey of Heap Memory: From malloc to free'
+      ),
+      caption: t(
+        'Har malloc ka ek free hona chahiye — warna memory leak hoti hai',
+        'Every malloc needs a free — otherwise the memory leaks'
+      ),
+      nodes: [
+        {
+          t: t('malloc(5 * sizeof(int))', 'malloc(5 * sizeof(int))'),
+          s: t('Heap se 20 bytes maango, address arr mein milta hai', 'Ask the heap for 20 bytes, the address lands in arr')
+        },
+        {
+          t: t('NULL check', 'NULL check'),
+          s: t('malloc fail ho toh NULL milta hai — use karne se pehle check karo', 'If malloc fails you get NULL — check it before using the pointer')
+        },
+        {
+          t: t('Use: arr[i] = i * i', 'Use: arr[i] = i * i'),
+          s: t('Pointer ko normal array ki tarah use karo: 0 1 4 9 16', 'Use the pointer like a normal array: 0 1 4 9 16')
+        },
+        {
+          t: t('realloc: size badhao', 'realloc: grow the size'),
+          s: t('Result hamesha temp pointer mein lo, phir arr = tmp', 'Always take the result in a temp pointer, then arr = tmp')
+        },
+        {
+          t: t('free(arr); arr = NULL;', 'free(arr); arr = NULL;'),
+          s: t('Memory wapas karo aur pointer ko NULL set karo — leak aur dangling dono khatm', 'Return the memory and set the pointer to NULL — leak and dangling pointer both gone')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'calloc: Zero se Bhari Memory',
+          'calloc: Memory Filled with Zero'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *arr = calloc(4, sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    printf("calloc values:");
+    for (int i = 0; i < 4; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    arr[0] = 7;
+    arr[3] = 9;
+    printf("after setting: %d %d %d %d\\n", arr[0], arr[1], arr[2], arr[3]);
+    free(arr);
+    return 0;
+}`,
+        output: `calloc values: 0 0 0 0
+after setting: 7 0 0 9`
+      },
+      {
+        title: t(
+          'realloc: 3 Numbers se 5 Numbers Tak',
+          'realloc: From 3 Numbers to 5 Numbers'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *arr = malloc(3 * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    arr[0] = 10;
+    arr[1] = 20;
+    arr[2] = 30;
+    int *tmp = realloc(arr, 5 * sizeof(int));
+    if (tmp == NULL) {
+        printf("Reallocation failed\\n");
+        free(arr);
+        return 1;
+    }
+    arr = tmp;
+    arr[3] = 40;
+    arr[4] = 50;
+    for (int i = 0; i < 5; i++) {
+        printf("%d", arr[i]);
+        if (i < 4) {
+            printf(" ");
+        }
+    }
+    printf("\\n");
+    free(arr);
+    return 0;
+}`,
+        output: `10 20 30 40 50`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'malloc fail hone par kya return karta hai?',
+          'What does malloc return when it fails?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('NULL', 'NULL'),
+          t('-1', '-1'),
+          t('Garbage pointer', 'A garbage pointer')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: malloc fail hone par NULL return karta hai, isliye har malloc ke baad NULL check zaroori hai — NULL pointer ko use karna crash karta hai.',
+          'Correct answer: malloc returns NULL when it fails, so a NULL check after every malloc is essential — using a NULL pointer crashes the program.'
+        )
+      },
+      {
+        q: t(
+          'calloc aur malloc mein sabse bada farak kya hai?',
+          'What is the biggest difference between calloc and malloc?'
+        ),
+        opts: [
+          t('calloc fast hota hai', 'calloc is faster'),
+          t('calloc memory ko 0 se bhar deta hai, malloc nahi', 'calloc fills memory with 0, malloc does not'),
+          t('calloc stack par memory deta hai', 'calloc gives memory on the stack'),
+          t('Koi farak nahi hai', 'There is no difference')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: calloc saari memory ko 0 se bhar deta hai, jabki malloc wali memory mein kachra values hoti hain — isliye counting arrays ke liye calloc natural choice hai.',
+          'Correct answer: calloc fills all memory with 0, while malloc memory holds garbage values — that is why calloc is the natural choice for counting arrays.'
+        )
+      },
+      {
+        q: t(
+          'realloc fail hone par purane block ka kya hota hai?',
+          'What happens to the old block when realloc fails?'
+        ),
+        opts: [
+          t('Purana block free ho jaata hai', 'The old block is freed'),
+          t('Purana block ab bhi valid rehta hai', 'The old block stays valid'),
+          t('Purana block zero ho jaata hai', 'The old block becomes zero'),
+          t('Program crash ho jaata hai', 'The program crashes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: realloc fail hone par NULL milta hai par purana block ab bhi valid rehta hai — isliye result hamesha temp pointer mein lo, warna arr NULL ho jaayega aur purana block leak ho jaayega.',
+          'Correct answer: when realloc fails it returns NULL, but the old block stays valid — so always take the result in a temp pointer, or arr becomes NULL and the old block leaks.'
+        )
+      },
+      {
+        q: t(
+          'free ke baad pointer ko NULL par set karne se kya fayda hai?',
+          'What is the benefit of setting a pointer to NULL after free?'
+        ),
+        opts: [
+          t('Memory turant wapas mil jaati hai', 'The memory is returned at once'),
+          t('Double free aur dangling pointer se bachat hoti hai', 'It protects against double free and dangling pointers'),
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('Koi fayda nahi hai', 'There is no benefit')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: free(NULL) safe hota hai aur NULL pointer ko use karna turant pakda jaata hai, isliye free ke baad NULL set karne se double free aur use-after-free dono khatm ho jaate hain.',
+          'Correct answer: free(NULL) is safe and using a NULL pointer is caught at once, so setting NULL after free kills both double free and use-after-free.'
+        )
+      },
+      {
+        q: t(
+          'Memory leak kya hota hai?',
+          'What is a memory leak?'
+        ),
+        opts: [
+          t('malloc se zyada memory maangna', 'Asking malloc for too much memory'),
+          t('Heap memory allocate karke free na karna', 'Allocating heap memory and never freeing it'),
+          t('Stack overflow hona', 'A stack overflow'),
+          t('Pointer ko NULL set karna', 'Setting a pointer to NULL')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har malloc ka ek free hona chahiye — agar free bhool gaye toh memory program band hone tak wapas nahi milti aur dheere-dheere khatm ho jaati hai.',
+          'Correct answer: every malloc needs a free — if you forget free, the memory is not returned until the program ends and slowly runs out.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'malloc bytes maangta hai, calloc zero-filled memory deta hai, realloc size badhata hai, free memory wapas karta hai.',
+        'malloc asks for bytes, calloc gives zero-filled memory, realloc grows the size, and free returns the memory.'
+      ),
+      t(
+        'Har malloc ke baad NULL check karo aur size hamesha n * sizeof(type) likho.',
+        'Check for NULL after every malloc, and always write the size as n * sizeof(type).'
+      ),
+      t(
+        'realloc ka result hamesha temp pointer mein lo — fail hone par purana block ab bhi valid rehta hai.',
+        'Always take the result of realloc in a temp pointer — the old block stays valid when it fails.'
+      ),
+      t(
+        'free ke baad pointer ko NULL set kar do — double free aur dangling pointer dono khatm.',
+        'Set the pointer to NULL after free — this kills both double free and dangling pointers.'
+      ),
+      t(
+        'Stack apne aap clean hota hai, heap nahi — har malloc ka ek free hona chahiye, warna leak hota hai.',
+        'The stack cleans itself up, the heap does not — every malloc needs a free, or the memory leaks.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: malloc se 4 Marks ka Sum Nikaalo',
+        'Practice: Find the Sum of 4 Marks with malloc'
+      ),
+      task: t(
+        'Neeche diya gaya program malloc se 4 marks ke liye memory maangta hai, unka sum nikaalta hai aur phir free karta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir marks ki values badal kar dobara run karo aur naya sum khud haath se verify karo.',
+        'The program below asks malloc for memory for 4 marks, finds their sum, and then frees the memory. Run it and verify the output matches the expected output, then change the mark values, run it again, and verify the new sum by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *marks = malloc(4 * sizeof(int));
+    if (marks == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    marks[0] = 10;
+    marks[1] = 20;
+    marks[2] = 30;
+    marks[3] = 40;
+    int sum = 0;
+    for (int i = 0; i < 4; i++) {
+        sum += marks[i];
+    }
+    printf("Sum = %d\\n", sum);
+    free(marks);
+    return 0;
+}`,
+      expected: `Sum = 100`
+    },
+    readMinutes: 12
+  };
+
+const cDynamicArrays: Article = {
+    id: 'c-dynamic-arrays',
+    subjectId: 'c-programming',
+    title: t(
+      'Dynamic Arrays — realloc se Growing Array Banana',
+      'Dynamic Arrays — Building a Growing Array with realloc'
+    ),
+    summary: t(
+      'Dynamic array ko zero se samjho: size aur capacity ka farak, capacity double karke amortized O(1) push kaise milta hai, beech se element insert aur delete kaise karte hain, aur shrink kab karna chahiye.',
+      'Learn dynamic arrays from scratch: the difference between size and capacity, how doubling the capacity gives amortized O(1) push, how to insert and delete an element in the middle, and when to shrink.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Dynamic Array Kya Hai? (Size vs Capacity)',
+          '1. What Is a Dynamic Array? (Size vs Capacity)'
+        ),
+        body: t(
+          `Fixed array ki sabse badi problem hai ki uska size pehle se tay karna padta hai. Agar aap \`int arr[100];\` banate ho aur sirf 5 numbers aate hain, toh 95 jagah bekaar jaati hai. Agar 101 numbers aaye, toh array chhota pad jaata hai. **Dynamic array** is problem ka solution hai — ek aisa array jo zaroorat ke hisaab se badhta hai. Iske peeche do numbers hote hain: **size** (kitne elements abhi hain) aur **capacity** (kitni jagah allocate hui hai). Size hamesha capacity se chhota ya barabar hota hai.
+
+Kaam aise karta hai: shuru mein chhoti capacity se start karo, jaise 2. Jab array bhar jaaye (size == capacity), toh \`realloc\` se capacity **double** kar do — 2 se 4, 4 se 8, 8 se 16. Naya element hamesha \`arr[size]\` par daalo aur phir \`size++\` karo. Capacity double karne ki wajah se har push par realloc nahi karna padta — zyadatar pushes mein jagah pehle se khaali hoti hai, isliye push average mein **O(1)** hota hai. Isi pattern par Python ki list, C++ ka vector aur Java ka ArrayList bane hain.
+
+Size aur capacity ka farak samajhna bahut zaroori hai. Size batata hai ki kitne elements use ho rahe hain — loop hamesha size tak chalao, capacity tak nahi. Capacity batati hai ki kitni jagah reserve hai — yeh sirf realloc ke faisle ke liye hai. Agar aap capacity tak loop chala doge, toh kachra values print hongi ya crash hoga.`,
+          `The biggest problem with a fixed array is that its size must be decided in advance. If you create \`int arr[100];\` and only 5 numbers arrive, 95 slots go to waste. If 101 numbers arrive, the array is too small. A **dynamic array** solves this problem — an array that grows as needed. Two numbers sit behind it: **size** (how many elements are present now) and **capacity** (how much space is allocated). Size is always less than or equal to capacity.
+
+It works like this: start with a small capacity, such as 2. When the array fills up (size == capacity), use \`realloc\` to **double** the capacity — 2 to 4, 4 to 8, 8 to 16. Always place the new element at \`arr[size]\` and then do \`size++\`. Because the capacity doubles, realloc is not needed on every push — most pushes find free space already there, so push is **O(1)** on average. Python's list, C++'s vector, and Java's ArrayList are all built on this pattern.
+
+Understanding the difference between size and capacity is very important. Size tells you how many elements are in use — always loop up to size, never up to capacity. Capacity tells you how much space is reserved — it is only used to decide when to realloc. If you loop up to capacity, you will print garbage values or crash.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Playlist, Chat Messages aur Shopping Cart',
+          '2. Real-Life Examples: A Playlist, Chat Messages, and a Shopping Cart'
+        ),
+        body: t(
+          `Dynamic array roz ki zindagi mein har jagah hai. Sabse seedha example hai **music playlist**. Aapko pehle se nahi pata hota ki playlist mein 5 gaane honge ya 500. Har naya gaana push hota hai, aur jab jagah khatm hoti hai toh capacity double hoti hai. Gaana delete karne par beech wale elements shift hote hain aur size ek kam ho jaata hai. Playlist ka har add aur remove dynamic array ka push aur delete hai.
+
+Doosra example hai **chat messages**. WhatsApp ya Telegram mein messages aate rehte hain — koi nahi jaanta ki ek chat mein kitne messages honge. App har message ko ek growing list mein push karta hai. Purane messages scroll karne par wahi list read hoti hai. Agar har message ke liye alag se malloc karna padta, toh program slow ho jaata — capacity doubling ki wajah se hazaron messages bhi fast add hote hain.
+
+Teesra example hai **shopping cart**. Cart mein items add aur remove hote rehte hain. Fixed array mein cart ka size pehle se tay karna padta — 10 items ki limit ajeeb lagti. Dynamic array mein cart jitna chaahe badh sakta hai, aur checkout par size batata hai ki kitne items hain. Har badi app ke peeche yahi simple pattern hai.`,
+          `Dynamic arrays are everywhere in daily life. The simplest example is a **music playlist**. You do not know in advance whether a playlist will hold 5 songs or 500. Every new song is pushed, and when the space runs out the capacity doubles. Deleting a song shifts the middle elements and reduces the size by one. Every add and remove in a playlist is a push and delete on a dynamic array.
+
+A second example is **chat messages**. In WhatsApp or Telegram, messages keep arriving — nobody knows how many messages a chat will hold. The app pushes every message into a growing list. Scrolling back to old messages reads that same list. If every message needed its own malloc, the program would be slow — capacity doubling keeps even thousands of messages fast to add.
+
+A third example is a **shopping cart**. Items are added and removed all the time. A fixed array would force a size limit in advance — a limit of 10 items would feel strange. In a dynamic array, the cart can grow as much as it likes, and the size tells you how many items there are at checkout. This simple pattern sits behind every large app.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 10, 20, 30, 40, 50 Push Karna aur Capacity Double Hona (Dry Run)',
+          '3. Step-by-Step: Pushing 10, 20, 30, 40, 50 and Doubling Capacity (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek dynamic array ko haath se dry run karte hain. Shuru mein \`size = 0\` aur \`capacity = 2\` hai, aur \`malloc\` se 2 integers ki jagah mili hai. Values hain 10, 20, 30, 40, 50.
+
+**Push 10:** size (0) capacity (2) se chhota hai, isliye realloc nahi chahiye. \`arr[0] = 10\`, size = 1. **Push 20:** size (1) ab bhi capacity se chhota hai. \`arr[1] = 20\`, size = 2. **Push 30:** ab size == capacity (2 == 2), isliye capacity double hoti hai — 2 se 4. \`realloc\` se nayi jagah milti hai, purani values copy hoti hain. \`arr[2] = 30\`, size = 3. **Push 40:** size (3) capacity (4) se chhota hai. \`arr[3] = 40\`, size = 4. **Push 50:** phir size == capacity (4 == 4), capacity double hoti hai — 4 se 8. \`arr[4] = 50\`, size = 5.
+
+Final state: size = 5, capacity = 8, elements \`10 20 30 40 50\`. Dhyaan do — 5 pushes mein sirf **2 baar** realloc hua. Yahi doubling ki taakat hai: n pushes mein sirf log(n) baar realloc hota hai, isliye average push O(1) hota hai. Neeche wala code yahi dry run karta hai aur final size aur capacity print karta hai.`,
+          `Now let us dry-run a dynamic array by hand. At the start, \`size = 0\` and \`capacity = 2\`, and \`malloc\` has given space for 2 integers. The values are 10, 20, 30, 40, 50.
+
+**Push 10:** size (0) is smaller than capacity (2), so no realloc is needed. \`arr[0] = 10\`, size = 1. **Push 20:** size (1) is still smaller than capacity. \`arr[1] = 20\`, size = 2. **Push 30:** now size == capacity (2 == 2), so the capacity doubles — from 2 to 4. \`realloc\` gives new space and the old values are copied. \`arr[2] = 30\`, size = 3. **Push 40:** size (3) is smaller than capacity (4). \`arr[3] = 40\`, size = 4. **Push 50:** again size == capacity (4 == 4), so the capacity doubles — from 4 to 8. \`arr[4] = 50\`, size = 5.
+
+Final state: size = 5, capacity = 8, elements \`10 20 30 40 50\`. Note that 5 pushes needed only **2** reallocs. That is the power of doubling: n pushes need only log(n) reallocs, so the average push is O(1). The code below performs exactly this dry run and prints the final size and capacity.`
+        ),
+        code: {
+          title: t(
+            'Dynamic Array: 5 Values Push Karo, Capacity Double Hote Dekho',
+            'Dynamic Array: Push 5 Values and Watch Capacity Double'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int size = 0;
+    int capacity = 2;
+    int *arr = malloc(capacity * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    int values[] = {10, 20, 30, 40, 50};
+    for (int i = 0; i < 5; i++) {
+        if (size == capacity) {
+            capacity = capacity * 2;
+            int *tmp = realloc(arr, capacity * sizeof(int));
+            if (tmp == NULL) {
+                printf("Reallocation failed\\n");
+                free(arr);
+                return 1;
+            }
+            arr = tmp;
+        }
+        arr[size] = values[i];
+        size++;
+    }
+    printf("size = %d, capacity = %d\\n", size, capacity);
+    printf("elements:");
+    for (int i = 0; i < size; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    free(arr);
+    return 0;
+}`,
+          output: `size = 5, capacity = 8
+elements: 10 20 30 40 50`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Capacity Tak Loop, realloc ka Direct Assign aur Size Bhoolna',
+          '4. Common Mistakes: Looping to Capacity, Direct realloc Assignment, and Forgetting Size'
+        ),
+        body: t(
+          `Dynamic array mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: Capacity tak loop chalana.** Loop hamesha \`i < size\` tak chalao, \`i < capacity\` tak nahi. Capacity wali jagah reserve hai, par usmein kachra values hain. Unhe print karna ya use karna galat data deta hai. Yeh galti tab hoti hai jab size aur capacity confuse ho jaayein — dono ko alag variables mein rakho aur loop mein hamesha size likho.
+
+**Galti 2: \`realloc\` ko seedha \`arr\` mein assign karna.** \`arr = realloc(arr, naya_size)\` fail hone par NULL deta hai aur purana block leak ho jaata hai. Hamesha temp pointer use karo: \`int *tmp = realloc(arr, ...); if (tmp == NULL) { /* handle karo */ } arr = tmp;\`. Yeh pattern pichhle article mein bhi tha — yahi dynamic array ki sabse important aadat hai.
+
+**Galti 3: Push ke baad \`size++\` bhoolna.** Agar aap \`arr[size] = value\` likhte ho par \`size++\` bhool jaate ho, toh agla push usi jagah par overwrite kar dega aur array mein ek hi value baar-baar dikhegi. Push ka poora pattern hai: pehle jagah check karo, phir \`arr[size] = value\`, phir \`size++\` — teeno steps ek saath likho.
+
+**Galti 4: Delete ke baad size kam na karna aur shrink bhoolna.** Beech se delete karne par baad wale elements ko ek position left shift karna padta hai, phir \`size--\` karna padta hai. Agar \`size--\` bhool gaye, toh aakhri element do baar dikhega. Aur agar size capacity se bahut chhota ho jaaye (jaise size 2, capacity 64), toh \`realloc\` se shrink karna memory bachata hai — par har delete par shrink mat karo, warna baar-baar realloc hoga.`,
+          `The most common dynamic array mistakes come from four things.
+
+**Mistake 1: Looping up to capacity.** Always loop with \`i < size\`, never \`i < capacity\`. The capacity space is reserved, but it holds garbage values. Printing or using them gives wrong data. This mistake happens when size and capacity get confused — keep them in separate variables and always write size in the loop.
+
+**Mistake 2: Assigning \`realloc\` straight into \`arr\`.** \`arr = realloc(arr, new_size)\` returns NULL on failure and the old block leaks. Always use a temp pointer: \`int *tmp = realloc(arr, ...); if (tmp == NULL) { /* handle it */ } arr = tmp;\`. This pattern was in the previous article too — it is the most important habit for dynamic arrays.
+
+**Mistake 3: Forgetting \`size++\` after a push.** If you write \`arr[size] = value\` but forget \`size++\`, the next push will overwrite the same slot and the array will show one value again and again. The full push pattern is: first check the space, then \`arr[size] = value\`, then \`size++\` — write all three steps together.
+
+**Mistake 4: Not reducing size after a delete and never shrinking.** Deleting from the middle means shifting later elements one position left, then doing \`size--\`. If you forget \`size--\`, the last element appears twice. And if the size becomes much smaller than the capacity (for example size 2, capacity 64), shrinking with \`realloc\` saves memory — but do not shrink on every delete, or realloc will run again and again.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Capacity 0, Delete Aakhri Element aur Shrink',
+          '5. Edge Cases: Empty Array, Capacity 0, Deleting the Last Element, and Shrinking'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Khaali array.** Jab size = 0 ho, toh array mein kuch nahi hai — print loop kuch nahi chhapta aur delete karna galat hai. Delete se pehle hamesha check karo ki size 0 se bada hai. Khaali array par \`arr[0]\` padhna undefined behaviour hai.
+
+**2. Capacity 0 se start karna.** Kuch log capacity 0 se start karte hain aur pehle push par \`realloc(NULL, ...)\` karte hain — yeh \`malloc\` jaisa kaam karta hai, isliye chal jaata hai. Par code saaf rakhne ke liye capacity 2 ya 4 se start karna behtar hai, taaki pehle push par realloc ki zaroorat hi na pade.
+
+**3. Aakhri element delete karna.** Aakhri element delete karne par koi shifting nahi chahiye — sirf \`size--\` kaafi hai. Neeche wale delete example mein index 1 delete hota hai, isliye shifting hoti hai. Aakhri index delete karte waqt shift loop \`i < size - 1\` ki condition ki wajah se ek bhi baar nahi chalta — yahi sahi hai.
+
+**4. Shrink kab karein.** Jab size capacity ka ek chauthai (1/4) se kam ho jaaye, toh capacity ko aadha karna ek achha rule hai. Har delete par shrink karne se push-delete-push ka cycle baar-baar realloc karega — isse **thrashing** kehte hain. 1/4 wala rule isse bachata hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Empty array.** When size = 0, the array holds nothing — the print loop prints nothing and deleting is wrong. Before deleting, always check that the size is greater than 0. Reading \`arr[0]\` on an empty array is undefined behaviour.
+
+**2. Starting with capacity 0.** Some people start with capacity 0 and call \`realloc(NULL, ...)\` on the first push — this works like \`malloc\`, so it runs. But for clean code, starting with capacity 2 or 4 is better, so the first push needs no realloc at all.
+
+**3. Deleting the last element.** Deleting the last element needs no shifting — only \`size--\` is enough. In the delete example below, index 1 is deleted, so shifting happens. When the last index is deleted, the shift loop does not run even once because of the \`i < size - 1\` condition — and that is correct.
+
+**4. When to shrink.** When the size falls below one quarter (1/4) of the capacity, halving the capacity is a good rule. Shrinking on every delete makes a push-delete-push cycle realloc again and again — this is called **thrashing**. The 1/4 rule prevents it.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Har Push par realloc, Capacity 1.5x Badhana aur Fixed Array',
+          '6. What-If: realloc on Every Push, Growing Capacity by 1.5x, and Fixed Arrays'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: har push par realloc kar dein?** Neeche wala doosra example yahi karta hai — har push par \`realloc(arr, (size + 1) * sizeof(int))\`. Yeh sahi kaam karta hai, par slow hota hai: n pushes mein n baar realloc hota hai aur har baar poora array copy hota hai, isliye total kaam O(n^2) ho jaata hai. Doubling wale tareeke mein total kaam O(n) hota hai. Chhote arrays mein farak nahi dikhta, par 10,000 elements par doubling wala tareeka bahut fast hota hai.
+
+**What if: capacity 2x ki jagah 1.5x badhayein?** Kuch languages (jaise C++ ka vector kuch implementations mein) capacity 1.5x badhati hain. Yeh memory kam waste karti hai, par zyada baar realloc hoti hai. 2x simple hai aur amortized O(1) deta hai, 1.5x memory bachata hai. Interview mein dono ka naam lena achha lagta hai — par C mein khud likhte waqt 2x sabse simple aur safe hai.
+
+**What if: fixed array hi kaafi ho?** Agar size pehle se pata hai aur kabhi nahi badlega, toh fixed array behtar hai — simple, fast, aur koi leak ka risk nahi. Dynamic array sirf tab use karo jab size runtime par badle. Galat tool chunna bhi ek bug hai: har jagah dynamic array banana over-engineering hai.
+
+**What if: beech mein insert karna ho?** Insert karne par pehle jagah check karo (agar bhar gaya toh double karo), phir us index se aage wale saare elements ko ek position right shift karo, phir nayi value daalo aur \`size++\` karo. Delete iska ulta hai — left shift aur \`size--\`. Dono O(n) hote hain kyunki shifting hoti hai, jabki end par push O(1) hota hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you realloc on every push?** The second example below does exactly that — \`realloc(arr, (size + 1) * sizeof(int))\` on every push. It works correctly, but it is slow: n pushes cause n reallocs, and every time the whole array is copied, so the total work is O(n^2). With doubling, the total work is O(n). The difference does not show on small arrays, but with 10,000 elements the doubling method is much faster.
+
+**What if the capacity grows by 1.5x instead of 2x?** Some languages (C++'s vector in some implementations) grow capacity by 1.5x. This wastes less memory but reallocs more often. 2x is simple and gives amortized O(1), while 1.5x saves memory. Naming both in an interview sounds good — but when you write it yourself in C, 2x is the simplest and safest.
+
+**What if a fixed array is enough?** If the size is known in advance and never changes, a fixed array is better — simple, fast, and with no leak risk. Use a dynamic array only when the size changes at run time. Picking the wrong tool is also a bug: building a dynamic array everywhere is over-engineering.
+
+**What if you must insert in the middle?** To insert, first check the space (double it if full), then shift all elements from that index one position right, then place the new value and do \`size++\`. Delete is the reverse — shift left and do \`size--\`. Both are O(n) because of the shifting, while pushing at the end is O(1).`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Dynamic Array se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Dynamic Arrays to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Dynamic array** ek heap array hai jo zaroorat ke hisaab se badhta hai. Iske do numbers hote hain: **size** (kitne elements hain) aur **capacity** (kitni jagah reserve hai). Push ka pattern hai: agar size == capacity toh capacity double karo (\`realloc\` + temp pointer), phir \`arr[size] = value\` aur \`size++\`. Doubling ki wajah se push average mein **O(1)** hota hai — yahi **amortized analysis** hai.
+
+Yaad rakhne wali chaar baatein: pehli, loop hamesha size tak chalao, capacity tak nahi. Doosri, \`realloc\` ka result hamesha temp pointer mein lo. Teesri, push ke baad \`size++\` aur delete ke baad \`size--\` kabhi mat bhoolo. Chauthi, beech mein insert aur delete O(n) hote hain kyunki shifting hoti hai, jabki end par push O(1) hota hai.
+
+Interview mein dynamic array ke sawaal aksar ek hi pattern mein aate hain: "growing array kaise banate ho?", "capacity double kyun karte ho?", "push ka time complexity kya hai?", "beech se delete kaise karte ho?" — har ek ka answer ek hi hai: size aur capacity track karo, bharne par double karo, aur shifting se insert/delete karo. Agar aapko yeh pattern dikhne lag gaya hai, toh dynamic array aapko aa gaya hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle 5 pushes ka dry run haath se karo — size aur capacity har step par likho. Phir delete wale example mein shifting ko trace karo. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum files dekhenge — \`fopen\` se file kholna, \`fprintf\` se likhna aur \`fscanf\` se padhna.`,
+          `Let us tie the whole article together. A **dynamic array** is a heap array that grows as needed. It has two numbers: **size** (how many elements there are) and **capacity** (how much space is reserved). The push pattern is: if size == capacity, double the capacity (\`realloc\` with a temp pointer), then \`arr[size] = value\` and \`size++\`. Because of doubling, push is **O(1)** on average — this is **amortized analysis**.
+
+Remember four things: first, always loop up to size, never up to capacity. Second, always take the result of \`realloc\` in a temp pointer. Third, never forget \`size++\` after a push and \`size--\` after a delete. Fourth, insert and delete in the middle are O(n) because of shifting, while pushing at the end is O(1).
+
+Interview questions on dynamic arrays usually follow one pattern: "how do you build a growing array?", "why do you double the capacity?", "what is the time complexity of push?", "how do you delete from the middle?" — the answer to every one is the same: track size and capacity, double when full, and insert/delete with shifting. Once you start seeing that pattern, you know dynamic arrays.
+
+To revise, read this article once more in this order: first dry-run the 5 pushes by hand — write down size and capacity at every step. Then trace the shifting in the delete example. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at files — opening a file with \`fopen\`, writing with \`fprintf\`, and reading with \`fscanf\`.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Dynamic Array: Size aur Capacity ka Khel',
+        'Dynamic Array: The Game of Size and Capacity'
+      ),
+      caption: t(
+        'Capacity double hoti hai jab size capacity ke barabar ho jaaye — isliye push average O(1) hota hai',
+        'Capacity doubles when size equals capacity — that is why push is O(1) on average'
+      ),
+      nodes: [
+        {
+          t: t('Start: size 0, capacity 2', 'Start: size 0, capacity 2'),
+          s: t('malloc se 2 integers ki jagah', 'Space for 2 integers from malloc')
+        },
+        {
+          t: t('Push 10, 20: size 2', 'Push 10, 20: size 2'),
+          s: t('Array bhar gaya — size == capacity', 'Array is full — size == capacity')
+        },
+        {
+          t: t('Push 30: capacity 2 se 4', 'Push 30: capacity 2 to 4'),
+          s: t('realloc se double jagah, purani values copy hoti hain', 'realloc doubles the space, old values are copied')
+        },
+        {
+          t: t('Push 40, 50: size 5, capacity 8', 'Push 40, 50: size 5, capacity 8'),
+          s: t('5 pushes mein sirf 2 baar realloc — amortized O(1)', 'Only 2 reallocs in 5 pushes — amortized O(1)')
+        },
+        {
+          t: t('Delete: left shift + size--', 'Delete: shift left + size--'),
+          s: t('Beech se delete O(n) hota hai, end par push O(1)', 'Deleting from the middle is O(n), pushing at the end is O(1)')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Har Push par realloc (Slow Tareeka)',
+          'realloc on Every Push (The Slow Way)'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *arr = NULL;
+    int size = 0;
+    int values[] = {3, 6, 9};
+    for (int i = 0; i < 3; i++) {
+        int *tmp = realloc(arr, (size + 1) * sizeof(int));
+        if (tmp == NULL) {
+            printf("Reallocation failed\\n");
+            free(arr);
+            return 1;
+        }
+        arr = tmp;
+        arr[size] = values[i];
+        size++;
+        printf("after push %d: size = %d\\n", values[i], size);
+    }
+    printf("elements: %d %d %d\\n", arr[0], arr[1], arr[2]);
+    free(arr);
+    return 0;
+}`,
+        output: `after push 3: size = 1
+after push 6: size = 2
+after push 9: size = 3
+elements: 3 6 9`
+      },
+      {
+        title: t(
+          'Beech se Delete: Index 1 se 20 Hatana',
+          'Deleting from the Middle: Removing 20 at Index 1'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int size = 5;
+    int *arr = malloc(size * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    int values[] = {10, 20, 30, 40, 50};
+    for (int i = 0; i < size; i++) {
+        arr[i] = values[i];
+    }
+    int index = 1;  /* delete 20 */
+    for (int i = index; i < size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    size--;
+    printf("after deleting index 1:");
+    for (int i = 0; i < size; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\nsize = %d\\n", size);
+    free(arr);
+    return 0;
+}`,
+        output: `after deleting index 1: 10 30 40 50
+size = 4`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Dynamic array mein size aur capacity mein kya farak hai?',
+          'What is the difference between size and capacity in a dynamic array?'
+        ),
+        opts: [
+          t('Dono ek hi cheez hain', 'They are the same thing'),
+          t('Size batata hai kitne elements hain, capacity batati hai kitni jagah reserve hai', 'Size tells how many elements there are, capacity tells how much space is reserved'),
+          t('Capacity batati hai kitne elements hain, size batata hai kitni jagah hai', 'Capacity tells how many elements there are, size tells how much space there is'),
+          t('Size hamesha capacity se bada hota hai', 'Size is always bigger than capacity')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: size use ho rahe elements ki ginti hai aur capacity reserve jagah hai — loop hamesha size tak chalao, capacity tak nahi, warna kachra values milengi.',
+          'Correct answer: size is the count of elements in use and capacity is the reserved space — always loop up to size, never up to capacity, or you will get garbage values.'
+        )
+      },
+      {
+        q: t(
+          'Capacity double karne se push ka average time complexity kya hota hai?',
+          'What is the average time complexity of push when capacity is doubled?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)'),
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: doubling ki wajah se n pushes mein sirf log(n) baar realloc hota hai, isliye average push O(1) hota hai — ise amortized analysis kehte hain.',
+          'Correct answer: because of doubling, n pushes need only log(n) reallocs, so the average push is O(1) — this is called amortized analysis.'
+        )
+      },
+      {
+        q: t(
+          'Har push par realloc karne se total kaam kya hota hai?',
+          'What is the total work if you realloc on every push?'
+        ),
+        opts: [
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)'),
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har push par poora array copy hota hai, isliye n pushes mein 1 + 2 + ... + n = O(n^2) kaam hota hai — doubling wala tareeka O(n) mein karta hai.',
+          'Correct answer: every push copies the whole array, so n pushes do 1 + 2 + ... + n = O(n^2) work — the doubling method does it in O(n).'
+        )
+      },
+      {
+        q: t(
+          'Beech se element delete karne ka time complexity kya hota hai?',
+          'What is the time complexity of deleting an element from the middle?'
+        ),
+        opts: [
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: delete karne par baad wale saare elements ko ek position left shift karna padta hai, isliye delete O(n) hota hai, jabki end par push O(1) hota hai.',
+          'Correct answer: deleting means shifting all later elements one position left, so delete is O(n), while pushing at the end is O(1).'
+        )
+      },
+      {
+        q: t(
+          'realloc ka result seedha arr mein assign karna kyun galat hai?',
+          'Why is it wrong to assign the result of realloc straight into arr?'
+        ),
+        opts: [
+          t('realloc slow ho jaata hai', 'realloc becomes slow'),
+          t('Fail hone par arr NULL ho jaata hai aur purana block leak ho jaata hai', 'On failure arr becomes NULL and the old block leaks'),
+          t('Compiler error aata hai', 'A compiler error occurs'),
+          t('Capacity double nahi hoti', 'The capacity does not double')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: realloc fail hone par NULL deta hai par purana block valid rehta hai — seedha assign karne se purane block ka address kho jaata hai, isliye hamesha temp pointer use karo.',
+          'Correct answer: realloc returns NULL on failure, but the old block stays valid — assigning directly loses the old block address, so always use a temp pointer.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Size batata hai kitne elements hain, capacity batati hai kitni jagah reserve hai — loop hamesha size tak chalao.',
+        'Size tells how many elements there are, capacity tells how much space is reserved — always loop up to size.'
+      ),
+      t(
+        'Bharne par capacity double karo — isse push average O(1) hota hai (amortized analysis).',
+        'Double the capacity when full — this makes push O(1) on average (amortized analysis).'
+      ),
+      t(
+        'realloc ka result hamesha temp pointer mein lo, phir NULL check ke baad arr = tmp likho.',
+        'Always take the result of realloc in a temp pointer, then write arr = tmp after the NULL check.'
+      ),
+      t(
+        'Beech mein insert aur delete O(n) hote hain kyunki shifting hoti hai; end par push O(1) hota hai.',
+        'Insert and delete in the middle are O(n) because of shifting; pushing at the end is O(1).'
+      ),
+      t(
+        'Shrink tab karo jab size capacity ka 1/4 se kam ho jaaye — har delete par shrink karne se thrashing hoti hai.',
+        'Shrink only when size falls below 1/4 of capacity — shrinking on every delete causes thrashing.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Squares ka Dynamic Array aur Unka Sum',
+        'Practice: A Dynamic Array of Squares and Their Sum'
+      ),
+      task: t(
+        'Neeche diya gaya program dynamic array mein 1 se 6 tak ke squares (1, 4, 9, 16, 25, 36) push karta hai aur unka sum print karta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir loop ko 1 se 8 tak badal kar dobara run karo aur naya sum khud haath se verify karo.',
+        'The program below pushes the squares of 1 to 6 (1, 4, 9, 16, 25, 36) into a dynamic array and prints their sum. Run it and verify the output matches the expected output, then change the loop to run from 1 to 8, run it again, and verify the new sum by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int size = 0;
+    int capacity = 2;
+    int *arr = malloc(capacity * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return 1;
+    }
+    for (int n = 1; n <= 6; n++) {
+        if (size == capacity) {
+            capacity = capacity * 2;
+            int *tmp = realloc(arr, capacity * sizeof(int));
+            if (tmp == NULL) {
+                printf("Reallocation failed\\n");
+                free(arr);
+                return 1;
+            }
+            arr = tmp;
+        }
+        arr[size] = n * n;
+        size++;
+    }
+    int sum = 0;
+    printf("squares:");
+    for (int i = 0; i < size; i++) {
+        printf(" %d", arr[i]);
+        sum += arr[i];
+    }
+    printf("\\nSum = %d\\n", sum);
+    free(arr);
+    return 0;
+}`,
+      expected: `squares: 1 4 9 16 25 36
+Sum = 91`
+    },
+    readMinutes: 12
+  };
+
+const cFiles: Article = {
+    id: 'c-files',
+    subjectId: 'c-programming',
+    title: t(
+      'File Handling — fopen, fclose, fread, fwrite aur Text vs Binary',
+      'File Handling — fopen, fclose, fread, fwrite, and Text vs Binary'
+    ),
+    summary: t(
+      'File handling ko zero se samjho: fopen se file kaise kholte hain, fprintf aur fscanf se text kaise likhte aur padhte hain, fread aur fwrite se binary data kaise handle karte hain, aur fclose kyun zaroori hai.',
+      'Learn file handling from scratch: how to open a file with fopen, how to write and read text with fprintf and fscanf, how to handle binary data with fread and fwrite, and why fclose matters.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. File Handling Kya Hai? (fopen, FILE Pointer aur Modes)',
+          '1. What Is File Handling? (fopen, the FILE Pointer, and Modes)'
+        ),
+        body: t(
+          `Ab tak humare programs ka data sirf screen par aata tha aur program band hote hi gayab ho jaata tha. **File handling** ka matlab hai data ko file mein save karna taaki woh program band hone ke baad bhi rahe. C mein file ke saath kaam karne ke liye \`FILE\` naam ka ek khaas type hota hai, aur file ko kholne ke liye \`fopen\` function hota hai. \`fopen("notes.txt", "w")\` ka matlab hai "notes.txt naam ki file ko write mode mein kholo" — aur yeh ek \`FILE *\` pointer deta hai, jise hum aage har file operation mein use karte hain.
+
+\`fopen\` ka doosra argument **mode** hota hai, jo batata hai ki file ke saath kya karna hai: \`"r"\` (read — file pehle se honi chahiye), \`"w"\` (write — nayi file banti hai, purani file ho toh uska data mit jaata hai), \`"a"\` (append — data file ke end mein judta hai), \`"r+"\` (read + write). Text ke liye yeh modes kaafi hain; binary ke liye mode mein \`b\` judta hai, jaise \`"wb"\` aur \`"rb"\`. Mode galat chunna sabse common galti hai — \`"w"\` se kholi file mein purana data hamesha mit jaata hai, isliye pehle socho, phir mode chuno.
+
+File ka kaam khatm hone par \`fclose\` karna zaroori hai. \`fclose\` likha hua data asal mein disk par save karta hai aur file ko chhod deta hai. Agar aap \`fclose\` bhool gaye, toh likha hua data adhura reh sakta hai, kyunki C likhne ko pehle buffer mein rakhta hai aur baad mein disk par bhejta hai.`,
+          `Until now, our programs only showed data on the screen, and it disappeared as soon as the program ended. **File handling** means saving data into a file so that it survives after the program ends. In C, files use a special type called \`FILE\`, and the \`fopen\` function opens a file. \`fopen("notes.txt", "w")\` means "open the file notes.txt in write mode" — and it returns a \`FILE *\` pointer, which we use in every later file operation.
+
+The second argument of \`fopen\` is the **mode**, which says what you want to do with the file: \`"r"\` (read — the file must already exist), \`"w"\` (write — a new file is created, and an existing file loses its data), \`"a"\` (append — data is added at the end of the file), and \`"r+"\` (read + write). These modes are enough for text; for binary files, a \`b\` is added to the mode, such as \`"wb"\` and \`"rb"\`. Picking the wrong mode is the most common mistake — a file opened with \`"w"\` always loses its old data, so think first, then pick the mode.
+
+When you finish with a file, calling \`fclose\` is essential. \`fclose\` really saves the written data to disk and releases the file. If you forget \`fclose\`, the written data may stay incomplete, because C first keeps what you write in a buffer and sends it to disk later.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Notes App, Game Save aur Student Records',
+          '2. Real-Life Examples: A Notes App, a Game Save, and Student Records'
+        ),
+        body: t(
+          `File handling roz ki zindagi mein har jagah hai. Sabse seedha example hai **notes app**. Jab aap note likhte ho aur app band karte ho, toh note kahan jaata hai? Woh ek file mein save hota hai. Agli baar app kholo toh wahi file padhi jaati hai aur note wapas dikhta hai. Bina file handling ke har app ko har baar shuru se shuru karna padta — koi yaad nahi rehti.
+
+Doosra example hai **game save**. Game mein aapka level, score aur items file mein save hote hain. Game band karo, computer band karo — kal wapas aao toh save file se sab kuch wapas load ho jaata hai. Yeh text file bhi ho sakti hai aur binary file bhi — binary isliye kyunki woh chhoti hoti hai aur jaldi load hoti hai.
+
+Teesra example hai **student records**. School ka system har student ka naam aur marks file mein rakhta hai. Report card banate waqt system file padhta hai, marks nikaalta hai aur total karta hai. Text file mein records padhna aasan hota hai (\`fscanf\` se naam aur marks), aur binary file mein records fast hote hain (\`fread\` se poora struct ek baar mein).`,
+          `File handling is everywhere in daily life. The simplest example is a **notes app**. When you write a note and close the app, where does the note go? It is saved in a file. The next time you open the app, that file is read and the note appears again. Without file handling, every app would start from scratch each time — nothing would be remembered.
+
+A second example is a **game save**. Your level, score, and items are saved in a file. Close the game, switch off the computer — come back tomorrow and everything loads back from the save file. It can be a text file or a binary file — binary because it is smaller and loads faster.
+
+A third example is **student records**. A school system keeps every student's name and marks in a file. When a report card is made, the system reads the file, takes the marks, and adds them up. Records in a text file are easy to read (name and marks with \`fscanf\`), and records in a binary file are fast (\`fread\` reads a whole struct at once).`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: notes.txt Banana aur Wapas Padhna (Dry Run)',
+          '3. Step-by-Step: Creating notes.txt and Reading It Back (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek program ko line-by-line dry run karte hain. Kaam hai: \`notes.txt\` naam ki file banao, usmein do lines likho, file band karo, phir use read mode mein kholo aur lines wapas padho.
+
+**Step 1:** \`FILE *fp = fopen("notes.txt", "w");\` — file write mode mein khulti hai. Agar file nahi hai toh nayi banti hai, agar hai toh uska purana data mit jaata hai. **Step 2:** NULL check — agar file nahi khul payi (jaise folder ka permission na ho), toh \`fopen\` NULL deta hai. Hamesha check karo. **Step 3:** \`fprintf(fp, "Hello, C files!\\n");\` — \`printf\` jaisa hi hai, par screen ki jagah file mein likhta hai. Doosri line \`fprintf(fp, "Line 2: 42\\n");\` se likhi jaati hai. **Step 4:** \`fclose(fp);\` — data disk par save hota hai aur file band hoti hai.
+
+**Step 5:** \`fp = fopen("notes.txt", "r");\` — wahi file read mode mein khulti hai. **Step 6:** \`fgets(line, sizeof(line), fp)\` ek poori line padhta hai, newline samet. Jab file khatm ho jaati hai, toh \`fgets\` NULL deta hai aur \`while\` loop ruk jaata hai. Har line \`printf("Read: %s", line);\` se print hoti hai — \`%s\` ke baad \`\\n\` nahi likha, kyunki line mein pehle se newline hai. **Step 7:** phir se \`fclose\` aur \`remove("notes.txt")\` se test file delete kar do. Neeche wala code yahi karta hai.`,
+          `Now let us dry-run a program line by line. The task is: create a file called \`notes.txt\`, write two lines in it, close the file, then open it in read mode and read the lines back.
+
+**Step 1:** \`FILE *fp = fopen("notes.txt", "w");\` — the file opens in write mode. If it does not exist, a new one is created; if it exists, its old data is erased. **Step 2:** the NULL check — if the file cannot be opened (for example, without folder permission), \`fopen\` returns NULL. Always check. **Step 3:** \`fprintf(fp, "Hello, C files!\\n");\` — this is just like \`printf\`, but it writes to the file instead of the screen. The second line is written with \`fprintf(fp, "Line 2: 42\\n");\`. **Step 4:** \`fclose(fp);\` — the data is saved to disk and the file is closed.
+
+**Step 5:** \`fp = fopen("notes.txt", "r");\` — the same file opens in read mode. **Step 6:** \`fgets(line, sizeof(line), fp)\` reads one full line, including the newline. When the file ends, \`fgets\` returns NULL and the \`while\` loop stops. Each line is printed with \`printf("Read: %s", line);\` — there is no \`\\n\` after \`%s\` because the line already contains a newline. **Step 7:** close again with \`fclose\` and delete the test file with \`remove("notes.txt")\`. The code below does exactly this.`
+        ),
+        code: {
+          title: t(
+            'notes.txt Likho, Band Karo, Phir Wapas Padho',
+            'Write notes.txt, Close It, Then Read It Back'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    FILE *fp = fopen("notes.txt", "w");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    fprintf(fp, "Hello, C files!\\n");
+    fprintf(fp, "Line 2: 42\\n");
+    fclose(fp);
+
+    fp = fopen("notes.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    char line[100];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("Read: %s", line);
+    }
+    fclose(fp);
+    remove("notes.txt");
+    return 0;
+}`,
+          output: `Read: Hello, C files!
+Read: Line 2: 42`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: fclose Bhoolna, Galat Mode aur fscanf ki Limits',
+          '4. Common Mistakes: Forgetting fclose, Wrong Mode, and fscanf Limits'
+        ),
+        body: t(
+          `File handling mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: \`fclose\` bhool jaana.** Bina \`fclose\` ke likha hua data buffer mein reh sakta hai aur disk par nahi pahunchtas — file khaali ya adhuri dikhegi. Har \`fopen\` ka ek \`fclose\` hona chahiye, bilkul \`malloc\` aur \`free\` ki tarah. Program ke end mein OS file band kar deta hai, par us par bharosa mat karo.
+
+**Galti 2: \`"w"\` ki jagah \`"a"\` ya ulta.** \`"w"\` purana data mita deta hai, \`"a"\` purane data ke peeche jodta hai. Agar aapko purana data chahiye aur aap \`"w"\` se kholte ho, toh data hamesha ke liye kho jaata hai. Mode chunne se pehle ek second socho: naya data chahiye ya purane ke saath jodna hai?
+
+**Galti 3: NULL check bhoolna.** \`"r"\` mode mein jo file nahi hai, use kholne par \`fopen\` NULL deta hai. NULL pointer par \`fgets\` ya \`fprintf\` karna crash karta hai. Har \`fopen\` ke baad \`if (fp == NULL)\` likho — yeh ek line ki aadat hai jo crash se bachati hai.
+
+**Galti 4: \`fscanf\` se poori line padhne ki koshish.** \`fscanf(fp, "%s", ...)\` space par ruk jaata hai — "Amit Kumar" mein se sirf "Amit" milega. Poori line ke liye \`fgets\` use karo. Aur \`fscanf\` ka return check karo: woh batata hai kitne items successfully padhe gaye — neeche wale example mein \`== 2\` check karta hai ki naam aur marks dono mile.`,
+          `The most common file handling mistakes come from four things.
+
+**Mistake 1: Forgetting \`fclose\`.** Without \`fclose\`, written data can stay in the buffer and never reach disk — the file looks empty or incomplete. Every \`fopen\` needs a matching \`fclose\`, just like \`malloc\` and \`free\`. The OS closes files when the program ends, but do not rely on that.
+
+**Mistake 2: Using \`"w"\` instead of \`"a"\`, or the reverse.** \`"w"\` erases old data, while \`"a"\` adds new data behind the old data. If you need the old data and open with \`"w"\`, the data is lost forever. Before picking a mode, think for a second: do you want fresh data, or do you want to add to the old data?
+
+**Mistake 3: Skipping the NULL check.** Opening a file that does not exist in \`"r"\` mode makes \`fopen\` return NULL. Calling \`fgets\` or \`fprintf\` on a NULL pointer crashes the program. Write \`if (fp == NULL)\` after every \`fopen\` — this one-line habit prevents crashes.
+
+**Mistake 4: Trying to read a full line with \`fscanf\`.** \`fscanf(fp, "%s", ...)\` stops at a space — from "Amit Kumar" you only get "Amit". Use \`fgets\` for a full line. And check the return of \`fscanf\`: it tells you how many items were read successfully — in the example below, \`== 2\` checks that both the name and the marks were read.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: File Nahi Mili, Khaali File, Lambi Line aur Binary Mode',
+          '5. Edge Cases: Missing File, Empty File, Long Line, and Binary Mode'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. File nahi mili.** \`"r"\` mode mein missing file par \`fopen\` NULL deta hai — yeh error nahi hai, yeh normal behaviour hai. Program ko NULL check karke saaf message print karna chahiye, crash nahi karna chahiye. \`"w"\` mode mein missing file banti hai, isliye wahan yeh problem nahi aati.
+
+**2. Khaali file.** Khaali file par pehla hi \`fgets\` NULL deta hai, isliye \`while\` loop ek bhi baar nahi chalta aur kuch print nahi hota. Yeh sahi behaviour hai — khaali file par loop ko bina soche likhna safe hai, kyunki \`fgets\` khud hi ruk jaata hai.
+
+**3. Line buffer se lambi ho.** \`fgets(line, 100, fp)\` ek baar mein zyada se zyada 99 characters padhta hai. Agar line usse lambi hai, toh woh tukdon mein milegi — pehla \`fgets\` pehle 99 characters dega, agla \`fgets\` baaki. Lambi lines ke liye bada buffer lo ya line ko tukdon mein jod lo.
+
+**4. Text vs binary mode.** Windows par text mode mein \`\\n\` likhne par file mein \`\\r\\n\` likha jaata hai, aur binary mode mein aisa nahi hota. Numbers aur structs ke liye hamesha binary mode (\`"wb"\`, \`"rb"\`) use karo, warna data badal sakta hai. Neeche wala binary example \`fwrite\` aur \`fread\` se 3 integers save karke wapas padhta hai aur unka sum nikaalta hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Missing file.** In \`"r"\` mode, a missing file makes \`fopen\` return NULL — this is not an error, it is normal behaviour. The program should check for NULL and print a clear message, not crash. In \`"w"\` mode a missing file is created, so this problem does not arise there.
+
+**2. Empty file.** On an empty file, the very first \`fgets\` returns NULL, so the \`while\` loop never runs and nothing is printed. This is correct behaviour — writing the loop without thinking is safe, because \`fgets\` stops by itself.
+
+**3. A line longer than the buffer.** \`fgets(line, 100, fp)\` reads at most 99 characters at a time. If a line is longer, it arrives in pieces — the first \`fgets\` gives the first 99 characters, the next \`fgets\` gives the rest. For long lines, use a bigger buffer or join the pieces.
+
+**4. Text vs binary mode.** On Windows, writing \`\\n\` in text mode writes \`\\r\\n\` in the file, while binary mode does not do this. For numbers and structs, always use binary mode (\`"wb"\`, \`"rb"\`), or the data may change. The binary example below saves 3 integers with \`fwrite\`, reads them back with \`fread\`, and finds their sum.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Text ki Jagah Binary, fgets ki Jagah fscanf aur feof ka Sahi Use',
+          '6. What-If: Binary Instead of Text, fscanf Instead of fgets, and Correct Use of feof'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: text ki jagah binary use kar lein?** Text file mein number "42" 2 characters (2 bytes) mein store hota hai, binary mein \`int\` 4 bytes mein. Binary file chhoti hoti hai aur fast padhi jaati hai, par use text editor mein khol kar padh nahi sakte. Config aur logs ke liye text behtar hai, bade data aur structs ke liye binary behtar hai. Dono ka use case alag hai — pehle socho ki file ko insaan padhega ya program.
+
+**What if: \`fgets\` ki jagah \`fscanf\` se line padhein?** \`fscanf\` space par ruk jaata hai, isliye poori line nahi milti. Naam aur marks jaise fixed format ke liye \`fscanf\` perfect hai — neeche wala example \`"Amit 85"\` likh kar \`fscanf\` se wapas padhta hai aur check karta hai ki dono items mile. Free-form text ke liye \`fgets\` sahi hai.
+
+**What if: loop ke liye \`feof\` use karein?** Beginners aksar \`while (!feof(fp))\` likhte hain — yeh galat hai, kyunki \`feof\` tabhi true hota hai jab read pehle se fail ho chuka ho, isliye aakhri line do baar process hoti hai. Sahi tareeka hai \`fgets\` ka return check karna: \`while (fgets(...) != NULL)\`. Yahi pattern upar wale code mein hai aur interview mein yahi poochha jaata hai.
+
+**What if: file ko beech se padhna ho?** \`fseek(fp, offset, SEEK_SET)\` file pointer ko kisi bhi jagah le jaata hai, aur \`ftell(fp)\` batata hai ki pointer abhi kahan hai. Bade files mein yeh bahut kaam aata hai — poori file padhne ki jagah seedha sahi record par jaao.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you use binary instead of text?** In a text file, the number "42" is stored in 2 characters (2 bytes); in binary, an \`int\` takes 4 bytes. A binary file is smaller and faster to read, but you cannot open it in a text editor and read it. Text is better for config and logs, binary is better for large data and structs. The two have different uses — first decide whether a human or a program will read the file.
+
+**What if you read a line with \`fscanf\` instead of \`fgets\`?** \`fscanf\` stops at a space, so you do not get the full line. For a fixed format like a name and marks, \`fscanf\` is perfect — the example below writes \`"Amit 85"\`, reads it back with \`fscanf\`, and checks that both items arrived. For free-form text, \`fgets\` is right.
+
+**What if you use \`feof\` for the loop?** Beginners often write \`while (!feof(fp))\` — this is wrong, because \`feof\` only becomes true after a read has already failed, so the last line is processed twice. The correct way is to check the return of \`fgets\`: \`while (fgets(...) != NULL)\`. This is the pattern in the code above, and interviews ask about exactly this.
+
+**What if you must read from the middle of a file?** \`fseek(fp, offset, SEEK_SET)\` moves the file pointer anywhere, and \`ftell(fp)\` tells you where the pointer is now. This is very useful in large files — jump straight to the right record instead of reading the whole file.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Files se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Files to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **File handling** data ko program ke baad bhi zinda rakhta hai: \`fopen\` file kholta hai aur \`FILE *\` deta hai, \`fprintf\` aur \`fscanf\` text likhte aur padhte hain, \`fgets\` poori line padhta hai, \`fwrite\` aur \`fread\` binary data handle karte hain, aur \`fclose\` file band karke data ko disk par save karta hai. Modes yaad rakho — \`"r"\` read, \`"w"\` write (purana data mit jaata hai), \`"a"\` append, aur binary ke liye \`b\` jodo.
+
+Yaad rakhne wali chaar baatein: pehli, har \`fopen\` ke baad **NULL check** karo. Doosri, har \`fopen\` ka ek **\`fclose\`** hona chahiye, warna data adhura reh sakta hai. Teesri, poori line ke liye \`fgets\` use karo aur loop mein \`fgets\` ka return check karo — \`while (!feof(fp))\` galat hai. Chauthi, numbers aur structs ke liye **binary mode** use karo.
+
+Interview mein file handling ke sawaal aksar ek hi pattern mein aate hain: "file kaise kholte ho?", "\`"w"\` aur \`"a"\` mein kya farak hai?", "fgets aur fscanf mein kya farak hai?", "fclose kyun zaroori hai?" — har ek ka answer ek hi hai: fopen se kholo, NULL check karo, sahi function se likho ya padho, aur fclose se band karo. Agar aapko yeh pattern dikhne lag gaya hai, toh file handling aapko aa gayi hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle notes.txt wale program ka dry run haath se karo — likhna, band karna, padhna. Phir fprintf/fscanf wale example mein return check dekho. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum preprocessor dekhenge — \`#define\` se macros kaise bante hain aur conditional compilation kaise kaam karti hai.`,
+          `Let us tie the whole article together. **File handling** keeps data alive after the program ends: \`fopen\` opens a file and returns a \`FILE *\`, \`fprintf\` and \`fscanf\` write and read text, \`fgets\` reads a full line, \`fwrite\` and \`fread\` handle binary data, and \`fclose\` closes the file and saves the data to disk. Remember the modes — \`"r"\` read, \`"w"\` write (old data is erased), \`"a"\` append, and add \`b\` for binary.
+
+Remember four things: first, do a **NULL check** after every \`fopen\`. Second, every \`fopen\` needs a matching **\`fclose\`**, or the data may stay incomplete. Third, use \`fgets\` for a full line and check its return in the loop — \`while (!feof(fp))\` is wrong. Fourth, use **binary mode** for numbers and structs.
+
+Interview questions on file handling usually follow one pattern: "how do you open a file?", "what is the difference between \`"w"\` and \`"a"\`?", "what is the difference between fgets and fscanf?", "why is fclose essential?" — the answer to every one is the same: open with fopen, check for NULL, write or read with the right function, and close with fclose. Once you start seeing that pattern, you know file handling.
+
+To revise, read this article once more in this order: first dry-run the notes.txt program by hand — write, close, read. Then look at the return check in the fprintf/fscanf example. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at the preprocessor — how macros are built with \`#define\` and how conditional compilation works.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'File ka Safar: fopen se fclose Tak',
+        'The Journey of a File: From fopen to fclose'
+      ),
+      caption: t(
+        'Har fopen ka ek fclose hona chahiye — warna data buffer mein atak sakta hai',
+        'Every fopen needs a fclose — otherwise data can stay stuck in the buffer'
+      ),
+      nodes: [
+        {
+          t: t('fopen("notes.txt", "w")', 'fopen("notes.txt", "w")'),
+          s: t('File write mode mein khulti hai, FILE * pointer milta hai', 'File opens in write mode, you get a FILE * pointer')
+        },
+        {
+          t: t('NULL check', 'NULL check'),
+          s: t('File nahi khuli toh fopen NULL deta hai — pehle check karo', 'If the file did not open, fopen returns NULL — check it first')
+        },
+        {
+          t: t('fprintf / fgets / fwrite', 'fprintf / fgets / fwrite'),
+          s: t('Text ke liye fprintf aur fgets, binary ke liye fwrite aur fread', 'fprintf and fgets for text, fwrite and fread for binary')
+        },
+        {
+          t: t('fclose(fp)', 'fclose(fp)'),
+          s: t('Data disk par save hota hai aur file band hoti hai', 'Data is saved to disk and the file is closed')
+        },
+        {
+          t: t('fopen("notes.txt", "r")', 'fopen("notes.txt", "r")'),
+          s: t('Wahi file read mode mein kholo aur fgets se lines wapas padho', 'Open the same file in read mode and read the lines back with fgets')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'fprintf aur fscanf: Naam aur Marks Save Karo',
+          'fprintf and fscanf: Save a Name and Marks'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    FILE *fp = fopen("scores.txt", "w");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    fprintf(fp, "Amit 85\\n");
+    fclose(fp);
+
+    fp = fopen("scores.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    char name[50];
+    int marks = 0;
+    if (fscanf(fp, "%49s %d", name, &marks) == 2) {
+        printf("Name: %s Marks: %d\\n", name, marks);
+    }
+    fclose(fp);
+    remove("scores.txt");
+    return 0;
+}`,
+        output: `Name: Amit Marks: 85`
+      },
+      {
+        title: t(
+          'Binary File: fwrite se Likho, fread se Padho',
+          'Binary File: Write with fwrite, Read with fread'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void) {
+    int nums[] = {5, 10, 15};
+    FILE *fp = fopen("data.bin", "wb");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    fwrite(nums, sizeof(int), 3, fp);
+    fclose(fp);
+
+    int back[3] = {0, 0, 0};
+    fp = fopen("data.bin", "rb");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    size_t read = fread(back, sizeof(int), 3, fp);
+    fclose(fp);
+    remove("data.bin");
+    printf("read %zu numbers: %d %d %d\\n", read, back[0], back[1], back[2]);
+    printf("Sum = %d\\n", back[0] + back[1] + back[2]);
+    return 0;
+}`,
+        output: `read 3 numbers: 5 10 15
+Sum = 30`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '"w" mode mein pehle se maujood file ko kholne par kya hota hai?',
+          'What happens when you open an existing file in "w" mode?'
+        ),
+        opts: [
+          t('Purana data safe rehta hai', 'The old data stays safe'),
+          t('Purana data mit jaata hai', 'The old data is erased'),
+          t('Naya data end mein judta hai', 'New data is added at the end'),
+          t('File khulti hi nahi', 'The file does not open at all')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "w" mode file ko khaali karke kholta hai — purana data hamesha mit jaata hai. Purane data ke saath jodna ho toh "a" mode use karo.',
+          'Correct answer: "w" mode opens the file empty — the old data is always erased. To add to old data, use "a" mode.'
+        )
+      },
+      {
+        q: t(
+          '"r" mode mein jo file nahi hai, use kholne par fopen kya deta hai?',
+          'What does fopen return when you open a missing file in "r" mode?'
+        ),
+        opts: [
+          t('Nayi khaali file ban jaati hai', 'A new empty file is created'),
+          t('NULL', 'NULL'),
+          t('0', '0'),
+          t('Error message print hota hai', 'An error message is printed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "r" mode mein missing file par fopen NULL deta hai — isliye har fopen ke baad NULL check zaroori hai, warna NULL pointer par kaam karne se crash hoga.',
+          'Correct answer: in "r" mode, a missing file makes fopen return NULL — so a NULL check after every fopen is essential, or working on a NULL pointer will crash.'
+        )
+      },
+      {
+        q: t(
+          'Poori line padhne ke liye kaunsa function sahi hai?',
+          'Which function is correct for reading a full line?'
+        ),
+        opts: [
+          t('fscanf with %s', 'fscanf with %s'),
+          t('fgets', 'fgets'),
+          t('fread', 'fread'),
+          t('getc', 'getc')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fgets poori line padhta hai, space samet — jabki fscanf ka %s pehle space par ruk jaata hai. Fixed format ke liye fscanf, free-form text ke liye fgets use karo.',
+          'Correct answer: fgets reads a full line, including spaces — while fscanf with %s stops at the first space. Use fscanf for fixed formats and fgets for free-form text.'
+        )
+      },
+      {
+        q: t(
+          'while (!feof(fp)) se file padhna kyun galat hai?',
+          'Why is it wrong to read a file with while (!feof(fp))?'
+        ),
+        opts: [
+          t('feof slow hota hai', 'feof is slow'),
+          t('feof tabhi true hota hai jab read pehle se fail ho chuka ho, isliye aakhri line do baar process hoti hai', 'feof only becomes true after a read has already failed, so the last line is processed twice'),
+          t('feof file ko band kar deta hai', 'feof closes the file'),
+          t('Koi galti nahi hai, yeh sahi hai', 'There is no mistake, this is correct')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: feof end-of-file ko pehle se nahi batata — woh tabhi true hota hai jab ek read fail ho chuka ho, isliye aakhri line do baar chalti hai. Sahi tareeka hai fgets ka return check karna.',
+          'Correct answer: feof does not predict end-of-file — it only becomes true after a read has already failed, so the last line runs twice. The correct way is to check the return of fgets.'
+        )
+      },
+      {
+        q: t(
+          'fclose kyun zaroori hai?',
+          'Why is fclose essential?'
+        ),
+        opts: [
+          t('Sirf file ko band karne ke liye', 'Only to close the file'),
+          t('Likha hua data disk par save hota hai aur file free hoti hai', 'Written data is saved to disk and the file is released'),
+          t('File delete ho jaati hai', 'The file is deleted'),
+          t('Program fast ho jaata hai', 'The program becomes faster')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C likhne ko pehle buffer mein rakhta hai — fclose data ko asal mein disk par bhejta hai aur file ko chhod deta hai. Bina fclose ke data adhura reh sakta hai.',
+          'Correct answer: C first keeps what you write in a buffer — fclose really sends the data to disk and releases the file. Without fclose, the data may stay incomplete.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'fopen file kholta hai aur FILE * deta hai — "r" read, "w" write (purana data mit jaata hai), "a" append.',
+        'fopen opens a file and returns a FILE * — "r" read, "w" write (old data is erased), "a" append.'
+      ),
+      t(
+        'Har fopen ke baad NULL check karo aur har fopen ka ek fclose hona chahiye.',
+        'Check for NULL after every fopen, and every fopen needs a matching fclose.'
+      ),
+      t(
+        'Poori line ke liye fgets use karo aur loop mein fgets ka return check karo — while (!feof(fp)) galat hai.',
+        'Use fgets for a full line and check its return in the loop — while (!feof(fp)) is wrong.'
+      ),
+      t(
+        'Text ke liye fprintf aur fscanf, binary data ke liye fwrite aur fread use karo.',
+        'Use fprintf and fscanf for text, and fwrite and fread for binary data.'
+      ),
+      t(
+        'Numbers aur structs ke liye binary mode ("wb", "rb") use karo — text mode mein data badal sakta hai.',
+        'Use binary mode ("wb", "rb") for numbers and structs — text mode can change the data.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Diary File mein Lines Ginno',
+        'Practice: Count the Lines in a Diary File'
+      ),
+      task: t(
+        'Neeche diya gaya program diary.txt file banata hai, usmein 3 lines likhta hai, phir use padh kar lines ginta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir ek aur line (Day 4) jod kar dobara run karo aur naya count khud haath se verify karo.',
+        'The program below creates a file called diary.txt, writes 3 lines in it, then reads it and counts the lines. Run it and verify the output matches the expected output, then add one more line (Day 4), run it again, and verify the new count by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    FILE *fp = fopen("diary.txt", "w");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    fprintf(fp, "Day 1: started C\\n");
+    fprintf(fp, "Day 2: pointers\\n");
+    fprintf(fp, "Day 3: files\\n");
+    fclose(fp);
+
+    fp = fopen("diary.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open file\\n");
+        return 1;
+    }
+    int lines = 0;
+    char buf[100];
+    while (fgets(buf, sizeof(buf), fp) != NULL) {
+        lines++;
+    }
+    fclose(fp);
+    remove("diary.txt");
+    printf("Lines: %d\\n", lines);
+    return 0;
+}`,
+      expected: `Lines: 3`
+    },
+    readMinutes: 12
+  };
+
+const cPreprocessor: Article = {
+    id: 'c-preprocessor',
+    subjectId: 'c-programming',
+    title: t(
+      'Preprocessor aur Macros — #define, #include aur Conditional Compilation',
+      'Preprocessor and Macros — #define, #include, and Conditional Compilation'
+    ),
+    summary: t(
+      'Preprocessor ko zero se samjho: #define se constants aur function-like macros kaise bante hain, #include files ko kaise jodta hai, aur #ifdef aur #if se conditional compilation kaise kaam karti hai.',
+      'Learn the preprocessor from scratch: how #define builds constants and function-like macros, how #include joins files together, and how #ifdef and #if drive conditional compilation.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Preprocessor Kya Hai? (Compile se Pehle ka Step)',
+          '1. What Is the Preprocessor? (The Step Before Compiling)'
+        ),
+        body: t(
+          `Jab aap C program ko compile karte ho, toh compiler se pehle ek aur step chalta hai — **preprocessor**. Preprocessor woh lines handle karta hai jo \`#\` se shuru hoti hain, jaise \`#include <stdio.h>\` aur \`#define PI 3.14\`. Yeh lines asal C code nahi hain — yeh compiler ko instructions hain jo compile hone se pehle poori ho jaati hain. Preprocessor ka kaam hai text ko badalna: \`#include\` file ka content copy karke chipka deta hai, \`#define\` naam ko uski value se replace kar deta hai, aur conditional directives ke hisaab se code ko rakh ya hata deta hai.
+
+Sabse common directive hai \`#include\`. Jab aap \`#include <stdio.h>\` likhte ho, toh preprocessor \`stdio.h\` file ka poora content aapke program mein copy kar deta hai — isiliye aap \`printf\` use kar sakte ho. Angle brackets \` < > \` system headers ke liye hote hain, aur double quotes \` " " \` aapki khud ki header files ke liye hote hain, jaise \`#include "myheader.h"\`. Doosri common directive hai \`#define\`, jo ek naam ko value se jodti hai: \`#define PI 3.14\` likhne ke baad program mein har \`PI\` 3.14 se replace ho jaata hai — compile hone se pehle hi.
+
+Preprocessor ko samajhne ka sabse aasan tareeka hai yeh yaad rakhna: preprocessor sirf **text replacement** karta hai. Woh C ko nahi samajhta, woh sirf text ko kaat-ta aur chipkata hai. Isi liye macros mein brackets ki galti aasani se hoti hai — preprocessor aapki galti ko pakadta nahi, compiler baad mein ajeeb error deta hai.`,
+          `When you compile a C program, another step runs before the compiler — the **preprocessor**. The preprocessor handles the lines that start with \`#\`, such as \`#include <stdio.h>\` and \`#define PI 3.14\`. These lines are not real C code — they are instructions for the compiler that are finished before compiling starts. The preprocessor's job is to change text: \`#include\` copies a file's content and pastes it in, \`#define\` replaces a name with its value, and conditional directives keep or remove code as directed.
+
+The most common directive is \`#include\`. When you write \`#include <stdio.h>\`, the preprocessor copies the whole content of \`stdio.h\` into your program — that is why you can use \`printf\`. Angle brackets \` < > \` are for system headers, and double quotes \` " " \` are for your own header files, such as \`#include "myheader.h"\`. The second common directive is \`#define\`, which joins a name to a value: after \`#define PI 3.14\`, every \`PI\` in the program is replaced with 3.14 — before compiling even starts.
+
+The easiest way to understand the preprocessor is to remember this: the preprocessor only does **text replacement**. It does not understand C; it only cuts and pastes text. That is why bracket mistakes in macros happen so easily — the preprocessor does not catch your mistake, and the compiler later gives a strange error.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Config Values, Debug Mode aur Platform Code',
+          '2. Real-Life Examples: Config Values, Debug Mode, and Platform Code'
+        ),
+        body: t(
+          `Preprocessor roz ki zindagi mein har jagah hai. Sabse seedha example hai **config values**. Maan lo ek game mein maximum players 100 hain aur yeh number program mein 20 jagah use hota hai. Agar aap har jagah 100 likhte ho aur baad mein limit 200 karni ho, toh 20 jagah badalni padegi. \`#define MAX_PLAYERS 100\` likhne par sirf ek jagah badalni padti hai — baaki sab preprocessor khud replace kar deta hai. Yahi constants ka sabse bada fayda hai.
+
+Doosra example hai **debug mode**. Bade programs mein debug prints hote hain jo development mein chahiye hote hain, par final version mein nahi. \`#ifdef DEBUG\` se debug wali lines sirf tab compile hoti hain jab DEBUG define ho. Release build mein DEBUG define mat karo — saari debug lines gayab ho jaati hain, bina ek bhi line delete kiye. Neeche wala example yahi karta hai.
+
+Teesra example hai **platform code**. Ek hi program Windows aur Linux dono par chalana ho toh kuch parts alag hote hain — jaise file paths ya system calls. \`#ifdef _WIN32\` aur \`#else\` se dono versions ek hi file mein likhe jaate hain, aur preprocessor sahi wala chun leta hai. Bina conditional compilation ke har platform ke liye alag code likhna padta.`,
+          `The preprocessor is everywhere in daily life. The simplest example is **config values**. Suppose a game allows a maximum of 100 players, and this number is used in 20 places in the program. If you write 100 in every place and later need a limit of 200, you must change 20 places. With \`#define MAX_PLAYERS 100\`, only one place needs changing — the preprocessor replaces the rest by itself. That is the biggest benefit of constants.
+
+A second example is **debug mode**. Large programs have debug prints that are needed during development but not in the final version. With \`#ifdef DEBUG\`, the debug lines only compile when DEBUG is defined. In a release build, do not define DEBUG — all the debug lines disappear without deleting a single line. The example below does exactly this.
+
+A third example is **platform code**. When one program must run on both Windows and Linux, some parts differ — such as file paths or system calls. With \`#ifdef _WIN32\` and \`#else\`, both versions are written in the same file, and the preprocessor picks the right one. Without conditional compilation, you would have to write separate code for each platform.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: PI aur SQUARE Macro se Circle ka Area (Dry Run)',
+          '3. Step-by-Step: Circle Area with the PI and SQUARE Macros (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek program ko line-by-line dry run karte hain. Kaam hai: \`#define\` se PI aur SQUARE macro banao, radius 5 ke circle ka area nikaalo, aur 6 ka square print karo.
+
+**Step 1:** \`#define PI 3.14\` — preprocessor program mein har \`PI\` ko \`3.14\` se replace kar dega. **Step 2:** \`#define SQUARE(x) ((x) * (x))\` — yeh ek **function-like macro** hai. Jab bhi \`SQUARE(r)\` likha jaata hai, preprocessor use \`((r) * (r))\` se replace kar deta hai. Brackets isliye zaroori hain — bina brackets ke \`SQUARE(2 + 3)\` galat expand hota hai, yeh aage section 4 mein dekhenge.
+
+**Step 3:** \`double area = PI * SQUARE(r);\` — preprocessor ke baad yeh line ban jaati hai \`double area = 3.14 * ((r) * (r));\`. r = 5.0 hai, isliye area = 3.14 x 25 = 78.50. **Step 4:** \`printf("Area = %.2f\\n", area);\` se "Area = 78.50" print hota hai, aur \`SQUARE(6)\` se 36 milta hai. Neeche wala code yahi karta hai. Ise run karo aur output ko apne dry run se milao — aur dhyaan do ki macro mein koi function call nahi hota, sirf text replace hota hai.`,
+          `Now let us dry-run a program line by line. The task is: build PI and a SQUARE macro with \`#define\`, find the area of a circle with radius 5, and print the square of 6.
+
+**Step 1:** \`#define PI 3.14\` — the preprocessor replaces every \`PI\` in the program with \`3.14\`. **Step 2:** \`#define SQUARE(x) ((x) * (x))\` — this is a **function-like macro**. Whenever \`SQUARE(r)\` is written, the preprocessor replaces it with \`((r) * (r))\`. The brackets are essential — without them, \`SQUARE(2 + 3)\` expands wrongly, as we will see in section 4.
+
+**Step 3:** \`double area = PI * SQUARE(r);\` — after the preprocessor, this line becomes \`double area = 3.14 * ((r) * (r));\`. Since r = 5.0, the area is 3.14 x 25 = 78.50. **Step 4:** \`printf("Area = %.2f\\n", area);\` prints "Area = 78.50", and \`SQUARE(6)\` gives 36. The code below does exactly this. Run it and match the output against your dry run — and note that no function is called in a macro, only text is replaced.`
+        ),
+        code: {
+          title: t(
+            'PI aur SQUARE Macro se Circle ka Area',
+            'Circle Area with the PI and SQUARE Macros'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+#define PI 3.14
+#define SQUARE(x) ((x) * (x))
+
+int main(void) {
+    double r = 5.0;
+    double area = PI * SQUARE(r);
+    printf("Radius = %.1f\\n", r);
+    printf("Area = %.2f\\n", area);
+    printf("Square of 6 = %d\\n", SQUARE(6));
+    return 0;
+}`,
+          output: `Radius = 5.0
+Area = 78.50
+Square of 6 = 36`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Brackets Bhoolna, Semicolon aur Side Effects',
+          '4. Common Mistakes: Forgetting Brackets, Semicolons, and Side Effects'
+        ),
+        body: t(
+          `Preprocessor mein sabse zyada galtiyan chaar cheezon par hoti hain, aur sabke peeche ek hi wajah hai — macro sirf text replacement hai, function nahi.
+
+**Galti 1: Macro mein brackets bhoolna.** \`#define SQUARE(x) x * x\` likhne par \`SQUARE(2 + 3)\` expand hota hai \`2 + 3 * 2 + 3\` mein, jo 11 hota hai — 25 nahi! Kyunki \`*\` ki precedence \`+\` se zyada hoti hai. Sahi macro hai \`#define SQUARE(x) ((x) * (x))\` — har parameter aur poora expression brackets mein. Yeh macro likhne ka sabse important rule hai.
+
+**Galti 2: \`#define\` ke end mein semicolon lagana.** \`#define PI 3.14;\` likhne par har \`PI\` 3.14 ke saath semicolon se replace hota hai — \`area = PI * 2;\` ban jaata hai \`area = 3.14; * 2;\`, jo compile error deta hai. \`#define\` ke end mein kabhi semicolon mat lagao.
+
+**Galti 3: Side effects wala argument.** \`SQUARE(i++)\` expand hota hai \`((i++) * (i++))\` mein — \`i\` do baar badhta hai! Function mein aisa nahi hota, kyunki argument ek baar evaluate hota hai. Macro mein argument jitni baar likha hai, utni baar evaluate hota hai. Isliye macro mein \`i++\` jaise expressions kabhi mat bhejo.
+
+**Galti 4: Macro ko function samajhna.** Macro mein type checking nahi hoti, debugging mushkil hoti hai, aur error messages ajeeb aate hain. Chhote, simple kaam ke liye macro theek hai, par bade logic ke liye hamesha asli function likho.`,
+          `The most common preprocessor mistakes come from four things, and all of them trace back to one cause — a macro is only text replacement, not a function.
+
+**Mistake 1: Forgetting brackets in a macro.** If you write \`#define SQUARE(x) x * x\`, then \`SQUARE(2 + 3)\` expands to \`2 + 3 * 2 + 3\`, which is 11 — not 25! This happens because \`*\` has higher precedence than \`+\`. The correct macro is \`#define SQUARE(x) ((x) * (x))\` — every parameter and the whole expression inside brackets. This is the most important rule for writing macros.
+
+**Mistake 2: Putting a semicolon at the end of \`#define\`.** If you write \`#define PI 3.14;\`, every \`PI\` is replaced with 3.14 plus a semicolon — \`area = PI * 2;\` becomes \`area = 3.14; * 2;\`, which is a compile error. Never put a semicolon at the end of a \`#define\`.
+
+**Mistake 3: An argument with side effects.** \`SQUARE(i++)\` expands to \`((i++) * (i++))\` — \`i\` increases twice! In a function this does not happen, because the argument is evaluated once. In a macro, the argument is evaluated as many times as it is written. So never pass expressions like \`i++\` into a macro.
+
+**Mistake 4: Treating a macro like a function.** A macro has no type checking, is hard to debug, and gives strange error messages. A macro is fine for small, simple jobs, but for larger logic always write a real function.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Header Guards, #undef aur Macro Redefine',
+          '5. Edge Cases: Header Guards, #undef, and Macro Redefinition'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Header guards.** Agar ek hi header file do baar include ho jaaye, toh uske andar ke definitions do baar aa jaate hain aur compile error aata hai. Isse bachne ke liye header ke upar likha jaata hai \`#ifndef MYHEADER_H\`, phir \`#define MYHEADER_H\`, aur end mein \`#endif\`. Pehli baar include hone par guard define ho jaata hai, doosri baar preprocessor poora content skip kar deta hai. Har apni header file mein guard likhna achhi aadat hai.
+
+**2. \`#undef\`.** \`#undef PI\` se PI ki definition khatm ho jaati hai — uske baad PI dobara define kiya ja sakta hai ya normal naam ki tarah use ho sakta hai. Yeh tab kaam aata hai jab ek hi naam ko program ke alag hisso mein alag matlab dena ho.
+
+**3. Macro ko dobara define karna.** Ek hi macro ko do baar alag value se define karna warning deta hai. Agar dobara define karna hai, toh pehle \`#undef\` karo, phir \`#define\` karo. Bina \`#undef\` ke dobara define karna compiler warning deta hai aur confuse karta hai.
+
+**4. \`#if\` vs \`#ifdef\`.** \`#ifdef DEBUG\` sirf yeh check karta hai ki DEBUG define hai ya nahi — uski value se matlab nahi. \`#if LIMIT > 50\` value ko check karta hai. Neeche wala example \`#if LIMIT > 50\` se batata hai ki limit badi hai ya chhoti. Dono ka use alag hai — define check karna ho toh \`#ifdef\`, value check karni ho toh \`#if\`.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Header guards.** If the same header file is included twice, its definitions appear twice and cause a compile error. To prevent this, the top of the header has \`#ifndef MYHEADER_H\`, then \`#define MYHEADER_H\`, and \`#endif\` at the end. On the first include, the guard gets defined; on the second include, the preprocessor skips the whole content. Writing a guard in every header file you create is a good habit.
+
+**2. \`#undef\`.** \`#undef PI\` removes the definition of PI — after that, PI can be defined again or used as a normal name. This is useful when the same name needs a different meaning in different parts of the program.
+
+**3. Redefining a macro.** Defining the same macro twice with a different value gives a warning. If you must define it again, first write \`#undef\`, then \`#define\`. Redefining without \`#undef\` gives a compiler warning and causes confusion.
+
+**4. \`#if\` vs \`#ifdef\`.** \`#ifdef DEBUG\` only checks whether DEBUG is defined — its value does not matter. \`#if LIMIT > 50\` checks the value. The example below uses \`#if LIMIT > 50\` to say whether the limit is large or small. The two have different uses — use \`#ifdef\` to check a definition and \`#if\` to check a value.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Macro ki Jagah Function, const ki Jagah #define aur #pragma',
+          '6. What-If: Function Instead of Macro, const Instead of #define, and #pragma'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: macro ki jagah function use kar lein?** \`SQUARE\` ke liye function likhna safe hai — type checking hoti hai, \`i++\` ek baar evaluate hota hai, aur debugging aasan hoti hai. Macro ka fayda sirf speed hai — function call ka overhead nahi hota — par aaj ke compilers chhote functions ko khud inline kar dete hain. Rule simple hai: logic ke liye function, simple constant ke liye \`#define\`.
+
+**What if: \`#define\` ki jagah \`const\` use kar lein?** \`const double PI = 3.14;\` mein type hoti hai aur debugger mein value dikhti hai, jabki \`#define PI 3.14\` mein sirf text replace hota hai. Aaj ke C mein constants ke liye \`const\` ya \`enum\` behtar maane jaate hain. Par array size jaise jagah par \`#define\` ab bhi chahiye hota hai, kyunki \`const\` variable compile-time constant nahi hota purane C mein.
+
+**What if: DEBUG ko code mein define kar dein?** \`#define DEBUG 1\` file ke upar likhne se debug code compile hota hai. Neeche wala example yahi karta hai — DEBUG define hai, isliye "Debug mode is ON" print hota hai. Agar DEBUG wali line hata do, toh \`#ifdef\` wala block gayab ho jaata hai aur sirf MAX wali lines chalti hain. Yahi conditional compilation ki taakat hai.
+
+**What if: header guard ki jagah \`#pragma once\` use karein?** \`#pragma once\` bhi double include se bachata hai aur chhota hai, par yeh standard C nahi hai — zyadatar compilers support karte hain, par sab nahi. Portable code ke liye header guards (\`#ifndef\`) behtar hain.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you use a function instead of a macro?** Writing a function for \`SQUARE\` is safe — there is type checking, \`i++\` is evaluated once, and debugging is easy. A macro's only benefit is speed — there is no function call overhead — but modern compilers inline small functions themselves. The rule is simple: functions for logic, \`#define\` for simple constants.
+
+**What if you use \`const\` instead of \`#define\`?** \`const double PI = 3.14;\` has a type and its value shows in the debugger, while \`#define PI 3.14\` is only text replacement. In modern C, \`const\` or \`enum\` are considered better for constants. But \`#define\` is still needed in places like array sizes, because a \`const\` variable is not a compile-time constant in older C.
+
+**What if you define DEBUG in the code?** Writing \`#define DEBUG 1\` at the top of the file makes the debug code compile. The example below does exactly this — DEBUG is defined, so "Debug mode is ON" is printed. If you remove the DEBUG line, the \`#ifdef\` block disappears and only the MAX lines run. That is the power of conditional compilation.
+
+**What if you use \`#pragma once\` instead of a header guard?** \`#pragma once\` also prevents double inclusion and is shorter, but it is not standard C — most compilers support it, but not all. For portable code, header guards (\`#ifndef\`) are better.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Preprocessor se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from the Preprocessor to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Preprocessor** compile se pehle chalta hai aur sirf text replacement karta hai: \`#include\` file ka content chipkata hai, \`#define\` naam ko value se replace karta hai, aur \`#ifdef\` / \`#if\` / \`#else\` / \`#endif\` se code ko conditionally rakhta ya hatata hai. Function-like macros jaise \`SQUARE(x)\` bhi sirf text replace karte hain — koi function call nahi hota.
+
+Yaad rakhne wali chaar baatein: pehli, macro mein har parameter aur poora expression **brackets** mein likho, warna precedence bug aayega. Doosri, \`#define\` ke end mein **semicolon** kabhi mat lagao. Teesri, macro mein \`i++\` jaise side effects wale arguments kabhi mat bhejo — woh do baar evaluate hote hain. Chauthi, har header file mein **header guard** likho taaki double include se compile error na aaye.
+
+Interview mein preprocessor ke sawaal aksar ek hi pattern mein aate hain: "macro aur function mein kya farak hai?", "SQUARE(2 + 3) galat kyun hota hai?", "#ifdef aur #if mein kya farak hai?", "header guard kya hai?" — har ek ka answer ek hi hai: preprocessor sirf text replacement karta hai, isliye brackets, semicolon aur side effects ka dhyaan rakho. Agar aapko yeh pattern dikhne lag gaya hai, toh preprocessor aapko aa gaya hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle SQUARE macro ka expansion haath se karo — bina brackets ke aur brackets ke saath, dono. Phir DEBUG wale example mein #ifdef ko on aur off karke socho ki kya print hoga. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum sorting aur searching dekhenge — bubble sort, selection sort, insertion sort, linear search aur binary search.`,
+          `Let us tie the whole article together. The **preprocessor** runs before compiling and only does text replacement: \`#include\` pastes a file's content, \`#define\` replaces a name with a value, and \`#ifdef\` / \`#if\` / \`#else\` / \`#endif\` keep or remove code conditionally. Function-like macros such as \`SQUARE(x)\` also only replace text — no function is called.
+
+Remember four things: first, put every parameter and the whole expression in **brackets** in a macro, or a precedence bug will appear. Second, never put a **semicolon** at the end of a \`#define\`. Third, never pass arguments with side effects such as \`i++\` into a macro — they are evaluated twice. Fourth, write a **header guard** in every header file so double inclusion never causes a compile error.
+
+Interview questions on the preprocessor usually follow one pattern: "what is the difference between a macro and a function?", "why is SQUARE(2 + 3) wrong?", "what is the difference between #ifdef and #if?", "what is a header guard?" — the answer to every one is the same: the preprocessor only replaces text, so watch the brackets, the semicolon, and the side effects. Once you start seeing that pattern, you know the preprocessor.
+
+To revise, read this article once more in this order: first expand the SQUARE macro by hand — both without brackets and with brackets. Then think about what the DEBUG example prints with #ifdef on and off. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at sorting and searching — bubble sort, selection sort, insertion sort, linear search, and binary search.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'layers',
+      title: t(
+        'Preprocessor ki Layers: Text Replace se Compile Tak',
+        'Layers of the Preprocessor: From Text Replacement to Compiling'
+      ),
+      caption: t(
+        'Preprocessor sirf text badalta hai — C ko samajhta nahi, isliye brackets aur semicolon ka dhyaan rakho',
+        'The preprocessor only changes text — it does not understand C, so watch the brackets and semicolons'
+      ),
+      nodes: [
+        {
+          t: t('#include <stdio.h>', '#include <stdio.h>'),
+          s: t('Header file ka content program mein copy ho jaata hai', 'The header file content is copied into the program')
+        },
+        {
+          t: t('#define PI 3.14', '#define PI 3.14'),
+          s: t('Har PI text replace se 3.14 ban jaata hai', 'Every PI becomes 3.14 through text replacement')
+        },
+        {
+          t: t('#define SQUARE(x) ((x) * (x))', '#define SQUARE(x) ((x) * (x))'),
+          s: t('Function-like macro — brackets zaroori hain, warna precedence bug', 'Function-like macro — brackets are essential, or a precedence bug appears')
+        },
+        {
+          t: t('#ifdef DEBUG ... #endif', '#ifdef DEBUG ... #endif'),
+          s: t('Debug code sirf tab compile hota hai jab DEBUG define ho', 'Debug code only compiles when DEBUG is defined')
+        },
+        {
+          t: t('Compiler', 'Compiler'),
+          s: t('Preprocessor ke baad bacha hua code hi compiler ko milta hai', 'Only the code left after the preprocessor reaches the compiler')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'MAX Macro aur DEBUG Mode',
+          'The MAX Macro and DEBUG Mode'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+#define DEBUG 1
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
+int main(void) {
+#ifdef DEBUG
+    printf("Debug mode is ON\\n");
+#endif
+    printf("MAX of 12 and 7 = %d\\n", MAX(12, 7));
+    printf("MAX of 3 and 9 = %d\\n", MAX(3, 9));
+    return 0;
+}`,
+        output: `Debug mode is ON
+MAX of 12 and 7 = 12
+MAX of 3 and 9 = 9`
+      },
+      {
+        title: t(
+          '#if se Conditional Compilation: Limit Badi ya Chhoti?',
+          'Conditional Compilation with #if: Is the Limit Large or Small?'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+#define VERSION "1.0"
+#define LIMIT 100
+
+int main(void) {
+    printf("Program version: %s\\n", VERSION);
+#if LIMIT > 50
+    printf("Limit %d is large\\n", LIMIT);
+#else
+    printf("Limit %d is small\\n", LIMIT);
+#endif
+    return 0;
+}`,
+        output: `Program version: 1.0
+Limit 100 is large`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          '#define SQUARE(x) x * x likhne par SQUARE(2 + 3) ka answer kya hota hai?',
+          'If you write #define SQUARE(x) x * x, what is the value of SQUARE(2 + 3)?'
+        ),
+        opts: [
+          t('25', '25'),
+          t('11', '11'),
+          t('10', '10'),
+          t('Compile error', 'A compile error')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: macro expand hota hai 2 + 3 * 2 + 3 mein, aur * ki precedence + se zyada hoti hai, isliye answer 2 + 6 + 3 = 11 hota hai. Sahi macro hai ((x) * (x)).',
+          'Correct answer: the macro expands to 2 + 3 * 2 + 3, and * has higher precedence than +, so the answer is 2 + 6 + 3 = 11. The correct macro is ((x) * (x)).'
+        )
+      },
+      {
+        q: t(
+          'Preprocessor asal mein kya karta hai?',
+          'What does the preprocessor actually do?'
+        ),
+        opts: [
+          t('C code ko machine code mein badalta hai', 'It turns C code into machine code'),
+          t('Sirf text replacement karta hai', 'It only does text replacement'),
+          t('Program ko run karta hai', 'It runs the program'),
+          t('Errors ko fix karta hai', 'It fixes errors')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: preprocessor C ko nahi samajhta — woh sirf text ko kaat-ta aur chipkata hai. Isi liye macro ki galtiyan compiler baad mein ajeeb errors ke roop mein dikhata hai.',
+          'Correct answer: the preprocessor does not understand C — it only cuts and pastes text. That is why macro mistakes show up later as strange compiler errors.'
+        )
+      },
+      {
+        q: t(
+          '#ifdef DEBUG aur #if LIMIT > 50 mein kya farak hai?',
+          'What is the difference between #ifdef DEBUG and #if LIMIT > 50?'
+        ),
+        opts: [
+          t('Dono ek hi kaam karte hain', 'Both do the same thing'),
+          t('#ifdef define check karta hai, #if value check karta hai', '#ifdef checks a definition, #if checks a value'),
+          t('#if define check karta hai, #ifdef value check karta hai', '#if checks a definition, #ifdef checks a value'),
+          t('#ifdef sirf numbers ke liye hai', '#ifdef is only for numbers')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: #ifdef sirf yeh dekhta hai ki naam define hai ya nahi, jabki #if uski value ko evaluate karta hai — jaise LIMIT > 50 mein value 100 check hoti hai.',
+          'Correct answer: #ifdef only checks whether a name is defined, while #if evaluates its value — for example, in LIMIT > 50 the value 100 is checked.'
+        )
+      },
+      {
+        q: t(
+          'Header guard kis liye use hota hai?',
+          'What is a header guard used for?'
+        ),
+        opts: [
+          t('Header file ko fast banane ke liye', 'To make the header file fast'),
+          t('Ek hi header do baar include hone se rokne ke liye', 'To stop the same header from being included twice'),
+          t('Header file ko chhupane ke liye', 'To hide the header file'),
+          t('Macros ko define karne ke liye', 'To define macros')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina guard ke ek header do baar include hone par definitions do baar aa jaati hain aur compile error aata hai — #ifndef guard doosri baar poora content skip kar deta hai.',
+          'Correct answer: without a guard, including a header twice brings its definitions twice and causes a compile error — the #ifndef guard skips the whole content on the second include.'
+        )
+      },
+      {
+        q: t(
+          '#define PI 3.14; (semicolon ke saath) likhne par kya hota hai?',
+          'What happens if you write #define PI 3.14; (with a semicolon)?'
+        ),
+        opts: [
+          t('Kuch nahi, semicolon ignore hota hai', 'Nothing, the semicolon is ignored'),
+          t('Har PI semicolon samet replace hota hai aur compile error aata hai', 'Every PI is replaced along with the semicolon and a compile error occurs'),
+          t('PI ki value 3.14; ban jaati hai', 'The value of PI becomes 3.14;'),
+          t('Program slow ho jaata hai', 'The program becomes slow')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: preprocessor semicolon ko bhi replace karta hai — area = PI * 2 ban jaata hai area = 3.14; * 2, jo compile error deta hai. #define ke end mein kabhi semicolon mat lagao.',
+          'Correct answer: the preprocessor replaces the semicolon too — area = PI * 2 becomes area = 3.14; * 2, which is a compile error. Never put a semicolon at the end of a #define.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Preprocessor compile se pehle chalta hai aur sirf text replacement karta hai — woh C ko nahi samajhta.',
+        'The preprocessor runs before compiling and only does text replacement — it does not understand C.'
+      ),
+      t(
+        'Macro mein har parameter aur poora expression brackets mein likho — #define SQUARE(x) ((x) * (x)).',
+        'Put every parameter and the whole expression in brackets in a macro — #define SQUARE(x) ((x) * (x)).'
+      ),
+      t(
+        '#define ke end mein kabhi semicolon mat lagao, aur macro mein i++ jaise side effects wale arguments mat bhejo.',
+        'Never put a semicolon at the end of a #define, and never pass arguments with side effects such as i++ into a macro.'
+      ),
+      t(
+        '#ifdef define check karta hai, #if value check karta hai — debug mode ke liye #ifdef, limits ke liye #if.',
+        '#ifdef checks a definition, #if checks a value — use #ifdef for debug mode and #if for limits.'
+      ),
+      t(
+        'Har header file mein header guard (#ifndef) likho taaki double include se compile error na aaye.',
+        'Write a header guard (#ifndef) in every header file so double inclusion never causes a compile error.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: AREA aur CUBE Macros Banao',
+        'Practice: Build the AREA and CUBE Macros'
+      ),
+      task: t(
+        'Neeche diya gaya program AREA aur CUBE macros se rectangle ka area aur 3 ka cube nikaalta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir AREA(7, 3) aur CUBE(4) jod kar dobara run karo aur naye answers khud haath se verify karo.',
+        'The program below uses the AREA and CUBE macros to find the area of a rectangle and the cube of 3. Run it and verify the output matches the expected output, then add AREA(7, 3) and CUBE(4), run it again, and verify the new answers by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+#define AREA(w, h) ((w) * (h))
+#define CUBE(x) ((x) * (x) * (x))
+
+int main(void) {
+    printf("Area of 6 x 4 rectangle = %d\\n", AREA(6, 4));
+    printf("Cube of 3 = %d\\n", CUBE(3));
+    printf("Area of 5 x 5 square = %d\\n", AREA(5, 5));
+    return 0;
+}`,
+      expected: `Area of 6 x 4 rectangle = 24
+Cube of 3 = 27
+Area of 5 x 5 square = 25`
+    },
+    readMinutes: 12
+  };
+
+const cSortingSearching: Article = {
+    id: 'c-sorting-searching',
+    subjectId: 'c-programming',
+    title: t(
+      'Sorting aur Searching — Bubble, Selection, Insertion, Linear aur Binary Search',
+      'Sorting and Searching — Bubble, Selection, Insertion, Linear, and Binary Search'
+    ),
+    summary: t(
+      'Sorting aur searching ko zero se samjho: bubble, selection aur insertion sort kaise kaam karte hain, linear search kab use hota hai, aur binary search sorted array mein O(log n) mein kaise dhoondhta hai.',
+      'Learn sorting and searching from scratch: how bubble, selection, and insertion sort work, when to use linear search, and how binary search finds an element in a sorted array in O(log n).'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Sorting aur Searching Kya Hain? (Order aur Dhoondhna)',
+          '1. What Are Sorting and Searching? (Order and Finding)'
+        ),
+        body: t(
+          `**Sorting** ka matlab hai cheezon ko ek order mein lagana — chhota se bada, ya A se Z. **Searching** ka matlab hai kisi cheez ko dhoondhna — jaise array mein number 7 kahan hai. Dono ka gehra connection hai: sorted data mein dhoondhna bahut fast hota hai, unsorted data mein slow. Isi liye pehle sort karte hain, phir search karte hain — phone ke contacts bhi isi liye sorted hote hain, taaki naam turant mil jaaye.
+
+Is article mein hum teen simple sorts dekhenge: **bubble sort** (paas wale do elements ko compare karke bada element peeche bhejo), **selection sort** (har baar sabse chhota element dhoondh kar aage laao), aur **insertion sort** (har element ko pehle se sorted hisse mein sahi jagah par daalo). Teenon ka time complexity **O(n^2)** hai — chhote arrays ke liye theek hain, bade arrays ke liye slow. Agle article mein quick sort aur merge sort dekhenge, jo **O(n log n)** mein chalte hain.
+
+Searching mein do tareeke hain: **linear search** (pehle se aakhri tak ek-ek karke check karo — O(n)) aur **binary search** (sorted array ko baar-baar aadha karo — O(log n)). Linear search kisi bhi array par chalta hai, binary search sirf sorted array par chalta hai. Yeh shart yaad rakhna bahut zaroori hai — unsorted array par binary search galat answer dega.`,
+          `**Sorting** means putting things in order — smallest to largest, or A to Z. **Searching** means finding something — such as where the number 7 is in an array. The two are deeply connected: finding things in sorted data is very fast, while finding things in unsorted data is slow. That is why we sort first and then search — phone contacts are sorted for the same reason, so a name is found at once.
+
+In this article we will look at three simple sorts: **bubble sort** (compare two neighbours and send the bigger one back), **selection sort** (find the smallest element each time and bring it forward), and **insertion sort** (place each element in its correct spot inside the already sorted part). All three run in **O(n^2)** time — fine for small arrays, slow for large ones. In the next article we will look at quick sort and merge sort, which run in **O(n log n)**.
+
+There are two ways to search: **linear search** (check one by one from the first to the last — O(n)) and **binary search** (keep halving the sorted array — O(log n)). Linear search works on any array, while binary search only works on a sorted array. Remembering this condition is very important — binary search gives a wrong answer on an unsorted array.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Exam Ranks, Dictionary aur Phone Contacts',
+          '2. Real-Life Examples: Exam Ranks, a Dictionary, and Phone Contacts'
+        ),
+        body: t(
+          `Sorting aur searching roz ki zindagi mein har jagah hain. Sabse seedha example hai **exam ranks**. Hazaaron students ke marks ko sort karke hi rank nikalta hai — sabse zyada marks wala pehle, phir doosra, phir teesra. Bina sort kiye topper dhoondhne ke liye saare marks scan karne padenge, aur rank nikaalna mushkil ho jaayega. Sorting ek baar karo, phir har sawaal ka jawab fast milta hai.
+
+Doosra example hai **dictionary**. Dictionary mein words sorted hote hain, isliye aap binary search jaisa tareeka use karte ho: dictionary ko beech se kholo, dekho ki word pehle aadhe mein hai ya doosre mein, phir us aadhe ko phir se aadha karo. Yahi binary search hai — 1,000 pages wali dictionary mein koi bhi word lagbhag 10 steps mein mil jaata hai, kyunki har step mein aadhi dictionary khatm ho jaati hai.
+
+Teesra example hai **phone contacts**. Contacts naam ke hisaab se sorted hote hain, isliye "Rahul" dhoondhne mein ek second bhi nahi lagta. Agar contacts unsorted hote, toh har search mein poori list scan karni padti — 2,000 contacts mein yeh slow ho jaata. Sorting ka kharcha ek baar hota hai, searching ka fayda baar-baar milta hai.`,
+          `Sorting and searching are everywhere in daily life. The simplest example is **exam ranks**. Ranks come only after sorting thousands of students' marks — the highest marks first, then the second, then the third. Without sorting, finding the topper would mean scanning all the marks, and finding ranks would be hard. Sort once, and every later question gets a fast answer.
+
+A second example is a **dictionary**. Words in a dictionary are sorted, so you use a method like binary search: open the dictionary in the middle, see whether the word is in the first half or the second half, then halve that half again. That is binary search — in a 1,000-page dictionary, any word is found in about 10 steps, because each step removes half the dictionary.
+
+A third example is **phone contacts**. Contacts are sorted by name, so finding "Rahul" takes less than a second. If contacts were unsorted, every search would scan the whole list — with 2,000 contacts that would be slow. Sorting costs once, and searching pays off again and again.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Bubble Sort se {5, 2, 9, 1, 7} Sort Karna (Dry Run)',
+          '3. Step-by-Step: Sorting {5, 2, 9, 1, 7} with Bubble Sort (Dry Run)'
+        ),
+        body: t(
+          `Ab hum bubble sort ko haath se dry run karte hain. Array hai \`{5, 2, 9, 1, 7}\`. Bubble sort mein hum paas wale do elements ko compare karte hain, aur agar pehla doosre se bada ho toh swap kar dete hain. Ek poora pass karne par sabse bada element aakhir mein pahunch jaata hai — jaise bubble upar tairta hai.
+
+**Pass 1:** (5, 2) — 5 > 2, swap: \`{2, 5, 9, 1, 7}\`. (5, 9) — theek hai. (9, 1) — 9 > 1, swap: \`{2, 5, 1, 9, 7}\`. (9, 7) — 9 > 7, swap: \`{2, 5, 1, 7, 9}\`. Pass 1 ke baad 9 aakhir mein hai. **Pass 2:** (2, 5) theek, (5, 1) swap: \`{2, 1, 5, 7, 9}\`, (5, 7) theek. **Pass 3:** (2, 1) swap: \`{1, 2, 5, 7, 9}\`, (2, 5) theek. **Pass 4:** (1, 2) theek — koi swap nahi, array sorted hai.
+
+Final array: \`1 2 5 7 9\`. Dhyaan do — har pass mein ek element apni sahi jagah par pahunch jaata hai, isliye har pass ek element kam compare karta hai. Neeche wala code yahi karta hai: outer loop passes ke liye, inner loop comparisons ke liye, aur swap ke liye \`temp\` variable. Ise run karo aur output ko apne dry run se milao.`,
+          `Now let us dry-run bubble sort by hand. The array is \`{5, 2, 9, 1, 7}\`. In bubble sort, we compare two neighbouring elements, and if the first is bigger than the second, we swap them. After one full pass, the biggest element reaches the end — like a bubble floating up.
+
+**Pass 1:** (5, 2) — 5 > 2, swap: \`{2, 5, 9, 1, 7}\`. (5, 9) — fine. (9, 1) — 9 > 1, swap: \`{2, 5, 1, 9, 7}\`. (9, 7) — 9 > 7, swap: \`{2, 5, 1, 7, 9}\`. After pass 1, 9 is at the end. **Pass 2:** (2, 5) fine, (5, 1) swap: \`{2, 1, 5, 7, 9}\`, (5, 7) fine. **Pass 3:** (2, 1) swap: \`{1, 2, 5, 7, 9}\`, (2, 5) fine. **Pass 4:** (1, 2) fine — no swap, the array is sorted.
+
+Final array: \`1 2 5 7 9\`. Note that each pass puts one element in its correct place, so each pass compares one element fewer. The code below does exactly this: the outer loop runs the passes, the inner loop runs the comparisons, and a \`temp\` variable does the swap. Run it and match the output against your dry run.`
+        ),
+        code: {
+          title: t(
+            'Bubble Sort: {5, 2, 9, 1, 7} ko Sort Karo',
+            'Bubble Sort: Sort {5, 2, 9, 1, 7}'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void) {
+    int arr[] = {5, 2, 9, 1, 7};
+    int n = 5;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+          output: `Sorted: 1 2 5 7 9`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Off-by-One, Unsorted par Binary Search aur Swap Bhoolna',
+          '4. Common Mistakes: Off-by-One, Binary Search on Unsorted Data, and Forgetting the Swap'
+        ),
+        body: t(
+          `Sorting aur searching mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: Off-by-one errors.** Bubble sort mein inner loop \`j < n - i - 1\` tak chalta hai, \`j < n\` tak nahi — warna \`arr[j + 1]\` array ke bahar chala jaata hai. Binary search mein \`low <= high\` likhna hai, \`low < high\` nahi — warna aakhri element kabhi check nahi hota. Loop ki boundaries hamesha chhote example par haath se verify karo.
+
+**Galti 2: Unsorted array par binary search.** Binary search sirf sorted array par kaam karta hai. Agar array unsorted hai aur aap binary search lagate ho, toh woh galat answer dega — ya kahega ki element nahi hai, jabki woh hai. Binary search se pehle hamesha sort karo, ya pehle check karo ki array sorted hai.
+
+**Galti 3: Swap mein temp bhoolna.** \`arr[j] = arr[j + 1]; arr[j + 1] = arr[j];\` likhne se pehli value kho jaati hai — dono jagah ek hi value aa jaati hai. Hamesha \`temp\` variable use karo: pehle value temp mein, phir swap, phir temp wapas. Yeh galti beginners se baar-baar hoti hai.
+
+**Galti 4: Linear search mein -1 bhoolna.** Agar element nahi mila, toh function ko -1 return karna chahiye — 0 nahi, kyunki 0 ek valid index hai. Neeche wala linear search example 8 ke liye -1 deta hai, jo batata hai ki 8 array mein nahi hai.`,
+          `The most common sorting and searching mistakes come from four things.
+
+**Mistake 1: Off-by-one errors.** In bubble sort, the inner loop runs up to \`j < n - i - 1\`, not \`j < n\` — otherwise \`arr[j + 1]\` goes past the end of the array. In binary search, write \`low <= high\`, not \`low < high\` — otherwise the last element is never checked. Always verify loop boundaries by hand on a small example.
+
+**Mistake 2: Binary search on an unsorted array.** Binary search only works on a sorted array. If the array is unsorted and you apply binary search, it gives a wrong answer — or says the element is missing when it is really there. Before binary search, always sort first, or check first that the array is sorted.
+
+**Mistake 3: Forgetting temp in a swap.** Writing \`arr[j] = arr[j + 1]; arr[j + 1] = arr[j];\` loses the first value — both places end up with the same value. Always use a \`temp\` variable: first save the value in temp, then swap, then put temp back. Beginners make this mistake again and again.
+
+**Mistake 4: Forgetting -1 in linear search.** If the element is not found, the function should return -1 — not 0, because 0 is a valid index. The linear search example below returns -1 for 8, which says that 8 is not in the array.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Array, Ek Element, Duplicates aur Element Nahi Mila',
+          '5. Edge Cases: Empty Array, One Element, Duplicates, and Element Not Found'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Khaali array (n = 0).** Bubble sort mein outer loop \`i < n - 1\` matlab \`i < -1\` hota hai, jo ek bhi baar nahi chalta — safe hai. Binary search mein \`high = -1\` hota hai, isliye \`low <= high\` pehle hi false hai aur -1 return hota hai. Dono safe hain, par khaali array par test karna achhi aadat hai.
+
+**2. Ek element.** Ek element wala array pehle se sorted hota hai — sort karne ki zaroorat nahi. Binary search mein \`low == high == 0\` hota hai, isliye ek hi comparison mein answer mil jaata hai.
+
+**3. Duplicates.** Array \`{4, 9, 2, 9, 7}\` mein 9 do baar hai. Linear search pehla 9 deta hai — index 1. Binary search koi bhi 9 de sakta hai, pehla zaroori nahi. Agar pehla occurrence chahiye ho toh binary search ko thoda badalna padta hai — yeh interview mein poochha jaata hai.
+
+**4. Element nahi mila.** Linear search aur binary search dono -1 dete hain jab element nahi milta. Caller ko -1 check karna chahiye — bina check ke \`arr[-1]\` use karna crash karta hai. Neeche wale examples mein 8 aur 4 ke liye -1 aata hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Empty array (n = 0).** In bubble sort, the outer loop \`i < n - 1\` means \`i < -1\`, which never runs — safe. In binary search, \`high = -1\`, so \`low <= high\` is false at once and -1 is returned. Both are safe, but testing on an empty array is a good habit.
+
+**2. One element.** An array with one element is already sorted — nothing needs sorting. In binary search, \`low == high == 0\`, so a single comparison gives the answer.
+
+**3. Duplicates.** In the array \`{4, 9, 2, 9, 7}\`, 9 appears twice. Linear search returns the first 9 — index 1. Binary search may return any 9, not necessarily the first. If you need the first occurrence, binary search must be changed a little — interviews ask about this.
+
+**4. Element not found.** Both linear search and binary search return -1 when the element is missing. The caller must check for -1 — using \`arr[-1]\` without a check crashes the program. In the examples below, 8 and 4 give -1.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Selection vs Bubble, Insertion Kab Behtar aur Binary vs Linear',
+          '6. What-If: Selection vs Bubble, When Insertion Is Better, and Binary vs Linear'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: bubble ki jagah selection sort use kar lein?** Selection sort har pass mein sabse chhota element dhoondh kar aage laata hai — swaps kam hote hain (zyada se zyada n swaps), par comparisons utne hi hote hain (O(n^2)). Bubble sort mein swaps zyada hote hain, par agar kisi pass mein koi swap na ho toh sort ruk sakta hai (early exit). Dono O(n^2) hain — chhote arrays ke liye dono theek hain.
+
+**What if: array pehle se lagbhag sorted ho?** Insertion sort yahan jeetta hai — lagbhag sorted array par woh O(n) ke kareeb chalta hai, kyunki har element ko sirf ek-do jagah shift karna padta hai. Neeche wala practice example insertion sort se \`{7, 3, 9, 1}\` ko sort karta hai. Bubble sort bhi early exit se lagbhag sorted array par fast hota hai. Isi liye real libraries chhote ya lagbhag sorted arrays ke liye insertion sort use karti hain.
+
+**What if: sirf ek baar search karna ho?** Binary search ke liye pehle sort karna padta hai — O(n log n) ka kharcha. Agar sirf ek baar search karna hai, toh linear search O(n) mein sasta padta hai. Binary search tab jeetta hai jab baar-baar search karna ho — sort ek baar, search hazaar baar. Yahi trade-off interview mein poochha jaata hai.
+
+**What if: array sorted nahi hai aur binary search chahiye?** Pehle sort karo, phir binary search karo. Sort ka kharcha O(n log n) hai, par uske baad har search O(log n) mein hoti hai. Agar searches kam hain toh linear search hi behtar hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you use selection sort instead of bubble sort?** Selection sort finds the smallest element in each pass and brings it forward — swaps are few (at most n swaps), but comparisons are the same (O(n^2)). Bubble sort does more swaps, but it can stop early if a pass makes no swap (early exit). Both are O(n^2) — both are fine for small arrays.
+
+**What if the array is already almost sorted?** Insertion sort wins here — on an almost sorted array it runs close to O(n), because each element only needs shifting by one or two places. The practice example below sorts \`{7, 3, 9, 1}\` with insertion sort. Bubble sort with early exit is also fast on an almost sorted array. That is why real libraries use insertion sort for small or almost sorted arrays.
+
+**What if you only need to search once?** Binary search needs sorting first — an O(n log n) cost. If you only search once, linear search at O(n) is cheaper. Binary search wins when you search again and again — sort once, search a thousand times. Interviews ask about exactly this trade-off.
+
+**What if the array is unsorted but you want binary search?** Sort first, then binary search. Sorting costs O(n log n), but after that every search is O(log n). If searches are few, linear search is better.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Sorting aur Searching se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Sorting and Searching to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Sorting** order lagata hai, **searching** dhoondhta hai. Teen simple sorts — **bubble** (paas wale swap karo), **selection** (sabse chhota aage laao), **insertion** (sahi jagah par daalo) — teenon O(n^2) hain aur chhote arrays ke liye theek hain. **Linear search** kisi bhi array par O(n) mein chalta hai, **binary search** sirf sorted array par O(log n) mein chalta hai — har step mein aadha array khatm hota hai.
+
+Yaad rakhne wali chaar baatein: pehli, binary search se pehle **sort** karo — unsorted par woh galat answer dega. Doosri, loop ki boundaries haath se verify karo — \`j < n - i - 1\` aur \`low <= high\`. Teesri, swap mein hamesha **temp** use karo. Chauthi, element na mile toh **-1** return karo aur caller mein -1 check karo.
+
+Interview mein sorting aur searching ke sawaal aksar ek hi pattern mein aate hain: "bubble sort kaise kaam karta hai?", "binary search ki condition kya hai?", "linear aur binary mein kab kaunsa?", "insertion sort kab behtar hai?" — har ek ka answer ek hi hai: sort ka tareeka batao, complexity batao, aur binary ke liye sorted hona zaroori hai. Agar aapko yeh pattern dikhne lag gaya hai, toh sorting aur searching aapko aa gayi hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle bubble sort ka dry run haath se karo — har pass ke baad array likho. Phir binary search ko {1, 3, 5, 7, 9, 11} mein 7 ke liye trace karo — low, mid, high har step par likho. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum quick sort aur merge sort dekhenge — O(n log n) wale fast sorts.`,
+          `Let us tie the whole article together. **Sorting** puts things in order, **searching** finds things. The three simple sorts — **bubble** (swap neighbours), **selection** (bring the smallest forward), **insertion** (place in the correct spot) — are all O(n^2) and fine for small arrays. **Linear search** runs in O(n) on any array, while **binary search** runs in O(log n) only on a sorted array — each step removes half the array.
+
+Remember four things: first, **sort** before binary search — on unsorted data it gives a wrong answer. Second, verify loop boundaries by hand — \`j < n - i - 1\` and \`low <= high\`. Third, always use a **temp** variable in a swap. Fourth, return **-1** when the element is missing, and check for -1 in the caller.
+
+Interview questions on sorting and searching usually follow one pattern: "how does bubble sort work?", "what is the condition for binary search?", "when do you use linear and when binary?", "when is insertion sort better?" — the answer to every one is the same: explain the sort method, state the complexity, and remember that binary search needs sorted data. Once you start seeing that pattern, you know sorting and searching.
+
+To revise, read this article once more in this order: first dry-run bubble sort by hand — write the array after each pass. Then trace binary search for 7 in {1, 3, 5, 7, 9, 11} — write low, mid, and high at every step. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at quick sort and merge sort — the fast O(n log n) sorts.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'bars',
+      title: t(
+        'Sorting aur Searching ki Speed: O(n^2) vs O(n log n) vs O(log n)',
+        'Speed of Sorting and Searching: O(n^2) vs O(n log n) vs O(log n)'
+      ),
+      caption: t(
+        'n = 1000 par andaza steps — binary search sabse fast, bubble sort sabse slow',
+        'Rough steps at n = 1000 — binary search is fastest, bubble sort is slowest'
+      ),
+      nodes: [],
+      bars: [
+        {
+          label: t('Linear search O(n)', 'Linear search O(n)'),
+          value: 50,
+          note: t('1000 steps', '1000 steps')
+        },
+        {
+          label: t('Binary search O(log n)', 'Binary search O(log n)'),
+          value: 5,
+          note: t('10 steps', '10 steps')
+        },
+        {
+          label: t('Bubble sort O(n^2)', 'Bubble sort O(n^2)'),
+          value: 100,
+          note: t('10,00,000 steps', '1,000,000 steps')
+        },
+        {
+          label: t('Quick / merge sort O(n log n)', 'Quick / merge sort O(n log n)'),
+          value: 20,
+          note: t('10,000 steps', '10,000 steps')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Linear Search: Pehla 9 aur Missing 8',
+          'Linear Search: The First 9 and the Missing 8'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int linear_search(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main(void) {
+    int arr[] = {4, 9, 2, 9, 7};
+    printf("9 found at index %d\\n", linear_search(arr, 5, 9));
+    printf("7 found at index %d\\n", linear_search(arr, 5, 7));
+    printf("8 found at index %d\\n", linear_search(arr, 5, 8));
+    return 0;
+}`,
+        output: `9 found at index 1
+7 found at index 4
+8 found at index -1`
+      },
+      {
+        title: t(
+          'Binary Search: Sorted Array mein 7, 11 aur Missing 4',
+          'Binary Search: 7, 11, and the Missing 4 in a Sorted Array'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int binary_search(int arr[], int n, int key) {
+    int low = 0, high = n - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == key) {
+            return mid;
+        } else if (arr[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int main(void) {
+    int arr[] = {1, 3, 5, 7, 9, 11};
+    printf("7 found at index %d\\n", binary_search(arr, 6, 7));
+    printf("11 found at index %d\\n", binary_search(arr, 6, 11));
+    printf("4 found at index %d\\n", binary_search(arr, 6, 4));
+    return 0;
+}`,
+        output: `7 found at index 3
+11 found at index 5
+4 found at index -1`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Binary search ke liye sabse zaroori shart kya hai?',
+          'What is the most important condition for binary search?'
+        ),
+        opts: [
+          t('Array khaali hona chahiye', 'The array must be empty'),
+          t('Array sorted hona chahiye', 'The array must be sorted'),
+          t('Array mein duplicates nahi hone chahiye', 'The array must have no duplicates'),
+          t('Array ka size 10 se kam hona chahiye', 'The array size must be less than 10')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: binary search har step mein aadha array khatm karta hai — yeh sirf tab sahi hai jab array sorted ho. Unsorted array par binary search galat answer dega.',
+          'Correct answer: binary search removes half the array at each step — this is only correct when the array is sorted. On an unsorted array, binary search gives a wrong answer.'
+        )
+      },
+      {
+        q: t(
+          'Bubble sort, selection sort aur insertion sort ka time complexity kya hai?',
+          'What is the time complexity of bubble sort, selection sort, and insertion sort?'
+        ),
+        opts: [
+          t('O(n log n)', 'O(n log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)'),
+          t('O(log n)', 'O(log n)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: teenon simple sorts mein nested loops hote hain — har element ke liye poora array scan hota hai, isliye teenon O(n^2) hain. Fast sorts (quick, merge) O(n log n) hote hain.',
+          'Correct answer: all three simple sorts use nested loops — the whole array is scanned for every element, so all three are O(n^2). The fast sorts (quick, merge) are O(n log n).'
+        )
+      },
+      {
+        q: t(
+          'Bubble sort ke ek pass ke baad sabse bada element kahan pahunchta hai?',
+          'Where does the biggest element reach after one pass of bubble sort?'
+        ),
+        opts: [
+          t('Array ke shuru mein', 'At the start of the array'),
+          t('Array ke beech mein', 'In the middle of the array'),
+          t('Array ke aakhir mein', 'At the end of the array'),
+          t('Apni jagah par hi rehta hai', 'It stays in its place')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: bubble sort mein bada element har comparison mein peeche khisakta hai, isliye ek pass ke baad sabse bada element aakhir mein pahunch jaata hai — jaise bubble upar tairta hai.',
+          'Correct answer: in bubble sort, the bigger element moves back in every comparison, so after one pass the biggest element reaches the end — like a bubble floating up.'
+        )
+      },
+      {
+        q: t(
+          '1000 elements wale sorted array mein binary search zyada se zyada kitne steps lega?',
+          'How many steps at most will binary search take in a sorted array of 1000 elements?'
+        ),
+        opts: [
+          t('1000', '1000'),
+          t('500', '500'),
+          t('Lagbhag 10', 'About 10'),
+          t('1', '1')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: binary search har step mein array ko aadha karta hai — 2^10 = 1024, isliye 1000 elements mein lagbhag 10 steps kaafi hain. Yahi O(log n) ki taakat hai.',
+          'Correct answer: binary search halves the array at each step — 2^10 = 1024, so about 10 steps are enough for 1000 elements. That is the power of O(log n).'
+        )
+      },
+      {
+        q: t(
+          'Element na mile toh search function ko kya return karna chahiye?',
+          'What should a search function return when the element is not found?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('-1', '-1'),
+          t('Array ka size', 'The size of the array'),
+          t('NULL', 'NULL')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: -1 return karna chahiye, kyunki 0 ek valid index hai aur -1 kabhi valid index nahi hota — caller -1 check karke samajh jaata hai ki element nahi mila.',
+          'Correct answer: return -1, because 0 is a valid index and -1 is never a valid index — the caller checks for -1 and knows the element was not found.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Bubble, selection aur insertion sort teenon O(n^2) hain — chhote arrays ke liye theek, bade ke liye slow.',
+        'Bubble, selection, and insertion sort are all O(n^2) — fine for small arrays, slow for large ones.'
+      ),
+      t(
+        'Binary search sirf sorted array par chalta hai aur O(log n) mein dhoondhta hai — har step mein aadha array khatm hota hai.',
+        'Binary search only works on a sorted array and finds in O(log n) — each step removes half the array.'
+      ),
+      t(
+        'Linear search kisi bhi array par O(n) mein chalta hai aur pehla match deta hai; na mile toh -1 deta hai.',
+        'Linear search runs in O(n) on any array and returns the first match; it returns -1 when nothing is found.'
+      ),
+      t(
+        'Swap mein hamesha temp variable use karo, aur loop ki boundaries (j < n - i - 1, low <= high) haath se verify karo.',
+        'Always use a temp variable in a swap, and verify loop boundaries (j < n - i - 1, low <= high) by hand.'
+      ),
+      t(
+        'Lagbhag sorted array par insertion sort O(n) ke kareeb chalta hai — isliye real libraries chhote arrays ke liye use karti hain.',
+        'On an almost sorted array, insertion sort runs close to O(n) — which is why real libraries use it for small arrays.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Insertion Sort se {7, 3, 9, 1} Sort Karo',
+        'Practice: Sort {7, 3, 9, 1} with Insertion Sort'
+      ),
+      task: t(
+        'Neeche diya gaya program insertion sort se {7, 3, 9, 1} ko sort karta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir array ko {8, 2, 6, 4} badal kar dobara run karo aur naya sorted array khud haath se verify karo.',
+        'The program below sorts {7, 3, 9, 1} with insertion sort. Run it and verify the output matches the expected output, then change the array to {8, 2, 6, 4}, run it again, and verify the new sorted array by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void) {
+    int arr[] = {7, 3, 9, 1};
+    int n = 4;
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+      expected: `Sorted: 1 3 7 9`
+    },
+    readMinutes: 12
+  };
+
+const cSortingAdvanced: Article = {
+    id: 'c-sorting-advanced',
+    subjectId: 'c-programming',
+    title: t(
+      'Quick Sort aur Merge Sort — O(n log n) wale Fast Sorts',
+      'Quick Sort and Merge Sort — The Fast O(n log n) Sorts'
+    ),
+    summary: t(
+      'Quick sort aur merge sort ko zero se samjho: divide and conquer kaise kaam karta hai, pivot se partition kaise hota hai, merge step do sorted hisso ko kaise jodta hai, aur worst case mein kaunsa sort kab slow hota hai.',
+      'Learn quick sort and merge sort from scratch: how divide and conquer works, how a pivot partitions the array, how the merge step joins two sorted halves, and when each sort becomes slow in the worst case.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Quick Sort aur Merge Sort Kya Hain? (Divide and Conquer)',
+          '1. What Are Quick Sort and Merge Sort? (Divide and Conquer)'
+        ),
+        body: t(
+          `Pichhle article mein humne O(n^2) wale simple sorts dekhe — bubble, selection aur insertion. Bade arrays par woh slow hote hain: 10,000 elements par bubble sort lagbhag 10 crore comparisons karta hai. **Quick sort** aur **merge sort** is problem ka solution hain — dono **O(n log n)** mein chalte hain aur dono ek hi idea par bane hain: **divide and conquer** (todo, jeeto, jodo). Bada problem chhota karo, chhote problems ko solve karo, phir answers ko jod do.
+
+**Quick sort** ka idea hai: ek **pivot** chuno, array ko pivot se chhote aur bade hisso mein baant do (**partition**), phir dono hisso ko alag-alag sort karo. Partition ke baad pivot apni final sahi jagah par hota hai — use dobara chhoona nahi padta. **Merge sort** ka idea ulta hai: pehle array ko aadha-aadha karke chhote tukdon mein todo, jab tak har tukda ek element ka na ho jaaye (jo pehle se sorted hai), phir sorted tukdon ko **merge** karke wapas jodo. Merge step mein do sorted lists ko ek sorted list mein milaya jaata hai.
+
+Dono ka average time **O(n log n)** hai, par farak hai: quick sort **in-place** hota hai (extra array nahi chahiye) aur aam taur par fast hota hai, par worst case mein O(n^2) ho sakta hai. Merge sort hamesha O(n log n) deta hai aur **stable** hota hai, par use extra memory chahiye hoti hai. Interview mein dono ka farak baar-baar poochha jaata hai.`,
+          `In the previous article we saw the O(n^2) simple sorts — bubble, selection, and insertion. On large arrays they are slow: on 10,000 elements, bubble sort makes about 100 million comparisons. **Quick sort** and **merge sort** solve this problem — both run in **O(n log n)** and both are built on one idea: **divide and conquer** (break apart, win, join). Make the big problem small, solve the small problems, then join the answers.
+
+The idea of **quick sort** is: pick a **pivot**, split the array into parts smaller and bigger than the pivot (**partition**), then sort the two parts separately. After partition, the pivot sits in its final correct place — it never needs touching again. **Merge sort** works the other way: first split the array in half again and again until every piece has one element (which is already sorted), then **merge** the sorted pieces back together. The merge step joins two sorted lists into one sorted list.
+
+Both average **O(n log n)**, but they differ: quick sort is **in-place** (it needs no extra array) and is usually faster, but in the worst case it can become O(n^2). Merge sort always gives O(n log n) and is **stable**, but it needs extra memory. Interviews ask about this difference again and again.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Library ki Kitabein, Exam Results aur Phone Gallery',
+          '2. Real-Life Examples: Library Books, Exam Results, and a Phone Gallery'
+        ),
+        body: t(
+          `Divide and conquer roz ki zindagi mein har jagah hai. Sabse seedha example hai **library ki kitabein**. Hazaaron kitabon ko sort karna ho toh pehle unhe hisso mein baanto — A se H, I se P, Q se Z. Har hissa alag se sort karo, phir hisso ko merge kar do. Yahi merge sort hai — bada kaam chhota karo, chhota kaam solve karo, phir jod do. Ek aadmi ko poori library sort karne mein din lag jaayega, par teen log alag hisse sort karke merge kar dein toh kaam fast ho jaata hai.
+
+Doosra example hai **exam results**. Lakhon students ke results sort karne ke liye quick sort jaisa tareeka use hota hai: ek pivot score chuno (jaise 60 marks), students ko 60 se kam aur zyada mein baanto, phir dono groups ko alag se sort karo. Har baantne par problem aadhi ho jaati hai, isliye lakhon records bhi seconds mein sort ho jaate hain. Yeh O(n log n) ki taakat hai.
+
+Teesra example hai **phone gallery**. Photos date ke hisaab se sorted dikhti hain — yeh merge sort jaisa stable sort hota hai, kyunki same date wali photos ka order nahi badalna chahiye. Stability ka matlab hai: barabar elements ka pehle wala order bana rehta hai. Gallery mein yeh zaroori hai, isliye wahan merge sort jaisa stable sort use hota hai.`,
+          `Divide and conquer is everywhere in daily life. The simplest example is **library books**. To sort thousands of books, first split them into parts — A to H, I to P, Q to Z. Sort each part separately, then merge the parts. That is merge sort — make the big job small, solve the small jobs, then join them. One person would take a day to sort the whole library, but three people sorting separate parts and merging them finish fast.
+
+A second example is **exam results**. To sort the results of hundreds of thousands of students, a method like quick sort is used: pick a pivot score (such as 60 marks), split students into below 60 and above 60, then sort the two groups separately. Each split halves the problem, so even hundreds of thousands of records sort in seconds. That is the power of O(n log n).
+
+A third example is a **phone gallery**. Photos appear sorted by date — this is a stable sort like merge sort, because photos from the same date should keep their order. Stability means: equal elements keep their original order. This matters in a gallery, so a stable sort like merge sort is used there.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Quick Sort se {10, 7, 8, 9, 1, 5} Sort Karna (Dry Run)',
+          '3. Step-by-Step: Sorting {10, 7, 8, 9, 1, 5} with Quick Sort (Dry Run)'
+        ),
+        body: t(
+          `Ab hum quick sort ko haath se dry run karte hain. Array hai \`{10, 7, 8, 9, 1, 5}\`. Hum aakhri element ko pivot banate hain — pivot = 5. **Partition** ka kaam hai pivot se chhote elements ko left mein aur bade ko right mein laana.
+
+**Partition (pivot 5):** \`i\` chhote hisse ki boundary batata hai, shuru mein -1. \`j\` 0 se 4 tak chalta hai: 10 > 5, skip. 7 > 5, skip. 8 > 5, skip. 9 > 5, skip. 1 < 5, isliye \`i\` 0 hota hai aur 1 ko index 0 se swap karo: \`{1, 7, 8, 9, 10, 5}\`. Loop khatm. Ab pivot ko \`i + 1\` = 1 par laao: index 1 aur 5 swap karo: \`{1, 5, 8, 9, 10, 7}\`. Pivot 5 apni final jagah (index 1) par hai — uske left mein sirf 1 hai (chhota), right mein sab bade hain.
+
+**Recursion:** left hissa \`{1}\` ek element ka hai — pehle se sorted. Right hissa \`{8, 9, 10, 7}\` ko dobara quick sort karo, pivot = 7. Partition se 7 apni jagah par aata hai aur array ban jaata hai \`{1, 5, 7, 8, 9, 10}\`. Final array: \`1 5 7 8 9 10\`. Neeche wala code yahi karta hai: \`partition\` function pivot ko sahi jagah par laata hai aur \`quick_sort\` dono hisso par recursion karta hai.`,
+          `Now let us dry-run quick sort by hand. The array is \`{10, 7, 8, 9, 1, 5}\`. We make the last element the pivot — pivot = 5. The job of **partition** is to bring elements smaller than the pivot to the left and bigger ones to the right.
+
+**Partition (pivot 5):** \`i\` marks the boundary of the small part, starting at -1. \`j\` runs from 0 to 4: 10 > 5, skip. 7 > 5, skip. 8 > 5, skip. 9 > 5, skip. 1 < 5, so \`i\` becomes 0 and 1 is swapped with index 0: \`{1, 7, 8, 9, 10, 5}\`. The loop ends. Now bring the pivot to \`i + 1\` = 1: swap index 1 with 5: \`{1, 5, 8, 9, 10, 7}\`. The pivot 5 is in its final place (index 1) — only 1 (smaller) is on its left, and everything bigger is on its right.
+
+**Recursion:** the left part \`{1}\` has one element — already sorted. The right part \`{8, 9, 10, 7}\` is quick-sorted again, with pivot = 7. Partition puts 7 in its place and the array becomes \`{1, 5, 7, 8, 9, 10}\`. Final array: \`1 5 7 8 9 10\`. The code below does exactly this: the \`partition\` function puts the pivot in its correct place, and \`quick_sort\` recurses on both parts.`
+        ),
+        code: {
+          title: t(
+            'Quick Sort: {10, 7, 8, 9, 1, 5} ko Sort Karo',
+            'Quick Sort: Sort {10, 7, 8, 9, 1, 5}'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    return i + 1;
+}
+
+void quick_sort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quick_sort(arr, low, pi - 1);
+        quick_sort(arr, pi + 1, high);
+    }
+}
+
+int main(void) {
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = 6;
+    quick_sort(arr, 0, n - 1);
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+          output: `Sorted: 1 5 7 8 9 10`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Pivot Galat Chunna, Base Case Bhoolna aur Merge ki Copy',
+          '4. Common Mistakes: Picking the Wrong Pivot, Forgetting the Base Case, and the Merge Copy'
+        ),
+        body: t(
+          `Quick aur merge sort mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: Pivot hamesha pehla ya aakhri chunna.** Agar array pehle se sorted hai aur pivot aakhri element hai, toh partition ek taraf khaali aur doosri taraf n - 1 elements deta hai — recursion n levels deep ho jaata hai aur time O(n^2) ho jaata hai. Yahi quick sort ka worst case hai. Isse bachne ke liye random pivot chuno ya beech wala element (median-of-three) chuno. Interview mein yahi poochha jaata hai: "quick sort kab O(n^2) hota hai?"
+
+**Galti 2: Base case bhoolna.** \`quick_sort\` aur \`merge_sort\` mein \`if (low < high)\` ya \`if (left < right)\` base case hai — bina iske recursion kabhi nahi rukta aur stack overflow hota hai. Har recursive function mein pehle socho: recursion kab rukega?
+
+**Galti 3: Merge mein bache hue elements bhoolna.** Merge karte waqt ek list khatm ho jaati hai aur doosri mein elements bachte hain — unhe copy karna zaroori hai. Neeche wale merge sort example mein do \`while\` loops bache hue elements ko copy karte hain. Agar yeh loops bhool gaye, toh aakhri elements gayab ho jaayenge aur array adhura sort hoga.
+
+**Galti 4: Partition mein \`<\` ki jagah \`<=\` likhna.** Agar partition mein \`arr[j] <= pivot\` likh diya, toh pivot ke barabar elements bhi left mein chale jaate hain — duplicates wale array par partition galat ho sakta hai aur recursion infinite ho sakta hai. Partition ki condition ko chhote example par haath se verify karo.`,
+          `The most common quick sort and merge sort mistakes come from four things.
+
+**Mistake 1: Always picking the first or last element as pivot.** If the array is already sorted and the pivot is the last element, partition gives an empty side and a side with n - 1 elements — recursion goes n levels deep and time becomes O(n^2). This is quick sort's worst case. To avoid it, pick a random pivot or the middle element (median-of-three). Interviews ask exactly this: "when does quick sort become O(n^2)?"
+
+**Mistake 2: Forgetting the base case.** In \`quick_sort\` and \`merge_sort\`, \`if (low < high)\` or \`if (left < right)\` is the base case — without it, recursion never stops and the stack overflows. In every recursive function, first ask: when does the recursion stop?
+
+**Mistake 3: Forgetting the leftover elements in merge.** While merging, one list ends and the other still has elements — they must be copied. In the merge sort example below, two \`while\` loops copy the leftover elements. If you forget these loops, the last elements disappear and the array is only partly sorted.
+
+**Mistake 4: Writing \`<=\` instead of \`<\` in partition.** If partition uses \`arr[j] <= pivot\`, elements equal to the pivot also go left — on an array with duplicates, partition can go wrong and recursion can become infinite. Verify the partition condition by hand on a small example.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Sorted Array, Reverse Array, Duplicates aur Ek Element',
+          '5. Edge Cases: Sorted Array, Reverse Array, Duplicates, and One Element'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Pehle se sorted array.** Merge sort ke liye yeh best case jaisa hai — phir bhi O(n log n) kaam karta hai, kyunki woh hamesha aadha karta hai. Quick sort ke liye yeh worst case hai agar pivot aakhri element ho — har partition sirf ek element alag karta hai aur time O(n^2) ho jaata hai. Random pivot yeh problem khatm kar deta hai.
+
+**2. Reverse sorted array.** Dono sorts ke liye yeh bhi ek test hai. Merge sort phir bhi O(n log n) deta hai. Quick sort mein pehla pivot sabse chhota ho toh partition ek taraf khaali hota hai — phir se O(n^2). Neeche wala doosra merge example \`{38, 27, 43, 3, 9, 82, 10}\` ko sort karta hai, jismein bade aur chhote mix hain.
+
+**3. Saare elements barabar.** Agar saare elements barabar hain, toh quick sort ka partition ek taraf saare elements bhej deta hai — worst case O(n^2). Merge sort phir bhi O(n log n) deta hai aur stable rehta hai. Duplicates wale data ke liye merge sort safe choice hai.
+
+**4. Ek element ya khaali array.** Ek element wala array pehle se sorted hai — base case \`low < high\` false hota hai aur recursion turant rukta hai. Khaali array par \`quick_sort(arr, 0, -1)\` bhi safe hai, kyunki \`0 < -1\` false hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Already sorted array.** For merge sort, this is like a best case — it still does O(n log n) work, because it always halves the array. For quick sort, this is the worst case if the pivot is the last element — every partition separates only one element and time becomes O(n^2). A random pivot removes this problem.
+
+**2. Reverse sorted array.** This is a test for both sorts too. Merge sort still gives O(n log n). In quick sort, if the first pivot is the smallest, partition leaves one side empty — again O(n^2). The second merge example below sorts \`{38, 27, 43, 3, 9, 82, 10}\`, which mixes large and small values.
+
+**3. All elements equal.** If all elements are equal, quick sort's partition sends all elements to one side — worst case O(n^2). Merge sort still gives O(n log n) and stays stable. For data with duplicates, merge sort is the safe choice.
+
+**4. One element or an empty array.** An array with one element is already sorted — the base case \`low < high\` is false and recursion stops at once. An empty array with \`quick_sort(arr, 0, -1)\` is also safe, because \`0 < -1\` is false.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Quick vs Merge, Stability aur Extra Memory',
+          '6. What-If: Quick vs Merge, Stability, and Extra Memory'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: quick sort ki jagah merge sort use kar lein?** Merge sort hamesha O(n log n) deta hai aur stable hota hai — isliye linked lists aur bade files (external sorting) ke liye behtar hai. Par use extra memory chahiye hoti hai — merge step mein temporary arrays bante hain. Neeche wale merge example mein \`L[10]\` aur \`R[10]\` temporary arrays hain. Quick sort in-place hota hai, isliye memory kam use karta hai aur aam taur par fast hota hai — isliye zyadatar libraries (jaise C ki \`qsort\`) quick sort jaisa tareeka use karti hain.
+
+**What if: stability chahiye ho?** Stability ka matlab hai barabar elements ka order bana rehta hai. Merge sort stable hota hai kyunki merge mein \`L[i] <= R[j]\` likha hai — barabar hone par left wala pehle aata hai. Quick sort stable nahi hota, kyunki partition mein swaps order badal dete hain. Agar aap students ko pehle naam se sort karke phir marks se sort karte ho, toh stability zaroori hai — warna naam wala order kho jaayega.
+
+**What if: array bahut bada ho aur memory mein na aaye?** Merge sort ko **external sorting** mein use karte hain — file ko tukdon mein baanto, har tukde ko sort karo, phir merge karo. Quick sort ko is kaam ke liye nahi use karte, kyunki partition ke liye random access chahiye hota hai. Bade data ke liye merge sort hi standard hai.
+
+**What if: recursion ki jagah loop use karein?** Dono sorts ko iterative bhi likha ja sakta hai, par recursive version padhne aur samajhne mein aasan hota hai. Recursion ki depth log(n) hoti hai average case mein, isliye stack overflow ka risk kam hota hai — sirf worst case mein depth n ho jaati hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you use merge sort instead of quick sort?** Merge sort always gives O(n log n) and is stable — so it is better for linked lists and large files (external sorting). But it needs extra memory — the merge step builds temporary arrays. In the merge example below, \`L[10]\` and \`R[10]\` are temporary arrays. Quick sort is in-place, so it uses less memory and is usually faster — that is why most libraries (such as C's \`qsort\`) use a quick sort style method.
+
+**What if you need stability?** Stability means equal elements keep their order. Merge sort is stable because merge writes \`L[i] <= R[j]\` — when equal, the left one comes first. Quick sort is not stable, because swaps in partition change the order. If you sort students by name first and then by marks, stability matters — otherwise the name order is lost.
+
+**What if the array is too big to fit in memory?** Merge sort is used in **external sorting** — split the file into pieces, sort each piece, then merge them. Quick sort is not used for this, because partition needs random access. For large data, merge sort is the standard.
+
+**What if you use a loop instead of recursion?** Both sorts can be written iteratively, but the recursive version is easier to read and understand. Recursion depth is log(n) on average, so the risk of stack overflow is low — only in the worst case does depth become n.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Quick aur Merge Sort se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Quick and Merge Sort to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Quick sort** pivot chun kar partition karta hai — pivot apni final jagah par pahunch jaata hai, phir dono hisse alag se sort hote hain. **Merge sort** array ko aadha-aadha karke todta hai, phir sorted tukdon ko merge karke jodta hai. Dono **divide and conquer** par bane hain aur average mein **O(n log n)** mein chalte hain — bubble sort ke O(n^2) se bahut fast.
+
+Yaad rakhne wali chaar baatein: pehli, quick sort **in-place** aur fast hai, par worst case O(n^2) hota hai jab pivot bura ho — random pivot ya median-of-three use karo. Doosri, merge sort hamesha O(n log n) deta hai aur **stable** hota hai, par use extra memory chahiye. Teesri, har recursive function mein **base case** likho, warna stack overflow hoga. Chauthi, merge mein bache hue elements ko copy karna mat bhoolo.
+
+Interview mein quick aur merge sort ke sawaal aksar ek hi pattern mein aate hain: "quick sort ka worst case kab aata hai?", "merge sort stable kyun hota hai?", "quick vs merge — kab kaunsa?", "partition kaise kaam karta hai?" — har ek ka answer ek hi hai: divide and conquer samjhao, pivot aur merge ka step batao, aur complexity aur stability ka farak batao. Agar aapko yeh pattern dikhne lag gaya hai, toh advanced sorting aapko aa gayi hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle quick sort ka partition haath se karo — pivot 5 par {10, 7, 8, 9, 1, 5} ko trace karo. Phir merge sort ko {12, 11, 13, 5, 6, 7} par trace karo — pehle todo, phir merge karo. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum linked list dekhenge — nodes jo pointers se judte hain aur size ki koi limit nahi hoti.`,
+          `Let us tie the whole article together. **Quick sort** picks a pivot and partitions — the pivot reaches its final place, then both parts are sorted separately. **Merge sort** splits the array in half again and again, then merges the sorted pieces back together. Both are built on **divide and conquer** and run in **O(n log n)** on average — much faster than bubble sort's O(n^2).
+
+Remember four things: first, quick sort is **in-place** and fast, but its worst case is O(n^2) when the pivot is bad — use a random pivot or median-of-three. Second, merge sort always gives O(n log n) and is **stable**, but it needs extra memory. Third, write a **base case** in every recursive function, or the stack will overflow. Fourth, never forget to copy the leftover elements in merge.
+
+Interview questions on quick and merge sort usually follow one pattern: "when does quick sort hit its worst case?", "why is merge sort stable?", "quick vs merge — when do you use which?", "how does partition work?" — the answer to every one is the same: explain divide and conquer, explain the pivot and merge steps, and explain the difference in complexity and stability. Once you start seeing that pattern, you know advanced sorting.
+
+To revise, read this article once more in this order: first do the quick sort partition by hand — trace {10, 7, 8, 9, 1, 5} with pivot 5. Then trace merge sort on {12, 11, 13, 5, 6, 7} — first split, then merge. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at linked lists — nodes joined by pointers, with no size limit.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'tree',
+      title: t(
+        'Merge Sort ka Divide and Conquer Tree: {12, 11, 13, 5, 6, 7}',
+        'Merge Sort Divide and Conquer Tree: {12, 11, 13, 5, 6, 7}'
+      ),
+      caption: t(
+        'Pehle array aadha-aadha toot-ta hai, phir sorted tukde merge hokar wapas judte hain',
+        'First the array splits in half again and again, then the sorted pieces merge back together'
+      ),
+      nodes: [
+        {
+          t: t('{12, 11, 13, 5, 6, 7}', '{12, 11, 13, 5, 6, 7}'),
+          s: t('Poora array — pehle aadha karo', 'Whole array — split it in half first')
+        },
+        {
+          t: t('{12, 11, 13} aur {5, 6, 7}', '{12, 11, 13} and {5, 6, 7}'),
+          s: t('Do hisse — har hisse ko phir aadha karo', 'Two parts — halve each part again'),
+          depth: 1
+        },
+        {
+          t: t('{12} {11} {13} {5} {6} {7}', '{12} {11} {13} {5} {6} {7}'),
+          s: t('Ek element — pehle se sorted, ab merge shuru', 'One element each — already sorted, merging starts now'),
+          depth: 2
+        },
+        {
+          t: t('Merge: {11, 12, 13} aur {5, 6, 7}', 'Merge: {11, 12, 13} and {5, 6, 7}'),
+          s: t('Do sorted lists ko ek sorted list mein milao', 'Join two sorted lists into one sorted list'),
+          depth: 1
+        },
+        {
+          t: t('{5, 6, 7, 11, 12, 13}', '{5, 6, 7, 11, 12, 13}'),
+          s: t('Final sorted array — hamesha O(n log n)', 'Final sorted array — always O(n log n)')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Merge Sort: {12, 11, 13, 5, 6, 7} ko Sort Karo',
+          'Merge Sort: Sort {12, 11, 13, 5, 6, 7}'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    int L[10], R[10];
+    for (int i = 0; i < n1; i++) {
+        L[i] = arr[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = arr[mid + 1 + j];
+    }
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void merge_sort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = (left + right) / 2;
+        merge_sort(arr, left, mid);
+        merge_sort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+int main(void) {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = 6;
+    merge_sort(arr, 0, n - 1);
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+        output: `Sorted: 5 6 7 11 12 13`
+      },
+      {
+        title: t(
+          'Merge Sort: {38, 27, 43, 3, 9, 82, 10} ko Sort Karo',
+          'Merge Sort: Sort {38, 27, 43, 3, 9, 82, 10}'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    int L[10], R[10];
+    for (int i = 0; i < n1; i++) {
+        L[i] = arr[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = arr[mid + 1 + j];
+    }
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void merge_sort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = (left + right) / 2;
+        merge_sort(arr, left, mid);
+        merge_sort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+int main(void) {
+    int arr[] = {38, 27, 43, 3, 9, 82, 10};
+    int n = 7;
+    merge_sort(arr, 0, n - 1);
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+        output: `Sorted: 3 9 10 27 38 43 82`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Quick sort ka worst case kab aata hai?',
+          'When does the worst case of quick sort occur?'
+        ),
+        opts: [
+          t('Jab array pehle se sorted ho aur pivot aakhri element ho', 'When the array is already sorted and the pivot is the last element'),
+          t('Jab array khaali ho', 'When the array is empty'),
+          t('Jab array mein duplicates hon', 'When the array has duplicates'),
+          t('Jab array ka size chhota ho', 'When the array size is small')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: sorted array par aakhri pivot har partition mein sirf ek element alag karta hai, isliye recursion n levels deep ho jaata hai aur time O(n^2) ho jaata hai. Random pivot isse bachata hai.',
+          'Correct answer: on a sorted array, the last pivot separates only one element per partition, so recursion goes n levels deep and time becomes O(n^2). A random pivot prevents this.'
+        )
+      },
+      {
+        q: t(
+          'Merge sort stable kyun hota hai?',
+          'Why is merge sort stable?'
+        ),
+        opts: [
+          t('Kyunki woh in-place hota hai', 'Because it is in-place'),
+          t('Kyunki merge mein L[i] <= R[j] likha hai — barabar hone par left wala pehle aata hai', 'Because merge writes L[i] <= R[j] — when equal, the left one comes first'),
+          t('Kyunki woh fast hota hai', 'Because it is fast'),
+          t('Kyunki woh recursion use nahi karta', 'Because it does not use recursion')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: merge step mein <= ki wajah se barabar elements mein left wale ko pehle liya jaata hai, isliye unka pehle wala order bana rehta hai — yahi stability hai.',
+          'Correct answer: in the merge step, the <= means the left element is taken first when equal, so their original order stays — that is stability.'
+        )
+      },
+      {
+        q: t(
+          'Quick sort aur merge sort mein memory ka sabse bada farak kya hai?',
+          'What is the biggest memory difference between quick sort and merge sort?'
+        ),
+        opts: [
+          t('Dono ko barabar memory chahiye', 'Both need the same memory'),
+          t('Quick sort in-place hota hai, merge sort ko extra memory chahiye', 'Quick sort is in-place, merge sort needs extra memory'),
+          t('Merge sort in-place hota hai, quick sort ko extra memory chahiye', 'Merge sort is in-place, quick sort needs extra memory'),
+          t('Dono ko koi extra memory nahi chahiye', 'Neither needs any extra memory')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: quick sort array ke andar hi swap karta hai, jabki merge sort ko temporary arrays (L aur R) chahiye hote hain — isliye memory kam ho toh quick sort behtar hai.',
+          'Correct answer: quick sort swaps inside the array itself, while merge sort needs temporary arrays (L and R) — so when memory is tight, quick sort is better.'
+        )
+      },
+      {
+        q: t(
+          'Partition ke baad pivot kahan hota hai?',
+          'Where is the pivot after partition?'
+        ),
+        opts: [
+          t('Array ke shuru mein', 'At the start of the array'),
+          t('Apni final sahi jagah par', 'In its final correct place'),
+          t('Array ke aakhir mein', 'At the end of the array'),
+          t('Kahin bhi ho sakta hai', 'It can be anywhere')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: partition pivot se chhote elements ko left aur bade ko right bhejta hai, isliye pivot apni final sorted jagah par pahunch jaata hai aur use dobara chhoona nahi padta.',
+          'Correct answer: partition sends elements smaller than the pivot to the left and bigger ones to the right, so the pivot reaches its final sorted place and never needs touching again.'
+        )
+      },
+      {
+        q: t(
+          'Merge sort ka worst case time complexity kya hai?',
+          'What is the worst case time complexity of merge sort?'
+        ),
+        opts: [
+          t('O(n^2)', 'O(n^2)'),
+          t('O(n)', 'O(n)'),
+          t('O(n log n)', 'O(n log n)'),
+          t('O(log n)', 'O(log n)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: merge sort hamesha array ko aadha karta hai chahe data kaisa bhi ho, isliye worst case bhi O(n log n) hota hai — quick sort ke worst case O(n^2) se behtar.',
+          'Correct answer: merge sort always halves the array whatever the data looks like, so even its worst case is O(n log n) — better than quick sort worst case of O(n^2).'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Quick sort pivot se partition karta hai — pivot apni final jagah par pahunch jaata hai, phir dono hisse alag se sort hote hain.',
+        'Quick sort partitions around a pivot — the pivot reaches its final place, then both parts are sorted separately.'
+      ),
+      t(
+        'Merge sort array ko aadha-aadha todta hai aur sorted tukdon ko merge karke jodta hai — hamesha O(n log n).',
+        'Merge sort splits the array in half again and again and joins the sorted pieces with merge — always O(n log n).'
+      ),
+      t(
+        'Quick sort in-place aur fast hai, par worst case O(n^2) hota hai jab pivot bura ho — random pivot use karo.',
+        'Quick sort is in-place and fast, but its worst case is O(n^2) when the pivot is bad — use a random pivot.'
+      ),
+      t(
+        'Merge sort stable hota hai (barabar elements ka order bana rehta hai) par use extra memory chahiye hoti hai.',
+        'Merge sort is stable (equal elements keep their order) but it needs extra memory.'
+      ),
+      t(
+        'Har recursive function mein base case likho (low < high) aur merge mein bache hue elements ko copy karna mat bhoolo.',
+        'Write a base case (low < high) in every recursive function, and never forget to copy the leftover elements in merge.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Quick Sort se {33, 12, 45, 9, 21} Sort Karo',
+        'Practice: Sort {33, 12, 45, 9, 21} with Quick Sort'
+      ),
+      task: t(
+        'Neeche diya gaya program quick sort se {33, 12, 45, 9, 21} ko sort karta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir array ko {50, 20, 40, 10, 30} badal kar dobara run karo aur naya sorted array khud haath se verify karo.',
+        'The program below sorts {33, 12, 45, 9, 21} with quick sort. Run it and verify the output matches the expected output, then change the array to {50, 20, 40, 10, 30}, run it again, and verify the new sorted array by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    return i + 1;
+}
+
+void quick_sort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quick_sort(arr, low, pi - 1);
+        quick_sort(arr, pi + 1, high);
+    }
+}
+
+int main(void) {
+    int arr[] = {33, 12, 45, 9, 21};
+    int n = 5;
+    quick_sort(arr, 0, n - 1);
+    printf("Sorted:");
+    for (int i = 0; i < n; i++) {
+        printf(" %d", arr[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+      expected: `Sorted: 9 12 21 33 45`
+    },
+    readMinutes: 12
+  };
+
+const cLinkedList: Article = {
+    id: 'c-linked-list',
+    subjectId: 'c-programming',
+    title: t(
+      'Linked List — Insert, Delete aur Traverse Karna',
+      'Linked List — Inserting, Deleting, and Traversing'
+    ),
+    summary: t(
+      'Linked list ko zero se samjho: node aur pointer se list kaise banti hai, end aur beginning mein insert kaise karte hain, beech se delete kaise karte hain, aur array se linked list kab behtar hoti hai.',
+      'Learn linked lists from scratch: how nodes and pointers build a list, how to insert at the end and the beginning, how to delete from the middle, and when a linked list beats an array.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Linked List Kya Hai? (Node, Data aur Next Pointer)',
+          '1. What Is a Linked List? (Node, Data, and Next Pointer)'
+        ),
+        body: t(
+          `Array mein saare elements ek ke baad ek, ek hi jagah par hote hain — isliye array ka size pehle se tay karna padta hai aur beech mein insert karna mushkil hota hai. **Linked list** is problem ka solution hai: ismein har element ek alag **node** hota hai, aur har node mein do cheezein hoti hain — **data** (jaise number 10) aur **next** (agle node ka address). Nodes memory mein kahin bhi ho sakte hain, par \`next\` pointer unhe ek chain ki tarah jod deta hai. List ka pehla node **head** kehlata hai, aur aakhri node ka \`next\` \`NULL\` hota hai — yahi batata hai ki list khatm ho gayi.
+
+C mein node ek **struct** hota hai: \`struct Node { int data; struct Node *next; };\`. Har naya node \`malloc\` se banta hai, kyunki list kab badhegi yeh pehle se nahi pata hota. Node banane ke baad uska \`data\` set karo, \`next\` ko \`NULL\` ya agle node par set karo, aur use list se jod do. List ko padhne ke liye head se shuru karo aur \`next\` ko follow karte hue aage badho, jab tak \`NULL\` na mil jaaye — is process ko **traverse** kehte hain.
+
+Linked list ki sabse badi taakat hai ki iska size kabhi fixed nahi hota — jitne nodes chahiye, utne \`malloc\` se banao. Aur beech mein insert ya delete karna O(1) hota hai, kyunki sirf pointers badalne padte hain, elements shift nahi karne padte. Isi liye stack, queue aur bahut saare real systems linked list par bane hain.`,
+          `In an array, all elements sit one after another in one place — so the size must be decided in advance, and inserting in the middle is hard. A **linked list** solves this problem: every element is a separate **node**, and each node holds two things — **data** (such as the number 10) and **next** (the address of the next node). Nodes can sit anywhere in memory, but the \`next\` pointer joins them like a chain. The first node of the list is called the **head**, and the last node's \`next\` is \`NULL\` — that is what says the list has ended.
+
+In C, a node is a **struct**: \`struct Node { int data; struct Node *next; };\`. Every new node is built with \`malloc\`, because nobody knows in advance how much the list will grow. After creating a node, set its \`data\`, set its \`next\` to \`NULL\` or to the next node, and join it to the list. To read the list, start at the head and follow \`next\` forward until you reach \`NULL\` — this process is called **traversing**.
+
+The greatest strength of a linked list is that its size is never fixed — create as many nodes as you need with \`malloc\`. And inserting or deleting in the middle is O(1), because only pointers change; no elements need shifting. That is why stacks, queues, and many real systems are built on linked lists.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Train ke Dabbe, Playlist aur Browser History',
+          '2. Real-Life Examples: Train Coaches, a Playlist, and Browser History'
+        ),
+        body: t(
+          `Linked list roz ki zindagi mein har jagah hai. Sabse seedha example hai **train ke dabbe**. Har dabba ek node hai — usmein passengers (data) hote hain aur agle dabbe se judne wala connector (next pointer) hota hai. Dabbe kahin bhi ho sakte hain, par connector unhe ek line mein jod deta hai. Beech mein naya dabba jodna aasan hai — sirf do connectors badlo, poori train ko shift nahi karna padta. Yahi linked list ka insert hai.
+
+Doosra example hai **music playlist**. Playlist mein gaane ek ke baad ek chalte hain — har gaane ko pata hai ki agla gaana kaunsa hai. Beech mein gaana add karna ya delete karna aasan hai, kyunki sirf links badalte hain. Array wali playlist mein beech se gaana hatane par saare gaane shift karne padte — linked list mein sirf ek pointer badalta hai.
+
+Teesra example hai **browser history**. Har page ka pata hai ki usse pehle kaunsa page tha aur uske baad kaunsa aaya. Back button dabane par browser pehle wale node par jaata hai, forward dabane par agle par. History kabhi khatm nahi hoti — naye pages aate rehte hain aur list badhti rehti hai. Yahi dynamic size linked list ki pehchan hai.`,
+          `Linked lists are everywhere in daily life. The simplest example is **train coaches**. Every coach is a node — it holds passengers (data) and a connector to the next coach (the next pointer). Coaches can sit anywhere, but the connector joins them in one line. Adding a new coach in the middle is easy — just change two connectors; the whole train does not need shifting. That is insertion in a linked list.
+
+A second example is a **music playlist**. Songs in a playlist play one after another — each song knows which song comes next. Adding or removing a song in the middle is easy, because only links change. In an array playlist, removing a song from the middle would shift all the songs — in a linked list, only one pointer changes.
+
+A third example is **browser history**. Every page knows which page came before it and which came after. Pressing back takes the browser to the previous node, pressing forward takes it to the next. History never ends — new pages keep arriving and the list keeps growing. This growing size is the mark of a linked list.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 10, 20, 30 Append Karna aur Traverse Karna (Dry Run)',
+          '3. Step-by-Step: Appending 10, 20, 30 and Traversing (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek linked list ko haath se dry run karte hain. Kaam hai: khaali list mein 10, 20, 30 append karo (end mein jodo), phir traverse karke print karo.
+
+**Step 1:** \`head = NULL\` — list khaali hai. **Append 10:** \`new_node(10)\` se malloc hota hai, node ka data 10 aur next NULL. Head NULL hai, isliye head hi naya node ban jaata hai. List: \`10 -> NULL\`. **Append 20:** naya node (20, NULL) banta hai. Head NULL nahi hai, isliye head se chal kar aakhri node (10) tak jaao aur uska next naye node par set karo. List: \`10 -> 20 -> NULL\`. **Append 30:** phir se aakhri node (20) tak jaao aur uska next naye node par set karo. List: \`10 -> 20 -> 30 -> NULL\`.
+
+**Traverse:** \`print_list\` mein \`temp = head\` se shuru karo. Jab tak \`temp != NULL\`, \`temp->data\` print karo aur \`temp = temp->next\` se aage badho. Output hota hai \`10 -> 20 -> 30 -> NULL\`. **Free:** \`free_list\` mein har node ko ek-ek karke free karo — pehle agla node yaad rakho, phir current ko free karo, warna agle node ka address kho jaayega. Neeche wala code yahi karta hai. Ise run karo aur output ko apne dry run se milao.`,
+          `Now let us dry-run a linked list by hand. The task is: append 10, 20, 30 to an empty list (add at the end), then traverse and print it.
+
+**Step 1:** \`head = NULL\` — the list is empty. **Append 10:** \`new_node(10)\` calls malloc, and the node's data is 10 with next NULL. Since head is NULL, head itself becomes the new node. List: \`10 -> NULL\`. **Append 20:** a new node (20, NULL) is created. Head is not NULL, so walk from head to the last node (10) and set its next to the new node. List: \`10 -> 20 -> NULL\`. **Append 30:** walk to the last node (20) again and set its next to the new node. List: \`10 -> 20 -> 30 -> NULL\`.
+
+**Traverse:** in \`print_list\`, start with \`temp = head\`. While \`temp != NULL\`, print \`temp->data\` and move forward with \`temp = temp->next\`. The output is \`10 -> 20 -> 30 -> NULL\`. **Free:** in \`free_list\`, free each node one by one — first remember the next node, then free the current one, or the next node's address is lost. The code below does exactly this. Run it and match the output against your dry run.`
+        ),
+        code: {
+          title: t(
+            'Linked List: 10, 20, 30 Append Karo aur Traverse Karo',
+            'Linked List: Append 10, 20, 30 and Traverse'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *new_node(int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = NULL;
+    return node;
+}
+
+void append(struct Node **head, int data) {
+    struct Node *node = new_node(data);
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    struct Node *temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = node;
+}
+
+void print_list(struct Node *head) {
+    struct Node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\\n");
+}
+
+void free_list(struct Node *head) {
+    struct Node *temp = NULL;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+int main(void) {
+    struct Node *head = NULL;
+    append(&head, 10);
+    append(&head, 20);
+    append(&head, 30);
+    print_list(head);
+    free_list(head);
+    return 0;
+}`,
+          output: `10 -> 20 -> 30 -> NULL`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Head Update Bhoolna, next NULL Na Karna aur Free ke Baad Use',
+          '4. Common Mistakes: Forgetting to Update Head, Not Setting next to NULL, and Use After Free'
+        ),
+        body: t(
+          `Linked list mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: Head update bhoolna.** \`append\` aur \`push_front\` mein head badal sakta hai, isliye head ko \`struct Node **head\` (pointer to pointer) se pass karna padta hai. Agar aap sirf \`struct Node *head\` pass karoge, toh function ke andar head badlega, par bahar wali head wahi rahegi — list kho jaayegi. Neeche wale examples mein \`append(&head, ...)\` aur \`push_front(&head, ...)\` mein \`&\` dhyaan se dekho.
+
+**Galti 2: Naye node ka \`next\` NULL na karna.** \`malloc\` se bani memory mein kachra hota hai — agar aap \`node->next = NULL\` bhool gaye, toh \`next\` mein kachra address hoga aur traverse karte waqt program kahin bhi chala jaayega ya crash karega. \`new_node\` mein hamesha \`next = NULL\` likho.
+
+**Galti 3: Free ke baad node use karna.** Node ko \`free\` karne ke baad uska \`data\` ya \`next\` padhna use-after-free hai. Delete karte waqt pehle agla node yaad rakho, phir free karo. \`free_list\` mein yahi pattern hai: \`temp = head; head = head->next; free(temp);\`.
+
+**Galti 4: Delete mein pehla node bhoolna.** Agar delete karne wala node head hi hai, toh head ko aage badhana padta hai — warna head freed memory ki taraf point karega. Neeche wale delete example mein head wala case alag se handle hota hai: \`if ((*head)->data == key)\` mein head ko aage badha kar purane head ko free kiya jaata hai.`,
+          `The most common linked list mistakes come from four things.
+
+**Mistake 1: Forgetting to update head.** In \`append\` and \`push_front\`, head can change, so head must be passed as \`struct Node **head\` (a pointer to a pointer). If you only pass \`struct Node *head\`, head changes inside the function, but the head outside stays the same — and the list is lost. In the examples below, look carefully at the \`&\` in \`append(&head, ...)\` and \`push_front(&head, ...)\`.
+
+**Mistake 2: Not setting a new node's \`next\` to NULL.** Memory from \`malloc\` holds garbage — if you forget \`node->next = NULL\`, \`next\` holds a garbage address, and traversing can wander anywhere or crash. Always write \`next = NULL\` in \`new_node\`.
+
+**Mistake 3: Using a node after freeing it.** Reading the \`data\` or \`next\` of a node after \`free\` is use-after-free. When deleting, first remember the next node, then free. \`free_list\` uses exactly this pattern: \`temp = head; head = head->next; free(temp);\`.
+
+**Mistake 4: Forgetting the first node in delete.** If the node to delete is the head itself, head must move forward — otherwise head points at freed memory. In the delete example below, the head case is handled separately: in \`if ((*head)->data == key)\`, head moves forward and the old head is freed.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali List, Ek Node, Head Delete aur Missing Value',
+          '5. Edge Cases: Empty List, One Node, Head Delete, and Missing Value'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Khaali list.** Khaali list par traverse karna safe hai — \`temp = NULL\` hota hai, isliye \`while\` loop ek bhi baar nahi chalta aur sirf \`NULL\` print hota hai. Delete karna bhi safe hai — \`delete_value\` mein pehla check \`if (*head == NULL) return;\` hai. Har function mein pehle khaali list ka check likho.
+
+**2. Ek node.** Ek node wali list mein append karna traverse jaisa hai — head se shuru karo, head hi aakhri node hai. Delete karne par head wala case chalta hai aur list phir se khaali ho jaati hai. Ek node wale cases ko hamesha test karo.
+
+**3. Head delete karna.** Head delete karne par head ko aage badhana padta hai — yeh sabse common interview trap hai. Agar aap sirf head ko free kar doge aur head ko aage nahi badhaoge, toh head dangling pointer ban jaayega.
+
+**4. Value nahi mili.** Delete karte waqt agar value list mein nahi hai, toh loop aakhir tak chal kar ruk jaata hai aur kuch delete nahi hota — neeche wale delete example mein \`if (temp->next != NULL)\` check isiliye hai. Search karne par bhi -1 milta hai, jaise practice example mein 99 ke liye -1 aata hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Empty list.** Traversing an empty list is safe — \`temp = NULL\`, so the \`while\` loop never runs and only \`NULL\` is printed. Deleting is also safe — the first check in \`delete_value\` is \`if (*head == NULL) return;\`. Write an empty-list check first in every function.
+
+**2. One node.** In a list with one node, appending is like traversing — start at head, and head is itself the last node. Deleting runs the head case and the list becomes empty again. Always test the one-node cases.
+
+**3. Deleting the head.** Deleting the head means head must move forward — this is the most common interview trap. If you only free head without moving it forward, head becomes a dangling pointer.
+
+**4. Value not found.** When deleting, if the value is not in the list, the loop runs to the end and stops, and nothing is deleted — that is why the delete example below has the \`if (temp->next != NULL)\` check. Searching also gives -1, as in the practice example where 99 gives -1.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Array ki Jagah List, Shuru mein Insert aur Beech mein Insert',
+          '6. What-If: List Instead of Array, Insert at the Start, and Insert in the Middle'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: array ki jagah hamesha linked list use kar lein?** Linked list har kaam ke liye nahi hai. Array mein \`arr[3]\` se koi bhi element O(1) mein milta hai, linked list mein index 3 tak pahunchne ke liye 3 nodes traverse karne padte hain — O(n). Random access chahiye ho toh array behtar hai, insert/delete zyada ho toh list behtar hai. Dono ka use case alag hai.
+
+**What if: shuru mein insert karna ho?** \`push_front\` sabse fast operation hai — O(1). Naya node banao, uska \`next\` head par set karo, aur head ko naye node par le jaao. Neeche wala doosra example \`{10, 20, 30}\` ke aage 5 jod kar \`5 -> 10 -> 20 -> 30 -> NULL\` banata hai. Stack isi liye linked list par banta hai — push aur pop dono shuru mein O(1) hote hain.
+
+**What if: beech mein insert karna ho?** Pehle us node tak traverse karo jiske baad insert karna hai (O(n)), phir sirf do pointers badlo — naya node us node ke next ko point kare, aur woh node naye node ko point kare. Array mein beech mein insert karne par saare elements shift hote hain (O(n) shifts), list mein sirf 2 pointers badalte hain. Yahi linked list ki sabse badi jeet hai.
+
+**What if: list ko ulta karna ho?** List reverse karna interview ka classic sawaal hai — teen pointers (\`prev\`, \`curr\`, \`next\`) se har node ka \`next\` ulta kar do. Yeh O(n) mein hota hai aur extra list nahi chahiye. Is pattern ko samajhna linked list ki gehri samajh dikhata hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you always use a linked list instead of an array?** A linked list is not for everything. In an array, \`arr[3]\` gives any element in O(1); in a linked list, reaching index 3 means traversing 3 nodes — O(n). If you need random access, an array is better; if you insert and delete a lot, a list is better. The two have different uses.
+
+**What if you must insert at the start?** \`push_front\` is the fastest operation — O(1). Create a new node, set its \`next\` to head, and move head to the new node. The second example below adds 5 in front of \`{10, 20, 30}\` to make \`5 -> 10 -> 20 -> 30 -> NULL\`. This is why a stack is built on a linked list — push and pop are both O(1) at the start.
+
+**What if you must insert in the middle?** First traverse to the node after which you want to insert (O(n)), then change only two pointers — the new node points at that node's next, and that node points at the new node. In an array, inserting in the middle shifts all elements (O(n) shifts); in a list, only 2 pointers change. That is the linked list's biggest win.
+
+**What if you must reverse the list?** Reversing a list is a classic interview question — with three pointers (\`prev\`, \`curr\`, \`next\`), flip the \`next\` of every node. It runs in O(n) and needs no extra list. Understanding this pattern shows a deep understanding of linked lists.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Linked List se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Linked List to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Linked list** nodes ki chain hoti hai — har node mein **data** aur agle node ka **next** pointer hota hai. Aakhri node ka \`next\` \`NULL\` hota hai aur pehla node **head** hota hai. Naya node \`malloc\` se banta hai, traverse head se \`NULL\` tak hota hai, aur free karte waqt pehle agla node yaad rakhna padta hai.
+
+Yaad rakhne wali chaar baatein: pehli, head badal sakta hai isliye functions mein \`struct Node **head\` (pointer to pointer) pass karo. Doosri, naye node ka \`next\` hamesha \`NULL\` par set karo — \`malloc\` wali memory mein kachra hota hai. Teesri, delete karte waqt head wala case alag se handle karo. Chauthi, free ke baad node ko kabhi use mat karo — pehle agla node yaad rakho, phir free karo.
+
+Interview mein linked list ke sawaal aksar ek hi pattern mein aate hain: "array vs linked list?", "shuru mein insert kaise karte ho?", "beech se delete kaise karte ho?", "list ko reverse kaise karte ho?" — har ek ka answer ek hi hai: node banao, pointers jodo, aur head ko sahi se update karo. Agar aapko yeh pattern dikhne lag gaya hai, toh linked list aapko aa gayi hai.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle 10, 20, 30 append karne ka dry run haath se karo — har step par list likho. Phir delete wale example mein head aur beech wale cases ko trace karo. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain. Agle article mein hum stack aur queue dekhenge — linked list aur array dono se bane hue.`,
+          `Let us tie the whole article together. A **linked list** is a chain of nodes — each node holds **data** and a **next** pointer to the next node. The last node's \`next\` is \`NULL\` and the first node is the **head**. A new node is built with \`malloc\`, traversing runs from head to \`NULL\`, and when freeing, the next node must be remembered first.
+
+Remember four things: first, head can change, so pass \`struct Node **head\` (a pointer to a pointer) into functions. Second, always set a new node's \`next\` to \`NULL\` — memory from \`malloc\` holds garbage. Third, handle the head case separately when deleting. Fourth, never use a node after freeing it — remember the next node first, then free.
+
+Interview questions on linked lists usually follow one pattern: "array vs linked list?", "how do you insert at the start?", "how do you delete from the middle?", "how do you reverse a list?" — the answer to every one is the same: create a node, join the pointers, and update head correctly. Once you start seeing that pattern, you know linked lists.
+
+To revise, read this article once more in this order: first dry-run appending 10, 20, 30 by hand — write the list after each step. Then trace the head and middle cases in the delete example. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview. In the next article we will look at stacks and queues — built on both linked lists and arrays.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Linked List: Head se NULL Tak ka Safar',
+        'Linked List: The Journey from Head to NULL'
+      ),
+      caption: t(
+        'Har node mein data aur agle node ka address hota hai — aakhri node ka next NULL hota hai',
+        'Every node holds data and the address of the next node — the last node next is NULL'
+      ),
+      nodes: [
+        {
+          t: t('head -> [10 | next]', 'head -> [10 | next]'),
+          s: t('Pehla node — head iski taraf point karta hai', 'First node — head points at it')
+        },
+        {
+          t: t('[20 | next]', '[20 | next]'),
+          s: t('Doosra node — pehle node ka next iski taraf point karta hai', 'Second node — the first node next points at it')
+        },
+        {
+          t: t('[30 | NULL]', '[30 | NULL]'),
+          s: t('Aakhri node — iska next NULL hai, list yahin khatm hoti hai', 'Last node — its next is NULL, the list ends here')
+        },
+        {
+          t: t('Traverse: temp = temp->next', 'Traverse: temp = temp->next'),
+          s: t('Head se shuru karo, NULL milne tak aage badho', 'Start at head, move forward until you reach NULL')
+        },
+        {
+          t: t('Free: pehle next yaad rakho', 'Free: remember next first'),
+          s: t('Har node ko free karo — warna agle node ka address kho jaayega', 'Free every node — or the next node address is lost')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Shuru mein Insert: 5 ko Aage Jodo',
+          'Insert at the Start: Add 5 in Front'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *new_node(int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = NULL;
+    return node;
+}
+
+void append(struct Node **head, int data) {
+    struct Node *node = new_node(data);
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    struct Node *temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = node;
+}
+
+void push_front(struct Node **head, int data) {
+    struct Node *node = new_node(data);
+    node->next = *head;
+    *head = node;
+}
+
+void print_list(struct Node *head) {
+    struct Node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\\n");
+}
+
+void free_list(struct Node *head) {
+    struct Node *temp = NULL;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+int main(void) {
+    struct Node *head = NULL;
+    append(&head, 10);
+    append(&head, 20);
+    append(&head, 30);
+    push_front(&head, 5);
+    print_list(head);
+    free_list(head);
+    return 0;
+}`,
+        output: `5 -> 10 -> 20 -> 30 -> NULL`
+      },
+      {
+        title: t(
+          'Beech se Delete: 20 ko Hatana',
+          'Deleting from the Middle: Removing 20'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *new_node(int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = NULL;
+    return node;
+}
+
+void append(struct Node **head, int data) {
+    struct Node *node = new_node(data);
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    struct Node *temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = node;
+}
+
+void delete_value(struct Node **head, int key) {
+    if (*head == NULL) {
+        return;
+    }
+    if ((*head)->data == key) {
+        struct Node *temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        return;
+    }
+    struct Node *temp = *head;
+    while (temp->next != NULL && temp->next->data != key) {
+        temp = temp->next;
+    }
+    if (temp->next != NULL) {
+        struct Node *gone = temp->next;
+        temp->next = gone->next;
+        free(gone);
+    }
+}
+
+void print_list(struct Node *head) {
+    struct Node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\\n");
+}
+
+void free_list(struct Node *head) {
+    struct Node *temp = NULL;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+int main(void) {
+    struct Node *head = NULL;
+    append(&head, 10);
+    append(&head, 20);
+    append(&head, 30);
+    delete_value(&head, 20);
+    print_list(head);
+    free_list(head);
+    return 0;
+}`,
+        output: `10 -> 30 -> NULL`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Linked list ke aakhri node ka next pointer kya hota hai?',
+          'What is the next pointer of the last node in a linked list?'
+        ),
+        opts: [
+          t('Head ki taraf point karta hai', 'It points at the head'),
+          t('NULL', 'NULL'),
+          t('Khud ki taraf point karta hai', 'It points at itself'),
+          t('Kuch bhi ho sakta hai', 'It can be anything')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: aakhri node ka next NULL hota hai — yahi batata hai ki list khatm ho gayi. Traverse karte waqt NULL milne par loop rukta hai.',
+          'Correct answer: the last node next is NULL — that is what says the list has ended. While traversing, the loop stops when NULL is reached.'
+        )
+      },
+      {
+        q: t(
+          'append aur push_front mein head ko pointer to pointer (Node **) se kyun pass karte hain?',
+          'Why do append and push_front take head as a pointer to pointer (Node **)?'
+        ),
+        opts: [
+          t('Taaki code fast chale', 'So the code runs faster'),
+          t('Kyunki head badal sakta hai aur badlaav bahar bhi dikhna chahiye', 'Because head can change and the change must show outside too'),
+          t('Kyunki compiler yahi maangta hai', 'Because the compiler demands it'),
+          t('Koi khaas wajah nahi hai', 'There is no special reason')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: khaali list mein append karne par ya shuru mein insert karne par head badalta hai — sirf Node * pass karne par badlaav function ke andar hi rehta aur list kho jaati.',
+          'Correct answer: appending to an empty list or inserting at the start changes head — passing only Node * would keep the change inside the function and the list would be lost.'
+        )
+      },
+      {
+        q: t(
+          'Linked list mein beech se delete karna array se fast kyun hota hai?',
+          'Why is deleting from the middle faster in a linked list than in an array?'
+        ),
+        opts: [
+          t('Kyunki list chhoti hoti hai', 'Because the list is smaller'),
+          t('Kyunki sirf pointers badalte hain, elements shift nahi hote', 'Because only pointers change, elements are not shifted'),
+          t('Kyunki list sorted hoti hai', 'Because the list is sorted'),
+          t('Kyunki malloc fast hota hai', 'Because malloc is fast')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: list mein delete karne par sirf ek pointer badalta hai — pichhla node seedha agle node ki taraf point karne lagta hai. Array mein saare baad wale elements shift karne padte hain.',
+          'Correct answer: deleting in a list changes only one pointer — the previous node points straight at the next node. In an array, all later elements must be shifted.'
+        )
+      },
+      {
+        q: t(
+          'Linked list mein index 3 tak pahunchne ka time complexity kya hai?',
+          'What is the time complexity of reaching index 3 in a linked list?'
+        ),
+        opts: [
+          t('O(1)', 'O(1)'),
+          t('O(log n)', 'O(log n)'),
+          t('O(n)', 'O(n)'),
+          t('O(n^2)', 'O(n^2)')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: list mein random access nahi hota — head se shuru karke ek-ek node traverse karna padta hai, isliye kisi bhi index tak pahunchna O(n) hota hai, jabki array mein O(1) hota hai.',
+          'Correct answer: a list has no random access — you must traverse node by node from the head, so reaching any index is O(n), while in an array it is O(1).'
+        )
+      },
+      {
+        q: t(
+          'Naye node ka next NULL par set karna kyun zaroori hai?',
+          'Why is it essential to set a new node next to NULL?'
+        ),
+        opts: [
+          t('Taaki list sorted rahe', 'So the list stays sorted'),
+          t('Kyunki malloc wali memory mein kachra hota hai aur traverse crash kar sakta hai', 'Because malloc memory holds garbage and traversing can crash'),
+          t('Taaki head update ho jaaye', 'So head gets updated'),
+          t('Koi zaroorat nahi hai', 'There is no need')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: malloc se mili memory mein kachra values hoti hain — next ko NULL na karne par traverse karte waqt program kachra address par chala jaayega aur crash karega.',
+          'Correct answer: memory from malloc holds garbage values — if next is not set to NULL, traversing will follow a garbage address and crash.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Har node mein data aur agle node ka next pointer hota hai; aakhri node ka next NULL hota hai aur pehla node head hota hai.',
+        'Every node holds data and a next pointer to the next node; the last node next is NULL and the first node is the head.'
+      ),
+      t(
+        'Head badal sakta hai, isliye functions mein struct Node **head (pointer to pointer) pass karo.',
+        'Head can change, so pass struct Node **head (a pointer to a pointer) into functions.'
+      ),
+      t(
+        'Naye node ka next hamesha NULL par set karo — malloc wali memory mein kachra hota hai.',
+        'Always set a new node next to NULL — memory from malloc holds garbage.'
+      ),
+      t(
+        'Beech mein insert aur delete O(1) hote hain (sirf pointers badalte hain), par kisi index tak pahunchna O(n) hota hai.',
+        'Insert and delete in the middle are O(1) (only pointers change), but reaching an index is O(n).'
+      ),
+      t(
+        'Free karte waqt pehle agla node yaad rakho, phir free karo — aur free ke baad node ko kabhi use mat karo.',
+        'When freeing, remember the next node first, then free — and never use a node after freeing it.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: List ke Nodes Ginno aur 15 ko Dhoondho',
+        'Practice: Count the Nodes in a List and Find 15'
+      ),
+      task: t(
+        'Neeche diya gaya program {4, 8, 15, 16, 23, 42} ki linked list banata hai, nodes ginta hai aur 15 ko dhoondhta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir values mein 99 jod kar dobara run karo aur naya count aur search result khud haath se verify karo.',
+        'The program below builds a linked list of {4, 8, 15, 16, 23, 42}, counts the nodes, and searches for 15. Run it and verify the output matches the expected output, then add 99 to the values, run it again, and verify the new count and search result by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *new_node(int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = NULL;
+    return node;
+}
+
+void append(struct Node **head, int data) {
+    struct Node *node = new_node(data);
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+    struct Node *temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = node;
+}
+
+int count_nodes(struct Node *head) {
+    int count = 0;
+    struct Node *temp = head;
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+int search(struct Node *head, int key) {
+    int pos = 1;
+    struct Node *temp = head;
+    while (temp != NULL) {
+        if (temp->data == key) {
+            return pos;
+        }
+        pos++;
+        temp = temp->next;
+    }
+    return -1;
+}
+
+void free_list(struct Node *head) {
+    struct Node *temp = NULL;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+int main(void) {
+    struct Node *head = NULL;
+    int values[] = {4, 8, 15, 16, 23, 42};
+    for (int i = 0; i < 6; i++) {
+        append(&head, values[i]);
+    }
+    printf("Count = %d\\n", count_nodes(head));
+    printf("15 found at position %d\\n", search(head, 15));
+    printf("99 found at position %d\\n", search(head, 99));
+    free_list(head);
+    return 0;
+}`,
+      expected: `Count = 6
+15 found at position 3
+99 found at position -1`
+    },
+    readMinutes: 12
+  };
+
+const cStackQueue: Article = {
+    id: 'c-stack-queue',
+    subjectId: 'c-programming',
+    title: t(
+      'Stack aur Queue — Array aur Linked List se Banana',
+      'Stack and Queue — Building Them with Array and Linked List'
+    ),
+    summary: t(
+      'Stack aur queue ko zero se samjho: LIFO aur FIFO ka farak, array se stack kaise banta hai, linked list se stack aur queue kaise bante hain, aur overflow aur underflow se kaise bachte hain.',
+      'Learn stacks and queues from scratch: the difference between LIFO and FIFO, how a stack is built on an array, how stacks and queues are built on a linked list, and how to avoid overflow and underflow.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Stack aur Queue Kya Hain? (LIFO vs FIFO)',
+          '1. What Are a Stack and a Queue? (LIFO vs FIFO)'
+        ),
+        body: t(
+          `**Stack** aur **queue** dono linear data structures hain — matlab elements ek line mein hote hain — par unka order bilkul alag hai. Stack **LIFO** hota hai — Last In, First Out. Socho plates ka dher: jo plate sabse upar rakhi, wahi pehle uthayi jaati hai. Stack mein naya element hamesha **top** par aata hai (**push**) aur nikaala bhi top se hi jaata hai (**pop**). **Peek** se top wala element bina nikaale dekha ja sakta hai.
+
+**Queue** **FIFO** hota hai — First In, First Out. Socho ticket ki line: jo pehle aaya, woh pehle jaata hai. Queue mein naya element peeche judta hai (**enqueue**) aur nikaala aage se jaata hai (**dequeue**). Queue ke do ends hote hain — **front** (aage, jahan se nikaalte hain) aur **rear** (peeche, jahan jodte hain). Dono ke operations O(1) hote hain, kyunki kaam hamesha ends par hota hai, beech mein nahi.
+
+Stack aur queue dono ko array se bhi banaya ja sakta hai aur linked list se bhi. Array wala version simple hota hai, par size fixed hota hai — bhar jaane par **overflow** hota hai. Linked list wala version kabhi nahi bharta (jab tak memory hai), par har node ke liye \`malloc\` chahiye hota hai. Is article mein hum dono versions dekhenge.`,
+          `A **stack** and a **queue** are both linear data structures — their elements sit in a line — but their order is completely different. A stack is **LIFO** — Last In, First Out. Think of a pile of plates: the plate placed on top is the one picked up first. In a stack, a new element always arrives at the **top** (**push**) and is also removed from the top (**pop**). **Peek** lets you look at the top element without removing it.
+
+A queue is **FIFO** — First In, First Out. Think of a ticket line: whoever arrives first leaves first. In a queue, a new element joins at the back (**enqueue**) and is removed from the front (**dequeue**). A queue has two ends — **front** (the front, where things are removed) and **rear** (the back, where things are added). Both operations are O(1), because work always happens at the ends, never in the middle.
+
+Both stacks and queues can be built on an array or on a linked list. The array version is simple, but its size is fixed — when it fills up, an **overflow** happens. The linked list version never fills up (while memory lasts), but every node needs a \`malloc\`. In this article we will look at both versions.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Undo Button, Printer Queue aur Browser Back',
+          '2. Real-Life Examples: The Undo Button, a Printer Queue, and Browser Back'
+        ),
+        body: t(
+          `Stack aur queue roz ki zindagi mein har jagah hain. Sabse seedha example hai **undo button**. Jab aap kuch likhte ho aur Ctrl+Z dabate ho, toh aakhri kaam pehle wapas hota hai — yeh stack hai. Har kaam stack mein push hota hai, undo karne par pop hota hai. Redo bhi ek stack hota hai — undo kiye hue kaam wapas laane ke liye. Text editor, photo editor aur code editor — sab mein undo stack hota hai.
+
+Doosra example hai **printer queue**. Jab 5 log ek saath print bhejte hain, toh printer ek-ek karke print karta hai — jo pehle aaya, uska pehle print hota hai. Yahi queue hai — FIFO. Printer ke andar ek queue hoti hai, aur har naya print job rear mein judta hai. Agar printer queue ko stack ki tarah chalata, toh aakhri wala pehle print hota aur pehle wale ko intezaar karna padta — yeh galat hota.
+
+Teesra example hai **browser back button**. Aap jis page par jaate ho, woh stack mein push hota hai. Back dabane par pop hota hai aur pehle wala page dikhta hai. Function calls bhi stack par chalte hain — jab function call hota hai, toh woh call stack mein push hota hai, aur return hone par pop hota hai. Isi liye bahut gehri recursion par **stack overflow** hota hai.`,
+          `Stacks and queues are everywhere in daily life. The simplest example is the **undo button**. When you write something and press Ctrl+Z, the last action is undone first — this is a stack. Every action is pushed onto the stack, and undo pops it. Redo is also a stack — for bringing back undone actions. Text editors, photo editors, and code editors all have an undo stack.
+
+A second example is a **printer queue**. When 5 people send prints at once, the printer prints them one by one — whoever arrived first prints first. That is a queue — FIFO. Inside the printer there is a queue, and every new print job joins at the rear. If the printer ran like a stack, the last one would print first and the first one would have to wait — that would be wrong.
+
+A third example is the **browser back button**. Each page you visit is pushed onto a stack. Pressing back pops it and shows the previous page. Function calls also run on a stack — when a function is called, it is pushed onto the call stack, and when it returns, it is popped. That is why very deep recursion causes a **stack overflow**.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Array Stack mein 10, 20, 30 Push aur Pop Karna (Dry Run)',
+          '3. Step-by-Step: Pushing 10, 20, 30 and Popping on an Array Stack (Dry Run)'
+        ),
+        body: t(
+          `Ab hum ek array stack ko haath se dry run karte hain. Stack ka size MAX = 5 hai, aur \`top\` batata hai ki top kahan hai — shuru mein \`top = -1\` matlab stack khaali hai.
+
+**Push 10:** pehle check karo ki stack bhar gaya hai kya (\`top == MAX - 1\`?). Nahi, isliye \`top++\` (top = 0) aur \`stack[0] = 10\`. **Push 20:** top = 1, \`stack[1] = 20\`. **Push 30:** top = 2, \`stack[2] = 30\`. Ab stack hai \`[10, 20, 30]\` aur top = 2.
+
+**Pop:** pehle check karo ki stack khaali hai kya (\`top == -1\`?). Nahi, isliye \`x = stack[top]\` = 30, phir \`top--\` (top = 1). Pop 30 deta hai. **Peek:** \`stack[top]\` = 20 — bina nikaale dekha. Final stack: \`10 20\` aur top = 1. Neeche wala code yahi karta hai. Ise run karo aur output ko apne dry run se milao — aur dhyaan do ki push aur pop dono mein pehle boundary check hota hai, phir kaam hota hai.`,
+          `Now let us dry-run an array stack by hand. The stack size is MAX = 5, and \`top\` says where the top is — at the start, \`top = -1\` means the stack is empty.
+
+**Push 10:** first check whether the stack is full (\`top == MAX - 1\`?). No, so \`top++\` (top = 0) and \`stack[0] = 10\`. **Push 20:** top = 1, \`stack[1] = 20\`. **Push 30:** top = 2, \`stack[2] = 30\`. Now the stack is \`[10, 20, 30]\` and top = 2.
+
+**Pop:** first check whether the stack is empty (\`top == -1\`?). No, so \`x = stack[top]\` = 30, then \`top--\` (top = 1). Pop returns 30. **Peek:** \`stack[top]\` = 20 — seen without removing. Final stack: \`10 20\` and top = 1. The code below does exactly this. Run it and match the output against your dry run — and note that both push and pop check the boundary first, then do the work.`
+        ),
+        code: {
+          title: t(
+            'Array Stack: Push 10, 20, 30, Pop Karo, Peek Karo',
+            'Array Stack: Push 10, 20, 30, Pop, and Peek'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int x) {
+    if (top == MAX - 1) {
+        printf("Stack overflow\\n");
+        return;
+    }
+    top++;
+    stack[top] = x;
+}
+
+int pop(void) {
+    if (top == -1) {
+        printf("Stack underflow\\n");
+        return -1;
+    }
+    int x = stack[top];
+    top--;
+    return x;
+}
+
+int peek(void) {
+    if (top == -1) {
+        return -1;
+    }
+    return stack[top];
+}
+
+int main(void) {
+    push(10);
+    push(20);
+    push(30);
+    printf("Popped: %d\\n", pop());
+    printf("Top now: %d\\n", peek());
+    printf("Stack:");
+    for (int i = 0; i <= top; i++) {
+        printf(" %d", stack[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+          output: `Popped: 30
+Top now: 20
+Stack: 10 20`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Overflow, Underflow, top ki Galat Value aur Front Update',
+          '4. Common Mistakes: Overflow, Underflow, Wrong top Value, and Front Updates'
+        ),
+        body: t(
+          `Stack aur queue mein sabse zyada galtiyan chaar cheezon par hoti hain.
+
+**Galti 1: Overflow check bhoolna.** Array stack mein push karne se pehle \`top == MAX - 1\` check karna zaroori hai. Bina check ke push karne par array ke bahar likha jaata hai — yeh **buffer overflow** hai aur program crash kar sakta hai ya galat data de sakta hai. Har push mein pehle check, phir kaam.
+
+**Galti 2: Underflow check bhoolna.** Khaali stack se pop karne par \`top = -1\` hota hai aur \`stack[-1]\` padhna galat hai. Pop aur dequeue mein pehle khaali hone ka check karo — neeche wale examples mein \`if (top == -1)\` aur \`if (front == -1 || front > rear)\` yahi karte hain. Khaali stack se pop karne par -1 return karna aur message print karna sahi tareeka hai.
+
+**Galti 3: \`top\` ki starting value galat rakhna.** \`top = -1\` ka matlab hai khaali stack — pehla push top ko 0 banata hai. Agar aap \`top = 0\` se shuru karoge, toh pehla element index 1 par jaayega ya index 0 overwrite hoga. \`top = -1\` wali convention ko yaad rakho: top hamesha aakhri element ka index hota hai.
+
+**Galti 4: Queue mein front ko update na karna.** Dequeue karne par front ko aage badhana padta hai — warna wahi element baar-baar nikalta rahega. Aur jab front rear se aage nikal jaaye, toh queue khaali hai — yeh condition \`front > rear\` se check hoti hai. Neeche wale array queue example mein yahi pattern hai.`,
+          `The most common stack and queue mistakes come from four things.
+
+**Mistake 1: Forgetting the overflow check.** In an array stack, checking \`top == MAX - 1\` before pushing is essential. Pushing without a check writes past the array — this is a **buffer overflow** and can crash the program or give wrong data. In every push: check first, then work.
+
+**Mistake 2: Forgetting the underflow check.** Popping from an empty stack means \`top = -1\`, and reading \`stack[-1]\` is wrong. In pop and dequeue, first check whether the structure is empty — the examples below do this with \`if (top == -1)\` and \`if (front == -1 || front > rear)\`. Popping from an empty stack should return -1 and print a message.
+
+**Mistake 3: Starting \`top\` with the wrong value.** \`top = -1\` means an empty stack — the first push makes top 0. If you start with \`top = 0\`, the first element goes to index 1 or overwrites index 0. Remember the \`top = -1\` convention: top is always the index of the last element.
+
+**Mistake 4: Not updating front in a queue.** On dequeue, front must move forward — otherwise the same element keeps coming out again and again. And when front moves past rear, the queue is empty — this condition is checked with \`front > rear\`. The array queue example below uses exactly this pattern.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khaali Stack, Bhara Stack, Khaali Queue aur Circular Queue',
+          '5. Edge Cases: Empty Stack, Full Stack, Empty Queue, and Circular Queue'
+        ),
+        body: t(
+          `Edge cases woh situations hain jo normal test mein nahi aati, par interview aur real bugs mein yahi phansate hain.
+
+**1. Khaali stack se pop.** \`top == -1\` par pop karna underflow hai — sahi code -1 return karta hai aur "Stack underflow" print karta hai. Caller ko -1 check karna chahiye, warna -1 ko asli data samajh kar galat kaam hoga.
+
+**2. Bhara stack.** \`top == MAX - 1\` par push karna overflow hai — sahi code "Stack overflow" print karke wapas aata hai, bina array ke bahar likhe. Array stack ki size limit hi uski sabse badi kamzori hai — linked list stack mein yeh problem nahi hoti.
+
+**3. Khaali queue.** Queue mein khaali hone ki do nishaniyan hain: \`front == -1\` (kabhi kuch aaya hi nahi) ya \`front > rear\` (sab kuch nikaal liya). Dono check karna zaroori hai, warna dequeue galat data dega.
+
+**4. Array queue mein jagah waste hona.** Simple array queue mein dequeue karne par front aage badhta hai, par peeche wali jagah dobara use nahi hoti — queue "bhar" jaati hai jabki aage jagah khaali hai. Iska solution hai **circular queue** — rear aakhir mein pahunch kar wapas 0 par aa jaata hai (\`rear = (rear + 1) % MAX\`). Circular queue interview mein baar-baar poochha jaata hai.`,
+          `Edge cases are the situations that never appear in normal tests but cause real bugs and interview traps.
+
+**1. Pop from an empty stack.** Popping when \`top == -1\` is underflow — correct code returns -1 and prints "Stack underflow". The caller must check for -1, or -1 will be treated as real data and cause wrong behaviour.
+
+**2. Full stack.** Pushing when \`top == MAX - 1\` is overflow — correct code prints "Stack overflow" and returns without writing past the array. The size limit is the array stack's biggest weakness — a linked list stack does not have this problem.
+
+**3. Empty queue.** A queue shows empty in two ways: \`front == -1\` (nothing ever arrived) or \`front > rear\` (everything was removed). Both must be checked, or dequeue will give wrong data.
+
+**4. Wasted space in an array queue.** In a simple array queue, dequeue moves front forward, but the space behind is never reused — the queue becomes "full" while space sits empty in front. The fix is a **circular queue** — when rear reaches the end, it wraps back to 0 (\`rear = (rear + 1) % MAX\`). Interviews ask about circular queues again and again.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Array ki Jagah Linked List, Queue se Stack aur Stack se Queue',
+          '6. What-If: Linked List Instead of Array, Queue from Stack, and Stack from Queue'
+        ),
+        body: t(
+          `Ab hum "what-if" sawaal poochhte hain — yahi woh sawaal hain jo interviewer poochhta hai.
+
+**What if: array ki jagah linked list use kar lein?** Linked list stack mein push aur pop dono shuru mein hote hain — O(1) aur kabhi overflow nahi hota. Neeche wala doosra example linked list stack hai: push head mein karta hai, pop head se karta hai. Queue ke liye linked list mein front aur rear dono pointers chahiye hote hain — practice example mein yahi hai. Linked list version mein har node ke liye \`malloc\` aur \`free\` chahiye, par size ki koi limit nahi hoti.
+
+**What if: queue se stack banana ho?** Do queues se stack banaya ja sakta hai — push karte waqt element ko doosri queue mein daalo aur purane elements ko bhi shift karo, taaki aakhri aaya hua element front mein aa jaaye. Yeh interview ka classic sawaal hai aur isse samajh aata hai ki stack aur queue ek doosre se kaise bante hain.
+
+**What if: stack se queue banana ho?** Do stacks se queue banta hai — ek stack mein enqueue karo, doosre se dequeue karo. Jab doosra stack khaali ho, toh pehle stack ke saare elements ko doosre mein daal do — order ulta ho jaata hai aur FIFO mil jaata hai. Yeh bhi interview ka favourite sawaal hai.
+
+**What if: function calls ka stack samajhna ho?** Har function call call stack mein push hota hai — uske variables aur return address ke saath. Function return hone par pop hota hai. Recursion isi liye kaam karta hai — har recursive call apna alag stack frame banata hai. Bahut gehri recursion par stack overflow hota hai, kyunki call stack ki memory limited hoti hai.`,
+          `Now let us ask "what-if" questions — these are exactly the questions interviewers ask.
+
+**What if you use a linked list instead of an array?** In a linked list stack, push and pop both happen at the start — O(1), and overflow never happens. The second example below is a linked list stack: push adds at the head, pop removes from the head. A linked list queue needs both front and rear pointers — the practice example has exactly this. The linked list version needs \`malloc\` and \`free\` for every node, but it has no size limit.
+
+**What if you must build a stack from queues?** A stack can be built from two queues — when pushing, put the element in the second queue and shift the old elements too, so the newest element lands at the front. This is a classic interview question, and it shows how stacks and queues are built from each other.
+
+**What if you must build a queue from stacks?** A queue is built from two stacks — enqueue into one stack, dequeue from the other. When the second stack is empty, move all elements from the first stack into the second — the order flips and you get FIFO. This is also an interview favourite.
+
+**What if you must understand the function call stack?** Every function call is pushed onto the call stack — with its variables and return address. When the function returns, it is popped. This is why recursion works — every recursive call creates its own stack frame. Very deep recursion causes a stack overflow, because call stack memory is limited.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Stack aur Queue se Interview Tak ka Poora Picture',
+          '7. Summary: The Full Picture, from Stack and Queue to the Interview'
+        ),
+        body: t(
+          `Chalo poora article ek jagah par bandhte hain. **Stack** LIFO hota hai — push aur pop dono top par hote hain, \`top = -1\` matlab khaali. **Queue** FIFO hoti hai — enqueue rear par, dequeue front se, \`front == -1\` ya \`front > rear\` matlab khaali. Dono ke operations O(1) hote hain. Array wala version simple hai par size fixed hota hai; linked list wala version kabhi nahi bharta par har node ke liye \`malloc\` chahiye.
+
+Yaad rakhne wali chaar baatein: pehli, push se pehle **overflow** check karo (\`top == MAX - 1\`) aur pop se pehle **underflow** check karo (\`top == -1\`). Doosri, \`top = -1\` se shuru karo — top hamesha aakhri element ka index hota hai. Teesri, queue mein dequeue ke baad **front** ko aage badhao, aur khaali hone ke liye \`front > rear\` bhi check karo. Chauthi, array queue mein jagah waste hoti hai — iska solution **circular queue** hai.
+
+Interview mein stack aur queue ke sawaal aksar ek hi pattern mein aate hain: "stack aur queue mein kya farak hai?", "overflow aur underflow kya hain?", "linked list se stack kaise banate ho?", "do stacks se queue kaise banti hai?" — har ek ka answer ek hi hai: LIFO ya FIFO batao, ends par kaam karo, aur boundary checks likho. Agar aapko yeh pattern dikhne lag gaya hai, toh stack aur queue aapko aa gaye hain.
+
+Revision ke liye yeh article ek baar phir se is order mein padho: pehle array stack ka dry run haath se karo — push 10, 20, 30, pop, peek. Phir array queue mein enqueue 1, 2, 3 aur dequeue ko trace karo — front aur rear har step par likho. Aakhiri mein 5 key notes ko ek baar zor se padh lo — interview se pehle yahi 5 lines kaafi hain.`,
+          `Let us tie the whole article together. A **stack** is LIFO — push and pop both happen at the top, and \`top = -1\` means empty. A **queue** is FIFO — enqueue at the rear, dequeue from the front, and \`front == -1\` or \`front > rear\` means empty. Both operations are O(1). The array version is simple but has a fixed size; the linked list version never fills up but needs a \`malloc\` for every node.
+
+Remember four things: first, check for **overflow** before push (\`top == MAX - 1\`) and for **underflow** before pop (\`top == -1\`). Second, start with \`top = -1\` — top is always the index of the last element. Third, in a queue, move **front** forward after dequeue, and also check \`front > rear\` for empty. Fourth, an array queue wastes space — the fix is a **circular queue**.
+
+Interview questions on stacks and queues usually follow one pattern: "what is the difference between a stack and a queue?", "what are overflow and underflow?", "how do you build a stack on a linked list?", "how is a queue built from two stacks?" — the answer to every one is the same: say LIFO or FIFO, work at the ends, and write the boundary checks. Once you start seeing that pattern, you know stacks and queues.
+
+To revise, read this article once more in this order: first dry-run the array stack by hand — push 10, 20, 30, pop, peek. Then trace enqueue 1, 2, 3 and dequeue in the array queue — write front and rear at every step. Finally, read the 5 key notes out loud once — those 5 lines are enough before an interview.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Stack (LIFO) vs Queue (FIFO): Kaam Ends par Hota Hai',
+        'Stack (LIFO) vs Queue (FIFO): Work Happens at the Ends'
+      ),
+      caption: t(
+        'Stack mein push aur pop dono top par — queue mein enqueue rear par aur dequeue front se',
+        'In a stack, push and pop both happen at the top — in a queue, enqueue at the rear and dequeue from the front'
+      ),
+      nodes: [
+        {
+          t: t('Stack: push 10, 20, 30', 'Stack: push 10, 20, 30'),
+          s: t('Top par aate hain — stack: [10, 20, 30], top = 2', 'They arrive at the top — stack: [10, 20, 30], top = 2')
+        },
+        {
+          t: t('Stack: pop -> 30', 'Stack: pop -> 30'),
+          s: t('Jo aakhri aaya, woh pehle nikalta hai — LIFO', 'The last one in is the first one out — LIFO')
+        },
+        {
+          t: t('Stack: peek -> 20', 'Stack: peek -> 20'),
+          s: t('Top dekho bina nikaale — ab top = 20 hai', 'Look at the top without removing it — now top is 20')
+        },
+        {
+          t: t('Queue: enqueue 1, 2, 3', 'Queue: enqueue 1, 2, 3'),
+          s: t('Rear mein judte hain — front = 1, rear = 3', 'They join at the rear — front = 1, rear = 3')
+        },
+        {
+          t: t('Queue: dequeue -> 1', 'Queue: dequeue -> 1'),
+          s: t('Jo pehle aaya, woh pehle nikalta hai — FIFO, ab front = 2', 'The first one in is the first one out — FIFO, now front = 2')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t(
+          'Linked List Stack: Push 5, 15, 25 aur Pop Karo',
+          'Linked List Stack: Push 5, 15, 25 and Pop'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+void push(struct Node **top, int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = *top;
+    *top = node;
+}
+
+int pop(struct Node **top) {
+    if (*top == NULL) {
+        printf("Stack underflow\\n");
+        return -1;
+    }
+    struct Node *temp = *top;
+    int data = temp->data;
+    *top = temp->next;
+    free(temp);
+    return data;
+}
+
+int main(void) {
+    struct Node *top = NULL;
+    push(&top, 5);
+    push(&top, 15);
+    push(&top, 25);
+    printf("Popped: %d\\n", pop(&top));
+    printf("Popped: %d\\n", pop(&top));
+    printf("Top now: %d\\n", top->data);
+    free(top);
+    return 0;
+}`,
+        output: `Popped: 25
+Popped: 15
+Top now: 5`
+      },
+      {
+        title: t(
+          'Array Queue: Enqueue 1, 2, 3 aur Dequeue Karo',
+          'Array Queue: Enqueue 1, 2, 3 and Dequeue'
+        ),
+        language: 'c',
+        code: `#include <stdio.h>
+
+#define MAX 5
+
+int queue[MAX];
+int front = -1, rear = -1;
+
+void enqueue(int x) {
+    if (rear == MAX - 1) {
+        printf("Queue overflow\\n");
+        return;
+    }
+    if (front == -1) {
+        front = 0;
+    }
+    rear++;
+    queue[rear] = x;
+}
+
+int dequeue(void) {
+    if (front == -1 || front > rear) {
+        printf("Queue underflow\\n");
+        return -1;
+    }
+    int x = queue[front];
+    front++;
+    return x;
+}
+
+int main(void) {
+    enqueue(1);
+    enqueue(2);
+    enqueue(3);
+    printf("Dequeued: %d\\n", dequeue());
+    printf("Front now: %d\\n", queue[front]);
+    printf("Queue:");
+    for (int i = front; i <= rear; i++) {
+        printf(" %d", queue[i]);
+    }
+    printf("\\n");
+    return 0;
+}`,
+        output: `Dequeued: 1
+Front now: 2
+Queue: 2 3`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Stack aur queue mein sabse bada farak kya hai?',
+          'What is the biggest difference between a stack and a queue?'
+        ),
+        opts: [
+          t('Stack fast hota hai, queue slow', 'A stack is fast, a queue is slow'),
+          t('Stack LIFO hota hai, queue FIFO hoti hai', 'A stack is LIFO, a queue is FIFO'),
+          t('Stack mein sirf ek element hota hai', 'A stack holds only one element'),
+          t('Koi farak nahi hai', 'There is no difference')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: stack mein jo aakhri aaya woh pehle nikalta hai (LIFO), queue mein jo pehle aaya woh pehle nikalta hai (FIFO) — yahi order ka farak dono ko alag karta hai.',
+          'Correct answer: in a stack, the last one in is the first one out (LIFO); in a queue, the first one in is the first one out (FIFO) — this order difference is what sets them apart.'
+        )
+      },
+      {
+        q: t(
+          'Khaali stack se pop karne par kya hota hai?',
+          'What happens when you pop from an empty stack?'
+        ),
+        opts: [
+          t('0 return hota hai', '0 is returned'),
+          t('Stack underflow — -1 return hota hai', 'Stack underflow — -1 is returned'),
+          t('Stack overflow hota hai', 'A stack overflow occurs'),
+          t('Program hang ho jaata hai', 'The program hangs')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: khaali stack par top = -1 hota hai aur stack[-1] padhna galat hai — sahi code underflow check karke -1 return karta hai aur message print karta hai.',
+          'Correct answer: on an empty stack, top = -1, and reading stack[-1] is wrong — correct code checks for underflow, returns -1, and prints a message.'
+        )
+      },
+      {
+        q: t(
+          'Array stack mein top = -1 se shuru kyun karte hain?',
+          'Why do we start with top = -1 in an array stack?'
+        ),
+        opts: [
+          t('Taaki stack bada dikhe', 'So the stack looks bigger'),
+          t('Kyunki -1 ka matlab khaali hai aur pehla push top ko 0 banata hai', 'Because -1 means empty, and the first push makes top 0'),
+          t('Kyunki compiler yahi maangta hai', 'Because the compiler demands it'),
+          t('Koi khaas wajah nahi hai', 'There is no special reason')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: top hamesha aakhri element ka index hota hai — khaali stack mein koi element nahi hai, isliye top = -1. Pehla push top++ karke 0 banata hai aur stack[0] mein daalta hai.',
+          'Correct answer: top is always the index of the last element — an empty stack has no element, so top = -1. The first push does top++ to make 0 and stores in stack[0].'
+        )
+      },
+      {
+        q: t(
+          'Queue mein front > rear ka kya matlab hai?',
+          'What does front > rear mean in a queue?'
+        ),
+        opts: [
+          t('Queue bhar gayi hai', 'The queue is full'),
+          t('Queue khaali hai — sab kuch nikaal liya gaya', 'The queue is empty — everything was removed'),
+          t('Queue mein ek element hai', 'The queue has one element'),
+          t('Front galat hai', 'Front is wrong')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: har dequeue par front aage badhta hai — jab front rear se aage nikal jaaye, toh matlab saare elements nikaale ja chuke hain aur queue khaali hai.',
+          'Correct answer: every dequeue moves front forward — when front moves past rear, all elements have been removed and the queue is empty.'
+        )
+      },
+      {
+        q: t(
+          'Undo button kis data structure par kaam karta hai?',
+          'Which data structure does the undo button work on?'
+        ),
+        opts: [
+          t('Queue', 'Queue'),
+          t('Stack', 'Stack'),
+          t('Linked list', 'Linked list'),
+          t('Array', 'Array')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: undo stack par kaam karta hai — har kaam push hota hai aur undo karne par aakhri kaam pehle pop hota hai. Yahi LIFO order undo ko sahi banata hai.',
+          'Correct answer: undo works on a stack — every action is pushed, and undo pops the last action first. This LIFO order is what makes undo correct.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Stack LIFO hota hai (push/pop top par), queue FIFO hoti hai (enqueue rear par, dequeue front se).',
+        'A stack is LIFO (push/pop at the top), a queue is FIFO (enqueue at the rear, dequeue from the front).'
+      ),
+      t(
+        'Push se pehle overflow check karo (top == MAX - 1) aur pop se pehle underflow check karo (top == -1).',
+        'Check for overflow before push (top == MAX - 1) and for underflow before pop (top == -1).'
+      ),
+      t(
+        'top = -1 se shuru karo — top hamesha aakhri element ka index hota hai.',
+        'Start with top = -1 — top is always the index of the last element.'
+      ),
+      t(
+        'Queue khaali hoti hai jab front == -1 ya front > rear ho — dequeue ke baad front ko aage badhao.',
+        'A queue is empty when front == -1 or front > rear — move front forward after dequeue.'
+      ),
+      t(
+        'Array queue mein peeche wali jagah waste hoti hai — iska solution circular queue hai (rear = (rear + 1) % MAX).',
+        'In an array queue, the space behind is wasted — the fix is a circular queue (rear = (rear + 1) % MAX).'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Linked List Queue se 10, 20, 30 Enqueue aur Dequeue Karo',
+        'Practice: Enqueue and Dequeue 10, 20, 30 with a Linked List Queue'
+      ),
+      task: t(
+        'Neeche diya gaya program linked list se queue banata hai, 10, 20, 30 enqueue karta hai aur do baar dequeue karta hai. Ise run karke verify karo ki output expected jaisa aata hai, phir 40 enqueue karke dobara run karo aur naya output khud haath se verify karo.',
+        'The program below builds a queue on a linked list, enqueues 10, 20, 30, and dequeues twice. Run it and verify the output matches the expected output, then enqueue 40, run it again, and verify the new output by hand.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *front = NULL;
+struct Node *rear = NULL;
+
+void enqueue(int data) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        exit(1);
+    }
+    node->data = data;
+    node->next = NULL;
+    if (rear == NULL) {
+        front = node;
+        rear = node;
+    } else {
+        rear->next = node;
+        rear = node;
+    }
+}
+
+int dequeue(void) {
+    if (front == NULL) {
+        printf("Queue underflow\\n");
+        return -1;
+    }
+    struct Node *temp = front;
+    int data = temp->data;
+    front = front->next;
+    if (front == NULL) {
+        rear = NULL;
+    }
+    free(temp);
+    return data;
+}
+
+void print_queue(void) {
+    printf("Queue:");
+    struct Node *temp = front;
+    while (temp != NULL) {
+        printf(" %d", temp->data);
+        temp = temp->next;
+    }
+    printf("\\n");
+}
+
+int main(void) {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    printf("Dequeued: %d\\n", dequeue());
+    printf("Dequeued: %d\\n", dequeue());
+    print_queue();
+    printf("Front now: %d\\n", front->data);
+    free(front);
+    return 0;
+}`,
+      expected: `Dequeued: 10
+Dequeued: 20
+Queue: 30
+Front now: 30`
+    },
+    readMinutes: 12
+  };
+
+const cCommandLine: Article = {
+    id: 'c-command-line',
+    subjectId: 'c-programming',
+    title: t(
+      'Command-Line Arguments — argc, argv aur Exit Codes',
+      'Command-Line Arguments — argc, argv, and Exit Codes'
+    ),
+    summary: t(
+      'Program ko chalate waqt bahar se values dena seekho: argc kitne arguments aaye yeh batata hai, argv un arguments ko strings ki array mein rakhta hai, aur exit code batata hai ki program theek chala ya fail hua.',
+      'Learn to pass values to a program when you run it: argc tells you how many arguments arrived, argv holds those arguments as an array of strings, and the exit code tells you whether the program ran fine or failed.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Command-Line Arguments Kya Hote Hain? (argc aur argv)',
+          '1. What Are Command-Line Arguments? (argc and argv)'
+        ),
+        body: t(
+          `Jab aap terminal mein \`./greet Rahul 25\` likhte ho, toh aap program ko chalate waqt hi do values de rahe ho — \`Rahul\` aur \`25\`. In values ko **command-line arguments** kehte hain. Program ke andar yeh values \`main\` function ke do parameters se milti hain: \`int main(int argc, char *argv[])\`. Yahan **argc** matlab argument count — kul kitne arguments aaye, aur **argv** matlab argument vector — arguments ki ek array, jismein har argument ek string hota hai.
+
+Ek bahut important baat: \`argv[0]\` hamesha program ka apna naam hota hai. Upar wale example mein \`argc\` 3 hai — \`argv[0]\` hai \`./greet\`, \`argv[1]\` hai \`Rahul\` aur \`argv[2]\` hai \`25\`. Matlab user ne 2 values di, par \`argc\` 3 dikhata hai kyunki program ka naam bhi gina jaata hai. Beginners ki sabse common galti yahi hoti hai — woh samajhte hain ki \`argv[0]\` pehla user argument hai, jabki woh program ka naam hai. Pehla asli argument hamesha \`argv[1]\` se shuru hota hai.
+
+Saare arguments **strings** hote hain, chahe woh number hi kyun na dikhe. \`25\` bhi string \`\"25\"\` hai, number 25 nahi. Agar aapko usse jodna-ghatana hai, toh pehle \`atoi\` ya \`strtol\` se number mein badalna padega. Yeh samajhna bahut zaroori hai, kyunki \`argv[2] + 5\` likhne se 30 nahi milega — string par maths nahi chalti.`,
+          `When you type \`./greet Rahul 25\` in the terminal, you are giving the program two values at the moment you run it — \`Rahul\` and \`25\`. These values are called **command-line arguments**. Inside the program, these values arrive through two parameters of the \`main\` function: \`int main(int argc, char *argv[])\`. Here **argc** means argument count — how many arguments arrived in total — and **argv** means argument vector — an array of the arguments, where every argument is a string.
+
+One very important point: \`argv[0]\` is always the name of the program itself. In the example above, \`argc\` is 3 — \`argv[0]\` is \`./greet\`, \`argv[1]\` is \`Rahul\`, and \`argv[2]\` is \`25\`. So the user gave 2 values, but \`argc\` shows 3 because the program name is also counted. This is the most common beginner mistake — people think \`argv[0]\` is the first user argument, when it is the program name. The first real argument always starts at \`argv[1]\`.
+
+All arguments are **strings**, even when they look like numbers. \`25\` is the string \`"25"\`, not the number 25. If you want to add or subtract with it, you must first convert it to a number with \`atoi\` or \`strtol\`. This is very important to understand, because writing \`argv[2] + 5\` will not give 30 — maths does not work on strings.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Compiler, File Tools aur Scripts',
+          '2. Real-Life Examples: Compilers, File Tools, and Scripts'
+        ),
+        body: t(
+          `Command-line arguments aap roz use karte ho, bina soche. Jab aap \`gcc hello.c -o hello\` likhte ho, toh \`gcc\` ek program hai aur \`hello.c\` aur \`-o hello\` uske arguments hain. Compiler ko kaise pata chalta hai ki kaunsi file compile karni hai aur output ka naam kya rakhna hai? Wahi \`argc\` aur \`argv\` se. \`gcc\` ke andar code \`argv\` ko padhta hai, pehle argument ko input file samajhta hai aur \`-o\` ke baad wale argument ko output naam samajhta hai.
+
+Doosra example hai file tools. \`cp file1.txt file2.txt\` mein do arguments hain — source file aur destination file. \`ls -l\` mein \`ls\` program hai aur \`-l\` ek option argument hai jo kehta hai "detail mein list dikhao". Aise chhote-chhote flags — \`-h\` help ke liye, \`--version\` version ke liye — sab command-line arguments hi hote hain. Har professional tool isi tarah kaam karta hai.
+
+Teesra example hai aapke apne programs. Maan lo aapne ek program banaya jo kisi file ke words gin-ta hai. Har baar code mein file ka naam badalne ki jagah, aap program ko aise chala sakte ho: \`./wordcount story.txt\`. Ek hi program, alag-alag file naam — yahi command-line arguments ki taakat hai. Program flexible ban jaata hai, aur user ko code badle bina har baar naya input dene ki aazadi milti hai.`,
+          `You use command-line arguments every day without thinking about it. When you type \`gcc hello.c -o hello\`, \`gcc\` is a program and \`hello.c\` and \`-o hello\` are its arguments. How does the compiler know which file to compile and what name to give the output? Through \`argc\` and \`argv\`. The code inside \`gcc\` reads \`argv\`, treats the first argument as the input file, and treats the argument after \`-o\` as the output name.
+
+A second example is file tools. In \`cp file1.txt file2.txt\` there are two arguments — the source file and the destination file. In \`ls -l\`, \`ls\` is the program and \`-l\` is an option argument that says "show the list in detail". Small flags like these — \`-h\` for help, \`--version\` for the version — are all command-line arguments. Every professional tool works this way.
+
+A third example is your own programs. Suppose you wrote a program that counts the words in a file. Instead of changing the file name inside the code every time, you can run the program like this: \`./wordcount story.txt\`. One program, different file names — that is the power of command-line arguments. The program becomes flexible, and the user can give new input every time without changing the code.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: ./greet Rahul 25 ka Dry Run',
+          '3. Step-by-Step: Dry Run of ./greet Rahul 25'
+        ),
+        body: t(
+          `Neeche wala program \`./greet Rahul 25\` jaise run hota hai. Pehle \`argc\` aur \`argv\` ki values samjho: \`argc = 3\`, \`argv[1] = \"Rahul\"\`, \`argv[2] = \"25\"\`. Program pehle \`argc\` print karta hai, phir ek loop mein \`argv[1]\` aur \`argv[2]\` print karta hai. Dhyaan do — loop \`i = 1\` se shuru hota hai, \`i = 0\` se nahi, kyunki \`argv[0]\` program ka naam hai aur humein user ke arguments chahiye.
+
+Phir program check karta hai: \`if (argc < 3)\`. Agar user ne naam ya umar nahi di, toh program usage message print karke \`return 1\` karta hai — matlab error ke saath band hota hai. Yahan \`argc < 3\` isliye hai kyunki humein program naam ke alawa 2 arguments chahiye. Agar user sirf \`./greet Rahul\` chalaye, toh \`argc\` 2 hoga aur program usage dikha kar ruk jaayega. Yeh check likhna bahut zaroori hai — iske bina program \`argv[2]\` ko padhne ki koshish karega jo hai hi nahi, aur crash ho sakta hai.
+
+Aakhir mein program \`printf(\"Hello, %s! You are %s years old.\\n\", argv[1], argv[2])\` se greeting print karta hai aur \`return 0\` karta hai — matlab sab theek raha. \`%s\` yahan string ke liye hai, kyunki \`argv[1]\` aur \`argv[2]\` dono strings hain. Code ko run karke output dekho — yeh wahi output hai jo \`./greet Rahul 25\` chalane par milta hai.`,
+          `The program below runs like \`./greet Rahul 25\`. First understand the values of \`argc\` and \`argv\`: \`argc = 3\`, \`argv[1] = \"Rahul\"\`, \`argv[2] = \"25\"\`. The program first prints \`argc\`, then prints \`argv[1]\` and \`argv[2]\` in a loop. Notice that the loop starts at \`i = 1\`, not \`i = 0\`, because \`argv[0]\` is the program name and we want the user arguments.
+
+Then the program checks: \`if (argc < 3)\`. If the user did not give a name or an age, the program prints a usage message and does \`return 1\` — it stops with an error. The check is \`argc < 3\` because we need 2 arguments besides the program name. If the user runs only \`./greet Rahul\`, then \`argc\` is 2 and the program shows the usage and stops. Writing this check is very important — without it, the program would try to read \`argv[2]\`, which does not exist, and it could crash.
+
+Finally, the program prints a greeting with \`printf(\"Hello, %s! You are %s years old.\\n\", argv[1], argv[2])\` and does \`return 0\` — everything went fine. The \`%s\` here is for strings, because both \`argv[1]\` and \`argv[2]\` are strings. Run the code and look at the output — this is exactly the output you get from running \`./greet Rahul 25\`.`
+        ),
+        code: {
+          title: t(
+            'argc aur argv: ./greet Rahul 25',
+            'argc and argv: ./greet Rahul 25'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int i;
+
+    printf("argc = %d\\n", argc);
+    for (i = 1; i < argc; i++) {
+        printf("argv[%d] = %s\\n", i, argv[i]);
+    }
+    if (argc < 3) {
+        printf("Usage: prog <name> <age>\\n");
+        return 1;
+    }
+    printf("Hello, %s! You are %s years old.\\n", argv[1], argv[2]);
+    return 0;
+}`,
+          output: `argc = 3
+argv[1] = Rahul
+argv[2] = 25
+Hello, Rahul! You are 25 years old.`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: argv[0], Bina Check ke argv aur String Maths',
+          '4. Common Mistakes: argv[0], argv Without a Check, and String Maths'
+        ),
+        body: t(
+          `**Galti 1: \`argv[0]\` ko pehla argument samajhna.** Yeh sabse common galti hai. \`argv[0]\` program ka naam hai, user ka pehla argument \`argv[1]\` hai. Agar aap \`argv[0]\` ko naam samajh kar print karoge, toh \`Rahul\` ki jagah \`./greet\` print hoga. Hamesha yaad rakho: user arguments \`argv[1]\` se shuru hote hain aur \`argc - 1\` tak jaate hain.
+
+**Galti 2: \`argc\` check kiye bina \`argv\` padhna.** Agar user koi argument nahi deta aur aap \`argv[1]\` padh lete ho, toh woh \`NULL\` hota hai aur \`printf(\"%s\", argv[1])\` crash kar sakta hai. Isliye \`argv[i]\` use karne se pehle hamesha check karo ki \`argc > i\` hai ya nahi. Usage message ke saath \`return 1\` karna sahi tareeka hai — user ko turant pata chal jaata hai ki kya missing hai.
+
+**Galti 3: Argument par seedha maths karna.** \`argv[2]\` string \`\"25\"\` hai. \`argv[2] + 5\` se 30 nahi milega — yeh pointer arithmetic hai, number addition nahi. Pehle \`atoi(argv[2])\` ya \`strtol(argv[2], NULL, 10)\` se number mein badlo, phir maths karo. \`atoi\` simple hai par galat input par 0 de deta hai bina bataye; \`strtol\` behtar hai kyunki woh error bhi pakad sakta hai, par beginners ke liye \`atoi\` se shuru karna theek hai.
+
+**Galti 4: \`argv\` ko badalna ya free karna.** \`argv\` ki strings ko aap padh sakte ho, par unhe \`free\` mat karo aur un par likhne se bacho — woh operating system ki memory hai. Agar argument ko badalna hai, toh pehle use apni khud ki array mein \`strcpy\` se copy karo, phir copy ko badlo.`,
+          `**Mistake 1: Treating \`argv[0]\` as the first argument.** This is the most common mistake. \`argv[0]\` is the program name; the first user argument is \`argv[1]\`. If you print \`argv[0]\` thinking it is the name, you will see \`./greet\` instead of \`Rahul\`. Always remember: user arguments start at \`argv[1]\` and go up to \`argc - 1\`.
+
+**Mistake 2: Reading \`argv\` without checking \`argc\`.** If the user gives no argument and you read \`argv[1]\`, it is \`NULL\`, and \`printf(\"%s\", argv[1])\` can crash. So before using \`argv[i]\`, always check that \`argc > i\`. Printing a usage message and doing \`return 1\` is the right way — the user immediately knows what is missing.
+
+**Mistake 3: Doing maths directly on an argument.** \`argv[2]\` is the string \`"25"\`. Writing \`argv[2] + 5\` will not give 30 — that is pointer arithmetic, not number addition. First convert it to a number with \`atoi(argv[2])\` or \`strtol(argv[2], NULL, 10)\`, then do the maths. \`atoi\` is simple but silently gives 0 for bad input; \`strtol\` is better because it can catch errors, but starting with \`atoi\` is fine for beginners.
+
+**Mistake 4: Changing or freeing \`argv\`.** You can read the strings in \`argv\`, but do not \`free\` them and avoid writing to them — that memory belongs to the operating system. If you need to change an argument, first copy it into your own array with \`strcpy\`, then change the copy.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Koi Argument Nahi, Bahut Saare Arguments aur Khali String',
+          '5. Edge Cases: No Arguments, Many Arguments, and Empty Strings'
+        ),
+        body: t(
+          `**1. Koi argument nahi.** Sirf \`./greet\` chalao toh \`argc = 1\` hota hai aur \`argv[1]\` \`NULL\` hota hai. Aapka program usage message dikha kar \`return 1\` kare — yahi sahi behaviour hai. Kabhi bhi \`argc\` check kiye bina \`argv[1]\` mat padho.
+
+**2. Bahut saare arguments.** \`./greet Rahul 25 Delhi India\` mein \`argc = 5\` hota hai. Aapka program sirf pehle 2 arguments use karta hai aur baaki ko ignore karta hai — yeh theek hai, par kuch programs extra arguments par error dete hain. Decide karo: extra arguments ignore karne hain ya error dena hai, aur woh behaviour document karo.
+
+**3. Space wala argument.** \`./greet \"Rahul Kumar\" 25\` mein quotes ki wajah se \`Rahul Kumar\` ek hi argument hai — \`argv[1] = \"Rahul Kumar\"\`, \`argc\` phir bhi 3 hai. Bina quotes ke \`./greet Rahul Kumar 25\` mein \`argc = 4\` ho jaata hai aur \`argv[2]\` ban jaata hai \`Kumar\`. Space ko ek argument mein rakhne ke liye shell mein quotes zaroori hain — yeh shell ka kaam hai, C ka nahi.
+
+**4. Khali string argument.** \`./greet \"\" 25\` mein \`argv[1]\` khali string \`\"\"\` hai, \`NULL\` nahi. \`argc\` phir bhi 3 hai. Khali string ek valid argument hai — agar aapka program naam khali nahi hona chahiye, toh \`argv[1][0] == '\\0'\` check karke alag se handle karo.`,
+          `**1. No arguments.** Running just \`./greet\` gives \`argc = 1\` and \`argv[1]\` is \`NULL\`. Your program should show a usage message and do \`return 1\` — that is the correct behaviour. Never read \`argv[1]\` without checking \`argc\` first.
+
+**2. Many arguments.** In \`./greet Rahul 25 Delhi India\`, \`argc = 5\`. Your program uses only the first 2 arguments and ignores the rest — that is fine, but some programs give an error for extra arguments. Decide: ignore extra arguments or report an error, and document that behaviour.
+
+**3. An argument with a space.** In \`./greet \"Rahul Kumar\" 25\`, the quotes make \`Rahul Kumar\` a single argument — \`argv[1] = \"Rahul Kumar\"\` and \`argc\` is still 3. Without quotes, \`./greet Rahul Kumar 25\` gives \`argc = 4\` and \`argv[2]\` becomes \`Kumar\`. Quotes in the shell are needed to keep a space inside one argument — that is the shell's job, not C's.
+
+**4. An empty string argument.** In \`./greet \"\" 25\`, \`argv[1]\` is the empty string \`\"\"\`, not \`NULL\`. \`argc\` is still 3. An empty string is a valid argument — if your program needs a non-empty name, check \`argv[1][0] == '\\0'\` and handle it separately.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Exit Codes, atoi vs strtol aur Flags',
+          '6. What-If: Exit Codes, atoi vs strtol, and Flags'
+        ),
+        body: t(
+          `**What if: program \`return 0\` ki jagah \`return 1\` kare?** \`main\` se return ki gayi value program ka **exit code** ban jaati hai. \`0\` matlab success, aur koi bhi non-zero value matlab failure. Shell mein \`echo $?\` se aakhri program ka exit code dekha ja sakta hai. Scripts isi par depend karte hain: agar \`gcc\` exit code 1 de, toh build script ruk jaata hai; agar 0 de, toh aage badhta hai. Isliye galat usage par \`return 1\` aur success par \`return 0\` likhna sirf style nahi, ek contract hai.
+
+**What if: number convert karne ke liye \`atoi\` ki jagah \`strtol\` use karein?** \`atoi(\"abc\")\` bina error ke 0 de deta hai — aapko pata hi nahi chalega ki input galat tha. \`strtol\` ke saath aap check kar sakte ho ki poori string number thi ya nahi, aur overflow bhi pakad sakte ho. Chhote demo programs mein \`atoi\` theek hai, par real tools mein \`strtol\` sahi choice hai. Neeche wala pehla example \`atoi\` ko fixed strings par dikhata hai — wahan input pehle se pata hai, isliye \`atoi\` safe hai.
+
+**What if: \`--help\` jaise flags handle karne hon?** Flags bhi arguments hi hote hain. Loop mein har \`argv[i]\` ko \`strcmp(argv[i], \"--help\")\` se compare karo; match mile toh help print karke \`return 0\` karo. Bade programs mein \`getopt\` naam ki library function yahi kaam karti hai, par chhote programs mein simple \`strcmp\` loop kaafi hai. Yaad rakho: flags ko pehle check karo, phir positional arguments ko.`,
+          `**What if the program does \`return 1\` instead of \`return 0\`?** The value returned from \`main\` becomes the program's **exit code**. \`0\` means success, and any non-zero value means failure. In the shell, \`echo $?\` shows the exit code of the last program. Scripts depend on this: if \`gcc\` gives exit code 1, the build script stops; if it gives 0, the script continues. So writing \`return 1\` for wrong usage and \`return 0\` for success is not just style — it is a contract.
+
+**What if we use \`strtol\` instead of \`atoi\` to convert a number?** \`atoi(\"abc\")\` gives 0 without any error — you never learn that the input was wrong. With \`strtol\` you can check whether the whole string was a number, and you can also catch overflow. In small demo programs \`atoi\` is fine, but in real tools \`strtol\` is the right choice. The first example below shows \`atoi\` on fixed strings — the input is known in advance there, so \`atoi\` is safe.
+
+**What if we must handle flags like \`--help\`?** Flags are also arguments. In a loop, compare every \`argv[i]\` with \`strcmp(argv[i], \"--help\")\`; on a match, print the help and do \`return 0\`. In large programs a library function called \`getopt\` does this job, but in small programs a simple \`strcmp\` loop is enough. Remember: check flags first, then positional arguments.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: argc, argv aur Exit Codes ka Poora Picture',
+          '7. Summary: The Full Picture of argc, argv, and Exit Codes'
+        ),
+        body: t(
+          `**argc** batata hai kitne arguments aaye, **argv** un arguments ki strings ki array hai. \`argv[0]\` program ka naam hai, pehla asli argument \`argv[1]\` hai, aur aakhri argument \`argv[argc - 1]\` hai. Saare arguments strings hote hain — number chahiye toh \`atoi\` ya \`strtol\` se convert karo. \`argv[i]\` padhne se pehle hamesha \`argc\` check karo, warna \`NULL\` padh kar program crash ho sakta hai.
+
+**Exit code** program ka result batata hai: \`0\` matlab success, non-zero matlab failure. Galat usage par usage message ke saath \`return 1\` karo; success par \`return 0\`. Shell aur scripts isi exit code par faisle lete hain, isliye yeh ek contract hai, sirf ek number nahi.
+
+Revision ke liye: \`./greet Rahul 25\` ko khud trace karo — \`argc\` kitna hai, har \`argv[i]\` mein kya hai, aur kyun loop \`i = 1\` se shuru hota hai. Phir program ko bina argument ke chalane ka socho — kaunsi line chalegi aur exit code kya hoga. Agar yeh dono dry run bina ruke ho jaayein, toh command-line arguments aapko aa gaye hain. Agle article mein hum error handling dekhenge — jab file nahi khulti ya memory nahi milti, toh program ko kaise gracefully fail hona chahiye.`,
+          `**argc** tells you how many arguments arrived, and **argv** is the array of those arguments as strings. \`argv[0]\` is the program name, the first real argument is \`argv[1]\`, and the last argument is \`argv[argc - 1]\`. All arguments are strings — if you need a number, convert with \`atoi\` or \`strtol\`. Always check \`argc\` before reading \`argv[i]\`, or the program may read \`NULL\` and crash.
+
+The **exit code** reports the program's result: \`0\` means success and non-zero means failure. On wrong usage, show a usage message and do \`return 1\`; on success, do \`return 0\`. Shells and scripts make decisions on this exit code, so it is a contract, not just a number.
+
+To revise: trace \`./greet Rahul 25\` yourself — what is \`argc\`, what is in each \`argv[i]\`, and why does the loop start at \`i = 1\`? Then think about running the program with no arguments — which line runs and what is the exit code? If both dry runs go smoothly, you know command-line arguments. In the next article we will look at error handling — how a program should fail gracefully when a file does not open or memory is not available.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        './greet Rahul 25: argc aur argv ka Map',
+        './greet Rahul 25: Map of argc and argv'
+      ),
+      caption: t(
+        'argc = 3 hai kyunki program ka naam bhi gina jaata hai',
+        'argc is 3 because the program name is counted too'
+      ),
+      nodes: [
+        {
+          t: t('argc = 3', 'argc = 3'),
+          s: t('Kul arguments: program naam + 2 user values', 'Total arguments: program name + 2 user values')
+        },
+        {
+          t: t('argv[0] = ./greet', 'argv[0] = ./greet'),
+          s: t('Program ka naam — user argument nahi hai', 'The program name — not a user argument')
+        },
+        {
+          t: t('argv[1] = Rahul', 'argv[1] = Rahul'),
+          s: t('Pehla asli argument (string)', 'The first real argument (a string)')
+        },
+        {
+          t: t('argv[2] = 25', 'argv[2] = 25'),
+          s: t('Doosra argument — abhi bhi string "25" hai', 'The second argument — still the string "25"')
+        },
+        {
+          t: t('return 0 = success, 1 = error', 'return 0 = success, 1 = error'),
+          s: t('Exit code shell ko batata hai program ka result', 'The exit code tells the shell the program result')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('atoi: String "42" ko Number mein Badalna', 'atoi: Turning the String "42" into a Number'),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int a = atoi("42");
+    int b = atoi("7");
+
+    printf("a = %d\\n", a);
+    printf("b = %d\\n", b);
+    printf("a + b = %d\\n", a + b);
+    printf("a * b = %d\\n", a * b);
+    return 0;
+}`,
+        output: `a = 42
+b = 7
+a + b = 49
+a * b = 294`
+      },
+      {
+        title: t('Exit Code: Function se 1 ya 0 Return Karna', 'Exit Code: Returning 1 or 0 from a Function'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int check_age(int age)
+{
+    if (age < 18) {
+        return 1;
+    }
+    return 0;
+}
+
+int main(void)
+{
+    printf("check_age(17) = %d (not allowed)\\n", check_age(17));
+    printf("check_age(21) = %d (allowed)\\n", check_age(21));
+    return 0;
+}`,
+        output: `check_age(17) = 1 (not allowed)
+check_age(21) = 0 (allowed)`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Program ko ./greet Rahul 25 jaise chalaya gaya. argc ki value kya hogi?',
+          'The program is run as ./greet Rahul 25. What is the value of argc?'
+        ),
+        opts: [
+          t('2', '2'),
+          t('3', '3'),
+          t('1', '1'),
+          t('0', '0')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: argc = 3 hai, kyunki program ka naam (argv[0]) bhi gina jaata hai, uske baad Rahul aur 25.',
+          'Correct answer: argc is 3, because the program name (argv[0]) is counted too, followed by Rahul and 25.'
+        )
+      },
+      {
+        q: t(
+          'argv[0] mein kya hota hai?',
+          'What does argv[0] hold?'
+        ),
+        opts: [
+          t('Pehla user argument', 'The first user argument'),
+          t('Program ka naam', 'The program name'),
+          t('Aakhri argument', 'The last argument'),
+          t('Kuch nahi (NULL)', 'Nothing (NULL)')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: argv[0] hamesha program ka naam hota hai; pehla asli user argument argv[1] mein hota hai.',
+          'Correct answer: argv[0] is always the program name; the first real user argument is in argv[1].'
+        )
+      },
+      {
+        q: t(
+          'Command-line arguments kis type ke hote hain?',
+          'What type are command-line arguments?'
+        ),
+        opts: [
+          t('int', 'int'),
+          t('float', 'float'),
+          t('String (char *)', 'String (char *)'),
+          t('char', 'char')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: saare arguments strings hote hain, chahe woh "25" jaise number hi kyun na dikhe — maths ke liye pehle atoi ya strtol se convert karo.',
+          'Correct answer: all arguments are strings, even when they look like the number "25" — convert with atoi or strtol before doing maths.'
+        )
+      },
+      {
+        q: t(
+          'Program bina argument ke chalaya gaya aur argv[1] padh liya gaya. Kya ho sakta hai?',
+          'The program is run with no arguments and argv[1] is read. What can happen?'
+        ),
+        opts: [
+          t('Kuch nahi, khali string milti hai', 'Nothing, you get an empty string'),
+          t('argv[1] NULL hota hai aur program crash ho sakta hai', 'argv[1] is NULL and the program can crash'),
+          t('argv[1] mein program ka naam aa jaata hai', 'argv[1] gets the program name'),
+          t('argc badh kar 2 ho jaata hai', 'argc grows to 2')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: bina argument ke argv[1] NULL hota hai, isliye use padhne se pehle hamesha argc check karo.',
+          'Correct answer: with no arguments, argv[1] is NULL, so always check argc before reading it.'
+        )
+      },
+      {
+        q: t(
+          'Exit code 0 ka matlab kya hota hai?',
+          'What does exit code 0 mean?'
+        ),
+        opts: [
+          t('Program fail hua', 'The program failed'),
+          t('Program success se chala', 'The program ran successfully'),
+          t('Koi argument nahi mila', 'No argument was given'),
+          t('Program crash ho gaya', 'The program crashed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: exit code 0 matlab success hota hai; non-zero value matlab failure hota hai, aur scripts isi par faisle lete hain.',
+          'Correct answer: exit code 0 means success; a non-zero value means failure, and scripts make decisions based on it.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'argc kul arguments batata hai; argv[0] program ka naam hai, pehla user argument argv[1] hai.',
+        'argc gives the total argument count; argv[0] is the program name and the first user argument is argv[1].'
+      ),
+      t(
+        'Saare arguments strings hote hain — number chahiye toh atoi ya strtol se convert karo.',
+        'All arguments are strings — convert with atoi or strtol when you need a number.'
+      ),
+      t(
+        'argv[i] padhne se pehle hamesha argc check karo, warna NULL padh kar crash ho sakta hai.',
+        'Always check argc before reading argv[i], or the program may read NULL and crash.'
+      ),
+      t(
+        'Exit code 0 matlab success, non-zero matlab failure — scripts isi par depend karte hain.',
+        'Exit code 0 means success and non-zero means failure — scripts depend on it.'
+      ),
+      t(
+        'Galat usage par usage message dikhao aur return 1 karo.',
+        'On wrong usage, show a usage message and return 1.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Apna Greet Program Banao',
+        'Practice: Build Your Own Greet Program'
+      ),
+      task: t(
+        'Neeche wala starter program run karo — isko ./greet Amit jaise chalao (do arguments: program naam + Amit). Done tab hoga jab output mein argc = 2 aur Hello, Amit! dikhe. Phir program ko bina argument ke chalao aur dekho ki usage message aur exit code 1 milta hai.',
+        'Run the starter program below — run it as ./greet Amit (two arguments: the program name plus Amit). You are done when the output shows argc = 2 and Hello, Amit! Then run the program with no arguments and check that you get the usage message and exit code 1.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    if (argc < 2) {
+        printf("Usage: prog <name>\\n");
+        return 1;
+    }
+    printf("argc = %d\\n", argc);
+    printf("Hello, %s!\\n", argv[1]);
+    return 0;
+}`,
+      expected: `argc = 2
+Hello, Amit!`
+    },
+    readMinutes: 12
+  };
+
+const cErrorHandling: Article = {
+    id: 'c-error-handling',
+    subjectId: 'c-programming',
+    title: t(
+      'Error Handling — errno, perror aur Defensive C',
+      'Error Handling — errno, perror, and Defensive C'
+    ),
+    summary: t(
+      'C mein error par program chup nahi rehta — woh errno mein error number rakhta hai, perror aur strerror se uska matlab batata hai, aur NULL check karke aap crash se pehle hi galti pakad sakte ho.',
+      'In C, an error does not stay silent — the error number is kept in errno, perror and strerror explain what it means, and a NULL check lets you catch the mistake before a crash.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Error Handling Kya Hai? (errno, perror aur NULL Checks)',
+          '1. What Is Error Handling? (errno, perror, and NULL Checks)'
+        ),
+        body: t(
+          `C mein jab koi function fail hota hai — jaise file nahi khulti ya memory nahi milti — toh woh chilla kar nahi batata. Woh bas ek khaas value return karta hai, jaise \`NULL\` ya \`-1\`, aur error ki detail ek global variable **errno** mein rakh deta hai. \`errno\` ek number hai: 2 matlab file nahi mili, 13 matlab permission nahi hai, 12 matlab memory khatm ho gayi. Har number ka ek matlab hota hai, aur us matlab ko padhne ke liye do tareeke hain: **perror** aur **strerror**.
+
+\`perror(\"Error opening file\")\` seedha screen par likhta hai: \`Error opening file: No such file or directory\`. Yeh message stderr par jaata hai, isliye woh normal output se alag rehta hai. \`strerror(errno)\` wahi message ek string ki tarah return karta hai, jise aap \`printf\` se apne format mein dikha sakte ho. Dono ka kaam ek hi hai — number ko insaan ki bhasha mein badalna. Beginners ke liye \`perror\` sabse simple hai: ek line, aur error saaf dikh jaata hai.
+
+**Defensive C** ka matlab hai: har us function ka return value check karo jo fail ho sakta hai. \`fopen\` ka result \`NULL\` check karo, \`malloc\` ka result \`NULL\` check karo, divide karne se pehle denominator zero toh nahi check karo. Yeh checks likhna extra kaam lagta hai, par yahi woh farak hai jo ek toy program aur ek reliable program mein hota hai. Error ko ignore karne se error gayab nahi hota — woh aage jaakar segfault ban jaata hai.`,
+          `In C, when a function fails — for example a file does not open or memory is not available — it does not shout about it. It simply returns a special value, like \`NULL\` or \`-1\`, and keeps the detail of the error in a global variable called **errno**. \`errno\` is a number: 2 means the file was not found, 13 means no permission, and 12 means out of memory. Every number has a meaning, and there are two ways to read that meaning: **perror** and **strerror**.
+
+\`perror(\"Error opening file\")\` writes directly to the screen: \`Error opening file: No such file or directory\`. This message goes to stderr, so it stays separate from normal output. \`strerror(errno)\` returns the same message as a string, which you can show with \`printf\` in your own format. Both do the same job — turning a number into human language. For beginners, \`perror\` is the simplest: one line, and the error is clearly visible.
+
+**Defensive C** means: check the return value of every function that can fail. Check the result of \`fopen\` for \`NULL\`, check the result of \`malloc\` for \`NULL\`, and check that the denominator is not zero before dividing. Writing these checks feels like extra work, but this is exactly the difference between a toy program and a reliable program. Ignoring an error does not make it go away — it turns into a segfault later.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: File Not Found, Bina Permission aur Memory Fail',
+          '2. Real-Life Examples: File Not Found, No Permission, and Memory Failure'
+        ),
+        body: t(
+          `Sabse common real-life error hai **file not found**. Aapka program \`data.txt\` kholna chahta hai, par user ne file galat folder mein rakhi hai. Bina check ke program \`NULL\` pointer par padhne ki koshish karega aur crash ho jaayega. Check ke saath program bolega: \`Error opening file: No such file or directory\` — user ko turant pata chal jaata hai ki file ka naam ya jagah galat hai. Yahi farak hai ek crash aur ek helpful message mein.
+
+Doosra example hai **permission denied**. Program kisi system file ko likhne ki koshish karta hai, par uske paas permission nahi hai. \`fopen\` fail hota hai aur \`errno\` 13 ban jaata hai — \`Permission denied\`. Sahi program yeh message dikha kar ruk jaata hai, user permission theek karta hai aur dobara chalata hai. Galat program aage badh kar khaali file par likhne ki koshish karta hai aur ajeeb behaviour dikhata hai.
+
+Teesra example hai **memory allocation fail**. \`malloc\` bade size ke liye \`NULL\` return kar sakta hai jab memory khatm ho. Chhote programs mein yeh kabhi nahi hota, isliye beginners is check ko skip kar dete hain. Par bade programs mein, ya bahut bade data par, yahi check crash se bachata hai. Rule simple hai: agar function fail ho sakta hai, toh uska return value check karo — chhota program ho ya bada.`,
+          `The most common real-life error is **file not found**. Your program wants to open \`data.txt\`, but the user put the file in the wrong folder. Without a check, the program tries to read through a \`NULL\` pointer and crashes. With a check, the program says: \`Error opening file: No such file or directory\` — the user immediately knows the file name or location is wrong. That is the difference between a crash and a helpful message.
+
+A second example is **permission denied**. The program tries to write to a system file, but it has no permission. \`fopen\` fails and \`errno\` becomes 13 — \`Permission denied\`. A correct program shows this message and stops; the user fixes the permission and runs it again. A wrong program carries on, tries to write to an empty file, and shows strange behaviour.
+
+A third example is **memory allocation failure**. \`malloc\` can return \`NULL\` for a large size when memory runs out. In small programs this never happens, so beginners skip this check. But in large programs, or with very large data, this check is what saves you from a crash. The rule is simple: if a function can fail, check its return value — in a small program or a large one.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: missing.txt Kholne ki Koshish aur Dry Run',
+          '3. Step-by-Step: Trying to Open missing.txt, with a Dry Run'
+        ),
+        body: t(
+          `Neeche wala program \`missing.txt\` naam ki file kholne ki koshish karta hai — ek aisi file jo hai hi nahi. Dry run karte hain: \`fopen(\"missing.txt\", \"r\")\` chalti hai, operating system file dhoondhta hai, nahi milti, toh \`fopen\` \`NULL\` return karta hai aur \`errno\` mein 2 set kar deta hai (2 matlab \`No such file or directory\`).
+
+Ab \`if (fp == NULL)\` check chalta hai — yeh **true** hai, kyunki \`fp\` \`NULL\` hai. Andar \`strerror(errno)\` se message milta hai: \`No such file or directory\`. Program print karta hai: \`Error opening file: No such file or directory\`. Phir \`printf(\"errno = %d\\n\", errno)\` se number bhi dikhata hai: \`errno = 2\`. Aakhir mein \`return 1\` — program error exit code ke saath band hota hai, crash ke saath nahi.
+
+Dhyaan do: \`errno\` ko turant padhna zaroori hai. Agar \`fopen\` fail hone ke baad aap koi aur function chala do, toh woh \`errno\` ko badal sakta hai aur asli error kho jaayega. Isliye pattern hamesha yahi hai: fail hote hi turant \`perror\` ya \`strerror\` se message nikaalo, phir aage badho. Header files bhi yaad rakho: \`errno\` ke liye \`errno.h\`, \`strerror\` ke liye \`string.h\` aur \`FILE\` ke liye \`stdio.h\` chahiye.`,
+          `The program below tries to open a file called \`missing.txt\` — a file that does not exist. Let us do a dry run: \`fopen(\"missing.txt\", \"r\")\` runs, the operating system looks for the file, does not find it, so \`fopen\` returns \`NULL\` and sets \`errno\` to 2 (2 means \`No such file or directory\`).
+
+Now the check \`if (fp == NULL)\` runs — it is **true**, because \`fp\` is \`NULL\`. Inside, \`strerror(errno)\` gives the message: \`No such file or directory\`. The program prints: \`Error opening file: No such file or directory\`. Then \`printf(\"errno = %d\\n\", errno)\` also shows the number: \`errno = 2\`. Finally, \`return 1\` — the program stops with an error exit code, not with a crash.
+
+Notice: you must read \`errno\` immediately. If you run another function after \`fopen\` fails, that function can change \`errno\` and the real error is lost. So the pattern is always the same: the moment a call fails, get the message at once with \`perror\` or \`strerror\`, then move on. Also remember the headers: \`errno.h\` for \`errno\`, \`string.h\` for \`strerror\`, and \`stdio.h\` for \`FILE\`.`
+        ),
+        code: {
+          title: t(
+            'fopen Fail: errno aur strerror se Error Message',
+            'fopen Fails: Error Message from errno and strerror'
+          ),
+          language: 'c',
+          code: `#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    FILE *fp = fopen("missing.txt", "r");
+
+    if (fp == NULL) {
+        printf("Error opening file: %s\\n", strerror(errno));
+        printf("errno = %d\\n", errno);
+        return 1;
+    }
+    printf("File opened.\\n");
+    fclose(fp);
+    return 0;
+}`,
+          output: `Error opening file: No such file or directory
+errno = 2`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Bina Check ke NULL, errno ko Der se Padhna aur Silent Fail',
+          '4. Common Mistakes: NULL Without a Check, Reading errno Late, and Silent Failure'
+        ),
+        body: t(
+          `**Galti 1: \`fopen\` ya \`malloc\` ka result check kiye bina use karna.** Yeh C mein segfault ki sabse badi wajah hai. \`FILE *fp = fopen(...)\` ke baad turant \`if (fp == NULL)\` likho. \`malloc\` ke baad turant \`if (arr == NULL)\` likho. Check likhne mein 3 lines lagti hain, crash debug karne mein 3 ghante lag sakte hain.
+
+**Galti 2: \`errno\` ko der se padhna.** \`errno\` ek global variable hai jo har library call badal sakti hai. Agar \`fopen\` fail hone ke baad aap \`printf\` chala kar phir \`errno\` padho, toh bhi aksar theek rehta hai, par beech mein koi aur failing call aa jaaye toh asli error kho jaata hai. Safe tareeka: fail hote hi turant \`perror\` karo ya \`strerror(errno)\` ko ek variable mein copy karo.
+
+**Galti 3: Error ko chup-chaap ignore karna.** Kuch beginners \`if (fp == NULL) { return 1; }\` likhte hain — bina koi message. Program band toh ho jaata hai, par user ko pata hi nahi chalta kyun. Hamesha ek clear message print karo: kya fail hua aur kyun. Aapka future self — jo 2 mahine baad yeh program debug karega — aapko dhanyavaad dega.
+
+**Galti 4: Divide-by-zero ko check na karna.** C mein integer ko zero se divide karna crash hai, warning nahi. \`a / b\` likhne se pehle hamesha \`if (b == 0)\` check karo. Neeche wala pehla example yahi dikhata hai: pehle \`b = 0\` par error message, phir \`b = 4\` par sahi answer 5.`,
+          `**Mistake 1: Using the result of \`fopen\` or \`malloc\` without checking it.** This is the biggest cause of segfaults in C. Right after \`FILE *fp = fopen(...)\`, write \`if (fp == NULL)\`. Right after \`malloc\`, write \`if (arr == NULL)\`. The check takes 3 lines; debugging a crash can take 3 hours.
+
+**Mistake 2: Reading \`errno\` late.** \`errno\` is a global variable that any library call can change. If you run \`printf\` after \`fopen\` fails and then read \`errno\`, it is often still fine, but if another failing call comes in between, the real error is lost. The safe way: call \`perror\` at once when a call fails, or copy \`strerror(errno)\` into a variable immediately.
+
+**Mistake 3: Silently ignoring an error.** Some beginners write \`if (fp == NULL) { return 1; }\` — with no message. The program stops, but the user never learns why. Always print a clear message: what failed and why. Your future self — who debugs this program two months later — will thank you.
+
+**Mistake 4: Not checking for divide-by-zero.** Dividing an integer by zero in C is a crash, not a warning. Before writing \`a / b\`, always check \`if (b == 0)\`. The first example below shows exactly this: first an error message when \`b = 0\`, then the correct answer 5 when \`b = 4\`.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khali File, Bada malloc aur errno = 0',
+          '5. Edge Cases: Empty File, Large malloc, and errno = 0'
+        ),
+        body: t(
+          `**1. File khulti hai par khali hai.** \`fopen\` success deta hai, \`fp\` \`NULL\` nahi hai — par file mein kuch nahi hai. Padhne par \`fscanf\` turant \`EOF\` deta hai. Yeh error nahi hai, normal situation hai: khali file ka matlab zero records hai, crash nahi. Aapka loop bas zero baar chalega. Isliye khali file ko alag se error mat banao.
+
+**2. \`malloc(0)\` ya bahut bada \`malloc\`.** \`malloc(0)\` ya toh \`NULL\` deta hai ya ek aisa pointer deta hai jise aap use nahi kar sakte — dono cases mein use mat karo. Bahut bada size, jaise \`malloc(1000000000000)\`, aam taur par \`NULL\` dega. Isliye size hamesha check karo aur \`NULL\` ka handle likho, chahe size chhota hi kyun na ho.
+
+**3. \`errno = 0\` ka matlab.** \`errno\` 0 matlab koi error nahi hua. Par \`errno\` ko success ka proof mat samjho — kuch functions success par bhi \`errno\` ko 0 nahi karte. Rule yeh hai: pehle function ka return value dekho; sirf jab woh fail bataye, tab \`errno\` padho. Return value pehle, \`errno\` baad mein.
+
+**4. \`perror\` ke baad program jaari rakhna.** Har error par program band karna zaroori nahi hai. Agar ek optional file nahi khulti, toh aap warning dikha kar default values se aage badh sakte ho. Decide karo: yeh error fatal hai (band karo) ya recoverable hai (warning dikhao, aage badho). Dono patterns sahi hain — bas decide karke saaf likho.`,
+          `**1. The file opens but is empty.** \`fopen\` succeeds, \`fp\` is not \`NULL\` — but the file holds nothing. Reading gives \`EOF\` from \`fscanf\` at once. This is not an error, it is a normal situation: an empty file means zero records, not a crash. Your loop simply runs zero times. So do not treat an empty file as an error.
+
+**2. \`malloc(0)\` or a very large \`malloc\`.** \`malloc(0)\` either gives \`NULL\` or a pointer you cannot use — in both cases, do not use it. A very large size, like \`malloc(1000000000000)\`, usually gives \`NULL\`. So always check the size and write a \`NULL\` handler, even when the size is small.
+
+**3. What \`errno = 0\` means.** \`errno\` 0 means no error happened. But do not treat \`errno\` as proof of success — some functions do not set \`errno\` to 0 on success. The rule is: look at the function return value first; only when it reports failure, read \`errno\`. Return value first, \`errno\` second.
+
+**4. Continuing after \`perror\`.** Not every error needs to stop the program. If an optional file does not open, you can show a warning and continue with default values. Decide: is this error fatal (stop) or recoverable (warn and continue)? Both patterns are correct — just decide and write it clearly.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: perror vs strerror, Return Codes aur Asserts',
+          '6. What-If: perror vs strerror, Return Codes, and Asserts'
+        ),
+        body: t(
+          `**What if: \`perror\` ki jagah \`strerror\` use karein?** \`perror(\"msg\")\` seedha stderr par \`msg: <error>\` likhta hai — ek line mein kaam khatam. \`strerror(errno)\` string return karta hai, jise aap \`printf\` se apne format mein, ya ek log file mein, likh sakte ho. User ko turant dikhane ke liye \`perror\`, aur message ko save karke baad mein use karne ke liye \`strerror\`. Dono sahi hain; farak sirf itna hai ki message kahan jaata hai.
+
+**What if: function error ko kaise bataye — return value ya errno?** Aapki khud ki functions ke liye best pattern hai: success par 0 return karo, error par 1 (ya alag-alag error ke liye alag number). Neeche practice mein \`safe_divide\` yahi karta hai — zero par 1 return karta hai, success par 0 aur result ko pointer se bhar deta hai. Caller check karta hai: \`if (safe_divide(...) == 1)\` toh error message, warna result use karo. Yeh pattern poori C duniya mein use hota hai.
+
+**What if: \`assert\` use karein?** \`assert(b != 0)\` debug build mein galat condition par program ko turant rok deta hai aur file aur line number batata hai. Yeh developer ki galti pakadne ke liye hai, user ke galat input ke liye nahi. User zero de sakta hai — woh normal input hai, uske liye \`if\` check likho. Apne code ki galti (jo kabhi nahi honi chahiye) ke liye \`assert\` likho. Dono ki jagah alag hai.`,
+          `**What if we use \`strerror\` instead of \`perror\`?** \`perror(\"msg\")\` writes \`msg: <error>\` straight to stderr — the job is done in one line. \`strerror(errno)\` returns a string, which you can write with \`printf\` in your own format, or into a log file. Use \`perror\` to show the user at once, and \`strerror\` to save the message and use it later. Both are correct; the only difference is where the message goes.
+
+**What if a function must report an error — return value or errno?** For your own functions, the best pattern is: return 0 on success and 1 on error (or different numbers for different errors). In the practice below, \`safe_divide\` does exactly this — it returns 1 for zero, and on success returns 0 and fills the result through a pointer. The caller checks: \`if (safe_divide(...) == 1)\` then show an error message, otherwise use the result. This pattern is used across the whole C world.
+
+**What if we use \`assert\`?** \`assert(b != 0)\` stops the program at once in a debug build when the condition is wrong, and tells you the file and line number. It is for catching the developer's mistake, not the user's bad input. A user can give zero — that is normal input, and for that you write an \`if\` check. Write \`assert\` for a mistake in your own code (which should never happen). The two have different places.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Defensive C ka Poora Picture',
+          '7. Summary: The Full Picture of Defensive C'
+        ),
+        body: t(
+          `Har function jo fail ho sakta hai, uska return value check karo: \`fopen\` aur \`malloc\` ke liye \`NULL\`, divide ke liye zero denominator, file read ke liye \`EOF\`. Fail hote hi turant \`errno\` padho — \`perror\` se seedha message dikhao ya \`strerror(errno)\` se string lo. \`errno\` ko der se padhoge toh asli error kho sakta hai.
+
+Apni functions ke liye pattern yaad rakho: success par 0, error par 1 return karo, aur result ko pointer se wapas do. Error par hamesha clear message dikhao — kya fail hua aur kyun — aur decide karo ki error fatal hai ya recoverable. \`assert\` developer ki galti ke liye hai, user ke input ke liye \`if\` check likho.
+
+Revision ke liye: \`missing.txt\` wale program ko khud trace karo — \`fopen\` kya return karta hai, \`errno\` mein kya aata hai, aur program kis line par rukta hai. Phir socho: agar file mil jaati, toh kaunsi lines chalti? Agar yeh dry run clear hai, toh error handling aapko aa gaya hai. Agle article mein hum debugging dekhenge — jab program galat answer de ya crash ho, toh galti ko kaise dhoondha jaata hai.`,
+          `Check the return value of every function that can fail: \`NULL\` for \`fopen\` and \`malloc\`, a zero denominator for division, and \`EOF\` for file reads. The moment a call fails, read \`errno\` at once — show the message directly with \`perror\`, or take the string with \`strerror(errno)\`. If you read \`errno\` late, the real error can be lost.
+
+Remember the pattern for your own functions: return 0 on success and 1 on error, and give the result back through a pointer. On error, always show a clear message — what failed and why — and decide whether the error is fatal or recoverable. \`assert\` is for the developer's mistake; for user input, write an \`if\` check.
+
+To revise: trace the \`missing.txt\` program yourself — what does \`fopen\` return, what goes into \`errno\`, and on which line does the program stop? Then think: if the file had been found, which lines would run? If this dry run is clear, you know error handling. In the next article we will look at debugging — how to find the mistake when a program gives a wrong answer or crashes.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Error Handling ka Flow: Check, Message, Decide',
+        'Error Handling Flow: Check, Message, Decide'
+      ),
+      caption: t(
+        'Har fail hone wali call ke baad yahi teen steps chalte hain',
+        'These three steps run after every call that can fail'
+      ),
+      nodes: [
+        {
+          t: t('1. Call karo: fopen / malloc', '1. Call: fopen / malloc'),
+          s: t('Function chalao aur return value lo', 'Run the function and take its return value')
+        },
+        {
+          t: t('2. Check karo: NULL hai kya?', '2. Check: is it NULL?'),
+          s: t('NULL matlab fail — aage mat badho', 'NULL means failure — do not carry on')
+        },
+        {
+          t: t('3. Message dikhao: perror / strerror', '3. Show a message: perror / strerror'),
+          s: t('errno se kya hua, yeh user ko batao', 'Use errno to tell the user what happened')
+        },
+        {
+          t: t('4. Decide karo: ruko ya aage badho', '4. Decide: stop or carry on'),
+          s: t('Fatal error par return 1, recoverable par warning', 'Return 1 for a fatal error, warn for a recoverable one')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Divide-by-Zero Guard: Pehle Check, Phir Divide', 'Divide-by-Zero Guard: Check First, Then Divide'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int a = 20;
+    int b = 0;
+
+    if (b == 0) {
+        printf("Cannot divide by zero.\\n");
+    } else {
+        printf("20 / %d = %d\\n", b, a / b);
+    }
+    b = 4;
+    if (b == 0) {
+        printf("Cannot divide by zero.\\n");
+    } else {
+        printf("20 / %d = %d\\n", b, a / b);
+    }
+    return 0;
+}`,
+        output: `Cannot divide by zero.
+20 / 4 = 5`
+      },
+      {
+        title: t('malloc NULL Check: Memory Mili ya Nahi', 'malloc NULL Check: Did We Get Memory or Not'),
+        language: 'c',
+        code: `#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int *arr = malloc(5 * sizeof(int));
+    int i;
+    int sum = 0;
+
+    if (arr == NULL) {
+        printf("Memory allocation failed.\\n");
+        return 1;
+    }
+    for (i = 0; i < 5; i++) {
+        arr[i] = i + 1;
+        sum += arr[i];
+    }
+    printf("Sum of 1 to 5 = %d\\n", sum);
+    free(arr);
+    arr = NULL;
+    printf("Memory freed safely.\\n");
+    return 0;
+}`,
+        output: `Sum of 1 to 5 = 15
+Memory freed safely.`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'fopen fail hone par kya return karta hai?',
+          'What does fopen return when it fails?'
+        ),
+        opts: [
+          t('0', '0'),
+          t('NULL', 'NULL'),
+          t('-1', '-1'),
+          t('Khali string', 'An empty string')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fopen fail hone par NULL return karta hai, isliye turant if (fp == NULL) check likhna chahiye.',
+          'Correct answer: fopen returns NULL when it fails, so you should write an if (fp == NULL) check at once.'
+        )
+      },
+      {
+        q: t(
+          'errno = 2 ka matlab kya hota hai?',
+          'What does errno = 2 mean?'
+        ),
+        opts: [
+          t('Permission denied', 'Permission denied'),
+          t('No such file or directory', 'No such file or directory'),
+          t('Out of memory', 'Out of memory'),
+          t('Koi error nahi', 'No error')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: errno 2 matlab file nahi mili — strerror(errno) yahi message deta hai: No such file or directory.',
+          'Correct answer: errno 2 means the file was not found — strerror(errno) gives this message: No such file or directory.'
+        )
+      },
+      {
+        q: t(
+          'errno ko kab padhna chahiye?',
+          'When should you read errno?'
+        ),
+        opts: [
+          t('Program ke end mein', 'At the end of the program'),
+          t('Fail hote hi turant', 'Immediately when the call fails'),
+          t('Kabhi nahi', 'Never'),
+          t('Sirf success par', 'Only on success')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: errno ko fail hote hi turant padhna chahiye, kyunki beech mein chali koi aur call usse badal sakti hai.',
+          'Correct answer: errno must be read immediately when the call fails, because another call in between can change it.'
+        )
+      },
+      {
+        q: t(
+          'C mein integer ko zero se divide karne par kya hota hai?',
+          'What happens when you divide an integer by zero in C?'
+        ),
+        opts: [
+          t('Answer 0 milta hai', 'You get the answer 0'),
+          t('Answer infinity milta hai', 'You get the answer infinity'),
+          t('Program crash ho jaata hai', 'The program crashes'),
+          t('Compiler warning deta hai aur chalta rehta hai', 'The compiler warns and it keeps running')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: integer divide-by-zero C mein crash hai, isliye divide karne se pehle hamesha if (b == 0) check karo.',
+          'Correct answer: integer divide-by-zero is a crash in C, so always check if (b == 0) before dividing.'
+        )
+      },
+      {
+        q: t(
+          'free ke baad pointer ko NULL kyun set karte hain?',
+          'Why do we set a pointer to NULL after free?'
+        ),
+        opts: [
+          t('Memory wapas mil jaati hai', 'The memory comes back'),
+          t('Dangling pointer se dobara free ya use rokne ke liye', 'To stop a second free or use through a dangling pointer'),
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('Compiler khush ho jaata hai', 'The compiler becomes happy')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: free ke baad pointer dangling rehta hai — NULL set karne se dobara free ya galat use turant pakda jaata hai.',
+          'Correct answer: after free the pointer stays dangling — setting it to NULL means a second free or wrong use is caught at once.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'fopen aur malloc fail hone par NULL dete hain — turant check karo.',
+        'fopen and malloc give NULL when they fail — check at once.'
+      ),
+      t(
+        'errno mein error number hota hai; perror ya strerror se uska matlab dikhao.',
+        'errno holds the error number; show its meaning with perror or strerror.'
+      ),
+      t(
+        'errno ko fail hote hi turant padho, warna asli error kho sakta hai.',
+        'Read errno immediately when a call fails, or the real error can be lost.'
+      ),
+      t(
+        'Divide karne se pehle hamesha zero check karo — integer divide-by-zero crash hai.',
+        'Always check for zero before dividing — integer divide-by-zero is a crash.'
+      ),
+      t(
+        'Error par clear message dikhao aur decide karo: fatal hai ya recoverable.',
+        'On error, show a clear message and decide: is it fatal or recoverable?'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Safe Divide Function Banao',
+        'Practice: Build a Safe Divide Function'
+      ),
+      task: t(
+        'Neeche wala starter run karo — safe_divide(20, 0) par error message aana chahiye aur safe_divide(20, 4) par answer 5. Done tab hoga jab output expected jaisa aaye. Phir safe_divide(100, 10) ke liye ek aur call add karo aur check karo ki answer 10 aata hai.',
+        'Run the starter below — safe_divide(20, 0) must give an error message and safe_divide(20, 4) must give the answer 5. You are done when the output matches the expected output. Then add one more call for safe_divide(100, 10) and check that the answer is 10.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int safe_divide(int a, int b, int *result)
+{
+    if (b == 0) {
+        return 1;
+    }
+    *result = a / b;
+    return 0;
+}
+
+int main(void)
+{
+    int result = 0;
+
+    if (safe_divide(20, 0, &result) == 1) {
+        printf("20 / 0: error, cannot divide by zero.\\n");
+    } else {
+        printf("20 / 0 = %d\\n", result);
+    }
+    if (safe_divide(20, 4, &result) == 1) {
+        printf("20 / 4: error, cannot divide by zero.\\n");
+    } else {
+        printf("20 / 4 = %d\\n", result);
+    }
+    return 0;
+}`,
+      expected: `20 / 0: error, cannot divide by zero.
+20 / 4 = 5`
+    },
+    readMinutes: 12
+  };
+
+const cDebugging: Article = {
+    id: 'c-debugging',
+    subjectId: 'c-programming',
+    title: t(
+      'Debugging aur Segfaults — printf, gdb aur Common Causes',
+      'Debugging and Segfaults — printf, gdb, and Common Causes'
+    ),
+    summary: t(
+      'Program galat answer de ya crash ho jaaye toh ghabrao mat: printf se values trace karo, gdb se crash ki line dhoondho, aur segfault ki 4 common wajahen yaad rakho.',
+      'Do not panic when a program gives a wrong answer or crashes: trace values with printf, find the crashing line with gdb, and remember the 4 common causes of a segfault.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Debugging Kya Hai? (printf Debugging aur gdb)',
+          '1. What Is Debugging? (printf Debugging and gdb)'
+        ),
+        body: t(
+          `**Debugging** ka matlab hai program mein galti dhoondhna aur use theek karna. C mein do sabse kaam ke tools hain. Pehla hai **printf debugging** — program ke andar jagah-jagah \`printf\` daal kar dekhna ki har step par variable ki value kya hai. Agar sum galat aa raha hai, toh loop ke andar \`printf(\"i = %d, sum = %d\\n\", i, sum)\` likho. Output dekh kar turant pata chal jaayega ki kaunsi iteration mein value bigdi.
+
+Doosra tool hai **gdb** — GNU Debugger. Program ko \`gcc -g\` se compile karo (yeh \`-g\` debug info add karta hai), phir \`gdb ./prog\` se chalao. \`run\` se program chalega, crash par gdb ruk kar batayega ki kaunsi line par crash hua. \`backtrace\` (ya \`bt\`) se pata chalta hai ki crash se pehle kaunsi functions chali thi. \`print x\` se kisi variable ki value dekhi ja sakti hai. gdb seekhne mein thoda waqt lagta hai, par segfault ke liye yeh sabse tez tareeka hai.
+
+Teesra tareeka hai **rubber-duck debugging** — apne code ko kisi ko (ya khud ko zor se) line-by-line samjhana. Aksar samjhate-samjhate hi galti dikh jaati hai. Debugging mein sabse badi galti hai andhere mein code badalte rehna — pehle galti ko reproduce karo, phir uski jagah dhoondho, phir ek chhota sa fix karo aur dobara test karo.`,
+          `**Debugging** means finding a mistake in a program and fixing it. In C there are two most useful tools. The first is **printf debugging** — putting \`printf\` calls at places inside the program to see what each variable holds at every step. If the sum is wrong, write \`printf(\"i = %d, sum = %d\\n\", i, sum)\` inside the loop. From the output you can see at once in which iteration the value went wrong.
+
+The second tool is **gdb** — the GNU Debugger. Compile the program with \`gcc -g\` (the \`-g\` adds debug info), then run it with \`gdb ./prog\`. \`run\` starts the program, and on a crash gdb stops and tells you which line crashed. \`backtrace\` (or \`bt\`) shows which functions ran before the crash. \`print x\` shows the value of any variable. Learning gdb takes a little time, but for a segfault it is the fastest way.
+
+A third way is **rubber-duck debugging** — explaining your code line by line to someone (or out loud to yourself). Often the mistake shows itself while you are explaining. The biggest mistake in debugging is changing code blindly in the dark — first reproduce the mistake, then find its place, then make one small fix and test again.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Galat Sum, Crash aur Ajeeb Output',
+          '2. Real-Life Examples: Wrong Sum, Crash, and Strange Output'
+        ),
+        body: t(
+          `Pehla real-life case: program 1 se 5 ka sum nikaal raha hai aur answer 15 ki jagah 10 aa raha hai. Aankhon se code dekhne par sab theek lagta hai. Loop ke andar \`printf\` daalo toh dikhta hai: \`i = 1, sum = 1\`, \`i = 2, sum = 3\`, \`i = 3, sum = 6\`... aur phir loop ruk jaata hai. Matlab loop \`i <= 5\` ki jagah \`i < 4\` chal raha tha — condition galat thi. Bina trace ke yeh galti dhoondhna mushkil hai, trace ke saath 10 second ka kaam hai.
+
+Doosra case: program chalte hi crash ho jaata hai aur screen par \`Segmentation fault\` likha aata hai. Matlab program ne aisi memory ko chhua jise chhune ki permission nahi thi. gdb mein \`run\` karo toh gdb batata hai: crash \`printf(\"%d\", *p)\` wali line par hua, aur \`print p\` batata hai \`p = NULL\`. Ab fix saaf hai — use karne se pehle \`NULL\` check karo.
+
+Teesra case: program kabhi-kabhi sahi, kabhi-kabhi galat answer deta hai. Yeh sabse khatarnak bug hai — iska matlab hai uninitialized variable ya out-of-bounds access. Aaj memory mein kuch aur pada hai, kal kuch aur. Aise bug ko pakadne ke liye compiler warnings (\`-Wall -Wextra\`) aur tools jaise Valgrind kaam aate hain. Rule yaad rakho: jo bug kabhi-kabhi aata hai, woh memory ki galti hoti hai.`,
+          `The first real-life case: a program adds 1 to 5 and gives 10 instead of 15. Looking at the code, everything seems fine. Add a \`printf\` inside the loop and you see: \`i = 1, sum = 1\`, \`i = 2, sum = 3\`, \`i = 3, sum = 6\`... and then the loop stops. So the loop was running \`i < 4\` instead of \`i <= 5\` — the condition was wrong. Without a trace this mistake is hard to find; with a trace it takes 10 seconds.
+
+The second case: the program crashes as soon as it runs and the screen shows \`Segmentation fault\`. That means the program touched memory it had no permission to touch. Run it in gdb with \`run\` and gdb tells you: the crash happened on the line \`printf(\"%d\", *p)\`, and \`print p\` shows \`p = NULL\`. Now the fix is clear — check for \`NULL\` before using it.
+
+The third case: the program sometimes gives the right answer and sometimes the wrong one. This is the most dangerous bug — it means an uninitialized variable or an out-of-bounds access. Today the memory holds one thing, tomorrow another. To catch such a bug, compiler warnings (\`-Wall -Wextra\`) and tools like Valgrind help. Remember the rule: a bug that appears only sometimes is a memory mistake.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Sum 1 se 5 ka printf Trace aur Dry Run',
+          '3. Step-by-Step: printf Trace of the Sum from 1 to 5, with a Dry Run'
+        ),
+        body: t(
+          `Neeche wala program 1 se 5 tak ka sum nikaalta hai, aur har step par \`printf\` se trace dikhata hai. Dry run karte hain: shuru mein \`sum = 0\`, \`i = 1\`. Pehli iteration: \`sum += 1\` se \`sum = 1\`, print hota hai \`i = 1, sum = 1\`. Doosri iteration: \`i = 2\`, \`sum = 1 + 2 = 3\`, print \`i = 2, sum = 3\`. Teesri: \`i = 3\`, \`sum = 6\`. Chauthi: \`i = 4\`, \`sum = 10\`. Paanchvi: \`i = 5\`, \`sum = 15\`. Loop khatm, print hota hai \`Total = 15\`.
+
+Ab socho sum galat aata — maan lo loop \`i <= 4\` tak chal raha hota. Trace mein aakhri line hoti \`i = 4, sum = 10\` aur total 10 aata. Trace dekh kar turant pata chal jaata hai ki loop ek iteration kam chala. Bina trace ke aapko sirf final answer dikhta — 10 — aur aapko pata hi nahi chalta ki galti loop mein hai ya sum ki starting value mein.
+
+printf debugging ka ek aur fayda: yeh har jagah kaam karta hai, koi setup nahi chahiye. gdb powerful hai, par printf sabse pehla kadam hai. Jab program theek ho jaaye, toh debug wale \`printf\` hata do — warna final output mein extra lines dikhengi. Ya unhe ek \`#define DEBUG\` ke peeche rakho, taaki zaroorat par wapas la sakein.`,
+          `The program below adds 1 to 5, and shows a trace with \`printf\` at every step. Let us do a dry run: at the start, \`sum = 0\` and \`i = 1\`. First iteration: \`sum += 1\` gives \`sum = 1\`, and it prints \`i = 1, sum = 1\`. Second iteration: \`i = 2\`, \`sum = 1 + 2 = 3\`, prints \`i = 2, sum = 3\`. Third: \`i = 3\`, \`sum = 6\`. Fourth: \`i = 4\`, \`sum = 10\`. Fifth: \`i = 5\`, \`sum = 15\`. The loop ends and prints \`Total = 15\`.
+
+Now suppose the sum came out wrong — say the loop ran only up to \`i <= 4\`. The trace would end with \`i = 4, sum = 10\` and the total would be 10. From the trace you can see at once that the loop ran one iteration short. Without a trace you only see the final answer — 10 — and you never learn whether the mistake is in the loop or in the starting value of the sum.
+
+Printf debugging has another advantage: it works everywhere, with no setup. gdb is powerful, but printf is the first step. When the program is fixed, remove the debug \`printf\` calls — otherwise extra lines will appear in the final output. Or keep them behind a \`#define DEBUG\`, so you can bring them back when needed.`
+        ),
+        code: {
+          title: t(
+            'printf Trace: Har Step par i aur sum Dekho',
+            'printf Trace: See i and sum at Every Step'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void)
+{
+    int sum = 0;
+    int i;
+
+    for (i = 1; i <= 5; i++) {
+        sum += i;
+        printf("i = %d, sum = %d\\n", i, sum);
+    }
+    printf("Total = %d\\n", sum);
+    return 0;
+}`,
+          output: `i = 1, sum = 1
+i = 2, sum = 3
+i = 3, sum = 6
+i = 4, sum = 10
+i = 5, sum = 15
+Total = 15`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Segfault ki 4 Wajahen aur Blind Fix',
+          '4. Common Mistakes: 4 Causes of a Segfault and Blind Fixes'
+        ),
+        body: t(
+          `**Segfault wajah 1: NULL pointer ko use karna.** \`int *p = NULL; printf(\"%d\", *p);\` turant crash karega. Fix: use karne se pehle \`if (p == NULL)\` check karo. Neeche wala pehla example yahi dikhata hai — check ke saath program safely chalta hai.
+
+**Segfault wajah 2: Array out of bounds.** \`int arr[3]\` mein \`arr[5] = 10\` likhna aisi memory ko chhuna hai jo aapki nahi hai. Kabhi crash, kabhi galat value, kabhi kuch nahi — yahi is bug ko khatarnak banata hai. Fix: index use karne se pehle \`if (index < 0 || index >= 3)\` check karo. Neeche wala doosra example yahi guard dikhata hai.
+
+**Segfault wajah 3: Uninitialized pointer.** \`int *p;\` likh kar \`p\` ko bina value diye use karna — \`p\` mein kachra address hota hai. Fix: pointer ko declare karte hi value do — \`int *p = NULL;\` ya kisi valid variable ka address.
+
+**Segfault wajah 4: Free ki hui memory ko use karna (use-after-free).** \`free(p)\` ke baad \`p\` se padhna ya likhna galat hai. Fix: \`free\` ke baad turant \`p = NULL\` set karo, taaki galat use turant pakda jaaye.
+
+**Galti 5: Blind fix.** Bina samjhe code badalte rehna — ek line badlo, chalao, phir doosri line badlo. Isse bug chhup jaata hai, theek nahi hota. Pehle reproduce karo, phir trace ya gdb se jagah dhoondho, phir ek fix karo aur test karo.`,
+          `**Segfault cause 1: Using a NULL pointer.** \`int *p = NULL; printf(\"%d\", *p);\` crashes at once. Fix: check \`if (p == NULL)\` before using it. The first example below shows exactly this — with the check, the program runs safely.
+
+**Segfault cause 2: Array out of bounds.** Writing \`arr[5] = 10\` in an \`int arr[3]\` touches memory that is not yours. Sometimes a crash, sometimes a wrong value, sometimes nothing — that is what makes this bug dangerous. Fix: before using an index, check \`if (index < 0 || index >= 3)\`. The second example below shows this guard.
+
+**Segfault cause 3: Uninitialized pointer.** Writing \`int *p;\` and using \`p\` without giving it a value — \`p\` holds a garbage address. Fix: give a pointer a value as soon as you declare it — \`int *p = NULL;\` or the address of a valid variable.
+
+**Segfault cause 4: Using freed memory (use-after-free).** Reading or writing through \`p\` after \`free(p)\` is wrong. Fix: set \`p = NULL\` right after \`free\`, so a wrong use is caught at once.
+
+**Mistake 5: Blind fixing.** Changing code without understanding — change one line, run it, then change another line. This hides the bug instead of fixing it. First reproduce it, then find its place with a trace or gdb, then make one fix and test it.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Kabhi-Kabhi Crash, Bada Input aur Compiler Warnings',
+          '5. Edge Cases: Sometimes Crashing, Large Input, and Compiler Warnings'
+        ),
+        body: t(
+          `**1. Kabhi-kabhi crash.** Agar program 10 baar mein 1 baar crash hota hai, toh wajah aam taur par uninitialized variable ya out-of-bounds access hai. Memory mein har baar alag kachra hota hai, isliye behaviour badalta rehta hai. Aise bug ko \`gcc -Wall -Wextra\` se compile karke dhoondho — compiler aksar uninitialized variable ki warning deta hai. Warning ko error samjho: zero warnings ka rule rakho.
+
+**2. Chhote input par theek, bade input par crash.** Yeh aam taur par fixed-size array ka overflow hai — array 100 ka hai aur input 150 items ka aa gaya. Fix: ya toh array bada karo, ya dynamic memory (\`malloc\`) use karo, ya input ka size check karke extra items ko reject karo.
+
+**3. Debug build mein theek, release build mein crash.** Optimization ke saath compiler code ko badal deta hai, aur uninitialized variable ka behaviour badal jaata hai. Yeh bug ka sign hai, compiler ki galti nahi. Fix wahi hai — variable ko initialize karo, warnings theek karo.
+
+**4. gdb mein crash ki line mil gayi, par wajah samajh nahi aayi.** \`backtrace\` dekho — crash wali line par kaunsi function se aaye the? \`print\` se us function ke arguments dekho. Aksar crash ki line sirf symptom hoti hai; asli galti usse pehle wali line mein hoti hai jahan pointer ko galat value mili thi.`,
+          `**1. Crashing only sometimes.** If a program crashes 1 time out of 10, the cause is usually an uninitialized variable or an out-of-bounds access. The memory holds different garbage each time, so the behaviour keeps changing. Find such a bug by compiling with \`gcc -Wall -Wextra\` — the compiler often warns about an uninitialized variable. Treat warnings as errors: keep a zero-warnings rule.
+
+**2. Fine on small input, crashing on large input.** This is usually a fixed-size array overflow — the array holds 100 items and the input brings 150. Fix: make the array bigger, use dynamic memory (\`malloc\`), or check the input size and reject extra items.
+
+**3. Fine in a debug build, crashing in a release build.** With optimization, the compiler changes the code, and the behaviour of an uninitialized variable changes. This is a sign of a bug, not a compiler mistake. The fix is the same — initialize the variable and fix the warnings.
+
+**4. gdb found the crashing line, but the cause is unclear.** Look at the \`backtrace\` — which function called into the crashing line? Use \`print\` to see that function's arguments. Often the crashing line is only the symptom; the real mistake is in an earlier line where the pointer got a wrong value.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: gdb ke Commands, Valgrind aur Rubber Duck',
+          '6. What-If: gdb Commands, Valgrind, and Rubber Duck'
+        ),
+        body: t(
+          `**What if: gdb mein program ko step-by-step chalana ho?** \`gcc -g prog.c -o prog\` se compile karo, phir \`gdb ./prog\`. \`break main\` se main par breakpoint lagao, \`run\` se chalao, \`next\` se ek line aage badho, \`print sum\` se value dekho, \`continue\` se aage chalao. Yeh 5 commands — \`break\`, \`run\`, \`next\`, \`print\`, \`continue\` — gdb ka 90% kaam kar dete hain. Baaki commands baad mein seekhi ja sakti hain.
+
+**What if: memory bug gdb se bhi na dikhe?** Tab **Valgrind** kaam aata hai: \`valgrind ./prog\` chalao. Valgrind har memory access ko check karta hai aur batata hai: out-of-bounds read, use-after-free, memory leak — sab kuch, line number ke saath. Valgrind slow chalata hai, par memory bugs ke liye yeh sabse best tool hai. Is article ke code mein Valgrind ki zaroorat nahi hai, kyunki saare accesses bounds ke andar hain.
+
+**What if: bug sirf dusre computer par aata hai?** Pehle compiler warnings check karo — dono computers par same code, same warnings. Phir input check karo — kya dusre computer par input alag hai? Aksar farak input mein hota hai, code mein nahi. Input ko file mein save karo aur dono jagah wahi input chala kar compare karo.`,
+          `**What if you want to run the program step by step in gdb?** Compile with \`gcc -g prog.c -o prog\`, then run \`gdb ./prog\`. Use \`break main\` to set a breakpoint at main, \`run\` to start, \`next\` to move one line ahead, \`print sum\` to see a value, and \`continue\` to carry on. These 5 commands — \`break\`, \`run\`, \`next\`, \`print\`, \`continue\` — cover 90% of gdb work. The rest can be learned later.
+
+**What if a memory bug does not show up even in gdb?** Then **Valgrind** helps: run \`valgrind ./prog\`. Valgrind checks every memory access and reports out-of-bounds reads, use-after-free, and memory leaks — all with line numbers. Valgrind runs slowly, but it is the best tool for memory bugs. The code in this article does not need Valgrind, because all accesses stay inside bounds.
+
+**What if the bug appears only on another computer?** First check the compiler warnings — the same code should give the same warnings on both computers. Then check the input — is the input different on the other computer? Often the difference is in the input, not the code. Save the input in a file and run the same input in both places to compare.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Debugging ka Poora Picture',
+          '7. Summary: The Full Picture of Debugging'
+        ),
+        body: t(
+          `Debugging ka pehla kadam hai bug ko **reproduce** karna — kaunsa input, kaunsa step, kitni baar. Phir **trace** karo: \`printf\` se har step ki values dekho, ya gdb mein breakpoint lagakar step karo. Crash par gdb batata hai kaunsi line aur \`backtrace\` batata hai kaunsi calls se aaye the. Segfault ki 4 common wajahen yaad rakho: NULL pointer, out-of-bounds index, uninitialized pointer aur use-after-free.
+
+Compiler warnings ko error samjho — \`gcc -std=c11 -Wall -Wextra\` se zero warnings ka rule rakho. Jo bug kabhi-kabhi aata hai, woh memory ki galti hoti hai; uske liye Valgrind kaam aata hai. Aur blind fix mat karo — ek fix, phir test, phir aage.
+
+Revision ke liye: sum wale trace ko khud bina code dekhe likho — har iteration mein \`i\` aur \`sum\` kya honge? Phir socho: agar \`arr[3]\` mein index 5 use karo toh kya hoga aur guard kaise likhoge? Agar dono clear hain, toh debugging aapko aa gaya hai. Agle article mein hum pehla project banayenge — number guessing game, poori planning ke saath.`,
+          `The first step of debugging is to **reproduce** the bug — which input, which step, how often. Then **trace** it: see the values at every step with \`printf\`, or step through it with a breakpoint in gdb. On a crash, gdb tells you which line, and \`backtrace\` tells you which calls led there. Remember the 4 common causes of a segfault: a NULL pointer, an out-of-bounds index, an uninitialized pointer, and use-after-free.
+
+Treat compiler warnings as errors — keep a zero-warnings rule with \`gcc -std=c11 -Wall -Wextra\`. A bug that appears only sometimes is a memory mistake; Valgrind helps with that. And never fix blindly — one fix, then test, then move on.
+
+To revise: write the sum trace yourself without looking at the code — what are \`i\` and \`sum\` in each iteration? Then think: if you use index 5 in an \`arr[3]\`, what happens, and how would you write the guard? If both are clear, you know debugging. In the next article we will build the first project — a number guessing game, with full planning.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Debugging ka Flow: Reproduce, Trace, Fix, Test',
+        'Debugging Flow: Reproduce, Trace, Fix, Test'
+      ),
+      caption: t(
+        'Blind fix mat karo — har step order mein chalao',
+        'Do not fix blindly — run every step in order'
+      ),
+      nodes: [
+        {
+          t: t('1. Reproduce karo', '1. Reproduce it'),
+          s: t('Kaunsa input, kaunsa step, kitni baar?', 'Which input, which step, how often?')
+        },
+        {
+          t: t('2. Trace karo: printf ya gdb', '2. Trace: printf or gdb'),
+          s: t('Har step ki values dekho, crash ki line dhoondho', 'See the values at every step, find the crashing line')
+        },
+        {
+          t: t('3. Wajah dhoondho', '3. Find the cause'),
+          s: t('NULL? Out of bounds? Uninitialized? Use-after-free?', 'NULL? Out of bounds? Uninitialized? Use-after-free?')
+        },
+        {
+          t: t('4. Ek fix karo, phir test karo', '4. Make one fix, then test'),
+          s: t('Fix ke baad dobara chalao — warnings zero hone chahiye', 'Run again after the fix — warnings must be zero')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('NULL Check: Pointer Use Karne se Pehle', 'NULL Check: Before Using a Pointer'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int *p = NULL;
+
+    if (p == NULL) {
+        printf("p is NULL. Do not use *p.\\n");
+    } else {
+        printf("Value = %d\\n", *p);
+    }
+    printf("Program finished safely.\\n");
+    return 0;
+}`,
+        output: `p is NULL. Do not use *p.
+Program finished safely.`
+      },
+      {
+        title: t('Bounds Guard: Index 5 par Array [3] Safe Rakho', 'Bounds Guard: Keep Array [3] Safe at Index 5'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int arr[3] = {10, 20, 30};
+    int index = 5;
+
+    if (index < 0 || index >= 3) {
+        printf("Index %d is out of bounds (valid: 0-2).\\n", index);
+    } else {
+        printf("arr[%d] = %d\\n", index, arr[index]);
+    }
+    index = 1;
+    if (index < 0 || index >= 3) {
+        printf("Index %d is out of bounds (valid: 0-2).\\n", index);
+    } else {
+        printf("arr[%d] = %d\\n", index, arr[index]);
+    }
+    return 0;
+}`,
+        output: `Index 5 is out of bounds (valid: 0-2).
+arr[1] = 20`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Segmentation fault ka sabse common matlab kya hota hai?',
+          'What does a segmentation fault most commonly mean?'
+        ),
+        opts: [
+          t('Program ne galat memory ko chhua', 'The program touched wrong memory'),
+          t('Program mein syntax error hai', 'The program has a syntax error'),
+          t('File nahi mili', 'The file was not found'),
+          t('Compiler crash ho gaya', 'The compiler crashed')
+        ],
+        ans: 0,
+        expl: t(
+          'Sahi jawab: segfault matlab program ne aisi memory ko chhua jise chhune ki permission nahi thi — aksar NULL pointer ya out-of-bounds access ki wajah se.',
+          'Correct answer: a segfault means the program touched memory it had no permission to touch — often because of a NULL pointer or an out-of-bounds access.'
+        )
+      },
+      {
+        q: t(
+          'gdb mein crash ki line ke baad kaunsi calls chali thi, yeh kaise dekhte hain?',
+          'In gdb, how do you see which calls ran before the crashing line?'
+        ),
+        opts: [
+          t('print', 'print'),
+          t('backtrace (bt)', 'backtrace (bt)'),
+          t('next', 'next'),
+          t('continue', 'continue')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: backtrace (bt) crash se pehle chali saari function calls ki list dikhata hai, isliye asli wajah dhoondhna aasan ho jaata hai.',
+          'Correct answer: backtrace (bt) shows the list of all function calls that ran before the crash, which makes finding the real cause easier.'
+        )
+      },
+      {
+        q: t(
+          'int arr[3] mein kaunsa index safe hai?',
+          'Which index is safe in an int arr[3]?'
+        ),
+        opts: [
+          t('3', '3'),
+          t('5', '5'),
+          t('2', '2'),
+          t('-1', '-1')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: arr[3] ke valid index 0, 1 aur 2 hain — 3, 5 ya -1 out of bounds hain aur segfault ya galat value de sakte hain.',
+          'Correct answer: the valid indexes of arr[3] are 0, 1, and 2 — 3, 5, or -1 are out of bounds and can give a segfault or a wrong value.'
+        )
+      },
+      {
+        q: t(
+          'Program kabhi-kabhi sahi aur kabhi-kabhi galat answer de. Sabse likely wajah kya hai?',
+          'A program sometimes gives the right answer and sometimes the wrong one. What is the most likely cause?'
+        ),
+        opts: [
+          t('Syntax error', 'Syntax error'),
+          t('Uninitialized variable ya out-of-bounds access', 'An uninitialized variable or out-of-bounds access'),
+          t('Galat file naam', 'Wrong file name'),
+          t('Compiler purana hai', 'The compiler is old')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: kabhi-kabhi aane wala bug aam taur par memory ki galti hoti hai — memory mein har baar alag kachra hota hai, isliye answer badalta rehta hai.',
+          'Correct answer: a bug that appears only sometimes is usually a memory mistake — the memory holds different garbage each time, so the answer keeps changing.'
+        )
+      },
+      {
+        q: t(
+          'gdb use karne ke liye program ko kaise compile karte hain?',
+          'How do you compile a program for use with gdb?'
+        ),
+        opts: [
+          t('gcc prog.c', 'gcc prog.c'),
+          t('gcc -g prog.c -o prog', 'gcc -g prog.c -o prog'),
+          t('gcc -O3 prog.c', 'gcc -O3 prog.c'),
+          t('gcc --help prog.c', 'gcc --help prog.c')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: -g flag debug info add karta hai, jisse gdb crash ki line number aur variable values dikha sakta hai.',
+          'Correct answer: the -g flag adds debug info, which lets gdb show the crashing line number and variable values.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Pehle bug ko reproduce karo, phir trace karo, phir ek fix karo aur test karo.',
+        'First reproduce the bug, then trace it, then make one fix and test it.'
+      ),
+      t(
+        'printf debugging: har step par values print karo — galti ki jagah turant dikhti hai.',
+        'Printf debugging: print values at every step — the place of the mistake shows at once.'
+      ),
+      t(
+        'Segfault ki 4 wajahen: NULL pointer, out-of-bounds, uninitialized pointer, use-after-free.',
+        'Four causes of a segfault: NULL pointer, out-of-bounds, uninitialized pointer, use-after-free.'
+      ),
+      t(
+        'gdb mein break, run, next, print, continue — yahi 5 commands 90% kaam kar deti hain.',
+        'In gdb, break, run, next, print, continue — these 5 commands cover 90% of the work.'
+      ),
+      t(
+        'Compiler warnings ko error samjho: gcc -Wall -Wextra se zero warnings rakho.',
+        'Treat compiler warnings as errors: keep zero warnings with gcc -Wall -Wextra.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Average ka printf Trace Banao',
+        'Practice: Build a printf Trace for an Average'
+      ),
+      task: t(
+        'Neeche wala starter run karo — yeh marks {10, 20, 30} ka sum aur average nikaalta hai, har step par trace ke saath. Done tab hoga jab output expected jaisa aaye aur tum bata sako ki har line mein sum kyun wahi hai. Phir marks ko {10, 20, 30, 40} badal kar trace dobara chalao aur naya average check karo.',
+        'Run the starter below — it finds the sum and average of marks {10, 20, 30}, with a trace at every step. You are done when the output matches the expected output and you can say why the sum is what it is on each line. Then change marks to {10, 20, 30, 40}, run the trace again, and check the new average.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void)
+{
+    int marks[3] = {10, 20, 30};
+    int sum = 0;
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        sum += marks[i];
+        printf("i = %d, marks[i] = %d, sum = %d\\n", i, marks[i], sum);
+    }
+    printf("Average = %d\\n", sum / 3);
+    return 0;
+}`,
+      expected: `i = 0, marks[i] = 10, sum = 10
+i = 1, marks[i] = 20, sum = 30
+i = 2, marks[i] = 30, sum = 60
+Average = 20`
+    },
+    readMinutes: 12
+  };
+
+const cProjectGuess: Article = {
+    id: 'c-project-guess',
+    subjectId: 'c-programming',
+    title: t(
+      'Project: Number Guessing Game — Plan, Code, Test, Extend',
+      'Project: Number Guessing Game — Plan, Code, Test, Extend'
+    ),
+    summary: t(
+      'Apna pehla poora game banao: computer ek secret number chhupata hai, aap guess karte ho, aur har guess par Too low ya Too high ka hint milta hai — plan se lekar test aur extend tak.',
+      'Build your first complete game: the computer hides a secret number, you guess it, and every guess gets a Too low or Too high hint — from plan to test and extend.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Number Guessing Game Kya Hai? (Plan aur Rules)',
+          '1. What Is the Number Guessing Game? (Plan and Rules)'
+        ),
+        body: t(
+          `Number guessing game ek simple game hai: computer ek secret number sochta hai — maan lo 1 se 100 ke beech mein — aur player ko use guess karna hota hai. Har guess par game hint deta hai: guess chhota hai toh **Too low!**, bada hai toh **Too high!**, aur barabar hai toh **Correct!** Player tab tak guess karta rehta hai jab tak sahi number na mil jaaye ya attempts khatm na ho jaayein.
+
+Project shuru karne se pehle plan likhna bahut zaroori hai. Hamara plan: **(1)** secret number fix karo — demo mein 42; **(2)** guesses ki ek list rakho — demo mein {30, 50, 42}; **(3)** har guess ko secret se compare karo; **(4)** hint print karo; **(5)** sahi guess par tries gin kar jeet ka message dikhao aur loop roko; **(6)** attempts khatm ho jaayein toh secret bata kar haar ka message dikhao. Yeh 6 steps poora game hai — isse zyada kuch nahi chahiye.
+
+Asli game mein secret number \`rand()\` se banta hai aur guesses \`scanf\` se aate hain. Par is article ka demo code fixed values use karta hai — secret 42 aur guesses {30, 50, 42} — taaki code bina input ke bhi run ho sake aur output hamesha ek jaisa aaye. Logic bilkul wahi hai; sirf input ka source alag hai. Jab aap apne computer par kheloge, toh fixed values ki jagah \`scanf\` aur \`rand()\` laga dena.`,
+          `The number guessing game is a simple game: the computer thinks of a secret number — say between 1 and 100 — and the player must guess it. After every guess the game gives a hint: if the guess is too small, **Too low!**; if it is too big, **Too high!**; and if it is equal, **Correct!** The player keeps guessing until the right number is found or the attempts run out.
+
+Writing a plan before starting a project is very important. Our plan: **(1)** fix the secret number — 42 in the demo; **(2)** keep a list of guesses — {30, 50, 42} in the demo; **(3)** compare every guess with the secret; **(4)** print a hint; **(5)** on a correct guess, count the tries, show the win message, and stop the loop; **(6)** if the attempts run out, show the secret and the lose message. These 6 steps are the whole game — nothing more is needed.
+
+In the real game, the secret number comes from \`rand()\` and the guesses come from \`scanf\`. But the demo code in this article uses fixed values — secret 42 and guesses {30, 50, 42} — so the code runs without input and the output is always the same. The logic is exactly the same; only the source of the input is different. When you play on your own computer, replace the fixed values with \`scanf\` and \`rand()\`.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Game Loop, Hints aur Attempts',
+          '2. Real-Life Examples: Game Loop, Hints, and Attempts'
+        ),
+        body: t(
+          `Guessing game ka **game loop** har game mein hota hai — chahe woh chess ho ya mobile game. Loop ka pattern hamesha wahi hai: input lo, game state update karo, result dikhao, aur jeet ya haar check karo. Hamare game mein input hai guess, state hai attempts ki ginti, aur result hai hint. Yeh pattern seekh lo toh aage ke projects — calculator ka menu loop, tic-tac-toe ka move loop — sab aasan lagenge.
+
+**Hints** game ko khelne layak banate hain. Bina hint ke player andhere mein guess karta rahega. Hint ka logic sirf ek \`if-else\` hai: guess < secret toh Too low, guess > secret toh Too high, warna Correct. Yeh teen-way comparison C mein baar-baar aata hai — search, sort, aur game logic mein. Ise ek helper function \`check_guess\` mein daal dena achhi practice hai, taaki logic ek jagah rahe aur test karna aasan ho.
+
+**Attempts limit** game ko interesting banata hai. Bina limit ke player hamesha jeet jaayega — bas 1 se 100 tak saare numbers try kar lo. 5 attempts ki limit se har guess keemat rakhta hai. Neeche wala doosra example yahi dikhata hai: 5 guesses mein secret 42 nahi mila, toh game haar ka message dikhata hai. Limit ke saath \`won\` naam ka flag zaroori hai — loop ke baad check karo ki jeet hui ya nahi.`,
+          `The **game loop** of the guessing game appears in every game — whether chess or a mobile game. The loop pattern is always the same: take input, update the game state, show the result, and check for a win or a loss. In our game the input is the guess, the state is the count of attempts, and the result is the hint. Once you learn this pattern, the later projects — the calculator menu loop, the tic-tac-toe move loop — will all feel easy.
+
+**Hints** make the game playable. Without a hint, the player guesses in the dark. The hint logic is just one \`if-else\`: guess < secret means Too low, guess > secret means Too high, otherwise Correct. This three-way comparison appears again and again in C — in search, sort, and game logic. Putting it in a helper function called \`check_guess\` is good practice, so the logic lives in one place and is easy to test.
+
+An **attempts limit** makes the game interesting. Without a limit the player always wins — just try every number from 1 to 100. A limit of 5 attempts makes every guess count. The second example below shows exactly this: the secret 42 was not found in 5 guesses, so the game shows the lose message. With a limit, a flag called \`won\` is needed — after the loop, check whether you won or not.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Secret 42, Guesses 30, 50, 42 ka Dry Run',
+          '3. Step-by-Step: Dry Run with Secret 42 and Guesses 30, 50, 42'
+        ),
+        body: t(
+          `Neeche wala code poora game hai. Dry run karte hain: \`secret = 42\`, guesses hain \`{30, 50, 42}\`. Loop \`i = 0\` se shuru: guess hai 30. Print hota hai \`Guess 1: 30\`. Check: 30 < 42 hai, toh \`Too low! Try a bigger number.\` print hota hai. Loop aage badhta hai.
+
+\`i = 1\`: guess hai 50. Print hota hai \`Guess 2: 50\`. Check: 50 > 42 hai, toh \`Too high! Try a smaller number.\` print hota hai. \`i = 2\`: guess hai 42. Print hota hai \`Guess 3: 42\`. Check: 42 == 42 hai, toh \`Correct! You guessed it in 3 tries.\` print hota hai aur \`break\` se loop turant ruk jaata hai. Total 3 tries mein jeet.
+
+Dhyaan do: \`break\` zaroori hai — iske bina loop aage bhi chalta rehta, jabki game khatm ho chuka hai. Aur tries ki ginti \`i + 1\` hai, kyunki \`i\` 0 se shuru hota hai. Pehla guess \`i = 0\` par hai, par woh try number 1 hai. Yeh off-by-one detail beginners ko aksar confuse karti hai — hamesha check karo ki display number aur index mein 1 ka farak hai.`,
+          `The code below is the whole game. Let us do a dry run: \`secret = 42\` and the guesses are \`{30, 50, 42}\`. The loop starts at \`i = 0\`: the guess is 30. It prints \`Guess 1: 30\`. Check: 30 < 42, so it prints \`Too low! Try a bigger number.\` The loop moves on.
+
+\`i = 1\`: the guess is 50. It prints \`Guess 2: 50\`. Check: 50 > 42, so it prints \`Too high! Try a smaller number.\` \`i = 2\`: the guess is 42. It prints \`Guess 3: 42\`. Check: 42 == 42, so it prints \`Correct! You guessed it in 3 tries.\` and \`break\` stops the loop at once. A win in 3 tries in total.
+
+Notice: \`break\` is needed — without it the loop would keep running even though the game is over. And the count of tries is \`i + 1\`, because \`i\` starts at 0. The first guess is at \`i = 0\`, but it is try number 1. This off-by-one detail often confuses beginners — always check that the display number and the index differ by 1.`
+        ),
+        code: {
+          title: t(
+            'Guessing Game: Secret 42 aur 3 Guesses',
+            'Guessing Game: Secret 42 and 3 Guesses'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void)
+{
+    int secret = 42;
+    int guesses[3] = {30, 50, 42};
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        printf("Guess %d: %d\\n", i + 1, guesses[i]);
+        if (guesses[i] < secret) {
+            printf("Too low! Try a bigger number.\\n");
+        } else if (guesses[i] > secret) {
+            printf("Too high! Try a smaller number.\\n");
+        } else {
+            printf("Correct! You guessed it in %d tries.\\n", i + 1);
+            break;
+        }
+    }
+    return 0;
+}`,
+          output: `Guess 1: 30
+Too low! Try a bigger number.
+Guess 2: 50
+Too high! Try a smaller number.
+Guess 3: 42
+Correct! You guessed it in 3 tries.`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Break Bhoolna, Galat Comparison aur Off-by-One',
+          '4. Common Mistakes: Forgetting break, Wrong Comparison, and Off-by-One'
+        ),
+        body: t(
+          `**Galti 1: Sahi guess par \`break\` bhoolna.** Agar \`break\` nahi likha, toh sahi guess ke baad bhi loop chalta rahega aur baaki guesses bhi process honge. Game khatm ho chuka hai, par program ko pata nahi. Hamesha jeet ke baad \`break\` likho, ya loop ki condition mein jeet ka flag daalo.
+
+**Galti 2: Comparison ulta likhna.** \`if (guesses[i] < secret)\` par \`Too high\` print karna — hint ulta ho jaayega aur player confuse ho jaayega. Hint likhte waqt ek second ruk kar socho: guess chhota hai matlab secret bada hai, isliye hint hai "Try a bigger number". Dry run se yeh galti turant pakdi jaati hai.
+
+**Galti 3: Tries ginne mein off-by-one.** \`i\` ko tries samajh lena — pehle guess par \`i = 0\` hota hai, par woh try 1 hai. Sahi guess par \`i\` ki jagah \`i + 1\` print karo. Ya alag se \`tries\` variable rakho jo har guess par 1 badhta hai — yeh zyada saaf hai.
+
+**Galti 4: Secret ko guess list mein daal kar test na karna.** Agar aapki test guesses mein secret hai hi nahi, toh aapko kabhi pata nahi chalega ki jeet wala code chalta bhi hai ya nahi. Test mein hamesha teeno cases rakho: Too low, Too high, aur Correct. Hamare demo mein teeno hain — 30, 50, aur 42.`,
+          `**Mistake 1: Forgetting \`break\` on a correct guess.** Without \`break\`, the loop keeps running after the correct guess and processes the remaining guesses too. The game is over, but the program does not know it. Always write \`break\` after a win, or put a win flag in the loop condition.
+
+**Mistake 2: Writing the comparison backwards.** Printing \`Too high\` when \`if (guesses[i] < secret)\` — the hint becomes backwards and the player gets confused. When writing a hint, pause for a second and think: a small guess means the secret is bigger, so the hint is "Try a bigger number". A dry run catches this mistake at once.
+
+**Mistake 3: Off-by-one in counting tries.** Treating \`i\` as the try count — on the first guess \`i = 0\`, but that is try 1. On a correct guess, print \`i + 1\` instead of \`i\`. Or keep a separate \`tries\` variable that grows by 1 on every guess — that is cleaner.
+
+**Mistake 4: Testing without the secret in the guess list.** If your test guesses never include the secret, you will never know whether the win code runs at all. Always keep all three cases in a test: Too low, Too high, and Correct. Our demo has all three — 30, 50, and 42.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Pehle Guess mein Jeet, Aakhri Guess mein Jeet aur Haar',
+          '5. Edge Cases: Win on the First Guess, Win on the Last Guess, and Loss'
+        ),
+        body: t(
+          `**1. Pehle guess mein jeet.** Guesses = {42, ...} — pehli hi try mein sahi. Loop \`break\` se ruk jaata hai aur message aata hai \`Correct! You guessed it in 1 tries.\` — grammar thoda ajeeb hai ("1 tries" ki jagah "1 try"), par logic sahi hai. Real game mein singular/plural ka khayal rakho, demo mein yeh theek hai.
+
+**2. Aakhri guess mein jeet.** 5 attempts hain aur secret 5th guess mein milta hai. Loop \`break\` se rukta hai, \`won\` flag 1 ban jaata hai, aur haar ka message nahi aata. Yeh case test karna zaroori hai — aksar code aakhri guess par jeet ko haar samajh leta hai kyunki loop khatm ho gaya.
+
+**3. Haar — saare guesses galat.** Neeche wala doosra example yahi hai: guesses {10, 20, 30, 40, 50}, secret 42, koi guess sahi nahi. Loop 5 baar chal kar khatm hota hai, \`won\` 0 rehta hai, aur message aata hai \`Out of attempts! The number was 42.\` Yeh message zaroori hai — warna player ko kabhi pata nahi chalega ki secret kya tha.
+
+**4. Guess range se bahar.** Player 150 guess karta hai jab range 1-100 hai. Demo mein koi range check nahi hai — 150 par bhi Too high aayega, jo technically sahi hai. Real game mein range check add karo: guess < 1 ya > 100 ho toh "Out of range" bol kar attempt ginne bina dobara poochho.`,
+          `**1. Win on the first guess.** Guesses = {42, ...} — correct on the very first try. The loop stops with \`break\` and the message is \`Correct! You guessed it in 1 tries.\` — the grammar is a little odd ("1 tries" instead of "1 try"), but the logic is right. In a real game, handle singular and plural; in a demo this is fine.
+
+**2. Win on the last guess.** There are 5 attempts and the secret is found on the 5th guess. The loop stops with \`break\`, the \`won\` flag becomes 1, and the lose message does not appear. Testing this case is important — code often mistakes a win on the last guess for a loss because the loop ended.
+
+**3. Loss — all guesses wrong.** The second example below is exactly this: guesses {10, 20, 30, 40, 50}, secret 42, no guess correct. The loop runs 5 times and ends, \`won\` stays 0, and the message is \`Out of attempts! The number was 42.\` This message is needed — otherwise the player never learns what the secret was.
+
+**4. Guess outside the range.** The player guesses 150 when the range is 1-100. The demo has no range check — 150 still gives Too high, which is technically right. In a real game, add a range check: if the guess is below 1 or above 100, say "Out of range" and ask again without counting the attempt.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: rand, scanf aur Difficulty Levels',
+          '6. What-If: rand, scanf, and Difficulty Levels'
+        ),
+        body: t(
+          `**What if: secret har baar random ho?** Asli game mein \`srand(time(NULL))\` ek baar chalao, phir \`secret = rand() % 100 + 1\` se 1-100 ka number lo. \`srand\` ko ek hi baar chalana zaroori hai — har guess se pehle \`srand\` chalane se wahi number dobara mil sakta hai, kyunki \`time(NULL)\` ek second mein nahi badalta. Demo mein \`rand\` nahi hai taaki output fixed rahe; apne computer par yeh do lines add karo.
+
+**What if: guesses \`scanf\` se aayein?** Loop mein \`scanf(\"%d\", &guess)\` likho aur har baar naya guess lo. \`scanf\` ka return value check karo — agar user number ki jagah akshar de, toh \`scanf\` 0 return karta hai aur guess mein purani value reh jaati hai. Real game mein is check ke bina infinite loop ho sakta hai. Demo mein fixed array isliye hai taaki yeh complexity abhi na aaye.
+
+**What if: difficulty levels hon?** Easy: range 1-10, attempts 5. Medium: range 1-100, attempts 7. Hard: range 1-1000, attempts 10. Sirf do variables badalte hain — range aur attempts — baaki logic wahi rehta hai. Yeh dikhata hai ki achha design kya hota hai: game logic ko range aur attempts se alag rakho, taaki nayi difficulty sirf do numbers badal kar ban jaaye.`,
+          `**What if the secret is random every time?** In the real game, run \`srand(time(NULL))\` once, then get a number from 1-100 with \`secret = rand() % 100 + 1\`. Running \`srand\` only once is important — running it before every guess can give the same number again, because \`time(NULL)\` does not change within a second. The demo has no \`rand\` so that the output stays fixed; add these two lines on your own computer.
+
+**What if the guesses come from \`scanf\`?** Write \`scanf(\"%d\", &guess)\` inside the loop and take a new guess each time. Check the return value of \`scanf\` — if the user types a letter instead of a number, \`scanf\` returns 0 and the guess keeps its old value. Without this check, a real game can loop forever. The demo uses a fixed array so that this complexity does not appear yet.
+
+**What if there are difficulty levels?** Easy: range 1-10, 5 attempts. Medium: range 1-100, 7 attempts. Hard: range 1-1000, 10 attempts. Only two variables change — the range and the attempts — the rest of the logic stays the same. This shows what good design is: keep the game logic separate from the range and attempts, so a new difficulty is made by changing just two numbers.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Game Loop aur Testing ka Poora Picture',
+          '7. Summary: The Full Picture of the Game Loop and Testing'
+        ),
+        body: t(
+          `Guessing game ka core sirf teen cheezein hain: **compare** (guess vs secret), **hint** (Too low / Too high / Correct) aur **loop control** (\`break\` jeet par, \`won\` flag haar check ke liye). Yeh teen cheezein har game mein hoti hain — sirf rules badalte hain. Helper function \`check_guess\` logic ko ek jagah rakhta hai: -1 matlab too low, 1 matlab too high, 0 matlab correct.
+
+Testing ke liye teeno cases zaroori hain: Too low, Too high, Correct — aur do edge cases: aakhri guess mein jeet aur saare guesses galat. Agar aapka game in paanchon cases mein sahi chalta hai, toh woh solid hai. Demo mein fixed values isliye hain taaki output repeatable ho; asli game mein \`rand()\` aur \`scanf\` lagte hain, logic wahi rehta hai.
+
+Revision ke liye: secret 42 aur guesses {30, 50, 42} ko bina code dekhe trace karo — har guess par kya print hoga aur loop kab rukega? Phir guesses {10, 20, 30, 40, 50} ka trace karo — haar ka message kab aayega? Agar dono clear hain, toh game loop aapko aa gaya hai. Agle project mein hum menu-driven calculator banayenge — wahi loop, naya menu.`,
+          `The core of the guessing game is just three things: **compare** (guess vs secret), **hint** (Too low / Too high / Correct), and **loop control** (\`break\` on a win, a \`won\` flag to check for a loss). These three things are in every game — only the rules change. The helper function \`check_guess\` keeps the logic in one place: -1 means too low, 1 means too high, 0 means correct.
+
+For testing, all three cases are needed: Too low, Too high, Correct — plus two edge cases: a win on the last guess and all guesses wrong. If your game runs correctly in all five cases, it is solid. The demo uses fixed values so the output is repeatable; the real game uses \`rand()\` and \`scanf\`, and the logic stays the same.
+
+To revise: trace secret 42 with guesses {30, 50, 42} without looking at the code — what prints on each guess and when does the loop stop? Then trace guesses {10, 20, 30, 40, 50} — when does the lose message appear? If both are clear, you know the game loop. In the next project we will build a menu-driven calculator — the same loop, a new menu.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Guessing Game ka Flow: Guess, Hint, Jeet ya Haar',
+        'Guessing Game Flow: Guess, Hint, Win or Lose'
+      ),
+      caption: t(
+        'Har guess par yahi cycle chalti hai, jab tak jeet ya attempts khatm na hon',
+        'This cycle runs on every guess, until a win or the attempts run out'
+      ),
+      nodes: [
+        {
+          t: t('1. Secret fix karo: 42', '1. Fix the secret: 42'),
+          s: t('Demo mein fixed, asli game mein rand() se', 'Fixed in the demo, from rand() in the real game')
+        },
+        {
+          t: t('2. Guess lo: 30, 50, 42', '2. Take a guess: 30, 50, 42'),
+          s: t('Demo mein array se, asli game mein scanf se', 'From an array in the demo, from scanf in the real game')
+        },
+        {
+          t: t('3. Compare karo aur hint do', '3. Compare and give a hint'),
+          s: t('Chhota: Too low, bada: Too high, barabar: Correct', 'Smaller: Too low, bigger: Too high, equal: Correct')
+        },
+        {
+          t: t('4. Jeet par break, haar par secret batao', '4. break on a win, show the secret on a loss'),
+          s: t('won flag se loop ke baad haar check karo', 'Use the won flag to check for a loss after the loop')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Helper Function: check_guess -1, 0 ya 1 Deta Hai', 'Helper Function: check_guess Gives -1, 0, or 1'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int check_guess(int secret, int guess)
+{
+    if (guess < secret) {
+        return -1;
+    }
+    if (guess > secret) {
+        return 1;
+    }
+    return 0;
+}
+
+int main(void)
+{
+    printf("check_guess(42, 30) = %d (too low)\\n", check_guess(42, 30));
+    printf("check_guess(42, 50) = %d (too high)\\n", check_guess(42, 50));
+    printf("check_guess(42, 42) = %d (correct)\\n", check_guess(42, 42));
+    return 0;
+}`,
+        output: `check_guess(42, 30) = -1 (too low)
+check_guess(42, 50) = 1 (too high)
+check_guess(42, 42) = 0 (correct)`
+      },
+      {
+        title: t('Attempts Limit: 5 Guesses mein Haar', 'Attempts Limit: Losing in 5 Guesses'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int secret = 42;
+    int guesses[5] = {10, 20, 30, 40, 50};
+    int i;
+    int won = 0;
+
+    for (i = 0; i < 5; i++) {
+        printf("Guess %d: %d\\n", i + 1, guesses[i]);
+        if (guesses[i] == secret) {
+            printf("Correct! You win.\\n");
+            won = 1;
+            break;
+        }
+        if (guesses[i] < secret) {
+            printf("Too low!\\n");
+        } else {
+            printf("Too high!\\n");
+        }
+    }
+    if (won == 0) {
+        printf("Out of attempts! The number was %d.\\n", secret);
+    }
+    return 0;
+}`,
+        output: `Guess 1: 10
+Too low!
+Guess 2: 20
+Too low!
+Guess 3: 30
+Too low!
+Guess 4: 40
+Too low!
+Guess 5: 50
+Too high!
+Out of attempts! The number was 42.`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Secret 42 hai aur guess 30 hai. Kaunsa hint milega?',
+          'The secret is 42 and the guess is 30. Which hint will you get?'
+        ),
+        opts: [
+          t('Too high!', 'Too high!'),
+          t('Too low!', 'Too low!'),
+          t('Correct!', 'Correct!'),
+          t('Out of range', 'Out of range')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 30 < 42 hai, isliye guess chhota hai aur hint Too low! milega — secret bada hai.',
+          'Correct answer: 30 < 42, so the guess is too small and the hint is Too low! — the secret is bigger.'
+        )
+      },
+      {
+        q: t(
+          'Sahi guess milne ke baad loop ko rokne ke liye kya use karte hain?',
+          'What do we use to stop the loop after a correct guess?'
+        ),
+        opts: [
+          t('continue', 'continue'),
+          t('return 0', 'return 0'),
+          t('break', 'break'),
+          t('exit', 'exit')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: break loop ko turant rok deta hai; continue sirf current iteration skip karta hai aur loop chalta rehta hai.',
+          'Correct answer: break stops the loop at once; continue only skips the current iteration and the loop keeps running.'
+        )
+      },
+      {
+        q: t(
+          'check_guess(42, 50) kya return karega?',
+          'What will check_guess(42, 50) return?'
+        ),
+        opts: [
+          t('-1', '-1'),
+          t('0', '0'),
+          t('1', '1'),
+          t('42', '42')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: 50 > 42 hai, isliye guess too high hai aur function 1 return karta hai; -1 too low ke liye aur 0 correct ke liye hai.',
+          'Correct answer: 50 > 42, so the guess is too high and the function returns 1; -1 is for too low and 0 is for correct.'
+        )
+      },
+      {
+        q: t(
+          'Attempts khatm hone par haar kaise pata chalti hai?',
+          'How do we know there was a loss when the attempts run out?'
+        ),
+        opts: [
+          t('Loop ki condition se', 'From the loop condition'),
+          t('won flag 0 rehta hai', 'The won flag stays 0'),
+          t('secret badal jaata hai', 'The secret changes'),
+          t('Program crash ho jaata hai', 'The program crashes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: jeet par won = 1 set hota hai; agar loop bina jeet ke khatm ho jaaye toh won 0 rehta hai aur haar ka message print hota hai.',
+          'Correct answer: a win sets won = 1; if the loop ends without a win, won stays 0 and the lose message is printed.'
+        )
+      },
+      {
+        q: t(
+          'Demo code mein fixed secret aur fixed guesses kyun use kiye gaye?',
+          'Why does the demo code use a fixed secret and fixed guesses?'
+        ),
+        opts: [
+          t('rand() kaam nahi karta', 'rand() does not work'),
+          t('Taaki code bina input ke chale aur output hamesha ek jaisa aaye', 'So the code runs without input and the output is always the same'),
+          t('scanf seekhna zaroori nahi hai', 'Learning scanf is not needed'),
+          t('Fixed values fast hote hain', 'Fixed values are faster')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fixed values se code bina input ke run hota hai aur output repeatable rehta hai; asli game mein rand() aur scanf() lagte hain, logic wahi rehta hai.',
+          'Correct answer: fixed values let the code run without input and keep the output repeatable; the real game uses rand() and scanf(), and the logic stays the same.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Game loop ka pattern: input lo, state update karo, result dikhao, jeet/haar check karo.',
+        'The game loop pattern: take input, update the state, show the result, check for a win or loss.'
+      ),
+      t(
+        'Hint logic: guess < secret toh Too low, guess > secret toh Too high, barabar toh Correct.',
+        'Hint logic: guess < secret means Too low, guess > secret means Too high, equal means Correct.'
+      ),
+      t(
+        'Jeet par break likho, warna loop chalta rahega.',
+        'Write break on a win, or the loop will keep running.'
+      ),
+      t(
+        'Haar check ke liye won flag rakho — loop ke baad won == 0 matlab haar.',
+        'Keep a won flag to check for a loss — won == 0 after the loop means a loss.'
+      ),
+      t(
+        'Test mein teeno cases rakho: Too low, Too high aur Correct.',
+        'Keep all three cases in a test: Too low, Too high, and Correct.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Secret 7 wala Game Banao',
+        'Practice: Build the Game with Secret 7'
+      ),
+      task: t(
+        'Neeche wala starter run karo — secret 7 hai aur guesses {5, 9, 7} hain. Done tab hoga jab output expected jaisa aaye: pehle Too low, phir Too high, phir 3 tries mein Correct. Phir guesses ko {1, 2, 3} badal kar chalao aur check karo ki 3 tries mein haar ka message aata hai ya nahi — haar ke liye won flag aur out-of-attempts message add karo.',
+        'Run the starter below — the secret is 7 and the guesses are {5, 9, 7}. You are done when the output matches the expected output: first Too low, then Too high, then Correct in 3 tries. Then change the guesses to {1, 2, 3}, run it, and check whether you get a lose message in 3 tries — add a won flag and an out-of-attempts message for the loss.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void)
+{
+    int secret = 7;
+    int guesses[3] = {5, 9, 7};
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        printf("Guess %d: %d\\n", i + 1, guesses[i]);
+        if (guesses[i] < secret) {
+            printf("Too low!\\n");
+        } else if (guesses[i] > secret) {
+            printf("Too high!\\n");
+        } else {
+            printf("Correct! You guessed it in %d tries.\\n", i + 1);
+            break;
+        }
+    }
+    return 0;
+}`,
+      expected: `Guess 1: 5
+Too low!
+Guess 2: 9
+Too high!
+Guess 3: 7
+Correct! You guessed it in 3 tries.`
+    },
+    readMinutes: 12
+  };
+
+const cProjectCalculator: Article = {
+    id: 'c-project-calculator',
+    subjectId: 'c-programming',
+    title: t(
+      'Project: Menu-Driven Calculator — Plan, Code, Test, Extend',
+      'Project: Menu-Driven Calculator — Plan, Code, Test, Extend'
+    ),
+    summary: t(
+      'Ek asli tool banao: menu dikhao, user se choice lo, switch se operation chuno, aur divide-by-zero jaise errors ko safely handle karo — plan se lekar test aur extend tak.',
+      'Build a real tool: show a menu, take a choice from the user, pick the operation with switch, and handle errors like divide-by-zero safely — from plan to test and extend.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Menu-Driven Calculator Kya Hai? (Plan aur Design)',
+          '1. What Is a Menu-Driven Calculator? (Plan and Design)'
+        ),
+        body: t(
+          `Menu-driven calculator ek aisa program hai jo pehle options ki list dikhata hai — 1. Add, 2. Subtract, 3. Multiply, 4. Divide — phir user ki choice ke hisaab se kaam karta hai. Yeh **menu loop** har real tool mein hota hai: ATM machine, phone settings, aur bank apps sab menu se hi chalte hain. Menu ka fayda yeh hai ki user ko commands yaad nahi rakhne padte — options saamne hain, bas number chunna hai.
+
+Hamara plan: **(1)** do numbers fix karo — demo mein a = 20, b = 6; **(2)** menu print karo; **(3)** choice fix karo — demo mein 2 (Subtract); **(4)** \`switch\` se choice ke hisaab se operation chalao; **(5)** result print karo; **(6)** galat choice par "Invalid choice" dikhao; **(7)** divide par zero check karo. Har operation ko alag function mein likhna achhi design hai — \`add(a, b)\`, \`multiply(a, b)\` — taaki main function saaf rahe aur har operation ko alag se test kiya ja sake.
+
+Demo code mein choice aur numbers fixed hain, taaki code bina input ke run ho aur output hamesha ek jaisa aaye. Asli calculator mein choice aur numbers \`scanf\` se aate hain, aur menu ek loop mein chalta hai jab tak user exit na chune. Logic bilkul wahi hai — sirf input ka source badalta hai.`,
+          `A menu-driven calculator is a program that first shows a list of options — 1. Add, 2. Subtract, 3. Multiply, 4. Divide — and then works according to the user's choice. This **menu loop** is in every real tool: ATM machines, phone settings, and bank apps all run on menus. The advantage of a menu is that the user does not need to remember commands — the options are in front of them, and they just pick a number.
+
+Our plan: **(1)** fix two numbers — a = 20, b = 6 in the demo; **(2)** print the menu; **(3)** fix the choice — 2 (Subtract) in the demo; **(4)** run the operation for that choice with \`switch\`; **(5)** print the result; **(6)** show "Invalid choice" for a wrong choice; **(7)** check for zero on divide. Writing each operation in its own function is good design — \`add(a, b)\`, \`multiply(a, b)\` — so the main function stays clean and each operation can be tested separately.
+
+In the demo code the choice and numbers are fixed, so the code runs without input and the output is always the same. In a real calculator the choice and numbers come from \`scanf\`, and the menu runs in a loop until the user picks exit. The logic is exactly the same — only the source of the input changes.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: ATM Menu, Phone Settings aur switch',
+          '2. Real-Life Examples: ATM Menu, Phone Settings, and switch'
+        ),
+        body: t(
+          `ATM machine menu-driven program ka sabse achha example hai. Screen par options aati hain: 1. Balance, 2. Withdraw, 3. Deposit, 4. Exit. Aap number dabate ho, machine wahi kaam karti hai, phir menu dobara dikhata hai. Hamara calculator bilkul wahi pattern hai — menu dikhao, choice lo, kaam karo, menu dobara dikhao. Yeh loop tab tak chalta hai jab tak user exit na chune.
+
+Phone ki settings bhi menu-driven hain: WiFi, Bluetooth, Display — har option ek choice hai, aur har choice ke peeche alag code chalta hai. C mein yeh pattern \`switch\` se banta hai. \`switch(choice)\` mein har \`case\` ek option hai. \`if-else\` se bhi yahi kaam ho sakta hai, par 4-5 options par \`switch\` zyada saaf dikhta hai — har case alag line par, har case ke end mein \`break\`.
+
+Teesra example hai **functions se design**. Calculator ke har operation ko function banao: \`add\` sirf jodta hai, \`divide\` sirf divide karta hai aur zero par error deta hai. Main function sirf menu aur choice sambhalta hai. Isse do fayde hain: pehla, har function ko alag se test kar sakte ho; doosra, naya operation add karna aasan hai — naya function likho aur switch mein ek case add karo, baaki code ko chhedo mat.`,
+          `An ATM machine is the best example of a menu-driven program. The screen shows options: 1. Balance, 2. Withdraw, 3. Deposit, 4. Exit. You press a number, the machine does that job, then shows the menu again. Our calculator is exactly the same pattern — show the menu, take a choice, do the job, show the menu again. This loop runs until the user picks exit.
+
+Phone settings are also menu-driven: WiFi, Bluetooth, Display — every option is a choice, and different code runs behind each choice. In C this pattern is built with \`switch\`. In \`switch(choice)\`, every \`case\` is one option. The same job could be done with \`if-else\`, but with 4-5 options \`switch\` looks cleaner — each case on its own line, with \`break\` at the end of each case.
+
+A third example is **design with functions**. Make each calculator operation a function: \`add\` only adds, \`divide\` only divides and reports an error for zero. The main function only handles the menu and the choice. This has two benefits: first, each function can be tested separately; second, adding a new operation is easy — write a new function and add one case to the switch, without touching the rest of the code.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: Choice 2, 20 - 6 ka Dry Run',
+          '3. Step-by-Step: Dry Run of Choice 2, 20 - 6'
+        ),
+        body: t(
+          `Neeche wala code poora calculator hai. Dry run karte hain: \`a = 20\`, \`b = 6\`, \`choice = 2\`. Pehle menu print hota hai — 5 lines: header aur 4 options. Phir \`printf(\"Choice: %d\\n\", choice)\` se dikhta hai ki choice 2 hai. Ab \`switch (choice)\` chalta hai.
+
+\`switch\` choice ko har case se compare karta hai: case 1? choice 2 hai, nahi mila. Case 2? Mil gaya! Andar \`printf(\"%d - %d = %d\\n\", a, b, a - b)\` chalta hai — \`20 - 6 = 14\` print hota hai. Phir \`break\` se switch se bahar nikal jaate hain — case 3 aur case 4 skip ho jaate hain. Program \`return 0\` se khatm hota hai.
+
+Dhyaan do: \`break\` ke bina case 2 ke baad case 3 aur case 4 bhi chal jaate — yeh **fallthrough** hai. Calculator mein fallthrough matlab ek choice par teen answers print honge — bilkul galat. Isliye har case ke end mein \`break\` likhna calculator mein must hai. \`default\` case tab chalta hai jab choice 1-4 mein se koi bhi na ho — jaise choice 9 par "Invalid choice" print hoga.`,
+          `The code below is the whole calculator. Let us do a dry run: \`a = 20\`, \`b = 6\`, \`choice = 2\`. First the menu prints — 5 lines: the header and 4 options. Then \`printf(\"Choice: %d\\n\", choice)\` shows that the choice is 2. Now \`switch (choice)\` runs.
+
+The \`switch\` compares the choice with every case: case 1? The choice is 2, no match. Case 2? Match! Inside, \`printf(\"%d - %d = %d\\n\", a, b, a - b)\` runs — it prints \`20 - 6 = 14\`. Then \`break\` takes us out of the switch — case 3 and case 4 are skipped. The program ends with \`return 0\`.
+
+Notice: without \`break\`, case 3 and case 4 would also run after case 2 — this is **fallthrough**. In a calculator, fallthrough means one choice prints three answers — completely wrong. So writing \`break\` at the end of every case is a must in a calculator. The \`default\` case runs when the choice is none of 1-4 — for example, choice 9 prints "Invalid choice".`
+        ),
+        code: {
+          title: t(
+            'Calculator: Menu, Choice 2, 20 - 6 = 14',
+            'Calculator: Menu, Choice 2, 20 - 6 = 14'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void)
+{
+    int a = 20;
+    int b = 6;
+    int choice = 2;
+
+    printf("--- Calculator ---\\n");
+    printf("1. Add\\n");
+    printf("2. Subtract\\n");
+    printf("3. Multiply\\n");
+    printf("4. Divide\\n");
+    printf("Choice: %d\\n", choice);
+    switch (choice) {
+        case 1:
+            printf("%d + %d = %d\\n", a, b, a + b);
+            break;
+        case 2:
+            printf("%d - %d = %d\\n", a, b, a - b);
+            break;
+        case 3:
+            printf("%d * %d = %d\\n", a, b, a * b);
+            break;
+        case 4:
+            printf("%d / %d = %d\\n", a, b, a / b);
+            break;
+        default:
+            printf("Invalid choice.\\n");
+            break;
+    }
+    return 0;
+}`,
+          output: `--- Calculator ---
+1. Add
+2. Subtract
+3. Multiply
+4. Divide
+Choice: 2
+20 - 6 = 14`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: break Bhoolna, Divide-by-Zero aur Integer Division',
+          '4. Common Mistakes: Forgetting break, Divide-by-Zero, and Integer Division'
+        ),
+        body: t(
+          `**Galti 1: Case ke end mein \`break\` bhoolna.** Yeh switch ki sabse common galti hai. Ek choice par saare neeche wale cases bhi chal jaate hain. Calculator mein choice 2 par 14 ke saath 120 (multiply) aur 3 (divide) bhi print ho jaayenge. Har case ke end mein \`break\` likho — sirf tab chhodo jab fallthrough jaan-boojh kar chahiye ho.
+
+**Galti 2: Divide mein zero check na karna.** Case 4 mein \`a / b\` seedha likhna crash hai jab \`b = 0\` ho. Sahi tareeka hai \`divide\` function banana jo zero par 1 return kare aur main mein error message dikhao. Neeche wala doosra example yahi pattern dikhata hai: 10 / 0 par error, 10 / 2 par answer 5.
+
+**Galti 3: Integer division se galat answer.** \`20 / 6\` C mein 3 deta hai, 3.33 nahi — kyunki dono int hain. Agar decimal answer chahiye, toh ek number ko float banao: \`20 / 6.0\` se 3.33 milega. Calculator banate waqt decide karo: integer calculator hai ya decimal? Demo integer hai, isliye 20 / 6 = 3 sahi hai — par user ko yeh pata hona chahiye.
+
+**Galti 4: Menu mein choice print na karna.** Demo mein \`printf(\"Choice: %d\\n\", choice)\` isliye hai taaki output se pata chale ki kaunsi choice chali. Bina iske output mein sirf answer dikhega aur test karna mushkil hoga. Debug aur test ke liye input ko print karna achhi aadat hai.`,
+          `**Mistake 1: Forgetting \`break\` at the end of a case.** This is the most common switch mistake. All the cases below the chosen one run too. In a calculator, choice 2 would print 120 (multiply) and 3 (divide) along with 14. Write \`break\` at the end of every case — skip it only when fallthrough is wanted on purpose.
+
+**Mistake 2: Not checking for zero in divide.** Writing \`a / b\` directly in case 4 is a crash when \`b = 0\`. The right way is a \`divide\` function that returns 1 for zero, with an error message in main. The second example below shows this pattern: an error for 10 / 0, and the answer 5 for 10 / 2.
+
+**Mistake 3: Wrong answer from integer division.** In C, \`20 / 6\` gives 3, not 3.33 — because both are int. If you need a decimal answer, make one number a float: \`20 / 6.0\` gives 3.33. When building a calculator, decide: is it an integer calculator or a decimal one? The demo is integer, so 20 / 6 = 3 is correct — but the user should know that.
+
+**Mistake 4: Not printing the choice in the menu.** The demo has \`printf(\"Choice: %d\\n\", choice)\` so the output shows which choice ran. Without it, the output shows only the answer and testing becomes hard. Printing the input is a good habit for debugging and testing.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Invalid Choice, b = 0 aur Negative Numbers',
+          '5. Edge Cases: Invalid Choice, b = 0, and Negative Numbers'
+        ),
+        body: t(
+          `**1. Invalid choice.** Choice = 9 ho toh koi case match nahi karta aur \`default\` chalta hai: "Invalid choice." print hota hai. \`default\` likhna mat bhoolo — iske bina galat choice par program chup-chaap kuch nahi karega aur user confuse ho jaayega ki hua kya.
+
+**2. Divide mein b = 0.** Yeh fatal error hai — program crash ho jaayega agar check na ho. \`divide\` function mein \`if (b == 0) return 1\` likho aur main mein error message dikhao. Calculator ko crash nahi hona chahiye, chahe user kuch bhi daale.
+
+**3. Negative numbers.** a = -20, b = 6 ho toh \`a + b = -14\` sahi aata hai — C mein negative numbers par maths normal chalti hai. Par \`a % b\` mein sign ka dhyaan rakho: C mein remainder ka sign dividend (a) jaisa hota hai. Agar modulo operation add karo, toh negative inputs par test zaroor karo.
+
+**4. Bade numbers aur overflow.** int mein 2,000,000,000 + 2,000,000,000 overflow karta hai aur galat answer deta hai. Chhote calculator ke liye yeh theek hai, par real calculator mein ya toh \`long long\` use karo ya overflow check karo. Overflow C mein silent hota hai — koi error nahi aata, bas galat answer milta hai.`,
+          `**1. Invalid choice.** If the choice is 9, no case matches and \`default\` runs: "Invalid choice." is printed. Do not forget to write \`default\` — without it, a wrong choice makes the program silently do nothing, and the user is left confused about what happened.
+
+**2. b = 0 in divide.** This is a fatal error — the program will crash if there is no check. In the \`divide\` function, write \`if (b == 0) return 1\` and show an error message in main. A calculator must not crash, no matter what the user enters.
+
+**3. Negative numbers.** With a = -20 and b = 6, \`a + b = -14\` comes out right — maths on negative numbers works normally in C. But watch the sign in \`a % b\`: in C the remainder takes the sign of the dividend (a). If you add a modulo operation, be sure to test it with negative inputs.
+
+**4. Large numbers and overflow.** In int, 2,000,000,000 + 2,000,000,000 overflows and gives a wrong answer. For a small calculator this is fine, but in a real calculator either use \`long long\` or check for overflow. Overflow in C is silent — no error appears, you just get a wrong answer.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Loop wala Menu, Float Calculator aur Naye Operations',
+          '6. What-If: Looping Menu, Float Calculator, and New Operations'
+        ),
+        body: t(
+          `**What if: menu baar-baar chale?** Asli calculator mein menu ek \`while\` loop mein hota hai: choice lo, kaam karo, phir menu dobara dikhao. Loop tab rukta hai jab choice 5 (Exit) ho. Iske liye menu print aur switch ko loop ke andar daalo, aur exit case mein \`break\` ki jagah loop se bahar nikalne ka tareeka likho — jaise ek \`running\` flag ya loop condition mein \`choice != 5\`.
+
+**What if: decimal calculator chahiye?** Numbers ko \`float\` ya \`double\` banao aur \`%f\` se print karo. \`20.0 / 6.0 = 3.33\` milega. Par float par \`%\` (modulo) nahi chalta — uske liye \`fmod\` function chahiye hoti hai, jo \`math.h\` mein hai. Decide karo: integer calculator simple hai, float calculator zyada useful hai.
+
+**What if: power ya square root add karna ho?** Naya function likho — jaise \`power(a, b)\` loop se — aur switch mein ek naya case add karo, menu mein ek nayi line add karo. Baaki code ko chhedo mat. Yahi modular design ki taakat hai: naya feature add karna matlab naya function + naya case, purana code safe rehta hai.`,
+          `**What if the menu runs again and again?** In a real calculator the menu sits in a \`while\` loop: take a choice, do the job, then show the menu again. The loop stops when the choice is 5 (Exit). For this, put the menu print and the switch inside the loop, and in the exit case write a way to leave the loop instead of \`break\` — for example a \`running\` flag, or a loop condition with \`choice != 5\`.
+
+**What if you need a decimal calculator?** Make the numbers \`float\` or \`double\` and print with \`%f\`. Then \`20.0 / 6.0 = 3.33\`. But \`%\` (modulo) does not work on float — for that you need the \`fmod\` function, which is in \`math.h\`. Decide: an integer calculator is simple, a float calculator is more useful.
+
+**What if you add power or square root?** Write a new function — for example \`power(a, b)\` with a loop — and add a new case to the switch, plus a new line in the menu. Do not touch the rest of the code. That is the power of modular design: adding a new feature means a new function plus a new case, and the old code stays safe.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: switch, Functions aur Safe Divide ka Poora Picture',
+          '7. Summary: The Full Picture of switch, Functions, and Safe Divide'
+        ),
+        body: t(
+          `Menu-driven program ka pattern hai: **menu dikhao, choice lo, switch se kaam chuno, result dikhao**. Har case ke end mein \`break\` likho, warna fallthrough se ek choice par kai answers print honge. Galat choice ke liye \`default\` mein "Invalid choice" dikhao. Har operation ko alag function mein likho — testing aasan hota hai aur naya operation add karna safe rehta hai.
+
+Divide mein hamesha zero check karo: \`divide\` function zero par 1 return kare, success par 0 aur result pointer se de. Integer division mein decimal nahi milta — \`20 / 6 = 3\` hai, 3.33 nahi. Yeh decide karke document karo ki calculator integer hai ya decimal.
+
+Revision ke liye: choice 2, a = 20, b = 6 ko bina code dekhe trace karo — kaunsa case chalega, kya print hoga, aur \`break\` kahan rukega? Phir choice 9 ka trace karo — kaunsa case chalega? Agar dono clear hain, toh switch aur menu aapko aa gaye hain. Agle project mein hum files ke saath student records system banayenge — data ko save karna aur wapas padhna.`,
+          `The pattern of a menu-driven program is: **show the menu, take a choice, pick the job with switch, show the result**. Write \`break\` at the end of every case, or fallthrough will print several answers for one choice. For a wrong choice, show "Invalid choice" in \`default\`. Write each operation in its own function — testing becomes easy and adding a new operation stays safe.
+
+Always check for zero in divide: the \`divide\` function returns 1 for zero, and on success returns 0 and gives the result through a pointer. Integer division gives no decimal — \`20 / 6 = 3\`, not 3.33. Decide and document whether the calculator is integer or decimal.
+
+To revise: trace choice 2 with a = 20 and b = 6 without looking at the code — which case runs, what prints, and where does \`break\` stop? Then trace choice 9 — which case runs? If both are clear, you know switch and menus. In the next project we will build a student records system with files — saving data and reading it back.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Calculator ka Flow: Menu, Choice, switch, Result',
+        'Calculator Flow: Menu, Choice, switch, Result'
+      ),
+      caption: t(
+        'Har choice par yahi flow chalta hai — switch hi traffic police hai',
+        'This flow runs on every choice — the switch is the traffic police'
+      ),
+      nodes: [
+        {
+          t: t('1. Menu dikhao', '1. Show the menu'),
+          s: t('1. Add, 2. Subtract, 3. Multiply, 4. Divide', '1. Add, 2. Subtract, 3. Multiply, 4. Divide')
+        },
+        {
+          t: t('2. Choice lo: 2', '2. Take the choice: 2'),
+          s: t('Demo mein fixed, asli mein scanf se', 'Fixed in the demo, from scanf in the real one')
+        },
+        {
+          t: t('3. switch: case 2 chala', '3. switch: case 2 runs'),
+          s: t('Har case ke end mein break — fallthrough roko', 'break at the end of every case — stop fallthrough')
+        },
+        {
+          t: t('4. Result: 20 - 6 = 14', '4. Result: 20 - 6 = 14'),
+          s: t('Divide mein zero check, galat choice par default', 'Zero check on divide, default for a wrong choice')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Functions: add aur multiply alag se Test Karo', 'Functions: Test add and multiply Separately'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int multiply(int a, int b)
+{
+    return a * b;
+}
+
+int main(void)
+{
+    printf("add(12, 8) = %d\\n", add(12, 8));
+    printf("multiply(12, 8) = %d\\n", multiply(12, 8));
+    return 0;
+}`,
+        output: `add(12, 8) = 20
+multiply(12, 8) = 96`
+      },
+      {
+        title: t('Safe Divide: Zero par Error, Warna Answer', 'Safe Divide: Error for Zero, Answer Otherwise'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int divide(int a, int b, int *result)
+{
+    if (b == 0) {
+        return 1;
+    }
+    *result = a / b;
+    return 0;
+}
+
+int main(void)
+{
+    int result = 0;
+
+    if (divide(10, 0, &result) == 1) {
+        printf("10 / 0: error, cannot divide by zero.\\n");
+    } else {
+        printf("10 / 0 = %d\\n", result);
+    }
+    if (divide(10, 2, &result) == 1) {
+        printf("10 / 2: error, cannot divide by zero.\\n");
+    } else {
+        printf("10 / 2 = %d\\n", result);
+    }
+    return 0;
+}`,
+        output: `10 / 0: error, cannot divide by zero.
+10 / 2 = 5`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'switch mein case ke end mein break na likho toh kya hota hai?',
+          'What happens if you do not write break at the end of a case in switch?'
+        ),
+        opts: [
+          t('Program crash ho jaata hai', 'The program crashes'),
+          t('Neeche wale cases bhi chal jaate hain (fallthrough)', 'The cases below also run (fallthrough)'),
+          t('switch dobara chalta hai', 'The switch runs again'),
+          t('Kuch nahi hota', 'Nothing happens')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: break ke bina control agle case mein gir jaata hai — isse fallthrough kehte hain, aur calculator mein ek choice par kai answers print ho jaate hain.',
+          'Correct answer: without break, control falls into the next case — this is called fallthrough, and in a calculator one choice prints several answers.'
+        )
+      },
+      {
+        q: t(
+          'Choice 9 di gayi aur cases 1-4 hain. Kaunsa case chalega?',
+          'The choice is 9 and the cases are 1-4. Which case will run?'
+        ),
+        opts: [
+          t('case 4', 'case 4'),
+          t('case 1', 'case 1'),
+          t('default', 'default'),
+          t('Koi nahi', 'None')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: jab koi case match nahi karta, toh default chalta hai — isliye galat choice par default mein Invalid choice dikhana chahiye.',
+          'Correct answer: when no case matches, default runs — so a wrong choice should show Invalid choice in default.'
+        )
+      },
+      {
+        q: t(
+          'C mein 20 / 6 ka answer kya hoga?',
+          'What is the answer of 20 / 6 in C?'
+        ),
+        opts: [
+          t('3.33', '3.33'),
+          t('3', '3'),
+          t('4', '4'),
+          t('3.5', '3.5')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: dono int hain, isliye integer division hota hai aur decimal kat jaata hai — answer 3 hai, 3.33 nahi.',
+          'Correct answer: both are int, so integer division happens and the decimal is cut off — the answer is 3, not 3.33.'
+        )
+      },
+      {
+        q: t(
+          'Divide mein b = 0 ho toh sahi tareeka kya hai?',
+          'What is the right way when b = 0 in divide?'
+        ),
+        opts: [
+          t('Seedha a / b likh do', 'Just write a / b directly'),
+          t('Pehle zero check karo aur error dikhao', 'Check for zero first and show an error'),
+          t('b ko 1 bana do', 'Change b to 1'),
+          t('Program band kar do', 'Stop the program')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: integer divide-by-zero crash hai, isliye divide se pehle zero check karo aur error message dikhao.',
+          'Correct answer: integer divide-by-zero is a crash, so check for zero before dividing and show an error message.'
+        )
+      },
+      {
+        q: t(
+          'Har operation ko alag function mein kyun likhte hain?',
+          'Why do we write each operation in its own function?'
+        ),
+        opts: [
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('Har operation alag se test ho sakta hai aur naya operation add karna aasan hota hai', 'Each operation can be tested separately and adding a new one is easy'),
+          t('Code chhota ho jaata hai', 'The code becomes shorter'),
+          t('switch ki zaroorat nahi padti', 'switch is not needed')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: alag functions se har operation ko akela test kiya ja sakta hai aur naya operation sirf ek function aur ek case add karke aata hai.',
+          'Correct answer: separate functions let you test each operation alone, and a new operation comes from adding just one function and one case.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Menu pattern: menu dikhao, choice lo, switch se kaam chuno, result dikhao.',
+        'Menu pattern: show the menu, take a choice, pick the job with switch, show the result.'
+      ),
+      t(
+        'Har case ke end mein break likho, warna fallthrough se kai answers print honge.',
+        'Write break at the end of every case, or fallthrough will print several answers.'
+      ),
+      t(
+        'Galat choice ke liye default mein Invalid choice dikhao.',
+        'Show Invalid choice in default for a wrong choice.'
+      ),
+      t(
+        'Divide mein hamesha zero check karo — divide-by-zero crash hai.',
+        'Always check for zero in divide — divide-by-zero is a crash.'
+      ),
+      t(
+        'Integer division mein decimal kat jaata hai: 20 / 6 = 3.',
+        'In integer division the decimal is cut off: 20 / 6 = 3.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Add aur Subtract wala Calculator Banao',
+        'Practice: Build a Calculator with Add and Subtract'
+      ),
+      task: t(
+        'Neeche wala starter run karo — choice 1 hai aur numbers 15 aur 5 hain, isliye answer 20 aana chahiye. Done tab hoga jab output expected jaisa aaye. Phir choice ko 2 badal kar chalao aur check karo ki answer 10 aata hai. Uske baad ek naya case 3 (Multiply) add karo aur choice 3 par 75 check karo.',
+        'Run the starter below — the choice is 1 and the numbers are 15 and 5, so the answer must be 20. You are done when the output matches the expected output. Then change the choice to 2, run it, and check that the answer is 10. After that, add a new case 3 (Multiply) and check 75 for choice 3.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void)
+{
+    int a = 15;
+    int b = 5;
+    int choice = 1;
+
+    printf("--- Calculator ---\\n");
+    printf("1. Add\\n");
+    printf("2. Subtract\\n");
+    printf("Choice: %d\\n", choice);
+    if (choice == 1) {
+        printf("%d + %d = %d\\n", a, b, a + b);
+    } else if (choice == 2) {
+        printf("%d - %d = %d\\n", a, b, a - b);
+    } else {
+        printf("Invalid choice.\\n");
+    }
+    return 0;
+}`,
+      expected: `--- Calculator ---
+1. Add
+2. Subtract
+Choice: 1
+15 + 5 = 20`
+    },
+    readMinutes: 12
+  };
+
+const cProjectStudent: Article = {
+    id: 'c-project-student',
+    subjectId: 'c-programming',
+    title: t(
+      'Project: Student Records System with Files — Plan, Code, Test, Extend',
+      'Project: Student Records System with Files — Plan, Code, Test, Extend'
+    ),
+    summary: t(
+      'Data ko program band hone ke baad bhi bachana seekho: struct se student record banao, file mein save karo, wapas padho, search karo aur topper nikaalo — poora system ek saath.',
+      'Learn to keep data alive after the program ends: build a student record with struct, save it in a file, read it back, search it, and find the topper — the whole system together.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Student Records System Kya Hai? (Plan aur Design)',
+          '1. What Is a Student Records System? (Plan and Design)'
+        ),
+        body: t(
+          `Student records system ek chhota database hai: har student ka id, naam aur marks store karna, use file mein save karna, aur zaroorat par wapas padhna. Ab tak ke programs mein data sirf tab tak rehta tha jab tak program chal raha tha — program band hote hi sab khatm. File mein save karne se data **persistent** ban jaata hai — kal program dobara chalao toh records phir bhi milenge. Yahi har real application ka core hai.
+
+Hamara plan: **(1)** \`struct Student\` banao — id (int), name (char[50]), marks (int); **(2)** 3 students ki array banao — Aarav 85, Meera 92, Rohan 78; **(3)** \`fopen(\"students.txt\", \"w\")\` se file banao aur har record ko \`fprintf\` se likho; **(4)** file band karo; **(5)** \`fopen(\"students.txt\", \"r\")\` se wapas kholo aur \`fscanf\` se ek-ek record padho; **(6)** saare records print karo aur total gin lo. Yeh program apni data file khud banata hai, isliye yeh standalone chalta hai — pehle se koi file chahiye hi nahi.
+
+Struct ka fayda yeh hai ki ek student ki saari details ek jagah rehti hain. Alag-alag arrays (ek ids ke liye, ek names ke liye, ek marks ke liye) mein galti aasan hai — ek array sort kar do toh baaki se link toot jaata hai. Struct mein id, naam aur marks hamesha saath rehte hain.`,
+          `A student records system is a small database: store each student's id, name, and marks, save them in a file, and read them back when needed. In all programs so far, data lived only while the program ran — once the program stopped, everything was gone. Saving to a file makes data **persistent** — run the program again tomorrow and the records are still there. This is the core of every real application.
+
+Our plan: **(1)** build a \`struct Student\` — id (int), name (char[50]), marks (int); **(2)** make an array of 3 students — Aarav 85, Meera 92, Rohan 78; **(3)** create the file with \`fopen(\"students.txt\", \"w\")\` and write each record with \`fprintf\`; **(4)** close the file; **(5)** open it again with \`fopen(\"students.txt\", \"r\")\` and read one record at a time with \`fscanf\`; **(6)** print all records and count the total. This program creates its own data file, so it runs standalone — no file needs to exist beforehand.
+
+The benefit of a struct is that all details of one student stay in one place. With separate arrays (one for ids, one for names, one for marks), a mistake is easy — sort one array and its link to the others breaks. In a struct, the id, name, and marks always stay together.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: School Register, File Save aur Search',
+          '2. Real-Life Examples: School Register, File Save, and Search'
+        ),
+        body: t(
+          `School ka register hi student records system hai — har student ki ek line: roll number, naam, marks. Teacher register mein likhta hai, aur agle din wahi register khol kar padhta hai. Hamari file \`students.txt\` wahi register hai — har line ek student hai, format hai \`id name marks\`. Program band hone ke baad bhi file disk par rehti hai, bilkul register ki tarah.
+
+**File save** ka pattern har application mein hai: text editor file save karta hai, game progress save karta hai, bank transactions save karta hai. Pattern hamesha wahi hai: \`fopen\` with \`"w"\`, \`fprintf\` se likho, \`fclose\` se band karo. \`fclose\` bhoolna common galti hai — bina close ke data file mein poori tarah likha nahi jaata, kyunki C data ko pehle buffer mein rakhta hai.
+
+**Search** system ki jaan hai. 1000 students mein se id 102 ko dhoondhna ho toh poori list scan karne ki zaroorat nahi — loop mein har record ka id compare karo, match mile toh print karke \`break\` karo. Neeche wala pehla example yahi dikhata hai: id 102 par Meera milti hai, 92 marks ke saath. Agar koi match na mile, toh "not found" message dikhao — chup rehna galat hai.`,
+          `A school register is a student records system — one line per student: roll number, name, marks. The teacher writes in the register, and the next day opens the same register to read it. Our file \`students.txt\` is that register — each line is one student, in the format \`id name marks\`. After the program stops, the file stays on the disk, just like the register.
+
+The **file save** pattern is in every application: a text editor saves a file, a game saves progress, a bank saves transactions. The pattern is always the same: \`fopen\` with \`"w"\`, write with \`fprintf\`, close with \`fclose\`. Forgetting \`fclose\` is a common mistake — without closing, the data is not fully written to the file, because C keeps data in a buffer first.
+
+**Search** is the heart of the system. To find id 102 among 1000 students, there is no need to scan the whole list by hand — compare each record's id in a loop, and on a match print it and \`break\`. The first example below shows exactly this: id 102 finds Meera, with 92 marks. If no match is found, show a "not found" message — staying silent is wrong.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: students.txt Banana, Padhna aur Dry Run',
+          '3. Step-by-Step: Creating students.txt, Reading It, and a Dry Run'
+        ),
+        body: t(
+          `Neeche wala code poora system hai. Dry run karte hain: pehle \`students\` array mein 3 records hain. \`fopen(\"students.txt\", \"w\")\` file banata hai — \`\"w\"\` matlab write mode; agar file pehle se hai toh woh overwrite ho jaati hai. \`fopen\` ka result check karte hain: \`NULL\` ho toh error message aur \`return 1\`. Phir loop mein \`fprintf\` se 3 lines likhte hain: \`101 Aarav 85\`, \`102 Meera 92\`, \`103 Rohan 78\`. \`fclose\` se file band karte hain aur print karte hain \`Saved 3 students to students.txt\`.
+
+Phir file ko \`\"r\"\` (read) mode mein wapas kholte hain. \`while (fscanf(fp, \"%d %49s %d\", &s.id, s.name, &s.marks) == 3)\` loop chalta hai: \`fscanf\` ek line padhta hai aur 3 values milne par 3 return karta hai. Pehli iteration mein s = {101, Aarav, 85}, count = 1, print hota hai \`1. Aarav - 85\`. Doosri mein Meera, teesri mein Rohan. Chauthi baar file khatm — \`fscanf\` 3 se kam return karta hai aur loop ruk jaata hai. Aakhir mein \`Total students: 3\` print hota hai.
+
+Dhyaan do: \`%49s\` mein 49 isliye hai kyunki name array 50 ka hai — 49 characters + \`\\0\` = 50. Yeh buffer overflow se bachata hai. Aur \`fscanf\` ka return value check karna zaroori hai — isse pata chalta hai ki poori line padhi gayi ya file khatm ho gayi.`,
+          `The code below is the whole system. Let us do a dry run: first the \`students\` array holds 3 records. \`fopen(\"students.txt\", \"w\")\` creates the file — \`"w"\` means write mode; if the file already exists, it is overwritten. We check the result of \`fopen\`: if it is \`NULL\`, show an error message and do \`return 1\`. Then a loop writes 3 lines with \`fprintf\`: \`101 Aarav 85\`, \`102 Meera 92\`, \`103 Rohan 78\`. We close the file with \`fclose\` and print \`Saved 3 students to students.txt\`.
+
+Then we open the file again in \`\"r\"\` (read) mode. The loop \`while (fscanf(fp, \"%d %49s %d\", &s.id, s.name, &s.marks) == 3)\` runs: \`fscanf\` reads one line and returns 3 when it finds 3 values. In the first iteration s = {101, Aarav, 85}, count = 1, and it prints \`1. Aarav - 85\`. The second gives Meera, the third Rohan. The fourth time the file ends — \`fscanf\` returns less than 3 and the loop stops. Finally it prints \`Total students: 3\`.
+
+Notice: the 49 in \`%49s\` is there because the name array is 50 long — 49 characters + \`\\0\` = 50. This protects against buffer overflow. And checking the return value of \`fscanf\` is needed — it tells you whether a full line was read or the file ended.`
+        ),
+        code: {
+          title: t(
+            'Student Records: File mein Save, File se Read',
+            'Student Records: Save to a File, Read from a File'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+struct Student {
+    int id;
+    char name[50];
+    int marks;
+};
+
+int main(void)
+{
+    struct Student students[3] = {
+        {101, "Aarav", 85},
+        {102, "Meera", 92},
+        {103, "Rohan", 78}
+    };
+    FILE *fp = fopen("students.txt", "w");
+    int i;
+    struct Student s;
+    int count = 0;
+
+    if (fp == NULL) {
+        printf("Error: could not create students.txt\\n");
+        return 1;
+    }
+    for (i = 0; i < 3; i++) {
+        fprintf(fp, "%d %s %d\\n", students[i].id, students[i].name,
+                students[i].marks);
+    }
+    fclose(fp);
+    printf("Saved 3 students to students.txt\\n");
+    fp = fopen("students.txt", "r");
+    if (fp == NULL) {
+        printf("Error: could not open students.txt\\n");
+        return 1;
+    }
+    printf("--- Student Records ---\\n");
+    while (fscanf(fp, "%d %49s %d", &s.id, s.name, &s.marks) == 3) {
+        count++;
+        printf("%d. %s - %d\\n", count, s.name, s.marks);
+    }
+    fclose(fp);
+    printf("Total students: %d\\n", count);
+    return 0;
+}`,
+          output: `Saved 3 students to students.txt
+--- Student Records ---
+1. Aarav - 85
+2. Meera - 92
+3. Rohan - 78
+Total students: 3`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: fclose Bhoolna, Galat Mode aur Buffer Overflow',
+          '4. Common Mistakes: Forgetting fclose, Wrong Mode, and Buffer Overflow'
+        ),
+        body: t(
+          `**Galti 1: \`fclose\` bhoolna.** Likhne ke baad file band nahi ki, toh data buffer mein reh jaata hai aur file khaali ya adhoori milti hai. Har \`fopen\` ke saath ek \`fclose\` likho — likhte hi likho, baad mein mat chhodo. Padhne ke baad bhi close karo, taaki file lock na rahe.
+
+**Galti 2: Galat mode.** \`"w\"\` se kholi file ko padhne ki koshish, ya \`"r\"\` se kholi file mein likhne ki koshish — dono fail hote hain. Yaad rakho: \`"w"\` = write (purani file overwrite ho jaati hai), \`"r"\` = read (file honi chahiye, warna NULL), \`"a"\` = append (purana data rehta hai, naya peeche judta hai). Mode chunne se pehle socho: naya data likhna hai ya purana padhna hai?
+
+**Galti 3: \`%s\` se buffer overflow.** \`fscanf(fp, \"%s\", name)\` mein agar file mein 100 characters ka naam ho aur array 50 ka ho, toh overflow ho jaayega. Hamesha width likho: \`%49s\` 50-size array ke liye. Yeh ek number ka farak crash aur safe program ka farak hai.
+
+**Galti 4: \`fscanf\` ka return value check na karna.** \`while (fscanf(...) == 3)\` ki jagah \`while (!feof(fp))\` likhna common galti hai — \`feof\` tabhi true hota hai jab read pehle se fail ho chuka ho, isliye aakhri record do baar print ho jaata hai. Return value check hi sahi tareeka hai.`,
+          `**Mistake 1: Forgetting \`fclose\`.** If you do not close the file after writing, the data stays in the buffer and the file is found empty or incomplete. Write one \`fclose\` for every \`fopen\` — write it at once, do not leave it for later. Close after reading too, so the file does not stay locked.
+
+**Mistake 2: Wrong mode.** Trying to read a file opened with \`"w"\`, or trying to write to a file opened with \`"r"\` — both fail. Remember: \`"w"\` = write (an old file is overwritten), \`"r"\` = read (the file must exist, otherwise NULL), \`"a"\` = append (old data stays, new data joins at the end). Before picking a mode, think: do I write new data or read old data?
+
+**Mistake 3: Buffer overflow with \`%s\`.** In \`fscanf(fp, \"%s\", name)\`, if the file holds a 100-character name and the array is 50 long, it overflows. Always write the width: \`%49s\` for a 50-size array. This one number is the difference between a crash and a safe program.
+
+**Mistake 4: Not checking the return value of \`fscanf\`.** Writing \`while (!feof(fp))\` instead of \`while (fscanf(...) == 3)\` is a common mistake — \`feof\` becomes true only after a read has already failed, so the last record prints twice. Checking the return value is the right way.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Khali File, Duplicate ID aur Space wala Naam',
+          '5. Edge Cases: Empty File, Duplicate ID, and a Name with a Space'
+        ),
+        body: t(
+          `**1. Khali file.** Agar \`students.txt\` khali hai, toh \`fscanf\` pehli baar mein hi 3 se kam return karta hai, loop zero baar chalta hai, aur output hota hai \`Total students: 0\`. Yeh sahi behaviour hai — khali file ka matlab zero records hai, error nahi. Aapka program crash nahi hona chahiye.
+
+**2. Duplicate ID.** Do students ka id 101 ho toh search pehla wala dhoondh kar ruk jaayega. Duplicate IDs se system gadbad ho jaata hai — naya student add karte waqt check karo ki id pehle se hai ya nahi. Real system mein id unique honi chahiye, aur yeh check add karte waqt lagta hai.
+
+**3. Space wala naam.** \`%s\` space par ruk jaata hai — "Rahul Kumar" padhne par sirf "Rahul" milega aur "Kumar" agle field mein chala jaayega. Isliye demo mein single-word naam hain. Space wale naam ke liye ya toh underscore use karo (Rahul_Kumar), ya \`fgets\` se poori line padho. Yeh file format ki limit hai, samajhna zaroori hai.
+
+**4. File pehle se hai.** \`"w"\` mode purani file ko overwrite kar deta hai — purana data khatm. Agar purana data bachana hai, toh \`"a"\` (append) use karo. Hamare program mein overwrite jaan-boojh kar hai: har run mein wahi 3 records likhe jaate hain, isliye file hamesha clean rehti hai.`,
+          `**1. Empty file.** If \`students.txt\` is empty, \`fscanf\` returns less than 3 on the very first try, the loop runs zero times, and the output is \`Total students: 0\`. This is correct behaviour — an empty file means zero records, not an error. Your program must not crash.
+
+**2. Duplicate ID.** If two students share the id 101, a search finds the first one and stops. Duplicate IDs break the system — when adding a new student, check whether the id already exists. In a real system the id must be unique, and this check belongs in the add step.
+
+**3. A name with a space.** \`%s\` stops at a space — reading "Rahul Kumar" gives only "Rahul", and "Kumar" lands in the next field. That is why the demo uses single-word names. For names with spaces, either use an underscore (Rahul_Kumar), or read the whole line with \`fgets\`. This is a limit of the file format, and it is important to understand.
+
+**4. The file already exists.** Mode \`"w"\` overwrites an old file — the old data is gone. If the old data must be kept, use \`"a"\` (append). In our program the overwrite is on purpose: every run writes the same 3 records, so the file always stays clean.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Append Mode, Average aur Topper',
+          '6. What-If: Append Mode, Average, and Topper'
+        ),
+        body: t(
+          `**What if: naya student purane records ke saath add karna ho?** \`fopen(\"students.txt\", \"a\")\` use karo — append mode purana data rehne deta hai aur naya record peeche jod deta hai. Pehle records padho, phir naya record append karo, phir dobara padh kar dikhao. Yahi real add-student feature hai. Demo mein \`"w"\` isliye hai taaki har run mein file clean rahe.
+
+**What if: class ka average nikaalna ho?** Neeche wala doosra example yahi karta hai: marks {85, 92, 78} ka sum 255 hai, average \`sum / 3.0\` se 85.00 aata hai. Dhyaan do — \`sum / 3\` se 85 aata (integer division), \`sum / 3.0\` se 85.00 aata hai. Average ke liye float division zaroori hai, aur \`%.2f\` se 2 decimal places dikhao.
+
+**What if: topper dhoondhna ho?** Practice mein yahi hai: saare students ko scan karo, sabse zyada marks wale ka index yaad rakho, aur end mein uska naam print karo. Yeh max-find pattern hai — wahi jo array wale articles mein seekha tha. Topper hai Meera, 92 marks. Agar do students ke marks barabar hon, toh pehla wala topper banta hai — tie ka rule decide karke document karo.`,
+          `**What if a new student must be added with the old records?** Use \`fopen(\"students.txt\", \"a\")\` — append mode keeps the old data and adds the new record at the end. First read the records, then append the new record, then read again to show them. That is the real add-student feature. The demo uses \`"w"\` so the file stays clean on every run.
+
+**What if you need the class average?** The second example below does exactly this: the sum of marks {85, 92, 78} is 255, and the average from \`sum / 3.0\` is 85.00. Notice — \`sum / 3\` gives 85 (integer division), while \`sum / 3.0\` gives 85.00. Float division is needed for an average, and \`%.2f\` shows 2 decimal places.
+
+**What if you need the topper?** That is the practice below: scan all students, remember the index of the highest marks, and print that name at the end. This is the max-find pattern — the same one learned in the array articles. The topper is Meera, with 92 marks. If two students tie, the first one becomes the topper — decide the tie rule and document it.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Struct, Files aur Search ka Poora Picture',
+          '7. Summary: The Full Picture of Struct, Files, and Search'
+        ),
+        body: t(
+          `Student system ke 3 pillars hain: **struct** (ek student ki details ek jagah), **file** (data ko persistent banana — \`"w"\` se likho, \`"r"\` se padho, \`fclose\` se band karo), aur **search** (loop mein id compare karo, match par print karke \`break\` karo). \`fscanf\` ka return value check karo — \`== 3\` matlab poori line padhi gayi. \`%49s\` jaise width se buffer overflow roko.
+
+File ka format simple rakho: har line ek record, fields space se alag. Space wale naam is format mein nahi chalte — single-word naam ya underscore use karo. Overwrite (\`"w"\`) vs append (\`"a"\`) ka farak samjho: naya data likhna hai toh \`"w"\`, purane ke saath jodna hai toh \`"a"\`.
+
+Revision ke liye: program ko bina code dekhe trace karo — file mein kaunsi 3 lines likhi jaayengi, phir padhte waqt har iteration mein \`s\` mein kya hoga aur \`count\` kitna hoga? Agar yeh clear hai, toh files aur struct aapko aa gaye hain. Agle project mein hum tic-tac-toe banayenge — 2D array, winner check aur draw detection.`,
+          `The student system has 3 pillars: **struct** (one student's details in one place), **file** (making data persistent — write with \`"w"\`, read with \`"r"\`, close with \`fclose\`), and **search** (compare the id in a loop, print on a match and \`break\`). Check the return value of \`fscanf\` — \`== 3\` means a full line was read. Stop buffer overflow with a width like \`%49s\`.
+
+Keep the file format simple: one record per line, fields separated by spaces. Names with spaces do not work in this format — use single-word names or underscores. Understand overwrite (\`"w"\`) vs append (\`"a"\`): use \`"w"\` to write new data, \`"a"\` to add to old data.
+
+To revise: trace the program without looking at the code — which 3 lines are written to the file, and while reading, what is in \`s\` and what is \`count\` in each iteration? If this is clear, you know files and structs. In the next project we will build tic-tac-toe — a 2D array, winner check, and draw detection.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'flow',
+      title: t(
+        'Student System ka Flow: Struct, File, Search',
+        'Student System Flow: Struct, File, Search'
+      ),
+      caption: t(
+        'Data struct se file mein jaata hai, aur file se wapas screen par aata hai',
+        'Data goes from a struct into a file, and from the file back to the screen'
+      ),
+      nodes: [
+        {
+          t: t('1. struct Student: id, name, marks', '1. struct Student: id, name, marks'),
+          s: t('Ek student ki saari details ek jagah', 'All details of one student in one place')
+        },
+        {
+          t: t('2. fopen "w" + fprintf: file mein save', '2. fopen "w" + fprintf: save to the file'),
+          s: t('Har line ek student: 101 Aarav 85', 'One student per line: 101 Aarav 85')
+        },
+        {
+          t: t('3. fopen "r" + fscanf: file se read', '3. fopen "r" + fscanf: read from the file'),
+          s: t('Return value == 3 matlab poori line mili', 'Return value == 3 means a full line was read')
+        },
+        {
+          t: t('4. Search aur average: loop se kaam', '4. Search and average: work with a loop'),
+          s: t('id match par break, max marks par topper', 'break on an id match, topper from max marks')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Search: id 102 par Meera ko Dhoondho', 'Search: Find Meera by id 102'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+struct Student {
+    int id;
+    char name[50];
+    int marks;
+};
+
+int main(void)
+{
+    struct Student students[3] = {
+        {101, "Aarav", 85},
+        {102, "Meera", 92},
+        {103, "Rohan", 78}
+    };
+    int search_id = 102;
+    int i;
+    int found = 0;
+
+    for (i = 0; i < 3; i++) {
+        if (students[i].id == search_id) {
+            printf("Found: %s (id %d) - %d marks\\n",
+                   students[i].name, students[i].id, students[i].marks);
+            found = 1;
+            break;
+        }
+    }
+    if (found == 0) {
+        printf("Student with id %d not found.\\n", search_id);
+    }
+    return 0;
+}`,
+        output: `Found: Meera (id 102) - 92 marks`
+      },
+      {
+        title: t('Average: Class ke Marks ka Average Nikaalo', 'Average: Find the Class Average Marks'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int marks[3] = {85, 92, 78};
+    int sum = 0;
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        sum += marks[i];
+    }
+    printf("Total marks = %d\\n", sum);
+    printf("Average marks = %.2f\\n", sum / 3.0);
+    return 0;
+}`,
+        output: `Total marks = 255
+Average marks = 85.00`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'File ko write mode mein kholne ke liye kaunsa mode use hota hai?',
+          'Which mode is used to open a file in write mode?'
+        ),
+        opts: [
+          t('"r"', '"r"'),
+          t('"w"', '"w"'),
+          t('"a"', '"a"'),
+          t('"x"', '"x"')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: "w" write mode hai — file ban jaati hai ya purani file overwrite ho jaati hai; "r" read ke liye aur "a" append ke liye hai.',
+          'Correct answer: "w" is write mode — the file is created or an old file is overwritten; "r" is for read and "a" is for append.'
+        )
+      },
+      {
+        q: t(
+          'fscanf ka return value == 3 ka matlab kya hai?',
+          'What does an fscanf return value of == 3 mean?'
+        ),
+        opts: [
+          t('File khatm ho gayi', 'The file ended'),
+          t('3 values successfully padhi gayin', '3 values were read successfully'),
+          t('Error aaya', 'An error happened'),
+          t('3 lines padhi gayin', '3 lines were read')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: fscanf utni values return karta hai jitni successfully padhi gayin — 3 matlab id, naam aur marks teeno mil gaye.',
+          'Correct answer: fscanf returns how many values were read successfully — 3 means the id, name, and marks were all found.'
+        )
+      },
+      {
+        q: t(
+          '50-size char array ke liye fscanf mein kaunsa width safe hai?',
+          'Which width in fscanf is safe for a 50-size char array?'
+        ),
+        opts: [
+          t('%s', '%s'),
+          t('%50s', '%50s'),
+          t('%49s', '%49s'),
+          t('%100s', '%100s')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: %49s hai — 49 characters + null terminator = 50, isliye buffer overflow nahi hota; bina width ke %s overflow kar sakta hai.',
+          'Correct answer: %49s — 49 characters plus the null terminator makes 50, so there is no buffer overflow; %s without a width can overflow.'
+        )
+      },
+      {
+        q: t(
+          'Likhne ke baad fclose kyun zaroori hai?',
+          'Why is fclose needed after writing?'
+        ),
+        opts: [
+          t('File delete ho jaati hai', 'The file is deleted'),
+          t('Buffer ka data file mein poori tarah likha jaata hai', 'The buffered data is fully written to the file'),
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('File ka naam badal jaata hai', 'The file name changes')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: C data ko pehle buffer mein rakhta hai — fclose ke bina data file mein adhoora reh sakta hai.',
+          'Correct answer: C keeps data in a buffer first — without fclose, the data can stay incomplete in the file.'
+        )
+      },
+      {
+        q: t(
+          'Struct use karne ka sabse bada fayda kya hai?',
+          'What is the biggest benefit of using a struct?'
+        ),
+        opts: [
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('Ek student ki saari details ek jagah rehti hain', 'All details of one student stay in one place'),
+          t('File ki zaroorat nahi padti', 'No file is needed'),
+          t('Memory kam lagti hai', 'Less memory is used')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: struct mein id, naam aur marks hamesha saath rehte hain — alag arrays mein ek ko sort karne par baaki se link toot jaata hai.',
+          'Correct answer: in a struct the id, name, and marks always stay together — with separate arrays, sorting one breaks its link to the others.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'struct ek student ki saari details ek jagah rakhta hai — id, naam, marks.',
+        'A struct keeps all details of one student in one place — id, name, marks.'
+      ),
+      t(
+        'fopen "w" se likho, "r" se padho, aur har fopen ke baad fclose karo.',
+        'Write with fopen "w", read with "r", and fclose after every fopen.'
+      ),
+      t(
+        'fscanf ka return value check karo — == 3 matlab poori line mili.',
+        'Check the return value of fscanf — == 3 means a full line was read.'
+      ),
+      t(
+        '%49s jaise width se buffer overflow roko (50-size array ke liye).',
+        'Stop buffer overflow with a width like %49s (for a 50-size array).'
+      ),
+      t(
+        'File se data persistent banta hai — program band hone ke baad bhi records rehte hain.',
+        'A file makes data persistent — records stay even after the program stops.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Topper Dhoondho aur File mein Save Karo',
+        'Practice: Find the Topper and Save to a File'
+      ),
+      task: t(
+        'Neeche wala starter run karo — yeh 3 students ko students.txt mein save karta hai aur topper print karta hai. Done tab hoga jab output mein Topper: Meera - 92 marks dikhe. Phir file students.txt ko khol kar check karo ki usmein 3 lines hain: 101 Aarav 85, 102 Meera 92, 103 Rohan 78.',
+        'Run the starter below — it saves 3 students to students.txt and prints the topper. You are done when the output shows Topper: Meera - 92 marks. Then open the file students.txt and check that it holds 3 lines: 101 Aarav 85, 102 Meera 92, 103 Rohan 78.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+struct Student {
+    int id;
+    char name[50];
+    int marks;
+};
+
+int main(void)
+{
+    struct Student students[3] = {
+        {101, "Aarav", 85},
+        {102, "Meera", 92},
+        {103, "Rohan", 78}
+    };
+    FILE *fp = fopen("students.txt", "w");
+    int i;
+    int top = 0;
+
+    if (fp == NULL) {
+        printf("Error: could not create students.txt\\n");
+        return 1;
+    }
+    for (i = 0; i < 3; i++) {
+        fprintf(fp, "%d %s %d\\n", students[i].id, students[i].name,
+                students[i].marks);
+    }
+    fclose(fp);
+    for (i = 1; i < 3; i++) {
+        if (students[i].marks > students[top].marks) {
+            top = i;
+        }
+    }
+    printf("Topper: %s - %d marks\\n", students[top].name, students[top].marks);
+    return 0;
+}`,
+      expected: `Topper: Meera - 92 marks`
+    },
+    readMinutes: 12
+  };
+
+const cProjectTictactoe: Article = {
+    id: 'c-project-tictactoe',
+    subjectId: 'c-programming',
+    title: t(
+      'Project: Tic-Tac-Toe — Plan, Code, Test, Extend',
+      'Project: Tic-Tac-Toe — Plan, Code, Test, Extend'
+    ),
+    summary: t(
+      'Do players wala classic game banao: 3x3 board 2D array se, X aur O ki baari-bari moves, winner check rows, columns aur diagonals se, aur draw detection — plan se lekar test aur extend tak.',
+      'Build the classic two-player game: a 3x3 board from a 2D array, X and O taking turns, a winner check from rows, columns, and diagonals, and draw detection — from plan to test and extend.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Tic-Tac-Toe Kya Hai? (Plan aur Rules)',
+          '1. What Is Tic-Tac-Toe? (Plan and Rules)'
+        ),
+        body: t(
+          `Tic-tac-toe 3x3 grid par khela jaane wala do players ka game hai. Pehla player **X** hai, doosra **O** hai. Dono baari-bari khaali cell mein apna mark lagate hain. Jo player pehle apne 3 marks ek line mein laga le — row, column ya diagonal — woh jeet jaata hai. Agar saare 9 cells bhar jaayein aur koi line na bane, toh game **draw** hota hai.
+
+Hamara plan: **(1)** 3x3 char board banao, saare cells space \`' '\` se bharo; **(2)** moves ki fixed list rakho — demo mein 5 moves: X(0,0), O(0,1), X(1,1), O(0,2), X(2,2); **(3)** har move par board update karo aur move print karo; **(4)** har move ke baad \`check_winner\` chalao — koi jeeta toh loop roko; **(5)** end mein final board print karo aur winner ya "No winner yet" dikhao. Yeh 5 steps poora game hai.
+
+Board ko **2D array** \`char board[3][3]\` se banate hain — row 0-2, column 0-2. \`board[1][1]\` matlab beech wala cell. Khaali cell ko space se dikhate hain, taaki print karte waqt board saaf dikhe. Winner check ke liye 8 lines check karni hoti hain: 3 rows, 3 columns, 2 diagonals.`,
+          `Tic-tac-toe is a two-player game played on a 3x3 grid. The first player is **X** and the second is **O**. Both take turns placing their mark in an empty cell. The player who first gets 3 marks in a line — a row, a column, or a diagonal — wins. If all 9 cells fill up with no line formed, the game is a **draw**.
+
+Our plan: **(1)** make a 3x3 char board, filling all cells with a space \`' '\`; **(2)** keep a fixed list of moves — 5 moves in the demo: X(0,0), O(0,1), X(1,1), O(0,2), X(2,2); **(3)** update the board on every move and print the move; **(4)** run \`check_winner\` after every move — if someone won, stop the loop; **(5)** at the end, print the final board and show the winner or "No winner yet". These 5 steps are the whole game.
+
+The board is built with a **2D array** \`char board[3][3]\` — rows 0-2, columns 0-2. \`board[1][1]\` means the middle cell. An empty cell is shown with a space, so the board looks clean when printed. For the winner check, 8 lines must be checked: 3 rows, 3 columns, and 2 diagonals.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Board Games, 2D Arrays aur Win Check',
+          '2. Real-Life Examples: Board Games, 2D Arrays, and Win Check'
+        ),
+        body: t(
+          `Chess, sudoku, aur minesweeper — sab board games 2D array par bante hain. Board ka har cell ek position hai, aur har position par ek value hai: khaali, X ya O. 2D array isliye perfect hai kyunki board bhi 2D hai — row aur column se kisi bhi cell ko turant dhoondha ja sakta hai. \`board[row][col]\` likhna board par ungli rakhne jaisa hai.
+
+**Winner check** ka pattern har board game mein hai. Tic-tac-toe mein 8 lines check karni hoti hain. Code mein rows aur columns ko loop se check karte hain — 3 rows ke liye ek loop, 3 columns ke liye wahi loop. Diagonals sirf 2 hain, isliye unhe alag se check karte hain. Important detail: line check karne se pehle dekho ki pehla cell space toh nahi hai — warna 3 khaali cells bhi "winner" ban jaayenge! \`board[i][0] != ' '\` yahi check hai.
+
+**Draw detection** alag function hai: \`board_full\` saare cells scan karta hai, koi space mile toh 0 return karta hai (board khaali jagah hai), warna 1 return karta hai. Draw tab hota hai jab board full ho aur koi winner na ho. Dono conditions ek saath check karni hoti hain — sirf full board draw nahi hota, kyunki aakhri move par bhi jeet ho sakti hai.`,
+          `Chess, sudoku, and minesweeper — all board games are built on a 2D array. Every cell of the board is a position, and every position holds a value: empty, X, or O. A 2D array is perfect because the board is also 2D — any cell can be found at once by row and column. Writing \`board[row][col]\` is like putting a finger on the board.
+
+The **winner check** pattern is in every board game. In tic-tac-toe, 8 lines must be checked. In code, rows and columns are checked with a loop — one loop for 3 rows and the same loop for 3 columns. There are only 2 diagonals, so they are checked separately. One important detail: before checking a line, see whether the first cell is a space — otherwise 3 empty cells would also become a "winner"! The check \`board[i][0] != ' '\` is exactly that.
+
+**Draw detection** is a separate function: \`board_full\` scans all cells, returns 0 if any space is found (the board still has room), and 1 otherwise. A draw happens when the board is full and there is no winner. Both conditions must be checked together — a full board alone is not a draw, because the last move can also be a win.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 5 Moves, Diagonal Win ka Dry Run',
+          '3. Step-by-Step: Dry Run of 5 Moves and a Diagonal Win'
+        ),
+        body: t(
+          `Neeche wala code poora game hai. Dry run karte hain: board shuru mein saara khaali hai. Moves hain \`{{0,0}, {0,1}, {1,1}, {0,2}, {2,2}}\`. Player \`i % 2 == 0\` se decide hota hai — even \`i\` par X, odd par O.
+
+Move 1: \`i = 0\`, player X, cell (0,0). Print: \`X plays (0, 0)\`. Winner check: koi line nahi. Move 2: \`i = 1\`, player O, cell (0,1). Print: \`O plays (0, 1)\`. Winner check: nahi. Move 3: \`i = 2\`, player X, cell (1,1) — beech wala. Print: \`X plays (1, 1)\`. Winner check: nahi, abhi sirf 2 X hain. Move 4: \`i = 3\`, player O, cell (0,2). Print: \`O plays (0, 2)\`. Winner check: nahi. Move 5: \`i = 4\`, player X, cell (2,2). Print: \`X plays (2, 2)\`. Winner check: diagonal (0,0), (1,1), (2,2) — teeno X! Winner = 'X', \`break\` se loop ruk jaata hai.
+
+Final board print hota hai: pehli row \`X | O | O\`, doosri row \`  | X |  \`, teesri row \`  |   | X\`. Aakhir mein \`X wins!\` print hota hai. Yeh diagonal win hai — X ne beech se diagonal banayi.`,
+          `The code below is the whole game. Let us do a dry run: the board starts completely empty. The moves are \`{{0,0}, {0,1}, {1,1}, {0,2}, {2,2}}\`. The player is decided by \`i % 2 == 0\` — X on even \`i\`, O on odd \`i\`.
+
+Move 1: \`i = 0\`, player X, cell (0,0). Prints: \`X plays (0, 0)\`. Winner check: no line. Move 2: \`i = 1\`, player O, cell (0,1). Prints: \`O plays (0, 1)\`. Winner check: no. Move 3: \`i = 2\`, player X, cell (1,1) — the middle. Prints: \`X plays (1, 1)\`. Winner check: no, only 2 X marks so far. Move 4: \`i = 3\`, player O, cell (0,2). Prints: \`O plays (0, 2)\`. Winner check: no. Move 5: \`i = 4\`, player X, cell (2,2). Prints: \`X plays (2, 2)\`. Winner check: the diagonal (0,0), (1,1), (2,2) — all three are X! Winner = 'X', and \`break\` stops the loop.
+
+The final board prints: first row \`X | O | O\`, second row \`  | X |  \`, third row \`  |   | X\`. Finally it prints \`X wins!\`. This is a diagonal win — X built a diagonal through the middle.`
+        ),
+        code: {
+          title: t(
+            'Tic-Tac-Toe: 5 Moves, X ki Diagonal Win',
+            'Tic-Tac-Toe: 5 Moves, X Wins on the Diagonal'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+void print_board(char board[3][3])
+{
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        printf(" %c | %c | %c\\n", board[i][0], board[i][1], board[i][2]);
+        if (i < 2) {
+            printf("---+---+---\\n");
+        }
+    }
+}
+
+char check_winner(char board[3][3])
+{
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        if (board[i][0] != ' ' && board[i][0] == board[i][1] &&
+            board[i][1] == board[i][2]) {
+            return board[i][0];
+        }
+        if (board[0][i] != ' ' && board[0][i] == board[1][i] &&
+            board[1][i] == board[2][i]) {
+            return board[0][i];
+        }
+    }
+    if (board[0][0] != ' ' && board[0][0] == board[1][1] &&
+        board[1][1] == board[2][2]) {
+        return board[0][0];
+    }
+    if (board[0][2] != ' ' && board[0][2] == board[1][1] &&
+        board[1][1] == board[2][0]) {
+        return board[0][2];
+    }
+    return ' ';
+}
+
+int main(void)
+{
+    char board[3][3] = {
+        {' ', ' ', ' '},
+        {' ', ' ', ' '},
+        {' ', ' ', ' '}
+    };
+    int moves[5][2] = {{0, 0}, {0, 1}, {1, 1}, {0, 2}, {2, 2}};
+    int i;
+    char winner = ' ';
+
+    for (i = 0; i < 5; i++) {
+        char player = (i % 2 == 0) ? 'X' : 'O';
+        board[moves[i][0]][moves[i][1]] = player;
+        printf("%c plays (%d, %d)\\n", player, moves[i][0], moves[i][1]);
+        winner = check_winner(board);
+        if (winner != ' ') {
+            break;
+        }
+    }
+    printf("Final board:\\n");
+    print_board(board);
+    if (winner != ' ') {
+        printf("%c wins!\\n", winner);
+    } else {
+        printf("No winner yet.\\n");
+    }
+    return 0;
+}`,
+          output: `X plays (0, 0)
+O plays (0, 1)
+X plays (1, 1)
+O plays (0, 2)
+X plays (2, 2)
+Final board:
+ X | O | O
+---+---+---
+   | X |  
+---+---+---
+   |   | X
+X wins!`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Khaali Line ko Winner, Bhara Cell aur Galat Index',
+          '4. Common Mistakes: Empty Line as Winner, Filled Cell, and Wrong Index'
+        ),
+        body: t(
+          `**Galti 1: Khaali line ko winner samajhna.** Agar \`check_winner\` mein \`board[i][0] != ' '\` check nahi likha, toh shuru mein hi 3 khaali cells ek line ban jaate hain aur program bolega "winner" jabki board khaali hai. Yeh sabse common tic-tac-toe bug hai. Har line check mein pehle cell ka non-space check must hai.
+
+**Galti 2: Bhare hue cell par move karna.** Demo mein moves fixed hain aur saare alag cells par hain, isliye yeh problem nahi aati. Asli game mein player galti se bhara cell chun sakta hai — us par dobara likhne se pehle wala mark mit jaayega. Fix: move lagane se pehle check karo \`if (board[row][col] != ' ')\` toh "Cell already taken" bolo aur move ginne bina dobara poochho.
+
+**Galti 3: Row aur column ulta likhna.** \`board[moves[i][0]][moves[i][1]]\` mein pehla index row hai, doosra column. Ulta likhne se move galat jagah lag jaayega aur winner check galat hoga. Dry run mein har move ke baad board banao — kagaz par 3x3 grid mein X aur O lagao — toh galti turant dikh jaayegi.
+
+**Galti 4: Har move ke baad winner check na karna.** Agar winner check sirf end mein karo, toh jeet ke baad bhi game chalta rahega aur haarne wala player aur moves khel lega. Har move ke baad check karo aur jeet par turant \`break\` karo.`,
+          `**Mistake 1: Treating an empty line as a winner.** If \`check_winner\` does not have the \`board[i][0] != ' '\` check, then at the start 3 empty cells already form a line and the program reports a "winner" while the board is empty. This is the most common tic-tac-toe bug. The non-space check on the first cell is a must in every line check.
+
+**Mistake 2: Playing on a filled cell.** In the demo the moves are fixed and all on different cells, so this problem does not appear. In a real game a player can pick a filled cell by mistake — writing over it erases the earlier mark. Fix: before placing a move, check \`if (board[row][col] != ' ')\`, say "Cell already taken", and ask again without counting the move.
+
+**Mistake 3: Swapping row and column.** In \`board[moves[i][0]][moves[i][1]]\`, the first index is the row and the second is the column. Swapping them puts the move in the wrong place and breaks the winner check. In a dry run, draw the board after every move — put X and O on a paper 3x3 grid — and the mistake shows at once.
+
+**Mistake 4: Not checking the winner after every move.** If the winner check runs only at the end, the game keeps going after a win and the losing player plays more moves. Check after every move and \`break\` at once on a win.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Draw, Aakhri Move par Jeet aur Pehla Move',
+          '5. Edge Cases: Draw, Win on the Last Move, and the First Move'
+        ),
+        body: t(
+          `**1. Draw.** Neeche wala doosra example yahi hai: board poora bhara hai — X O X / X O O / O X X — aur koi line nahi bani. \`board_full\` 1 return karta hai aur message aata hai \`Draw!\`. Draw check hamesha winner check ke baad aana chahiye: pehle dekho koi jeeta ya nahi, phir dekho board full hai ya nahi.
+
+**2. Aakhri move (9th) par jeet.** Board full hone ke saath-saath jeet bhi ho sakti hai — jaise aakhri cell se diagonal poori ho jaaye. Is case mein winner jeetta hai, draw nahi hota. Isliye order zaroori hai: winner check pehle, draw check baad mein. Agar order ulta ho, toh jeet ko draw bol diya jaayega.
+
+**3. Pehla move.** Pehle move ke baad winner check chalta hai, par jeet impossible hai — kam se kam 5 moves chahiye jeet ke liye (X ke 3 marks). Check phir bhi chalana theek hai — code simple rehta hai aur koi nuksaan nahi. Optimization ke liye 5th move se pehle check skip kiya ja sakta hai, par beginners ke liye simple code behtar hai.
+
+**4. Sirf 5 moves ka demo.** Hamara demo 5 moves ke baad ruk jaata hai, jabki poora game 9 moves tak chal sakta hai. Yeh demo ki limit hai, game ki nahi — moves array ko 9 tak badha kar poora game khela ja sakta hai. Practice mein aapko yahi karna hai.`,
+          `**1. Draw.** The second example below is exactly this: the board is completely full — X O X / X O O / O X X — and no line is formed. \`board_full\` returns 1 and the message is \`Draw!\`. The draw check must always come after the winner check: first see whether anyone won, then see whether the board is full.
+
+**2. Win on the last (9th) move.** The board can fill up and a win can happen together — for example the last cell completes a diagonal. In this case the winner wins, it is not a draw. So the order matters: winner check first, draw check second. If the order is reversed, a win is wrongly called a draw.
+
+**3. The first move.** After the first move the winner check runs, but a win is impossible — at least 5 moves are needed for a win (3 X marks). Running the check anyway is fine — the code stays simple and there is no harm. For optimization the check could be skipped before the 5th move, but for beginners simple code is better.
+
+**4. A demo of only 5 moves.** Our demo stops after 5 moves, while a full game can run to 9 moves. This is a limit of the demo, not of the game — the moves array can grow to 9 to play the full game. That is what you will do in the practice.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Computer Opponent, Bada Board aur Score',
+          '6. What-If: Computer Opponent, Bigger Board, and Score'
+        ),
+        body: t(
+          `**What if: computer se khelna ho?** Computer ka move simple tareeke se banaya ja sakta hai: pehla khaali cell dhoondho aur wahan O lagao. Yeh aasan hai par computer hamesha haarta hai. Behtar computer ke liye minimax algorithm hota hai — woh har possible move ko aage tak soch kar best move chunta hai, aur tic-tac-toe mein minimax kabhi nahi haarta. Minimax advanced topic hai; pehle simple computer banao, phir minimax seekho.
+
+**What if: board 4x4 ya 5x5 ho?** Board size ko variable banao — \`#define SIZE 4\` — aur winner check ko loop se general karo. 4x4 mein jeet ke liye 4 marks ek line mein chahiye. Code wahi rehta hai, sirf size aur win-length badalte hain. Yeh dikhata hai ki constants ko hardcode karne ki jagah define karna kyun achha hai.
+
+**What if: score track karna ho?** X ki jeet, O ki jeet aur draws ko 3 variables mein gino. Har game ke baad score print karo: \`Score - X: 2, O: 1, Draws: 1\`. Score ko file mein save karo toh kal bhi score milega — student records wale article ka file pattern yahan bhi kaam aayega.`,
+          `**What if you want to play against the computer?** The computer move can be made simply: find the first empty cell and put O there. This is easy, but the computer always loses. For a better computer there is the minimax algorithm — it thinks ahead through every possible move and picks the best one, and in tic-tac-toe minimax never loses. Minimax is an advanced topic; first build a simple computer, then learn minimax.
+
+**What if the board is 4x4 or 5x5?** Make the board size a variable — \`#define SIZE 4\` — and make the winner check general with a loop. In 4x4, a win needs 4 marks in a line. The code stays the same, only the size and the win-length change. This shows why defining a constant is better than hardcoding it.
+
+**What if you track the score?** Count X wins, O wins, and draws in 3 variables. After every game print the score: \`Score - X: 2, O: 1, Draws: 1\`. Save the score in a file and it is still there tomorrow — the file pattern from the student records article works here too.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: 2D Array, Winner Check aur Draw ka Poora Picture',
+          '7. Summary: The Full Picture of 2D Array, Winner Check, and Draw'
+        ),
+        body: t(
+          `Tic-tac-toe ke 3 pillars hain: **2D array board** (\`board[row][col]\`, khaali cell = space), **winner check** (3 rows, 3 columns, 2 diagonals — pehle cell ka non-space check must hai), aur **draw check** (\`board_full\` + koi winner nahi). Har move ke baad winner check karo aur jeet par \`break\` karo. Draw check hamesha winner check ke baad aaye.
+
+Player \`i % 2\` se decide hota hai — even par X, odd par O. Yeh turn-taking pattern har do-player game mein hai. Move lagane se pehle cell khaali hai ya nahi, yeh check asli game mein zaroori hai — demo mein fixed moves isliye safe hain kyunki saare cells alag hain.
+
+Revision ke liye: 5 moves ko bina code dekhe trace karo — har move ke baad board kaisa dikhega aur winner check kya bolega? Phir row win wala example trace karo — pehli row mein teeno X kaise jeet dete hain? Agar dono clear hain, toh 2D arrays aur game logic aapko aa gaye hain. Agle article mein hum interview prep karenge — tricky outputs aur top questions.`,
+          `Tic-tac-toe has 3 pillars: a **2D array board** (\`board[row][col]\`, an empty cell is a space), a **winner check** (3 rows, 3 columns, 2 diagonals — the non-space check on the first cell is a must), and a **draw check** (\`board_full\` plus no winner). Check the winner after every move and \`break\` on a win. The draw check must always come after the winner check.
+
+The player is decided by \`i % 2\` — X on even, O on odd. This turn-taking pattern is in every two-player game. Before placing a move, checking whether the cell is empty is needed in a real game — the fixed moves in the demo are safe because all cells are different.
+
+To revise: trace the 5 moves without looking at the code — how does the board look after each move, and what does the winner check say? Then trace the row-win example — how do three X marks in the first row give a win? If both are clear, you know 2D arrays and game logic. In the next article we will do interview prep — tricky outputs and top questions.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Tic-Tac-Toe Board: 3x3 Grid aur 8 Winning Lines',
+        'Tic-Tac-Toe Board: 3x3 Grid and 8 Winning Lines'
+      ),
+      caption: t(
+        'X ne diagonal (0,0)-(1,1)-(2,2) se jeeta — baaki 7 lines khaali rahi',
+        'X won on the diagonal (0,0)-(1,1)-(2,2) — the other 7 lines stayed empty'
+      ),
+      nodes: [
+        {
+          t: t('Board: char board[3][3]', 'Board: char board[3][3]'),
+          s: t('Khaali cell = space, X ya O se bharo', 'An empty cell is a space, filled with X or O')
+        },
+        {
+          t: t('Rows: 3 lines', 'Rows: 3 lines'),
+          s: t('Har row ke 3 cells ek jaise hon toh jeet', 'A win when all 3 cells of a row match')
+        },
+        {
+          t: t('Columns: 3 lines', 'Columns: 3 lines'),
+          s: t('Har column ke 3 cells ek jaise hon toh jeet', 'A win when all 3 cells of a column match')
+        },
+        {
+          t: t('Diagonals: 2 lines', 'Diagonals: 2 lines'),
+          s: t('(0,0)-(1,1)-(2,2) aur (0,2)-(1,1)-(2,0)', '(0,0)-(1,1)-(2,2) and (0,2)-(1,1)-(2,0)')
+        },
+        {
+          t: t('Draw: board full + koi winner nahi', 'Draw: board full + no winner'),
+          s: t('Pehle winner check, phir draw check', 'Winner check first, then the draw check')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Row Win: Pehli Row mein Teeno X', 'Row Win: Three X Marks in the First Row'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+char check_winner(char board[3][3])
+{
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        if (board[i][0] != ' ' && board[i][0] == board[i][1] &&
+            board[i][1] == board[i][2]) {
+            return board[i][0];
+        }
+    }
+    return ' ';
+}
+
+int main(void)
+{
+    char board[3][3] = {
+        {'X', 'X', 'X'},
+        {'O', ' ', 'O'},
+        {' ', ' ', ' '}
+    };
+    char winner = check_winner(board);
+
+    if (winner != ' ') {
+        printf("Winner: %c\\n", winner);
+    } else {
+        printf("No winner.\\n");
+    }
+    return 0;
+}`,
+        output: `Winner: X`
+      },
+      {
+        title: t('Draw: Board Full, Koi Winner Nahi', 'Draw: Board Full, No Winner'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int board_full(char board[3][3])
+{
+    int r;
+    int c;
+
+    for (r = 0; r < 3; r++) {
+        for (c = 0; c < 3; c++) {
+            if (board[r][c] == ' ') {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int main(void)
+{
+    char board[3][3] = {
+        {'X', 'O', 'X'},
+        {'X', 'O', 'O'},
+        {'O', 'X', 'X'}
+    };
+
+    if (board_full(board) == 1) {
+        printf("Board is full.\\n");
+        printf("Draw!\\n");
+    } else {
+        printf("Board is not full.\\n");
+    }
+    return 0;
+}`,
+        output: `Board is full.
+Draw!`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'Tic-tac-toe mein kul kitni winning lines hoti hain?',
+          'How many winning lines are there in total in tic-tac-toe?'
+        ),
+        opts: [
+          t('6', '6'),
+          t('8', '8'),
+          t('9', '9'),
+          t('3', '3')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: 8 lines hoti hain — 3 rows, 3 columns aur 2 diagonals.',
+          'Correct answer: there are 8 lines — 3 rows, 3 columns, and 2 diagonals.'
+        )
+      },
+      {
+        q: t(
+          'check_winner mein board[i][0] != \' \' check kyun zaroori hai?',
+          'Why is the board[i][0] != \' \' check needed in check_winner?'
+        ),
+        opts: [
+          t('Program fast ho jaata hai', 'The program becomes faster'),
+          t('Warna 3 khaali cells bhi winner ban jaayenge', 'Otherwise 3 empty cells would also become a winner'),
+          t('Compiler warning hat jaati hai', 'The compiler warning goes away'),
+          t('Board print saaf dikhta hai', 'The board prints cleanly')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: khaali cells mein bhi space-space-space barabar hota hai, isliye pehle cell ka non-space check must hai.',
+          'Correct answer: empty cells also have space-space-space equal, so the non-space check on the first cell is a must.'
+        )
+      },
+      {
+        q: t(
+          'Moves mein player kaise decide hota hai?',
+          'How is the player decided in the moves?'
+        ),
+        opts: [
+          t('Random se', 'By random'),
+          t('i % 2 se — even par X, odd par O', 'By i % 2 — X on even, O on odd'),
+          t('Hamesha X', 'Always X'),
+          t('User se poochh kar', 'By asking the user')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: i % 2 se baari badalti hai — even index par X aur odd index par O khelta hai.',
+          'Correct answer: i % 2 changes the turn — X plays on an even index and O on an odd index.'
+        )
+      },
+      {
+        q: t(
+          'Draw kab hota hai?',
+          'When is it a draw?'
+        ),
+        opts: [
+          t('Jab board full ho', 'When the board is full'),
+          t('Jab board full ho aur koi winner na ho', 'When the board is full and there is no winner'),
+          t('Jab 5 moves ho jaayein', 'When 5 moves are done'),
+          t('Jab X jeete', 'When X wins')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: sirf full board draw nahi hota — aakhri move par jeet bhi ho sakti hai, isliye dono conditions ek saath check karo.',
+          'Correct answer: a full board alone is not a draw — the last move can also be a win, so check both conditions together.'
+        )
+      },
+      {
+        q: t(
+          'board[1][1] kaunsa cell hai?',
+          'Which cell is board[1][1]?'
+        ),
+        opts: [
+          t('Upar-left corner', 'Top-left corner'),
+          t('Beech wala cell', 'The middle cell'),
+          t('Neeche-right corner', 'Bottom-right corner'),
+          t('Pehli row ka beech wala', 'The middle of the first row')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: row 1 aur column 1 matlab 3x3 board ka beech wala cell hai — diagonal win mein yahi cell aata hai.',
+          'Correct answer: row 1 and column 1 is the middle cell of a 3x3 board — this cell is part of a diagonal win.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        'Board char board[3][3] hai — khaali cell space hai, X ya O se bharo.',
+        'The board is char board[3][3] — an empty cell is a space, filled with X or O.'
+      ),
+      t(
+        '8 winning lines: 3 rows, 3 columns, 2 diagonals.',
+        '8 winning lines: 3 rows, 3 columns, 2 diagonals.'
+      ),
+      t(
+        'Winner check mein pehle cell ka non-space check must hai, warna khaali line jeet jaayegi.',
+        'In the winner check, the non-space check on the first cell is a must, or an empty line would win.'
+      ),
+      t(
+        'Har move ke baad winner check karo aur jeet par break karo.',
+        'Check the winner after every move and break on a win.'
+      ),
+      t(
+        'Draw = board full + koi winner nahi; winner check hamesha pehle aaye.',
+        'Draw = board full + no winner; the winner check must always come first.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Row Win wala Game Banao',
+        'Practice: Build the Game with a Row Win'
+      ),
+      task: t(
+        'Neeche wala starter run karo — yeh ek aisa board dikhata hai jismein X ne pehli row se jeeta hai. Done tab hoga jab output expected jaisa aaye. Phir board ko badal kar O ki win banao (doosri row mein O, O, O) aur X wins ki jagah O wins print karo.',
+        'Run the starter below — it shows a board where X won with the first row. You are done when the output matches the expected output. Then change the board to make O win (O, O, O in the second row) and print O wins instead of X wins.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+void print_board(char board[3][3])
+{
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        printf(" %c | %c | %c\\n", board[i][0], board[i][1], board[i][2]);
+        if (i < 2) {
+            printf("---+---+---\\n");
+        }
+    }
+}
+
+int main(void)
+{
+    char board[3][3] = {
+        {'X', 'X', 'X'},
+        {'O', 'O', ' '},
+        {' ', ' ', ' '}
+    };
+
+    printf("Final board:\\n");
+    print_board(board);
+    printf("X wins!\\n");
+    return 0;
+}`,
+      expected: `Final board:
+ X | X | X
+---+---+---
+ O | O |  
+---+---+---
+   |   |  
+X wins!`
+    },
+    readMinutes: 12
+  };
+
+const cInterview: Article = {
+    id: 'c-interview',
+    subjectId: 'c-programming',
+    title: t(
+      'C Interview Prep — Tricky Outputs, Top Questions aur Revision Plan',
+      'C Interview Prep — Tricky Outputs, Top Questions, and Revision Plan'
+    ),
+    summary: t(
+      'Interview se pehle C ko revise karo: tricky outputs jo aksar galat hote hain, top 10 questions jo har interviewer poochhta hai, aur 7-din ka revision plan jo sab kuch ek saath bandhta hai.',
+      'Revise C before the interview: tricky outputs that are often answered wrong, the top 10 questions every interviewer asks, and a 7-day revision plan that ties everything together.'
+    ),
+    sections: [
+      {
+        heading: t(
+          '1. Interview mein C se Kya Poochhte Hain? (Pattern aur Strategy)',
+          '1. What Do Interviews Ask About C? (Pattern and Strategy)'
+        ),
+        body: t(
+          `C interview mein 4 tarah ke sawaal aate hain. **Pehla: tricky output** — chhota sa code diya jaata hai aur output poochha jaata hai, jaise \`5 / 2\` kitna hoga ya \`x++\` ke baad \`x\` kitna hoga. Yeh sawaal concept check karte hain, memory nahi. **Doosra: concept questions** — pointer kya hai, stack aur heap mein farak, \`malloc\` aur \`calloc\` mein farak. **Teesra: code likhna** — string reverse karo, array ka max nikaalo, linked list mein loop detect karo. **Chautha: debugging** — diye gaye code mein bug dhoondho.
+
+Strategy simple hai: pehle output wale sawaal pakke karo, kyunki woh sabse zyada aate hain aur sabse jaldi solve hote hain. Har tricky output ke peeche ek concept hai — integer division, precedence, post-increment, switch fallthrough, pointer basics. Concept samajh lo toh output khud aa jaayega. Ratta mat maro — har output ko dry run karke samjho.
+
+Interview mein code likhte waqt **soch kar bolo** — pehle approach batao, phir code likho, phir ek example se test karo. Interviewer ko sirf sahi answer nahi, aapki soch dekhni hoti hai. Agar atak jaao, toh hint maango — hint maangna kamzori nahi hai, communication hai. Aur hamesha edge cases bolo: khali input, zero, negative — yeh sun kar interviewer ko pata chalta hai ki aap defensive programmer ho.`,
+          `A C interview has 4 kinds of questions. **First: tricky output** — a small piece of code is given and the output is asked, like what \`5 / 2\` gives or what \`x\` becomes after \`x++\`. These questions check concepts, not memory. **Second: concept questions** — what is a pointer, the difference between stack and heap, the difference between \`malloc\` and \`calloc\`. **Third: writing code** — reverse a string, find the max of an array, detect a loop in a linked list. **Fourth: debugging** — find the bug in given code.
+
+The strategy is simple: first master the output questions, because they appear most often and are solved fastest. Behind every tricky output there is one concept — integer division, precedence, post-increment, switch fallthrough, pointer basics. Understand the concept and the output follows on its own. Do not memorize — understand each output with a dry run.
+
+When writing code in an interview, **think out loud** — first explain the approach, then write the code, then test it with an example. The interviewer wants to see your thinking, not just the right answer. If you get stuck, ask for a hint — asking for a hint is not weakness, it is communication. And always mention edge cases: empty input, zero, negative — hearing this tells the interviewer you are a defensive programmer.`
+        )
+      },
+      {
+        heading: t(
+          '2. Real-Life Examples: Interview ke 3 Classic Moments',
+          '2. Real-Life Examples: 3 Classic Interview Moments'
+        ),
+        body: t(
+          `**Moment 1: Output wala sawaal.** Interviewer board par likhta hai: \`int x = 5; int y = x++; printf(\"%d %d\", x, y);\` Candidate bolta hai "5 5" — galat. Sahi hai "6 5", kyunki \`x++\` pehle purani value deta hai (5, jo y mein jaati hai), phir x ko 1 badhata hai (6). Yeh ek line poora concept check kar leti hai — post-increment ka matlab.
+
+**Moment 2: Pointer wala sawaal.** Interviewer poochhta hai: \`int n = 10; int *p = &n; *p = 20;\` ke baad \`n\` kitna hoga? Candidate jo pointer samajhta hai, woh turant bolega 20 — kyunki \`p\` n ka address hai aur \`*p = 20\` se n ki value badal jaati hai. Neeche wala doosra example yahi dikhata hai. Pointer ko samajhna C interview ki aadhi jeet hai.
+
+**Moment 3: switch fallthrough.** Interviewer likhta hai: \`day = 2\` par switch mein case 2 ke baad break nahi hai. Candidate sirf "Tuesday" bolta hai — galat. Sahi output hai "Tuesday" aur "Wednesday" dono, kyunki break ke bina control case 3 mein gir jaata hai. Neeche wala pehla example yahi dikhata hai. Fallthrough interview ka favourite trap hai — isliye har switch mein break check karo.`,
+          `**Moment 1: The output question.** The interviewer writes on the board: \`int x = 5; int y = x++; printf(\"%d %d\", x, y);\` The candidate says "5 5" — wrong. The right answer is "6 5", because \`x++\` first gives the old value (5, which goes into y), then increases x by 1 (6). This one line checks the whole concept — what post-increment means.
+
+**Moment 2: The pointer question.** The interviewer asks: after \`int n = 10; int *p = &n; *p = 20;\`, what is \`n\`? A candidate who understands pointers answers at once: 20 — because \`p\` is the address of n, and \`*p = 20\` changes the value of n. The second example below shows exactly this. Understanding pointers is half the win in a C interview.
+
+**Moment 3: switch fallthrough.** The interviewer writes a switch with \`day = 2\` and no break after case 2. The candidate says only "Tuesday" — wrong. The right output is both "Tuesday" and "Wednesday", because without break, control falls into case 3. The first example below shows exactly this. Fallthrough is an interview favourite trap — so check the break in every switch.`
+        )
+      },
+      {
+        heading: t(
+          '3. Step-by-Step: 6 Tricky Outputs ka Dry Run',
+          '3. Step-by-Step: Dry Run of 6 Tricky Outputs'
+        ),
+        body: t(
+          `Neeche wala code 6 tricky outputs ek saath dikhata hai. Ek-ek karke dry run karte hain. **(1)** \`5 / 2 = 2\` — dono int hain, isliye integer division, decimal kat jaata hai. **(2)** \`5.0 / 2 = 2.5\` — ek number float hai, isliye float division, answer 2.5 aata hai. Yeh do lines integer vs float division ka farak dikhati hain — interview mein sabse zyada poochha jaane wala farak.
+
+**(3)** \`5 % 2 = 1\` — modulo matlab remainder, 5 ko 2 se bhaag kar remainder 1 bachta hai. **(4)** \`2 + 3 * 4 = 14\` — precedence: multiply pehle (3 * 4 = 12), phir add (2 + 12 = 14). **(5)** \`(2 + 3) * 4 = 20\` — brackets pehle: (2 + 3 = 5), phir 5 * 4 = 20. Yeh do lines dikhati hain ki brackets precedence ko kaise badal dete hain.
+
+**(6)** \`x = 6, y = 5\` — \`int x = 5; int y = x++;\` mein \`x++\` pehle 5 deta hai (y = 5), phir x ko 6 banata hai. Agar \`++x\` hota, toh pehle x 6 banta aur y bhi 6 hota. Post-increment vs pre-increment ka yahi farak hai — aur yeh interview mein har baar aata hai.`,
+          `The code below shows 6 tricky outputs together. Let us dry-run them one by one. **(1)** \`5 / 2 = 2\` — both are int, so it is integer division and the decimal is cut off. **(2)** \`5.0 / 2 = 2.5\` — one number is float, so it is float division and the answer is 2.5. These two lines show the difference between integer and float division — the most asked difference in interviews.
+
+**(3)** \`5 % 2 = 1\` — modulo means remainder; dividing 5 by 2 leaves a remainder of 1. **(4)** \`2 + 3 * 4 = 14\` — precedence: multiply first (3 * 4 = 12), then add (2 + 12 = 14). **(5)** \`(2 + 3) * 4 = 20\` — brackets first: (2 + 3 = 5), then 5 * 4 = 20. These two lines show how brackets change precedence.
+
+**(6)** \`x = 6, y = 5\` — in \`int x = 5; int y = x++;\`, \`x++\` first gives 5 (y = 5), then makes x 6. If it were \`++x\`, x would become 6 first and y would also be 6. That is the difference between post-increment and pre-increment — and it comes up in every interview.`
+        ),
+        code: {
+          title: t(
+            '6 Tricky Outputs: Division, Precedence aur x++',
+            '6 Tricky Outputs: Division, Precedence, and x++'
+          ),
+          language: 'c',
+          code: `#include <stdio.h>
+
+int main(void)
+{
+    int x = 5;
+    int y = x++;
+
+    printf("5 / 2 = %d\\n", 5 / 2);
+    printf("5.0 / 2 = %.1f\\n", 5.0 / 2);
+    printf("5 %% 2 = %d\\n", 5 % 2);
+    printf("2 + 3 * 4 = %d\\n", 2 + 3 * 4);
+    printf("(2 + 3) * 4 = %d\\n", (2 + 3) * 4);
+    printf("x = %d, y = %d\\n", x, y);
+    return 0;
+}`,
+          output: `5 / 2 = 2
+5.0 / 2 = 2.5
+5 % 2 = 1
+2 + 3 * 4 = 14
+(2 + 3) * 4 = 20
+x = 6, y = 5`
+        }
+      },
+      {
+        heading: t(
+          '4. Common Mistakes: Interview mein Galat Jawab ki 4 Wajahen',
+          '4. Common Mistakes: 4 Reasons for Wrong Answers in Interviews'
+        ),
+        body: t(
+          `**Galti 1: Integer division ko float samajhna.** \`5 / 2\` par "2.5" bolna sabse common galti hai. Yaad rakho: dono int hon toh answer int hi hoga. Float answer ke liye ek operand float hona chahiye — \`5.0 / 2\` ya \`(float)5 / 2\`.
+
+**Galti 2: Precedence bhoolna.** \`2 + 3 * 4\` par "20" bolna — multiply pehle hota hai, isliye answer 14 hai. Brackets wali line se compare karo: \`(2 + 3) * 4 = 20\`. Precedence ka order yaad rakho: brackets, multiply/divide/modulo, phir add/subtract.
+
+**Galti 3: Post-increment ko pre-increment samajhna.** \`y = x++\` mein y ko 5 milta hai, 6 nahi. \`x++\` ka matlab hai "pehle value do, phir badhao". \`++x\` ka matlab hai "pehle badhao, phir value do". Ek line mein dono ka farak yaad rakho.
+
+**Galti 4: Chup rehna.** Interview mein sabse badi galti galat answer nahi, chup rehna hai. Agar answer nahi pata, toh soch kar bolo: "Mujhe lagta hai answer yeh hai, kyunki..." Interviewer aapki soch ko marks deta hai, sirf final answer ko nahi. Galat answer + sahi reasoning, chup rehne se behtar hai.`,
+          `**Mistake 1: Treating integer division as float.** Saying "2.5" for \`5 / 2\` is the most common mistake. Remember: if both are int, the answer is int. For a float answer, one operand must be float — \`5.0 / 2\` or \`(float)5 / 2\`.
+
+**Mistake 2: Forgetting precedence.** Saying "20" for \`2 + 3 * 4\` — multiply comes first, so the answer is 14. Compare with the brackets line: \`(2 + 3) * 4 = 20\`. Remember the precedence order: brackets, multiply/divide/modulo, then add/subtract.
+
+**Mistake 3: Mixing up post-increment and pre-increment.** In \`y = x++\`, y gets 5, not 6. \`x++\` means "give the value first, then increase". \`++x\` means "increase first, then give the value". Remember the difference in one line.
+
+**Mistake 4: Staying silent.** In an interview, the biggest mistake is not a wrong answer but silence. If you do not know the answer, think out loud: "I think the answer is this, because..." The interviewer marks your thinking, not just the final answer. A wrong answer with right reasoning is better than silence.`
+        )
+      },
+      {
+        heading: t(
+          '5. Edge Cases: Undefined Behaviour, sizeof aur Signed vs Unsigned',
+          '5. Edge Cases: Undefined Behaviour, sizeof, and Signed vs Unsigned'
+        ),
+        body: t(
+          `**1. Undefined behaviour (UB).** Kuch code ka koi fixed answer nahi hota — jaise \`a++ + ++a\` ek hi statement mein \`a\` ko do baar badalna. Compiler kuch bhi kar sakta hai, aur har compiler alag answer de sakta hai. Interview mein aise code par sahi jawab hai: "Yeh undefined behaviour hai, iska koi fixed output nahi hai." Yeh jawab dena concept ki gehri samajh dikhata hai.
+
+**2. \`sizeof\` ke sawaal.** \`sizeof(char)\` hamesha 1 hota hai, \`sizeof(int)\` aam taur par 4 hota hai. Par \`sizeof\` par bharosa karne se pehle yaad rakho: yeh platform par depend karta hai. Interview mein \`sizeof\` ka answer dete waqt "aam taur par" bolo, "hamesha" nahi — sirf char ke liye hamesha 1 hai.
+
+**3. Signed vs unsigned.** \`unsigned int\` mein -1 store karne par woh bahut bada number ban jaata hai (4294967295). Signed aur unsigned ko compare karne par signed bhi unsigned ban jaata hai, aur -1 bada dikhne lagta hai. Yeh interview ka advanced trap hai — pehle basic topics pakke karo, phir yeh.
+
+**4. \`main\` ka return type.** Sahi signature hai \`int main(void)\` ya \`int main(int argc, char *argv[])\`. \`void main()\` galat hai — purane books mein dikhta hai, par standard mein \`main\` int return karta hai. Interviewer yeh chhoti si baat bhi check kar sakta hai.`,
+          `**1. Undefined behaviour (UB).** Some code has no fixed answer — for example \`a++ + ++a\`, which changes \`a\` twice in one statement. The compiler can do anything, and each compiler can give a different answer. In an interview, the right answer for such code is: "This is undefined behaviour, it has no fixed output." Giving this answer shows a deep understanding of the concept.
+
+**2. \`sizeof\` questions.** \`sizeof(char)\` is always 1, and \`sizeof(int)\` is usually 4. But before trusting \`sizeof\`, remember: it depends on the platform. When answering a \`sizeof\` question in an interview, say "usually", not "always" — only char is always 1.
+
+**3. Signed vs unsigned.** Storing -1 in an \`unsigned int\` makes it a very large number (4294967295). When a signed value is compared with an unsigned one, the signed value also becomes unsigned, and -1 starts looking large. This is an advanced interview trap — first master the basic topics, then this one.
+
+**4. The return type of \`main\`.** The correct signature is \`int main(void)\` or \`int main(int argc, char *argv[])\`. \`void main()\` is wrong — it appears in old books, but in the standard \`main\` returns int. An interviewer can check even this small point.`
+        )
+      },
+      {
+        heading: t(
+          '6. What-If: Top 10 Questions, 7-Din Plan aur Mock Interview',
+          '6. What-If: Top 10 Questions, 7-Day Plan, and Mock Interview'
+        ),
+        body: t(
+          `**Top 10 questions jo har interviewer poochhta hai:** (1) Pointer kya hai aur \`*\` aur \`&\` mein farak? (2) Stack vs heap? (3) \`malloc\` vs \`calloc\`? (4) \`static\` keyword kya karta hai? (5) Array aur pointer mein farak? (6) String ko reverse kaise karoge? (7) Dangling pointer kya hai? (8) \`struct\` vs \`union\`? (9) Recursion kya hai aur base case kyun zaroori hai? (10) \`const\` pointer vs pointer to const? Har question ka jawab 2-3 lines mein, ek example ke saath, taiyaar rakho.
+
+**7-din revision plan:** Din 1 — basics: variables, loops, functions. Din 2 — arrays aur strings. Din 3 — pointers aur memory. Din 4 — structs aur files. Din 5 — tricky outputs (is article ka code). Din 6 — 4 projects ko dobara banao bina dekhe. Din 7 — mock interview: dost se sawaal poochhwao, time limit mein code likho. Har din 2 ghante, sirf padhna nahi — code likhna aur chalana.
+
+**What if: mock interview mein atak jaao?** Ruk kar bolo: "Main isse is tarah soch raha hoon..." Approach batao, phir code likho. Agar approach galat ho, toh interviewer hint dega — hint lena theek hai. Mock interview ka maksad perfect answer nahi, pressure mein sochna seekhna hai.`,
+          `**Top 10 questions every interviewer asks:** (1) What is a pointer, and what is the difference between \`*\` and \`&\`? (2) Stack vs heap? (3) \`malloc\` vs \`calloc\`? (4) What does the \`static\` keyword do? (5) Difference between an array and a pointer? (6) How would you reverse a string? (7) What is a dangling pointer? (8) \`struct\` vs \`union\`? (9) What is recursion, and why is the base case needed? (10) \`const\` pointer vs pointer to const? Keep each answer ready in 2-3 lines, with one example.
+
+**7-day revision plan:** Day 1 — basics: variables, loops, functions. Day 2 — arrays and strings. Day 3 — pointers and memory. Day 4 — structs and files. Day 5 — tricky outputs (the code in this article). Day 6 — rebuild the 4 projects without looking. Day 7 — mock interview: ask a friend to question you, and write code within a time limit. Two hours each day, not just reading — writing and running code.
+
+**What if you get stuck in a mock interview?** Pause and say: "I am thinking about it this way..." Explain the approach, then write the code. If the approach is wrong, the interviewer will give a hint — taking a hint is fine. The goal of a mock interview is not a perfect answer, but learning to think under pressure.`
+        )
+      },
+      {
+        heading: t(
+          '7. Summary: Interview Prep ka Poora Picture',
+          '7. Summary: The Full Picture of Interview Prep'
+        ),
+        body: t(
+          `Interview prep ka core hai: **tricky outputs** (integer division, precedence, post-increment, fallthrough, pointers), **top 10 questions** (har ek ka 2-3 lines mein jawab + example), aur **code likhna** (string reverse, max find, search — sab projects se aate hain). Har output ko dry run karke samjho, ratta mat maro.
+
+Yaad rakho: \`5 / 2 = 2\`, \`5.0 / 2 = 2.5\`, \`2 + 3 * 4 = 14\`, \`(2 + 3) * 4 = 20\`, \`y = x++\` mein y ko purani value milti hai, switch mein break ke bina fallthrough hota hai, aur pointer se value badalne par original variable badal jaata hai. Yeh 7 baatein interview ke aadhe output sawaal cover kar leti hain.
+
+Revision ke liye: is article ka code bina dekhe trace karo — 6 outputs mein se kitne sahi aaye? Phir top 10 questions mein se kisi 3 ka jawab zor se bolo. Agar dono ho jaayein, toh aap interview ke liye taiyaar ho. C batch 4 yahin khatm hota hai — command-line args se lekar interview tak, aapne C ke aakhri 8 topics poore kar liye hain.`,
+          `Interview prep has a core: **tricky outputs** (integer division, precedence, post-increment, fallthrough, pointers), the **top 10 questions** (each answer in 2-3 lines plus an example), and **writing code** (string reverse, max find, search — all from the projects). Understand each output with a dry run; do not memorize.
+
+Remember: \`5 / 2 = 2\`, \`5.0 / 2 = 2.5\`, \`2 + 3 * 4 = 14\`, \`(2 + 3) * 4 = 20\`, in \`y = x++\` y gets the old value, without break a switch falls through, and changing a value through a pointer changes the original variable. These 7 points cover half the output questions in an interview.
+
+To revise: trace the code in this article without looking — how many of the 6 outputs did you get right? Then say the answers to any 3 of the top 10 questions out loud. If both go well, you are ready for the interview. C batch 4 ends here — from command-line args to the interview, you have completed the last 8 topics of C.`
+        )
+      }
+    ],
+    diagram: {
+      kind: 'boxes',
+      title: t(
+        'Interview ke 4 Sawaal Types aur 7-Din Plan',
+        '4 Interview Question Types and the 7-Day Plan'
+      ),
+      caption: t(
+        'Output sawaal sabse zyada aate hain — pehle unhe pakka karo',
+        'Output questions appear most often — master them first'
+      ),
+      nodes: [
+        {
+          t: t('1. Tricky output: 5/2, x++, fallthrough', '1. Tricky output: 5/2, x++, fallthrough'),
+          s: t('Sabse zyada aate hain — dry run se samjho', 'They appear most often — understand them with a dry run')
+        },
+        {
+          t: t('2. Concept: pointer, stack vs heap, malloc', '2. Concept: pointer, stack vs heap, malloc'),
+          s: t('Har jawab 2-3 lines + ek example', 'Each answer in 2-3 lines plus one example')
+        },
+        {
+          t: t('3. Code likhna: reverse, max, search', '3. Writing code: reverse, max, search'),
+          s: t('Pehle approach bolo, phir code likho, phir test karo', 'Say the approach first, then write the code, then test it')
+        },
+        {
+          t: t('4. Debugging: bug dhoondho', '4. Debugging: find the bug'),
+          s: t('Reproduce karo, trace karo, fix karo', 'Reproduce it, trace it, fix it')
+        },
+        {
+          t: t('7-din plan: basics se mock interview tak', '7-day plan: from basics to mock interview'),
+          s: t('Har din 2 ghante — code likhna, sirf padhna nahi', 'Two hours each day — writing code, not just reading')
+        }
+      ]
+    },
+    codeExamples: [
+      {
+        title: t('Switch Fallthrough: Tuesday ke Saath Wednesday Bhi', 'Switch Fallthrough: Wednesday Too, with Tuesday'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int day = 2;
+
+    switch (day) {
+        case 1:
+            printf("Monday\\n");
+            break;
+        case 2:
+            printf("Tuesday\\n");
+            /* fall through */
+        case 3:
+            printf("Wednesday\\n");
+            break;
+        default:
+            printf("Other day\\n");
+            break;
+    }
+    return 0;
+}`,
+        output: `Tuesday
+Wednesday`
+      },
+      {
+        title: t('Pointer Basics: *p se n Badalta Hai', 'Pointer Basics: *p Changes n'),
+        language: 'c',
+        code: `#include <stdio.h>
+
+int main(void)
+{
+    int n = 10;
+    int *p = &n;
+
+    printf("n = %d\\n", n);
+    printf("*p = %d\\n", *p);
+    *p = 20;
+    printf("After *p = 20, n = %d\\n", n);
+    return 0;
+}`,
+        output: `n = 10
+*p = 10
+After *p = 20, n = 20`
+      }
+    ],
+    mcqs: [
+      {
+        q: t(
+          'C mein 5 / 2 ka answer kya hoga?',
+          'What is the answer of 5 / 2 in C?'
+        ),
+        opts: [
+          t('2.5', '2.5'),
+          t('2', '2'),
+          t('3', '3'),
+          t('2.0', '2.0')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: dono int hain, isliye integer division hota hai aur decimal kat jaata hai — answer 2 hai.',
+          'Correct answer: both are int, so integer division happens and the decimal is cut off — the answer is 2.'
+        )
+      },
+      {
+        q: t(
+          'int x = 5; int y = x++; ke baad x aur y kitne honge?',
+          'After int x = 5; int y = x++; what are x and y?'
+        ),
+        opts: [
+          t('x = 5, y = 5', 'x = 5, y = 5'),
+          t('x = 6, y = 6', 'x = 6, y = 6'),
+          t('x = 6, y = 5', 'x = 6, y = 5'),
+          t('x = 5, y = 6', 'x = 5, y = 6')
+        ],
+        ans: 2,
+        expl: t(
+          'Sahi jawab: x++ pehle purani value 5 deta hai (y = 5), phir x ko 6 banata hai — isliye x = 6, y = 5.',
+          'Correct answer: x++ first gives the old value 5 (y = 5), then makes x 6 — so x = 6, y = 5.'
+        )
+      },
+      {
+        q: t(
+          '2 + 3 * 4 ka answer kya hoga?',
+          'What is the answer of 2 + 3 * 4?'
+        ),
+        opts: [
+          t('20', '20'),
+          t('14', '14'),
+          t('24', '24'),
+          t('9', '9')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: multiply pehle hota hai (3 * 4 = 12), phir add (2 + 12 = 14) — precedence ka yahi order hai.',
+          'Correct answer: multiply comes first (3 * 4 = 12), then add (2 + 12 = 14) — that is the precedence order.'
+        )
+      },
+      {
+        q: t(
+          'switch mein case 2 ke baad break nahi hai. day = 2 par kya print hoga?',
+          'In a switch, there is no break after case 2. What prints for day = 2?'
+        ),
+        opts: [
+          t('Sirf Tuesday', 'Only Tuesday'),
+          t('Tuesday aur Wednesday dono', 'Both Tuesday and Wednesday'),
+          t('Sirf Wednesday', 'Only Wednesday'),
+          t('Kuch nahi', 'Nothing')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: break ke bina control case 3 mein gir jaata hai (fallthrough), isliye Tuesday ke saath Wednesday bhi print hota hai.',
+          'Correct answer: without break, control falls into case 3 (fallthrough), so Wednesday prints along with Tuesday.'
+        )
+      },
+      {
+        q: t(
+          'int n = 10; int *p = &n; *p = 20; ke baad n kitna hoga?',
+          'After int n = 10; int *p = &n; *p = 20; what is n?'
+        ),
+        opts: [
+          t('10', '10'),
+          t('20', '20'),
+          t('0', '0'),
+          t('Garbage value', 'Garbage value')
+        ],
+        ans: 1,
+        expl: t(
+          'Sahi jawab: p mein n ka address hai, isliye *p = 20 se n ki value badal kar 20 ho jaati hai.',
+          'Correct answer: p holds the address of n, so *p = 20 changes the value of n to 20.'
+        )
+      }
+    ],
+    keyNotes: [
+      t(
+        '5 / 2 = 2 (integer division), 5.0 / 2 = 2.5 (float division).',
+        '5 / 2 = 2 (integer division), 5.0 / 2 = 2.5 (float division).'
+      ),
+      t(
+        'Precedence: brackets, phir multiply/divide, phir add/subtract — 2 + 3 * 4 = 14.',
+        'Precedence: brackets, then multiply/divide, then add/subtract — 2 + 3 * 4 = 14.'
+      ),
+      t(
+        'y = x++ mein y ko purani value milti hai; ++x mein pehle badhta hai.',
+        'In y = x++, y gets the old value; in ++x, it increases first.'
+      ),
+      t(
+        'Switch mein break bhoolne se fallthrough hota hai — agla case bhi chal jaata hai.',
+        'Forgetting break in a switch causes fallthrough — the next case runs too.'
+      ),
+      t(
+        'Pointer se value badalne par original variable badal jaata hai: *p = 20 se n = 20.',
+        'Changing a value through a pointer changes the original variable: *p = 20 makes n = 20.'
+      )
+    ],
+    practice: {
+      title: t(
+        'Practice: Tricky Outputs ko Khud Trace Karo',
+        'Practice: Trace Tricky Outputs Yourself'
+      ),
+      task: t(
+        'Neeche wala starter run karo — yeh a / b, a % b aur a++ ke outputs dikhata hai, jahan a = 10 aur b = 3 hain. Done tab hoga jab output expected jaisa aaye aur tum har line ka reason bata sako: a / b = 3 kyun hai, a % b = 1 kyun hai, aur a++ = 10 kyun print hota hai jabki uske baad a = 11 hai.',
+        'Run the starter below — it shows the outputs of a / b, a % b, and a++, where a = 10 and b = 3. You are done when the output matches the expected output and you can give the reason for each line: why a / b = 3, why a % b = 1, and why a++ prints 10 while a becomes 11 after it.'
+      ),
+      language: 'c',
+      starter: `#include <stdio.h>
+
+int main(void)
+{
+    int a = 10;
+    int b = 3;
+
+    printf("a / b = %d\\n", a / b);
+    printf("a %% b = %d\\n", a % b);
+    printf("a++ = %d\\n", a++);
+    printf("After a++, a = %d\\n", a);
+    return 0;
+}`,
+      expected: `a / b = 3
+a % b = 1
+a++ = 10
+After a++, a = 11`
+    },
+    readMinutes: 12
+  };
+
 export const cProgramming: Subject = {
   id: 'c-programming',
   name: {
@@ -1727,5 +14602,39 @@ int main() {
         expected: '14\n20',
       },
     },
+    cDataTypes,
+    cInputOutput,
+    cArrays,
+    cMultidim,
+    cStrings,
+    cStringLibrary,
+    cOperatorsDeep,
+    cControlDeep,
+    cPointers,
+    cPointersFunctions,
+    cPointersAdvanced,
+    cStructures,
+    cStructuresAdvanced,
+    cUnionsEnums,
+    cFunctionsAdvanced,
+    cRecursion,
+    cStorageClasses,
+    cBitwise,
+    cMemory,
+    cDynamicArrays,
+    cFiles,
+    cPreprocessor,
+    cSortingSearching,
+    cSortingAdvanced,
+    cLinkedList,
+    cStackQueue,
+    cCommandLine,
+    cErrorHandling,
+    cDebugging,
+    cProjectGuess,
+    cProjectCalculator,
+    cProjectStudent,
+    cProjectTictactoe,
+    cInterview,
   ],
 };
