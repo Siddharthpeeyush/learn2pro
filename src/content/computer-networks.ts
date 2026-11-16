@@ -13891,6 +13891,30 @@ export const computerNetworks: Subject = {
             hindi: 'असल में TCP/IP इंटरनेट चलाता है; OSI सिर्फ़ समझने और exam का मॉडल है।',
           },
         },
+        {
+          q: {
+            hinglish: '2000 bytes ke message par TCP 20, IP 20, Ethernet 14 + 4 bytes judte hain. Total packet kitna hoga?',
+            english: 'A 2000-byte message gets TCP 20, IP 20, and Ethernet 14 + 4 bytes added. What is the total packet size?',
+          },
+          opts: [
+            { hinglish: '2058 bytes', english: '2058 bytes' },
+            { hinglish: '2000 bytes', english: '2000 bytes' },
+            { hinglish: '2040 bytes', english: '2040 bytes' },
+            { hinglish: '2100 bytes', english: '2100 bytes' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: '2000 + 20 + 20 + 14 + 4 = 2058 bytes. Overhead 58 bytes hai.',
+            english: '2000 + 20 + 20 + 14 + 4 = 2058 bytes. The overhead is 58 bytes.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Network ka matlab hai do ya zyada devices ka judna aur data baantna.', english: 'A network is two or more devices connected and sharing data.' },
+        { hinglish: 'OSI mein 7 layers hain, neeche se upar: Physical, Data Link, Network, Transport, Session, Presentation, Application.', english: 'The OSI model has 7 layers, bottom to top: Physical, Data Link, Network, Transport, Session, Presentation, Application.' },
+        { hinglish: 'TCP/IP mein 4 layers hain — aur asal internet TCP/IP par chalta hai, OSI sirf ek reference model hai.', english: 'TCP/IP has 4 layers — and the real internet runs on TCP/IP; OSI is only a reference model.' },
+        { hinglish: 'Har layer apna header jodti hai: 1000 bytes ka message 1058 bytes ka packet ban jata hai, overhead 58 bytes.', english: 'Every layer adds its own header: a 1000-byte message becomes a 1058-byte packet, with 58 bytes of overhead.' },
+        { hinglish: 'IP address badal sakta hai, MAC address device se chipka rehta hai.', english: 'An IP address can change; a MAC address stays stuck to the device.' },
       ],
       practice: {
         title: {
@@ -13905,7 +13929,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'msg = 500\noverhead = 20 + 20 + 14 + 4\ntotal = msg + overhead\nprint("Total packet:", total, "bytes")\nprint("Overhead percent:", round(overhead / total * 100, 1), "%")\n',
-        expected: 'Total 558 bytes. Overhead 58 bytes = 10.4%. (Chhote message par overhead percent zyada hota hai.)',
+        expected: 'Total packet: 558 bytes\nOverhead percent: 10.4 %',
       },
       readMinutes: 11,
     },
@@ -14099,6 +14123,30 @@ export const computerNetworks: Subject = {
             hindi: '.0 network address है — यह किसी डिवाइस को नहीं मिलता, सिर्फ़ पूरे नेटवर्क को दिखाता है।',
           },
         },
+        {
+          q: {
+            hinglish: '/26 subnet mein kitne usable hosts hote hain?',
+            english: 'How many usable hosts are in a /26 subnet?',
+          },
+          opts: [
+            { hinglish: '256', english: '256' },
+            { hinglish: '128', english: '128' },
+            { hinglish: '62', english: '62' },
+            { hinglish: '30', english: '30' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: '/26 mein 6 host bits bachte hain: 2^6 = 64 address, network aur broadcast minus karne par 62 usable hosts bachte hain.',
+            english: '/26 leaves 6 host bits: 2^6 = 64 addresses, minus the network and broadcast addresses leaves 62 usable hosts.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: '/24 mein 256 address hote hain, par usable hosts 254 hote hain — network aur broadcast address kisi device ko nahi milte.', english: 'A /24 has 256 addresses, but only 254 usable hosts — the network and broadcast addresses are never given to a device.' },
+        { hinglish: 'Hosts nikalne ka formula: 2^(32 − prefix) − 2.', english: 'The formula for hosts is 2^(32 − prefix) − 2.' },
+        { hinglish: 'Subnet mask jitna lamba, subnet utne hi chhote aur har subnet mein hosts utne hi kam.', english: 'The longer the subnet mask, the smaller each subnet and the fewer hosts per subnet.' },
+        { hinglish: '/26 mein 64 address hote hain, jinmein se 62 usable hote hain.', english: 'A /26 has 64 addresses, of which 62 are usable.' },
+        { hinglish: 'CIDR notation mein /n ka matlab hai pehle n bits network ke hain.', english: 'In CIDR notation, /n means the first n bits belong to the network.' },
       ],
       practice: {
         title: {
@@ -14113,7 +14161,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'print("Subnets:", 2 ** (25 - 24))\nprint("Addresses per subnet:", 2 ** (32 - 25))\nprint("Hosts per subnet:", 2 ** (32 - 25) - 2)\nprint("Second subnet network: 192.168.10.128")\nprint("Second subnet broadcast: 192.168.10.255")\n',
-        expected: '(a) 2 subnets. (b) 126 hosts each. (c) Second subnet: network 192.168.10.128, broadcast 192.168.10.255, hosts .129–.254.',
+        expected: 'Subnets: 2\nAddresses per subnet: 128\nHosts per subnet: 126\nSecond subnet network: 192.168.10.128\nSecond subnet broadcast: 192.168.10.255',
       },
       readMinutes: 12,
     },
@@ -14307,6 +14355,30 @@ export const computerNetworks: Subject = {
             hindi: 'DNS query UDP से होती है — एक packet जाता है, एक जवाब आता है; TCP स्लो होता क्योंकि पहले handshake चाहिए।',
           },
         },
+        {
+          q: {
+            hinglish: 'Inmein se kaunsa UDP use karta hai?',
+            english: 'Which of these uses UDP?',
+          },
+          opts: [
+            { hinglish: 'HTTP se file download', english: 'File download over HTTP' },
+            { hinglish: 'SMTP se email bhejna', english: 'Sending email over SMTP' },
+            { hinglish: 'HTTPS par banking website', english: 'Banking website over HTTPS' },
+            { hinglish: 'Live video call', english: 'Live video call' },
+          ],
+          ans: 3,
+          expl: {
+            hinglish: 'Live video ko kam delay chahiye aur ek frame kho jaye to bhi chal jata hai; UDP mein na handshake hota hai na dobara bhejna, isiliye woh tez rehta hai.',
+            english: 'Live video needs low delay and can live with a lost frame; UDP has no handshake and no retransmission, so it stays fast.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'TCP reliable hai: connection, order, retransmission — file download aur web ke liye.', english: 'TCP is reliable: connection, order, retransmission — for file downloads and the web.' },
+        { hinglish: 'UDP fast hai: no handshake, no retransmission — live video aur DNS query ke liye.', english: 'UDP is fast: no handshake, no retransmission — for live video and DNS queries.' },
+        { hinglish: 'Three-way handshake: SYN → SYN-ACK → ACK; phir data chalta hai.', english: 'The three-way handshake is SYN → SYN-ACK → ACK; data flows only after that.' },
+        { hinglish: 'Segments = ceil(file size ÷ MSS); aakhri segment mein bacha hua data hota hai.', english: 'Segments = ceil(file size ÷ MSS); the last segment carries whatever data is left.' },
+        { hinglish: 'Sequence number byte ka number hota hai — isse receiver order aur khoye hue bytes pehchan leta hai.', english: 'The sequence number is the byte’s number — it lets the receiver spot order and lost bytes.' },
       ],
       practice: {
         title: {
@@ -14321,7 +14393,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'import math\nsize = 500000\nmss = 1460\nsegs = math.ceil(size / mss)\nlast = size - (segs - 1) * mss\nprint("Segments:", segs)\nprint("Last segment bytes:", last)\n',
-        expected: 'Segments: 343 (342.46 round up). Last segment: 500,000 − 342 × 1460 = 680 bytes.',
+        expected: 'Segments: 343\nLast segment bytes: 680',
       },
       readMinutes: 12,
     },
@@ -14516,6 +14588,30 @@ export const computerNetworks: Subject = {
             hindi: 'HTTPS सिर्फ़ कनेक्शन encrypt करता है — गलत साइट भी HTTPS पर चल सकती है, इसीलिए साइट का नाम चेक करो।',
           },
         },
+        {
+          q: {
+            hinglish: '10 MB ka page, 40 Mbps connection — download mein kitna time lagega?',
+            english: 'A 10 MB page on a 40 Mbps connection — how long does the download take?',
+          },
+          opts: [
+            { hinglish: '2 second', english: '2 seconds' },
+            { hinglish: '4 second', english: '4 seconds' },
+            { hinglish: '0.25 second', english: '0.25 seconds' },
+            { hinglish: '10 second', english: '10 seconds' },
+          ],
+          ans: 0,
+          expl: {
+            hinglish: '10 MB × 8 = 80 Mb; 80 ÷ 40 = 2 second.',
+            english: '10 MB × 8 = 80 Mb; 80 ÷ 40 = 2 seconds.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'DNS naam ko IP mein badalta hai — bina DNS ke aapko har site ka number yaad rakhna padta.', english: 'DNS turns a name into an IP — without it you would have to remember every site’s number.' },
+        { hinglish: 'Pehli visit mein DNS + TCP + TLS + HTTP ka time judta hai — isiliye pehli baar site khulne mein der lagti hai.', english: 'The first visit adds up DNS + TCP + TLS + HTTP time — that is why a site opens slowly the first time.' },
+        { hinglish: 'Download time = size (Mb) ÷ speed (Mbps); MB ko pehle 8 se guna karke Mb banao.', english: 'Download time = size (Mb) ÷ speed (Mbps); first multiply MB by 8 to get Mb.' },
+        { hinglish: '404 ka matlab hai page nahi mila — server mila, par woh page us par nahi hai.', english: '404 means the page was not found — the server was reached, but that page is not on it.' },
+        { hinglish: 'HTTPS sirf connection encrypt karta hai — galat site bhi HTTPS par chal sakti hai, isiliye naam check karo.', english: 'HTTPS only encrypts the connection — a wrong site can also run on HTTPS, so check the name.' },
       ],
       practice: {
         title: {
@@ -14530,7 +14626,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'size_mb = 50\nspeed1 = 25\nspeed2 = 50\nprint("25 Mbps par:", size_mb * 8 / speed1, "second")\nprint("50 Mbps par:", size_mb * 8 / speed2, "second")\n',
-        expected: '(a) 50 × 8 = 400 Mb ÷ 25 = 16 second. (b) 400 ÷ 50 = 8 second.',
+        expected: '25 Mbps par: 16.0 second\n50 Mbps par: 8.0 second',
       },
       readMinutes: 12,
     },
@@ -14724,6 +14820,30 @@ export const computerNetworks: Subject = {
             hindi: 'आने और जाने का रास्ता अलग हो सकता है — routing हर तरफ़ से अलग फ़ैसला लेता है।',
           },
         },
+        {
+          q: {
+            hinglish: 'Routing table mein 10.0.0.0/8 → A aur 10.1.0.0/16 → B hai. 10.1.5.9 ke liye packet kahan jayega?',
+            english: 'A routing table has 10.0.0.0/8 → A and 10.1.0.0/16 → B. Where does a packet for 10.1.5.9 go?',
+          },
+          opts: [
+            { hinglish: 'A, kyunki /8 chhota hai', english: 'A, because /8 is shorter' },
+            { hinglish: 'B, kyunki /16 sabse lamba matching prefix hai', english: 'B, because /16 is the longest matching prefix' },
+            { hinglish: 'A aur B dono', english: 'Both A and B' },
+            { hinglish: 'Drop ho jayega — do entry match karti hain', english: 'Dropped — two entries match' },
+          ],
+          ans: 1,
+          expl: {
+            hinglish: 'Sabse lamba prefix jeetta hai; /16, /8 se zyada specific hai.',
+            english: 'The longest prefix wins; /16 is more specific than /8.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Router IP address dekh kar rasta chunta hai; switch MAC address dekh kar.', english: 'A router chooses the path by IP address; a switch by MAC address.' },
+        { hinglish: 'Longest prefix match jeetta hai — sabse specific entry wale rasta par packet jata hai.', english: 'The longest prefix match wins — the packet takes the path of the most specific entry.' },
+        { hinglish: 'Dijkstra ka rule: har baar sabse sasta unvisited node chuno aur uske neighbours update karo.', english: 'Dijkstra’s rule: each time pick the cheapest unvisited node and update its neighbours.' },
+        { hinglish: 'TTL har hop par 1 kam hota hai; 0 hote hi packet drop ho jata hai — isse loop mein packet hamesha nahi ghoomta.', english: 'TTL drops by 1 at each hop; at 0 the packet is dropped — so a packet never loops forever.' },
+        { hinglish: 'Aane aur jaane ka rasta alag ho sakta hai — routing har direction mein alag faisla leta hai.', english: 'The going and returning paths can differ — routing decides separately in each direction.' },
       ],
       practice: {
         title: {
@@ -14738,7 +14858,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'ab, bc, ac = 3, 2, 10\nvia_b = ab + bc\nprint("A-B-C kharcha:", via_b)\nprint("A-C seedha kharcha:", ac)\nprint("Sabse sasta rasta: A-B-C" if via_b < ac else "Sabse sasta rasta: A-C")\nprint("Seedha rasta kitna mehenga:", ac - via_b)\n',
-        expected: '(a) A–B–C. (b) 5. (c) Seedha rasta 10 ka hai, 5 zyada mehenga.',
+        expected: 'A-B-C kharcha: 5\nA-C seedha kharcha: 10\nSabse sasta rasta: A-B-C\nSeedha rasta kitna mehenga: 5',
       },
       readMinutes: 12,
     },
@@ -14931,6 +15051,30 @@ export const computerNetworks: Subject = {
             hindi: 'Firewall बाहर के packet रोकता है, लेकिन आप खुद phishing link पर click करो तो वह नहीं रोक सकता।',
           },
         },
+        {
+          q: {
+            hinglish: '8 log hain. Symmetric encryption mein kitni alag keys chahiye?',
+            english: 'There are 8 people. How many different keys does symmetric encryption need?',
+          },
+          opts: [
+            { hinglish: '8', english: '8' },
+            { hinglish: '16', english: '16' },
+            { hinglish: '28', english: '28' },
+            { hinglish: '56', english: '56' },
+          ],
+          ans: 2,
+          expl: {
+            hinglish: 'Har pair ko ek key chahiye: n(n−1)/2 = 8×7/2 = 28.',
+            english: 'Each pair needs one key: n(n−1)/2 = 8×7/2 = 28.',
+          },
+        },
+      ],
+      keyNotes: [
+        { hinglish: 'Encryption data chhupata hai, authentication pehchan pakki karta hai — dono alag kaam hain.', english: 'Encryption hides data; authentication confirms identity — they are two different jobs.' },
+        { hinglish: 'Symmetric mein har pair ko ek key chahiye: n logon ke liye n(n−1)/2 keys.', english: 'In symmetric encryption each pair needs one key: n people need n(n−1)/2 keys.' },
+        { hinglish: 'Caesar cipher mein har akshar fixed shift se badalta hai — shift 3 mein CAT → FDW banta hai.', english: 'In a Caesar cipher each letter shifts by a fixed amount — with shift 3, CAT becomes FDW.' },
+        { hinglish: 'Firewall bahar ke packet rokta hai, lekin phishing link par khud click karne se nahi bacha sakta.', english: 'A firewall stops outside packets, but it cannot save you if you click a phishing link yourself.' },
+        { hinglish: '4 ank ka PIN 10,000 combination deta hai — phir bhi 1234 jaisa aasan PIN mat rakho.', english: 'A 4-digit PIN gives 10,000 combinations — still, never use an easy PIN like 1234.' },
       ],
       practice: {
         title: {
@@ -14945,7 +15089,7 @@ export const computerNetworks: Subject = {
         },
         language: 'python',
         starter: 'def caesar(word, shift):\n    return "".join(chr((ord(c) - 65 + shift) % 26 + 65) for c in word)\nprint("CAT ->", caesar("CAT", 3))\nn = 6\nprint("Symmetric keys for 6 people:", n * (n - 1) // 2)\nprint("4-digit PIN combinations:", 10 ** 4)\n',
-        expected: '(a) CAT → FDW (C→F, A→D, T→W). (b) 15 keys. (c) 10,000 combinations.',
+        expected: 'CAT -> FDW\nSymmetric keys for 6 people: 15\n4-digit PIN combinations: 10000',
       },
       readMinutes: 12,
     },
